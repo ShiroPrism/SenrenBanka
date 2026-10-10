@@ -51,6 +51,10 @@ components:
   link:
     textColor: "{colors.ink}"
     typography: "{typography.body}"
+  link-mark:
+    textColor: "{colors.ink-muted}"
+  work-ext:
+    textColor: "{colors.ink-muted}"
   section-title:
     textColor: "{colors.ink}"
     typography: "{typography.title}"
@@ -157,6 +161,13 @@ components:
 - **Selection / Caret:** 文本选中为焦赭底 + 暖纸文字；插入符为焦赭——"红笔批注"延伸到浏览器原生界面。
 - **Touch:** `pointer: coarse` 时纵向 padding 0.78rem（命中区 ≈44px）；桌面保持紧凑。
 
+### Marks & External Indicators（标志与外链标识）
+- **Brand mark:** `links[].icon === "github"` 的链接在标签前渲染 GitHub 品牌 mark（本地 SVG，来源 simple-icons / CC0；灰墨、0.85em、静态，不参与 hover 变色）。
+- **Functional icons:** `mail` → Mail、未映射 / 缺省 → Globe（`@lucide/astro`、1.5 描边、灰墨、0.85em，与品牌 mark 同槽同尺寸）——Elsewhere 内 100% 标记、不留裸链接（2026-10-10 依「要么不用，要么全用」修订，纯文本回退已否决）。
+- **External indicator:** Selected Works 中带 `url` 的作品标题后渲染外链箭头（`ArrowUpRight`，lucide、1.5 描边、0.8em、灰墨）。它是语义标识（指出"去向外部"），不是装饰。
+- **A11y:** 以上皆 `aria-hidden`；可访问名由既有文本标签承担。
+- **来源与规则:** 唯一图标库 `@lucide/astro` + simple-icons 资产，见 `docs/adr/0002-icon-and-brand-mark-strategy.md`。
+
 ### TOC / Anchor Nav（masthead 锚点目录）
 - **Style:** Label 档大写、灰墨、无下划线；hover 转墨色 + 焦赭下划线；锚点目标 `scroll-margin-top: 2rem`。
 - **Touch:** `pointer: coarse` 时导航项与作品标题链接均在 0.78rem 命中区内。
@@ -183,6 +194,7 @@ components:
 ### Do:
 - **Do** 保持正文测量宽度 ≤34em（简介）/ ≤46em（描述行）。
 - **Do** 用 1px 发丝线分区，栏目间距用 `clamp(3rem, 9vh, 5.5rem)`。
+- **Do** 链接标记（品牌 mark / 外链箭头）保持灰墨与静态；强调仍只交给焦赭下划线的交互态。
 - **Do** 静态焦赭只出现在期号与作品序号（每栏目 ≤3 处）；链接 hover 下划线、文本选中底色与插入符为交互态强调；链接静态下划线保持墨色（2026-10-10 依 The One Accent Rule 收权并厘清计数口径）。
 - **Do** 标题用 `text-wrap: balance`，正文左对齐（不两端对齐）。
 - **Do** 中文回退宋体系；大写标签保持 0.18em 字距。

@@ -1,7 +1,9 @@
 ---
 import { Font } from 'astro:assets';
+import { ArrowUpRight, Mail, Globe } from '@lucide/astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
+import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('editorial');
@@ -54,7 +56,7 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
                   <span class="ed-index">{pad(index)}</span>
                   <div class="ed-work-body">
                     <h3 class="ed-work-title">
-                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                      {project.url ? <a href={project.url}>{project.title}<ArrowUpRight class="ed-ext" aria-hidden="true" /></a> : project.title}
                     </h3>
                     {project.description && <p class="ed-work-desc">{project.description}</p>}
                     {project.tags && (
@@ -81,7 +83,7 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
           {
             listLinks.map((link) => (
               <li>
-                <a class="ed-link" href={link.url}>{link.label}</a>
+                <a class="ed-link" href={link.url}>{link.icon === 'github' ? <GithubMark class="ed-mark" aria-hidden="true" /> : link.icon === 'mail' ? <Mail class="ed-mark" aria-hidden="true" /> : <Globe class="ed-mark" aria-hidden="true" />}{link.label}</a>
               </li>
             ))
           }

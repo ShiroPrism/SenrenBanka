@@ -1,7 +1,9 @@
 ---
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
+import { Mail, ArrowUpRight, Globe } from '@lucide/astro';
 import { loadDesignView } from '../../lib/site';
+import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('fast');
@@ -27,7 +29,11 @@ const { profile, switcher } = view;
           <div class="fs-actions fs-rise" style="--rise-delay: 90ms">
             {
               profile.links.map((link) => (
-                <a class="fs-btn" href={link.url}>{link.label}</a>
+                <a class="fs-btn" href={link.url}>
+                  {link.icon === 'github' && <GithubMark class="fs-btn-mark" aria-hidden="true" />}
+                  {link.icon === 'mail' && <Mail class="fs-btn-mark" aria-hidden="true" />}
+                  {link.icon !== 'github' && link.icon !== 'mail' && <Globe class="fs-btn-mark" aria-hidden="true" />}{link.label}
+                </a>
               ))
             }
           </div>
@@ -42,7 +48,7 @@ const { profile, switcher } = view;
                   <li class="fs-card">
                     <p class="fs-card-num">{String(index + 1).padStart(2, '0')}</p>
                     <h3 class="fs-card-title">
-                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                      {project.url ? <a href={project.url}>{project.title}<ArrowUpRight class="fs-card-ext" aria-hidden="true" /></a> : project.title}
                     </h3>
                     {project.description && <p class="fs-card-desc">{project.description}</p>}
                     {project.tags && <p class="fs-card-tags">{project.tags.join(' · ')}</p>}

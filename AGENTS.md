@@ -42,6 +42,54 @@
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
 - oxide / fast 的 `DESIGN.md` 是厂商原始快照，**不得修改**；其动效决策记录在 `SPEC §18` 与 `change-log/`。
 
+## Iconography & Icon Library Rules
+
+### 1. Design-first
+
+- 每套设计的图标选择必须遵循对应 `DESIGN.md` 的视觉规范。
+- 如果 `DESIGN.md` 明确指定图标库、图标格式或绘制风格，优先遵循原规范，不得默认替换为 Lucide。
+- 如果规范没有指定图标库，由实现 Agent 根据该设计的视觉语言选择合适的图标方案。
+- 图标不是必需品。允许使用 ASCII / Unicode 符号、原生 SVG、CSS 几何图形，或完全不使用图标。
+- 不得为了增加视觉元素而给所有标题、列表和段落机械地添加图标。
+
+### 2. Library compatibility
+
+- 使用设计规范指定的图标库前，先核实其实际 API、框架要求、构建方式、许可证及资源输出形式。
+- 优先选择与当前 Astro 静态页面兼容的方案：Astro 图标组件、静态 SVG、SVG Sprite 或经过许可核实的本地 SVG 资源。
+- 不得仅为了使用 React 图标组件而引入 React、React 集成或其他大型依赖；只有存在明确且合理的需求时才考虑。
+- 如果指定的图标库与当前技术栈不兼容，优先评估其官方提供的非 React 接入方式或静态资源格式。确实不可行时，选择视觉上最接近且兼容的替代方案，并记录原因。
+- Lucide 仅作为候选通用图标库，不是项目的强制依赖。不得在已有方案满足需求时，为少量图标重复引入多个相似库。
+- 不得仅因某个图标库流行，就忽略设计规范指定的尺寸、描边、填充方式与图形比例。
+
+### 3. Dependencies and build output
+
+- 优先复用项目已有依赖与设计自带资源。
+- 新增依赖前，确认其是否确有必要，并检查安装、构建和维护成本。
+- 图标应优先在构建阶段输出为 SVG 或其他适合的静态资源，不依赖运行时 CDN，也不应为了普通图标引入不必要的客户端 JavaScript。
+- 不得因图标导入方式破坏各设计的 Tailwind CSS 4 样式隔离或让未使用的设计资源进入其他页面。
+- 品牌 Logo 必须使用对应品牌的合法资源，并单独核实商标及授权要求。
+
+### 4. Styling and accessibility
+
+- 图标的尺寸、颜色、描边、填充、间距和交互状态由对应设计控制，不建立强制统一的全局图标视觉风格。
+- 装饰性图标应避免被辅助技术重复朗读；仅有图标的交互控件必须提供可访问名称。
+- 不得仅通过颜色或图标形状传达关键状态；必要时配合文字或其他语义提示。
+- 新增或更换图标后，检查桌面端、移动端、对比度及图标与相邻文字的对齐情况。
+
+### 5. Source design documents
+
+- 厂商官方 `DESIGN.md` 快照遵守项目既有的只读约定，不得擅自修改原始内容。
+- 如果原始规范的图标方案需要针对 Astro 做适配，将适配方式及原因记录在项目规格或变更日志中。
+- 自产的 `DESIGN.md` 则应同步记录实际采用的图标风格与实现约定，确保规范与代码一致。
+
+### 6. Project conventions（本项目现行约定）
+
+- **当前实现**：通用功能图标库采用 `@lucide/astro`（构建期内联 SVG、零客户端 JS）；复用既有方案，不重复引入相似库。
+- **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA / 切换器保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
+- **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `SPEC §18`。
+- **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。
+- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照（oxide / fast）的适配记录见 `SPEC §18`。
+
 ## 已知坑（均已实测，勿重复踩）
 
 - **不要让任何多页共享的模块对设计页面 / CSS 建立动态导入边**：
@@ -52,11 +100,13 @@
 - **Tailwind 不识别动态拼接的类名**（如 `border-${color}` 不会被扫描到）；需要安全列表时用 `@source inline("...")`。
 - **`@astrojs/tailwind` 已弃用**，勿引入；Tailwind 4 官方集成 = `@tailwindcss/vite`（已配置）。
 - 切换页 `/designs/` 在 `manualSwitch: false` 时**不构建**（404），且任一设计页不得留入口。
+- **Tailwind Preflight 把 `svg` 置为 `display: block`**：行内语境中的 svg 图标（文本旁的品牌 mark / 外链箭头）会折到下一行——必须显式 `display: inline-block`（flex 语境不受影响）。2026-10-10 由图标改动验证期 rect 实测暴露。
 
 ## 新增设计评审清单
 
 - [ ] 四件套 + provenance（来源类型 / URL / 日期 / 许可）完整
 - [ ] 核心字段全部渲染；扩展区块取舍与理由写进 DESIGN.md
+- [ ] 若使用图标 / 品牌标志：符合「Iconography & Icon Library Rules」（设计规范优先 / 库与技术栈兼容 / 列表面 100% 标记、无裸链接 / 资产 vendored + 商标核对 / `aria-hidden`）
 - [ ] `<HeadMeta {...view.head} />` 与切换入口均存在
 - [ ] 移动端 375px 宽无横向溢出、正文可读
 - [ ] `npm run build` 通过（含 `astro check`）

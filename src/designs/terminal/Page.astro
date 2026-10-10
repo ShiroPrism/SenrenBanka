@@ -48,7 +48,7 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
                   <a class="tm-link" href={link.url} aria-label={`${link.label}: ${link.url}`}>
                     {link.label.toLowerCase()}
                   </a>{' '}
-                  <span class="tm-dim" aria-hidden="true">{shortUrl(link.url)}</span>
+                  <span class="tm-dim" aria-hidden="true">→ {shortUrl(link.url)}</span>
                 </li>
               ))
             }
@@ -86,7 +86,7 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
                 {profile.projects.map((project, index) => (
                   <li class="tm-proj">
                     <span class="tm-dim">{pad(index)}</span>{' '}
-                    {project.url ? <a class="tm-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
+                    {project.url ? <a class="tm-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}{project.url && <span class="tm-dim" aria-hidden="true"> → {shortUrl(project.url)}</span>}
                     {project.description ? <span class="tm-dim"> — {project.description}</span> : null}
                     {project.tags && <span class="tm-dim"> [{project.tags.join(', ')}]</span>}
                   </li>

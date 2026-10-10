@@ -142,6 +142,7 @@ components:
 
 ### Links
 - **Style:** 琥珀色 + 暗琥珀下划线（offset 3px）；无边框、无背景。URL 显示为去协议短形式（`github.com/example`）。
+- **External marker:** 去向用 `→` 指路——链接行 `label → url`、项目行 `title → url`（`ls -l` 的符号链接语言）；Dim 档、`aria-hidden`，位于链接外（不参与反白）。
 - **Hover:** 仅在 `@media (hover: hover) and (pointer: fine)` 下反白（背景→基准琥珀、文字→屏底），无过渡动画（终端不做补间）。
 - **Touch:** `pointer: coarse` 时纵向 padding 0.75rem（命中区 ≈44px）；inline padding 不改变行高节奏。
 - **Focus:** 2px 琥珀 outline、offset 3px。
@@ -156,7 +157,7 @@ components:
 - **Motion:** `1.1s steps(1)` 闪烁；`prefers-reduced-motion: reduce` 时静止常亮。
 
 ### List Rows
-- **Style:** `└─ marker`（Dim 档）+ 链接（琥珀）+ URL（Dim 档）；项目行以序号列开头。
+- **Style:** `└─ marker`（Dim 档）+ 链接（琥珀）+ `→ URL`（Dim 档，外链标识）；项目行以序号列开头，带 `url` 的标题后接 `→ url`。
 - **≤560px:** 链接列表改为 `grid-template-columns: 3ch 1fr`——marker 固定列、换行的 URL 与链接左缘对齐。
 - **Density:** 行距 0.3rem；项目行 0.65rem。
 
@@ -174,6 +175,7 @@ components:
 ### Do:
 - **Do** 保持"命令 → 输出"顺序；层级用缩进与颜色档位表达。
 - **Do** 让 ASCII 装饰用等宽字符重复（`─` `└─` `01`），字距 0、行高 1.6。
+- **Do** 外链去向用 `→` 指路（`label → url` / `title → url`），Dim 档、`aria-hidden`。
 - **Do** 全站小写；`$` 前缀、`#` 注释是文案语法的一部分。
 - **Do** 把中文原文直接放进输出行（等宽网格天然支持 CJK 宽度）。
 - **Do** hover 用反白块，而不是颜色渐变。
@@ -182,6 +184,7 @@ components:
 
 ### Don't:
 - **Don't** 引入第二个色相或第二个字族。
+- **Don't** 引入 SVG 图标或图标库——终端的全部标记都是字符（`└─` `→` `─`）。
 - **Don't** 使用卡片、圆角、投影——唯一的例外是屏幕外框。
 - **Don't** 用粗体区分层级（Weightless Rule）。
 - **Don't** 做 glitch / 打字机 / 闪烁大面积元素等炫技动画；光标是唯一动效。

@@ -92,7 +92,9 @@
 }
 
 .fs-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.45rem 1rem;
   border: 1px solid var(--fast-stroke-ctrl-on-outline-rest);
   border-radius: var(--fast-corner-large);
@@ -116,6 +118,26 @@
 
 .fs-btn-primary:hover {
   background: var(--fast-background-ctrl-brand-hover);
+}
+
+/* 按钮图标（lucide 功能图标 / 本地品牌 mark）与卡片外链箭头；
+   规则与来源见 SPEC §18 与 ADR 0002。
+   卡片箭头位于行内语境：Preflight 把 svg 置为 block（会折行），必须显式 inline-block。 */
+
+.fs-btn-mark {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  stroke-width: 1.75;
+}
+
+.fs-card-ext {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-left: 0.3em;
+  vertical-align: -0.08em;
+  stroke-width: 1.75;
 }
 
 .fs-section {

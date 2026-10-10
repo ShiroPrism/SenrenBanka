@@ -1,7 +1,9 @@
 ---
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
+import { Mail, Globe } from '@lucide/astro';
 import { loadDesignView } from '../../lib/site';
+import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('oxide');
@@ -38,7 +40,7 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
                 profile.links.map((link) => (
                   <li>
                     <a class="ox-link" href={link.url}>
-                      <span class="ox-link-arrow" aria-hidden="true">▸</span>{link.label}
+                      {link.icon === 'github' ? <GithubMark class="ox-mark" aria-hidden="true" /> : link.icon === 'mail' ? <Mail class="ox-mark" aria-hidden="true" /> : <Globe class="ox-mark" aria-hidden="true" />}{link.label}
                     </a>
                   </li>
                 ))
