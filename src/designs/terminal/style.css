@@ -1,0 +1,194 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-terminal: var(--font-jetbrains-mono);
+}
+
+.tm {
+  margin: 0;
+  min-height: 100vh;
+  background: #0a0703;
+  color: #ffb000;
+  font-family: var(--font-terminal), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  display: grid;
+  place-items: start center;
+  padding: clamp(1rem, 4vw, 3rem) clamp(0.75rem, 4vw, 2rem);
+}
+
+/* 扫描线：绘制在屏幕背景层（文字之下），见 .tm-screen */
+
+.tm-screen {
+  position: relative;
+  z-index: 1;
+  width: min(52rem, 100%);
+  border: 1px solid #5c4413;
+  border-radius: 12px;
+  background-image:
+    repeating-linear-gradient(to bottom, rgba(255, 176, 0, 0.025) 0 1px, transparent 1px 3px),
+    linear-gradient(#0d0903, #0a0703);
+  box-shadow:
+    inset 0 0 70px rgba(255, 176, 0, 0.07),
+    0 24px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.tm-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid #5c4413;
+  font-size: 0.75rem;
+  color: #c68a1a;
+}
+
+.tm-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1px solid #c68a1a;
+  border-radius: 50%;
+}
+
+.tm-chrome-title {
+  margin-left: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.tm-chrome-switch {
+  margin-left: auto;
+}
+
+.tm-body {
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.tm-block {
+  margin: 0 0 2.25rem;
+}
+
+.tm-cmd {
+  margin: 0 0 0.5rem;
+  color: #c68a1a;
+}
+
+.tm-out {
+  margin: 0 0 0.4rem;
+}
+
+.tm-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 0.5rem;
+}
+
+.tm-headline {
+  color: #ffcf70;
+}
+
+.tm-bio {
+  max-width: 62ch;
+  margin-top: 0.75rem;
+}
+
+.tm-dim {
+  color: #c68a1a;
+}
+
+.tm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tm-list > li {
+  margin: 0 0 0.3rem;
+}
+
+.tm-proj {
+  margin-bottom: 0.65rem !important;
+}
+
+/* experience 注释独立成行、缩进——与主行形成两档对比（中段层级） */
+.tm-note {
+  display: block;
+  margin-left: 3ch;
+}
+
+/* ≤560px：链接列表改为固定 marker 列 + URL 缩进对齐（移动端折行整齐） */
+@media (max-width: 560px) {
+  .tm-list-links > li {
+    display: grid;
+    grid-template-columns: 3ch minmax(0, 1fr);
+    column-gap: 0.5ch;
+  }
+
+  .tm-list-links > li > .tm-dim:first-child {
+    grid-column: 1;
+  }
+
+  .tm-list-links > li > .tm-link {
+    grid-column: 2;
+  }
+
+  .tm-list-links > li > .tm-dim:last-child {
+    grid-column: 2;
+  }
+}
+
+.tm-link {
+  color: #ffb000;
+  text-decoration: underline;
+  text-decoration-color: #c68a1a;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tm-link:hover {
+    background: #ffb000;
+    color: #0a0703;
+    text-decoration: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .tm-link {
+    padding-block: 0.75rem;
+  }
+}
+
+.tm-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  margin-left: 0.2em;
+  background: #ffb000;
+  animation: tm-blink 1.1s steps(1) infinite;
+}
+
+@keyframes tm-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.tm-footer .tm-out {
+  margin-bottom: 0.35rem;
+}
+
+.tm a:focus-visible {
+  outline: 2px solid #ffb000;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tm-cursor {
+    animation: none;
+  }
+}

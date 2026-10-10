@@ -1,0 +1,57 @@
+---
+import InfraStyles from '../components/InfraStyles.astro';
+import { renderRouterScript } from '../lib/router-script';
+import { loadSite } from '../lib/site';
+import { withBase } from '../lib/urls';
+
+/**
+ * 根路由页（SPEC §7.3）：零外部请求的内联脚本选择设计并立即跳转。
+ * 无 JS → noscript 内 meta refresh 到默认设计 + 手动链接列表。
+ * SEO → noindex, follow（唯一可索引入口是默认设计页，SPEC §7.4）。
+ */
+const model = await loadSite();
+const script = renderRouterScript({
+  mode: model.mode,
+  manualSwitch: model.switcherEnabled,
+  defaultId: model.default.id,
+  enabled: model.enabled.map((design) => design.id),
+  cacheHours: model.random.cacheHours,
+  avoidRepeat: model.random.avoidRepeat,
+  base: model.base,
+  storageKey: model.storageKey,
+});
+const fallbackUrl = withBase(`${model.default.id}/`);
+---
+<html lang={model.site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{model.site.title}</title>
+    <meta name="robots" content="noindex, follow" />
+    <script is:inline set:html={script} />
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${fallbackUrl}`} />
+    </noscript>
+  </head>
+  <body>
+    <InfraStyles />
+    <main class="infra">
+      <p class="infra-redirect">正在进入你的设计… / Taking you to a design…</p>
+      <noscript>
+        <h1>{model.site.title}</h1>
+        <p>JavaScript 已禁用，正在跳转到默认设计；若未自动跳转，请手动选择：</p>
+        <ul class="infra-list">
+          {
+            model.enabled.map((design) => (
+              <li>
+                <a class="infra-card" href={withBase(`${design.id}/`)}>
+                  <span class="name">{design.meta.displayName}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </noscript>
+    </main>
+  </body>
+</html>

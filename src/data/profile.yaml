@@ -1,0 +1,48 @@
+# 示例占位资料（中英混排，用于验证字体回退与排版）。
+# 这是一个虚拟人物，不是真实信息。请替换为你自己的内容。
+# 契约：name / headline / bio / links 为核心字段，所有设计必须呈现；
+#       projects / experience / skills / contact 为扩展区块，由各设计自行取舍。
+
+name: "Lin Yao / 林遥"
+headline: "Building calm tools for noisy problems / 为嘈杂的问题造安静的工具"
+bio: "独立开发者与界面工程师，关注设计系统、静态站点与开发者体验。前五年在两家创业公司负责前端与设计工程。下班后喜欢胶片摄影和长距离骑行。"
+location: "Hangzhou, China"
+
+links:
+  - label: GitHub
+    url: "https://github.com/example"
+    icon: github
+  - label: Email
+    url: "mailto:hello@example.com"
+    icon: mail
+  - label: 博客
+    url: "https://example.com/blog"
+
+projects:
+  - title: "Static Smith"
+    description: "A tiny build-time pipeline that turns content files into printable booklets."
+    url: "https://example.com/static-smith"
+    tags: ["Astro", "TypeScript"]
+  - title: "灰度笔记"
+    description: "一个只做一件事的极简笔记应用，本地优先、永不上传。"
+    url: "https://example.com/greyscale-notes"
+    tags: ["PWA", "SQLite"]
+  - title: "Night Shift Radio"
+    description: "深夜电台声音地图，把城市噪音做成可听的风景。"
+    tags: ["Web Audio", "Map"]
+
+experience:
+  - org: "Paper Street Studio"
+    role: "前端与设计工程 Lead"
+    period: "2023 – now"
+    description: "负责设计系统与营销站技术栈，把页面交付周期从两周压到两天。"
+  - org: "Harbor Labs"
+    role: "Senior Frontend Engineer"
+    period: "2019 – 2023"
+    description: "主导组件库重构与可访问性专项。"
+
+skills: ["TypeScript", "Astro", "Design Systems", "CSS 动画", "可访问性"]
+
+contact:
+  email: "hello@example.com"
+  note: "欢迎交流合作，也欢迎来信聊聊胶片和骑行。"

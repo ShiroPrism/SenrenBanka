@@ -1,0 +1,127 @@
+---
+import HeadMeta from '../../components/HeadMeta.astro';
+import { loadDesignView } from '../../lib/site';
+import './style.css';
+
+const view = await loadDesignView('oxide');
+const { profile, switcher } = view;
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█';
+---
+<html lang={view.site.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+  </head>
+  <body class="ox">
+    <div class="ox-frame">
+      <header class="ox-top">
+        <span class="ox-brand">SENRENBANKA<span class="ox-brand-dot"> ●</span></span>
+        <span class="ox-top-meta">{profile.location ?? 'REMOTE'}</span>
+      </header>
+      <p class="ox-wave" aria-hidden="true">{wave}</p>
+
+      <main>
+        <section class="ox-hero">
+          <p class="ox-label">IDENTITY / 身份</p>
+          <h1 class="ox-name">{profile.name}</h1>
+          <p class="ox-headline">{profile.headline}</p>
+          <p class="ox-bio">{profile.bio}</p>
+        </section>
+
+        <section class="ox-columns">
+          <div>
+            <p class="ox-label">CHANNELS / 链接</p>
+            <ul class="ox-links">
+              {
+                profile.links.map((link) => (
+                  <li>
+                    <a class="ox-link" href={link.url}>
+                      <span class="ox-link-arrow">▸</span>{link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          {
+            profile.skills && profile.skills.length > 0 && (
+              <div>
+                <p class="ox-label">CAPABILITIES / 能力</p>
+                <ul class="ox-badges">
+                  {profile.skills.map((skill) => (
+                    <li class="ox-badge">{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </section>
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="ox-section">
+              <p class="ox-label">DEPLOYMENTS / 精选项目</p>
+              <ul class="ox-rows">
+                {profile.projects.map((project, index) => (
+                  <li class="ox-row">
+                    <span class="ox-num tabular-nums">{pad(index)}</span>
+                    <div>
+                      <h2 class="ox-row-title">
+                        {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                      </h2>
+                      {project.description && <p class="ox-row-desc">{project.description}</p>}
+                      {project.tags && (
+                        <p class="ox-row-tags">{project.tags.map((tag) => `[${tag}]`).join(' ')}</p>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="ox-section">
+              <p class="ox-label">OPERATIONS / 经历</p>
+              <ul class="ox-rows">
+                {profile.experience.map((item) => (
+                  <li class="ox-row">
+                    <span class="ox-num tabular-nums">{item.period ?? '----'}</span>
+                    <div>
+                      <h2 class="ox-row-title">
+                        {item.org}
+                        {item.role ? <span class="ox-dim"> — {item.role}</span> : null}
+                      </h2>
+                      {item.description && <p class="ox-row-desc">{item.description}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </main>
+
+      <footer class="ox-footer">
+        <div>
+          <p class="ox-label">CONTACT</p>
+          {
+            profile.contact?.email ? (
+              <a class="ox-link" href={`mailto:${profile.contact.email}`}>
+                <span class="ox-link-arrow">▸</span>{profile.contact.email}
+              </a>
+            ) : (
+              <p class="ox-dim">no channel configured</p>
+            )
+          }
+        </div>
+        <div class="ox-footer-right">
+          {switcher.enabled && <a class="ox-switch" href={switcher.href}>SWITCH DESIGN ▸</a>}
+          <p class="ox-wave ox-wave-small" aria-hidden="true">{wave}</p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

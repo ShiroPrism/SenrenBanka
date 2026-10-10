@@ -1,0 +1,35 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# 点目录默认全部不入库（本地工具状态：impeccable 会话/快照、.trae、.codex 等）
+.*/
+!.github
+# 白名单：仓库定制的 design-page-verify skill（唯一入库的 skill；git 要求逐级放行父目录）
+!.agents/
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/design-page-verify
+!.agents/skills/design-page-verify/
+!.agents/skills/design-page-verify/**
+
+
+# logs & env
+*.log
+.env
+.env.*
+
+# os
+.DS_Store
+Thumbs.db
+
+# deployment platform caches
+.vercel/
+.wrangler/
+
+# typescript incremental caches
+*.tsbuildinfo

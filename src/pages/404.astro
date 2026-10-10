@@ -1,0 +1,37 @@
+---
+import HeadMeta from '../components/HeadMeta.astro';
+import InfraStyles from '../components/InfraStyles.astro';
+import { loadSite } from '../lib/site';
+import { withBase } from '../lib/urls';
+
+/** 中性 404（SPEC §11）：noindex，GH Pages 会自动使用 dist/404.html。 */
+const model = await loadSite();
+---
+<html lang={model.site.lang}>
+  <head>
+    <HeadMeta title={`404 · ${model.site.title}`} robots="noindex, follow" />
+  </head>
+  <body>
+    <InfraStyles />
+    <main class="infra">
+      <h1>404</h1>
+      <p>这个地址没有对应的页面或设计。 / No page or design found at this address.</p>
+      <ul class="infra-list">
+        <li>
+          <a class="infra-card" href={withBase('/')}>
+            <span class="name">回到入口 / Back to the entry</span>
+          </a>
+        </li>
+        {
+          model.switcherEnabled ? (
+            <li>
+              <a class="infra-card" href={withBase('designs/')}>
+                <span class="name">查看全部设计 / All designs</span>
+              </a>
+            </li>
+          ) : null
+        }
+      </ul>
+    </main>
+  </body>
+</html>

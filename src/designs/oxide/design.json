@@ -1,0 +1,14 @@
+{
+  "displayName": "Oxide",
+  "description": "深色工业风：OKLCH 中性色 + 绿色强调、等宽大写标签、ASCII 纹理与发丝分隔线。",
+  "enabled": true,
+  "accent": "#3fdaa0",
+  "source": {
+    "type": "official-vendor",
+    "url": "https://github.com/oxidecomputer/design-system/blob/master/design.md",
+    "fetchedAt": "2026-10-10",
+    "license": "MPL-2.0",
+    "attribution": "Oxide Computer Company — Oxide Design System (design.md), MPL-2.0；完整许可见 SOURCE-LICENSE.txt"
+  },
+  "generatedBy": "n/a（官方发布规范，非生成）"
+}

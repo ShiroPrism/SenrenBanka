@@ -1,0 +1,18 @@
+# 站点信息与设计行为配置。
+# design.default 必须是某个已启用设计（design.json 中 "enabled": true）的 id。
+# 设计清单不在这里维护：src/designs/<id>/ 目录存在即注册（SPEC §6）。
+
+site:
+  title: "林遥 / Lin Yao"
+  description: "独立开发者与界面工程师的个人主页——同一个人的四种样子。"
+  lang: "zh-CN"
+  # url: "https://your-domain.example"   # 可选；构建时优先使用 SITE_URL 环境变量
+  # storageKey: "my-portfolio"           # 可选；默认按 base 路径自动派生命名空间
+
+design:
+  mode: random        # random | fixed
+  default: editorial  # random 模式下为无 JS / SEO 回退设计；fixed 模式下为固定展示
+  manualSwitch: true
+  random:
+    cacheHours: 24    # 0 = 每次访问都重新随机（仍避免连续重复）
+    avoidImmediateRepeat: true

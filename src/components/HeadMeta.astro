@@ -1,0 +1,23 @@
+---
+import { withBase } from '../lib/urls';
+
+/**
+ * 共享 <head> 元信息（SPEC §6.4）。
+ * 每套设计必须原样传入 view.head；索引策略由框架统一计算（仅默认设计可索引）。
+ */
+interface Props {
+  title: string;
+  robots: string;
+  description?: string;
+  canonical?: string;
+}
+
+const { title, robots, description, canonical } = Astro.props;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+{description ? <meta name="description" content={description} /> : null}
+{canonical ? <link rel="canonical" href={canonical} /> : null}
+<meta name="robots" content={robots} />
+<link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />

@@ -1,0 +1,301 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+/* Oxide: 深色优先、OKLCH 色彩、等宽大写标签、ASCII 纹理、发丝描边、紧致圆角。
+   色值以 hex 作回退、oklch() 覆盖（渐进增强）。 */
+.ox {
+  margin: 0;
+  background-color: #17181c;
+  background-color: oklch(0.162 0.01 260);
+  color: #b9bbc0;
+  color: oklch(0.79 0.0011 260);
+  font-family: SuisseIntl, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 可见网格：极弱的结构纹理（SPEC: Visible grids） */
+.ox::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(125, 132, 148, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 132, 148, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.ox-frame {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1.25rem, 5vw, 4rem) 3rem;
+}
+
+.ox-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #34363c;
+  border-bottom-color: oklch(0.316 0.006 260);
+}
+
+.ox-brand,
+.ox-top-meta,
+.ox-label,
+.ox-badge,
+.ox-num,
+.ox-row-tags,
+.ox-switch,
+.ox-wave {
+  font-family: 'GT America Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.ox-brand {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #ececee;
+}
+
+.ox-brand-dot {
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-top-meta {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8a8c93;
+}
+
+.ox-wave {
+  margin: 1rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.1;
+  letter-spacing: 0;
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7 / 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.ox-hero {
+  padding: clamp(2.5rem, 8vh, 5rem) 0 clamp(2rem, 6vh, 3.25rem);
+  border-bottom: 1px solid #34363c;
+  border-bottom-color: oklch(0.316 0.006 260);
+}
+
+.ox-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #8a8c93;
+  margin: 0 0 0.75rem;
+}
+
+.ox-name {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #f2f3f4;
+  margin: 0 0 0.75rem;
+}
+
+.ox-headline {
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: #e6e7e9;
+  margin: 0 0 1rem;
+  max-width: 36em;
+}
+
+.ox-bio {
+  max-width: 52ch;
+  margin: 0;
+}
+
+.ox-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 2rem 4rem;
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #34363c;
+  border-bottom-color: oklch(0.316 0.006 260);
+}
+
+.ox-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ox-links li {
+  margin: 0 0 0.4rem;
+}
+
+.ox-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ox-link:hover {
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-link-arrow {
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+  margin-right: 0.55rem;
+}
+
+.ox-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ox-badge {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #34363c;
+  border-color: oklch(0.316 0.006 260);
+  border-radius: 2px;
+  color: #b9bbc0;
+}
+
+.ox-section {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid #34363c;
+  border-bottom-color: oklch(0.316 0.006 260);
+}
+
+.ox-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ox-row {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid #34363c;
+  border-top-color: oklch(0.316 0.006 260);
+}
+
+.ox-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (max-width: 560px) {
+  .ox-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+.ox-num {
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-row-title {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #f2f3f4;
+  margin: 0 0 0.3rem;
+}
+
+.ox-row-title a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid #3fdaa0;
+  border-bottom-color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-row-title a:hover {
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-row-desc {
+  margin: 0 0 0.35rem;
+  max-width: 56ch;
+}
+
+.ox-row-tags {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+}
+
+.ox-dim {
+  color: #8a8c93;
+}
+
+.ox-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-top: 2.5rem;
+}
+
+/* flex 子项的 min-width:auto 会被 nowrap 的 ASCII 波形撑到 max-content（实测导致移动端横向溢出）；
+   显式 min-width:0 允许其收缩，波形再由自身 overflow:hidden 裁剪。 */
+.ox-footer-right {
+  min-width: 0;
+}
+
+.ox-switch {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #3fdaa0;
+  color: oklch(0.77 0.1919 163.7);
+  text-decoration: none;
+}
+
+.ox-switch:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.ox-wave-small {
+  margin-top: 0.6rem;
+  font-size: 0.6875rem;
+  opacity: 0.45;
+}
+
+.ox a:focus-visible {
+  outline: 2px solid #3fdaa0;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ox * {
+    transition: none !important;
+  }
+}

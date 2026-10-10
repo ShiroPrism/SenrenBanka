@@ -1,0 +1,138 @@
+---
+import { Font } from 'astro:assets';
+import HeadMeta from '../../components/HeadMeta.astro';
+import { loadDesignView } from '../../lib/site';
+import './style.css';
+
+const view = await loadDesignView('terminal');
+const { profile, switcher } = view;
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const rule = '─'.repeat(52);
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+---
+<html lang={view.site.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* 正文等宽字体不预加载（6 个子集文件过多）；display:swap + 系统 mono 回退已足够 */}
+    <Font cssVariable="--font-jetbrains-mono" />
+  </head>
+  <body class="tm">
+    <main class="tm-screen" aria-label="SenrenBanka terminal">
+      <div class="tm-chrome">
+        <span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span>
+        <span class="tm-chrome-title" aria-hidden="true">guest@senrenbanka: ~</span>
+        {switcher.enabled && (
+          <a class="tm-link tm-chrome-switch" href={switcher.href} aria-label="切换设计 / Switch design">[switch design]</a>
+        )}
+      </div>
+
+      <div class="tm-body">
+        <section class="tm-block" aria-label="Intro 简介">
+          <p class="tm-cmd"><span aria-hidden="true">$</span> whoami <span class="tm-dim" aria-hidden="true"># 简介</span></p>
+          <h1 class="tm-name">{profile.name}<span class="tm-cursor" aria-hidden="true"></span></h1>
+          <p class="tm-out tm-headline">{profile.headline}</p>
+          <p class="tm-out tm-bio">{profile.bio}</p>
+          {profile.location && (
+            <p class="tm-out tm-dim"><span aria-hidden="true">#</span> based in {profile.location}</p>
+          )}
+        </section>
+
+        <section class="tm-block" aria-labelledby="tm-links-title">
+          <h2 id="tm-links-title" class="sr-only"><span lang="en">Links</span> 链接</h2>
+          <p class="tm-cmd"><span aria-hidden="true">$</span> ls links/ <span class="tm-dim" aria-hidden="true"># 链接</span></p>
+          <ul class="tm-list tm-list-links">
+            {
+              profile.links.map((link) => (
+                <li>
+                  <span class="tm-dim" aria-hidden="true">└─</span>{' '}
+                  <a class="tm-link" href={link.url} aria-label={`${link.label}: ${link.url}`}>
+                    {link.label.toLowerCase()}
+                  </a>{' '}
+                  <span class="tm-dim" aria-hidden="true">{shortUrl(link.url)}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="tm-block" aria-labelledby="tm-experience-title">
+              <h2 id="tm-experience-title" class="sr-only"><span lang="en">Experience</span> 经历</h2>
+              <p class="tm-cmd"><span aria-hidden="true">$</span> cat experience.log <span class="tm-dim" aria-hidden="true"># 经历</span></p>
+              {profile.experience.map((item) => (
+                <p class="tm-out">
+                  <span class="tm-dim">[{item.period ?? '----'}]</span>{' '}
+                  <span class="tm-org">{item.org}</span>
+                  {item.role ? ` — ${item.role}` : ''}
+                  {item.description ? (
+                    <span class="tm-dim tm-note">
+                      {' '}
+                      <span aria-hidden="true">#</span> {item.description}
+                    </span>
+                  ) : null}
+                </p>
+              ))}
+            </section>
+          )
+        }
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="tm-block" aria-labelledby="tm-projects-title">
+              <h2 id="tm-projects-title" class="sr-only"><span lang="en">Projects</span> 项目</h2>
+              <p class="tm-cmd"><span aria-hidden="true">$</span> ls -l projects/ <span class="tm-dim" aria-hidden="true"># 项目</span></p>
+              <ul class="tm-list">
+                {profile.projects.map((project, index) => (
+                  <li class="tm-proj">
+                    <span class="tm-dim">{pad(index)}</span>{' '}
+                    {project.url ? <a class="tm-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
+                    {project.description ? <span class="tm-dim"> — {project.description}</span> : null}
+                    {project.tags && <span class="tm-dim"> [{project.tags.join(', ')}]</span>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="tm-block" aria-labelledby="tm-skills-title">
+              <h2 id="tm-skills-title" class="sr-only"><span lang="en">Skills</span> 技能</h2>
+              <p class="tm-cmd"><span aria-hidden="true">$</span> cat skills.txt <span class="tm-dim" aria-hidden="true"># 技能</span></p>
+              <p class="tm-out tm-skills">{profile.skills.join('  ·  ')}</p>
+            </section>
+          )
+        }
+
+        <section class="tm-block" aria-labelledby="tm-contact-title">
+          <h2 id="tm-contact-title" class="sr-only"><span lang="en">Contact</span> 联系</h2>
+          <p class="tm-cmd"><span aria-hidden="true">$</span> mail <span class="tm-dim" aria-hidden="true"># 联系</span></p>
+          {profile.contact?.email ? (
+            <p class="tm-out">
+              {profile.contact.note ?? 'Say hello'} →{' '}
+              <a class="tm-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+            </p>
+          ) : (
+            <p class="tm-out"><span class="tm-dim">no mail configured</span></p>
+          )}
+        </section>
+
+        <footer class="tm-footer">
+          <p class="tm-out tm-dim whitespace-pre" aria-hidden="true">{rule}</p>
+          {
+            switcher.enabled && (
+              <p class="tm-out">
+                [switch design]{' '}
+                <a class="tm-link" href={switcher.href} aria-label="切换设计 / Switch design">./designs/</a>{' '}
+                <span class="tm-dim"><span aria-hidden="true">#</span> 换一台机器看看</span>
+              </p>
+            )
+          }
+          <p class="tm-out tm-dim">session ends — 谢谢访问 / EOF</p>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>
