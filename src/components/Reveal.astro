@@ -1,0 +1,38 @@
+---
+/**
+ * 滚动显现装配（共享，纯 JS，不 import 任何 CSS → 不破坏设计间的样式隔离）。
+ *
+ * 用法：仅在"采用动效"的设计的 <head> 内放置一次 `<Reveal />`；
+ * editorial / terminal 不引入本组件、不加载脚本。
+ *
+ * 1) 内联 boot（同步、在 <head> 中先于正文执行）：仅当
+ *    非 reduced-motion 且支持 IntersectionObserver 时，才给 <html> 打 `data-reveal-ready`。
+ *    条件不满足则不打标 → 各设计的隐藏态（以该属性为门控）永不生效 → 内容始终可见。
+ * 2) 内联计时安全网：若 2s 内模块未执行（脚本加载失败等），撤销门控并全部揭示。
+ * 3) 引入 src/lib/reveal.ts：观察 `[data-reveal]`，到达视口时揭示一次并取消观察。
+ */
+---
+
+<script is:inline>
+  (() => {
+    try {
+      const root = document.documentElement;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) return;
+      root.setAttribute('data-reveal-ready', '');
+      // 安全网：脚本失败时内容不得永久隐藏。
+      setTimeout(() => {
+        if (root.hasAttribute('data-reveal-init')) return;
+        root.removeAttribute('data-reveal-ready');
+        for (const el of document.querySelectorAll('[data-reveal]')) {
+          el.setAttribute('data-reveal-in', '');
+        }
+      }, 2000);
+    } catch {
+      /* 任何异常都不隐藏内容 */
+    }
+  })();
+</script>
+<script>
+  import '../lib/reveal';
+</script>

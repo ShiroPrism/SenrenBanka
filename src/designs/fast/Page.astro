@@ -1,5 +1,6 @@
 ---
 import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
 import './style.css';
 
@@ -9,6 +10,7 @@ const { profile, switcher } = view;
 <html lang={view.site.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Reveal />
   </head>
   <body class="fs">
     <div class="fs-page">
@@ -19,10 +21,10 @@ const { profile, switcher } = view;
 
       <main>
         <section class="fs-hero">
-          <p class="fs-eyebrow">Portfolio</p>
-          <h1 class="fs-title">{profile.headline}</h1>
-          <p class="fs-lead">{profile.bio}</p>
-          <div class="fs-actions">
+          <p class="fs-eyebrow fs-rise" style="--rise-delay: 0ms">Portfolio</p>
+          <h1 class="fs-title fs-rise" style="--rise-delay: 30ms">{profile.headline}</h1>
+          <p class="fs-lead fs-rise" style="--rise-delay: 60ms">{profile.bio}</p>
+          <div class="fs-actions fs-rise" style="--rise-delay: 90ms">
             {
               profile.links.map((link) => (
                 <a class="fs-btn" href={link.url}>{link.label}</a>
@@ -33,7 +35,7 @@ const { profile, switcher } = view;
 
         {
           profile.projects && profile.projects.length > 0 && (
-            <section class="fs-section">
+            <section class="fs-section" data-reveal>
               <h2 class="fs-h2">Projects</h2>
               <ul class="fs-cards md:grid md:grid-cols-3 gap-4">
                 {profile.projects.map((project, index) => (
@@ -53,7 +55,7 @@ const { profile, switcher } = view;
 
         {
           profile.experience && profile.experience.length > 0 && (
-            <section class="fs-section">
+            <section class="fs-section" data-reveal>
               <h2 class="fs-h2">Experience</h2>
               <ul class="fs-exp">
                 {profile.experience.map((item) => (
@@ -73,7 +75,7 @@ const { profile, switcher } = view;
 
         {
           profile.skills && profile.skills.length > 0 && (
-            <section class="fs-section">
+            <section class="fs-section" data-reveal>
               <h2 class="fs-h2">Skills</h2>
               <ul class="fs-chips">
                 {profile.skills.map((skill) => (

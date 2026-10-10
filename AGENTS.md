@@ -31,6 +31,17 @@
 5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
 6. `design.json` 的 `source`：非自产（官方 / 第三方）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`
 
+## 动效（Motion）
+
+- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`，术语见 `CONTEXT.md`。
+- **入场动画**：各设计私有纯 CSS `@keyframes`（无 JS 依赖），整体包在 `@media (prefers-reduced-motion: no-preference)` 内；减动态时不生成动画、元素保持自然可见态。
+- **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。
+- **可见性契约（不可违反）**：内容默认可见；CSS 隐藏态必须以 `html[data-reveal-ready]` 为唯一门控，该属性只由 `src/components/Reveal.astro` 的内联 boot 在「非 reduced-motion 且支持 `IntersectionObserver`」时写入。无 JS / 脚本失败 / 无 IO / 减动态时内容必须始终可见。
+- 只动 `opacity` / `transform`；避免过长延迟、重复播放与影响阅读节奏。
+- 采用动效的设计在 `<head>` 放一次 `<Reveal />`；不采用的设计不引入（**editorial / terminal 当前保持静止**——其自产规范限定动效范围，若要改动须先修订各自 `DESIGN.md` 的 Motion 章节）。
+- `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
+- oxide / fast 的 `DESIGN.md` 是厂商原始快照，**不得修改**；其动效决策记录在 `SPEC §18` 与 `change-log/`。
+
 ## 已知坑（均已实测，勿重复踩）
 
 - **不要让任何多页共享的模块对设计页面 / CSS 建立动态导入边**：

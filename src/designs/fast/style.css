@@ -300,6 +300,42 @@
   }
 }
 
+/* ---------- motion ----------
+   入场动画 = 纯 CSS（无 JS 依赖）；滚动显现 = 共享 IO 机制（见 docs/adr/0001）。
+   复用本设计的 duration / curve token；只动 opacity / transform；reveal-once。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .fs-rise {
+    animation: fs-rise var(--fast-duration-normal) var(--fast-curve-easy-ease) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+
+  /* 隐藏态以 html[data-reveal-ready] 为门控：boot 未成立则永不隐藏 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity var(--fast-duration-normal) var(--fast-curve-easy-ease) var(--reveal-delay, 0ms),
+      transform var(--fast-duration-normal) var(--fast-curve-easy-ease) var(--reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fs-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fs * {
     transition: none !important;

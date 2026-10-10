@@ -294,6 +294,76 @@
   outline-offset: 3px;
 }
 
+/* ---------- motion ----------
+   入场动画 = 纯 CSS（无 JS 依赖）；滚动显现 = 共享 IO 机制（见 docs/adr/0001）。
+   只动 opacity / transform；reveal-once；减动态时不生成任何动画。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .ox-rise {
+    animation: ox-rise 260ms ease-out both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+
+  /* 隐藏态以 html[data-reveal-ready] 为门控：boot 未成立则永不隐藏 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 260ms ease-out var(--reveal-delay, 0ms),
+      transform 260ms ease-out var(--reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 列表行错落：每行 30ms，最多前 5 行 */
+  html[data-reveal-ready] .ox-rows > :nth-child(2) {
+    --reveal-delay: 30ms;
+  }
+  html[data-reveal-ready] .ox-rows > :nth-child(3) {
+    --reveal-delay: 60ms;
+  }
+  html[data-reveal-ready] .ox-rows > :nth-child(4) {
+    --reveal-delay: 90ms;
+  }
+  html[data-reveal-ready] .ox-rows > :nth-child(5) {
+    --reveal-delay: 120ms;
+  }
+}
+
+@keyframes ox-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 触控命中区增强（与 editorial / terminal / fast 同一约定；
+   2026-10-10 由 design-page-verify 暴露 oxide 缺失，375px 实测链接命中高仅 14.4px） */
+@media (pointer: coarse) {
+  .ox-link,
+  .ox-switch {
+    padding-block: 0.95rem;
+  }
+
+  /* 标题链接原用 border-bottom 作下划线；padding 会把它推离文字，
+     故在触控下改用同色 text-decoration 保留视觉。 */
+  .ox-row-title a {
+    padding-block: 0.95rem;
+    border-bottom: 0;
+    text-decoration: underline;
+    text-decoration-color: #3fdaa0;
+    text-decoration-color: oklch(0.77 0.1919 163.7);
+    text-underline-offset: 4px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ox * {
     transition: none !important;
