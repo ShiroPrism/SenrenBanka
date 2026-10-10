@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets';
 import { ArrowUpRight, Mail, Globe } from '@lucide/astro';
 import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
@@ -19,6 +20,7 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-fraunces" />
+    <Reveal />
   </head>
   <body class="ed">
     <main class="ed-page">
@@ -46,13 +48,13 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
       {
         profile.projects && profile.projects.length > 0 && (
           <section class="ed-section" aria-labelledby="ed-works">
-            <div class="ed-section-head">
+            <div class="ed-section-head" data-reveal>
               <h2 id="ed-works" class="ed-section-title">Selected Works</h2>
               <p class="ed-label">精选作品</p>
             </div>
             <ol class="ed-works">
               {profile.projects.map((project, index) => (
-                <li class="ed-work">
+                <li class="ed-work" data-reveal>
                   <span class="ed-index">{pad(index)}</span>
                   <div class="ed-work-body">
                     <h3 class="ed-work-title">
@@ -75,11 +77,11 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
       }
 
       <section class="ed-section" aria-labelledby="ed-elsewhere">
-        <div class="ed-section-head">
+        <div class="ed-section-head" data-reveal>
           <h2 id="ed-elsewhere" class="ed-section-title">Elsewhere</h2>
           <p class="ed-label">外部链接</p>
         </div>
-        <ul class="ed-links">
+        <ul class="ed-links" data-reveal>
           {
             listLinks.map((link) => (
               <li>
@@ -90,7 +92,7 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
         </ul>
       </section>
 
-      <footer class="ed-footer">
+      <footer class="ed-footer" data-reveal>
         <div class="ed-invite">
           {profile.contact?.note && <p class="ed-invite-line">{profile.contact.note}</p>}
           {

@@ -21,3 +21,7 @@
 
 - `oxide` / `fast` 的动效参数由各自 `style.css` 维护；`editorial` / `terminal` 不加载任何动效脚本。
 - 相关决策与实测记录写入 `SPEC §18` 与 `change-log/0.2.0.md`；厂商 `DESIGN.md` 不改动。
+
+## 修订（2026-10-10，v0.4.0）
+
+- 本决定第 1 条的范围已由 `docs/adr/0003-differentiated-motion-enhancement.md` 修订：editorial / terminal 在**先修订各自自产 `DESIGN.md` 的 Motion 章节**之后，同样接入入场与滚动显现动效；"只让厂商规范授权的设计动起来"不再作为项目规则。其余决定（两种动效分离、门控而非默认隐藏、共享脚本不 import CSS）继续有效。

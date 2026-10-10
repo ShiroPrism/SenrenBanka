@@ -2,8 +2,7 @@
 /**
  * 滚动显现装配（共享，纯 JS，不 import 任何 CSS → 不破坏设计间的样式隔离）。
  *
- * 用法：仅在"采用动效"的设计的 <head> 内放置一次 `<Reveal />`；
- * editorial / terminal 不引入本组件、不加载脚本。
+ * 用法：采用动效的设计在 <head> 内放置一次 `<Reveal />`（当前四套设计均引入；见 docs/adr/0003）。
  *
  * 1) 内联 boot（同步、在 <head> 中先于正文执行）：仅当
  *    非 reduced-motion 且支持 IntersectionObserver 时，才给 <html> 打 `data-reveal-ready`。

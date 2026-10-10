@@ -61,6 +61,7 @@
 .ed-toc a {
   color: #57534e;
   text-decoration: none;
+  transition: color 120ms ease;
 }
 
 .ed-toc a:hover {
@@ -338,6 +339,148 @@
   text-transform: uppercase;
   color: #57534e;
   margin: 0;
+}
+
+/* ---------- motion ----------
+   页面语言是"印刷"：墨色渗入（仅 opacity）与发丝线从左绘制（scaleX）。
+   入场 = 首屏纯 CSS（无 JS 依赖）；滚动显现 = 共享 IO 机制（见 docs/adr/0001 / 0003）。
+   只动 opacity / transform；减动态时不生成任何动画与过渡，内容原样呈现。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 首屏：眉标 → 姓名 → 定位/简介依次渗入（无位移） */
+  .ed-masthead,
+  .ed-name,
+  .ed-hero-grid {
+    animation: ed-ink 340ms ease-out both;
+  }
+
+  .ed-name {
+    animation-delay: 90ms;
+  }
+
+  .ed-hero-grid {
+    animation-delay: 180ms;
+  }
+
+  /* hero 发丝线从左绘出：默认态即"已画完"（backwards 只负责起笔），
+     若动画未生效，伪元素仍以完整长度呈现（border 位置由它接管） */
+  .ed-hero {
+    position: relative;
+    border-bottom-color: transparent;
+  }
+
+  .ed-hero::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 1px;
+    background: #d6cfc4;
+    animation: ed-rule-draw 520ms ease-out 220ms backwards;
+  }
+
+  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+     transition 声明在持续匹配的规则上，保证揭示瞬间过渡一定触发。 */
+  html[data-reveal-ready] .ed-section-head[data-reveal] .ed-section-title,
+  html[data-reveal-ready] .ed-section-head[data-reveal] .ed-label {
+    transition:
+      opacity 300ms ease-out,
+      transform 300ms ease-out;
+  }
+
+  html[data-reveal-ready] .ed-section-head[data-reveal]:not([data-reveal-in]) .ed-section-title {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  html[data-reveal-ready] .ed-section-head[data-reveal]:not([data-reveal-in]) .ed-label {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  html[data-reveal-ready] .ed-section-head[data-reveal][data-reveal-in] .ed-label {
+    transition-delay: 80ms;
+  }
+
+  /* 作品行：墨色渗入 + 该行发丝线上墨绘制（只播一次） */
+  html[data-reveal-ready] .ed-work[data-reveal] {
+    position: relative;
+    transition: opacity 320ms ease-out;
+  }
+
+  html[data-reveal-ready] .ed-work[data-reveal]:not([data-reveal-in]) {
+    opacity: 0;
+  }
+
+  html[data-reveal-ready] .ed-work[data-reveal]:not(:first-child) {
+    border-top-color: transparent;
+  }
+
+  html[data-reveal-ready] .ed-work[data-reveal]:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: #d6cfc4;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 420ms ease-out 40ms;
+  }
+
+  html[data-reveal-ready] .ed-work[data-reveal][data-reveal-in]:not(:first-child)::before {
+    transform: scaleX(1);
+  }
+
+  /* Elsewhere 链接：以 70ms 错落渗入 */
+  html[data-reveal-ready] .ed-links[data-reveal] > li {
+    transition: opacity 300ms ease-out;
+  }
+
+  html[data-reveal-ready] .ed-links[data-reveal]:not([data-reveal-in]) > li {
+    opacity: 0;
+  }
+
+  html[data-reveal-ready] .ed-links[data-reveal][data-reveal-in] > li:nth-child(2) {
+    transition-delay: 70ms;
+  }
+
+  html[data-reveal-ready] .ed-links[data-reveal][data-reveal-in] > li:nth-child(3) {
+    transition-delay: 140ms;
+  }
+
+  html[data-reveal-ready] .ed-links[data-reveal][data-reveal-in] > li:nth-child(4) {
+    transition-delay: 210ms;
+  }
+
+  /* 页脚整体渗入 */
+  html[data-reveal-ready] .ed-footer[data-reveal] {
+    transition: opacity 320ms ease-out;
+  }
+
+  html[data-reveal-ready] .ed-footer[data-reveal]:not([data-reveal-in]) {
+    opacity: 0;
+  }
+}
+
+@keyframes ed-ink {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ed-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* ---------- a11y ---------- */

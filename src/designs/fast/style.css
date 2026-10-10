@@ -103,7 +103,14 @@
   font-size: 0.875rem;
   line-height: 1.4;
   text-decoration: none;
-  transition: background var(--fast-duration-normal) var(--fast-curve-easy-ease);
+  transition:
+    background var(--fast-duration-normal) var(--fast-curve-easy-ease),
+    transform var(--fast-duration-normal) var(--fast-curve-easy-ease);
+}
+
+/* 按压反馈：轻微缩放（vendor 明确允许的 :active 例外——触感反馈） */
+.fs-btn:active {
+  transform: scale(0.97);
 }
 
 .fs-btn:hover {
@@ -167,6 +174,21 @@
   border: 1px solid var(--fast-stroke-divider-rest);
   border-radius: var(--fast-corner-large);
   padding: var(--fast-padding-content-medium);
+  transition:
+    background var(--fast-duration-normal) var(--fast-curve-easy-ease),
+    border-color var(--fast-duration-normal) var(--fast-curve-easy-ease),
+    translate var(--fast-duration-normal) var(--fast-curve-easy-ease);
+}
+
+/* 卡片悬停：面层一格 + 描边一格 + 2px 浮起（translate 独立于 reveal 的 transform，互不覆盖）。
+   仅真悬停设备生效（vendor 约定：避免触屏 tap 后停留在 hover 态）。 */
+@media (hover: hover) and (pointer: fine) {
+  .fs-card:hover {
+    /* 亮色：面层进一格；暗色没有更近一层的 token，维持面层，靠描边与浮起表达 */
+    background: light-dark(var(--fast-background-layer-secondary), var(--fast-background-layer-primary));
+    border-color: var(--fast-stroke-ctrl-on-outline-rest);
+    translate: 0 -2px;
+  }
 }
 
 .fs-card-num {
@@ -305,6 +327,10 @@
   color: var(--fast-foreground-ctrl-brand-rest);
 }
 
+.fs-footer-link:hover {
+  text-decoration: underline;
+}
+
 .fs a:focus-visible {
   outline: 2px solid var(--fast-foreground-ctrl-brand-rest);
   outline-offset: 2px;
@@ -344,6 +370,26 @@
   html[data-reveal-ready] [data-reveal][data-reveal-in] {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* 卡片 / 经历行错落：60ms / 50ms 步进，上限 3 / 5 */
+  html[data-reveal-ready] .fs-cards > :nth-child(2) {
+    --reveal-delay: 60ms;
+  }
+  html[data-reveal-ready] .fs-cards > :nth-child(3) {
+    --reveal-delay: 120ms;
+  }
+  html[data-reveal-ready] .fs-exp > :nth-child(2) {
+    --reveal-delay: 50ms;
+  }
+  html[data-reveal-ready] .fs-exp > :nth-child(3) {
+    --reveal-delay: 100ms;
+  }
+  html[data-reveal-ready] .fs-exp > :nth-child(4) {
+    --reveal-delay: 150ms;
+  }
+  html[data-reveal-ready] .fs-exp > :nth-child(5) {
+    --reveal-delay: 200ms;
   }
 }
 

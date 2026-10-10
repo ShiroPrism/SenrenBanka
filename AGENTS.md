@@ -33,14 +33,16 @@
 
 ## 动效（Motion）
 
-- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`，术语见 `CONTEXT.md`。
+- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`。
 - **入场动画**：各设计私有纯 CSS `@keyframes`（无 JS 依赖），整体包在 `@media (prefers-reduced-motion: no-preference)` 内；减动态时不生成动画、元素保持自然可见态。
 - **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。
+- **滚动进度**：仅 oxide 顶部装饰线使用 CSS Scroll-Driven Animations（`animation-timeline: scroll()`；`animation` 简写会重置 timeline，必须后置声明）；`@supports` 门控 + 不支持 / 减动态时整条隐藏；**不得用于内容显隐**。
 - **可见性契约（不可违反）**：内容默认可见；CSS 隐藏态必须以 `html[data-reveal-ready]` 为唯一门控，该属性只由 `src/components/Reveal.astro` 的内联 boot 在「非 reduced-motion 且支持 `IntersectionObserver`」时写入。无 JS / 脚本失败 / 无 IO / 减动态时内容必须始终可见。
-- 只动 `opacity` / `transform`；避免过长延迟、重复播放与影响阅读节奏。
-- 采用动效的设计在 `<head>` 放一次 `<Reveal />`；不采用的设计不引入（**editorial / terminal 当前保持静止**——其自产规范限定动效范围，若要改动须先修订各自 `DESIGN.md` 的 Motion 章节）。
+- 运动只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
+- 持续动效（无限循环）仅限小范围、有明确视觉价值的元素（oxide 波形流动 / terminal 光标与状态灯 / oxide 进度线）；其余一律只播一次。
+- 采用动效的设计在 `<head>` 放一次 `<Reveal />`：**当前四套设计均引入**；新增设计若按规范保持静止则不引入，并在验证记录中显式注明。
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
-- oxide / fast 的 `DESIGN.md` 是厂商原始快照，**不得修改**；其动效决策记录在 `SPEC §18` 与 `change-log/`。
+- 自产规范（editorial / terminal）的 Motion 章节必须与实现一致，改动前先修订规范；oxide / fast 的 `DESIGN.md` 是厂商原始快照，**不得修改**，偏差记录在 `SPEC §18` 与 `change-log/`。
 
 ## Iconography & Icon Library Rules
 

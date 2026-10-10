@@ -91,6 +91,7 @@ components:
 - 不对称首屏（3fr / 2fr），正文测量宽度 ≤34em。
 - 焦赭色一屏内 ≤3 处：期号前缀、链接下划线、作品序号。
 - 衬线与无衬线严格分工，永不对调。
+- 动效是"印刷"的：墨色渗入 + 发丝线从左绘制；不移动版面、不回弹（2026-10-10 v0.4.0）。
 
 ## Colors
 
@@ -187,7 +188,10 @@ components:
 - 两段式：上段"邀请"（contact.note 斜体衬线 + 邮箱链接），下段 meta 行（Label 档切换入口 / colophon）。Email 只在邀请段出现一次——Elsewhere 列表自动过滤 mailto 链接（2026-10-10 distill 去重）。
 
 ### Motion
-- 唯一动效是下划线粗细的 120ms 过渡；`prefers-reduced-motion: reduce` 时全部关闭。
+- 页面语言是"印刷"：动效只有两个动作——**墨色渗入**（仅 opacity 渐显，无位移）与**发丝线从左绘出**（`transform: scaleX` 展开）；不做大于 10px 的位移、不做回弹、不做持续动画。
+- **首屏入场**（纯 CSS，无 JS 依赖）：眉标 → 姓名 → 定位/简介以 90ms 错落渗入（340ms 档）；hero 发丝线于 220ms 起从左绘出（520ms）——约 0.8s 内全部落定，核心内容不等待。
+- **滚动显现**（复用共享 `IntersectionObserver`，只播一次；机制见 `docs/adr/0001`、`docs/adr/0003`）：栏目头两端就位（标题自左 10px、副标自右 10px 且慢 80ms）；作品行渗入 + 该行发丝线上墨绘制（420ms，滞后 40ms）；Elsewhere 链接以 70ms 错落渗入；页脚整体渗入。
+- 链接下划线/颜色的交互态过渡保持 120ms；`prefers-reduced-motion: reduce` 时全部关闭；无 JS / 脚本失败时内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `AGENTS.md`）。
 
 ## Do's and Don'ts
 

@@ -7,7 +7,7 @@ description: "SenrenBanka 设计页验证流程：新建或修改设计页（或
 
 本 skill 是已验证过的"设计页完整验证"可执行版（对应 SPEC §13 验收标准与 AGENTS.md 新增设计评审清单）。
 **新设计按 DESIGN.md 实现完成后，或任一设计页 / 样式 / 构建配置 / `src/lib/` / `src/components/`（共享机制）改动后**，按本流程逐步执行，不得跳步；无法验证的项必须如实标注（如仿真限制、真机未测），禁止虚构结果。
-**动效相关断言（步骤 4b / 5b）只对"引入了 `<Reveal />` 的设计"生效**；无动效的设计（当前 editorial / terminal）应显式跳过，并在记录中注明是"设计上无动效"，而不是当成漏测。
+**动效相关断言（步骤 4b / 5b）只对"引入了 `<Reveal />` 的设计"生效**；无动效的设计（若某设计按规范保持静止）应显式跳过，并在记录中注明是"设计上无动效"，而不是当成漏测。
 
 ## 前置
 
@@ -63,12 +63,13 @@ npm run check        # 仅类型检查（可按需）
 
 ## 步骤 4b · 动效实测（仅对引入 `<Reveal />` 的设计）
 
-对采用动效的设计（当前 oxide / fast；editorial / terminal 跳过并注明"设计上无动效"）：
+对采用动效的设计（当前四套设计均已引入 `<Reveal />`）：
 
 - **门控**：`document.documentElement.hasAttribute('data-reveal-ready') === true`；`[data-reveal]` 数量与预期一致。
 - **首屏入场**：目标元素（如 `.ox-name` / `.fs-title`）`animation-name` 生效，且动画结束态 `opacity === '1'`、`transform` 为单位矩阵。
 - **滚动显现**：滚到底后**全部** `[data-reveal]` 均带 `[data-reveal-in]`，且 `opacity !== '1'` 的元素数为 **0**。
 - **跳转兜底（必测）**：直接 `window.scrollTo(0, document.documentElement.scrollHeight)`（模拟刷新恢复位置 / End 键 / 锚点跳转）后，隐藏元素仍为 **0**——该场景不产生 `IntersectionObserver` 通知，是已知高危路径。
+- **滚动进度（oxide）**：`.ox-progress` 存在且 `aria-hidden`；支持 scroll-driven 的环境下滚动后 `transform` 随进度变化（不支持的环境由 `@supports` 整条隐藏，属预期行为）。
 - **console / 网络**：0 错误 0 警告；请求仅自身资源（Document + 自有 CSS + 字体 / favicon），无 404。
 - 截图归档：动效前 / 后各 ≥1 张，给出路径。
 

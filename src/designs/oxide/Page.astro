@@ -10,6 +10,8 @@ const view = await loadDesignView('oxide');
 const { profile, switcher } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█';
+// 流动波形：4 份首尾相接；动画位移恰好一份（-25%）即无缝循环
+const waveFlow = wave.repeat(4);
 ---
 <html lang={view.site.lang}>
   <head>
@@ -17,12 +19,13 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
     <Reveal />
   </head>
   <body class="ox">
+    <div class="ox-progress" aria-hidden="true"></div>
     <div class="ox-frame">
       <header class="ox-top">
         <span class="ox-brand">SENRENBANKA<span class="ox-brand-dot" aria-hidden="true"> ●</span></span>
         <span class="ox-top-meta">{profile.location ?? 'REMOTE'}</span>
       </header>
-      <p class="ox-wave" aria-hidden="true">{wave}</p>
+      <p class="ox-wave" aria-hidden="true"><span class="ox-wave-track">{waveFlow}</span></p>
 
       <main>
         <section class="ox-hero" aria-labelledby="ox-identity-label">
@@ -108,7 +111,7 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
         }
       </main>
 
-      <footer class="ox-footer" aria-labelledby="ox-contact-label">
+      <footer class="ox-footer" data-reveal aria-labelledby="ox-contact-label">
         <div>
           <p id="ox-contact-label" class="ox-label">CONTACT</p>
           {
@@ -127,7 +130,7 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
               SWITCH DESIGN <span aria-hidden="true">▸</span>
             </a>
           )}
-          <p class="ox-wave ox-wave-small" aria-hidden="true">{wave}</p>
+          <p class="ox-wave ox-wave-small" aria-hidden="true"><span class="ox-wave-track">{waveFlow}</span></p>
         </div>
       </footer>
     </div>
