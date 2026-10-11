@@ -1,0 +1,524 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-kern: var(--font-geist);
+  --font-kern-mono: var(--font-geist-mono);
+}
+
+/* Kern — Monochrome Grid：纯黑白 + 发丝线网格骨架 + Geist 无衬线 / 等宽双声部。
+   token 与语义见 src/designs/kern/DESIGN.md；第三方复刻适配见 docs/designs/kern/ADAPTATION.md。 */
+
+.kern {
+  color-scheme: dark;
+  margin: 0;
+  caret-color: #ffffff;
+
+  /* ---- tokens（单色三声部：底 / 线 / 字） ---- */
+  --kern-surface: #111111;
+  --kern-surface-hover: #1a1a1a;
+  --kern-line: #262626; /* 结构性发丝线（装饰性分隔） */
+  --kern-line-strong: #666666; /* 交互边界（≥3:1） */
+  --kern-fg: #ffffff;
+  --kern-fg-body: #ededed;
+  --kern-fg-muted: #a1a1a1;
+  --kern-fg-faint: #888888;
+
+  /* 动效（DESIGN.md motion.*） */
+  --kern-curve: cubic-bezier(0.22, 1, 0.36, 1);
+  --kern-dur-hover: 140ms;
+  --kern-dur-enter: 260ms;
+  --kern-dur-reveal: 300ms;
+
+  --kern-pad: clamp(1.25rem, 4vw, 3rem);
+
+  background: #000000;
+  color: var(--kern-fg-body);
+  font-family:
+    var(--font-kern), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 反转选中态：单色语言里唯一的"高亮" */
+.kern ::selection {
+  background: var(--kern-fg);
+  color: #000000;
+}
+
+/* ---- 骨架：竖引导线贯穿全页；内容块自带内边距，规则线横贯全宽 ---- */
+
+.kern-shell {
+  max-width: 68rem;
+  margin: 0 auto;
+  border-inline: 1px solid var(--kern-line);
+}
+
+.kern-topbar,
+.kern-hero,
+.kern-section,
+.kern-footer {
+  padding-inline: var(--kern-pad);
+}
+
+/* 十字号 `+`：规则线与竖引导线交点标记（CSS 绘制，空内容伪元素不进入无障碍树） */
+.kern-topbar::before,
+.kern-topbar::after,
+.kern-section::before,
+.kern-section::after,
+.kern-footer::before,
+.kern-footer::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  background:
+    linear-gradient(#555555, #555555) center / 9px 1px no-repeat,
+    linear-gradient(#555555, #555555) center / 1px 9px no-repeat;
+}
+
+.kern-topbar::before,
+.kern-section::before,
+.kern-footer::before {
+  left: -5px;
+}
+
+.kern-topbar::after,
+.kern-section::after,
+.kern-footer::after {
+  right: -5px;
+}
+
+.kern-topbar::before,
+.kern-topbar::after {
+  bottom: -5px;
+}
+
+.kern-section::before,
+.kern-section::after,
+.kern-footer::before,
+.kern-footer::after {
+  top: -5px;
+}
+
+/* 十字号"骑线"定位会向骨架外溢出 5px：仅在骨架不触屏缘时显示（视口 ≥ 69rem 时边距 ≥ 8px），
+   窄屏隐藏以避免横向溢出；骨架由竖引导线 + 横规则线继续承担。 */
+@media (max-width: 69rem) {
+  .kern-topbar::before,
+  .kern-topbar::after,
+  .kern-section::before,
+  .kern-section::after,
+  .kern-footer::before,
+  .kern-footer::after {
+    display: none;
+  }
+}
+
+/* ---- 等宽仪表文字 ---- */
+
+.kern-meta {
+  font-family: var(--font-kern-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--kern-fg-faint);
+}
+
+/* ---- 顶栏（骨架顶盖） ---- */
+
+.kern-topbar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--kern-line);
+}
+
+/* ---- 首屏 ---- */
+
+.kern-hero {
+  padding-block: clamp(3.5rem, 9vh, 5.5rem) 2.75rem;
+}
+
+.kern-avatar {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--kern-line);
+  object-fit: cover;
+}
+
+.kern-display {
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--kern-fg);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.kern-lede {
+  font-size: clamp(1.125rem, 2.2vw, 1.375rem);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  color: var(--kern-fg-body);
+  margin: 1.25rem 0 0;
+  max-width: 52ch;
+}
+
+.kern-bio {
+  color: var(--kern-fg-muted);
+  margin: 1rem 0 0;
+  max-width: 56ch;
+}
+
+.kern-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* ---- 按钮（幽灵 / 反转；圆角族上限 12px，无胶囊） ---- */
+
+.kern-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.125rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    background-color var(--kern-dur-hover) var(--kern-curve),
+    border-color var(--kern-dur-hover) var(--kern-curve),
+    color var(--kern-dur-hover) var(--kern-curve),
+    transform var(--kern-dur-hover) var(--kern-curve);
+}
+
+.kern-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--kern-line-strong);
+  color: var(--kern-fg);
+}
+
+.kern-btn-primary {
+  background: var(--kern-fg);
+  border: 1px solid var(--kern-fg);
+  color: #000000;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kern-btn-ghost:hover {
+    background: var(--kern-surface);
+    border-color: #8a8a8a;
+  }
+
+  .kern-btn-primary:hover {
+    background: #e5e5e5;
+    border-color: #e5e5e5;
+  }
+}
+
+.kern-btn:active {
+  transform: scale(0.985);
+}
+
+/* 按钮内标记（lucide 功能图标 / 本地品牌 mark）；颜色随按钮文字 */
+.kern-btn-mark {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+/* ---- 分区（左等宽标签 / 右内容；顶部规则线横贯骨架） ---- */
+
+.kern-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  gap: 1rem 2.5rem;
+  padding-block: clamp(2.5rem, 7vh, 4rem);
+  border-top: 1px solid var(--kern-line);
+}
+
+@media (max-width: 768px) {
+  .kern-section {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.kern-label {
+  font-family: var(--font-kern-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--kern-fg-faint);
+  margin: 0;
+  align-self: start;
+}
+
+/* ---- 项目：共享边界的单元网格（容器左上 + 单元右下） ---- */
+
+.kern-cells {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--kern-line);
+  border-left: 1px solid var(--kern-line);
+}
+
+@media (min-width: 840px) {
+  .kern-cells {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.kern-cell {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-right: 1px solid var(--kern-line);
+  border-bottom: 1px solid var(--kern-line);
+  transition: background-color var(--kern-dur-hover) var(--kern-curve);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kern-cell:hover {
+    background: var(--kern-surface);
+  }
+}
+
+.kern-cell-title {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--kern-fg);
+  margin: 0;
+}
+
+.kern-cell-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .kern-cell-title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+}
+
+/* 外链箭头位于行内语境（Preflight 把 svg 置为 block，必须显式 inline-block） */
+.kern-cell-ext {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.35em;
+  vertical-align: -0.06em;
+  color: var(--kern-fg-muted);
+}
+
+.kern-cell-desc {
+  color: var(--kern-fg-muted);
+  margin: 0.5rem 0 0;
+  max-width: 46ch;
+}
+
+.kern-cell-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+}
+
+/* ---- 芯片（标签 / 技能共用）：等宽微标注 ---- */
+
+.kern-chip {
+  font-family: var(--font-kern-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--kern-fg-muted);
+  border: 1px solid var(--kern-line);
+  border-radius: 4px;
+  padding: 0.125rem 0.5rem;
+}
+
+/* ---- 经历：规则线行 ---- */
+
+.kern-exp {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.kern-exp-row {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--kern-line);
+}
+
+.kern-exp-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.kern-exp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.kern-exp-org {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--kern-fg);
+}
+
+.kern-exp-role {
+  color: var(--kern-fg-muted);
+  margin: 0.25rem 0 0;
+}
+
+.kern-exp-desc {
+  color: var(--kern-fg-muted);
+  margin: 0.5rem 0 0;
+  max-width: 60ch;
+}
+
+/* ---- 技能 ---- */
+
+.kern-skills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- 联系 ---- */
+
+.kern-contact-note {
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: var(--kern-fg-body);
+  margin: 0;
+  max-width: 44ch;
+}
+
+.kern-contact .kern-btn {
+  margin-top: 1.5rem;
+}
+
+/* ---- 页脚（骨架底盖） ---- */
+
+.kern-footer {
+  position: relative;
+  border-top: 1px solid var(--kern-line);
+  padding-block: 1.25rem;
+}
+
+/* ---- 焦点：高对比白环 ---- */
+
+.kern :focus-visible {
+  outline: 2px solid var(--kern-fg);
+  outline-offset: 2px;
+}
+
+/* ---- 触控（pointer: coarse） ---- */
+
+@media (pointer: coarse) {
+  .kern-btn {
+    min-height: 44px;
+  }
+
+  .kern-cell-title a {
+    padding-block: 0.75rem;
+  }
+}
+
+/* ---------- motion ----------
+   仪表语言：快出发、平滑落定（cubic-bezier(0.22, 1, 0.36, 1)）。
+   进场 = 纯 CSS；显现 = 共享 IO 机制（见 docs/adr/0001）；无持续动效。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .kern-rise {
+    animation: kern-rise var(--kern-dur-enter) var(--kern-curve) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+
+  /* 隐藏态以 html[data-reveal-ready] 为门控：boot 未成立则永不隐藏。
+     transition 一并携带 background-color：单元悬停反馈与显现互不覆盖。 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity var(--kern-dur-reveal) var(--kern-curve) var(--reveal-delay, 0ms),
+      transform var(--kern-dur-reveal) var(--kern-curve) var(--reveal-delay, 0ms),
+      background-color var(--kern-dur-hover) var(--kern-curve);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 单元 / 经历行错落：60ms / 50ms 步进，上限 3 / 5 */
+  html[data-reveal-ready] .kern-cells > :nth-child(2) {
+    --reveal-delay: 60ms;
+  }
+  html[data-reveal-ready] .kern-cells > :nth-child(3) {
+    --reveal-delay: 120ms;
+  }
+  html[data-reveal-ready] .kern-exp > :nth-child(2) {
+    --reveal-delay: 50ms;
+  }
+  html[data-reveal-ready] .kern-exp > :nth-child(3) {
+    --reveal-delay: 100ms;
+  }
+  html[data-reveal-ready] .kern-exp > :nth-child(4) {
+    --reveal-delay: 150ms;
+  }
+  html[data-reveal-ready] .kern-exp > :nth-child(5) {
+    --reveal-delay: 200ms;
+  }
+}
+
+@keyframes kern-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kern * {
+    transition: none !important;
+  }
+}

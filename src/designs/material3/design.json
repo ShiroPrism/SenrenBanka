@@ -1,0 +1,14 @@
+{
+  "displayName": "Material 3",
+  "description": "Google Material 3 官方文档汇编：紫 tonal 色系、五类型阶、大圆角与层级阴影、深浅双模。",
+  "enabled": true,
+  "accent": "#6750A4",
+  "source": {
+    "type": "official-docs-derived",
+    "url": "https://m3.material.io/",
+    "fetchedAt": "2026-10-11",
+    "license": "CC BY 4.0（指南内容）/ Apache-2.0（token 源码与图标）",
+    "attribution": "整合汇编自 Google Material 3 官方指南（m3.material.io，© Google LLC，CC BY 4.0）与 material-components/material-web token 源码、google/material-design-icons 图标（Apache-2.0）；逐节来源见 DESIGN.md 附录，许可全文见 SOURCE-LICENSE.txt。非 Google 官方发布。"
+  },
+  "generatedBy": "n/a（官方文档汇编，非生成）"
+}

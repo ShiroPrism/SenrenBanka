@@ -1,0 +1,163 @@
+---
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { ArrowUpRight, Mail } from '@lucide/astro';
+import { loadDesignView } from '../../lib/site';
+import GithubMark from '../../assets/brand/github.svg';
+import './style.css';
+
+const view = await loadDesignView('kern');
+const { profile, contextMenu } = view;
+---
+
+<html lang={view.site.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-geist" />
+    <Font cssVariable="--font-geist-mono" />
+    <Reveal />
+  </head>
+  <body class="kern">
+    <div class="kern-shell">
+      <header class="kern-topbar">
+        <span class="kern-meta">Portfolio</span>
+        {profile.location && <span class="kern-meta">{profile.location}</span>}
+      </header>
+
+      <main>
+        <section class="kern-hero" aria-labelledby="kern-title">
+          {
+            profile.avatar && (
+              <img
+                class="kern-avatar kern-rise"
+                style="--rise-delay: 0ms"
+                src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                alt=""
+                width="96"
+                height="96"
+                loading="eager"
+              />
+            )
+          }
+          <h1 id="kern-title" class="kern-display kern-rise" style="--rise-delay: 0ms">
+            {profile.name}
+          </h1>
+          <p class="kern-lede kern-rise" style="--rise-delay: 40ms">{profile.headline}</p>
+          <p class="kern-bio kern-rise" style="--rise-delay: 80ms">{profile.bio}</p>
+          <div class="kern-actions kern-rise" style="--rise-delay: 120ms">
+            {
+              profile.links.map((link) => (
+                <a class="kern-btn kern-btn-ghost" href={link.url}>
+                  {link.icon === 'github' && <GithubMark class="kern-btn-mark" aria-hidden="true" />}
+                  {link.icon === 'mail' && <Mail class="kern-btn-mark" aria-hidden="true" />}
+                  <span>{link.label}</span>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="kern-section" aria-labelledby="kern-projects" data-reveal>
+              <h2 id="kern-projects" class="kern-label">
+                Projects
+              </h2>
+              <div class="kern-content">
+                <ul class="kern-cells">
+                  {profile.projects.map((project) => (
+                    <li class="kern-cell" data-reveal>
+                      <h3 class="kern-cell-title">
+                        {project.url ? (
+                          <a href={project.url}>
+                            {project.title}
+                            <ArrowUpRight class="kern-cell-ext" aria-hidden="true" />
+                          </a>
+                        ) : (
+                          project.title
+                        )}
+                      </h3>
+                      {project.description && <p class="kern-cell-desc">{project.description}</p>}
+                      {project.tags && (
+                        <ul class="kern-cell-tags">
+                          {project.tags.map((tag) => (
+                            <li class="kern-chip">{tag}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="kern-section" aria-labelledby="kern-experience" data-reveal>
+              <h2 id="kern-experience" class="kern-label">
+                Experience
+              </h2>
+              <div class="kern-content">
+                <ul class="kern-exp">
+                  {profile.experience.map((item) => (
+                    <li class="kern-exp-row" data-reveal>
+                      <div class="kern-exp-head">
+                        <span class="kern-exp-org">{item.org}</span>
+                        {item.period && <span class="kern-meta">{item.period}</span>}
+                      </div>
+                      {item.role && <p class="kern-exp-role">{item.role}</p>}
+                      {item.description && <p class="kern-exp-desc">{item.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="kern-section" aria-labelledby="kern-skills" data-reveal>
+              <h2 id="kern-skills" class="kern-label">
+                Skills
+              </h2>
+              <div class="kern-content">
+                <ul class="kern-skills">
+                  {profile.skills.map((skill) => (
+                    <li class="kern-chip">{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )
+        }
+
+        <section class="kern-section" aria-labelledby="kern-contact" data-reveal>
+          <h2 id="kern-contact" class="kern-label">
+            Contact
+          </h2>
+          <div class="kern-content kern-contact">
+            {profile.contact?.note && <p class="kern-contact-note">{profile.contact.note}</p>}
+            {
+              profile.contact?.email && (
+                <a class="kern-btn kern-btn-primary" href={`mailto:${profile.contact.email}`}>
+                  <Mail class="kern-btn-mark" aria-hidden="true" />
+                  <span>{profile.contact.email}</span>
+                </a>
+              )
+            }
+          </div>
+        </section>
+      </main>
+
+      <footer class="kern-footer">
+        <span class="kern-meta">{profile.name} · built from a single profile</span>
+      </footer>
+    </div>
+    {contextMenu.enabled && <ContextMenu config={contextMenu} />}
+  </body>
+</html>

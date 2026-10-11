@@ -77,5 +77,26 @@ export default defineConfig({
       fallbacks: ['ui-monospace', 'SFMono-Regular', 'monospace'],
       options: { package: '@fontsource-variable/jetbrains-mono' },
     },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: 'Roboto Flex Variable',
+      cssVariable: '--font-roboto-flex',
+      fallbacks: ['Roboto', 'system-ui', 'Arial', 'sans-serif'],
+      options: { package: '@fontsource-variable/roboto-flex' },
+    },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: 'Geist Variable',
+      cssVariable: '--font-geist',
+      fallbacks: ['system-ui', '-apple-system', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+      options: { package: '@fontsource-variable/geist' },
+    },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: 'Geist Mono Variable',
+      cssVariable: '--font-geist-mono',
+      fallbacks: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      options: { package: '@fontsource-variable/geist-mono' },
+    },
   ],
 });

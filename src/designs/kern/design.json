@@ -1,0 +1,14 @@
+{
+  "displayName": "Kern",
+  "description": "对 Vercel Geist 视觉语言的非官方致敬复刻：纯黑白高对比、发丝线网格骨架、Geist 无衬线与等宽双声部。",
+  "enabled": true,
+  "accent": "#111111",
+  "source": {
+    "type": "third-party-analysis",
+    "url": "https://vercel.com/geist",
+    "fetchedAt": "2026-10-11",
+    "license": "无（上游未提供文档 / 素材许可；本复刻为纯视觉分析自撰，不含上游内容）",
+    "attribution": "对 Vercel Geist 视觉语言的第三方分析复刻（非官方致敬）；规范与实现均为自有产出，不包含 Vercel 商标资产与上游文本 / 素材。"
+  },
+  "generatedBy": "n/a（第三方分析复刻，规范自撰）"
+}

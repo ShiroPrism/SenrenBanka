@@ -1,0 +1,575 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-m3: var(--font-roboto-flex);
+}
+
+/* Material 3（baseline 汇编）：紫 tonal 色系、五类型阶、大圆角（4–28px）、层级阴影、prefers-color-scheme 深浅双模。
+   数值与来源见 src/designs/material3/DESIGN.md；项目侧适配见 docs/designs/material3/ADAPTATION.md。
+   token 命名以 md.sys 角色为骨架（--m3-<role>）。 */
+
+.m3 {
+  color-scheme: light dark;
+  margin: 0;
+
+  /* ---- baseline 浅色方案（角色值来自 _md-sys-color.scss / _md-ref-palette.scss） ---- */
+  --m3-primary: #6750a4;
+  --m3-on-primary: #ffffff;
+  --m3-primary-container: #eaddff;
+  --m3-on-primary-container: #21005d;
+  --m3-secondary-container: #e8def8;
+  --m3-on-secondary-container: #1d192b;
+  --m3-surface: #fef7ff;
+  --m3-on-surface: #1d1b20;
+  --m3-on-surface-variant: #49454f;
+  --m3-surface-container-lowest: #ffffff;
+  --m3-surface-container-low: #f7f2fa;
+  --m3-surface-container: #f3edf7;
+  --m3-surface-container-high: #ece6f0;
+  --m3-surface-container-highest: #e6e0e9;
+  --m3-outline: #79747e;
+  --m3-outline-variant: #cac4d0;
+
+  /* ---- 层级阴影：web 近似配方（dp 层级 0–5 见规范；静息卡片 level1、hover 升一级 level2） ---- */
+  --m3-elev-1: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 1px 3px 1px rgb(0 0 0 / 0.15);
+  --m3-elev-2: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 2px 6px 2px rgb(0 0 0 / 0.15);
+
+  /* ---- 动效：emphasized 族 + 时长 token 子集 ---- */
+  --m3-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --m3-ease-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --m3-dur-short3: 150ms;
+  --m3-dur-short4: 200ms;
+  --m3-dur-enter: 400ms; /* emphasized-decelerate 建议配对（入场） */
+
+  /* ---- 圆角标尺子集 ---- */
+  --m3-corner-xs: 4px;
+  --m3-corner-s: 8px;
+  --m3-corner-m: 12px;
+  --m3-corner-l: 16px;
+  --m3-corner-xl: 28px;
+  --m3-corner-full: 9999px;
+
+  background: var(--m3-surface);
+  color: var(--m3-on-surface);
+  font-family:
+    var(--font-m3), 'Roboto', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 1rem; /* body-large 16/24 */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* baseline 深色方案（_md-sys-color.scss dark 映射） */
+@media (prefers-color-scheme: dark) {
+  .m3 {
+    --m3-primary: #d0bcff;
+    --m3-on-primary: #381e72;
+    --m3-primary-container: #4f378b;
+    --m3-on-primary-container: #eaddff;
+    --m3-secondary-container: #4a4458;
+    --m3-on-secondary-container: #e8def8;
+    --m3-surface: #141218;
+    --m3-on-surface: #e6e0e9;
+    --m3-on-surface-variant: #cac4d0;
+    --m3-surface-container-lowest: #0f0d13;
+    --m3-surface-container-low: #1d1b20;
+    --m3-surface-container: #211f26;
+    --m3-surface-container-high: #2b2930;
+    --m3-surface-container-highest: #36343b;
+    --m3-outline: #938f99;
+    --m3-outline-variant: #49454f;
+  }
+}
+
+/* ---- 布局：窗口尺寸类断点（600 / 840）；边距随类递进，正文列宽受限 ---- */
+
+.m3-shell {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+@media (min-width: 600px) {
+  .m3-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 840px) {
+  .m3-shell {
+    padding-inline: 2rem;
+  }
+}
+
+/* ---- 顶栏（small top app bar 64dp） ---- */
+
+.m3-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--m3-outline-variant);
+}
+
+.m3-wordmark {
+  font-size: 1.375rem; /* title-large 22/28 */
+  line-height: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.m3-loc {
+  font-size: 0.75rem; /* label-medium 12/16 */
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--m3-on-surface-variant);
+}
+
+/* ---- hero ---- */
+
+.m3-hero {
+  padding: 3.5rem 0 2.5rem;
+  max-width: 46rem;
+}
+
+.m3-avatar {
+  display: block;
+  width: 7rem;
+  height: 7rem;
+  margin-bottom: 1.25rem;
+  border-radius: var(--m3-corner-full);
+  object-fit: cover;
+}
+
+.m3-label {
+  font-size: 0.875rem; /* label-large 14/20 */
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: var(--m3-on-surface-variant);
+  margin: 0 0 0.75rem;
+}
+
+.m3-title {
+  font-size: 2.25rem; /* display-small 36/44 → 840+ display-medium 45/52 */
+  line-height: 1.2223;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin: 0 0 1rem;
+  max-width: 26ch;
+}
+
+@media (min-width: 840px) {
+  .m3-title {
+    font-size: 2.8125rem;
+    line-height: 1.1556;
+  }
+}
+
+.m3-bio {
+  font-size: 1rem; /* body-large 16/24 */
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  color: var(--m3-on-surface-variant);
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
+}
+
+/* ---- 按钮（M3 全圆角；tonal = secondary-container / filled = primary） ---- */
+
+.m3-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.m3-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  padding: 0 1.5rem;
+  border-radius: var(--m3-corner-full);
+  font-size: 0.875rem; /* label-large */
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  text-decoration: none;
+  transition:
+    background-color var(--m3-dur-short4) var(--m3-ease-emphasized),
+    box-shadow var(--m3-dur-short3) var(--m3-ease-emphasized);
+}
+
+.m3-btn-tonal {
+  background: var(--m3-secondary-container);
+  color: var(--m3-on-secondary-container);
+}
+
+.m3-btn-filled {
+  background: var(--m3-primary);
+  color: var(--m3-on-primary);
+}
+
+/* 状态层近似：hover 8% / press 10%（指南现值；层色 = 内容色，见规范交互态章） */
+@media (hover: hover) and (pointer: fine) {
+  .m3-btn-tonal:hover {
+    background: color-mix(
+      in srgb,
+      var(--m3-on-secondary-container) 8%,
+      var(--m3-secondary-container)
+    );
+  }
+
+  .m3-btn-filled:hover {
+    background: color-mix(in srgb, var(--m3-on-primary) 8%, var(--m3-primary));
+  }
+}
+
+.m3-btn-tonal:active {
+  background: color-mix(
+    in srgb,
+    var(--m3-on-secondary-container) 10%,
+    var(--m3-secondary-container)
+  );
+}
+
+.m3-btn-filled:active {
+  background: color-mix(in srgb, var(--m3-on-primary) 10%, var(--m3-primary));
+}
+
+/* 按钮内图标（lucide 品牌 mark / vendored Material Symbols）；尺寸由设计控制 */
+.m3-btn-mark {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+/* vendored Material Symbols（无 fill 属性）→ 继承内容色 */
+.m3-icon {
+  fill: currentColor;
+}
+
+/* ---- 分区 ---- */
+
+.m3-section {
+  margin-top: 3.5rem;
+}
+
+.m3-h2 {
+  font-size: 1.5rem; /* headline-small 24/32 */
+  line-height: 2rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  margin: 0 0 1.5rem;
+}
+
+/* ---- projects：elevated 卡片（level1，hover 升 level2） ---- */
+
+.m3-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .m3-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 840px) {
+  .m3-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.m3-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--m3-surface-container-low);
+  border-radius: var(--m3-corner-m);
+  padding: 1.25rem 1.25rem 1rem;
+  box-shadow: var(--m3-elev-1);
+  transition: box-shadow var(--m3-dur-short3) var(--m3-ease-emphasized);
+}
+
+/* 交互态层级 +1（规范层级章）；仅真悬停设备 */
+@media (hover: hover) and (pointer: fine) {
+  .m3-card:hover {
+    box-shadow: var(--m3-elev-2);
+  }
+}
+
+.m3-card-title {
+  font-size: 1rem; /* title-medium 16/24 */
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  margin: 0 0 0.5rem;
+}
+
+.m3-card-link {
+  color: var(--m3-primary);
+  text-decoration: none;
+}
+
+.m3-card-link:hover {
+  text-decoration: underline;
+}
+
+/* 外链箭头位于行内语境（Preflight 把 svg 置为 block，必须显式 inline-block） */
+.m3-card-ext {
+  display: inline-block;
+  width: 0.875em;
+  height: 0.875em;
+  margin-left: 0.3em;
+  vertical-align: -0.08em;
+}
+
+.m3-card-desc {
+  font-size: 0.875rem; /* body-medium 14/20 */
+  line-height: 1.4286;
+  letter-spacing: 0.25px;
+  color: var(--m3-on-surface-variant);
+  margin: 0 0 1rem;
+}
+
+.m3-tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: auto 0 0;
+  padding: 0;
+}
+
+.m3-tag {
+  font-size: 0.75rem; /* label-medium */
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--m3-on-surface-variant);
+  border: 1px solid var(--m3-outline);
+  border-radius: var(--m3-corner-s);
+  padding: 0.25rem 0.625rem;
+}
+
+/* ---- experience：列表（outline-variant 分隔线） ---- */
+
+.m3-exp {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.m3-exp-row {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--m3-outline-variant);
+}
+
+.m3-exp-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.m3-exp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.m3-exp-org {
+  font-size: 1rem; /* title-medium */
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+.m3-exp-period {
+  font-size: 0.75rem; /* label-medium */
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--m3-on-surface-variant);
+  white-space: nowrap;
+}
+
+.m3-exp-role {
+  font-size: 0.875rem; /* title-small */
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: var(--m3-primary);
+  margin: 0.25rem 0 0;
+}
+
+.m3-exp-desc {
+  font-size: 0.875rem; /* body-medium */
+  line-height: 1.5;
+  letter-spacing: 0.25px;
+  color: var(--m3-on-surface-variant);
+  margin: 0.35rem 0 0;
+  max-width: 60ch;
+}
+
+/* ---- skills：filter 芯片（outlined、8px 圆角） ---- */
+
+.m3-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.m3-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 1rem;
+  border: 1px solid var(--m3-outline);
+  border-radius: var(--m3-corner-s);
+  font-size: 0.875rem; /* label-large */
+  line-height: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: var(--m3-on-surface-variant);
+}
+
+/* ---- contact：primary-container 大圆角面块（28px） ---- */
+
+.m3-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background: var(--m3-primary-container);
+  color: var(--m3-on-primary-container);
+  border-radius: var(--m3-corner-xl);
+  padding: 2rem;
+}
+
+@media (min-width: 840px) {
+  .m3-contact {
+    padding: 2.5rem;
+  }
+}
+
+.m3-contact-note {
+  font-size: 0.875rem; /* body-medium */
+  line-height: 1.4286;
+  letter-spacing: 0.25px;
+  margin: 0;
+  max-width: 40ch;
+}
+
+/* ---- 页脚 ---- */
+
+.m3-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--m3-outline-variant);
+  font-size: 0.75rem; /* body-small */
+  line-height: 1rem;
+  letter-spacing: 0.4px;
+  color: var(--m3-on-surface-variant);
+}
+
+/* ---- 焦点：键盘焦点指示环（web 近似：2px primary + offset） ---- */
+
+.m3 :focus-visible {
+  outline: 2px solid var(--m3-primary);
+  outline-offset: 2px;
+}
+
+/* ---- 触控（pointer: coarse）：命中高度按「24dp 符号 → 48dp 目标」口径增强 ---- */
+
+@media (pointer: coarse) {
+  .m3-btn {
+    min-height: 48px;
+  }
+
+  .m3-chip {
+    min-height: 44px;
+  }
+
+  .m3-card-link {
+    padding-block: 0.8rem;
+  }
+}
+
+/* ---------- motion ----------
+   入场动画 = 纯 CSS（无 JS 依赖）；滚动显现 = 共享 IO 机制（见 docs/adr/0001）。
+   节奏：emphasized-decelerate 400ms（入场建议配对）；hero 逐项错落 30ms、卡片 60ms。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .m3-rise {
+    animation: m3-rise var(--m3-dur-enter) var(--m3-ease-emphasized-decel) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+
+  /* 隐藏态以 html[data-reveal-ready] 为门控：boot 未成立则永不隐藏。
+     transition 一并携带 box-shadow：卡片 hover 升层与显现互不覆盖。 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity var(--m3-dur-enter) var(--m3-ease-emphasized-decel) var(--reveal-delay, 0ms),
+      transform var(--m3-dur-enter) var(--m3-ease-emphasized-decel) var(--reveal-delay, 0ms),
+      box-shadow var(--m3-dur-short3) var(--m3-ease-emphasized);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 卡片 / 经历行错落：60ms / 50ms 步进，上限 3 / 5 */
+  html[data-reveal-ready] .m3-cards > :nth-child(2) {
+    --reveal-delay: 60ms;
+  }
+  html[data-reveal-ready] .m3-cards > :nth-child(3) {
+    --reveal-delay: 120ms;
+  }
+  html[data-reveal-ready] .m3-exp > :nth-child(2) {
+    --reveal-delay: 50ms;
+  }
+  html[data-reveal-ready] .m3-exp > :nth-child(3) {
+    --reveal-delay: 100ms;
+  }
+  html[data-reveal-ready] .m3-exp > :nth-child(4) {
+    --reveal-delay: 150ms;
+  }
+  html[data-reveal-ready] .m3-exp > :nth-child(5) {
+    --reveal-delay: 200ms;
+  }
+}
+
+@keyframes m3-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m3 * {
+    transition: none !important;
+  }
+}

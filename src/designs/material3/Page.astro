@@ -1,0 +1,160 @@
+---
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import GithubMark from '../../assets/brand/github.svg';
+import MailIcon from './assets/mail_24px.svg';
+import ArrowOutward from './assets/arrow_outward_24px.svg';
+import './style.css';
+
+const view = await loadDesignView('material3');
+const { profile, contextMenu } = view;
+---
+
+<html lang={view.site.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-roboto-flex" />
+    <Reveal />
+  </head>
+  <body class="m3">
+    <div class="m3-shell">
+      <header class="m3-topbar">
+        <span class="m3-wordmark">{profile.name}</span>
+        {profile.location && <span class="m3-loc">{profile.location}</span>}
+      </header>
+
+      <main>
+        <section class="m3-hero" aria-labelledby="m3-title">
+          {
+            profile.avatar && (
+              <img
+                class="m3-avatar m3-rise"
+                style="--rise-delay: 0ms"
+                src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                alt=""
+                width="112"
+                height="112"
+                loading="eager"
+              />
+            )
+          }
+          <p class="m3-label m3-rise" style="--rise-delay: 30ms">Portfolio</p>
+          <h1 id="m3-title" class="m3-title m3-rise" style="--rise-delay: 60ms">
+            {profile.headline}
+          </h1>
+          <p class="m3-bio m3-rise" style="--rise-delay: 90ms">{profile.bio}</p>
+          <div class="m3-actions m3-rise" style="--rise-delay: 120ms">
+            {
+              profile.links.map((link) => (
+                <a class="m3-btn m3-btn-tonal" href={link.url}>
+                  {link.icon === 'github' && <GithubMark class="m3-btn-mark" aria-hidden="true" />}
+                  {link.icon === 'mail' && (
+                    <MailIcon class="m3-btn-mark m3-icon" aria-hidden="true" />
+                  )}
+                  <span>{link.label}</span>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="m3-section" aria-labelledby="m3-projects" data-reveal>
+              <h2 id="m3-projects" class="m3-h2">
+                Projects
+              </h2>
+              <ul class="m3-cards">
+                {profile.projects.map((project) => (
+                  <li class="m3-card" data-reveal>
+                    <h3 class="m3-card-title">
+                      {project.url ? (
+                        <a class="m3-card-link" href={project.url}>
+                          {project.title}
+                          <ArrowOutward class="m3-card-ext m3-icon" aria-hidden="true" />
+                        </a>
+                      ) : (
+                        project.title
+                      )}
+                    </h3>
+                    {project.description && <p class="m3-card-desc">{project.description}</p>}
+                    {project.tags && (
+                      <ul class="m3-tags">
+                        {project.tags.map((tag) => (
+                          <li class="m3-tag">{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="m3-section" aria-labelledby="m3-experience" data-reveal>
+              <h2 id="m3-experience" class="m3-h2">
+                Experience
+              </h2>
+              <ul class="m3-exp">
+                {profile.experience.map((item) => (
+                  <li class="m3-exp-row" data-reveal>
+                    <div class="m3-exp-head">
+                      <span class="m3-exp-org">{item.org}</span>
+                      {item.period && <span class="m3-exp-period">{item.period}</span>}
+                    </div>
+                    {item.role && <p class="m3-exp-role">{item.role}</p>}
+                    {item.description && <p class="m3-exp-desc">{item.description}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="m3-section" aria-labelledby="m3-skills" data-reveal>
+              <h2 id="m3-skills" class="m3-h2">
+                Skills
+              </h2>
+              <ul class="m3-chips">
+                {profile.skills.map((skill) => (
+                  <li class="m3-chip">{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <section class="m3-section" aria-labelledby="m3-contact" data-reveal>
+          <h2 id="m3-contact" class="m3-h2">
+            Contact
+          </h2>
+          <div class="m3-contact" data-reveal>
+            {profile.contact?.note && <p class="m3-contact-note">{profile.contact.note}</p>}
+            {
+              profile.contact?.email && (
+                <a class="m3-btn m3-btn-filled" href={`mailto:${profile.contact.email}`}>
+                  <MailIcon class="m3-btn-mark m3-icon" aria-hidden="true" />
+                  <span>{profile.contact.email}</span>
+                </a>
+              )
+            }
+          </div>
+        </section>
+      </main>
+
+      <footer class="m3-footer">
+        <span>{profile.name} · Material 3 设计系统汇编</span>
+        <span>built from a single profile</span>
+      </footer>
+    </div>
+    {contextMenu.enabled && <ContextMenu config={contextMenu} />}
+  </body>
+</html>
