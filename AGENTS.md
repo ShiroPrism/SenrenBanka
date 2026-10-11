@@ -1,6 +1,6 @@
 # AGENTS.md — 项目级实现约定
 
-本文件是编码 Agent 的强制约定（对应 SPEC §9）。新增 / 修改设计前必读。
+本文件是编码 Agent 的强制约定（对应 SPEC §9），只承载**通用**设计规则（不点名任何单一设计）；各设计的具体采用情况、适配记录与偏差见 `SPEC §18`、`CONTEXT.md` 与 `change-log/`。新增 / 修改设计前必读。
 
 ## 数据接口
 
@@ -30,6 +30,7 @@
 4. `manualSwitch` 开启时必须接入共享右键菜单（`{view.contextMenu.enabled && <ContextMenu config={view.contextMenu} />}`，放于 `<body>` 末尾）；**不得**再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口
 5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
 6. `design.json` 的 `source`：非自产（官方 / 第三方）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`
+7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
 
 ## 设计切换入口：共享桌面右键快捷操作菜单
 
@@ -43,16 +44,16 @@
 
 ## 动效（Motion）
 
-- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`。
+- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`；各设计当前采用情况见 `SPEC §18`。
+- **定位：设计语言维度**。目标不是给所有元素增加动画，而是让每套设计拥有更丰富、更有辨识度的动态表现，同时保持各自的设计语言。每套设计必须在 `DESIGN.md` 中定义自己的动效语言（形态 / 节奏 / 参数）；允许极简（单一过渡、单动作），决定静止必须给出论证。
 - **入场动画**：各设计私有纯 CSS `@keyframes`（无 JS 依赖），整体包在 `@media (prefers-reduced-motion: no-preference)` 内；减动态时不生成动画、元素保持自然可见态。
-- **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。
-- **滚动进度**：仅 oxide 顶部装饰线使用 CSS Scroll-Driven Animations（`animation-timeline: scroll()`；`animation` 简写会重置 timeline，必须后置声明）；`@supports` 门控 + 不支持 / 减动态时整条隐藏；**不得用于内容显隐**。
+- **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。采用共享机制的设计在 `<head>` 放一次 `<Reveal />`；不用共享机制的设计必须在 `DESIGN.md` 说明替代触发方式，且仍须满足下文可见性契约。
+- **装饰性滚动进度**：CSS Scroll-Driven Animations（`animation-timeline: scroll()`）仅允许用于装饰性进度指示，**不得用于内容显隐**；`@supports` 门控 + 不支持 / 减动态时整条隐藏；注意压缩器可能把 `animation-timeline` 合并进 `animation` 简写（产物中该简写在当前 Chromium 不被接受、整条失效），须以 `var()` 传入 timeline 阻断合并（v0.4.0 实测，见 `SPEC §18`）。
 - **可见性契约（不可违反）**：内容默认可见；CSS 隐藏态必须以 `html[data-reveal-ready]` 为唯一门控，该属性只由 `src/components/Reveal.astro` 的内联 boot 在「非 reduced-motion 且支持 `IntersectionObserver`」时写入。无 JS / 脚本失败 / 无 IO / 减动态时内容必须始终可见。
-- 运动只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
-- 持续动效（无限循环）仅限小范围、有明确视觉价值的元素（oxide 波形流动 / terminal 光标与状态灯 / oxide 进度线）；其余一律只播一次。
-- 采用动效的设计在 `<head>` 放一次 `<Reveal />`：**当前四套设计均引入**；新增设计若按规范保持静止则不引入，并在验证记录中显式注明。
+- **运动约束**：只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
+- **持续动效（无限循环）**：仅限小范围、有明确视觉价值的形态类装饰（如流动波形、光标呼吸、进度指示），且必须在 `DESIGN.md` 中论证；其余一律只播一次；减动态时持续动效静止。
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
-- 自产规范（editorial / terminal）的 Motion 章节必须与实现一致，改动前先修订规范；oxide / fast 的 `DESIGN.md` 是厂商原始快照，**不得修改**，偏差记录在 `SPEC §18` 与 `change-log/`。
+- **规范与实现同步**：自产规范（`design.json` 的 `source.type: self-produced`）的 Motion 章节必须与实现一致，改动前先修订规范；厂商快照（`official-vendor` / `third-party-analysis`）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `SPEC §18` 与 `change-log/`。
 
 ## Iconography & Icon Library Rules
 
@@ -100,7 +101,29 @@
 - **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
 - **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `SPEC §18`。
 - **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：右键菜单组件（项目级 chrome，见「设计切换入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
-- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照（oxide / fast）的适配记录见 `SPEC §18`。
+- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照的适配记录与各设计当前采用情况见 `SPEC §18`。
+
+## Visual Assets & Cursor Rules
+
+- 新增图片或自定义鼠标指针前，必须先阅读对应设计的 `DESIGN.md`，确认设计确实需要该素材。不得为了填补留白或追求视觉丰富而随意加入图片。
+- 优先使用设计已有的排版、CSS、ASCII / Unicode 图形、内联 SVG 和实际项目截图。素材不是必需项。
+- 获取远程素材时，必须核实原始来源、许可、署名要求及是否允许将素材随开源仓库再分发。不得把"允许网页使用"等同于"允许原样打包再分发"（合规策略见 `SPEC §4`）。
+- 不得直接依赖不稳定的第三方图片 URL。允许入库的素材应保存到对应设计的 `assets/`，共享品牌资产按现有约定存放，并记录必要的 provenance。
+- 图片应有合理的尺寸、格式、替代文本和加载策略。需要图片优化时，优先使用 Astro 支持的构建期资源处理方式（`astro:assets`）。
+- profile 头像由数据层统一解析（`src/data/assets/` 本地文件或外部 URL → 类型化图片引用），各设计不得自建头像管线；裁切、比例与呈现风格由设计自控。
+- 默认使用标准 CSS `cursor` 值表达常规交互。只有设计规范明确需要自定义指针时，才创建或获取小型本地光标素材。
+- 自定义光标必须提供标准 CSS 回退，并限制在适合桌面鼠标的环境使用（`(hover: hover) and (pointer: fine)`）；不得影响触屏浏览、文本选择、可访问性或正常点击。
+- 不得用跟随鼠标的 JavaScript 特效替代普通 CSS 光标，除非该效果是明确的设计需求且经过性能与交互评估。
+- 不论使用图片还是光标素材，都必须遵循对应设计的视觉规范，并在新增设计验证中检查移动端、构建产物和许可记录。
+
+## 无障碍与响应式（Accessibility & Responsive）
+
+- 页面每个分区必须有可访问名称（`aria-labelledby` 指向同区可见标签，或 `aria-label`）；装饰性符号 / 图形一律 `aria-hidden`，不得进入链接或控件的可访问名（可访问名由文本标签承担）。
+- 纯图标交互控件必须提供可访问名称；不得仅通过颜色或图标形状传达关键状态，必要时配合文字或其他语义提示。
+- 对比度硬底线为 WCAG AA（正文与低强度文本 ≥ 4.5:1）；设计自设更严档位（如 dim 档）时以更严者为准；每次新增 / 调整色值必须实测并记录数值。
+- 触控目标在 `pointer: coarse` 环境下命中高度 ≥ 44px（以 padding 等不破坏桌面节奏的方式扩展）；hover 类交互必须由 `(hover: hover) and (pointer: fine)` 门控，触屏不得依赖 hover 触发。
+- 375px 宽无横向溢出、正文可读；跨视口布局保持 DOM 顺序与视觉层级一致，不得倒置。
+- 键盘可达：交互元素可聚焦且焦点可见；新增交互组件须核对键盘操作路径。
 
 ## 已知坑（均已实测，勿重复踩）
 
@@ -120,9 +143,11 @@
 
 - [ ] 四件套 + provenance（来源类型 / URL / 日期 / 许可）完整
 - [ ] 核心字段全部渲染；扩展区块取舍与理由写进 DESIGN.md
+- [ ] `DESIGN.md` 含动效语言定义（Motion 章节；静止须论证）；采用共享滚动显现时 `<Reveal />` 与门控契约完整
 - [ ] 若使用图标 / 品牌标志：符合「Iconography & Icon Library Rules」（设计规范优先 / 库与技术栈兼容 / 列表面 100% 标记、无裸链接 / 资产 vendored + 商标核对 / `aria-hidden`）
+- [ ] 若使用图片 / 光标素材：符合「Visual Assets & Cursor Rules」（需求性核实 / provenance / `assets/` 归属 / 替代文本与加载策略）
 - [ ] `<HeadMeta {...view.head} />` 原样引入；`manualSwitch` 时接入共享 `<ContextMenu config={view.contextMenu} />`（**不得**自建切换入口或复制菜单实现）
-- [ ] 移动端 375px 宽无横向溢出、正文可读
+- [ ] 符合「无障碍与响应式」：分区可访问名称 / 装饰 `aria-hidden` / 对比度实测 ≥ 底线 / 触控命中 ≥ 44px / 375px 零横向溢出
 - [ ] `npm run build` 通过（含 `astro check`）
 - [ ] 抽查 `dist/`：该设计页面只链接自己的 CSS；根页 / 切换页 / 404 不链接任何设计 CSS
 

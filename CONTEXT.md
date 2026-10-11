@@ -6,6 +6,10 @@
 
 ### Motion
 
+**Motion language（动效语言）**:
+每套设计在 `DESIGN.md` Motion 章节中定义的动效表达集合（形态 / 节奏 / 参数；含入场、显现、持续与交互过渡）；共享机制只提供触发与兜底，不统一各设计的动效风格。
+_Avoid_: 动画系统、动效规范、全局动画配置
+
 **Entrance animation（入场动画）**:
 首屏元素在页面加载时一次性出现的动效，由各设计私有的纯 CSS `@keyframes` 实现，不依赖 JavaScript。
 _Avoid_: 首屏动画、load animation
@@ -47,6 +51,12 @@ _Avoid_: UI icon、界面图标
 **Icon fallback（图标回退）**:
 `links[].icon` 缺省或 slug 未被某设计映射时，该链接渲染所属设计的通用功能图标（如 Globe）——链接列表面 100% 标记、不留裸链接（2026-10-10 依「要么不用，要么全用」修订）。
 _Avoid_: 缺失图标、装饰降级、纯文本回退
+
+### Assets
+
+**Visual asset（视觉素材）**:
+设计中使用的图片、自定义光标等非图标类视觉素材；入库于该设计的 `assets/` 并记录 provenance，区别于功能图标 / 品牌标志，也区别于由数据层统一解析的 profile 头像。
+_Avoid_: 图片资源、素材库、装饰资源
 
 ### Switching & Chrome
 

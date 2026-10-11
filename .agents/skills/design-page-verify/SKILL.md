@@ -45,7 +45,7 @@ npm run check        # 仅类型检查（可按需）
 ```
 
 - `[]` + exit 0 = 干净；有发现时逐条处理或按"有意为之"记录（见步骤 7）。
-- **有效性反证**（必做，避免"静默空转"）：对已知含信号的目标（如 oxide 的网格底纹）或临时探针文件运行一次，确认检测器真的会命中；探针用完删除。
+- **有效性反证**（必做，避免"静默空转"）：对已知含信号的目标（如网格底纹类信号；当前命中情况见 `SPEC §18`）或临时探针文件运行一次，确认检测器真的会命中；探针用完删除。
 - 视觉叠层（可选，浏览器内信号）：`impeccable live-server --background` 获取端口 → 浏览器打开目标页 → 注入 `http://localhost:<port>/detect.js` → 读 console 的 `impeccable` 前缀消息 → `impeccable live-server stop`。
 
 ## 步骤 4 · 桌面实测（浏览器）
@@ -69,7 +69,7 @@ npm run check        # 仅类型检查（可按需）
 - **首屏入场**：目标元素（如 `.ox-name` / `.fs-title`）`animation-name` 生效，且动画结束态 `opacity === '1'`、`transform` 为单位矩阵。
 - **滚动显现**：滚到底后**全部** `[data-reveal]` 均带 `[data-reveal-in]`，且 `opacity !== '1'` 的元素数为 **0**。
 - **跳转兜底（必测）**：直接 `window.scrollTo(0, document.documentElement.scrollHeight)`（模拟刷新恢复位置 / End 键 / 锚点跳转）后，隐藏元素仍为 **0**——该场景不产生 `IntersectionObserver` 通知，是已知高危路径。
-- **滚动进度（oxide）**：`.ox-progress` 存在且 `aria-hidden`；支持 scroll-driven 的环境下滚动后 `transform` 随进度变化（不支持的环境由 `@supports` 整条隐藏，属预期行为）。
+- **装饰性滚动进度线**（若该设计采用该机制；当前采用清单见 `SPEC §18`，选择器以该设计实际实现为准）：进度线元素存在且 `aria-hidden`；支持 scroll-driven 的环境下滚动后 `transform` 随进度变化（不支持的环境由 `@supports` 整条隐藏，属预期行为）。
 - **console / 网络**：0 错误 0 警告；请求仅自身资源（Document + 自有 CSS + 字体 / favicon），无 404。
 - 截图归档：动效前 / 后各 ≥1 张，给出路径。
 
