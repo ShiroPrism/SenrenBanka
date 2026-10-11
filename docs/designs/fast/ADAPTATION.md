@@ -10,7 +10,7 @@
 
 ## 图标（ADR 0002）
 
-- hero 按钮前置图标（品牌 mark / Mail / Globe）+ 项目卡外链箭头；行内 svg 显式 `inline-block`（Preflight 兼容，坑已记入 `AGENTS.md` 已知坑）。
+- hero 按钮前置图标（品牌 mark / Mail；无 icon 配置不打标——2026-10-11 修订）+ 项目卡外链箭头；行内 svg 显式 `inline-block`（Preflight 兼容，坑已记入 `AGENTS.md` 已知坑）。
 
 ## 触控增补（快照未规定）
 

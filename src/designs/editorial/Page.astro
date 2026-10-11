@@ -1,6 +1,6 @@
 ---
 import { Font } from 'astro:assets';
-import { ArrowUpRight, Mail, Globe } from '@lucide/astro';
+import { ArrowUpRight, Mail } from '@lucide/astro';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
@@ -11,11 +11,10 @@ import './style.css';
 const view = await loadDesignView('editorial');
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
-// Email 只保留一处：优先 contact.email（页脚邀请），并把它从 Elsewhere 链接列表中过滤（distill 去重）
+// 页脚邀请地址：优先 contact.email，其次取链接中的 mailto（仅作邀请段地址来源；Elsewhere 全量渲染 links，不过滤）
 const mailtoLink = profile.links.find((link) => link.url.startsWith('mailto:'));
 const inviteEmail =
   profile.contact?.email ?? (mailtoLink ? mailtoLink.url.replace(/^mailto:/, '') : null);
-const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsWith('mailto:')) : profile.links;
 ---
 <html lang={view.site.lang}>
   <head>
@@ -83,9 +82,9 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
         </div>
         <ul class="ed-links" data-reveal>
           {
-            listLinks.map((link) => (
+            profile.links.map((link) => (
               <li>
-                <a class="ed-link" href={link.url}>{link.icon === 'github' ? <GithubMark class="ed-mark" aria-hidden="true" /> : link.icon === 'mail' ? <Mail class="ed-mark" aria-hidden="true" /> : <Globe class="ed-mark" aria-hidden="true" />}{link.label}</a>
+                <a class="ed-link" href={link.url}>{link.icon === 'github' && <GithubMark class="ed-mark" aria-hidden="true" />}{link.icon === 'mail' && <Mail class="ed-mark" aria-hidden="true" />}{link.label}</a>
               </li>
             ))
           }

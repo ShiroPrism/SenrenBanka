@@ -3,19 +3,19 @@
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
 > 厂商快照 `DESIGN.md` 只读；实现偏离与增补记录在 `docs/designs/oxide/ADAPTATION.md`。
-> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动。
+> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动；2026-10-11 v0.5.3 链接标记按配置化的聚焦回归已复核本页。
 
 ## 构建与产物
 
 - `npm run build` 7 页绿（`astro check` 0 错误 / 0 警告 / 0 提示）；注册表校验通过。
 - CSS 隔离成立：本页恰 1 条自身样式链接；`.ox-*` 选择器只出现在自身 CSS；根页 / 切换页 / 404 不链接任何设计 CSS。
 - `BASE_PATH=/demo` 全链路前缀正确；`rel="preload"` 计数 0；无外链资源（`src="http` = 0）。
-- 图标：内联 SVG 3 枚（GitHub mark / Mail / Globe），全部 `aria-hidden`。
+- 图标（不含共享菜单 chrome）：4 枚（品牌 mark ×2 / Mail ×2），全部 `aria-hidden`；未配置 icon 的链接不打标（2026-10-11 修订，Globe 残留 0）。
 
 ## 结构、内容与 a11y
 
 - 核心字段 `name` / `headline` / `bio` / `links` 全部渲染；扩展区块取舍见 `DESIGN.md` Project Contract。
-- 两轴「Visible grids」网格底纹为设计特征（对应检测器例外的来源，见下）；CHANNELS 链接列表 100% 标记。
+- 两轴「Visible grids」网格底纹为设计特征（对应检测器例外的来源，见下）；CHANNELS 链接列表按配置逐条标记（5/5 渲染）。
 - 分区具名：hero / channels 两栏 / capabilities / deployments / operations / footer 共 6 处 `aria-labelledby`（指向同区可见标签）；`.ox-columns` 为布局 `<div>`、两栏为具名 `<section>`。
 - 装饰符 `●` / 全部 `▸` `aria-hidden`；链接可访问名干净（实测 `GitHub` / `Email`，不以前缀装饰符开头）。
 - 响应式：桌面 `.ox-columns` 两列 → 375px 单列。
@@ -53,4 +53,4 @@
 ## 未测 / 限制
 
 - 真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放未实测；滚动进度线在 Firefox stable（2026-10 仍在 flag 后）按设计整条隐藏，未在该引擎实证。
-- 截图归档：`C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-oxide-*`、`verify-0.4.1-oxide-footer-wave.png`、`verify-051-oxide-menu.png` 等；为验证机器本地路径，未随仓库分发）。
+- 截图归档：`C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-oxide-*`、`verify-0.4.1-oxide-footer-wave.png`、`verify-051-oxide-menu.png`、`verify-053-oxide-links.jpg` 等；为验证机器本地路径，未随仓库分发）。

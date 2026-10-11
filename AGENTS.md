@@ -29,7 +29,7 @@
    （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）
 4. `manualSwitch` 开启时必须接入共享右键菜单（`{view.contextMenu.enabled && <ContextMenu config={view.contextMenu} />}`，放于 `<body>` 末尾）；**不得**再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口
 5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
-6. `design.json` 的 `source`：非自产（官方 / 第三方）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`
+6. `design.json` 的 `source`：非自产（`official-vendor` / `official-docs-derived` / `third-party-analysis`）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`（汇编为逐来源许可合集）
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
 
 ## 设计切换入口：共享桌面右键快捷操作菜单
@@ -53,7 +53,7 @@
 - **运动约束**：只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
 - **持续动效（无限循环）**：仅限小范围、有明确视觉价值的形态类装饰（如流动波形、光标呼吸、进度指示），且必须在 `DESIGN.md` 中论证；其余一律只播一次；减动态时持续动效静止。
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
-- **规范与实现同步**：自产规范（`design.json` 的 `source.type: self-produced`）的 Motion 章节必须与实现一致，改动前先修订规范；厂商快照（`official-vendor` / `third-party-analysis`）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `docs/designs/<id>/ADAPTATION.md` 与 `change-log/`。
+- **规范与实现同步**：自撰规范（`self-produced` / `third-party-analysis` 复刻）的 Motion 章节必须与实现一致，改动前先修订规范；厂商来源（`official-vendor` 快照 / `official-docs-derived` 汇编——汇编为"整合完成即冻结"）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `docs/designs/<id>/ADAPTATION.md` 与 `change-log/`。
 
 ## Iconography & Icon Library Rules
 
@@ -98,10 +98,10 @@
 ### 6. Project conventions（本项目现行约定）
 
 - **当前实现**：通用功能图标库采用 `@lucide/astro`（构建期内联 SVG、零客户端 JS）；复用既有方案，不重复引入相似库。
-- **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
+- **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；**仅当映射存在时才渲染标记——未配置 / 未映射一律不打图标**（2026-10-11 修订：按配置逐条标记；旧「Globe 回退 / 列表 100% 标记」被项目所有者否决）。列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
 - **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `docs/verification/shared.md`。
 - **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：右键菜单组件（项目级 chrome，见「设计切换入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
-- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照的适配记录与各设计当前采用情况见 `docs/designs/*/ADAPTATION.md` 与 `docs/verification/`。
+- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商来源（快照 / 汇编 / 复刻）的适配记录与各设计当前采用情况见 `docs/designs/*/ADAPTATION.md` 与 `docs/verification/`。
 
 ## Visual Assets & Cursor Rules
 
@@ -124,6 +124,7 @@
 - 触控目标在 `pointer: coarse` 环境下命中高度 ≥ 44px（以 padding 等不破坏桌面节奏的方式扩展）；hover 类交互必须由 `(hover: hover) and (pointer: fine)` 门控，触屏不得依赖 hover 触发。
 - 375px 宽无横向溢出、正文可读；跨视口布局保持 DOM 顺序与视觉层级一致，不得倒置。
 - 键盘可达：交互元素可聚焦且焦点可见；新增交互组件须核对键盘操作路径。
+- 桌面端内容区不得贴边：常见桌面宽度（约 1280–1536px）下，正文 / 卡片等内容须有可见的左右留白（内容 max-width 或侧边距至少其一显著生效）；满幅背景与装饰不受此限（2026-10-11 反馈沉淀）。
 
 ## 已知坑（均已实测，勿重复踩）
 
@@ -138,6 +139,7 @@
 - **Tailwind Preflight 把 `svg` 置为 `display: block`**：行内语境中的 svg 图标（文本旁的品牌 mark / 外链箭头）会折到下一行——必须显式 `display: inline-block`（flex 语境不受影响）。2026-10-10 由图标改动验证期 rect 实测暴露。
 - **右键菜单运行时必须按能力门控动态加载**：`ContextMenu.astro` 用内联 `matchMedia('(hover: hover) and (pointer: fine)')` + 动态 `import()`（Vite 不给该 chunk 生成 `modulepreload`，dist 实测）；**不要改成静态 import**，否则触屏设备会白白下载菜单逻辑。菜单样式用 `<style is:inline>`：不新增 `<link>`（"每设计页只链接自己的 CSS" 仍成立）。
 - **`document.execCommand` 必须保持以 `document` 为 `this` 调用**：解构出的裸方法引用会抛 `Illegal invocation`（2026-10-10 降级复制路径实测踩坑）；该 API 虽被废弃，仍是 Clipboard API 不可用时的唯一同步降级路径，经自定义类型引用以避开 TS 废弃告警。
+- **新增字体族的首次构建需联网**：npm provider（unifont）即使 `remote: false` 也把字体文件 URL 重写为 jsdelivr 地址；构建期 fallback metrics 会拉取该字体的二进制并缓存于 `node_modules/.astro/fonts/`（缓存后离线构建成立）。受限网络下先联网构建一次即可（本机 Node fetch 走代理需 `NODE_USE_ENV_PROXY=1`；2026-10-11 新字体族接入实测，SPEC §3.2 第 13 条）。
 
 ## 构建
 

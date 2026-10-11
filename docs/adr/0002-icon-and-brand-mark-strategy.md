@@ -32,3 +32,13 @@
 1. **链接列表面 100% 标记**：`links[]` 枚举渲染的链接面（editorial Elsewhere / oxide CHANNELS / fast hero buttons；terminal 的 `→` 原本即全量）中，未映射或缺省 slug 的链接渲染该设计的**通用功能图标**（`@lucide/astro` 的 `Globe`），不再纯文本回退。初版「纯文本回退是特性」因造成同一列表半用视觉不一致，**被否决**。
 2. **oxide 功能图标改用 lucide（outlined 呈现）**：厂商规范 Icons 章节允许 outlined variants，故品牌仍为本地 mark（filled）、功能图标（Mail / Globe）以 1.5 描边呈现；原「oxide 不引入 lucide」收窄为「oxide 的品牌不使用图标库近似、功能图标可 outlined」。
 3. **边界不变**：链接列表面之外的链接（页脚邀请、Contact CTA、切换器）保留各设计原生 affordance（无图标或 `▸`），不受"全用"约束。
+
+## 修订（2026-10-11）
+
+项目所有者裁定：**未配置 `icon` 的链接不得渲染默认标记**（旧「Globe 回退」在无 icon 配置的链接上造成误导）。2026-10-10 修订（v0.3.1）第 1 条「链接列表面 100% 标记」与第 3 条的「全用」表述即行失效；现行口径：
+
+1. **按配置逐条标记**：`links[].icon` 仅当目标设计存在映射时渲染对应标记（editorial / oxide：`github` → 品牌 mark、`mail` → Mail；fast 同）；未配置 / 未映射一律不渲染图标（可访问名由文本标签承担）。同一列表允许按配置混合带标 / 无标链接。
+2. **oxide 功能图标 outlined 呈现**（2026-10-10 修订第 2 条）维持有效。
+3. **边界不变**：链接列表面之外（页脚邀请 / Contact CTA / 切换器）保留各设计原生 affordance。
+
+同时：editorial 移除 mailto distill 去重——Elsewhere 全量渲染 `links[]`，与数据契约「links 必须全部渲染」对齐。

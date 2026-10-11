@@ -4,6 +4,24 @@
 
 ## Language
 
+### Design Sources
+
+**Source form（来源形态）**:
+一套设计的规范与上游的关系方式——厂商快照 / 规范整合 / 视觉复刻 / 自产，与 `design.json` 的 `source.type` 四值一一对应。
+_Avoid_: 来源类型、source 字段
+
+**Vendor snapshot（厂商快照）**:
+厂商官方**单份** `DESIGN.md` 的逐字快照（`source.type: official-vendor`）；入库后只读、此后不依赖上游，适配偏差记入该主题 `ADAPTATION.md`。
+_Avoid_: 官方文档、下载的规范
+
+**Design compilation（规范整合）**:
+从厂商官方**开放文档**（多文件 / 网站）遴选整合而成的一份规范（`source.type: official-docs-derived`）；自有行文组织、文末附逐节来源与许可，**整合完成即冻结**——不是逐字快照。
+_Avoid_: 文档汇总、二手整理、摘抄
+
+**Design reinterpretation（视觉复刻）**:
+仅借鉴目标设计系统的视觉语言、规范完全自撰的设计（`source.type: third-party-analysis`）；不移植上游文本与素材，标注"非官方"，命名不含厂商商标。
+_Avoid_: 仿制、克隆、致敬版
+
 ### Motion
 
 **Motion language（动效语言）**:
@@ -48,9 +66,9 @@ _Avoid_: brand icon、logo 图标、social icon
 不指向特定品牌的通用界面图形（如信封、地球、外链箭头）；全项目唯一来源是 `@lucide/astro`（stroke 风格、构建期内联、零客户端 JS），与品牌标志分开处理。
 _Avoid_: UI icon、界面图标
 
-**Icon fallback（图标回退）**:
-`links[].icon` 缺省或 slug 未被某设计映射时，该链接渲染所属设计的通用功能图标（如 Globe）——链接列表面 100% 标记、不留裸链接（2026-10-10 依「要么不用，要么全用」修订）。
-_Avoid_: 缺失图标、装饰降级、纯文本回退
+**Link mark（链接标记）**:
+由 `links[].icon` 映射驱动的链接标识（品牌 mark / 功能图标）；仅当 slug 存在映射时才渲染，未配置 / 未映射不渲染任何标记（2026-10-11 修订：按配置逐条标记，旧「Globe 回退 / 100% 标记」被否决）。
+_Avoid_: icon fallback、默认图标、纯文本回退
 
 ### Assets
 

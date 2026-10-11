@@ -267,8 +267,8 @@
 }
 
 /* ---------- marks & external indicators ---------- */
-/* 链接标记：品牌 mark（GitHub，本地 SVG）与通用功能图标（Mail / Globe，lucide、1.5 描边）；
-   灰墨、静态无 hover 变化；列表面 100% 标记（ADR 0002 修订——不允许半用裸链接）。
+/* 链接标记：品牌 mark（GitHub，本地 SVG）与功能图标（Mail，lucide、1.5 描边）；
+   灰墨、静态无 hover 变化；按配置逐条标记——未配置 / 未映射不打标（2026-10-11 修订，ADR 0002）。
    外链箭头（ArrowUpRight）用于作品行。Preflight 把 svg 置为 block（会折行）——行内图标必须显式 inline-block。 */
 
 .ed-mark {

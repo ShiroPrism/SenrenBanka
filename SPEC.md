@@ -45,6 +45,8 @@
 
 其他默认（已确认）：字体用 `astro:fonts` 构建期自托管（运行时零第三方请求）；仓库附示例 `profile.yaml`；项目名 `SenrenBanka`。
 
+> 2026-10-11 扩充（grill 访谈）：设计来源口径扩为「快照 / 官方文档汇编 / 视觉复刻 / 自产」四形态与二期 30 席选型，见 §4.1 / §4.4（决策记录 ADR 0005）。
+
 ---
 
 ## 3. 技术栈与关键事实
@@ -77,7 +79,7 @@
 10. **先例**：未发现"根路径随机分配整套设计"的直接可复用项目；astro-distro（26 主题、localStorage、防闪烁内联脚本，MIT）可作实现参考；CSS Zen Garden / Style Stage 验证了"同内容多设计、固定 URL"的理念。
 11. **CSS 聚合陷阱**【已核实，本机实测】：多页共享模块中任何对设计 `Page.astro` / `style.css` 的**动态导入边**（如非 eager `import.meta.glob('./*/Page.astro')`）会把**所有**设计的 CSS 聚合进**每个**引用页面的 `<link>`（实测：根页曾携带全部设计 CSS）。对策：设计路由改用 `injectRoute`（每页只带自己的 CSS），注册表的存在性检查改用 `node:fs`。
 12. **内容层条目 id 会归一化**【已核实，本机实测】：glob loader 把 `site.config.yaml` 的条目 id 归一化为 `siteconfig`；按"单文件集合取唯一条目"处理（`getCollection()[0]`）。
-13. **字体 npm provider**【已核实，本机实测】：`fontProviders.npm({ remote:false })` + `options.package` 可从已安装 `@fontsource-variable/*` 包在构建期自托管（无需联网）；族名必须与包内 CSS 完全一致（`Fraunces Variable`、`JetBrains Mono Variable`）；传 `weights` 范围过滤会解析不到（省略即可，variable 包自带完整字重轴）。
+13. **字体 npm provider**【已核实，本机实测】：`fontProviders.npm({ remote:false })` + `options.package` 可从已安装 `@fontsource-variable/*` 包在构建期自托管（无需联网）；族名必须与包内 CSS 完全一致（`Fraunces Variable`、`JetBrains Mono Variable`）；传 `weights` 范围过滤会解析不到（省略即可，variable 包自带完整字重轴）。**修订（2026-10-11）**：provider 即使 `remote: false`，仍把字体文件 URL 重写为 jsdelivr 地址——构建期 fallback metrics（Capsize）会拉取主字体二进制并按 URL 哈希缓存至 `node_modules/.astro/fonts/`；**新增字体族的首次构建需可访问 jsdelivr**（本机 Node fetch 走代理需 `NODE_USE_ENV_PROXY=1`），缓存就绪后离线构建成立（2026-10-11 新字体族接入实测）。
 14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia('(hover: hover) and (pointer: fine)')` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`，**触屏设备零菜单 JS 请求**（375×812 触控仿真实测 chunk 请求数 0）。
 15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
 16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。
@@ -89,19 +91,27 @@
 ### 4.1 合规策略【已定】
 
 - **允许入库**：
-  - A. 厂商官方发布（如 official-design-md 索引的 Vercel、Nuxt、Resend、Ant Design、Atlassian、FAST、Oxide、Juspay、Clerk、Mintlify、VoltAgent）——逐份核实原文所在仓库、许可要求并保留声明；"first-party 官方"的说法目前仅为索引仓库自述，须逐份核实。
+  - A. **厂商官方发布（快照）**（如 official-design-md 索引的 Vercel、Nuxt、Resend、Ant Design、Atlassian、FAST、Oxide、Juspay、Clerk、Mintlify、VoltAgent）——逐份核实原文所在仓库、许可要求并保留声明；"first-party 官方"的说法仅为索引仓库自述，须逐份核实。2026-10-11 复核：索引 11 条中仅 FAST / Oxide（已收录）与 Juspay / VoltAgent 的文件带明确许可；Nuxt / Resend / Clerk / Mintlify / Ant Design 的官网文件本身无许可声明、Atlassian 明文禁止再分发、Vercel 无许可——一律不按快照收录。
+  - C. **官方文档衍生整合**（`source.type: official-docs-derived`，2026-10-11 新增）——从厂商**官方开放文档**（仓库 markdown / 官网文档；许可为可再分发类型，如 MIT / Apache-2.0 / CC0 / CC BY / OGL / PDL / MPL）遴选整合为一份 `DESIGN.md`：自有行文组织、文末「来源与许可」附录逐节保留出处、附逐来源许可全文；**非逐字快照，整合完成即冻结**。
   - D. 自产（按 Google Stitch `design.md` 格式起草，并用 impeccable `document`（scan 模式）规范化固化；`generatedBy` 记录工具与版本）——完全可控。
-- **条件允许**：B. 第三方整理（awesome-design-md，仓库 MIT、74 套品牌分析）——仅当逐份核实许可可行，并在 `design.json` 与 README 中标注"非官方分析"。
-- **排除**：designmd.co（条款/许可页为空壳，无法确认再分发授权；正文依赖 JS 注入）。
+- **条件允许**：B. **第三方分析**（`source.type: third-party-analysis`）——**视觉语言复刻**（2026-10-11 新增）：仅借鉴目标设计系统的视觉语言，规范完全自撰、不移植上游文本与素材；在 `design.json` 与 README 中标注"非官方分析"；`url` / `fetchedAt` = 参考对象入口与视觉分析日期，`license` 填参考对象许可状况说明。
+- **排除**：designmd.co（条款/许可页为空壳，无法确认再分发授权；正文依赖 JS 注入）；外部抽取 / 逆向索引——awesome-design-md 经 2026-10-11 复核为自托管抽取产物（README 自述 "extracted from real websites"、无官方来源链接），designmd.app、designsystems.one、langlabs.io 同类——一律不接入；Atlassian、Shopify Polaris 的快照与复刻均回避（许可明文禁止再分发 / 演绎）。
 
 ### 4.2 获取与归档流程（每新增一套设计）
 
-1. 选定来源，抓取**完整** `DESIGN.md`（GitHub raw 优先，URL 稳定）。
-2. 保存到 `src/designs/<id>/DESIGN.md`（作为快照，此后不依赖上游）。
-3. 填写 `design.json.source`：`type`（official-vendor / third-party-analysis / self-produced）、`url`、`fetchedAt`（ISO 日期）、`license`、`attribution`。
-4. 许可要求保留声明时，附 `SOURCE-LICENSE.txt`（原文许可或声明）。
-5. 构建校验通过（缺 provenance 字段时**构建失败**）。
-6. 无法获取、文件不完整或许可不明确时：**如实报告，不得伪造**；改选其他来源。
+按来源形态三选一：
+
+- **快照（A）**：抓取**完整** `DESIGN.md`（GitHub raw 优先，URL 稳定）→ 原样保存到 `src/designs/<id>/DESIGN.md`（此后不依赖上游）。
+- **汇编（C）**：先核定上游材料清单与逐来源许可（可再分发类型）→ 遴选整合为一份规范（自有行文组织、文末「来源与许可」附录逐节列 URL、必要引用短句并标注、不整段逐字移植）→ 保存到 `src/designs/<id>/DESIGN.md`；**整合完成即冻结**（跟随上游 = 新一次整合，记 changelog，不静默修改）。
+- **复刻（B）**：分析目标视觉语言，规范完全自撰（可经 impeccable 规范化），不移植上游文本与素材。
+
+共同收口：
+
+1. 填写 `design.json.source`：`type`（official-vendor / official-docs-derived / third-party-analysis / self-produced）、`url`、`fetchedAt`（ISO 日期）、`license`、`attribution`。
+2. 许可要求保留声明时，附 `SOURCE-LICENSE.txt`（快照：原文许可；汇编：逐来源许可全文合集）。
+3. 构建校验通过（缺 provenance 字段时**构建失败**）。
+4. 厂商来源（快照 / 汇编 / 复刻）建 `docs/designs/<id>/ADAPTATION.md` 记录适配与取舍（对齐 fast / oxide 惯例），并更新 `docs/verification/` 与 `change-log/`。
+5. 无法获取、文件不完整或许可不明确时：**如实报告，不得伪造**；改选其他来源。
 
 ### 4.3 一期选型【已定】
 
@@ -113,6 +123,58 @@
 | terminal | 自产（impeccable 规范化） | — | 已实现 |
 
 实施结果（2026-10-10）：Vercel 的 design.md 挂在官网、无许可声明，按合规策略弃用，替换为许可已核实的 Microsoft FAST。自产规范已由 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范。
+
+### 4.4 二期扩充选型【已定，2026-10-11】
+
+来源口径（2026-10-11 grill 访谈）：A（快照 + 汇编）与 B（复刻）**全收**、分批覆盖、不设硬上限、每批后评估；文档许可未证实的 C 类候选不追查许可、视同不可用，仅以复刻形态收录；排序准则 = 许可硬门槛 → 视觉差异主导 → 落地成本系数 → 知名度补充。复刻设计的 id / displayName 不以厂商商标命名（逐套提案后定稿），`description` 以指示性文案注明"非官方致敬"。
+
+| 序 | id（草案） | 来源 | 形态 | 许可 | 状态 |
+|---|---|---|---|---|---|
+| 1 | carbon | IBM Carbon Design System | 汇编 | Apache-2.0 | **已移除**（2026-10-11 打样后同质复核：与 fast 重叠；recipe 经验保留） |
+| 2 | uswds | US Web Design System | 汇编 | CC0 1.0 | 待批 |
+| 3 | material3 | Google Material 3 | 汇编 | CC BY 4.0（内容）/ Apache-2.0（代码） | 待批（整合前逐页复核） |
+| 4 | govuk | GOV.UK Design System | 汇编 | OGL v3 | 待批（GDS Transport 字体回退） |
+| 5 | patternfly | Red Hat PatternFly | 汇编 | MIT | 待批 |
+| 6 | gitlab | GitLab Pajamas | 汇编 | MIT | 待批（材料量最大） |
+| 7 | ant-design | Ant Group Ant Design | 汇编 | MIT | 待批 |
+| 8 | tdesign | Tencent TDesign | 汇编 | MIT | 待批 |
+| 9 | dads | 日本数字厅 DADS | 汇编 | PDL 1.0 | 待批 |
+| 10 | nhs | NHS Digital Service Manual | 汇编 | OGL v3 | 待批（Frutiger 字体回退） |
+| 11 | protocol | Mozilla Protocol | 汇编 | MPL-2.0 | 待批 |
+| 12 | paste | Twilio Paste | 汇编 | MIT | 待批 |
+| 13 | primer | GitHub Primer | 汇编 | MIT | 待批（指南源仓库复核） |
+| 14 | semi | ByteDance Semi Design | 汇编 | MIT | 待批 |
+| 15 | nutui | JD NutUI | 汇编 | MIT | 待批 |
+| 16 | vanilla | Canonical Vanilla | 汇编 | CC-BY-SA 4.0 | 待批（同许可 + 署名义务） |
+
+原生单份快照尾巴：`juspay`（Juspay Blend，MIT，随手可加）；小微厂 Arkite UI / UIZZE 暂不收录。
+
+复刻席（序 17–30，命名逐套提案；规范自撰、不移植上游内容）：17 Apple HIG、18 Microsoft Fluent 2、19 Vercel Geist、20 Uber Base Web、21 Adobe Spectrum、22 Salesforce SLDS、23 VMware/Broadcom Clarity、24 ByteDance Arco、25 Huawei DevUI、26 EU ECL、27 Singapore SGDS、28 Wikimedia Codex、29 Nordhealth Nord、30 Zendesk Garden。
+
+排除（明示）：Atlassian、Shopify Polaris（禁止再分发 / 演绎，快照与复刻均回避）；Vercel、Nuxt、Resend、Clerk、Mintlify（官网文件无许可声明）；外部抽取 / 逆向索引一律不接入（见 §4.1）。
+
+批次节奏（2026-10-11 修订）：Carbon 打样批次已移除（打样产出与 fast 同质，复核后删去；汇编 recipe 经验保留——见 §4.2 与实测坑）。批次 2 起按「视觉差异化矩阵」（与现有设计的正交性）过滤重排后推进——每批 2–3 套、版本 +0.1/批；复刻批在汇编推进数批后插入。
+
+#### 4.4.1 视觉差异化矩阵与分级【2026-10-11 复核】
+
+锚点画像（现有设计；五维 = 色温 · 明度｜几何｜字体｜装饰语言）：
+
+| 设计 | 色温 · 明度 | 几何 | 字体 | 装饰语言 |
+|---|---|---|---|---|
+| editorial | 暖（米白 + 焦赭）· 浅 | 直角发丝线 / 非对称编辑网格 | 衬线主导 | 期号 / 序号 |
+| terminal | 暖橙 · 极暗 | 屏框 / 扫描线 | 等宽 | ASCII 波形 / 光标呼吸 |
+| oxide | 冷绿 · 深 | 发丝线 / 致密纹理 | 无衬线 + 等宽标签 | ASCII 波形 / 网格 |
+| fast | 冷蓝 · 浅 | 圆角卡片 | 系统无衬线 | 克制，零装饰 |
+
+覆盖缺口：浅色彩色系统（紫 / 红）、纯黑白极简、高对比政务语言、玻璃 / 材质感、大圆角与阴影层级。
+
+分级（仅视觉维；许可复核仍是前置硬门槛，逐一按 §4.2 执行）：
+
+- **A 强差异化（优先）**：`material3`（紫 tonal 色系、12–28px 大圆角、阴影层级、深浅双模——研究已完成）；`geist`（复刻；纯黑白极简 + 几何细节）；`govuk`（黑 / 黄 focus / 高饱和蓝的高对比直角语言；注意 GDS Transport 字体回退）。
+- **B 中等（备选）**：`vanilla`（紫橙）、`paste`（红）、`protocol`（黑白 + 橙）、`gitlab`（紫橙 DevOps）、`codex`（冷百科衬线，与 editorial 暖衬线部分接近）、Apple HIG（玻璃质感）。
+- **C 同质暂缓**：浅蓝企业组（`uswds`、`ant-design`、`tdesign`、`patternfly`、`primer`、SLDS、Spectrum、Clarity、Arco、DevUI、semi——与 fast 高度同质）；政务蓝组（`nhs`、`dads`、ECL、SGDS——与 govuk 择一）；Fluent 2（与 fast 同源）；nutui 与 paste 红系二选一。
+
+批次建议（提请确认后执行）：下一批 = `material3` + `geist`；`govuk` 备次批首位；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
 
 ---
 
@@ -483,7 +545,7 @@ SenrenBanka/
 - CF/Vercel 边缘能力增强（如带 Cookie 的服务端随机，非必需）
 - 自动化 e2e / 视觉回归 / Lighthouse CI
 - sitemap（一期仅 1 个可索引页，意义有限）
-- awesome-design-md 可选来源接入、更多设计
+- 更多设计扩充（2026-10-11 启动，见 §4.4；awesome-design-md 接入经复核取消，见 §4.1）
 - i18n、多资料语言版本
 - 设计市场 / 在线编辑器 / 账号系统 / 后端（不在一期，也未承诺）
 

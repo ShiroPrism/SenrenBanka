@@ -12,7 +12,7 @@
 
 ## 图标（ADR 0002）
 
-- CHANNELS：品牌 mark（filled、本地 vendored SVG）替换原 `▸`；功能图标 Mail / Globe 采用 lucide **outlined**、1.5 描边——快照 Icons 章节允许 outlined variants。
+- CHANNELS：品牌 mark（filled、本地 vendored SVG）替换原 `▸`；功能图标 Mail 采用 lucide **outlined**、1.5 描边（无 icon 配置不打标，2026-10-11 修订）——快照 Icons 章节允许 outlined variants。
 - `▸` 保留于列表面之外的原生 affordance（页脚联系）；全部装饰符 `aria-hidden`。
 
 ## a11y 增补（快照未覆盖）

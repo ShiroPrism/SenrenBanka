@@ -20,7 +20,7 @@ const designsRoot = path.join(process.cwd(), 'src', 'designs');
 
 const sourceSchema = z
   .object({
-    type: z.enum(['official-vendor', 'third-party-analysis', 'self-produced']),
+    type: z.enum(['official-vendor', 'official-docs-derived', 'third-party-analysis', 'self-produced']),
     url: z.string().min(1).optional(),
     fetchedAt: z.string().min(1).optional(),
     license: z.string().min(1).optional(),

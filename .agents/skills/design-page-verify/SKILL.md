@@ -13,9 +13,9 @@ description: "SenrenBanka 设计页验证流程：新建或修改设计页（或
 
 - 预览：`npm run preview`（本项目 preview 固定 http://localhost:4321；`npm run dev` 亦可）。
   **端口被占用**：启动时提示 `Port 4321 is in use` 会静默回落到 4322 →（若照抄 4321）后续断言全错。先清占用再重启：`Get-NetTCPConnection -LocalPort 4321 -State Listen` 取 `OwningProcess` → `Stop-Process -Id <pid> -Force`。（实测：`StopCommand` 停掉 preview 后 node 进程可能残留。）
-- 浏览器工具：`run_mcp` → server `integrated_code_mode` → tool `Exec`，内部用 `tools.browser_navigate / browser_evaluate / browser_console_messages / browser_take_screenshot` 等。
-- 移动触控仿真：优先用 `mcp_playwright` 的 `browser_run_code_unsafe` 直接建上下文（`viewport 375×812 + hasTouch:true + isMobile:true`），并回读 `matchMedia('(pointer: coarse)').matches` 证明触控生效；也可派 `browser_use` 子代理做同样的事。若不可用，结论降级为"静态核对"并声明。
-- 降级仿真（步骤 5b）：`browser_run_code_unsafe` 内用 `browser.newContext({ reducedMotion: 'reduce' })` / `({ javaScriptEnabled: false })`；无 IO 用 `addInitScript(() => { delete window.IntersectionObserver })`；脚本抛错用 `addInitScript(() => { window.IntersectionObserver = function () { throw new Error('boom') } })`。
+- 浏览器工具：优先用当前会话可用的浏览器工具族（2026-10-11 环境实测：code mode `Exec` 内 `tools.browser_*`——`browser_navigate` / `browser_evaluate`（参数 `{ script }`，用**裸表达式**，块语句体可能返回 undefined）/ `browser_console_messages` / `browser_network_requests` / `browser_take_screenshot`）。
+- 移动触控仿真（按序降级）：(1) `mcp_playwright` 的 `browser_run_code_unsafe` 直接建上下文（`viewport 375×812 + hasTouch:true + isMobile:true`），回读 `matchMedia('(pointer: coarse)').matches` 证明触控生效；(2) 无 run_code 能力时，用**本机 playwright-core 一次性脚本**（临时目录 `npm i playwright-core`，`chromium.launch({ executablePath: <本机 ms-playwright 内 chrome.exe>, headless: true, args: ['--no-proxy-server'] })` + `newContext({ viewport, hasTouch, isMobile, deviceScaleFactor })`；脚本放项目外，2026-10-11 实测可用）；(3) 派 `browser_use` 子代理做同样的事；均不可用才降级为“静态核对”并声明。
+- 降级仿真（步骤 5b）：`browser_run_code_unsafe` 内用 `browser.newContext({ reducedMotion: 'reduce' })` / `({ javaScriptEnabled: false })`；无 IO 用 `addInitScript(() => { delete window.IntersectionObserver })`；脚本抛错用 `addInitScript(() => { window.IntersectionObserver = function () { throw new Error('boom') } })`。无 run_code 能力时改用上述 playwright-core 一次性脚本（四情形可同一脚本内跑完）；reduced-motion 亦可 `mcp_playwright_browser_emulate_media({ reducedMotion: 'reduce' })` + 重载实测（2026-10-11 实测可用）。
 - 已知环境坑：本机 `HTTP_PROXY` 会拦截 localhost 的 curl/Invoke-WebRequest（表现为 502），需要时用 `curl.exe --noproxy "*"`；优先用浏览器工具取运行时证据。
 - 持久浏览器会话可能残留旧标签页的资源请求（如 `@vite/client`）——网络断言以**本次新导航后的 Document 请求**为准；`browser_evaluate` 请用裸表达式（如 `JSON.stringify({...})`），IIFE 写法在本环境可能返回 undefined。
 
@@ -81,7 +81,7 @@ npm run check        # 仅类型检查（可按需）
 - 无横向滚动：`document.documentElement.scrollWidth <= innerWidth + 1`；
 - 触控命中高度：主要链接/按钮 `getBoundingClientRect().height >= 40`（目标 44）；
 - 折行/对齐：关键列表、导航、工具条在窄屏的换行与左缘对齐；
-- 截图 ≥1 张，并给出路径。
+- 截图 ≥1 张，并给出路径；**fullPage 截图前先滚动到底触发全部 `[data-reveal]` 显现**，否则未触发区块在图面呈隐藏态（2026-10-11 实测口径，属记录方法问题而非页面缺陷）。
 
 ## 步骤 5b · 降级与可访问性（仅对引入 `<Reveal />` 的设计）
 
@@ -104,7 +104,7 @@ npm run check        # 仅类型检查（可按需）
 ## 步骤 7 · 记录与收口
 
 - **记录收口（`docs/verification/`）**：更新 `docs/verification/<id>.md` 的当前完整验证状态（改动内容 + 实测证据 + 未测项声明）；重复验证**改写**本文件，不追加历史快照（历史由 Git 保留）。共享机制改动更新 `docs/verification/shared.md`。
-- **例外与适配的归属**：自产设计——新 token、有意保留的检测器信号（格式：信号名 + 日期 + 理由）写入该 `DESIGN.md`；厂商快照设计——快照只读，适配与检测器例外写入 `docs/designs/<id>/ADAPTATION.md`。
+- **例外与适配的归属**：自撰设计（自产 / 复刻）——新 token、有意保留的检测器信号（格式：信号名 + 日期 + 理由）写入该 `DESIGN.md`；厂商来源设计（快照 / 汇编，规范只读、汇编为整合完成即冻结）——适配与检测器例外写入 `docs/designs/<id>/ADAPTATION.md`。
 - **版本发布**：在 `change-log/<version>.md` 保留精简结论（成果 / 修复 / 验证结论），不写调试流水账。
 - 最终状态：`npm run build` 绿 + 检测器 0 发现（或全部为已记录例外）。
 
@@ -128,4 +128,4 @@ npm run check        # 仅类型检查（可按需）
 - [ ] 降级：reduced-motion / 无 JS / 无 IO / IO 抛错 四种情形下隐藏元素均为 0
 - [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常（或如实降级声明）
 - [ ] 对比度达标（或记录例外）
-- [ ] `docs/verification/<id>.md`（或 `shared.md`）已更新为最新状态；例外按归属记录（自产 `DESIGN.md` / 厂商 `ADAPTATION.md`）；截图留档且记录路径
+- [ ] `docs/verification/<id>.md`（或 `shared.md`）已更新为最新状态；例外按归属记录（自撰 `DESIGN.md` / 厂商来源 `ADAPTATION.md`）；截图留档且记录路径

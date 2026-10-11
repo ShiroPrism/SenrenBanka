@@ -3,21 +3,21 @@
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
 > 厂商快照 `DESIGN.md` 只读；实现偏离与增补记录在 `docs/designs/fast/ADAPTATION.md`。
-> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动。
+> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动；2026-10-11 v0.5.3 链接标记按配置化的聚焦回归已复核本页。
 
 ## 构建与产物
 
 - `npm run build` 7 页绿（`astro check` 0 错误 / 0 警告 / 0 提示）；注册表校验通过。
 - CSS 隔离成立：本页恰 1 条自身样式链接；`.fs-*` 选择器只出现在自身 CSS；根页 / 切换页 / 404 不链接任何设计 CSS。
 - `BASE_PATH=/demo` 全链路前缀正确；`rel="preload"` 计数 0；无外链资源（`src="http` = 0）。
-- 图标：内联 SVG 5 枚（按钮前置 mark / Mail / Globe + 卡片外链箭头），全部 `aria-hidden`；行内图标显式 `inline-block`（Preflight 兼容，记入 `AGENTS.md` 已知坑）。
+- 图标（不含共享菜单 chrome）：hero 按钮 4 枚（品牌 mark ×2 / Mail ×2）+ 项目卡外链箭头 ×2，全部 `aria-hidden`；未配置 icon 的链接不打标（2026-10-11 修订，Globe 残留 0）；行内图标显式 `inline-block`（Preflight 兼容，记入 `AGENTS.md` 已知坑）。
 
 ## 结构、内容与 a11y
 
 - 核心字段 `name` / `headline` / `bio` / `links` 全部渲染；扩展区块取舍见 `DESIGN.md` Project Contract。
 - 结构：hero 操作按钮行 → 3 列卡片网格（桌面）→ 经历行 → 页脚；标题层级 `h1 → h2 → h3` 无跳级。
 - 语义 token + `light-dark()` 双主题：亮色底实测 `rgb(250,250,250)` ↔ 暗色底 `rgb(31,31,31)`；6px 圆角、3 列网格符合 token。
-- 链接列表面（hero 按钮）100% 标记；可访问名干净（实测 `GitHub` / `Email` / `博客`）。
+- 链接列表面（hero 按钮）按配置逐条标记（5/5 渲染；未配置 / 未映射不打标）；可访问名干净（实测 `GitHub` / `Email` / `博客`）。
 
 ## 对比度（最近实测）
 
@@ -50,4 +50,4 @@
 ## 未测 / 限制
 
 - 真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放未实测；触控与降级基于 Chromium 仿真。
-- 截图归档：`C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-fast-*`、`verify-fast-actions/-card.png`、`verify-051-fast-menu.png` 等；为验证机器本地路径，未随仓库分发）。
+- 截图归档：`C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-fast-*`、`verify-fast-actions/-card.png`、`verify-051-fast-menu.png`、`verify-053-fast-links.jpg` 等；为验证机器本地路径，未随仓库分发）。

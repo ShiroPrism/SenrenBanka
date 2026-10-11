@@ -161,7 +161,7 @@ components:
 
 ### Marks & External Indicators（标志与外链标识）
 - **Brand mark:** `links[].icon === "github"` 的链接在标签前渲染 GitHub 品牌 mark（本地 SVG，来源 simple-icons / CC0；灰墨、0.85em、静态，不参与 hover 变色）。
-- **Functional icons:** `mail` → Mail、未映射 / 缺省 → Globe（`@lucide/astro`、1.5 描边、灰墨、0.85em，与品牌 mark 同槽同尺寸）——Elsewhere 内 100% 标记、不留裸链接（2026-10-10 依「要么不用，要么全用」修订，纯文本回退已否决）。
+- **Functional icons:** `mail` → Mail（`@lucide/astro`、1.5 描边、灰墨、0.85em，与品牌 mark 同槽同尺寸）；**未配置 / 未映射的链接不渲染任何标记**——按配置逐条标记（2026-10-11 修订，旧「Globe 回退 / 100% 标记」被项目所有者否决）。
 - **External indicator:** Selected Works 中带 `url` 的作品标题后渲染外链箭头（`ArrowUpRight`，lucide、1.5 描边、0.8em、灰墨）。它是语义标识（指出"去向外部"），不是装饰。
 - **A11y:** 以上皆 `aria-hidden`；可访问名由既有文本标签承担。
 - **来源与规则:** 唯一图标库 `@lucide/astro` + simple-icons 资产，见 `docs/adr/0002-icon-and-brand-mark-strategy.md`。
@@ -182,7 +182,7 @@ components:
 - Label 档大写、灰墨；无边框、无底色——它们只是版面上的小字。
 
 ### Footer
-- 两段式：上段"邀请"（contact.note 斜体衬线 + 邮箱链接），下段 meta 行（colophon 右对齐）。Email 只在邀请段出现一次——Elsewhere 列表自动过滤 mailto 链接（2026-10-10 distill 去重；v0.5.0 移除切换入口）。
+- 两段式：上段"邀请"（contact.note 斜体衬线 + 邮箱链接），下段 meta 行（colophon 右对齐）。Elsewhere 列表**全量渲染 `links[]`**（2026-10-11 修订：移除 mailto distill 去重，链接列表与配置一一对应；邀请段照旧，优先 contact.email）。
 
 ### Motion
 - 页面语言是"印刷"：动效只有两个动作——**墨色渗入**（仅 opacity 渐显，无位移）与**发丝线从左绘出**（`transform: scaleX` 展开）；不做大于 10px 的位移、不做回弹、不做持续动画。
