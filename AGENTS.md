@@ -1,6 +1,6 @@
 # AGENTS.md — 项目级实现约定
 
-本文件是编码 Agent 的强制约定（对应 SPEC §9），只承载**通用**设计规则（不点名任何单一设计）；各设计的具体采用情况、适配记录与偏差见 `SPEC §18`、`CONTEXT.md` 与 `change-log/`。新增 / 修改设计前必读。
+本文件是编码 Agent 的强制约定（对应 SPEC §9），只承载**通用**设计规则（不点名任何单一设计）；各设计的具体采用情况、适配记录与偏差见 `docs/README.md` 索引（`docs/verification/`、`docs/designs/*/ADAPTATION.md`、`change-log/`）。新增 / 修改设计前必读。
 
 ## 数据接口
 
@@ -44,16 +44,16 @@
 
 ## 动效（Motion）
 
-- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`；各设计当前采用情况见 `SPEC §18`。
+- 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`；各设计当前采用情况见 `docs/verification/`。
 - **定位：设计语言维度**。目标不是给所有元素增加动画，而是让每套设计拥有更丰富、更有辨识度的动态表现，同时保持各自的设计语言。每套设计必须在 `DESIGN.md` 中定义自己的动效语言（形态 / 节奏 / 参数）；允许极简（单一过渡、单动作），决定静止必须给出论证。
 - **入场动画**：各设计私有纯 CSS `@keyframes`（无 JS 依赖），整体包在 `@media (prefers-reduced-motion: no-preference)` 内；减动态时不生成动画、元素保持自然可见态。
 - **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。采用共享机制的设计在 `<head>` 放一次 `<Reveal />`；不用共享机制的设计必须在 `DESIGN.md` 说明替代触发方式，且仍须满足下文可见性契约。
-- **装饰性滚动进度**：CSS Scroll-Driven Animations（`animation-timeline: scroll()`）仅允许用于装饰性进度指示，**不得用于内容显隐**；`@supports` 门控 + 不支持 / 减动态时整条隐藏；注意压缩器可能把 `animation-timeline` 合并进 `animation` 简写（产物中该简写在当前 Chromium 不被接受、整条失效），须以 `var()` 传入 timeline 阻断合并（v0.4.0 实测，见 `SPEC §18`）。
+- **装饰性滚动进度**：CSS Scroll-Driven Animations（`animation-timeline: scroll()`）仅允许用于装饰性进度指示，**不得用于内容显隐**；`@supports` 门控 + 不支持 / 减动态时整条隐藏；注意压缩器可能把 `animation-timeline` 合并进 `animation` 简写（产物中该简写在当前 Chromium 不被接受、整条失效），须以 `var()` 传入 timeline 阻断合并（本机已实测；记录见 `docs/verification/`）。
 - **可见性契约（不可违反）**：内容默认可见；CSS 隐藏态必须以 `html[data-reveal-ready]` 为唯一门控，该属性只由 `src/components/Reveal.astro` 的内联 boot 在「非 reduced-motion 且支持 `IntersectionObserver`」时写入。无 JS / 脚本失败 / 无 IO / 减动态时内容必须始终可见。
 - **运动约束**：只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
 - **持续动效（无限循环）**：仅限小范围、有明确视觉价值的形态类装饰（如流动波形、光标呼吸、进度指示），且必须在 `DESIGN.md` 中论证；其余一律只播一次；减动态时持续动效静止。
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发下文"已知坑"的 CSS 聚合）。
-- **规范与实现同步**：自产规范（`design.json` 的 `source.type: self-produced`）的 Motion 章节必须与实现一致，改动前先修订规范；厂商快照（`official-vendor` / `third-party-analysis`）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `SPEC §18` 与 `change-log/`。
+- **规范与实现同步**：自产规范（`design.json` 的 `source.type: self-produced`）的 Motion 章节必须与实现一致，改动前先修订规范；厂商快照（`official-vendor` / `third-party-analysis`）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `docs/designs/<id>/ADAPTATION.md` 与 `change-log/`。
 
 ## Iconography & Icon Library Rules
 
@@ -99,9 +99,9 @@
 
 - **当前实现**：通用功能图标库采用 `@lucide/astro`（构建期内联 SVG、零客户端 JS）；复用既有方案，不重复引入相似库。
 - **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
-- **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `SPEC §18`。
+- **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `docs/verification/shared.md`。
 - **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：右键菜单组件（项目级 chrome，见「设计切换入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
-- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照的适配记录与各设计当前采用情况见 `SPEC §18`。
+- **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照的适配记录与各设计当前采用情况见 `docs/designs/*/ADAPTATION.md` 与 `docs/verification/`。
 
 ## Visual Assets & Cursor Rules
 
@@ -139,30 +139,27 @@
 - **右键菜单运行时必须按能力门控动态加载**：`ContextMenu.astro` 用内联 `matchMedia('(hover: hover) and (pointer: fine)')` + 动态 `import()`（Vite 不给该 chunk 生成 `modulepreload`，dist 实测）；**不要改成静态 import**，否则触屏设备会白白下载菜单逻辑。菜单样式用 `<style is:inline>`：不新增 `<link>`（"每设计页只链接自己的 CSS" 仍成立）。
 - **`document.execCommand` 必须保持以 `document` 为 `this` 调用**：解构出的裸方法引用会抛 `Illegal invocation`（2026-10-10 降级复制路径实测踩坑）；该 API 虽被废弃，仍是 Clipboard API 不可用时的唯一同步降级路径，经自定义类型引用以避开 TS 废弃告警。
 
-## 新增设计评审清单
-
-- [ ] 四件套 + provenance（来源类型 / URL / 日期 / 许可）完整
-- [ ] 核心字段全部渲染；扩展区块取舍与理由写进 DESIGN.md
-- [ ] `DESIGN.md` 含动效语言定义（Motion 章节；静止须论证）；采用共享滚动显现时 `<Reveal />` 与门控契约完整
-- [ ] 若使用图标 / 品牌标志：符合「Iconography & Icon Library Rules」（设计规范优先 / 库与技术栈兼容 / 列表面 100% 标记、无裸链接 / 资产 vendored + 商标核对 / `aria-hidden`）
-- [ ] 若使用图片 / 光标素材：符合「Visual Assets & Cursor Rules」（需求性核实 / provenance / `assets/` 归属 / 替代文本与加载策略）
-- [ ] `<HeadMeta {...view.head} />` 原样引入；`manualSwitch` 时接入共享 `<ContextMenu config={view.contextMenu} />`（**不得**自建切换入口或复制菜单实现）
-- [ ] 符合「无障碍与响应式」：分区可访问名称 / 装饰 `aria-hidden` / 对比度实测 ≥ 底线 / 触控命中 ≥ 44px / 375px 零横向溢出
-- [ ] `npm run build` 通过（含 `astro check`）
-- [ ] 抽查 `dist/`：该设计页面只链接自己的 CSS；根页 / 切换页 / 404 不链接任何设计 CSS
-
 ## 构建
 
 - `npm run check`：`astro check`（TS / .astro 类型）
 - `npm run build`：check + 构建；设计注册表校验失败时会以 `[senrenbanka]` 前缀明确报错
-- 新设计页完成、或任一设计页/样式/构建配置改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程
+- 新设计页完成、或任一设计页 / 样式 / 构建配置 / 共享机制改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程（步骤与通过标准以 skill 为准，本文件不重复维护清单）；验证状态更新至 `docs/verification/`（见「文档维护」节）
 - 临时调整 `site.config.yaml`（如切 `mode: fixed`）验证行为后，请恢复示例配置再提交
+
+## 文档维护（强制）
+
+- 文档职责与引用关系见 `docs/README.md`（索引）；修改任何文档前先在该索引与既有记录中查找同一事实，避免重复维护。
+- 新信息写入职责对应的既有文档，不因内容增加而随意新建文件：跨主题规则 → 本文件；单主题例外 / 适配 → `docs/designs/<id>/ADAPTATION.md`（仅确有例外时创建）；当前验证状态 → `docs/verification/`；版本历史 → `change-log/`；长期决策 → `docs/adr/`。
+- 验证记录维护**最新完整状态**（更新式，不追加历史快照——历史由 Git 保留）；`change-log` 概括成果 / 修复 / 验证结论，不写逐次调试流水账。
+- 官方原始 `DESIGN.md` **不得被改写成项目适配版本**（只读；偏差记入该主题 `ADAPTATION.md`）。
+- 修改文档边界 / 章节位置后，必须同步更新全仓库引用（含 skill、ADR、change-log、源码注释），不留过期路径。
 
 ## 版本与变更日志
 
 - 变更日志在 `change-log/` 下**一个版本一个文件，以版本号命名**（如 `change-log/0.1.0.md`）
 - 版本规则：**大功能更新 `+0.1`**（0.1.0 → 0.2.0）；**小功能补丁 `+0.0.1`**（0.1.0 → 0.1.1）；与 `package.json` 的 `version` 保持同步
 - 每次版本更新**新增**对应版本号的日志文件，不在旧文件上累积
+- 日志内容概括该版本的重要成果、修复与验证结论；验证的**当前完整状态**在 `docs/verification/`，不在 change-log 重复维护
 
 ## 入库范围（git）
 

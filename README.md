@@ -51,5 +51,7 @@ npm run preview
 
 ## 文档
 
-- `SPEC.md`：完整项目规格（决策记录、运行时规则、目录结构、验收标准）
-- `AGENTS.md`：给编码 Agent 的实现约定与"新增设计"审查清单
+- `docs/README.md`：文档职责索引与维护规则（改文档前先看它）
+- `SPEC.md`：项目规格与事实来源（决策记录、运行时规则、目录结构、验收标准）
+- `AGENTS.md`：编码 Agent 的强制实现约定（新增设计必读；完整验证流程见 `design-page-verify` skill）
+- `docs/adr/` 长期技术决策 · `docs/designs/<id>/ADAPTATION.md` 主题适配记录 · `docs/verification/` 各主题与共享机制的当前验证状态 · `change-log/` 版本记录

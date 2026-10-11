@@ -5,7 +5,7 @@ description: "SenrenBanka 设计页验证流程：新建或修改设计页（或
 
 # 设计页验证流程（SenrenBanka）
 
-本 skill 是已验证过的"设计页完整验证"可执行版（对应 SPEC §13 验收标准与 AGENTS.md 新增设计评审清单）。
+本 skill 是已验证过的"设计页完整验证"可执行版（对应 SPEC §13 验收标准；规则见 `AGENTS.md`，记录归属见 `docs/README.md`）。
 **新设计按 DESIGN.md 实现完成后，或任一设计页 / 样式 / 构建配置 / `src/lib/` / `src/components/`（共享机制）改动后**，按本流程逐步执行，不得跳步；无法验证的项必须如实标注（如仿真限制、真机未测），禁止虚构结果。
 **动效相关断言（步骤 4b / 5b）只对"引入了 `<Reveal />` 的设计"生效**；无动效的设计（若某设计按规范保持静止）应显式跳过，并在记录中注明是"设计上无动效"，而不是当成漏测。
 
@@ -45,7 +45,7 @@ npm run check        # 仅类型检查（可按需）
 ```
 
 - `[]` + exit 0 = 干净；有发现时逐条处理或按"有意为之"记录（见步骤 7）。
-- **有效性反证**（必做，避免"静默空转"）：对已知含信号的目标（如网格底纹类信号；当前命中情况见 `SPEC §18`）或临时探针文件运行一次，确认检测器真的会命中；探针用完删除。
+- **有效性反证**（必做，避免"静默空转"）：对已知含信号的目标（如网格底纹类信号；已记录的例外见 `docs/designs/*/ADAPTATION.md` 或主题验证记录）或临时探针文件运行一次，确认检测器真的会命中；探针用完删除。
 - 视觉叠层（可选，浏览器内信号）：`impeccable live-server --background` 获取端口 → 浏览器打开目标页 → 注入 `http://localhost:<port>/detect.js` → 读 console 的 `impeccable` 前缀消息 → `impeccable live-server stop`。
 
 ## 步骤 4 · 桌面实测（浏览器）
@@ -63,13 +63,13 @@ npm run check        # 仅类型检查（可按需）
 
 ## 步骤 4b · 动效实测（仅对引入 `<Reveal />` 的设计）
 
-对采用动效的设计（当前四套设计均已引入 `<Reveal />`）：
+对采用共享显现的设计（当前采用情况见 `docs/verification/<id>.md`）：
 
 - **门控**：`document.documentElement.hasAttribute('data-reveal-ready') === true`；`[data-reveal]` 数量与预期一致。
 - **首屏入场**：目标元素（如 `.ox-name` / `.fs-title`）`animation-name` 生效，且动画结束态 `opacity === '1'`、`transform` 为单位矩阵。
 - **滚动显现**：滚到底后**全部** `[data-reveal]` 均带 `[data-reveal-in]`，且 `opacity !== '1'` 的元素数为 **0**。
 - **跳转兜底（必测）**：直接 `window.scrollTo(0, document.documentElement.scrollHeight)`（模拟刷新恢复位置 / End 键 / 锚点跳转）后，隐藏元素仍为 **0**——该场景不产生 `IntersectionObserver` 通知，是已知高危路径。
-- **装饰性滚动进度线**（若该设计采用该机制；当前采用清单见 `SPEC §18`，选择器以该设计实际实现为准）：进度线元素存在且 `aria-hidden`；支持 scroll-driven 的环境下滚动后 `transform` 随进度变化（不支持的环境由 `@supports` 整条隐藏，属预期行为）。
+- **装饰性滚动进度线**（若该设计采用该机制；当前采用情况见 `docs/verification/<id>.md`，选择器以该设计实际实现为准）：进度线元素存在且 `aria-hidden`；支持 scroll-driven 的环境下滚动后 `transform` 随进度变化（不支持的环境由 `@supports` 整条隐藏，属预期行为）。
 - **console / 网络**：0 错误 0 警告；请求仅自身资源（Document + 自有 CSS + 字体 / favicon），无 404。
 - 截图归档：动效前 / 后各 ≥1 张，给出路径。
 
@@ -103,8 +103,9 @@ npm run check        # 仅类型检查（可按需）
 
 ## 步骤 7 · 记录与收口
 
-- **SPEC §18** 追加一条验证记录：改动内容 + 实测证据 + 未测项声明。
-- **DESIGN.md** 同步：新 token、有意保留的检测器信号（格式：信号名 + 日期 + 理由）、例外说明。
+- **记录收口（`docs/verification/`）**：更新 `docs/verification/<id>.md` 的当前完整验证状态（改动内容 + 实测证据 + 未测项声明）；重复验证**改写**本文件，不追加历史快照（历史由 Git 保留）。共享机制改动更新 `docs/verification/shared.md`。
+- **例外与适配的归属**：自产设计——新 token、有意保留的检测器信号（格式：信号名 + 日期 + 理由）写入该 `DESIGN.md`；厂商快照设计——快照只读，适配与检测器例外写入 `docs/designs/<id>/ADAPTATION.md`。
+- **版本发布**：在 `change-log/<version>.md` 保留精简结论（成果 / 修复 / 验证结论），不写调试流水账。
 - 最终状态：`npm run build` 绿 + 检测器 0 发现（或全部为已记录例外）。
 
 ## 可选 · 完整评审（更重的质量门）
@@ -127,4 +128,4 @@ npm run check        # 仅类型检查（可按需）
 - [ ] 降级：reduced-motion / 无 JS / 无 IO / IO 抛错 四种情形下隐藏元素均为 0
 - [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常（或如实降级声明）
 - [ ] 对比度达标（或记录例外）
-- [ ] SPEC §18 与 DESIGN.md 记录已写入；截图留档且记录路径
+- [ ] `docs/verification/<id>.md`（或 `shared.md`）已更新为最新状态；例外按归属记录（自产 `DESIGN.md` / 厂商 `ADAPTATION.md`）；截图留档且记录路径

@@ -15,12 +15,12 @@
 - **用 `@media (scripting: enabled)` 隐藏**：脚本启用但加载失败时内容会被永久隐藏，违反降级契约。
 - **把隐藏态写进各设计 CSS 的默认分支**：同样会在无 JS 时永久隐藏内容。
 - **只用 CSS `animation-timeline: view()` 做滚动触发**：浏览器支持不足、降级语义不可控，且与"用原生 IntersectionObserver"的项目决定冲突。
-- **改厂商 `DESIGN.md` 补 Motion 章节**：SPEC §18 规定厂商规范为不可修改的原始快照。
+- **改厂商 `DESIGN.md` 补 Motion 章节**：项目约定（`AGENTS.md`「动效（Motion）」）规定厂商规范为不可修改的原始快照，偏差记入该主题的 `ADAPTATION.md`。
 
 ## 后果
 
 - `oxide` / `fast` 的动效参数由各自 `style.css` 维护；`editorial` / `terminal` 不加载任何动效脚本。
-- 相关决策与实测记录写入 `SPEC §18` 与 `change-log/0.2.0.md`；厂商 `DESIGN.md` 不改动。
+- 相关决策与实测记录见 `change-log/0.2.0.md` 与 `docs/verification/`（2026-10-11 由 SPEC §18 迁入）；厂商 `DESIGN.md` 不改动。
 
 ## 修订（2026-10-10，v0.4.0）
 

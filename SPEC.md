@@ -79,6 +79,8 @@
 12. **内容层条目 id 会归一化**【已核实，本机实测】：glob loader 把 `site.config.yaml` 的条目 id 归一化为 `siteconfig`；按"单文件集合取唯一条目"处理（`getCollection()[0]`）。
 13. **字体 npm provider**【已核实，本机实测】：`fontProviders.npm({ remote:false })` + `options.package` 可从已安装 `@fontsource-variable/*` 包在构建期自托管（无需联网）；族名必须与包内 CSS 完全一致（`Fraunces Variable`、`JetBrains Mono Variable`）；传 `weights` 范围过滤会解析不到（省略即可，variable 包自带完整字重轴）。
 14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia('(hover: hover) and (pointer: fine)')` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`，**触屏设备零菜单 JS 请求**（375×812 触控仿真实测 chunk 请求数 0）。
+15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
+16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。
 
 ---
 
@@ -88,7 +90,7 @@
 
 - **允许入库**：
   - A. 厂商官方发布（如 official-design-md 索引的 Vercel、Nuxt、Resend、Ant Design、Atlassian、FAST、Oxide、Juspay、Clerk、Mintlify、VoltAgent）——逐份核实原文所在仓库、许可要求并保留声明；"first-party 官方"的说法目前仅为索引仓库自述，须逐份核实。
-  - D. 自产（按 Google Stitch `design.md` 格式起草，并用 impeccable `document` 规范化固化；见 §18）——完全可控。
+  - D. 自产（按 Google Stitch `design.md` 格式起草，并用 impeccable `document`（scan 模式）规范化固化；`generatedBy` 记录工具与版本）——完全可控。
 - **条件允许**：B. 第三方整理（awesome-design-md，仓库 MIT、74 套品牌分析）——仅当逐份核实许可可行，并在 `design.json` 与 README 中标注"非官方分析"。
 - **排除**：designmd.co（条款/许可页为空壳，无法确认再分发授权；正文依赖 JS 注入）。
 
@@ -110,7 +112,7 @@
 | editorial | 自产（impeccable 规范化） | — | 已实现 |
 | terminal | 自产（impeccable 规范化） | — | 已实现 |
 
-实施结果（2026-10-10）：Vercel 的 design.md 挂在官网、无许可声明，按合规策略弃用，替换为许可已核实的 Microsoft FAST。自产规范已由 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范（详见 §18）。
+实施结果（2026-10-10）：Vercel 的 design.md 挂在官网、无许可声明，按合规策略弃用，替换为许可已核实的 Microsoft FAST。自产规范已由 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范。
 
 ---
 
@@ -158,7 +160,7 @@ contact:                      # 扩展区块
 - **可选字段**：`avatar`（部分风格不放照片）、`location`。
 - **扩展词汇表（一期仅 4 个）**：`projects`、`experience`、`skills`、`contact`。设计按自身风格**自行决定取舍、排列与样式**；不提供逐区块开关配置。
 - 设计可添加装饰性文案（如 "Selected Works" 标签），**不得编造**个人事实（项目、经历、数据）。
-- 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由实现约定 + 新设计审查清单约束。
+- 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由实现约定（`AGENTS.md`）+ `design-page-verify` 流程约束。
 
 ### 5.4 site.config.yaml 示例
 
@@ -315,18 +317,11 @@ src/designs/<id>/
 
 ---
 
-## 9. 项目级实现约定（补齐"单份 DESIGN.md 不足以生成完整页面"的缺口）
+## 9. 项目级实现约定
 
-【已定】交付 `AGENTS.md`（仓库根目录），面向编码 Agent 的强制清单，至少包含：
+【已定】项目级实现约定统一由仓库根目录 `AGENTS.md` 承载（编码 Agent 必读的**强制规则**，覆盖数据接口、每套设计必须满足、共享 chrome、动效、图标、素材、无障碍与响应式、已知坑、构建与文档维护）；本规格不再复制其条文。交付门槛（新设计完成、设计页或共享机制改动后的完整验证）由 `design-page-verify` skill 执行，其**当前状态**记录在 `docs/verification/`；文档职责索引见 `docs/README.md`。
 
-1. 数据接口（`loadSite()` 的字段与用法）；核心字段必须渲染、扩展区块自行取舍；
-2. 必须包含 `HeadMeta`；切换入口要求（`manualSwitch` 时的共享右键菜单接入，禁止自建入口，见 §7.5）；
-3. CSS 入口模板（`source(none) + @source`）；禁止动态类名；
-4. 字体注册流程（astro.config 中央登记 → `<Font>` → `@theme inline`）；
-5. 构建与校验命令；禁止跳过校验；
-6. 禁止事项：虚构个人事实、跨设计共享视觉组件/Token、违反来源许可；
-7. 已实测坑：glob 必须置于独立模块（§3.2-5）、`file()` 裸对象限制（§3.2-6）；
-8. **新设计审查清单**：四件套齐备、provenance 完整、核心字段渲染、切换入口存在（无 JS 可达）、移动端适配、CSS 隔离抽查、构建通过。
+（历史：2026-10-11 文档治理前，本节曾列出 AGENTS.md 的最低内容清单；此后规则唯一载体为 `AGENTS.md`，旧清单原文见 Git 历史。）
 
 ---
 
@@ -415,8 +410,14 @@ SenrenBanka/
 │     └─ 404.astro                   # 中性 404（noindex，GH Pages 自动使用）
 ├─ .gitignore
 ├─ .nvmrc                            # Node 24
-├─ AGENTS.md                         # 项目级实现约定 + 新设计审查清单（编码 Agent 必读）
+├─ AGENTS.md                         # 项目级实现约定（编码 Agent 必读的强制规则）
 ├─ LICENSE                           # MIT
+├─ change-log/                       # 版本记录（一个版本一个文件；成果 / 修复 / 验证结论）
+├─ docs/                             # 文档索引 / ADR / 主题适配 / 验证状态（见 docs/README.md）
+│  ├─ README.md                      #   文档职责索引与维护规则
+│  ├─ adr/                           #   长期技术决策（一事一文件）
+│  ├─ designs/<id>/ADAPTATION.md     #   主题适配记录（仅确有适配 / 例外时创建）
+│  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
 ├─ SPEC.md                           # 本规格（唯一契约文档）
 ├─ astro.config.mjs                  # Tailwind vite 插件 / fonts(npm provider) / site+base(env) / injectRoute 设计路由与切换页
@@ -433,7 +434,7 @@ SenrenBanka/
 2. 数据层：`content.config.ts`（glob loader + Zod）→ 示例 `profile.yaml` / `site.config.yaml` → `lib/site.ts` / `lib/urls.ts`。
 3. 骨架：`registry.ts`（含校验）+ `HeadMeta` + `pages/index.astro`（根路由）+ `[design]` 动态路由 + 切换页（条件构建），用 2 个临时最小设计跑通构建。
 4. 选型定稿：抓取 Oxide / Vercel 的完整 DESIGN.md（核实可获取性 + 许可 + provenance；不行则换备选）；用 impeccable `document --seed` 生成 editorial、terminal 两份 DESIGN.md。
-5. 逐套实现 4 套设计（按 §9 约定；每套完成后：构建 + 目检 + 移动端 + CSS 隔离抽查 + 审查清单）。
+5. 逐套实现 4 套设计（按 `AGENTS.md` 约定；每套完成后：`design-page-verify` 全流程，状态写入 `docs/verification/`）。
 6. 行为完善：随机/固定/缓存/避免重复/手选持久化全套 + 边界（单设计、过期、禁用设计、模式切换遗留存储）。
 7. 部署：GH workflow + CF/Vercel 文档 + 自定义域名说明 + base 前缀全链路自检（`BASE_PATH=/x npm run build` 抽查）。
 8. 验收：跑完 §13 全部条目；补全 README/AGENTS.md。
@@ -466,13 +467,13 @@ SenrenBanka/
 |---|---|
 | 许可风险（第三方规范再分发） | §4 策略：仅许可可确认来源入库；provenance 强制；designmd.co 排除；保留声明文件；不确定即不入库 |
 | CSS 体积失控（多设计类名互泄） | 从第一套设计起固定 `source(none)+@source` 协议；验收抽查隔离 |
-| DESIGN.md 格式参差、单份不足以成页 | §9 项目级实现约定层 + 新设计审查清单 |
+| DESIGN.md 格式参差、单份不足以成页 | `AGENTS.md` 项目级实现约定层 + `design-page-verify` 流程 |
 | 来源漂移（上游改 URL/删文件） | 快照归档入库 + `fetchedAt` 记录；构建不依赖上游 |
 | 工具版本漂移（impeccable 等） | `generatedBy` 记录生成工具与版本；技能升级不影响已归档设计 |
 | GH Pages 同域存储冲突 | 存储键含 base 命名空间 + 可覆盖 |
 | GH 子路径与根路径产物差异 | env 驱动 site/base + `urls.ts` 统一前缀 + 验收第 12 条 |
 | 近重复内容 SEO | 仅 default 可索引（§7.4） |
-| 设计质量不可自动校验的部分（右键菜单接入、随机语义等） | 审查清单人工把关 + `design-page-verify` 流程（一期接受） |
+| 设计质量不可自动校验的部分（右键菜单接入、随机语义等） | `design-page-verify` 流程与通过标准（一期接受） |
 
 ---
 
@@ -516,34 +517,15 @@ SenrenBanka/
 
 ---
 
-## 18. 实施记录（2026-10-10，第一阶段完成）
+## 18. 实施与验证记录的归属（2026-10-11 文档治理迁移）
 
-- 工程与四套设计已落地并通过 `npm run build`：7 个静态页面（4 设计 + 根路由 + 切换页 + 404），`astro check` 0 错误 0 警告。
-- 官方来源最终采用 **Oxide（MPL-2.0）** 与 **Microsoft FAST（MIT）**；Vercel 因文件挂在官网、无许可声明而弃用（见 §4.3）。
-- 自产规范（editorial / terminal）已用 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范：frontmatter token schema（colors/typography/rounded/spacing/components）+ 规范八段结构 + Named Rules。按 impeccable 自身路由，`--seed`（实现前世界工作坊）不适用于已实现代码，改用 scan 模式"固化首个实现"；North Star 由项目所有者选定（Editorial「The Issue」/ Terminal「The Amber Terminal」）；两个 `design.json` 的 `generatedBy` 已同步更新。未生成 `.impeccable/design.json` sidecar——该 sidecar 面向单设计系统的 live panel，本仓库多设计并存，暂不需要。
-- 设计路由最终实现为 `injectRoute` 注入（§10.4）；起因是动态 `[design]` 路由会把所有设计的 CSS 聚合进每个页面（§3.2-11，本机实测），改注入后每页仅链接自己的 CSS（dist 实测通过）。
-- 字体：`astro:fonts` + npm provider（`remote:false`）构建期自托管，dist 内 9 个 woff2、全站零第三方字体引用；editorial 预加载 Fraunces，terminal 不预加载 JetBrains Mono（子集文件过多）。
-- 新增实测坑（已写入 §3.2 与 AGENTS.md）：CSS 聚合、glob 条目 id 归一化、`weights` 过滤导致 npm provider 解析失败等。
-- **额外实测坑**：Astro 7 的 `import.meta.env.BASE_URL` 在带 base 时不带尾斜杠（`'/demo'`），`urls.ts` 已做归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon 全部带前缀）。
-- 固定模式 + `manualSwitch:false` 曾存在缺陷（会读取遗留存储），已修复为"永远 default 且不读写存储"（根脚本新增 `manualSwitch` 运行时开关）；浏览器实测：遗留存储被忽略、`/designs/` 返回 404。
-- 移动端复验发现并修复 oxide 页脚横向溢出：flex 子项 `min-width:auto` 被 nowrap 的 ASCII 波形撑到 max-content；修复为 `min-width:0`（并给波形加 `max-width:100%`），复验 375×812 下 scrollWidth=360、零溢出元素。
-- 行为验收（随机 / 缓存窗口 / 避免连续重复 / 手选持久化 / 切换页 / fixed 模式 / `manualSwitch:false` / `enabled:false` / 禁用 JS 降级 / 零第三方请求）全部执行并通过；`npm ci` 干净安装 + 构建通过。
-- 依据 impeccable `critique`（dual-agent 评审，快照存 `.impeccable/critique/`）与 `audit`（15/20）执行第一轮修复：**editorial** 强调色收权（P1：链接下划线默认墨色、hover 转焦赭；补 `::selection`/caret）；**terminal** a11y 三件套（sr-only 分区标题、装饰符 `aria-hidden`、链接 `aria-label`）并把 dim 档提亮至 ≈6.7:1（`#c68a1a`）。类别默认信号（cream/eyebrow/cursor/stripes）经项目所有者确认为**有意保留**并按设计记录。其余 P2/P3（导航/终点/移动端整齐度/字体 preload 等）留待后续 pass。
-- 第二轮修复（用户选定 layout→clarify→adapt）：editorial 增加 masthead 锚点目录（`#ed-works` / `#ed-elsewhere` / 切换设计）；页脚改"邀请"收尾（contact.note + 邮箱 CTA，colophon 降为 meta 行）；独立布局评估发现的桌面首屏分组倒置（`align-items: end` 令简介先于定位语、与 DOM 顺序不符）修为同顶对齐；≤560px kicker 仅保留中文；editorial 与 terminal 链接在 `pointer: coarse` 下扩展命中区至 ≈44px，terminal hover 反白加 `(hover: hover) and (pointer: fine)` 门控。layout 机械扫描（`detect --scope layout`）为零发现。
-- 第三轮修复（distill/optimize/终端 P3 收尾）：editorial Email 去重（Elsewhere 过滤 mailto、页脚邀请段唯一呈现；`Elsewhere` 副标改"外部链接"）；字体 preload 实测结论——npm provider 不填 face 的 `subset` 元数据、family 级 `subsets` 亦为空操作，**无法子集过滤**；编辑器实测三份 preload 中约 68KB 为未使用的 latin-ext/vietnamese，故**移除 editorial 的 preload**（latin 子集仍按 unicode-range 按需加载）；`.ed-switch` 归入 Label 档（0.6875rem 大写）、DESIGN.md 增加 `work-title` 字号 token（1.35rem），检测器在 editorial/terminal 上均回到**零发现**；terminal experience 注释独立成行（`.tm-note`，缩进 3ch）、≤560px 链接列表改 grid 对齐（marker 固定列 / URL 缩进）。
-- 四套设计检测器终态：editorial / terminal / fast **零发现**；oxide 保留 1 条 `codex-grid-background` advisory——该两轴网格底纹源自官方 Oxide 规范的 "Visible grids" 原则（`src/designs/oxide/DESIGN.md` 为厂商原始快照，不得修改），属**源自规范、有意保留**，在此记录为已知例外。
-- 第四轮修复（复评 8 条优先问题，用户选定"全部修"）：editorial——TOC「联系方式」改「外部链接」、nav aria-label 改「本期导航」、切换入口两处文案统一（`切换设计 / Switch design`）、`.ed-work-title a` 纳入 coarse 命中区、One Accent Rule 表述改为"按栏目计数 + 交互态豁免"；terminal——命令行尾加 `aria-hidden` 视觉注释标签（# 简介/链接/经历/项目/技能/联系）、链接 URL 去协议短形式、chrome 条加 `[switch design]` 入口（页脚保留）、扫描线自全屏叠加层迁入屏幕背景层（2.5%，文字之下，dim 最坏扫描行 ≥5:1）、hero 补 `# based in …`（location）、`--font-terminal` 令牌实际启用；字体回退链修正（Fraunces 与 JetBrains Mono 配置 `fallbacks`，避免 Astro 注入的无衬线优化回退排在预期衬线/等宽回退之前）。复评基线：editorial 25/28、terminal 19/24。
-- skill 演练（`design-page-verify` 首次全流程执行，对象 `fast`）：构建 / 产物 CSS 隔离 / base 前缀（`--base /demo`）/ 检测器（含 oxide 反证）/ 桌面实测（console 0、仅自身资源、h1→h2→h3 层级、light-dark 双主题实测 rgb(250,250,250)↔rgb(31,31,31)、6px 圆角、3 列网格）/ 375 触控仿真全部通过；**演练暴露并修复真实缺口**——fast 是唯一未做触控命中增强的设计（实测 `.fs-btn` 35.6px、`.fs-footer-link` 19.3px、`.fs-card-title a` 21.6px），已补 `@media (pointer: coarse)` 块（`.fs-btn` `padding-block: 0.8rem`、其余 `0.78rem`）。fast/DESIGN.md 为厂商原始快照（Microsoft FAST，MIT），不予修改，本条即项目侧记录。
-- **动效机制（进入动画 + 滚动显现，v0.2.0）**：按 `docs/adr/0001-motion-reveal-mechanism.md` 实现。**范围**：仅规范授权的 **oxide**（厂商规范已有 Motion 章节，明确鼓励入场动效）与 **fast**（厂商规范提供 duration / curve token）采用动效；**editorial**（自产规范限定"唯一动效是下划线过渡"）与 **terminal**（自产规范限定"光标是唯一动效"）保持静止、不加载脚本——厂商 `DESIGN.md` 为原始快照，未修改。**实现**：首屏入场 = 各设计私有纯 CSS `@keyframes`（无 JS 依赖，包在 `@media (prefers-reduced-motion: no-preference)` 内）；滚动显现 = 共享 `src/lib/reveal.ts` 的 `IntersectionObserver`（`[data-reveal]` → 首次进入视口置 `[data-reveal-in]` 并 `unobserve`，只播一次；时长 / 缓动 / 位移 / 错落由各设计 `style.css` 维护）。**可见性契约**：内容默认可见，仅当 `src/components/Reveal.astro` 的内联 boot 判定「非 reduced-motion 且支持 `IntersectionObserver`」时才给 `<html>` 打 `data-reveal-ready`，作为 CSS 隐藏态的唯一门控——无 JS / 脚本失败 / 无 IO / 减动态四种情况内容始终可见；共享脚本不 import 任何 CSS（不触发 §3.2 的 CSS 聚合陷阱）。oxide 参数：`260ms ease-out`、`translateY(10px)`、hero 4 项 40ms 错落、列表行 30ms（上限 5）；fast 参数：复用 `--fast-duration-normal` / `--fast-curve-easy-ease`、`translateY(8px)`、hero 4 项 30ms 错落。**实测**：构建 7 页通过（`astro check` 0/0）；CSS 隔离仍成立（4 份设计 CSS 各只含自身前缀，`oxide` 一份、`fast` 一份、editorial/terminal 各一份）；`data-reveal-ready` 与模块脚本只出现在 oxide / fast 页面。
-- **动效验证（`design-page-verify` 全流程，v0.2.0）**：构建 7 页通过、`astro check` 0/0；产物抽查——CSS 隔离成立（4 份设计 CSS 各只含自身前缀）、`BASE_PATH=/demo` 下 oxide 内部链接全部带 `/demo` 前缀、根页 / 切换页 / 404 **不链接**任何设计 CSS；impeccable 检测器 editorial / terminal / fast **零发现**、oxide 仅保留 1 条已记录的 `codex-grid-background` advisory（新增的 motion 规则未产生新发现）；桌面实测（oxide / fast）console 0 错误 0 警告、请求仅自身资源（Document + 自有 CSS + favicon），入场结束态 `opacity=1` 且 `animation-name` 生效，滚动到底后揭示 6/6（oxide）、3/3（fast）；375×812 + 触控仿真——`pointer: coarse` 生效、`scrollWidth == innerWidth`（无横向溢出）、主要链接命中高 ≥44px（oxide 44.8 / fast 44.2 / editorial 44.2 / terminal 44.0）；降级与可访问性——`reduced-motion: reduce` → 不写门控、`animation: none`、隐藏元素 0；无 JS → 全内容可见（截图 `verify-oxide-nojs.png`）；无 `IntersectionObserver` → 不写门控、隐藏 0；`IntersectionObserver` 构造抛错 → `try/catch` 撤销门控、隐藏 0。**验证期暴露并修复两处真实缺陷**：(1) 跳转式滚动（刷新恢复位置 / End 键）使元素"从视口下方直接跳到上方"，IO 不产生通知 → 内容永久隐藏（实测跳到底部 6 个目标只揭示 4 个），已加滚动兜底补揭示（复测 6/6）；(2) oxide 从未做触控命中增强（375px 实测 `.ox-link` 14.4px、`.ox-switch` 39.4px），已补 `@media (pointer: coarse)` 块（`padding-block: 0.95rem`；`.ox-row-title a` 的 border 下划线在触控下改用同色 `text-decoration` 以免被 padding 推离文字），复测 minHit 44.8px。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放；`prefers-reduced-motion` 与无 JS 降级基于 Chromium 仿真。截图归档于 `C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-oxide-top/-bottom/-375/-nojs.png`、`verify-fast-top/-bottom/-375.png`）。
-- **skill 演练（`design-page-verify` v0.2.0 更新后复跑）**：按更新后的流程完整走一遍（步骤 1–7 含 4b / 5b）。步骤 1 构建 7 页绿；步骤 2 CSS 隔离 4 份各一份、根页 / 切换页 / 404 不链接设计 CSS、`rel="preload"` 计数 0（与移除 editorial preload 后的预期一致）、`BASE_PATH=/demo` 全链路前缀正确；步骤 3 检测器 editorial / terminal / fast 零发现、oxide 仅 1 条已记录 advisory；步骤 4 桌面 oxide / fast console 0、请求仅自身资源、`h1→h2`（fast 另含 `h3`）、装饰元素 `aria-hidden` 就位、`:hover` 规则双证成立；步骤 4b 门控写入、入场 `animation-name` 生效且结束态 opacity 1、**跳转滚动后隐藏元素 0**（oxide 6/6、fast 3/3）；步骤 5 375px 触控 oxide 44.8 / fast 44.2、无横向溢出；步骤 5b 四种降级（reduced-motion / 无 JS / 无 IO / 脚本抛错）隐藏元素均为 0；步骤 6 oxide 对比度实测 dim / label 5.76、name 17.41、body 9.97、number 10.35（均 ≥4.5）。**演练暴露两项流程侧问题**：(a) skill 存在两份副本——`.agents/skills/`（入库版，本次更新）与 `.trae/skills/`（工具实际加载版）已漂移，实测 Skill 加载的是旧版；已同步两者，并需固化"以 `.agents` 为准 + 改动后同步 `.trae`"的约定；(b) 前置假设 preview 固定 4321，实测因上一 preview 进程残留导致端口被占用（回落 4322），流程缺处理说明。**另暴露 oxide 两项既存 a11y 缺口**（装饰符进入链接可访问名，实测 `▸GitHub` / `▸Email`；`.ox-hero` / `.ox-columns` / `.ox-section` 无可访问名称，`aria-label|aria-labelledby` 计数 0），对比 terminal 已具备 sr-only `<h2>` + `aria-hidden` 的同类处理——**已按项目所有者决定修复，见下条**。未测项同前（真机 / Safari / Firefox / 横屏 / 200% 缩放）。
-- **oxide a11y 收口 + skill 二轮硬化（2026-10-10）**：oxide——`.ox-hero`、`.ox-columns` 内两栏、两个 `.ox-section`、`.ox-footer` 补 `aria-labelledby` 指向同区可见标签（`.ox-columns` 由 `<section>` 降为布局 `<div>`、两栏升为具名 `<section>`，CSS 无需改动）；品牌点 `●`、链接箭头 `▸`、切换入口箭头全部 `aria-hidden`；切换入口改 `aria-label="切换设计 / Switch design"`。复测：桌面 `aria-label|aria-labelledby` 7 处、`aria-hidden` 8 处、4/4 箭头隐藏、标题序列 `h1→h2`（oxide 无 h3，亦无跳级）、`.ox-columns` 桌面两列 / 375px 单列、触控命中 44.8px、跳转滚动后隐藏元素 0、console 0；检测器仍仅 1 条已记录 advisory。`design-page-verify` skill 二轮硬化：前置补"端口被占用 → 清 4321 再重启 preview"；步骤 4 的 a11y 项改为可判定（每分区必须有可访问名称且计数 > 0；装饰符号不得进入链接可访问名）；通过标准新增 a11y 行。`AGENTS.md`「入库范围」写明 skill 唯一位置为 `.agents/skills/design-page-verify/SKILL.md`——失配的 `.trae/` 本地副本已于同日删除，此后单副本、改完即生效。
-- **图标与品牌标志（v0.3.0，试点）**：按 `docs/adr/0002-icon-and-brand-mark-strategy.md` 落地。**来源**：功能图标唯一来自 `@lucide/astro`（ISC；构建期内联 SVG、零客户端 JS、按需 tree-shaking）；品牌标志取自 simple-icons（CC0-1.0；canonical 仓库 github.com/simple-icons/simple-icons，经 jsDelivr 镜像获取，2026-10-10），vendored 为 `src/assets/brand/github.svg`（首个资产；商标核对结论：GitHub Logos and Usage Policy 允许个人账户链接用途；Bluesky 专项政策未查证到、暂不使用）。**接线**：`links[].icon` 可选 slug + 各设计私有映射（`Page.astro` 条件渲染）+ 未映射 / 缺省纯文本回退；标记一律 `aria-hidden`。**按设计分发**：editorial = Elsewhere 品牌 mark + Selected Works 外链箭头（`ArrowUpRight`，灰墨静态）；terminal = 零 SVG，`label → url` / `title → url` 字符标记（Dim 档、`aria-hidden`）；oxide = CHANNELS 品牌 mark 替换 `▸`（贴厂商 filled 语言，未引入 lucide）；fast = 按钮前置图标（GitHub mark / Mail）+ 项目卡外链箭头。**样式**：尺寸 / 描边 / 颜色由各设计 `style.css` 控制；无共享图标组件、无新增共享 CSS 边。厂商 `DESIGN.md`（oxide / fast）未修改。
-- **图标与品牌标志验证（`design-page-verify` 全流程，v0.3.0）**：构建 7 页通过（`astro check` 0/0）；产物抽查——CSS 隔离成立（4 份设计 CSS 各只含自身前缀；`.ed-mark/.ed-ext` 仅在 editorial、`.ox-mark` 仅在 oxide、`.fs-btn-mark/.fs-card-ext` 仅在 fast；terminal 零 SVG 仅字符 `→`）；四页所有 `<svg>` 均 `aria-hidden="true"`（editorial 3 / oxide 1 / fast 4 / terminal 0）、无 `<img>`、无外链资源（`src="http` 计数 0）、`rel="preload"` 0；根页 / 切换页 / 404 不链接任何设计 CSS；`BASE_PATH=/demo` 下四页内部链接全部带 `/demo` 前缀。检测器：editorial / terminal / fast 零发现；oxide 仅 1 条已记录 `codex-grid-background` advisory（有效性反证成立）。桌面实测：console 0；可访问名干净（oxide `▸`/mark 均不入可访问名——实测 `GitHub` / `Email`；editorial 实测 `GitHub` / `博客`；fast 按钮 `GitHub` / `Email` / `博客`）；计算值——editorial `.ed-ext` 17.28px / 1.5 描边 / `#57534e`、`.ed-mark` 14.45px；oxide `.ox-mark` 12px / accent 绿；fast `.fs-btn` 计算 display flex（flex 项 blockify）+ gap 8px、mark 14px、卡片箭头 14.4px / 1.75 描边 / `#0f6cbd`；行内图标 rect 实测与文字同行、垂直居中。375×812 + 触控仿真：`matchMedia('(pointer: coarse)')` 为 true、`scrollWidth == innerWidth`（零横向溢出）、命中高度 min——editorial 44.2 / terminal 44.0 / oxide 44.8（`.ox-link` 47.2）/ fast 44.2（`.fs-btn` 46.8）。对比度：editorial mark 6.95 / terminal dim 6.75 / oxide mark 9.92 / fast 亮 5.38 / 暗 5.18（均 ≥4.5）。**验证期暴露并修复一处真实缺陷**：Tailwind Preflight 将 `svg` 置为 `display:block`，行内图标（editorial mark / 箭头、oxide mark、fast 卡片箭头）整枚折行到文字下一行（rect 实测 svg 不与文本末端相接、y 越行）——已为行内图标显式 `display:inline-block`，复测同行居中；该坑已记入 `AGENTS.md`「已知坑」。截图归档于 `C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-<id>-top/-375/-full.png`、`verify-editorial-work-title/-works/-links.png`、`verify-terminal-links/-project.png`、`verify-oxide-channels.png`、`verify-fast-actions/-card/-card-title.png`）。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放。
-- **链接列表面 100% 标记（v0.3.1 修正「半用」）**：依项目所有者「要么不用，要么全用」裁定（ADR 0002「修订」节）：未映射 / 缺省 slug → 通用功能图标 `Globe`（lucide），纯文本回退否决；oxide CHANNELS 的 Email / 博客由 `▸` 改为 Mail / Globe（outlined、1.5 描边，厂商规范允许 outlined variants）；editorial Elsewhere 补 Globe；fast hero 按钮补 Globe。列表面之外的链接（页脚 / Contact CTA / 切换器）保留原生 affordance。**验证**：构建 7 页绿（`astro check` 0/0）；内联 SVG 计数 editorial 4 / oxide 3 / fast 5 / terminal 0，全部 `aria-hidden`、无 `<img>` / 外链资源；CSS 隔离四份单归属；检测器 editorial / terminal / fast 零发现、oxide 仅已记录 advisory；桌面列表面 100%（Elsewhere 2/2、CHANNELS 3/3、hero 3/3），尺寸 / 描边 / 颜色符合（14.45px・1.5・`#57534e` / 12px・1.5・accent / 1em・brand）；375×812 触控 coarse、零溢出、命中 44.2–47.2px；对比度沿用同色值 6.95 / 9.92 / 5.38・5.18。截图归档于 `C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-editorial-links.png`、`verify-oxide-channels.png`、`verify-fast-actions.png`、`verify-<id>-375.png`）。未测项同前。
-- **四套设计差异化动效增强（v0.4.0）**：按 `docs/adr/0003-differentiated-motion-enhancement.md` 落地（基础触发沿用 ADR 0001，其决定 1 的范围已修订）。**规范先行**：editorial `DESIGN.md` 重写 Motion 章节（"印刷"双动作）＋ Key Characteristics 增补；terminal 新增 Motion 章节并修订 Don't（打字级联仅限命令与装饰行）；厂商快照（oxide / fast）未修改，取舍记录于 ADR 0003 与本记录。**实现**：editorial = 首屏 opacity 渗入（90ms 错落）+ hero 伪元素 `scaleX` 划线 + 栏目头两端就位（±10px）+ 作品行「渗入 + 行线绘制」+ 链接 70ms 错落 + 页脚渗入；terminal = Astro 构建期切分命令字符（66 个 `tm-ty` span、95 处内联 `--d`）+ 逐字符 opacity 步进（`steps(1,end)`，零运行时 JS）+ 输出 / 列表项 `--d` 级联（16ms/字、50ms 行节奏、上限 6）+ chrome 首个圆点 2.6s 呼吸灯；oxide = 顶部 2px 滚动进度线（CSS Scroll-Driven Animations、`animation-timeline: scroll(root)`、`@supports` 门控、不支持 / 减动态整条隐藏）+ ASCII 波形 32s 无缝流动（`wave.repeat(4)` + `translateX(-25%)`）+ 链接 / 切换器 150ms ease 颜色过渡 + 页脚显现目标；fast = 卡片 / 经历行错落（60 / 50ms，复用既有 duration / curve token、零新增 token）+ 卡片 hover（面层 + 描边 + `translate: 0 -2px`，与 reveal 的 `transform` 互不覆盖）+ 按钮 `:active` `scale(0.97)` + 页脚链接 hover。**踩坑与修复**：CSS 压缩器会把 `animation-timeline` 合并进 `animation` 简写（产物 `animation:linear both ox-progress scroll(root)`），当前 Chromium 不接受该简写（`CSS.supports` = false）→ 整条声明失效（实测 `animation-name:none`），以 `var()` 传入 timeline 阻断合并后实测生效（top `scaleX(0)` → 中位 `0.5004` → 底 `1`）；terminal 检测器首跑出现新增 `em-dash-overuse`（新注释中的「——」与 `--d` 字样触发，10 处），改写后归零。
-- **动效增强验证（`design-page-verify` 全流程 + 动画专项，v0.4.0）**：构建 7 页绿（`astro check` 0/0）；产物抽查——CSS 隔离成立（四份各只含自身前缀、每设计页恰 1 条样式链接）、根页 / 切换页 / 404 不链接任何设计 CSS 且 `data-reveal-ready` 计数 0（reveal 脚本仅存在于四设计页）、`BASE_PATH=/demo` 全链路前缀正确（0 条非法根相对链接）、`rel="preload"` 四页均 0、核心字段四页齐备。检测器：editorial / terminal / fast 零发现、oxide 仅 1 条已记录 advisory（反证成立）。桌面实测（四页 console 0、请求仅自身资源）：editorial —— `.ed-name` `ed-ink`、hero 伪元素 `ed-rule-draw` + 结束态 `transform:none` + `border` 透明接管、行 2 `::before` `scaleX(1)`、链接错落 `transition-delay 0.07s`；terminal —— `.tm-name` `tm-step` 延迟 0.276s、链接行 / 项目行 0.324s / 0.42s、滚动到 projects 后 +180ms 仍有 3/20 单元未落屏（级联进行中）、settled 后 0，光标 `tm-blink`、圆点 `tm-live` infinite；oxide —— 进度线 `animationTimeline: scroll(root)` 且随滚动变化、波形 `ox-wave-flow` 运行中、链接过渡 `color|0.15s|ease`；fast —— 错落变量 60 / 120ms、卡片 hover `translate 0px -2px` + `#f5f5f5` + `#d1d1d1`（rest `none` / `#ffffff` / `#e0e0e0`）、按钮 active `matrix(0.97, 0, 0, 0.97, 0, 0)`（隔离上下文实测，:hover/:active 均 true）。**跳转兜底**：四页 `scrollTo(0, height)` 后隐藏目标 0；terminal 9 次快速往返滚动后隐藏 0 / 0；布局稳定（terminal `scrollHeight` 1243 → 1243）。375×812 + 触控：四页 `pointer: coarse`、`scrollWidth == innerWidth`（375，零溢出）、命中高 44.2 / 44.0 / 44.8 / 44.2。降级四情形：reduced-motion（动画数 0、门控不写、隐藏 0）、无 JS（`<html>` 无门控、h1 / 核心内容齐备、截图）、无 IO（门控不写、隐藏 0）、IO 构造抛错（门控撤销、隐藏 0）。对比度：terminal dim 6.75 / 正文 10.97、editorial 6.95、fast 亮 5.93 · 暗 9.75；oxide 色值未改动，沿用已核值（dim / label 5.76、name 17.41、body 9.97、number 10.35；本轮工具链对 oklch 未重算）。截图归档于 `C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-<id>-top/-bottom/-375/-nojs.png`）。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放；滚动进度线对 Firefox stable 的隐藏行为未在该引擎实证；「快速滚动卡顿」为定性观察（无 FPS / CLS 仪器化度量，以零布局位移 + 隐藏残留 0 近似）。
-- **动效修正两则（v0.4.1，项目所有者反馈）**：① **oxide** 页脚小波形此前静态（v0.4.0 仅顶部波形挂了流动轨道）——补 `.ox-wave-track` 后两处同为 `ox-wave-flow` 32s linear 无缝循环（实测 1.5s 内位移推进：顶部 −21.6→−56.6、页脚 −18.8→−49.3），减动态时均静止；仅 `Page.astro` 变化、CSS 复用既有规则。② **terminal** 块状光标自"基线对齐"改为"底边与字面底部对齐"（`translateY(0.15em)` 静态 transform）——实测修正前底边停于基线 191.55px、字面墨迹底部在 196.55px（光标整体浮于字面之上），修正后 197.31px 与字面底部齐平；减动态下位置保留、仅闪烁停止；`DESIGN.md`（Shapes / Cursor）同步。**验证**：构建 7 页绿（check 0/0）；CSS 隔离四份单归属（terminal 新哈希 `Page.oGXrcDw_.css`）；检测器 terminal 零发现、oxide 仅既知 advisory；console 0；375×812 触控零溢出且两条波形移动端仍流动、光标 0.6em 比例正确；reduced-motion 下光标 transform 保留 / 波形静止。截图 `verify-0.4.1-terminal-cursor.png`、`verify-0.4.1-oxide-footer-wave.png` 归档（含修复前对比 `cursor-fix-*`）。未测项同 v0.4.0。
-- **桌面右键快捷操作菜单（v0.5.0）：可见切换入口整体替换为共享 ContextMenu**。**决策**（`docs/adr/0004-context-menu-replaces-visible-switch.md`，经项目所有者确认三项待决）：菜单为**统一中性 chrome**（对齐项目所有者提供的示意图；随系统明暗，`light-dark()`）；`navigator.share` 不可用时**隐藏**该项；复制 / 分享反馈用 **Toast**（`role="status"`）。**实现**：新增 `src/components/ContextMenu.astro`（`<style is:inline>` 菜单 / Toast 样式 + `role="menu"` 标记 + 配置 JSON + 内联能力门控 `.then(动态 import)`）与 `src/lib/context-menu.ts`（打开 / 关闭 / 视口翻转、键盘（Shift+F10 / 上下文键 / ↑↓/Home/End/Enter/Space/Esc/Tab）、原生右键保留（链接 / 图片 / 输入 / 可编辑 / 已选文字 / 触屏来源）、复制（Clipboard API → `execCommand` 降级 → 失败 Toast）、分享（成功 / AbortError 取消 / 失败三态）、随机（排除当前 + `avoidRepeat` 再排除上次 → 写 `{designId, expiresAt}`（random=now+cacheHours / 0；fixed=null）→ `location.assign` 目标固定 URL））。`src/lib/site.ts` 的 `DesignView` 以 `contextMenu` 取代原 `switcher` 字段（构建期派生目标池 / `withBase()` href / storageKey）。四套设计删除全部旧入口共 6 处（editorial 导航 + 页脚、terminal chrome 条 + 页脚、oxide / fast 页脚）及专用 CSS（`.ed-switch` / `.tm-chrome-switch` / `.ox-switch` / `.fs-footer-link` 及各处 coarse 命中块条目）。`manualSwitch:false` → 组件整体不渲染。**验证（构建 7 页绿 / check 0/0/0；检测器 editorial / terminal / fast 零发现、oxide 仅既知 `codex-grid-background` advisory（同时构成有效性反证））**：dist——四设计页各 1 条自身 CSS 链接、菜单样式内联、根页 / 切换页 / 404 零菜单字节；运行时 chunk（`context-menu.*.js`）独立且无 `modulepreload`；`BASE_PATH=/demo` 全链路（配置 JSON / 复制 / 随机 / 切换页链接）带前缀。桌面实测（1280×800，Chromium）——四套设计菜单均可从非交互区域打开、eyebrow 为当前设计名、7 项（分享不受支持时 6 项）、边缘点击自动翻转收敛；次次右键收起、外部左键 / 滚动 / 尺寸变化 / Esc 关闭；Shift+F10 打开且焦点落首项（`data-cm-key` 焦点环），鼠标打开聚焦容器不预高亮；↑↓ 遍历、Enter 激活（回顶 796→0）、Tab 关闭；`aria-label` / `role` / `aria-disabled` / 装饰 icon `aria-hidden` 齐备；console 0、仅同源请求。动作实测——复制（Clipboard API 剪贴板回读正确；**降级路径**先暴露"解构 `execCommand` 裸调用 Illegal invocation"缺陷（见 `AGENTS.md` 已知坑）修复后真实降级复制回读正确；双双失败 → 错误 Toast）；分享成功 / 取消（AbortError）/ 失败三态 Toast；重载（sessionStorage 计数 1→2）；打印（stub 计数 1）；随机——4 设计池排除当前 + `avoidRepeat` 排除上次（seed last=fast 时落点 ∈ {oxide,terminal}）、存储 `{designId, expiresAt:now+24h}`、直达固定 URL 不覆盖存储、fixed 模式写 `expiresAt:null` 且根路径尊重手选；单启用设计时该项 `aria-disabled` 且强制点击不导航；`manualSwitch:false` 构建 6 页（`/designs/` 404、设计页零菜单 / 零脚本、右键不拦截）；触控仿真（375×812、coarse）——菜单不显示、程序化 contextmenu 无响应、**菜单 chunk 请求数 0**、无横向溢出（375）、无可见切换入口。对比度核算（菜单自身色板 vs 其底色）：亮色 eyebrow 初版 `#8e8e93` 仅 3.26 不达标 → 调深为 `#6f6f74`（实测 5.00）、icon 5.15、label 17.01；暗色 6.04–14.52；Toast 13.73、错误档 9.36；禁用项为 WCAG 豁免（状态由 `aria-disabled` + opacity 表达）。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横向 / 200% 缩放、Linux 桌面（`navigator.share` 缺失路径以 stub 验证，未在真实 Firefox 桌面实测）、菜单在 macOS 原生分享面板下的实际呈现。
-- **右键菜单顶部重设计（v0.5.1，项目所有者反馈：两行头部语义不明、整体过宽）**：移除「SENRENBANKA · EDITORIAL / 当前设计」双行头与品牌 eyebrow，改为**单行身份条**——设计强调色圆点（`design.json.accent`，与切换页芯片同源，经 `--cm-accent` 内联；缺省中性灰）+ 设计名 + 右对齐淡化「当前设计」标签；头部解除 `aria-hidden`（承载真实信息）、圆点保持装饰性 `aria-hidden`。宽度改为 `max-content` + `min 13.5rem` / `max 16.5rem` 收敛，实测四设计均 **216px**（原 304px）、高度 326px（原 352px）；条目 gap / 内边距 / 分隔线边距小幅收紧。`ContextMenuConfig` 增加可选 `accent`。**验证**：构建 7 页绿（check 0/0/0）；检测器 editorial / terminal / fast 零发现、oxide 仅既知 advisory；桌面四设计宽度 216、身份条为各自设计名、圆点计算色与 accent 逐一相符（`#9a3412` / `#ffb000` / `#3fdaa0` / `#0f6cbd`）、console 0；右下角翻转收敛、`Shift+F10` + `data-cm-key` 焦点环回归、深色主题三项颜色正确、375 触控菜单隐藏且 chunk 请求 0、零溢出；对比度：设计名 17.01 / 14.52、标签 5.00 / 6.04（圆点为装饰性身份芯片，与切换页芯片同口径）；产物：`--cm-accent` 内联、`cm-eyebrow`/`cm-current` 零残留、infra 页零菜单字节、四设计页仍各单链接自身 CSS（哈希不变）。截图 `verify-051-<id>-menu.png`、`verify-051-terminal-dark.png`、`verify-051-longname-probe.png`；超长设计名收敛以 DOM 注入实测（菜单停在 264px 上限、ellipsis 生效）。未测项同 v0.5.0。
-- **AGENTS.md 通用化重构（v0.5.2，项目所有者发起）**：AGENTS.md 改为只承载**通用**设计规则——移除全部单一设计名称与对具体 `DESIGN.md` 的引用（滚动进度机制、持续动效清单、规范同步策略、图标适配记录 4 处），文件头明确分工：「各设计的具体采用情况、适配记录与偏差」归口本 §18、`CONTEXT.md` 与 `change-log/`。**动效定位升级为「设计语言维度」**（沿 ADR 0003 方向）：总则「目标不是给所有元素增加动画，而是让每套设计拥有更丰富、更有辨识度的动态表现，同时保持各自的设计语言」；AGENTS.md「每套设计必须满足」新增第 7 条——`DESIGN.md` 须定义动效语言（Motion 章节；可极简，静止须论证）；共享显现改为「采用即接入 `<Reveal />`，不用须在 `DESIGN.md` 说明替代触发与可见性契约的满足路径」；滚动进度的压缩器合并坑修正为准确表述（`var()` 阻断合并）。**新增两节**：「Visual Assets & Cursor Rules」（素材必要性核实 / 优先既有表现手段 / 远程素材许可与再分发核实（衔接 §4）/ `assets/` 入库 + provenance / 替代文本与构建期优化 / 头像数据层统一解析 / 自定义光标回退与桌面门控 / 禁 JS 跟随特效）；「无障碍与响应式（Accessibility & Responsive）」（分区可访问名 / 装饰 `aria-hidden` 不入可访问名 / 对比度硬底线 4.5:1，自设更严档以更严者为准 / 触控命中 ≥44px（`pointer: coarse`）/ hover 门控 / 375px 零溢出 / DOM 顺序与视觉层级一致 / 键盘可达）。**评审清单扩充**：新增动效语言、素材合规、无障碍与响应式三行（原「移动端 375px」行并入）。**skill 同步**：`design-page-verify` 2 处专名（检测器有效性反证示例、滚动进度检查项）改为通用表述（引用本 §18 当前清单）。**术语**：`CONTEXT.md` 新增 Motion language（动效语言）/ Visual asset（视觉素材）。**验证**：纯文档 / 规则变更，未触碰页面代码；`npm run build` 7 页绿（`astro check` 0 错误 0 警告 0 提示）；AGENTS.md 专名残留 grep 为 0。**未测 / 限制**：无（本次不涉及运行时行为）。
+本规格**不维护**逐次实施 / 验证日志；各类记录的当前归属：
+
+- 各主题当前验证状态：`docs/verification/<id>.md`（共享机制：`docs/verification/shared.md`）
+- 主题适配与例外（厂商来源等）：`docs/designs/<id>/ADAPTATION.md`
+- 版本成果、修复与验证结论：`change-log/<version>.md`
+- 长期技术决策：`docs/adr/`
+- 文档职责索引与引用关系：`docs/README.md`
+
+2026-10-11 迁移把原 §18（v0.1.0–v0.5.2 的实施记录）按下述方式整理：仍有效的结论并入 §3.2 与本规格相关章节；验证细节迁入 `docs/verification/`；主题适配迁入 `docs/designs/<id>/ADAPTATION.md`；其余纯历史过程由 Git 保留（迁移前全文见 Git 历史）。
+
