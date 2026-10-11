@@ -98,5 +98,12 @@ export default defineConfig({
       fallbacks: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       options: { package: '@fontsource-variable/geist-mono' },
     },
+    {
+      provider: fontProviders.npm({ remote: false }),
+      name: 'Inter Variable',
+      cssVariable: '--font-inter',
+      fallbacks: ['system-ui', '-apple-system', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+      options: { package: '@fontsource-variable/inter' },
+    },
   ],
 });

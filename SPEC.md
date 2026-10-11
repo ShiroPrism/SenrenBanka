@@ -133,7 +133,7 @@
 | 1 | carbon | IBM Carbon Design System | 汇编 | Apache-2.0 | **已移除**（2026-10-11 打样后同质复核：与 fast 重叠；recipe 经验保留） |
 | 2 | uswds | US Web Design System | 汇编 | CC0 1.0 | 待批 |
 | 3 | material3 | Google Material 3 | 汇编 | CC BY 4.0（内容）/ Apache-2.0（代码） | **已实现**（v0.7.0；整合前逐页复核完成） |
-| 4 | govuk | GOV.UK Design System | 汇编 | OGL v3 | 待批（GDS Transport 字体回退） |
+| 4 | govuk | GOV.UK Design System | 汇编 | OGL v3 | **已实现**（v0.8.0；2025 品牌刷新口径，GDS Transport 回退 Arial） |
 | 5 | patternfly | Red Hat PatternFly | 汇编 | MIT | 待批 |
 | 6 | gitlab | GitLab Pajamas | 汇编 | MIT | 待批（材料量最大） |
 | 7 | ant-design | Ant Group Ant Design | 汇编 | MIT | 待批 |
@@ -149,11 +149,11 @@
 
 原生单份快照尾巴：`juspay`（Juspay Blend，MIT，随手可加）；小微厂 Arkite UI / UIZZE 暂不收录。
 
-复刻席（序 17–30，命名逐套提案；规范自撰、不移植上游内容）：17 Apple HIG、18 Microsoft Fluent 2、19 Vercel Geist、20 Uber Base Web、21 Adobe Spectrum、22 Salesforce SLDS、23 VMware/Broadcom Clarity、24 ByteDance Arco、25 Huawei DevUI、26 EU ECL、27 Singapore SGDS、28 Wikimedia Codex、29 Nordhealth Nord、30 Zendesk Garden。首批复刻已落地：19 Vercel Geist → **`kern`**（v0.7.0；id / displayName 于 2026-10-11 按命名提案定稿）。
+复刻席（序 17–30，命名逐套提案；规范自撰、不移植上游内容）：17 Apple HIG、18 Microsoft Fluent 2、19 Vercel Geist、20 Uber Base Web、21 Adobe Spectrum、22 Salesforce SLDS、23 VMware/Broadcom Clarity、24 ByteDance Arco、25 Huawei DevUI、26 EU ECL、27 Singapore SGDS、28 Wikimedia Codex、29 Nordhealth Nord、30 Zendesk Garden。首批复刻已落地：19 Vercel Geist → **`kern`**（v0.7.0）、17 Apple HIG → **`frost`**（v0.8.0）——id / displayName 均于 2026-10-11 按命名提案定稿。
 
 排除（明示）：Atlassian、Shopify Polaris（禁止再分发 / 演绎，快照与复刻均回避）；Vercel、Nuxt、Resend、Clerk、Mintlify（官网文件无许可声明）；外部抽取 / 逆向索引一律不接入（见 §4.1）。
 
-批次节奏（2026-10-11 修订）：Carbon 打样批次已移除（打样产出与 fast 同质，复核后删去；汇编 recipe 经验保留——见 §4.2 与实测坑）。批次 2 起按「视觉差异化矩阵」（与现有设计的正交性）过滤重排后推进——每批 2–3 套、版本 +0.1/批；复刻批与汇编同批推进（2026-10-11 修订：批次 2 = `material3` + 复刻首套 `kern`，原「数批后插入」不再适用）。**批次 2 已完成（v0.7.0，2026-10-11）**。
+批次节奏（2026-10-11 修订）：Carbon 打样批次已移除（打样产出与 fast 同质，复核后删去；汇编 recipe 经验保留——见 §4.2 与实测坑）。批次 2 起按「视觉差异化矩阵」（与现有设计的正交性）过滤重排后推进——每批 2–3 套、版本 +0.1/批；复刻批与汇编同批推进（2026-10-11 修订：批次 2 = `material3` + 复刻首套 `kern`，原「数批后插入」不再适用）。**批次 2 已完成（v0.7.0，2026-10-11）；批次 3 已完成（v0.8.0，2026-10-11：`govuk` + 复刻 `frost`）。**
 
 #### 4.4.1 视觉差异化矩阵与分级【2026-10-11 复核】
 
@@ -166,15 +166,15 @@
 | oxide | 冷绿 · 深 | 发丝线 / 致密纹理 | 无衬线 + 等宽标签 | ASCII 波形 / 网格 |
 | fast | 冷蓝 · 浅 | 圆角卡片 | 系统无衬线 | 克制，零装饰 |
 
-覆盖缺口（2026-10-11 批次 2 后更新：紫 tonal、纯黑白极简、大圆角与阴影层级已覆盖）：浅色红系、高对比政务语言、玻璃 / 材质感。
+覆盖缺口（2026-10-11 批次 3 后更新：紫 tonal、纯黑白极简、大圆角与阴影层级、政务语言、玻璃 / 材质感均已覆盖）：浅色红系。
 
 分级（仅视觉维；许可复核仍是前置硬门槛，逐一按 §4.2 执行）：
 
-- **A 强差异化（优先）**：`material3`（紫 tonal 色系、12–28px 大圆角、阴影层级、深浅双模——**已实现，v0.7.0**）；`geist`（复刻；纯黑白极简 + 几何细节——**已实现为 `kern`，v0.7.0**）；`govuk`（黑 / 黄 focus / 高饱和蓝的高对比直角语言；注意 GDS Transport 字体回退——**备次批首位**）。
-- **B 中等（备选）**：`vanilla`（紫橙）、`paste`（红）、`protocol`（黑白 + 橙）、`gitlab`（紫橙 DevOps）、`codex`（冷百科衬线，与 editorial 暖衬线部分接近）、Apple HIG（玻璃质感）。
+- **A 强差异化（优先）**：`material3`（紫 tonal 色系、12–28px 大圆角、阴影层级、深浅双模——**已实现，v0.7.0**）；`geist`（复刻；纯黑白极简 + 几何细节——**已实现为 `kern`，v0.7.0**）；`govuk`（蓝幅 / 黄 focus / 高对比直角语言——**已实现，v0.8.0**，2025 品牌刷新口径）；Apple HIG（复刻；玻璃 / 材质感——**已实现为 `frost`，v0.8.0**）。
+- **B 中等（备选）**：`vanilla`（紫橙）、`paste`（红）、`protocol`（黑白 + 橙）、`gitlab`（紫橙 DevOps）、`codex`（冷百科衬线，与 editorial 暖衬线部分接近）。
 - **C 同质暂缓**：浅蓝企业组（`uswds`、`ant-design`、`tdesign`、`patternfly`、`primer`、SLDS、Spectrum、Clarity、Arco、DevUI、semi——与 fast 高度同质）；政务蓝组（`nhs`、`dads`、ECL、SGDS——与 govuk 择一）；Fluent 2（与 fast 同源）；nutui 与 paste 红系二选一。
 
-批次建议：**批次 2 已完成**（`material3` + `kern`，v0.7.0，2026-10-11，经项目所有者确认执行）；后续批次按 §4.4.1 分级次序推进（`govuk` 备次批首位）；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
+批次建议：**批次 3 已完成**（`govuk` + `frost`，v0.8.0，2026-10-11，经项目所有者确认执行）；后续批次按 §4.4.1 分级次序推进（`paste` 等浅红系 / B 级候选）；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
 
 ---
 

@@ -1,0 +1,493 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-fr: var(--font-inter);
+}
+
+/* Frost — Materials & Depth（HIG 复刻）：极光底上的双层材料（导航功能玻璃 / 卡片标准材料）、
+   iOS 系统色与 17px 型阶、胶囊控件与弹簧动效。
+   数值与来源见 src/designs/frost/DESIGN.md；适配见 docs/designs/frost/ADAPTATION.md。 */
+
+.fr {
+  color-scheme: light dark;
+  margin: 0;
+
+  /* ---- 系统声部（浅色） ---- */
+  --fr-accent: #0071e3; /* iOS 系统蓝深一档，过 AA 硬底线（见 DESIGN.md） */
+  --fr-accent-solid: #0071e3; /* 填充底固定档（深浅同值）：白字在深色档 #0A84FF 上仅 3.65:1 */
+  --fr-canvas: #f2f2f7;
+  --fr-label: #1c1c1e;
+  --fr-secondary: #636366;
+  --fr-tertiary: #6e6e73;
+  --fr-separator: #c6c6c8;
+
+  /* ---- 材料（浅色）：两层厚度 ---- */
+  --fr-nav-bg: rgba(250, 250, 250, 0.6);
+  --fr-card-bg: rgba(255, 255, 255, 0.78);
+  --fr-fill: rgba(120, 120, 128, 0.12);
+  --fr-hairline: rgba(0, 0, 0, 0.05);
+  --fr-nav-border: rgba(0, 0, 0, 0.12);
+
+  /* ---- 动效：弹簧族 ---- */
+  --fr-spring: cubic-bezier(0.32, 1.25, 0.5, 1);
+  --fr-enter: 500ms;
+  --fr-reveal: 450ms;
+  --fr-hover: 200ms;
+  --fr-press: 130ms;
+
+  background: var(--fr-canvas);
+  color: var(--fr-label);
+  font-family:
+    var(--font-fr), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 1.0625rem; /* body 17 */
+  line-height: 1.47;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 深色（System appearance） */
+@media (prefers-color-scheme: dark) {
+  .fr {
+    --fr-accent: #0a84ff;
+    --fr-canvas: #000000;
+    --fr-label: #ffffff;
+    --fr-secondary: #a1a1a6;
+    --fr-tertiary: #8e8e93;
+    --fr-separator: #38383a;
+    --fr-nav-bg: rgba(22, 22, 24, 0.55);
+    --fr-card-bg: rgba(28, 28, 30, 0.72);
+    --fr-fill: rgba(120, 120, 128, 0.24);
+    --fr-hairline: rgba(255, 255, 255, 0.08);
+    --fr-nav-border: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* ---- 极光：玻璃的"背景内容"（固定装饰层，无动画，不进入无障碍树） ---- */
+
+.fr-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(620px 420px at 12% 6%, rgba(122, 184, 255, 0.5), transparent 70%),
+    radial-gradient(540px 440px at 88% 16%, rgba(196, 165, 255, 0.42), transparent 70%),
+    radial-gradient(580px 500px at 72% 86%, rgba(123, 224, 214, 0.4), transparent 72%),
+    radial-gradient(500px 400px at 16% 80%, rgba(255, 183, 201, 0.34), transparent 70%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .fr-aurora {
+    background:
+      radial-gradient(640px 460px at 12% 6%, rgba(36, 106, 199, 0.5), transparent 70%),
+      radial-gradient(560px 460px at 88% 16%, rgba(104, 76, 190, 0.45), transparent 70%),
+      radial-gradient(600px 520px at 72% 86%, rgba(22, 122, 114, 0.4), transparent 72%),
+      radial-gradient(520px 420px at 16% 80%, rgba(158, 64, 106, 0.34), transparent 70%);
+  }
+}
+
+/* ---- 玻璃回退：不支持 backdrop-filter 或系统"降低透明度" → 近实底 ---- */
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .fr {
+    --fr-nav-bg: rgba(250, 250, 250, 0.97);
+    --fr-card-bg: rgba(255, 255, 255, 0.97);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .fr {
+      --fr-nav-bg: rgba(22, 22, 24, 0.97);
+      --fr-card-bg: rgba(28, 28, 30, 0.97);
+    }
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .fr {
+    --fr-nav-bg: rgba(250, 250, 250, 0.97);
+    --fr-card-bg: rgba(255, 255, 255, 0.97);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .fr {
+      --fr-nav-bg: rgba(22, 22, 24, 0.97);
+      --fr-card-bg: rgba(28, 28, 30, 0.97);
+    }
+  }
+}
+
+/* ---- 导航（功能玻璃层） ---- */
+
+.fr-nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--fr-nav-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--fr-nav-border);
+}
+
+.fr-nav-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fr-nav-name {
+  font-size: 1.0625rem; /* Headline 17/1.29 */
+  line-height: 1.29;
+  font-weight: 600;
+}
+
+.fr-nav-loc {
+  font-size: 0.9375rem; /* Subheadline 15 */
+  line-height: 1.33;
+  color: var(--fr-secondary);
+}
+
+/* ---- 主列 ---- */
+
+.fr-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+}
+
+/* ---- 首屏 ---- */
+
+.fr-hero {
+  padding: 1.75rem 0 0.5rem;
+}
+
+.fr-avatar {
+  display: block;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin-bottom: 1.25rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 1px solid var(--fr-hairline);
+}
+
+.fr-large-title {
+  font-size: 2.125rem; /* 34 / 1.18 */
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+}
+
+.fr-title2 {
+  font-size: 1.375rem; /* Title 2 22 / 1.27 */
+  line-height: 1.27;
+  font-weight: 600;
+  margin: 0 0 0.625rem;
+  max-width: 40ch;
+}
+
+.fr-bio {
+  color: var(--fr-secondary);
+  margin: 0 0 1.25rem;
+  max-width: 56ch;
+}
+
+.fr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+/* ---- 胶囊控件 ---- */
+
+.fr-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 44px;
+  padding: 0 1.125rem;
+  border-radius: 9999px;
+  font-size: 1.0625rem; /* 17 */
+  line-height: 1.29;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color var(--fr-hover) ease,
+    color var(--fr-hover) ease,
+    transform var(--fr-press) var(--fr-spring);
+}
+
+.fr-capsule--fill {
+  background: var(--fr-fill);
+  color: var(--fr-label);
+}
+
+.fr-capsule--accent {
+  background: var(--fr-accent-solid);
+  color: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fr-capsule--fill:hover {
+    background: color-mix(in srgb, var(--fr-fill) 78%, var(--fr-label) 22%);
+  }
+
+  .fr-capsule--accent:hover {
+    background: color-mix(in srgb, var(--fr-accent-solid) 90%, #000000 10%);
+  }
+}
+
+.fr-capsule:active {
+  transform: scale(0.97);
+}
+
+/* 胶囊内标记（品牌 mark / 功能图标） */
+.fr-mark {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+/* ---- 分组（标签 + 卡片材料） ---- */
+
+.fr-group {
+  margin-top: 2rem;
+}
+
+.fr-group-label {
+  margin: 0 0 0.5rem;
+  padding: 0 1rem;
+  font-size: 0.8125rem; /* Group Label 13 */
+  line-height: 1.38;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fr-secondary);
+}
+
+.fr-card {
+  position: relative;
+  background: var(--fr-card-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 16px;
+  border: 1px solid var(--fr-hairline);
+  padding: 0.25rem 1rem;
+}
+
+.fr-card--pad {
+  padding: 1rem;
+}
+
+/* ---- 行（左缩进分隔线，iOS 惯用法） ---- */
+
+.fr-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fr-row {
+  position: relative;
+  padding: 0.75rem 0;
+}
+
+.fr-row + .fr-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1rem;
+  right: -1rem;
+  height: 1px;
+  background: var(--fr-separator);
+}
+
+.fr-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.fr-row-title {
+  margin: 0;
+  font-size: 1.0625rem; /* Headline 17 */
+  line-height: 1.29;
+  font-weight: 600;
+}
+
+.fr-row-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fr-row-link:hover {
+    color: var(--fr-accent);
+  }
+}
+
+/* 外链箭头位于行内语境（Preflight 把 svg 置为 block，必须显式 inline-block） */
+.fr-ext {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.3em;
+  vertical-align: -0.06em;
+  color: var(--fr-secondary);
+}
+
+.fr-row-meta {
+  font-size: 0.9375rem; /* 15 */
+  line-height: 1.33;
+  color: var(--fr-secondary);
+  white-space: nowrap;
+}
+
+.fr-row-sub {
+  margin: 0.25rem 0 0;
+  font-size: 0.9375rem; /* Subheadline 15 / 1.38 */
+  line-height: 1.38;
+  color: var(--fr-secondary);
+  max-width: 60ch;
+}
+
+/* ---- 芯片 ---- */
+
+.fr-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.625rem 0 0;
+  padding: 0;
+}
+
+.fr-card--pad .fr-chips {
+  margin: 0;
+}
+
+.fr-chip {
+  font-size: 0.8125rem; /* Footnote 13 */
+  line-height: 1.38;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  background: var(--fr-fill);
+  color: var(--fr-secondary);
+}
+
+/* ---- 联系（22px 大幅面卡 + Filled 胶囊） ---- */
+
+.fr-contact-card {
+  background: var(--fr-card-bg);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 22px;
+  border: 1px solid var(--fr-hairline);
+  padding: 1.5rem;
+}
+
+.fr-contact-note {
+  margin: 0 0 1rem;
+  max-width: 44ch;
+}
+
+/* ---- 页脚 ---- */
+
+.fr-footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  text-align: center;
+  font-size: 0.75rem; /* Caption 12 */
+  line-height: 1.33;
+  color: var(--fr-tertiary);
+}
+
+/* ---- 焦点：accent 双环 ---- */
+
+.fr :focus-visible {
+  outline: 2px solid var(--fr-accent);
+  outline-offset: 2px;
+}
+
+/* ---- 触控（pointer: coarse） ---- */
+
+@media (pointer: coarse) {
+  .fr .fr-row-title a {
+    display: inline-block;
+    padding-block: 0.7rem;
+  }
+}
+
+/* ---------- motion ----------
+   弹簧语言（cubic-bezier(0.32, 1.25, 0.5, 1)，轻微过冲）；极光静止（无持续动效）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .fr-rise {
+    animation: fr-rise var(--fr-enter) var(--fr-spring) both;
+    animation-delay: var(--rise-delay, 0ms);
+  }
+
+  /* 隐藏态以 html[data-reveal-ready] 为门控：boot 未成立则永不隐藏。
+     transition 一并携带 background-color：胶囊 / 材料反馈与显现互不覆盖。 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity var(--fr-reveal) var(--fr-spring) var(--reveal-delay, 0ms),
+      transform var(--fr-reveal) var(--fr-spring) var(--reveal-delay, 0ms),
+      background-color var(--fr-hover) ease;
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 行错落 50ms（上限 5）、组错落 70ms（上限 4） */
+  html[data-reveal-ready] .fr-rows > :nth-child(2) {
+    --reveal-delay: 50ms;
+  }
+  html[data-reveal-ready] .fr-rows > :nth-child(3) {
+    --reveal-delay: 100ms;
+  }
+  html[data-reveal-ready] .fr-rows > :nth-child(4) {
+    --reveal-delay: 150ms;
+  }
+  html[data-reveal-ready] .fr-rows > :nth-child(5) {
+    --reveal-delay: 200ms;
+  }
+  html[data-reveal-ready] .fr-main > .fr-group:nth-of-type(2) {
+    --reveal-delay: 70ms;
+  }
+  html[data-reveal-ready] .fr-main > .fr-group:nth-of-type(3) {
+    --reveal-delay: 140ms;
+  }
+  html[data-reveal-ready] .fr-main > .fr-group:nth-of-type(4) {
+    --reveal-delay: 210ms;
+  }
+}
+
+@keyframes fr-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fr * {
+    transition: none !important;
+  }
+}

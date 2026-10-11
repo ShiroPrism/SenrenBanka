@@ -1,0 +1,467 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+/* GOV.UK Design System（官方文档汇编）：直角 + 内容优先 + 黄黑焦点 + 实体感按钮。
+   数值与来源见 src/designs/govuk/DESIGN.md；适配见 docs/designs/govuk/ADAPTATION.md。
+   token 命名以功能色语义为骨架（--gv-<role>）。 */
+
+.gv {
+  --gv-brand: #1d70b8;
+  --gv-text: #0b0c0c;
+  --gv-secondary-text: #484949;
+  --gv-inverse-text: #ffffff;
+  --gv-link: #1a65a6;
+  --gv-link-hover: #0f385c;
+  --gv-link-visited: #54319f;
+  --gv-link-active: #0b0c0c;
+  --gv-border: #cecece;
+  --gv-focus: #ffdd00;
+  --gv-focus-text: #0b0c0c;
+  --gv-success: #0f7a52;
+  --gv-success-hover: #0b5c3e;
+  --gv-success-shadow: #083d29;
+  --gv-surface-bg: #f4f8fb;
+  --gv-surface-border: #8eb8dc;
+  --gv-tag-blue-text: #0f385c;
+  --gv-tag-blue-bg: #d2e2f1;
+
+  margin: 0;
+  background: #ffffff;
+  color: var(--gv-text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 19px;
+  line-height: 1.3158; /* 25/19 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- 容器（1020 外层 / 960 内容：border-box 下 max-width 1020 + 30 padding） ---- */
+
+.gv-container {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+@media (min-width: 640px) {
+  .gv-container {
+    padding: 0 30px;
+  }
+}
+
+/* ---- skip link（默认移出可视区；聚焦时出现） ---- */
+
+.gv-skip-link {
+  position: absolute;
+  left: -9999px;
+}
+
+.gv-skip-link:focus {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  display: inline-block;
+  padding: 10px 15px;
+  outline: 3px solid transparent;
+  background: var(--gv-focus);
+  color: var(--gv-focus-text);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow:
+    0 -2px var(--gv-focus),
+    0 4px var(--gv-focus-text);
+}
+
+/* ---- 页眉（brand 蓝幅 + 白字；2025 刷新的现行口径） ---- */
+
+.gv-header {
+  background: var(--gv-brand);
+  color: var(--gv-inverse-text);
+  border-bottom: 1px solid transparent;
+}
+
+.gv-header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 15px;
+}
+
+.gv-header__name {
+  display: inline-block;
+  padding: 16px 0 12px;
+  font-size: 30px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.gv-header__loc {
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+/* ---- 正文区 ---- */
+
+.gv-main {
+  padding: 30px 0 20px;
+}
+
+@media (min-width: 640px) {
+  .gv-main {
+    padding: 40px 0 30px;
+  }
+}
+
+/* ---- 链接（下划线常显；hover 加粗；focus 黄底黑字 + 黑底影） ---- */
+
+.gv a {
+  color: var(--gv-link);
+  text-decoration: underline;
+  text-decoration-thickness: max(1px, 0.0625rem);
+  text-underline-offset: 0.1578em;
+}
+
+.gv a:visited {
+  color: var(--gv-link-visited);
+}
+
+.gv a:hover {
+  color: var(--gv-link-hover);
+  text-decoration-thickness: max(3px, 0.1875rem, 0.12em);
+  text-decoration-skip-ink: none;
+}
+
+.gv a:active {
+  color: var(--gv-link-active);
+}
+
+.gv a:focus {
+  outline: 3px solid transparent;
+  color: var(--gv-focus-text);
+  background-color: var(--gv-focus);
+  box-shadow:
+    0 -2px var(--gv-focus),
+    0 4px var(--gv-focus-text);
+  text-decoration: none;
+}
+
+/* 行内标记（品牌 mark / 功能图标 / 外链箭头）；行内语境显式 inline-block */
+.gv-mark {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 0.25em;
+  vertical-align: -0.08em;
+}
+
+.gv-ext {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.25em;
+  vertical-align: -0.06em;
+}
+
+/* ---- 型阶 ---- */
+
+.gv-h1 {
+  margin: 0 0 30px;
+  font-size: 32px;
+  line-height: 1.0938; /* 35/32 */
+  font-weight: 700;
+  max-width: 640px;
+}
+
+.gv-body-l {
+  margin: 0 0 20px;
+  font-size: 21px;
+  line-height: 1.1905; /* 25/21 */
+}
+
+.gv-hero-bio {
+  max-width: 640px;
+}
+
+@media (min-width: 640px) {
+  .gv-h1 {
+    font-size: 48px;
+    line-height: 1.0417; /* 50/48 */
+  }
+
+  .gv-body-l {
+    font-size: 24px;
+    line-height: 1.25; /* 30/24 */
+  }
+}
+
+.gv-h2 {
+  margin: 0 0 20px;
+  font-size: 27px;
+  line-height: 1.1111; /* 30/27 */
+  font-weight: 700;
+}
+
+.gv-h3 {
+  margin: 0 0 15px;
+  font-size: 21px;
+  line-height: 1.1905;
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  .gv-h2 {
+    font-size: 36px;
+    line-height: 1.1111; /* 40/36 */
+  }
+
+  .gv-h3 {
+    font-size: 24px;
+    line-height: 1.25; /* 30/24 */
+  }
+}
+
+.gv-body {
+  margin: 0 0 20px;
+}
+
+.gv-secondary {
+  color: var(--gv-secondary-text);
+}
+
+/* ---- 列表 ---- */
+
+.gv-list {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.gv-list > li {
+  margin-bottom: 5px;
+}
+
+.gv-hero-links {
+  max-width: 640px;
+}
+
+/* ---- 分区 ---- */
+
+.gv-section {
+  padding-top: 30px;
+}
+
+@media (min-width: 640px) {
+  .gv-section {
+    padding-top: 40px;
+  }
+}
+
+.gv-hr {
+  border: 0;
+  border-bottom: 1px solid var(--gv-border);
+  margin: 0 0 20px;
+}
+
+.gv-project {
+  padding-bottom: 20px;
+}
+
+/* ---- 标签（状态语义；<strong> 句首大小写 19px bold） ---- */
+
+.gv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.gv-tag {
+  display: inline-block;
+  padding: 2px 8px 3px;
+  border-radius: 1px;
+  background: var(--gv-tag-blue-bg);
+  color: var(--gv-tag-blue-text);
+  font-size: 19px;
+  line-height: 1.3158;
+  font-weight: 700;
+  overflow-wrap: break-word;
+}
+
+/* ---- summary list（经历：键值行） ---- */
+
+.gv-summary {
+  margin: 0 0 30px;
+}
+
+.gv-summary-row {
+  border-bottom: 1px solid var(--gv-border);
+  padding: 10px 0;
+}
+
+.gv-summary-key {
+  margin: 0 0 5px;
+  font-weight: 700;
+}
+
+.gv-summary-value {
+  margin: 0 0 15px;
+}
+
+.gv-summary-value p {
+  margin: 0 0 10px;
+}
+
+.gv-summary-value > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .gv-summary {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  .gv-summary-row {
+    display: table-row;
+    border-bottom: 0;
+    padding: 0;
+  }
+
+  .gv-summary-key,
+  .gv-summary-value {
+    display: table-cell;
+    padding: 10px 20px 10px 0;
+    vertical-align: top;
+    border-bottom: 1px solid var(--gv-border);
+  }
+
+  .gv-summary-key {
+    width: 30%;
+    margin: 0;
+  }
+
+  .gv-summary-value {
+    margin: 0;
+  }
+}
+
+/* ---- inset text（contact：10px 左界 + 15px 内距） ---- */
+
+.gv-inset {
+  clear: both;
+  margin: 20px 0 30px;
+  padding: 15px;
+  border-left: 10px solid var(--gv-border);
+}
+
+.gv-inset > :last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .gv-inset {
+    margin: 30px 0;
+  }
+}
+
+/* ---- 按钮（绿底 + 2px 硬阴影 + 按压下移；直角） ---- */
+
+.gv .gv-button {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 22px;
+  padding: 8px 10px 7px;
+  border: 2px solid transparent;
+  border-radius: 0;
+  background: var(--gv-success);
+  color: var(--gv-inverse-text);
+  font-size: 19px;
+  line-height: 19px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--gv-success-shadow);
+}
+
+@media (min-width: 640px) {
+  .gv .gv-button {
+    width: auto;
+  }
+}
+
+.gv .gv-button:link,
+.gv .gv-button:visited,
+.gv .gv-button:hover,
+.gv .gv-button:active {
+  color: var(--gv-inverse-text);
+  text-decoration: none;
+}
+
+.gv .gv-button:hover {
+  background: var(--gv-success-hover);
+}
+
+/* 按压：下移 2px 压入阴影（上游唯一动效，原样保留） */
+.gv .gv-button:active {
+  top: 2px;
+}
+
+.gv .gv-button:focus {
+  border-color: var(--gv-focus);
+  outline: 3px solid transparent;
+  box-shadow: inset 0 0 0 1px var(--gv-focus);
+}
+
+.gv .gv-button:focus:not(:active):not(:hover) {
+  border-color: var(--gv-focus);
+  color: var(--gv-focus-text);
+  background: var(--gv-focus);
+  box-shadow: 0 2px 0 var(--gv-focus-text);
+}
+
+/* ---- 页脚（10px brand 顶边 + 浅蓝底） ---- */
+
+.gv-footer {
+  margin-top: 40px;
+  padding: 25px 0;
+  border-top: 10px solid var(--gv-brand);
+  background: var(--gv-surface-bg);
+  color: var(--gv-text);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.gv-footer p {
+  margin: 0 0 10px;
+}
+
+.gv-footer p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .gv-footer {
+    margin-top: 60px;
+    padding: 40px 0;
+  }
+}
+
+/* ---- 触控（pointer: coarse）：命中高度增强（行内链接 padding；按钮加高保持 1px 阴影补偿） ---- */
+
+@media (pointer: coarse) {
+  .gv-list > li > a,
+  .gv-h3 a {
+    display: inline-block;
+    padding-block: 0.75rem;
+  }
+
+  .gv .gv-button {
+    padding: 12px 10px 11px;
+  }
+}

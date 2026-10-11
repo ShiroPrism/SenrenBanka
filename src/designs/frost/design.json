@@ -1,0 +1,14 @@
+{
+  "displayName": "Frost",
+  "description": "对 Apple HIG 材料与层次语言的非官方致敬复刻：极光底上的双层毛玻璃、iOS 系统色与 17px 型阶、胶囊控件的安静主页。",
+  "enabled": true,
+  "accent": "#0A84FF",
+  "source": {
+    "type": "third-party-analysis",
+    "url": "https://developer.apple.com/design/human-interface-guidelines/materials",
+    "fetchedAt": "2026-10-11",
+    "license": "无（上游未提供文档 / 素材许可；本复刻为纯视觉分析自撰，不含上游内容）",
+    "attribution": "对 Apple Human Interface Guidelines（材料 / 层次 / 系统色语言）的第三方分析复刻（非官方致敬）；规范与实现均为自有产出，不包含 Apple 商标资产与上游文本 / 素材。"
+  },
+  "generatedBy": "n/a（第三方分析复刻，规范自撰）"
+}
