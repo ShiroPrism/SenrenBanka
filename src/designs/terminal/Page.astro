@@ -1,12 +1,13 @@
 ---
 import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
 import './style.css';
 
 const view = await loadDesignView('terminal');
-const { profile, switcher } = view;
+const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const rule = '─'.repeat(52);
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
@@ -40,9 +41,6 @@ const introEnd = afterCmd(cmdIntro);
       <div class="tm-chrome">
         <span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span>
         <span class="tm-chrome-title" aria-hidden="true">guest@senrenbanka: ~</span>
-        {switcher.enabled && (
-          <a class="tm-link tm-chrome-switch" href={switcher.href} aria-label="切换设计 / Switch design">[switch design]</a>
-        )}
       </div>
 
       <div class="tm-body">
@@ -140,18 +138,10 @@ const introEnd = afterCmd(cmdIntro);
 
         <footer class="tm-footer" data-reveal>
           <p class="tm-out tm-dim whitespace-pre" style="--d:0ms" aria-hidden="true">{rule}</p>
-          {
-            switcher.enabled && (
-              <p class="tm-out" style="--d:70ms">
-                [switch design]{' '}
-                <a class="tm-link" href={switcher.href} aria-label="切换设计 / Switch design">./designs/</a>{' '}
-                <span class="tm-dim"><span aria-hidden="true">#</span> 换一台机器看看</span>
-              </p>
-            )
-          }
           <p class="tm-out tm-dim" style="--d:140ms">session ends — 谢谢访问 / EOF</p>
         </footer>
       </div>
     </main>
+    {contextMenu.enabled && <ContextMenu config={contextMenu} />}
   </body>
 </html>

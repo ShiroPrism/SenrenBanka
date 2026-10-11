@@ -323,14 +323,6 @@
   color: var(--fast-foreground-ctrl-neutral-secondary-rest);
 }
 
-.fs-footer-link {
-  color: var(--fast-foreground-ctrl-brand-rest);
-}
-
-.fs-footer-link:hover {
-  text-decoration: underline;
-}
-
 .fs a:focus-visible {
   outline: 2px solid var(--fast-foreground-ctrl-brand-rest);
   outline-offset: 2px;
@@ -342,7 +334,6 @@
     padding-block: 0.8rem;
   }
 
-  .fs-footer-link,
   .fs-card-title a {
     padding-block: 0.78rem;
   }

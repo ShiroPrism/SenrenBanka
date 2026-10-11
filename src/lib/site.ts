@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { allDesigns, enabledDesigns, type DesignEntry } from '../designs/registry';
 import { storageKeyFor } from './router-script';
 import { BASE, withBase } from './urls';
+import type { ContextMenuRuntimeConfig } from './context-menu';
 
 export type ProfileData = CollectionEntry<'profile'>['data'];
 export type SiteConfigData = CollectionEntry<'site'>['data'];
@@ -11,6 +12,16 @@ export type SiteConfigData = CollectionEntry<'site'>['data'];
 export type ResolvedProfile = Omit<ProfileData, 'avatar'> & {
   avatar: ImageMetadata | string | null;
 };
+
+/** 桌面右键快捷操作菜单的构建期配置（SPEC §7.5；运行时见 src/lib/context-menu.ts）。 */
+export interface ContextMenuConfig extends ContextMenuRuntimeConfig {
+  /** manualSwitch 关闭时为 false：整菜单不渲染（运行时与样式也不注入）。 */
+  enabled: boolean;
+  /** 身份条展示的当前设计名。 */
+  designName: string;
+  /** 当前设计的强调色（design.json.accent，可选）——身份条圆点用，与切换页芯片同源。 */
+  accent?: string;
+}
 
 /** 传给每套设计页面的统一数据接口（SPEC §6.4）。 */
 export interface DesignView {
@@ -35,10 +46,8 @@ export interface DesignView {
     robots: string;
     lang: string;
   };
-  switcher: {
-    enabled: boolean;
-    href: string;
-  };
+  /** 设计切换入口：桌面右键快捷操作菜单（manualSwitch 语义见 SPEC §7.5）。 */
+  contextMenu: ContextMenuConfig;
 }
 
 export interface SiteModel {
@@ -130,6 +139,7 @@ export async function loadSite(): Promise<SiteModel> {
 /** 由 SiteModel 与某套设计派生页面数据（含 head 元信息与索引策略，SPEC §7.4）。 */
 export function buildDesignView(model: SiteModel, design: DesignEntry): DesignView {
   const isDefault = design.id === model.default.id;
+  const headTitle = isDefault ? model.site.title : `${design.meta.displayName} · ${model.site.title}`;
   return {
     profile: model.profile,
     site: {
@@ -145,15 +155,25 @@ export function buildDesignView(model: SiteModel, design: DesignEntry): DesignVi
       isDefault,
     },
     head: {
-      title: isDefault ? model.site.title : `${design.meta.displayName} · ${model.site.title}`,
+      title: headTitle,
       description: model.site.description,
       canonical: `${model.site.url ?? ''}${withBase(`${design.id}/`)}`,
       robots: isDefault ? 'index, follow' : 'noindex, follow',
       lang: model.site.lang,
     },
-    switcher: {
+    contextMenu: {
       enabled: model.switcherEnabled,
-      href: withBase('designs/'),
+      designName: design.meta.displayName,
+      accent: design.meta.accent,
+      currentId: design.id,
+      switcherHref: withBase('designs/'),
+      shareTitle: headTitle,
+      // 随机池 = 全部启用设计（含自身；运行时执行"排除当前"与 avoidRepeat，见 SPEC §7.5）
+      targets: model.enabled.map((entry) => ({ id: entry.id, href: withBase(`${entry.id}/`) })),
+      mode: model.mode,
+      cacheHours: model.random.cacheHours,
+      avoidRepeat: model.random.avoidRepeat,
+      storageKey: model.storageKey,
     },
   };
 }

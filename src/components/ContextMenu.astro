@@ -1,0 +1,257 @@
+---
+/**
+ * 桌面右键快捷操作菜单（共享组件，SPEC §7.5）。
+ *
+ * - 中性基础设施 UI：外观与 /designs/ 切换页同属项目 chrome，不模仿任何一套设计；
+ *   样式以 `<style is:inline>` 内联（不新增 <link>，每设计页仍只链接自己的 CSS）。
+ * - 行为全部在共享运行时 src/lib/context-menu.ts：仅在 `(hover: hover) and (pointer: fine)`
+ *   环境按需加载（触屏设备不加载菜单逻辑）；只接管非交互区域的右键，链接 / 图片 /
+ *   输入控件 / 已选文字保留浏览器原生菜单。
+ * - `manualSwitch: false` 时页面不渲染本组件（整菜单不启用，SPEC §7.5）。
+ */
+import { ArrowUp, Link as LinkIcon, Palette, Printer, RotateCw, Share2, Shuffle } from '@lucide/astro';
+import type { ContextMenuConfig } from '../lib/site';
+
+interface Props {
+  config: ContextMenuConfig;
+}
+
+const { config } = Astro.props;
+const runtimeConfig = {
+  currentId: config.currentId,
+  switcherHref: config.switcherHref,
+  shareTitle: config.shareTitle,
+  targets: config.targets,
+  mode: config.mode,
+  cacheHours: config.cacheHours,
+  avoidRepeat: config.avoidRepeat,
+  storageKey: config.storageKey,
+};
+// 转义 '<'，防止 JSON 串提前闭合 <script>（与 router-script.ts 同法）
+const configJson = JSON.stringify(runtimeConfig).replace(/</g, '\\u003c');
+// 仅一套启用设计时随机无法成立（排除当前后池为空）→ 禁用该项而非假装切换
+const randomDisabled = config.targets.length < 2;
+---
+
+<style is:inline>
+  /* 快捷操作菜单（共享 chrome，中性样式，随系统明暗；不参与各设计 Tailwind 扫描）。 */
+  .cm,
+  .cm-toast {
+    box-sizing: border-box;
+    font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC',
+      'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    color-scheme: light dark;
+  }
+  .cm {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    outline: none;
+    /* 内容自适应宽度：刚好容纳最宽一项；min 防止过窄、max 防超长设计名溢出 */
+    width: max-content;
+    min-width: 13.5rem;
+    max-width: min(16.5rem, calc(100vw - 1.5rem));
+    max-height: min(80vh, 42rem);
+    overflow: auto;
+    padding: 0.4rem;
+    background: light-dark(#ffffff, #202024);
+    color: light-dark(#1c1c1e, #ececee);
+    border: 1px solid light-dark(#e6e6e6, #37373c);
+    border-radius: 0.75rem;
+    box-shadow:
+      0 1px 2px light-dark(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.4)),
+      0 14px 36px light-dark(rgba(0, 0, 0, 0.13), rgba(0, 0, 0, 0.55));
+    font-size: 0.875rem;
+    line-height: 1.45;
+    text-align: left;
+  }
+  .cm-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.6rem 0.55rem;
+  }
+  /* 身份条：设计强调色圆点（与切换页芯片同源）+ 设计名 + 右对齐「当前设计」标签 */
+  .cm-dot {
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--cm-accent, light-dark(#6f6f74, #9d9da6));
+    box-shadow: 0 0 0 1px light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.14));
+  }
+  .cm-design {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: light-dark(#1c1c1e, #f2f2f4);
+  }
+  .cm-tag {
+    flex: none;
+    margin-left: auto;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: light-dark(#6f6f74, #9d9da6);
+  }
+  .cm-sep {
+    height: 1px;
+    margin: 0.3rem 0.45rem;
+    background: light-dark(#ececec, #34343a);
+  }
+  .cm-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.55rem 0.6rem;
+    border: 0;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: default;
+  }
+  .cm-item:hover,
+  .cm-item:focus {
+    background: light-dark(#f4f4f5, #2b2b31);
+  }
+  .cm-item:focus {
+    outline: none;
+  }
+  /* 键盘打开 / 键盘导航时才显示焦点环：鼠标打开首项不预高亮（对齐平台原生菜单观感），
+     键盘用户则以非颜色的 outline 明确聚焦位置（不只依赖底色变化）。 */
+  .cm[data-cm-key] .cm-item:focus {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+  .cm-icon {
+    flex: none;
+    display: block;
+    width: 1.0625rem;
+    height: 1.0625rem;
+    color: light-dark(#6d6d72, #a2a2ab);
+    stroke-width: 1.75;
+  }
+  .cm-label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  /* 禁用态：语义由 aria-disabled 承担，视觉再降一级（不只依赖颜色） */
+  .cm-item[aria-disabled='true'] {
+    color: light-dark(#a6a6ac, #6e6e77);
+    opacity: 0.7;
+  }
+  .cm-item[aria-disabled='true']:hover {
+    background: transparent;
+  }
+  .cm-item[aria-disabled='true'] .cm-icon {
+    color: inherit;
+  }
+  .cm-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.35rem;
+    z-index: 9999;
+    max-width: min(24rem, calc(100vw - 2rem));
+    padding: 0.55rem 0.95rem;
+    border-radius: 0.6rem;
+    background: light-dark(rgba(24, 24, 27, 0.93), rgba(12, 12, 14, 0.93));
+    color: #f7f7f8;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    transform: translateX(-50%);
+  }
+  .cm-toast[data-cm-tone='error'] {
+    background: rgba(127, 29, 29, 0.95);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cm[data-cm-open] {
+      animation: cm-in 120ms ease-out;
+    }
+    .cm-toast[data-cm-show] {
+      animation: cm-toast-in 160ms ease-out;
+    }
+  }
+  @keyframes cm-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes cm-toast-in {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 6px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+</style>
+
+<div class="cm" data-cm tabindex="-1" hidden style={config.accent ? `--cm-accent:${config.accent}` : undefined}>
+  <header class="cm-head">
+    <span class="cm-dot" aria-hidden="true"></span>
+    <span class="cm-design">{config.designName}</span>
+    <span class="cm-tag">当前设计</span>
+  </header>
+  <div class="cm-menu" role="menu" aria-label="快捷操作 / Quick actions">
+    <button class="cm-item" type="button" role="menuitem" data-cm-action="reload">
+      <RotateCw class="cm-icon" aria-hidden="true" /><span class="cm-label">重新加载</span>
+    </button>
+    <button class="cm-item" type="button" role="menuitem" data-cm-action="top">
+      <ArrowUp class="cm-icon" aria-hidden="true" /><span class="cm-label">回到页面顶部</span>
+    </button>
+    <button class="cm-item" type="button" role="menuitem" data-cm-action="copy">
+      <LinkIcon class="cm-icon" aria-hidden="true" /><span class="cm-label">复制当前页面链接</span>
+    </button>
+    <button class="cm-item" type="button" role="menuitem" data-cm-action="print">
+      <Printer class="cm-icon" aria-hidden="true" /><span class="cm-label">打印 / 保存为 PDF</span>
+    </button>
+    <button class="cm-item" type="button" role="menuitem" data-cm-action="share">
+      <Share2 class="cm-icon" aria-hidden="true" /><span class="cm-label">分享页面</span>
+    </button>
+    <div class="cm-sep" role="separator"></div>
+    <button
+      class="cm-item"
+      type="button"
+      role="menuitem"
+      data-cm-action="random"
+      aria-disabled={randomDisabled ? 'true' : undefined}
+    >
+      <Shuffle class="cm-icon" aria-hidden="true" /><span class="cm-label">随机一个设计</span>
+    </button>
+    <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
+      <Palette class="cm-icon" aria-hidden="true" /><span class="cm-label">切换设计…</span>
+    </a>
+  </div>
+</div>
+<div class="cm-toast" data-cm-toast role="status" aria-live="polite" hidden></div>
+<script type="application/json" data-cm-config set:html={configJson} />
+<script>
+  // 仅在桌面鼠标环境按需加载菜单运行时（触屏设备不加载菜单逻辑）
+  try {
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      import('../lib/context-menu')
+        .then((mod) => mod.initContextMenu())
+        .catch(() => {
+          /* 运行时加载失败 → 不启用自定义菜单（原生右键不受影响） */
+        });
+    }
+  } catch {
+    /* 能力检测失败 → 不启用自定义菜单（原生右键不受影响） */
+  }
+</script>

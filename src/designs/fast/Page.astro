@@ -1,4 +1,5 @@
 ---
+import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { Mail, ArrowUpRight, Globe } from '@lucide/astro';
@@ -7,7 +8,7 @@ import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('fast');
-const { profile, switcher } = view;
+const { profile, contextMenu } = view;
 ---
 <html lang={view.site.lang}>
   <head>
@@ -109,8 +110,8 @@ const { profile, switcher } = view;
 
       <footer class="fs-footer">
         <span>{profile.name} · built from a single profile</span>
-        {switcher.enabled && <a class="fs-footer-link" href={switcher.href}>Switch design</a>}
       </footer>
     </div>
+    {contextMenu.enabled && <ContextMenu config={contextMenu} />}
   </body>
 </html>

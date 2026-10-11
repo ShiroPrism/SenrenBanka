@@ -317,19 +317,9 @@
 .ed-footer-meta {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: baseline;
   gap: 1rem;
-}
-
-.ed-switch {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.6875rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #57534e;
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 .ed-colophon {
@@ -498,7 +488,6 @@
 @media (pointer: coarse) {
   .ed-link,
   .ed-toc a,
-  .ed-switch,
   .ed-work-title a {
     padding-block: 0.78rem;
   }

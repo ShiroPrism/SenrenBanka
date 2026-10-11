@@ -68,9 +68,6 @@ components:
   tag:
     textColor: "{colors.ink-muted}"
     typography: "{typography.label}"
-  footer-switch:
-    textColor: "{colors.ink-muted}"
-    typography: "{typography.label}"
 ---
 
 # Design System: Editorial — The Issue
@@ -134,10 +131,10 @@ components:
 ## Layout
 
 - 容器：`max-width: 72rem`，水平留白 `clamp(1.5rem, 6vw, 5rem)`。
-- 首屏 masthead 行：左 kicker（≤560px 仅中文）、右 Label 档导航「本期导航」（精选作品 / 外部链接 / 切换设计 / Switch design——切换入口与页脚同文案）；其下为姓名 → 不对称双栏（定位 3fr / 右栏简介+地点 2fr，**两栏同顶对齐**——保证定位语先于简介、与 DOM 顺序一致；≤720px 收为单栏）。
+- 首屏 masthead 行：左 kicker（≤560px 仅中文）、右 Label 档导航「本期导航」（精选作品 / 外部链接）；其下为姓名 → 不对称双栏（定位 3fr / 右栏简介+地点 2fr，**两栏同顶对齐**——保证定位语先于简介、与 DOM 顺序一致；≤720px 收为单栏）。
 - 栏目：`padding: clamp(3rem, 9vh, 5.5rem) 0` + 底部发丝线；栏目头为"名称（左）/ 大写副标（右）"的基线两端对齐。
 - 作品行：`grid-template-columns: 3.5rem minmax(0, 1fr)`，行距 `1.75rem 0`，行间发丝线（首行无）。
-- 页脚两段式：先"邀请"段（contact.note 斜体衬线 + 邮箱 CTA），再 meta 行（切换入口左 / colophon 右）——以对人的邀请收尾（2026-10-10 Peak-End 修正）。
+- 页脚两段式：先"邀请"段（contact.note 斜体衬线 + 邮箱 CTA），再 meta 行（colophon 右对齐）——以对人的邀请收尾（2026-10-10 Peak-End 修正；v0.5.0 移除页脚切换入口后 meta 行仅剩 colophon）。
 
 ## Elevation & Depth
 
@@ -185,7 +182,7 @@ components:
 - Label 档大写、灰墨；无边框、无底色——它们只是版面上的小字。
 
 ### Footer
-- 两段式：上段"邀请"（contact.note 斜体衬线 + 邮箱链接），下段 meta 行（Label 档切换入口 / colophon）。Email 只在邀请段出现一次——Elsewhere 列表自动过滤 mailto 链接（2026-10-10 distill 去重）。
+- 两段式：上段"邀请"（contact.note 斜体衬线 + 邮箱链接），下段 meta 行（colophon 右对齐）。Email 只在邀请段出现一次——Elsewhere 列表自动过滤 mailto 链接（2026-10-10 distill 去重；v0.5.0 移除切换入口）。
 
 ### Motion
 - 页面语言是"印刷"：动效只有两个动作——**墨色渗入**（仅 opacity 渐显，无位移）与**发丝线从左绘出**（`transform: scaleX` 展开）；不做大于 10px 的位移、不做回弹、不做持续动画。
@@ -216,6 +213,6 @@ components:
 - **核心字段必须渲染**：`name` / `headline` / `bio` / `links`。
 - **扩展区块取舍（编辑决定）**：渲染 `projects`（Selected Works）与 `contact`（Elsewhere 联系段）；
   **不渲染** `experience` / `skills`——杂志式"精选作品"叙事取代履历清单，这是本设计的编辑立场。
-- `<HeadMeta {...view.head} />` 必须原样引入；`manualSwitch` 时页脚必须保留切换入口。
+- `<HeadMeta {...view.head} />` 必须原样引入；设计切换由**全站共享的桌面右键快捷操作菜单**承担（`manualSwitch` 时接入 `<ContextMenu config={view.contextMenu} />`；项目级 chrome、中性外观，不属于本设计视觉系统）——本页不再保留任何可见切换入口。
 - 字体：`--font-fraunces`（astro.config 的 fonts 注册 + 页面 `<Font>` + 本文件 `@theme inline`）；
   CSS 入口保持 `@import "tailwindcss" source(none); @source "./";`。

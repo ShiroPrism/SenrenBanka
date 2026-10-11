@@ -1,6 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import { ArrowUpRight, Mail, Globe } from '@lucide/astro';
+import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
@@ -8,7 +9,7 @@ import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('editorial');
-const { profile, switcher } = view;
+const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 // Email 只保留一处：优先 contact.email（页脚邀请），并把它从 Elsewhere 链接列表中过滤（distill 去重）
 const mailtoLink = profile.links.find((link) => link.url.startsWith('mailto:'));
@@ -32,7 +33,6 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
           <nav class="ed-toc" aria-label="本期导航 / Issue navigation">
             <a href="#ed-works">精选作品</a>
             <a href="#ed-elsewhere">外部链接</a>
-            {switcher.enabled && <a href={switcher.href}>切换设计 / Switch design</a>}
           </nav>
         </div>
         <h1 class="ed-name text-balance">{profile.name}</h1>
@@ -104,10 +104,10 @@ const listLinks = inviteEmail ? profile.links.filter((link) => !link.url.startsW
           }
         </div>
         <div class="ed-footer-meta">
-          {switcher.enabled && <a class="ed-switch" href={switcher.href}>切换设计 / Switch design</a>}
           <p class="ed-colophon" lang="en">Designed in the shape of a magazine</p>
         </div>
       </footer>
     </main>
+    {contextMenu.enabled && <ContextMenu config={contextMenu} />}
   </body>
 </html>

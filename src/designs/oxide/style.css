@@ -50,7 +50,6 @@
 .ox-badge,
 .ox-num,
 .ox-row-tags,
-.ox-switch,
 .ox-wave {
   font-family: 'GT America Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -290,21 +289,6 @@
   min-width: 0;
 }
 
-.ox-switch {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #3fdaa0;
-  color: oklch(0.77 0.1919 163.7);
-  text-decoration: none;
-  transition: color 150ms ease;
-}
-
-.ox-switch:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
 .ox-wave-small {
   margin-top: 0.6rem;
   font-size: 0.6875rem;
@@ -421,8 +405,7 @@
 /* 触控命中区增强（与 editorial / terminal / fast 同一约定；
    2026-10-10 由 design-page-verify 暴露 oxide 缺失，375px 实测链接命中高仅 14.4px） */
 @media (pointer: coarse) {
-  .ox-link,
-  .ox-switch {
+  .ox-link {
     padding-block: 0.95rem;
   }
 

@@ -37,7 +37,7 @@
 | Q1 | 设计规范来源与合规 | 只用两类来源：**厂商官方发布**（official-design-md 索引）+ **自产**（impeccable `document --seed`）。第三方整理源（awesome-design-md）需逐份核实许可并标注"非官方"后可选入库；designmd.co **排除**（许可无法核实）。 |
 | Q2 | 个人资料字段契约 | 核心必填（name/headline/bio/links，所有设计必须呈现）+ 可选字段（avatar/location）+ 扩展区块词汇表（projects/experience/skills/contact，**设计自行取舍**）。设计可加装饰性文案，不得虚构个人信息。 |
 | Q3 | 切换与持久化语义 | 随机：存储有效→用存储；过期→重随机（排除上次）并写新窗口；手选=写入+重开窗口。固定：手选**永久记住**，无则用 default；手选在随机模式下**按 cacheHours 过期**。直达 URL 不写存储。 |
-| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **每套设计必留一个入口**（形式自由、无 JS 可达）。`manualSwitch:false` → 切换页不构建（404）、无入口；设计固定 URL 仍可直达。 |
+| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **桌面端统一右键快捷操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；移动端不提供菜单与任何替代入口）。`manualSwitch:false` → 菜单不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
 | Q5 | 根路径与 SEO | 根路径=零外部请求的轻量路由页（内联脚本 `location.replace`；noscript meta refresh→default+链接列表）。索引策略 **B**：仅 default 设计可索引，其余 `noindex,follow`。 |
 | Q6 | 设计注册机制 | **目录自动发现**：`src/designs/<id>/` 存在即注册，元数据在同目录 `design.json`；站点配置不含设计清单；`_` 前缀目录忽略；构建期校验强制完整性。`enabled:false` = 页面仍构建可直达，退出随机池与切换页。 |
 | Q7 | 部署基线 | `site`/`base` 由环境变量驱动（`SITE_URL` / `BASE_PATH`，默认 `/`）；GH workflow 自动注入本仓库上下文 → fork 后零配置；CF Pages/Vercel 用面板配置（文档说明）。一期验证深度：本地构建 + 文档核实，不做实际部署。 |
@@ -78,6 +78,7 @@
 11. **CSS 聚合陷阱**【已核实，本机实测】：多页共享模块中任何对设计 `Page.astro` / `style.css` 的**动态导入边**（如非 eager `import.meta.glob('./*/Page.astro')`）会把**所有**设计的 CSS 聚合进**每个**引用页面的 `<link>`（实测：根页曾携带全部设计 CSS）。对策：设计路由改用 `injectRoute`（每页只带自己的 CSS），注册表的存在性检查改用 `node:fs`。
 12. **内容层条目 id 会归一化**【已核实，本机实测】：glob loader 把 `site.config.yaml` 的条目 id 归一化为 `siteconfig`；按"单文件集合取唯一条目"处理（`getCollection()[0]`）。
 13. **字体 npm provider**【已核实，本机实测】：`fontProviders.npm({ remote:false })` + `options.package` 可从已安装 `@fontsource-variable/*` 包在构建期自托管（无需联网）；族名必须与包内 CSS 完全一致（`Fraunces Variable`、`JetBrains Mono Variable`）；传 `weights` 范围过滤会解析不到（省略即可，variable 包自带完整字重轴）。
+14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia('(hover: hover) and (pointer: fine)')` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`，**触屏设备零菜单 JS 请求**（375×812 触控仿真实测 chunk 请求数 0）。
 
 ---
 
@@ -230,8 +231,9 @@ src/designs/<id>/
 - 设计 `Page.astro` 是**完整文档**（含 `<html>`），渲染于 `src/pages/[design]/index.astro` 动态路由。
 - 统一数据接口 `src/lib/site.ts`（async `loadSite()`）：合并 site 配置 + 注册表 + profile，完成交叉校验，向设计提供：
   - `profile`（类型化个人资料，头像已解析为可直接渲染的图片引用）；
-  - `site`（title/description/lang/base）；
-  - `design`（自身元信息：id、displayName、isDefault、indexable）；
+  - `site`（title/description/lang/manualSwitch）；
+  - `design`（自身元信息：id、displayName、isDefault）；
+  - `contextMenu`（桌面右键菜单的构建期配置：当前设计与强调色 / 目标池 / `switcherHref` / 模式与存储语义；`manualSwitch:false` 时 `enabled:false`，见 §7.5）；
   - URL helper（`src/lib/urls.ts`，所有内部链接必须经它拼接 base 前缀）。
 - 每套设计 **必须**在 `<head>` 引入共享组件 `HeadMeta.astro`（title/description/canonical/robots/favicon；robots 规则见 §7.4）。
 
@@ -259,6 +261,8 @@ src/designs/<id>/
 | 直达某设计固定 URL（分享链接） | 正常渲染该设计 | **不写存储** |
 | 启用设计仅 1 套 | 永远进入它（排除逻辑自然失效） | 随机模式照常写窗口 |
 
+表注（v0.5.0）："手动切换"同时指 `/designs/` 切换页点击与右键菜单「随机一个设计」；后者额外**必须排除当前设计**（保证点击后确实发生切换），`avoidRepeat` 时再尽量排除上次，随后按上表写存储并**直接导航目标设计的固定 URL**（不回根路径）；页面加载 / 打开菜单本身不写存储。
+
 局限（如实文档化）：清除浏览器存储后无法保证"连续两次不重复"；存储按浏览器而非访客身份；跨设备不共享。
 
 ### 7.3 根路径路由页【已定】
@@ -277,12 +281,17 @@ src/designs/<id>/
 | 其他设计 | `noindex, follow` + self-canonical（可直达、可分享，不进搜索） |
 | 切换页 | `noindex, follow` |
 
-### 7.5 切换页与入口【已定】
+### 7.5 切换页与入口【已定；v0.5.0 入口形态修订】
 
 - `/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出全部启用设计（displayName + description + 可选 accent 色块 + 当前标记）。
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
-- 每套设计**必须**提供一个切换入口（形式自由：页脚链接/角落按钮/导航项；无 JS 可达；文案由设计自定），指向 `/designs/`。
-- `manualSwitch:false` → `/designs/` **不构建**（404，见 §10.4 实现注记）、任何入口不存在；各设计固定 URL 不受影响。
+- **设计切换入口 = 桌面端共享右键快捷操作菜单**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
+  - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。
+  - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。
+  - **随机语义**：复用 §7.1 存储键与格式、`withBase()` URL；必须排除当前设计；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后导航目标固定 URL；直达固定 URL 不覆盖既有选择。
+  - **键盘 / a11y**：`role="menu"` + `role="menuitem"`（icon `aria-hidden`，文本承担可访问名）；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困焦点；菜单随视口边界自动翻转收敛，点击外部 / 滚动 / 尺寸变化 / 再次右键关闭；打开时不锁定页面滚动。
+  - **移动端（项目决策）**：不提供页面内切换菜单、不模拟长按、**不加载菜单运行时**（能力门控 + 动态 import，见 §3.2-14）；设计页不保留任何移动端替代入口。
+- `manualSwitch:false` → `/designs/` **不构建**（404，见 §10.4 实现注记）、菜单不渲染（设计页零菜单标记 / 零脚本）；各设计固定 URL 不受影响。
 
 ---
 
@@ -311,7 +320,7 @@ src/designs/<id>/
 【已定】交付 `AGENTS.md`（仓库根目录），面向编码 Agent 的强制清单，至少包含：
 
 1. 数据接口（`loadSite()` 的字段与用法）；核心字段必须渲染、扩展区块自行取舍；
-2. 必须包含 `HeadMeta`；切换入口要求（`manualSwitch` 时）；
+2. 必须包含 `HeadMeta`；切换入口要求（`manualSwitch` 时的共享右键菜单接入，禁止自建入口，见 §7.5）；
 3. CSS 入口模板（`source(none) + @source`）；禁止动态类名；
 4. 字体注册流程（astro.config 中央登记 → `<Font>` → `@theme inline`）；
 5. 构建与校验命令；禁止跳过校验；
@@ -378,10 +387,13 @@ SenrenBanka/
 │  ├─ lib/                           # 框架共享逻辑（设计不重复实现）
 │  │  ├─ site.ts                     #   loadSite()：配置+注册表+资料合并、交叉校验、类型化数据接口
 │  │  ├─ urls.ts                     #   base 前缀 helper（所有内部链接必须经此拼接）
-│  │  └─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（随机/缓存/手选）
+│  │  ├─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（随机/缓存/手选）
+│  │  └─ context-menu.ts             #   桌面右键菜单运行时（动作/键盘/随机语义；无 CSS 边）
 │  ├─ components/
 │  │  ├─ HeadMeta.astro              # 共享 <head> 元信息（title/canonical/robots；零 Tailwind 类）
-│  │  └─ InfraStyles.astro           # 基础设施页共享极简样式（<style is:inline>，保证根页零外部请求）
+│  │  ├─ InfraStyles.astro           # 基础设施页共享极简样式（<style is:inline>，保证根页零外部请求）
+│  │  ├─ Reveal.astro                # 滚动显现装配（内联 boot + 共享 IO 触发，不 import CSS）
+│  │  └─ ContextMenu.astro           # 共享右键快捷操作菜单（中性 chrome；is:inline 样式 + 按需加载运行时）
 │  ├─ designs/                       # ★ 设计库：目录存在即注册（自动发现 + 构建期强校验）
 │  │  ├─ registry.ts                 #   glob design.json + Page.astro → 校验 → 派生注册表
 │  │  ├─ editorial/                  # ── 单套设计示例（自产：编辑杂志风）──
@@ -434,8 +446,8 @@ SenrenBanka/
 1. 干净克隆后 `npm ci && npm run build` 成功；`astro check` 无错误；注册表校验对缺失文件/缺 provenance 能明确报错（人为制造一次验证）。
 2. `dist/` 含：`index.html`（根路由）、`designs/index.html`（切换页）、每套设计 `dist/<id>/index.html`；`manualSwitch:false` 构建时无 `designs/`。
 3. CSS 隔离抽查：任取两套设计，A 的 CSS 不含 B 独有工具类（对 dist 产物 grep 抽查一次）。
-4. 随机行为矩阵（人工，dev 或 preview）：首访落地启用池内；窗口内刷新一致；过期（手改 `expiresAt`）后重随机且不与上次重复；仅 1 套启用时永远它；禁用设计从不出现在随机结果与切换页。
-5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用）；`manualSwitch:false` 无入口。
+4. 随机行为矩阵（人工，dev 或 preview）：首访落地启用池内；窗口内刷新一致；过期（手改 `expiresAt`）后重随机且不与上次重复；仅 1 套启用时永远它；禁用设计从不出现在随机结果与切换页；右键菜单「随机一个设计」遵循同一矩阵且**永不落在当前设计**（仅 1 套启用时该项禁用、点击不产生任何导航）。
+5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用，菜单随机写入 `expiresAt:null`）；`manualSwitch:false` 无菜单、无可见切换入口、`/designs/` 返回 404。
 6. 手选持久化：随机模式手选后窗口内保持、过期后恢复轮换；直达设计 URL 不改变后续根路径归属。
 7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
@@ -444,6 +456,7 @@ SenrenBanka/
 11. 每套设计含 `DESIGN.md` + `design.json`（provenance 完整）；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本与切换页链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。
+14. 右键快捷菜单（`manualSwitch:true`）：四套设计桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下无菜单且不请求菜单运行时；四套设计均不存在旧的可见 `Switch design` 入口。
 
 ---
 
@@ -459,7 +472,7 @@ SenrenBanka/
 | GH Pages 同域存储冲突 | 存储键含 base 命名空间 + 可覆盖 |
 | GH 子路径与根路径产物差异 | env 驱动 site/base + `urls.ts` 统一前缀 + 验收第 12 条 |
 | 近重复内容 SEO | 仅 default 可索引（§7.4） |
-| 设计质量不可自动校验的部分（切换入口存在性等） | 审查清单人工把关（一期接受） |
+| 设计质量不可自动校验的部分（右键菜单接入、随机语义等） | 审查清单人工把关 + `design-page-verify` 流程（一期接受） |
 
 ---
 
@@ -531,3 +544,5 @@ SenrenBanka/
 - **四套设计差异化动效增强（v0.4.0）**：按 `docs/adr/0003-differentiated-motion-enhancement.md` 落地（基础触发沿用 ADR 0001，其决定 1 的范围已修订）。**规范先行**：editorial `DESIGN.md` 重写 Motion 章节（"印刷"双动作）＋ Key Characteristics 增补；terminal 新增 Motion 章节并修订 Don't（打字级联仅限命令与装饰行）；厂商快照（oxide / fast）未修改，取舍记录于 ADR 0003 与本记录。**实现**：editorial = 首屏 opacity 渗入（90ms 错落）+ hero 伪元素 `scaleX` 划线 + 栏目头两端就位（±10px）+ 作品行「渗入 + 行线绘制」+ 链接 70ms 错落 + 页脚渗入；terminal = Astro 构建期切分命令字符（66 个 `tm-ty` span、95 处内联 `--d`）+ 逐字符 opacity 步进（`steps(1,end)`，零运行时 JS）+ 输出 / 列表项 `--d` 级联（16ms/字、50ms 行节奏、上限 6）+ chrome 首个圆点 2.6s 呼吸灯；oxide = 顶部 2px 滚动进度线（CSS Scroll-Driven Animations、`animation-timeline: scroll(root)`、`@supports` 门控、不支持 / 减动态整条隐藏）+ ASCII 波形 32s 无缝流动（`wave.repeat(4)` + `translateX(-25%)`）+ 链接 / 切换器 150ms ease 颜色过渡 + 页脚显现目标；fast = 卡片 / 经历行错落（60 / 50ms，复用既有 duration / curve token、零新增 token）+ 卡片 hover（面层 + 描边 + `translate: 0 -2px`，与 reveal 的 `transform` 互不覆盖）+ 按钮 `:active` `scale(0.97)` + 页脚链接 hover。**踩坑与修复**：CSS 压缩器会把 `animation-timeline` 合并进 `animation` 简写（产物 `animation:linear both ox-progress scroll(root)`），当前 Chromium 不接受该简写（`CSS.supports` = false）→ 整条声明失效（实测 `animation-name:none`），以 `var()` 传入 timeline 阻断合并后实测生效（top `scaleX(0)` → 中位 `0.5004` → 底 `1`）；terminal 检测器首跑出现新增 `em-dash-overuse`（新注释中的「——」与 `--d` 字样触发，10 处），改写后归零。
 - **动效增强验证（`design-page-verify` 全流程 + 动画专项，v0.4.0）**：构建 7 页绿（`astro check` 0/0）；产物抽查——CSS 隔离成立（四份各只含自身前缀、每设计页恰 1 条样式链接）、根页 / 切换页 / 404 不链接任何设计 CSS 且 `data-reveal-ready` 计数 0（reveal 脚本仅存在于四设计页）、`BASE_PATH=/demo` 全链路前缀正确（0 条非法根相对链接）、`rel="preload"` 四页均 0、核心字段四页齐备。检测器：editorial / terminal / fast 零发现、oxide 仅 1 条已记录 advisory（反证成立）。桌面实测（四页 console 0、请求仅自身资源）：editorial —— `.ed-name` `ed-ink`、hero 伪元素 `ed-rule-draw` + 结束态 `transform:none` + `border` 透明接管、行 2 `::before` `scaleX(1)`、链接错落 `transition-delay 0.07s`；terminal —— `.tm-name` `tm-step` 延迟 0.276s、链接行 / 项目行 0.324s / 0.42s、滚动到 projects 后 +180ms 仍有 3/20 单元未落屏（级联进行中）、settled 后 0，光标 `tm-blink`、圆点 `tm-live` infinite；oxide —— 进度线 `animationTimeline: scroll(root)` 且随滚动变化、波形 `ox-wave-flow` 运行中、链接过渡 `color|0.15s|ease`；fast —— 错落变量 60 / 120ms、卡片 hover `translate 0px -2px` + `#f5f5f5` + `#d1d1d1`（rest `none` / `#ffffff` / `#e0e0e0`）、按钮 active `matrix(0.97, 0, 0, 0.97, 0, 0)`（隔离上下文实测，:hover/:active 均 true）。**跳转兜底**：四页 `scrollTo(0, height)` 后隐藏目标 0；terminal 9 次快速往返滚动后隐藏 0 / 0；布局稳定（terminal `scrollHeight` 1243 → 1243）。375×812 + 触控：四页 `pointer: coarse`、`scrollWidth == innerWidth`（375，零溢出）、命中高 44.2 / 44.0 / 44.8 / 44.2。降级四情形：reduced-motion（动画数 0、门控不写、隐藏 0）、无 JS（`<html>` 无门控、h1 / 核心内容齐备、截图）、无 IO（门控不写、隐藏 0）、IO 构造抛错（门控撤销、隐藏 0）。对比度：terminal dim 6.75 / 正文 10.97、editorial 6.95、fast 亮 5.93 · 暗 9.75；oxide 色值未改动，沿用已核值（dim / label 5.76、name 17.41、body 9.97、number 10.35；本轮工具链对 oklch 未重算）。截图归档于 `C:\Users\lovelive\.trae-cn\trae-browser-screenshots\`（`verify-v040-<id>-top/-bottom/-375/-nojs.png`）。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放；滚动进度线对 Firefox stable 的隐藏行为未在该引擎实证；「快速滚动卡顿」为定性观察（无 FPS / CLS 仪器化度量，以零布局位移 + 隐藏残留 0 近似）。
 - **动效修正两则（v0.4.1，项目所有者反馈）**：① **oxide** 页脚小波形此前静态（v0.4.0 仅顶部波形挂了流动轨道）——补 `.ox-wave-track` 后两处同为 `ox-wave-flow` 32s linear 无缝循环（实测 1.5s 内位移推进：顶部 −21.6→−56.6、页脚 −18.8→−49.3），减动态时均静止；仅 `Page.astro` 变化、CSS 复用既有规则。② **terminal** 块状光标自"基线对齐"改为"底边与字面底部对齐"（`translateY(0.15em)` 静态 transform）——实测修正前底边停于基线 191.55px、字面墨迹底部在 196.55px（光标整体浮于字面之上），修正后 197.31px 与字面底部齐平；减动态下位置保留、仅闪烁停止；`DESIGN.md`（Shapes / Cursor）同步。**验证**：构建 7 页绿（check 0/0）；CSS 隔离四份单归属（terminal 新哈希 `Page.oGXrcDw_.css`）；检测器 terminal 零发现、oxide 仅既知 advisory；console 0；375×812 触控零溢出且两条波形移动端仍流动、光标 0.6em 比例正确；reduced-motion 下光标 transform 保留 / 波形静止。截图 `verify-0.4.1-terminal-cursor.png`、`verify-0.4.1-oxide-footer-wave.png` 归档（含修复前对比 `cursor-fix-*`）。未测项同 v0.4.0。
+- **桌面右键快捷操作菜单（v0.5.0）：可见切换入口整体替换为共享 ContextMenu**。**决策**（`docs/adr/0004-context-menu-replaces-visible-switch.md`，经项目所有者确认三项待决）：菜单为**统一中性 chrome**（对齐项目所有者提供的示意图；随系统明暗，`light-dark()`）；`navigator.share` 不可用时**隐藏**该项；复制 / 分享反馈用 **Toast**（`role="status"`）。**实现**：新增 `src/components/ContextMenu.astro`（`<style is:inline>` 菜单 / Toast 样式 + `role="menu"` 标记 + 配置 JSON + 内联能力门控 `.then(动态 import)`）与 `src/lib/context-menu.ts`（打开 / 关闭 / 视口翻转、键盘（Shift+F10 / 上下文键 / ↑↓/Home/End/Enter/Space/Esc/Tab）、原生右键保留（链接 / 图片 / 输入 / 可编辑 / 已选文字 / 触屏来源）、复制（Clipboard API → `execCommand` 降级 → 失败 Toast）、分享（成功 / AbortError 取消 / 失败三态）、随机（排除当前 + `avoidRepeat` 再排除上次 → 写 `{designId, expiresAt}`（random=now+cacheHours / 0；fixed=null）→ `location.assign` 目标固定 URL））。`src/lib/site.ts` 的 `DesignView` 以 `contextMenu` 取代原 `switcher` 字段（构建期派生目标池 / `withBase()` href / storageKey）。四套设计删除全部旧入口共 6 处（editorial 导航 + 页脚、terminal chrome 条 + 页脚、oxide / fast 页脚）及专用 CSS（`.ed-switch` / `.tm-chrome-switch` / `.ox-switch` / `.fs-footer-link` 及各处 coarse 命中块条目）。`manualSwitch:false` → 组件整体不渲染。**验证（构建 7 页绿 / check 0/0/0；检测器 editorial / terminal / fast 零发现、oxide 仅既知 `codex-grid-background` advisory（同时构成有效性反证））**：dist——四设计页各 1 条自身 CSS 链接、菜单样式内联、根页 / 切换页 / 404 零菜单字节；运行时 chunk（`context-menu.*.js`）独立且无 `modulepreload`；`BASE_PATH=/demo` 全链路（配置 JSON / 复制 / 随机 / 切换页链接）带前缀。桌面实测（1280×800，Chromium）——四套设计菜单均可从非交互区域打开、eyebrow 为当前设计名、7 项（分享不受支持时 6 项）、边缘点击自动翻转收敛；次次右键收起、外部左键 / 滚动 / 尺寸变化 / Esc 关闭；Shift+F10 打开且焦点落首项（`data-cm-key` 焦点环），鼠标打开聚焦容器不预高亮；↑↓ 遍历、Enter 激活（回顶 796→0）、Tab 关闭；`aria-label` / `role` / `aria-disabled` / 装饰 icon `aria-hidden` 齐备；console 0、仅同源请求。动作实测——复制（Clipboard API 剪贴板回读正确；**降级路径**先暴露"解构 `execCommand` 裸调用 Illegal invocation"缺陷（见 `AGENTS.md` 已知坑）修复后真实降级复制回读正确；双双失败 → 错误 Toast）；分享成功 / 取消（AbortError）/ 失败三态 Toast；重载（sessionStorage 计数 1→2）；打印（stub 计数 1）；随机——4 设计池排除当前 + `avoidRepeat` 排除上次（seed last=fast 时落点 ∈ {oxide,terminal}）、存储 `{designId, expiresAt:now+24h}`、直达固定 URL 不覆盖存储、fixed 模式写 `expiresAt:null` 且根路径尊重手选；单启用设计时该项 `aria-disabled` 且强制点击不导航；`manualSwitch:false` 构建 6 页（`/designs/` 404、设计页零菜单 / 零脚本、右键不拦截）；触控仿真（375×812、coarse）——菜单不显示、程序化 contextmenu 无响应、**菜单 chunk 请求数 0**、无横向溢出（375）、无可见切换入口。对比度核算（菜单自身色板 vs 其底色）：亮色 eyebrow 初版 `#8e8e93` 仅 3.26 不达标 → 调深为 `#6f6f74`（实测 5.00）、icon 5.15、label 17.01；暗色 6.04–14.52；Toast 13.73、错误档 9.36；禁用项为 WCAG 豁免（状态由 `aria-disabled` + opacity 表达）。**未测项**：真机（iOS / Android）与 Safari / Firefox 引擎、横向 / 200% 缩放、Linux 桌面（`navigator.share` 缺失路径以 stub 验证，未在真实 Firefox 桌面实测）、菜单在 macOS 原生分享面板下的实际呈现。
+- **右键菜单顶部重设计（v0.5.1，项目所有者反馈：两行头部语义不明、整体过宽）**：移除「SENRENBANKA · EDITORIAL / 当前设计」双行头与品牌 eyebrow，改为**单行身份条**——设计强调色圆点（`design.json.accent`，与切换页芯片同源，经 `--cm-accent` 内联；缺省中性灰）+ 设计名 + 右对齐淡化「当前设计」标签；头部解除 `aria-hidden`（承载真实信息）、圆点保持装饰性 `aria-hidden`。宽度改为 `max-content` + `min 13.5rem` / `max 16.5rem` 收敛，实测四设计均 **216px**（原 304px）、高度 326px（原 352px）；条目 gap / 内边距 / 分隔线边距小幅收紧。`ContextMenuConfig` 增加可选 `accent`。**验证**：构建 7 页绿（check 0/0/0）；检测器 editorial / terminal / fast 零发现、oxide 仅既知 advisory；桌面四设计宽度 216、身份条为各自设计名、圆点计算色与 accent 逐一相符（`#9a3412` / `#ffb000` / `#3fdaa0` / `#0f6cbd`）、console 0；右下角翻转收敛、`Shift+F10` + `data-cm-key` 焦点环回归、深色主题三项颜色正确、375 触控菜单隐藏且 chunk 请求 0、零溢出；对比度：设计名 17.01 / 14.52、标签 5.00 / 6.04（圆点为装饰性身份芯片，与切换页芯片同口径）；产物：`--cm-accent` 内联、`cm-eyebrow`/`cm-current` 零残留、infra 页零菜单字节、四设计页仍各单链接自身 CSS（哈希不变）。截图 `verify-051-<id>-menu.png`、`verify-051-terminal-dark.png`、`verify-051-longname-probe.png`；超长设计名收敛以 DOM 注入实测（菜单停在 264px 上限、ellipsis 生效）。未测项同 v0.5.0。

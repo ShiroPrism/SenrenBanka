@@ -11,7 +11,7 @@
   - `site`：title / description / lang / manualSwitch
   - `design`：id / displayName / description / isDefault
   - `head`：**必须原样传给 `HeadMeta`**（title / description / canonical / robots 由框架统一计算，robots 索引策略不可自行更改）
-  - `switcher`：`enabled` 与 `href`
+  - `contextMenu`：桌面右键快捷操作菜单的构建期配置（`enabled` / 当前设计 / 目标池 / storageKey 等，含随机与固定模式的存储语义）。`enabled` 为 `true` 时页面接入共享组件 `<ContextMenu config={view.contextMenu} />`（见下节）
 - 所有内部链接必须经 `withBase()`（`src/lib/urls.ts`）拼接 base 前缀，禁止硬编码绝对路径
 - 禁止虚构个人事实；允许装饰性文案（如 "Selected Works"、"Elsewhere"）
 
@@ -27,9 +27,19 @@
    ```
 
    （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）
-4. `manualSwitch` 开启时必须提供可见的切换入口链接（形式自由：页脚链接 / 角落按钮 / 导航项；无 JS 可达）
+4. `manualSwitch` 开启时必须接入共享右键菜单（`{view.contextMenu.enabled && <ContextMenu config={view.contextMenu} />}`，放于 `<body>` 末尾）；**不得**再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口
 5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
 6. `design.json` 的 `source`：非自产（官方 / 第三方）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`
+
+## 设计切换入口：共享桌面右键快捷操作菜单
+
+- **唯一实现**：`src/components/ContextMenu.astro`（标记 / 样式 / 配置注入）+ `src/lib/context-menu.ts`（运行时）。**禁止**每套设计复制菜单实现或自建切换入口；数据来自 `view.contextMenu`（构建期在 `src/lib/site.ts` 派生）。
+- **触发**：仅桌面鼠标环境（`(hover: hover) and (pointer: fine)`）在非交互区域右键/`Shift+F10` 打开；链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单——**不得对全页无条件 `preventDefault()`**。
+- **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印 / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时移除「分享页面」；复制 / 分享结果以 Toast（`role="status"`）反馈。
+- **随机语义**（与 `/designs/` 切换页、根脚本一致）：复用 `storageKey` 与 `{ designId, expiresAt }` 格式；必须排除当前设计（保证确实切换）、`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后直接导航目标设计的固定 URL；打开菜单 / 页面加载均不写存储。
+- **键盘 / 焦点**：菜单 `role="menu"`，项为 `role="menuitem"`；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困住焦点；鼠标打开不预高亮首项，键盘打开才显示焦点环（`data-cm-key`）。
+- **移动端（项目决策）**：触屏设备不提供菜单、不模拟长按、**不加载运行时**（内联能力检测 + 动态 `import()`，见「已知坑」）；设计页不保留任何移动端替代入口。
+- `manualSwitch: false` 时：`view.contextMenu.enabled` 为 `false` → 页面不渲染该组件（零标记 / 零脚本），`/designs/` 不构建（404）；各设计固定 URL 不受影响。
 
 ## 动效（Motion）
 
@@ -87,9 +97,9 @@
 ### 6. Project conventions（本项目现行约定）
 
 - **当前实现**：通用功能图标库采用 `@lucide/astro`（构建期内联 SVG、零客户端 JS）；复用既有方案，不重复引入相似库。
-- **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA / 切换器保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
+- **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；未映射 / 缺省渲染该设计的通用功能图标（Globe）。links 列表面内「要么不用，要么全用」——现行选择为全用、不留裸链接；列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
 - **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `SPEC §18`。
-- **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。
+- **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：右键菜单组件（项目级 chrome，见「设计切换入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
 - **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商快照（oxide / fast）的适配记录见 `SPEC §18`。
 
 ## 已知坑（均已实测，勿重复踩）
@@ -101,15 +111,17 @@
 - **内容层 glob loader 会归一化条目 id**（`site.config.yaml` → `"siteconfig"`）：取数用 `getCollection()` 取唯一条目，不要猜 id（见 `src/lib/site.ts`）。
 - **Tailwind 不识别动态拼接的类名**（如 `border-${color}` 不会被扫描到）；需要安全列表时用 `@source inline("...")`。
 - **`@astrojs/tailwind` 已弃用**，勿引入；Tailwind 4 官方集成 = `@tailwindcss/vite`（已配置）。
-- 切换页 `/designs/` 在 `manualSwitch: false` 时**不构建**（404），且任一设计页不得留入口。
+- 切换页 `/designs/` 在 `manualSwitch: false` 时**不构建**（404）；任一设计页不得留可见 / 可聚焦的切换入口（入口即桌面右键菜单，与切换页同受 `manualSwitch` 门控）。
 - **Tailwind Preflight 把 `svg` 置为 `display: block`**：行内语境中的 svg 图标（文本旁的品牌 mark / 外链箭头）会折到下一行——必须显式 `display: inline-block`（flex 语境不受影响）。2026-10-10 由图标改动验证期 rect 实测暴露。
+- **右键菜单运行时必须按能力门控动态加载**：`ContextMenu.astro` 用内联 `matchMedia('(hover: hover) and (pointer: fine)')` + 动态 `import()`（Vite 不给该 chunk 生成 `modulepreload`，dist 实测）；**不要改成静态 import**，否则触屏设备会白白下载菜单逻辑。菜单样式用 `<style is:inline>`：不新增 `<link>`（"每设计页只链接自己的 CSS" 仍成立）。
+- **`document.execCommand` 必须保持以 `document` 为 `this` 调用**：解构出的裸方法引用会抛 `Illegal invocation`（2026-10-10 降级复制路径实测踩坑）；该 API 虽被废弃，仍是 Clipboard API 不可用时的唯一同步降级路径，经自定义类型引用以避开 TS 废弃告警。
 
 ## 新增设计评审清单
 
 - [ ] 四件套 + provenance（来源类型 / URL / 日期 / 许可）完整
 - [ ] 核心字段全部渲染；扩展区块取舍与理由写进 DESIGN.md
 - [ ] 若使用图标 / 品牌标志：符合「Iconography & Icon Library Rules」（设计规范优先 / 库与技术栈兼容 / 列表面 100% 标记、无裸链接 / 资产 vendored + 商标核对 / `aria-hidden`）
-- [ ] `<HeadMeta {...view.head} />` 与切换入口均存在
+- [ ] `<HeadMeta {...view.head} />` 原样引入；`manualSwitch` 时接入共享 `<ContextMenu config={view.contextMenu} />`（**不得**自建切换入口或复制菜单实现）
 - [ ] 移动端 375px 宽无横向溢出、正文可读
 - [ ] `npm run build` 通过（含 `astro check`）
 - [ ] 抽查 `dist/`：该设计页面只链接自己的 CSS；根页 / 切换页 / 404 不链接任何设计 CSS
