@@ -3,46 +3,48 @@
 # 契约：name / headline / bio / links 为核心字段，所有设计必须呈现；
 #       projects / experience / skills / contact 为扩展区块，由各设计自行取舍。
 
-name: "Lin Yao / 林遥"
-headline: "Building calm tools for noisy problems / 为嘈杂的问题造安静的工具"
-bio: "独立开发者与界面工程师，关注设计系统、静态站点与开发者体验。前五年在两家创业公司负责前端与设计工程。下班后喜欢胶片摄影和长距离骑行。"
-location: "Hangzhou, China"
+name: "田所浩二 / Tadokoro Koji (野獣先輩)"
+headline: "24歳、学生です / 王道を行く、空手部主将兼BBシアター巨星"
+bio: "24岁，是学生なのだ。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！"
+avatar: "TadokoroKoji.png"
+location: "Shimokitazawa, Tokyo / 東京都世田谷区下北沢"
 
 links:
-  - label: GitHub
-    url: "https://github.com/example"
-    icon: github
-  - label: Email
-    url: "mailto:hello@example.com"
-    icon: mail
-  - label: 博客
-    url: "https://example.com/blog"
+  - label: niconico
+    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    icon: tv
+  - label: BB素材库
+    url: "https://example.com/bb-theater"
+    icon: video
+  - label: 下北沢通信
+    url: "https://example.com/114514"
+    icon: coffee
 
 projects:
-  - title: "Static Smith"
-    description: "A tiny build-time pipeline that turns content files into printable booklets."
-    url: "https://example.com/static-smith"
-    tags: ["Astro", "TypeScript"]
-  - title: "灰度笔记"
-    description: "一个只做一件事的极简笔记应用，本地优先、永不上传。"
-    url: "https://example.com/greyscale-notes"
-    tags: ["PWA", "SQLite"]
-  - title: "Night Shift Radio"
-    description: "深夜电台声音地图，把城市噪音做成可听的风景。"
-    tags: ["Web Audio", "Map"]
+  - title: "王道征途 (The Royal Road)"
+    description: "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。"
+    url: "https://example.com/oudou"
+    tags: ["114514", "王道", "空手道"]
+  - title: "特制红茶配方 (Iced Tea Formula)"
+    description: "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。"
+    url: "https://example.com/tea-lab"
+    tags: ["Tea", "Recipe"]
+  - title: "多元宇宙 BB 剧场巡演"
+    description: "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。"
+    tags: ["MAD", "AviUtl", "Synthesizer"]
 
 experience:
-  - org: "Paper Street Studio"
-    role: "前端与设计工程 Lead"
-    period: "2023 – now"
-    description: "负责设计系统与营销站技术栈，把页面交付周期从两周压到两天。"
-  - org: "Harbor Labs"
-    role: "Senior Frontend Engineer"
-    period: "2019 – 2023"
-    description: "主导组件库重构与可访问性专项。"
+  - org: "下北沢大学 空手部"
+    role: "主将 / 先辈 (Ace)"
+    period: "24岁 – 永恒"
+    description: "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。"
+  - org: "niconico 动画 / 互联网亚文化演艺企划"
+    role: "概念级主演 / 万能音 MAD 核心"
+    period: "2001 – now"
+    description: "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。"
 
-skills: ["TypeScript", "Astro", "Design Systems", "CSS 动画", "可访问性"]
+skills: ["空手道组手", "王道征途", "秘制调饮", "日光浴", "BB 素材化", "迫真咆哮"]
 
 contact:
-  email: "hello@example.com"
-  note: "欢迎交流合作，也欢迎来信聊聊胶片和骑行。"
+  email: "114514@shimokitazawa.jp"
+  note: "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。"

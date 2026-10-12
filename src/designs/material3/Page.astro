@@ -41,23 +41,25 @@ const { profile, contextMenu } = view;
               />
             )
           }
-          <p class="m3-label m3-rise" style="--rise-delay: 30ms">Portfolio</p>
-          <h1 id="m3-title" class="m3-title m3-rise" style="--rise-delay: 60ms">
-            {profile.headline}
-          </h1>
-          <p class="m3-bio m3-rise" style="--rise-delay: 90ms">{profile.bio}</p>
-          <div class="m3-actions m3-rise" style="--rise-delay: 120ms">
-            {
-              profile.links.map((link) => (
-                <a class="m3-btn m3-btn-tonal" href={link.url}>
-                  {link.icon === 'github' && <GithubMark class="m3-btn-mark" aria-hidden="true" />}
-                  {link.icon === 'mail' && (
-                    <MailIcon class="m3-btn-mark m3-icon" aria-hidden="true" />
-                  )}
-                  <span>{link.label}</span>
-                </a>
-              ))
-            }
+          <div class="m3-hero-text">
+            <p class="m3-label m3-rise" style="--rise-delay: 30ms">Portfolio</p>
+            <h1 id="m3-title" class="m3-title m3-rise" style="--rise-delay: 60ms">
+              {profile.headline}
+            </h1>
+            <p class="m3-bio m3-rise" style="--rise-delay: 90ms">{profile.bio}</p>
+            <div class="m3-actions m3-rise" style="--rise-delay: 120ms">
+              {
+                profile.links.map((link) => (
+                  <a class="m3-btn m3-btn-tonal" href={link.url}>
+                    {link.icon === 'github' && <GithubMark class="m3-btn-mark" aria-hidden="true" />}
+                    {link.icon === 'mail' && (
+                      <MailIcon class="m3-btn-mark m3-icon" aria-hidden="true" />
+                    )}
+                    <span>{link.label}</span>
+                  </a>
+                ))
+              }
+            </div>
           </div>
         </section>
 

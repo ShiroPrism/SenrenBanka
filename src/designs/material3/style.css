@@ -128,7 +128,12 @@
   color: var(--m3-on-surface-variant);
 }
 
-/* ---- hero ---- */
+/* ---- hero ----
+   compact / medium：单列，头像在正文之上（窄屏唯一站得住的排法）。
+   ≥1024px：改 canonical 两窗格——文本为主窗格、头像为右侧支撑窗格。
+   1024 而非尺寸类的 840：实测 840 下主列仅 776px，减去头像与 48px 间隔后
+   正文不足 550px，display-medium 标题被挤成 4 行、并排反而更差；
+   1024 起主列 ≥960px，两窗格才成立。依据见 docs/designs/material3/ADAPTATION.md。 */
 
 .m3-hero {
   padding: 3.5rem 0 2.5rem;
@@ -142,6 +147,31 @@
   margin-bottom: 1.25rem;
   border-radius: var(--m3-corner-full);
   object-fit: cover;
+}
+
+@media (min-width: 1024px) {
+  .m3-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+    max-width: none;
+    padding-block: 4rem 3rem;
+  }
+
+  .m3-avatar {
+    grid-column: 2;
+    grid-row: 1;
+    width: clamp(11rem, 16vw, 14rem);
+    height: clamp(11rem, 16vw, 14rem);
+    margin-bottom: 0;
+  }
+
+  /* profile.avatar 缺省时（site.ts 解析为 null）不渲染 <img>：auto 列宽为 0 但
+     column-gap 仍会生效，正文右缘会与下方分区差出一个间隔。收回为单列。 */
+  .m3-hero:not(:has(.m3-avatar)) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .m3-label {
