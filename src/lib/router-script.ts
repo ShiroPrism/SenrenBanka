@@ -7,6 +7,8 @@ export interface RouterRuntimeConfig {
   avoidRepeat: boolean;
   base: string;
   storageKey: string;
+  /** 当前语言前缀（'' = 无前缀的根路径）。 */
+  localePrefix?: string;
 }
 
 export interface SwitcherRuntimeConfig {
@@ -28,9 +30,13 @@ function safeJson(value: unknown): string {
 }
 
 /**
- * 根路径选择逻辑（SPEC §7.2 状态表）：
+ * 语言根入口选择逻辑（SPEC §7.2 状态表）：
+ * 与根路径完全一致，仅跳转目标带上语言前缀：
  * - fixed：有合法手选 → 手选；否则 default（根路径不写存储）
  * - random：存储未过期 → 用存储；否则重随机（avoidRepeat 时排除上次）并写入新窗口
+ *
+ * 主题偏好跨语言共享：storageKey 不含 locale，因此切换语言不会重置随机窗口，
+ * 也不会为每种语言形成互相覆盖的独立选择（SPEC §7.5）。
  */
 export function renderRouterScript(cfg: RouterRuntimeConfig): string {
   return `(function () {
@@ -60,20 +66,28 @@ export function renderRouterScript(cfg: RouterRuntimeConfig): string {
       localStorage.setItem(C.storageKey, JSON.stringify({ designId: target, expiresAt: expiresAt }));
     } catch (e) {}
   }
-  location.replace(C.base + target + '/');
+  location.replace(C.base + (C.localePrefix ? C.localePrefix + '/' : '') + target + '/');
 })();`;
 }
 
-/** 切换页：点击写入手选（random → 重开窗口；fixed → 永久记住），无 JS 时仅导航、不持久化。 */
+/**
+ * 切换页：点击写入手选（random → 重开窗口；fixed → 永久记住），无 JS 时仅导航、不持久化。
+ * 「当前」标记是切换页模板里的真实元素（而非 CSS content 生成），本脚本负责按存储显隐，
+ * 这样它才能随语言本地化（SPEC §4/§7.5）。
+ */
 export function renderSwitcherScript(cfg: SwitcherRuntimeConfig): string {
   return `(function () {
   var C = ${safeJson(cfg)};
+  function mark(id) {
+    var cur = document.querySelector('[data-design="' + id + '"]');
+    if (!cur) return;
+    cur.setAttribute('data-current', 'true');
+    var badge = cur.querySelector('[data-lang-badge]');
+    if (badge) badge.removeAttribute('hidden');
+  }
   try {
     var stored = JSON.parse(localStorage.getItem(C.storageKey) || 'null');
-    if (stored && stored.designId) {
-      var cur = document.querySelector('[data-design="' + stored.designId + '"]');
-      if (cur) cur.setAttribute('data-current', 'true');
-    }
+    if (stored && stored.designId) mark(stored.designId);
   } catch (e) {}
   document.addEventListener('click', function (e) {
     var el = e.target;

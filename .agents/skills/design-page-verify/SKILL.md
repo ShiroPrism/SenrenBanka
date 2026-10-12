@@ -26,17 +26,41 @@ npm run build        # 含 astro check；注册表校验失败会以 [senrenbank
 npm run check        # 仅类型检查（可按需）
 ```
 
-- 四件套齐备：`DESIGN.md` / `design.json` / `Page.astro` / `style.css`。
+- 五件套齐备：`DESIGN.md` / `design.json` / `Page.astro` / `style.css` / **`messages.ts`**（多语言文案契约，见步骤 2b）。
 - `design.json`：非自产来源必须含 `source.url/fetchedAt/license`；许可要求保留声明时附 `SOURCE-LICENSE.txt`。
 
 ## 步骤 2 · 产物静态抽查
 
 以 `<id>` 为目标设计 id、`<特征选择器>` 为该设计独有选择器（如 `.ed-masthead{`）：
 
-1. **CSS 隔离**：在 `dist/_astro/*.css` 中定位含 `<特征选择器>` 的文件；断言其他设计的选择器/工具类**不出现**在其中；断言 `dist/index.html`（根路由页）、`dist/designs/index.html`（切换页，若构建）、`dist/404.html` **不链接**任何设计 CSS。
-2. **base 前缀**：`npm run build -- --base /demo`（或设置 `BASE_PATH` 环境变量）后抽查 `dist/<id>/index.html` 的内部链接均带 `/demo` 前缀。
+1. **CSS 隔离**：在 `dist/_astro/*.css` 中定位含 `<特征选择器>` 的文件；断言其他设计的选择器/工具类**不出现**在其中；断言 `dist/index.html`（根路由页）、`dist/404.html`、各语言入口页、切换页**不链接**任何设计 CSS。
+2. **base 前缀**：`MSYS2_ARG_CONV_EXCL='*' npx astro build --outDir dist-demo --base /demo` 后抽查 `dist-demo/<locale>/<id>/index.html` 的内部链接均带 `/demo` 前缀。
+   **坑（Git Bash）**：单独写 `BASE_PATH=/demo` 会被 MSYS 路径转换成 `/D:/Git/demo`（产出错误 base）；单独写 `--base /demo` 同样会被转换。**两者必须同时使用**（`MSYS2_ARG_CONV_EXCL='*'` + `--base` 显式传参），实测有效。
 3. **字体与资源**：该页面只引用自身用到的字体文件；`rel="preload"` 数量与预期一致（无多余子集预载）。
 4. **核心字段**：目标页面 HTML 中核心字段（name/headline/bio/links）全部渲染。
+
+## 步骤 2b · 多语言专项（v0.9.0 起必做）
+
+以 `<locale>` ∈ {`zh-cn`, `ja`, `en`}、`site.config.yaml` 的 `i18n.locales` 为准：
+
+1. **页面齐备**：断言 `dist/<locale>/<id>/index.html` 存在，且 `dist` 中 CSS 文件总数仍等于设计数（多语言**不得**让每套设计产生独立 CSS）。
+2. **CSS 不随语言分裂**：同一设计的 `<locale>` 与其他语言页面引用**完全相同**的单个 CSS 文件（`diff` 两个 `<link rel=stylesheet>` 集合）。
+3. **`lang` / `robots` / `canonical` / `hreflang`**：
+   - `<html lang>` 等于该语言的 BCP 47 code（不是固定 `zh-CN`）；
+   - 默认设计 `index, follow`，非默认设计 `noindex, follow`；
+   - canonical 含 locale 前缀与 base；
+   - **仅默认设计**有 `<link rel="alternate" hreflang>`（各语言互指 + `x-default`）；非默认设计该计数必须为 **0**。
+4. **文案**：抽查该页面的分区标题来自本设计 `messages.ts`（随语言变化），且**模板中无残留的用户可见字面量**。
+5. **语言切换（右键菜单的二级菜单，`.cm-lang`）**：打开右键菜单 → **悬浮「语言」行展开子菜单** → 断言 3 个 `.cm-lang` 项、**恰好 1 个** `aria-current="page"`、每个带正确 `hreflang`、目标 URL **保持同一 `<id>`**、子菜单 `aria-label` 已本地化、触发项 `aria-expanded="true"`。
+   - **主菜单高度必须与语言数量无关**（二级菜单契约）：对比「语言项平铺」时的菜单高度，确认现在恒为固定项数；子菜单限高且可滚动、完全落在视口内。
+   - **键盘**：`↑↓` 在主菜单项间循环**不得飞出菜单**（焦点不能落到 `BODY`）；移到「语言」自动展开、移开收起；`→` 进入子菜单、`←` 返回。
+   - **设计页不应再有可见的 `.lang-switch`**（基础设施页切换页 / 404 除外）。
+6. **语言/主题正交性**：实点击一次语言链接，断言落点为 `/{目标locale}/{原id}/`（切换语言不改主题）。
+7. **配置开关**（临时改 `site.config.yaml` 后构建，**测完必须恢复**）：
+   - `manualSwitch: false` → 各语言切换页与旧 `/designs/` **不构建**、菜单内**主题切换项不渲染**（`data-cm-action="random"` / `switch` 计数为 0），**但菜单与语言分组照常渲染**（`.cm-lang` 仍为 3 项）；
+   - `mode: fixed` → 入口页仍落到默认设计且带 locale 前缀。
+8. **旧路径兼容**：`/<id>/` 与 `/designs/` 存在 meta refresh → 默认语言版本，且带 `canonical` + `noindex, follow`。
+9. **触控命中区**：375px + 触控下 `.lang-switch-link` 命中高度 ≥44px（各设计 `style.css` 的 `@media (pointer: coarse)`）。
 
 ## 步骤 3 · impeccable 检测器
 
@@ -121,11 +145,12 @@ npm run check        # 仅类型检查（可按需）
 
 - [ ] `npm run build` 通过（含 astro check），注册表校验无 `[senrenbanka]` 报错
 - [ ] 产物抽查：CSS 隔离、base 前缀、字体资源、核心字段全部通过
+- [ ] 多语言（步骤 2b）：24 页齐备、CSS 未按语言分裂、`lang`/`robots`/`canonical`/`hreflang` 正确、菜单二级菜单内语言项 3 个 + 1 个 `aria-current` + 键盘不飞出菜单、语言/主题正交、旧路径跳转与配置开关均符合
 - [ ] 检测器 0 发现（或均已记录为例外）
 - [ ] 桌面：console 0、仅自身资源、token 实测符合 DESIGN.md
 - [ ] a11y：标题层级无跳级、每个分区有可访问名称、链接可访问名不含装饰符、装饰元素 `aria-hidden`
 - [ ] 动效（若引入 `<Reveal />`）：门控写入、首屏 animation 生效、滚动到底全部 `data-reveal-in`、**跳转滚动不留隐藏元素**、console 0（无动效设计显式跳过并注明）
 - [ ] 降级：reduced-motion / 无 JS / 无 IO / IO 抛错 四种情形下隐藏元素均为 0
-- [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常（或如实降级声明）
+- [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常（或如实降级声明）。**注意**：语言切换在右键菜单内，触屏不提供（项目取舍），故 375px 下**不**断言语言切换可用性
 - [ ] 对比度达标（或记录例外）
 - [ ] `docs/verification/<id>.md`（或 `shared.md`）已更新为最新状态；例外按归属记录（自撰 `DESIGN.md` / 厂商来源 `ADAPTATION.md`）；截图留档且记录路径

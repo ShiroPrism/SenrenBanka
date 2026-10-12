@@ -37,6 +37,10 @@
 - 核心字段全部渲染（name 为 Display 档 h1 / headline / bio / links 幽灵按钮组）；扩展区块四类全取（projects 单元网格 / experience 规则线行 / skills 等宽芯片 / contact 声明 + 反转主按钮）。
 - 实现细节与实测数值在 `docs/verification/kern.md` 记录。
 
+## 语言切换入口适配（v0.9.0 · 2026-10-12）
+
+官方规范未定义语言切换入口。v0.9.0 起语言切换入口并入共享右键菜单的语言分组（`.cm-lang`），本设计**不再**单独渲染可见语言切换器，其 `style.css` 中亦无语言切换样式——语言项属项目 chrome 的中性外观，不模仿本设计视觉语言。
+
 ## 未测 / 限制
 
 - 同 `docs/verification/kern.md`；复刻规范为自撰、可修订（修订时同步实现与验证记录）。

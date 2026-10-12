@@ -1,0 +1,47 @@
+---
+import InfraStyles from '../components/InfraStyles.astro';
+import { loadSite } from '../lib/site';
+import { sharedMessagesFor } from '../i18n/resolve';
+
+/**
+ * 旧无语言前缀路径的兼容入口 `/<design>/` 与 `/designs/`（SPEC §7.3）。
+ *
+ * 静态托管无法在代码内实现真正的 HTTP 301（重定向由平台配置决定），因此这里采用
+ * **明确声明的降级方案**：
+ * - `<meta http-equiv="refresh">` 立即跳转到**默认语言**的同一目标（无 JavaScript 依赖）；
+ * - `<link rel="canonical">` 指向权威的 locale URL；
+ * - `noindex, follow`：不与 locale 页面形成重复可索引内容。
+ * 旧链接因此仍然可用，但权威地址只有带语言前缀的那一份。
+ */
+const model = await loadSite();
+const locale =
+  model.locales.find((entry) => entry.code === model.defaultLocale) ?? model.locales[0]!;
+const m = sharedMessagesFor(locale.code);
+
+// 末段路径即设计 id 或 'designs'（由 astro.config 按同一份清单注入，这里只做安全回退）
+const segment = Astro.url.pathname.split('/').filter(Boolean).pop() ?? '';
+const target =
+  segment === 'designs' && model.switcherEnabled
+    ? `designs/`
+    : (model.enabled.some((design) => design.id === segment) ? `${segment}/` : '');
+const targetUrl = `${model.base}${locale.path}/${target}`;
+---
+
+<!doctype html>
+<html lang={locale.code}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{locale.title}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={targetUrl} />
+    {targetUrl ? <meta http-equiv="refresh" content={`0;url=${targetUrl}`} /> : null}
+  </head>
+  <body>
+    <InfraStyles />
+    <main class="infra">
+      <p class="infra-redirect">{m.legacyRedirect.body}</p>
+      {targetUrl ? <a class="infra-card" href={targetUrl}>{targetUrl}</a> : null}
+    </main>
+  </body>
+</html>

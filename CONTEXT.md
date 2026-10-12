@@ -1,6 +1,6 @@
 # SenrenBanka
 
-多设计个人主页生成器：一份个人资料（`profile.yaml`）由多套互相独立的 `DESIGN.md` 规范生成多个静态设计页；本文件只收录本项目特有的领域术语，不含实现细节。
+多设计个人主页生成器：一份个人资料（按语言分文件维护于 `src/data/profiles/`）由多套互相独立的 `DESIGN.md` 规范生成多个静态设计页；本文件只收录本项目特有的领域术语，不含实现细节。
 
 ## Language
 
@@ -21,6 +21,44 @@ _Avoid_: 文档汇总、二手整理、摘抄
 **Design reinterpretation（视觉复刻）**:
 仅借鉴目标设计系统的视觉语言、规范完全自撰的设计（`source.type: third-party-analysis`）；不移植上游文本与素材，标注"非官方"，命名不含厂商商标。
 _Avoid_: 仿制、克隆、致敬版
+
+### Localization
+
+**Locale（语言）**:
+站点支持的一种语言，由 `site.config.yaml` 的 `i18n.locales` 唯一声明；每种语言同时决定 URL 前缀、资料文件、HTML `lang`、文案字典与 SEO 元数据。
+_Avoid_: 语言包、lang、语系
+
+**Locale code（语言代码）**:
+语言的 BCP 47 标准标识（如 `zh-CN`），用作 HTML `lang` 与翻译字典键；与 URL 前缀是两件事。
+_Avoid_: locale（指代代码本身时）、lang
+
+**Locale path（语言路径）**:
+语言在 URL 中的前缀，同时是资料文件名（`src/data/profiles/<path>.yaml`）；要求唯一且合法。
+_Avoid_: lang、slug
+
+**Language self-name（语言自称）**:
+语言选择器中展示该语言的名字，由各语言自己书写（简体中文 / 日本語 / English），不使用英文名或其他语言名。
+_Avoid_: 语言英文名、显示名
+
+**Localized profile（本地化资料）**:
+某语言下的人物资料文件；三种语言共用同一套字段契约，不为语言拆分 schema。
+_Avoid_: 翻译文件、多语言副本
+
+**Shared messages（共享文案）**:
+项目 chrome 与基础设施页（右键菜单、切换页、入口页、404、语言选择器）的用户可见文案，集中在 `src/i18n/messages.ts`；与各设计自己的 `messages.ts` 相对。
+_Avoid_: 全局文案、i18n 字典
+
+**Design messages（主题文案）**:
+某套设计自身界面的用户可见文案，位于 `src/designs/<id>/messages.ts`，按该设计的视觉语言撰写，不与其他设计统一表述。
+_Avoid_: 主题翻译、设计字典
+
+**Language switcher（语言切换入口）**:
+每套设计页可见的静态链接组，切换语言时保持当前主题不变；与主题切换入口相互独立，不受 `manualSwitch` 影响。
+_Avoid_: 语言菜单、多语言选择器
+
+**Untranslatable string（不翻译文案）**:
+承担设计意图而非信息传达的文本（命令、ASCII 装饰、刻意的双语标识、专有名词、法律署名），按各设计 `messages.ts` 的说明保持原样。
+_Avoid_: 硬编码文案（该词含贬义，此处是主动决策）
 
 ### Motion
 

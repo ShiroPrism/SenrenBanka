@@ -19,16 +19,32 @@ export interface ContextMenuTarget {
 export interface ContextMenuRuntimeConfig {
   /** 当前设计 id：随机抽选必须排除（保证点击后确实发生切换）。 */
   currentId: string;
-  /** 「切换设计…」目标（/designs/，已经过 withBase）。 */
+  /** 「切换设计…」目标（当前语言下的 /designs/，已经过 withBase）。 */
   switcherHref: string;
   /** Web Share 的 title 字段（页面标题）。 */
   shareTitle: string;
-  /** 随机目标池 = 全部启用设计（含当前，运行时排除）。 */
+  /** 随机目标池 = 全部启用设计（含当前，运行时排除；href 已含当前语言前缀）。 */
   targets: ContextMenuTarget[];
   mode: 'random' | 'fixed';
   cacheHours: number;
   avoidRepeat: boolean;
   storageKey: string;
+  /** 当前语言的 Toast 文案（构建期按 view.messages.toast 注入，运行时不做语言判断）。 */
+  toast: ContextMenuToastMessages;
+  /**
+   * 语言切换项（普通 <a>，导航由浏览器处理，运行时无需参与）。
+   * 保留在配置里是为了让运行时能识别它们不是"动作"——点击不应触发任何拦截。
+   */
+  languages?: Array<{ code: string; label: string; href: string; isCurrent: boolean }>;
+}
+
+export interface ContextMenuToastMessages {
+  copied: string;
+  copyFailed: string;
+  shared: string;
+  shareCancelled: string;
+  shareFailed: string;
+  noOtherDesign: string;
 }
 
 /** 保留原生菜单的元素（含宿主：未知的媒体/嵌入元素一律不动）。 */
@@ -65,9 +81,25 @@ export function initContextMenu(): void {
   } catch {
     return;
   }
-  if (!config || !Array.isArray(config.targets) || typeof config.storageKey !== 'string') return;
+  if (
+    !config ||
+    !Array.isArray(config.targets) ||
+    typeof config.storageKey !== 'string' ||
+    !config.toast
+  )
+    return;
 
-  const items = () => Array.from(root.querySelectorAll<HTMLElement>('[role="menuitem"]'));
+  /**
+   * 当前**活跃层级**的菜单项。
+   * 二级菜单（语言）的项也在 root 内，若用 root.querySelectorAll 会把它们混进
+   * 上下键导航，导致焦点跳进子菜单——因此必须按层级取（见 activeMenu）。
+   */
+  const submenu = root.querySelector<HTMLElement>('[data-cm-submenu]');
+  let activeMenu: HTMLElement = root;
+  const items = (menu: HTMLElement = activeMenu) =>
+    Array.from(menu.querySelectorAll<HTMLElement>('[role="menuitem"]')).filter(
+      (item) => !item.closest('[data-cm-submenu]') || menu === submenu,
+    );
 
   let open = false;
   let returnFocus: HTMLElement | null = null;
@@ -102,6 +134,54 @@ export function initContextMenu(): void {
     (list[0] ?? root).focus({ preventScroll: true });
   };
 
+  /* ---------- 二级菜单（语言） ---------- */
+
+  const subTrigger = root.querySelector<HTMLElement>('[data-cm-submenu-trigger]');
+  let subOpen = false;
+  let hoverTimer = 0;
+
+  /** 打开子菜单并定位：默认贴在触发项右侧，放不下则翻到左侧；纵向对齐触发项并收敛到视口内。 */
+  const openSubmenu = () => {
+    if (!submenu || !subTrigger || subOpen) return;
+    window.clearTimeout(hoverTimer);
+    subOpen = true;
+    submenu.hidden = false;
+    subTrigger.setAttribute('aria-expanded', 'true');
+    root.setAttribute('data-cm-sub', '');
+    const triggerRect = subTrigger.getBoundingClientRect();
+    const rect = submenu.getBoundingClientRect();
+    let left = triggerRect.right - 4;
+    if (left + rect.width > window.innerWidth - VIEWPORT_MARGIN) {
+      left = triggerRect.left - rect.width + 4; // 右侧放不下 → 翻到左侧
+    }
+    if (left < VIEWPORT_MARGIN) left = VIEWPORT_MARGIN;
+    let top = triggerRect.top - 6;
+    if (top + rect.height > window.innerHeight - VIEWPORT_MARGIN) {
+      top = Math.max(VIEWPORT_MARGIN, window.innerHeight - VIEWPORT_MARGIN - rect.height);
+    }
+    submenu.style.left = `${Math.round(left)}px`;
+    submenu.style.top = `${Math.round(top)}px`;
+  };
+
+  /** 焦点真正进入子菜单（点击或 → 键）时才切换导航层级。 */
+  const enterSubmenu = () => {
+    if (!submenu) return;
+    openSubmenu();
+    activeMenu = submenu;
+    (items(submenu)[0] ?? submenu).focus({ preventScroll: true });
+  };
+
+  const closeSubmenu = (returnFocusToTrigger = false) => {
+    if (!submenu || !subTrigger || !subOpen) return;
+    window.clearTimeout(hoverTimer);
+    subOpen = false;
+    activeMenu = root;
+    submenu.hidden = true;
+    subTrigger.setAttribute('aria-expanded', 'false');
+    root.removeAttribute('data-cm-sub');
+    if (returnFocusToTrigger) subTrigger.focus({ preventScroll: true });
+  };
+
   const show = (x: number, y: number, viaKeyboard: boolean) => {
     returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     root.hidden = false;
@@ -133,6 +213,8 @@ export function initContextMenu(): void {
   const close = (restoreFocus: boolean) => {
     if (!open) return;
     open = false;
+    closeSubmenu(false);
+    activeMenu = root;
     root.hidden = true;
     root.removeAttribute('data-cm-open');
     if (restoreFocus && returnFocus && document.contains(returnFocus)) {
@@ -196,20 +278,20 @@ export function initContextMenu(): void {
       ok = false;
     }
     if (!ok) ok = legacyCopy(url);
-    if (ok) showToast('已复制页面链接');
-    else showToast('复制失败，请手动复制地址栏链接', 'error');
+    if (ok) showToast(config.toast.copied);
+    else showToast(config.toast.copyFailed, 'error');
   };
 
   const sharePage = async () => {
     if (typeof navigator.share !== 'function') return; // 不支持时该项已在初始化时移除
     try {
       await navigator.share({ title: config.shareTitle, url: window.location.href });
-      showToast('已分享');
+      showToast(config.toast.shared);
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
-        showToast('已取消分享');
+        showToast(config.toast.shareCancelled);
       } else {
-        showToast('分享失败', 'error');
+        showToast(config.toast.shareFailed, 'error');
       }
     }
   };
@@ -225,7 +307,7 @@ export function initContextMenu(): void {
       }
     }
     if (pool.length === 0) {
-      showToast('没有其他设计可选');
+      showToast(config.toast.noOtherDesign);
       return;
     }
     const target = pool[Math.floor(Math.random() * pool.length)]!;
@@ -332,6 +414,23 @@ export function initContextMenu(): void {
       close(true); // 不困住焦点：菜单关闭，焦点自然移交
       return;
     }
+    // 二级菜单：在主菜单层级 → → 打开并进入；在子菜单层级 → → 关闭并回到触发项
+    if (event.key === 'ArrowRight') {
+      if (subOpen) return; // 已在子菜单层级，→ 无意义（对齐原生菜单）
+      const active = document.activeElement;
+      if (active === subTrigger && submenu) {
+        event.preventDefault();
+        root.setAttribute('data-cm-key', '');
+        enterSubmenu();
+      }
+      return;
+    }
+    if (event.key === 'ArrowLeft') {
+      if (!subOpen) return; // 主菜单层级：← 不做水平移动（避免与浏览器返回混淆）
+      event.preventDefault();
+      closeSubmenu(true);
+      return;
+    }
     if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
       event.preventDefault();
       root.setAttribute('data-cm-key', ''); // 键盘导航开始 → 显示焦点环
@@ -344,6 +443,11 @@ export function initContextMenu(): void {
       if (event.key === 'Home') next = 0;
       if (event.key === 'End') next = list.length - 1;
       list[next]!.focus({ preventScroll: true });
+      // ↑↓ 移到触发项时同步展开/收起子菜单（对齐原生菜单的 hover 语义）
+      if (subTrigger) {
+        if (list[next] === subTrigger) openSubmenu();
+        else if (subOpen) closeSubmenu(false);
+      }
       return;
     }
     if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
@@ -355,6 +459,37 @@ export function initContextMenu(): void {
     }
   });
 
+  // 悬浮打开二级菜单：带极短延迟，避免鼠标横扫时误开（对齐原生菜单）
+  if (subTrigger && submenu) {
+    subTrigger.addEventListener('pointerenter', (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return; // 触屏无悬浮语义
+      window.clearTimeout(hoverTimer);
+      hoverTimer = window.setTimeout(openSubmenu, 120);
+    });
+    subTrigger.addEventListener('pointerleave', (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return;
+      window.clearTimeout(hoverTimer);
+      // 延迟关闭：给指针移入子菜单留出时间（斜向移动不应误关）
+      hoverTimer = window.setTimeout(() => closeSubmenu(false), 220);
+    });
+    submenu.addEventListener('pointerenter', (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return;
+      window.clearTimeout(hoverTimer);
+    });
+    submenu.addEventListener('pointerleave', (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return;
+      window.clearTimeout(hoverTimer);
+      hoverTimer = window.setTimeout(() => closeSubmenu(false), 180);
+    });
+    // 点击触发项 = 切换子菜单（触屏与键盘 Enter 的等价路径）
+    subTrigger.addEventListener('click', (event: MouseEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (subOpen) closeSubmenu(true);
+      else enterSubmenu();
+    });
+  }
+
   root.addEventListener('click', (event: MouseEvent) => {
     const item =
       event.target instanceof Element
@@ -363,6 +498,11 @@ export function initContextMenu(): void {
     if (!item || !root.contains(item)) return;
     if (item.getAttribute('aria-disabled') === 'true') return;
     const action = item.getAttribute('data-cm-action');
+    // 语言项是原生 <a> 导航：不拦截默认行为，只收起整个菜单
+    if (item.classList.contains('cm-lang')) {
+      close(false);
+      return;
+    }
     if (action !== 'switch') close(false); // 「切换设计…」是原生 <a> 导航，不拦截默认行为
     switch (action) {
       case 'reload':

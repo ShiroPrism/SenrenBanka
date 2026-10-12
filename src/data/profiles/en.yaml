@@ -1,0 +1,50 @@
+# Sample profile · English.
+# A fictional character, not real information. Replace this with your own content.
+# The three profiles (zh-cn / ja / en) share one schema; proper nouns and technical
+# tags are intentionally not translated (SPEC §5.5).
+
+name: "田所浩二 / Tadokoro Koji (野獣先輩)"
+headline: "24 years old, still a student / Captain of the karate club and a BB Theater mega-star"
+bio: "Twenty-four, and a student, at that. These days I run the Shimokitazawa karate club, putting my juniors through their paces, and I like to soak up the sun on the rooftop and brew my own secret iced tea. I exist as a concept in the collective unconscious of the internet, showing up daily across every platform in the form of multidimensional BB material!"
+avatar: "TadokoroKoji.png"
+location: "Shimokitazawa, Tokyo / 東京都世田谷区下北沢"
+
+links:
+  - label: niconico
+    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    icon: tv
+  - label: BB素材库
+    url: "https://example.com/bb-theater"
+    icon: video
+  - label: 下北沢通信
+    url: "https://example.com/114514"
+    icon: coffee
+
+projects:
+  - title: "王道征途 (The Royal Road)"
+    description: "A project combining the karate club's daily kumite practice with academic sparring sessions for my juniors, recording the martial artists' honest sweat in real time."
+    url: "https://example.com/oudou"
+    tags: ["114514", "王道", "空手道"]
+  - title: "特制红茶配方 (Iced Tea Formula)"
+    description: "A cold-brew formula developed for post-training recovery, with a curious flavour that drops you rapidly into deep relaxation and then straight asleep."
+    url: "https://example.com/tea-lab"
+    tags: ["Tea", "Recipe"]
+  - title: "多元宇宙 BB 剧场巡演"
+    description: "A phenomenon-class subculture performance project spanning the golden and silver pavilions, roaring beastification, and every kind of audio-visual tuning."
+    tags: ["MAD", "AviUtl", "Synthesizer"]
+
+experience:
+  - org: "下北沢大学 空手部"
+    role: "Captain / Senior (Ace)"
+    period: "24 years old – forever"
+    description: "I lead the club's kumite drills, teach self-defence and physical conditioning, and also keep the dojo lounge stocked with cold drinks while looking after the younger students."
+  - org: "niconico 动画 / 互联网亚文化演艺企划"
+    role: "Concept-level lead / 万能音 MAD core"
+    period: "2001 – now"
+    description: "As a recurring piece of classic source material, I have taken part in tens of thousands of derivative fan works, becoming the raw material the internet deconstructs and remakes."
+
+skills: ["Karate kumite", "The royal road", "Secret drink mixing", "Sunbathing", "BB materialisation", "Primal roaring"]
+
+contact:
+  email: "114514@shimokitazawa.jp"
+  note: "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。"

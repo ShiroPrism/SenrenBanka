@@ -72,6 +72,14 @@
 - **玻璃路径的测量口径**：本机 headless Chromium 默认 `prefers-reduced-transparency: reduce`，玻璃观感需 CDP 显式仿真 `no-preference` 实测；截图亦在该仿真下归档（代表真实玻璃观感）。
 - 两层材料厚度与回退三态（supports / reduced-transparency）均实测在位；极光静止（无持续动效，DESIGN.md 论证）。
 
+## 多语言（v0.9.0，2026-10-12）
+
+- **语言切换入口 = 右键菜单的语言二级菜单**（`.cm-lang`，主菜单高度与语言数量无关）：本设计**不再**渲染可见语言切换器，`style.css` 中也**没有**语言切换样式（v0.9.0 修订：消除 8 套设计重复排版）。语言项由共享 `ContextMenu.astro` 提供，中性外观属项目 chrome，不模仿本设计。
+- 三语言页面：`<html lang>` 正确、robots 与 hreflang 策略正确（仅默认设计标注 hreflang）、二级菜单内 3 个语言项且目标**保持本设计 id**、**恰好 1 个** `aria-current="page"`、0 console 错误。
+- 键盘可达：↑↓ 可遍历至语言项，焦点环可见（实测 `outline: 1.6px solid`）。
+- 本设计 `style.css` 与改动前**逐字节一致**（仅末尾换行差异）——文案本地化与语言入口重构**未造成任何视觉漂移**。
+- 跨语言路由与共享机制的完整测试矩阵见 `docs/verification/shared.md`。
+
 ## 未测 / 限制
 
 - 真机（iOS / Android）与 Safari / Firefox 引擎未实测；触控 / 降级 / 玻璃路径均基于 Chromium 1200 仿真。

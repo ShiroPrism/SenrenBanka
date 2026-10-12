@@ -4,9 +4,11 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import './style.css';
 
-const view = await loadDesignView('terminal');
+const view = await loadDesignView('terminal', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const rule = '─'.repeat(52);
@@ -29,7 +31,7 @@ const cmdSkills = 'cat skills.txt';
 const cmdMail = 'mail';
 const introEnd = afterCmd(cmdIntro);
 ---
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
     {/* 正文等宽字体不预加载（6 个子集文件过多）；display:swap + 系统 mono 回退已足够 */}
@@ -50,7 +52,7 @@ const introEnd = afterCmd(cmdIntro);
           <p class="tm-out tm-headline" style={`--d:${lane(introEnd, 1)}ms`}>{profile.headline}</p>
           <p class="tm-out tm-bio" style={`--d:${lane(introEnd, 2)}ms`}>{profile.bio}</p>
           {profile.location && (
-            <p class="tm-out tm-dim" style={`--d:${lane(introEnd, 3)}ms`}><span aria-hidden="true">#</span> based in {profile.location}</p>
+            <p class="tm-out tm-dim" style={`--d:${lane(introEnd, 3)}ms`}><span aria-hidden="true">#</span> {t.basedIn} {profile.location}</p>
           )}
         </section>
 
@@ -128,17 +130,17 @@ const introEnd = afterCmd(cmdIntro);
           <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdMail).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdMail)}ms`} aria-hidden="true"># 联系</span></p>
           {profile.contact?.email ? (
             <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}>
-              {profile.contact.note ?? 'Say hello'} →{' '}
+              {profile.contact.note ?? t.sayHello} →{' '}
               <a class="tm-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
             </p>
           ) : (
-            <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}><span class="tm-dim">no mail configured</span></p>
+            <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}><span class="tm-dim">{t.noMail}</span></p>
           )}
         </section>
 
         <footer class="tm-footer" data-reveal>
           <p class="tm-out tm-dim whitespace-pre" style="--d:0ms" aria-hidden="true">{rule}</p>
-          <p class="tm-out tm-dim" style="--d:140ms">session ends — 谢谢访问 / EOF</p>
+          <p class="tm-out tm-dim" style="--d:140ms">{t.sessionEnd}</p>
         </footer>
       </div>
     </main>

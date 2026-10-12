@@ -1,0 +1,39 @@
+---
+/**
+ * 语言切换入口（共享组件，SPEC §4）。
+ *
+ * - 纯静态链接，**不依赖客户端 JavaScript**，桌面与移动端均可用（与仅桌面可用的
+ *   右键菜单不同：manualSwitch 只控制主题切换，不得关闭语言切换）。
+ * - 本组件只负责结构与行为：**不引入任何全局主题 CSS**。各设计在自己的
+ *   `style.css` 中按自身设计规范安排位置、样式与响应式行为（`.lang-switch` 为约定类名）。
+ * - 切换语言时保持当前主题 id（href 由框架按目标语言 + 同一设计 id 生成）。
+ */
+import type { LanguageSwitcherData } from '../lib/site';
+
+interface Props {
+  language: LanguageSwitcherData;
+}
+
+const { language } = Astro.props;
+---
+
+<nav class="lang-switch" aria-label={language.navLabel}>
+  <span class="lang-switch-label" aria-hidden="true">{language.label}</span>
+  <ul class="lang-switch-list">
+    {
+      language.items.map((item) => (
+        <li>
+          <a
+            class="lang-switch-link"
+            href={item.href}
+            hreflang={item.code}
+            lang={item.code}
+            aria-current={item.isCurrent ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

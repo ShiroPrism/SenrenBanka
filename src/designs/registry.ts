@@ -104,6 +104,13 @@ for (const [key, rawMeta] of Object.entries(metaModules)) {
   if (!hasFile(id, 'Page.astro')) {
     fail(id, '缺少 Page.astro（该设计的完整页面）');
   }
+  // locale 消息契约：每套设计必须提供三语言文案（SPEC §4）
+  if (!hasFile(id, 'messages.ts')) {
+    fail(
+      id,
+      '缺少 messages.ts（该设计的三语言文案）。契约：export const messages 需同时提供 site.config.yaml 中 i18n.locales 声明的每种语言 code，缺键在构建期报错。',
+    );
+  }
   entries.push({ id, meta: parsed.data });
 }
 

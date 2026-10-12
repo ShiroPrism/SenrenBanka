@@ -10,3 +10,12 @@ export const BASE = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 export function withBase(path: string): string {
   return BASE + path.replace(/^\/+/, '');
 }
+
+/** 去掉 base 前缀与首尾斜杠，得到部署无关的路径段序列（如 ['zh-cn','editorial']）。 */
+export function pathSegments(pathname: string): string[] {
+  let rest = pathname;
+  if (BASE !== '/' && rest.startsWith(BASE)) {
+    rest = rest.slice(BASE.length - 1); // 保留前导 '/'
+  }
+  return rest.split('/').filter(Boolean);
+}

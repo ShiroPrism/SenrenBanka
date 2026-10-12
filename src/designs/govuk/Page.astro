@@ -3,19 +3,21 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { ArrowUpRight, Mail } from '@lucide/astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
-const view = await loadDesignView('govuk');
+const view = await loadDesignView('govuk', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 ---
 
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
   </head>
   <body class="gv">
-    <a class="gv-skip-link" href="#gv-main">Skip to main content</a>
+    <a class="gv-skip-link" href="#gv-main">{t.skipLink}</a>
 
     <header class="gv-header">
       <div class="gv-container gv-header__inner">
@@ -47,9 +49,7 @@ const { profile, contextMenu } = view;
         {
           profile.projects && profile.projects.length > 0 && (
             <section class="gv-section" aria-labelledby="gv-projects">
-              <h2 id="gv-projects" class="gv-h2">
-                Projects
-              </h2>
+              <h2 id="gv-projects" class="gv-h2">{ t.projects }</h2>
               <div class="gv-projects">
                 {profile.projects.map((project, index) => (
                   <div class="gv-project">
@@ -84,9 +84,7 @@ const { profile, contextMenu } = view;
         {
           profile.experience && profile.experience.length > 0 && (
             <section class="gv-section" aria-labelledby="gv-experience">
-              <h2 id="gv-experience" class="gv-h2">
-                Experience
-              </h2>
+              <h2 id="gv-experience" class="gv-h2">{ t.experience }</h2>
               <dl class="gv-summary">
                 {profile.experience.map((item) => (
                   <div class="gv-summary-row">
@@ -106,9 +104,7 @@ const { profile, contextMenu } = view;
         {
           profile.skills && profile.skills.length > 0 && (
             <section class="gv-section" aria-labelledby="gv-skills">
-              <h2 id="gv-skills" class="gv-h2">
-                Skills
-              </h2>
+              <h2 id="gv-skills" class="gv-h2">{ t.skills }</h2>
               <ul class="gv-tags">
                 {profile.skills.map((skill) => (
                   <li>
@@ -121,9 +117,7 @@ const { profile, contextMenu } = view;
         }
 
         <section class="gv-section" aria-labelledby="gv-contact">
-          <h2 id="gv-contact" class="gv-h2">
-            Contact
-          </h2>
+          <h2 id="gv-contact" class="gv-h2">{ t.contact }</h2>
           <div class="gv-inset">
             {profile.contact?.note && <p class="gv-body">{profile.contact.note}</p>}
             {
@@ -140,13 +134,12 @@ const { profile, contextMenu } = view;
 
     <footer class="gv-footer">
       <div class="gv-container">
-        <p>{profile.name} · built from a single profile</p>
+        <p>{profile.name}</p>
         <p class="gv-secondary">
-          Contains public sector information licensed under the Open Government Licence v3.0.
+          {t.licenceNotice}
         </p>
       </div>
     </footer>
-
     {contextMenu.enabled && <ContextMenu config={contextMenu} />}
   </body>
 </html>

@@ -5,10 +5,12 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
-const view = await loadDesignView('editorial');
+const view = await loadDesignView('editorial', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 // 页脚邀请地址：优先 contact.email，其次取链接中的 mailto（仅作邀请段地址来源；Elsewhere 全量渲染 links，不过滤）
@@ -16,7 +18,7 @@ const mailtoLink = profile.links.find((link) => link.url.startsWith('mailto:'));
 const inviteEmail =
   profile.contact?.email ?? (mailtoLink ? mailtoLink.url.replace(/^mailto:/, '') : null);
 ---
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-fraunces" />
@@ -27,11 +29,11 @@ const inviteEmail =
       <header class="ed-hero">
         <div class="ed-masthead">
           <p class="ed-kicker">
-            <span class="ed-kicker-mark">第 01 期</span> · 个人特刊<span class="ed-kicker-en" lang="en"> / A magazine about one person</span>
+            <span class="ed-kicker-mark">{t.issueMark}</span> · {t.personalEdition}<span class="ed-kicker-en" lang="en"> / A magazine about one person</span>
           </p>
-          <nav class="ed-toc" aria-label="本期导航 / Issue navigation">
-            <a href="#ed-works">精选作品</a>
-            <a href="#ed-elsewhere">外部链接</a>
+          <nav class="ed-toc" aria-label="{t.navLabel}">
+            <a href="#ed-works">{t.worksLabel}</a>
+            <a href="#ed-elsewhere">{t.elsewhereLabel}</a>
           </nav>
         </div>
         <h1 class="ed-name text-balance">{profile.name}</h1>
@@ -49,7 +51,7 @@ const inviteEmail =
           <section class="ed-section" aria-labelledby="ed-works">
             <div class="ed-section-head" data-reveal>
               <h2 id="ed-works" class="ed-section-title">Selected Works</h2>
-              <p class="ed-label">精选作品</p>
+              <p class="ed-label">{t.worksLabel}</p>
             </div>
             <ol class="ed-works">
               {profile.projects.map((project, index) => (
@@ -78,7 +80,7 @@ const inviteEmail =
       <section class="ed-section" aria-labelledby="ed-elsewhere">
         <div class="ed-section-head" data-reveal>
           <h2 id="ed-elsewhere" class="ed-section-title">Elsewhere</h2>
-          <p class="ed-label">外部链接</p>
+          <p class="ed-label">{t.elsewhereLabel}</p>
         </div>
         <ul class="ed-links" data-reveal>
           {
@@ -103,7 +105,7 @@ const inviteEmail =
           }
         </div>
         <div class="ed-footer-meta">
-          <p class="ed-colophon" lang="en">Designed in the shape of a magazine</p>
+          <p class="ed-colophon" lang="en">{t.colophon}</p>
         </div>
       </footer>
     </main>

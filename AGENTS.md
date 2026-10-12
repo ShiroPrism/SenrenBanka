@@ -4,20 +4,43 @@
 
 ## 数据接口
 
-- 每个设计页面在 frontmatter 取数：`const view = await loadDesignView('<自己的 id>')`（`src/lib/site.ts`）
+- 每个设计页面在 frontmatter 取数：`const view = await loadDesignView('<自己的 id>', Astro.url.pathname)`（`src/lib/site.ts`）。**第二个参数是当前请求路径**——语言由它统一解析，页面**不得**各自实现语言判断逻辑
 - `view` 结构：
   - `profile`：核心字段 `name` / `headline` / `bio` / `links` **必须全部渲染**；
-    `avatar` / `location` 可选；扩展区块 `projects` / `experience` / `skills` / `contact` 由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）
-  - `site`：title / description / lang / manualSwitch
+    `avatar` / `location` 可选；扩展区块 `projects` / `experience` / `skills` / `contact` 由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）。资料**按当前语言**选取，页面不需要关心文件路径
+  - `locale`：当前语言条目（`code` / `path` / `label` / `title` / `description`）；`locales` 为全部语言
+  - `messages`：当前语言的共享文案（右键菜单 / 切换页 / 404 / 语言选择器）
+  - `site`：manualSwitch
   - `design`：id / displayName / description / isDefault
-  - `head`：**必须原样传给 `HeadMeta`**（title / description / canonical / robots 由框架统一计算，robots 索引策略不可自行更改）
+  - `head`：**必须原样传给 `HeadMeta`**（title / description / canonical / robots / lang / alternates 由框架统一计算，robots 索引策略不可自行更改）
   - `contextMenu`：桌面右键快捷操作菜单的构建期配置（`enabled` / 当前设计 / 目标池 / storageKey 等，含随机与固定模式的存储语义）。`enabled` 为 `true` 时页面接入共享组件 `<ContextMenu config={view.contextMenu} />`（见下节）
-- 所有内部链接必须经 `withBase()`（`src/lib/urls.ts`）拼接 base 前缀，禁止硬编码绝对路径
-- 禁止虚构个人事实；允许装饰性文案（如 "Selected Works"、"Elsewhere"）
+- `<html lang>` 必须用 `view.head.lang`（即当前语言的 BCP 47 code），**不得**使用固定的 `zh-CN`
+- 所有内部链接必须经 `withBase()`（`src/lib/urls.ts`）拼接 base 前缀，或用 `localeDesignHref()` / `localeHref()`（`src/lib/site.ts`）生成**带语言前缀**的地址；禁止硬编码绝对路径
+- 禁止虚构个人事实
+
+## 多语言（i18n）
+
+- 语言清单**只在一处维护**：`src/data/site.config.yaml` 的 `i18n.locales`（`code` / `path` / `label` / `title` / `description`）。不得在其他文件重复列出语言
+- 每种语言必须有 `src/data/profiles/<locale.path>.yaml`，字段契约与 `zh-CN` **完全一致**（同一套 `profileSchema`）
+- 站点 SEO 元数据按语言提供（`i18n.locales[].title/description`）；**不再**保留全局 `site.title` / `site.description` / `site.lang`
+- **每套设计必须提供 `src/designs/<id>/messages.ts`**，导出 `messages`，为 `i18n.locales` 声明的**每种语言 code** 各给一份文案（缺文件或缺键在构建期报错）。文案必须遵循该设计的视觉语言，**不得**把所有设计统一翻译成相同表述
+- 不翻译的文本（命令、ASCII 装饰、刻意的双语标识、品牌专有名词、法律署名）**必须在该设计 `messages.ts` 的文件注释中写明理由**，否则视为漏译
+- 用户可见静态文案**不得**留在 `Page.astro` 的模板字面量里；也包括运行时生成的提示（右键菜单 Toast 等）——后者由 `view.messages` 注入
+- **翻译纪律（重要）**：翻译**只处理已有文案**，不得为"显得完整"而新增解释性、说明性或自我描述的句子。原页面没有的句子，译文里也不该有。
+  - 典型反例：`built from a single profile` 译成「由同一份资料生成」——中文读者无法从中获得信息，只会觉得莫名其妙。
+  - 若某句原文本身语义不清、拿不准，**先问项目所有者**，不要自行"润色"或保留。
+  - 译文必须**能被该语言的读者读懂并获得与原文等量的信息**；做不到就说明原文该删，而不是硬译。
+- 共享 chrome 文案集中在 `src/i18n/messages.ts`；该模块与各设计 `messages.ts` **都是纯数据，不得 import 任何 CSS / `Page.astro` / `style.css`**
+- **语言切换入口 = 右键菜单的语言二级菜单**（`ContextMenu.astro` 内渲染，`.cm-lang`）：各设计页**不再**单独渲染可见的语言切换器，也**不需要**在自己的 `style.css` 中排版语言切换（v0.9.0 修订：消除 8 套设计的重复排版成本）。语言项是普通 `<a>`，逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记。
+- **语言项必须放在二级菜单里，不得平铺进主菜单**：语言数量由配置决定且可能很多，平铺会让主菜单长到超出视口。契约：主菜单高度与语言数量**无关**；子菜单自身限高并可滚动。
+- **`manualSwitch` 只控制菜单内的主题切换项**（随机 / 切换设计…）：`designActionsEnabled` 为 false 时这两项不渲染，但**菜单与语言分组仍渲染**——语言切换不受 `manualSwitch` 影响
+- 触屏设备不提供右键菜单（`pointer: coarse` 门控），因此**语言切换仅在桌面鼠标环境可用**；这是本项目的显式取舍，不是遗漏
+- 切换语言只改 locale，**不改当前主题、不重置随机窗口**；`storageKey` 不含 locale（主题偏好跨语言共享）
+- 语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码
 
 ## 每套设计必须满足
 
-1. 四件套齐备：`DESIGN.md`、`design.json`、`Page.astro`、`style.css`
+1. 四件套齐备：`DESIGN.md`、`design.json`、`Page.astro`、`style.css`，**加** `messages.ts`（见「多语言（i18n）」节）
 2. `Page.astro` 是完整文档（含 `<html>`），`<head>` 中必须包含 `<HeadMeta {...view.head} />`
 3. `style.css` 首两行必须为：
 
@@ -31,6 +54,7 @@
 5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
 6. `design.json` 的 `source`：非自产（`official-vendor` / `official-docs-derived` / `third-party-analysis`）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`（汇编为逐来源许可合集）
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
+8. **多语言接入**：接入 `<LanguageSwitcher />`（语言切换不受 `manualSwitch` 影响），且主题的界面文案全部来自本设计 `messages.ts`
 
 ## 设计切换入口：共享桌面右键快捷操作菜单
 
@@ -132,6 +156,13 @@
   `import.meta.glob('./*/Page.astro')`（非 eager）这类写法会把它触达的所有 `style.css` 聚合进**每个**引用方的 `<link>`。
   文件存在性检查请用 `node:fs`（见 `src/designs/registry.ts`）。
 - **设计路由用 `astro.config.mjs` 的 `injectRoute`**：`getStaticPaths` 不能引用页面 frontmatter 顶层的 glob 变量（构建拆包后报 `pages is not defined`）。副作用：新增 / 删除设计目录后需重启 `npm run dev`。
+- **多语言不得改成动态 `[design]` / `[locale]` 路由**：那会把所有设计的 CSS 聚合进每个页面。正解是 `injectRoute` 把同一 entrypoint 注册到多个语言前缀（见 `docs/adr/0006-multilingual-static-routing.md`）。
+- **Astro 原生 `i18n` 对本项目零增益**：实测开关两种配置的产物完全相同（37 页 `diff` 一致），唯一作用是让 `Astro.currentLocale` 有值——不配时它为 `UNDEFINED`。语言一律由 `resolveLocale(model, Astro.url.pathname)` 自解析。
+- **拼接 locale 前缀必须带斜杠**：`base + localePrefix + '/' + target + '/'`。漏掉中间的 `/` 会产出 `/zh-cnfrost/` 这种废路径（2026-10-12 实测踩坑）。
+- **`site.config.yaml` 里整段注释掉的键会解析成 `null` 而不是"缺失"**：`site:` 下全部注释时 `raw.site === null`，直接 `.default({})` 会构建失败；需 `z.preprocess((v) => v ?? {}, schema)`（用 `transform` 会把输出类型擦成 `{}`）。
+- **多语言的资料条目 id 带目录前缀**：glob loader 对 `profiles/*.yaml` 产出的 id 是 `profiles/zh-cn`，匹配 locale 时取 `id.split('/').pop()`。
+- **二级菜单的导航层级靠 `activeMenu` 跟踪**：`items()` 必须按**当前层级**取项，否则子菜单项会混进主菜单的 `↑↓` 序列；且**仅在焦点真正进入子菜单时**（点击 / `→`）才切换 `activeMenu`——仅仅展开子菜单（如悬浮或 `↑↓` 移到触发项）时切换会导致下一次 `↓` 跳进子菜单、焦点飞出菜单（2026-10-12 实测踩坑）。
+- **语言切换在右键菜单内（桌面专属）**：触屏不加载菜单运行时，因此移动端**没有**语言切换入口；语言项是普通 `<a>`，无 JS 时也能导航，但**触屏无法触达**。基础设施页（切换页 / 404）不依赖右键菜单，保留独立的可见 `LanguageSwitcher`。
 - **内容层 glob loader 会归一化条目 id**（`site.config.yaml` → `"siteconfig"`）：取数用 `getCollection()` 取唯一条目，不要猜 id（见 `src/lib/site.ts`）。
 - **Tailwind 不识别动态拼接的类名**（如 `border-${color}` 不会被扫描到）；需要安全列表时用 `@source inline("...")`。
 - **`@astrojs/tailwind` 已弃用**，勿引入；Tailwind 4 官方集成 = `@tailwindcss/vite`（已配置）。

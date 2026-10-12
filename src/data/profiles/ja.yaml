@@ -1,0 +1,55 @@
+# サンプルプロフィール · 日本語。
+# 仮想の人物であり、実在の情報ではない。実際の内容に置き換えてください。
+# 三份資料（zh-cn / ja / en）共用同一套 schema；专有名词与技术标记不翻译（SPEC §5.5）。
+
+name: "田所浩二 / Tadokoro Koji (野獣先輩)"
+headline: "24歳、学生です / 空手部の主将であり、BBシアターの巨星"
+bio: "24歳、是学生なのだ。現在は下北沢空手部で後輩を指導しながら汗を流し、普段は屋上で日光浴と秘伝のアイス紅茶の調製に興じている。インターネットの集合無意識における概念的存在として、長期にわたり各プラットフォームで多次元 BB 素材の形で全勤出勤もん！"
+avatar: "TadokoroKoji.png"
+location: "東京都世田谷区下北沢 / Shimokitazawa, Tokyo"
+
+links:
+  - label: niconico
+    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    icon: tv
+  - label: BB素材库
+    url: "https://example.com/bb-theater"
+    icon: video
+  - label: 下北沢通信
+    url: "https://example.com/114514"
+    icon: coffee
+
+projects:
+  - title: "王道征途 (The Royal Road)"
+    description: "空手部の日常の組手練習と、後輩（遠野）への指導を兼ねた企画。武道の汗を流す日常を、そのまま記録している。"
+    url: "https://example.com/oudou"
+    tags: ["114514", "王道", "空手道"]
+  - title: "特制红茶配方 (Iced Tea Formula)"
+    description: "練習後の体力補給として開発した水出し飲料のレシピ。深い弛緩と急速な睡気に落ち込むような、奇妙で多様な風味を持っている。"
+    url: "https://example.com/tea-lab"
+    tags: ["Tea", "Recipe"]
+  - title: "多元宇宙 BB 剧场巡演"
+    description: "金閣銀閣から咆哮する怪獣化まで、音と画のさまざまな調教を跨ぐ、サブカルチャー現象級の公演プロジェクト。"
+    tags: ["MAD", "AviUtl", "Synthesizer"]
+
+experience:
+  - org: "下北沢大学 空手部"
+    role: "主将 / 先輩 (Ace)"
+    period: "24歳 – 永遠"
+    description: "部活の組手練習を主導し、護身術と体力維持の技巧を教授。加えて道場の休憩室の冷饮品供給と後輩のケアも担当している。"
+  - org: "niconico 动画 / 互联网亚文化演艺企划"
+    role: "概念级主演 / 万能音 MAD 核心"
+    period: "2001 – 現在"
+    description: "高頻度で登場する典型的な素材として、数万件の二次創作派生劇場に参加し、网民の解构と二次創作の源泉となった。"
+
+skills:
+  - "空手道組手"
+  - "王道"
+  - "秘伝の調飲"
+  - "日光浴"
+  - "BB 素材化"
+  - "迫真咆哮"
+
+contact:
+  email: "114514@shimokitazawa.jp"
+  note: "いいよ！こいよ！訓練の後はいつでも道場に来て、茶を飲みながら切磋のさ。"

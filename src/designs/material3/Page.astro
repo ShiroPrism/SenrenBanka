@@ -4,16 +4,18 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import MailIcon from './assets/mail_24px.svg';
 import ArrowOutward from './assets/arrow_outward_24px.svg';
 import './style.css';
 
-const view = await loadDesignView('material3');
+const view = await loadDesignView('material3', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 ---
 
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-roboto-flex" />
@@ -42,7 +44,7 @@ const { profile, contextMenu } = view;
             )
           }
           <div class="m3-hero-text">
-            <p class="m3-label m3-rise" style="--rise-delay: 30ms">Portfolio</p>
+            <p class="m3-label m3-rise" style="--rise-delay: 30ms">{ t.portfolio }</p>
             <h1 id="m3-title" class="m3-title m3-rise" style="--rise-delay: 60ms">
               {profile.headline}
             </h1>
@@ -66,9 +68,7 @@ const { profile, contextMenu } = view;
         {
           profile.projects && profile.projects.length > 0 && (
             <section class="m3-section" aria-labelledby="m3-projects" data-reveal>
-              <h2 id="m3-projects" class="m3-h2">
-                Projects
-              </h2>
+              <h2 id="m3-projects" class="m3-h2">{ t.projects }</h2>
               <ul class="m3-cards">
                 {profile.projects.map((project) => (
                   <li class="m3-card" data-reveal>
@@ -100,9 +100,7 @@ const { profile, contextMenu } = view;
         {
           profile.experience && profile.experience.length > 0 && (
             <section class="m3-section" aria-labelledby="m3-experience" data-reveal>
-              <h2 id="m3-experience" class="m3-h2">
-                Experience
-              </h2>
+              <h2 id="m3-experience" class="m3-h2">{ t.experience }</h2>
               <ul class="m3-exp">
                 {profile.experience.map((item) => (
                   <li class="m3-exp-row" data-reveal>
@@ -122,9 +120,7 @@ const { profile, contextMenu } = view;
         {
           profile.skills && profile.skills.length > 0 && (
             <section class="m3-section" aria-labelledby="m3-skills" data-reveal>
-              <h2 id="m3-skills" class="m3-h2">
-                Skills
-              </h2>
+              <h2 id="m3-skills" class="m3-h2">{ t.skills }</h2>
               <ul class="m3-chips">
                 {profile.skills.map((skill) => (
                   <li class="m3-chip">{skill}</li>
@@ -135,9 +131,7 @@ const { profile, contextMenu } = view;
         }
 
         <section class="m3-section" aria-labelledby="m3-contact" data-reveal>
-          <h2 id="m3-contact" class="m3-h2">
-            Contact
-          </h2>
+          <h2 id="m3-contact" class="m3-h2">{ t.contact }</h2>
           <div class="m3-contact" data-reveal>
             {profile.contact?.note && <p class="m3-contact-note">{profile.contact.note}</p>}
             {
@@ -153,8 +147,7 @@ const { profile, contextMenu } = view;
       </main>
 
       <footer class="m3-footer">
-        <span>{profile.name} · Material 3 设计系统汇编</span>
-        <span>built from a single profile</span>
+        <span>{profile.name} · {t.footerSource}</span>
       </footer>
     </div>
     {contextMenu.enabled && <ContextMenu config={contextMenu} />}

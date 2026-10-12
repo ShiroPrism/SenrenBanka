@@ -5,14 +5,16 @@ import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { ArrowUpRight, Mail } from '@lucide/astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
-const view = await loadDesignView('frost');
+const view = await loadDesignView('frost', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 ---
 
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-inter" />
@@ -64,9 +66,7 @@ const { profile, contextMenu } = view;
       {
         profile.projects && profile.projects.length > 0 && (
           <section class="fr-group" aria-labelledby="fr-projects" data-reveal>
-            <h2 id="fr-projects" class="fr-group-label">
-              Projects
-            </h2>
+            <h2 id="fr-projects" class="fr-group-label">{ t.projects }</h2>
             <div class="fr-card">
               <ul class="fr-rows">
                 {profile.projects.map((project) => (
@@ -102,9 +102,7 @@ const { profile, contextMenu } = view;
       {
         profile.experience && profile.experience.length > 0 && (
           <section class="fr-group" aria-labelledby="fr-experience" data-reveal>
-            <h2 id="fr-experience" class="fr-group-label">
-              Experience
-            </h2>
+            <h2 id="fr-experience" class="fr-group-label">{ t.experience }</h2>
             <div class="fr-card">
               <ul class="fr-rows">
                 {profile.experience.map((item) => (
@@ -126,9 +124,7 @@ const { profile, contextMenu } = view;
       {
         profile.skills && profile.skills.length > 0 && (
           <section class="fr-group" aria-labelledby="fr-skills" data-reveal>
-            <h2 id="fr-skills" class="fr-group-label">
-              Skills
-            </h2>
+            <h2 id="fr-skills" class="fr-group-label">{ t.skills }</h2>
             <div class="fr-card fr-card--pad">
               <ul class="fr-chips">
                 {profile.skills.map((skill) => (
@@ -141,9 +137,7 @@ const { profile, contextMenu } = view;
       }
 
       <section class="fr-group" aria-labelledby="fr-contact" data-reveal>
-        <h2 id="fr-contact" class="fr-group-label">
-          Contact
-        </h2>
+        <h2 id="fr-contact" class="fr-group-label">{ t.contact }</h2>
         <div class="fr-contact-card">
           {profile.contact?.note && <p class="fr-contact-note">{profile.contact.note}</p>}
           {
@@ -159,9 +153,8 @@ const { profile, contextMenu } = view;
     </main>
 
     <footer class="fr-footer">
-      {profile.name} · built from a single profile
+      {profile.name}
     </footer>
-
     {contextMenu.enabled && <ContextMenu config={contextMenu} />}
   </body>
 </html>

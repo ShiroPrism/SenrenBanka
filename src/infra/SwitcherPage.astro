@@ -1,47 +1,62 @@
 ---
 import HeadMeta from '../components/HeadMeta.astro';
 import InfraStyles from '../components/InfraStyles.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 import { renderSwitcherScript } from '../lib/router-script';
-import { loadSite } from '../lib/site';
-import { withBase } from '../lib/urls';
+import { loadSite, languageSwitcherData, localeDesignHref, localeHref, resolveLocale } from '../lib/site';
+import { sharedMessagesFor } from '../i18n/resolve';
+import { designDescriptions, type DescriptionLocale } from '../designs/descriptions';
 
 /**
- * 切换页（SPEC §7.5）：共享基础设施页，中性极简，不模仿任何一套设计。
- * 由 astro.config 在 manualSwitch 开启时注入路由 '/designs'（关闭时不构建 → 404）。
+ * 切换页 `/<locale>/designs`（SPEC §7.5）：共享基础设施页，中性极简，不模仿任何一套设计。
+ * 由 astro.config 在 manualSwitch 开启时注入各语言路由（关闭时不构建 → 404）。
  * 点击 = 写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
+ * 设计说明取自各设计 messages 的本地化描述，而非单一语言的 design.json.description。
  */
 const model = await loadSite();
+const locale = resolveLocale(model, Astro.url.pathname);
+const m = sharedMessagesFor(locale.code);
 const script = renderSwitcherScript({
   mode: model.mode,
   cacheHours: model.random.cacheHours,
   storageKey: model.storageKey,
 });
 ---
-<html lang={model.site.lang}>
+
+<!doctype html>
+<html lang={locale.code}>
   <head>
     <HeadMeta
-      title={`切换设计 / Switch design · ${model.site.title}`}
-      description="一个资料，多套设计。点击任意一套即可手动切换。"
+      title={`${m.switcher.heading} · ${locale.title}`}
+      description={m.switcher.description}
       robots="noindex, follow"
     />
   </head>
   <body>
     <InfraStyles />
     <main class="infra">
-      <h1>切换设计 / Switch design</h1>
-      <p>
-        同一份个人资料的 {model.enabled.length} 套设计。随机分配的选择会被记住一段时间，点击任意一套即可手动切换。
-      </p>
+      <h1>{m.switcher.heading}</h1>
+      <p>{m.switcher.body.replace('{count}', String(model.enabled.length))}</p>
+      <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path, 'designs/'))} />
       <ul class="infra-list">
         {
           model.enabled.map((design) => (
             <li>
-              <a class="infra-card" href={withBase(`${design.id}/`)} data-design={design.id}>
+              <a
+                class="infra-card"
+                href={localeDesignHref(locale.path, design.id)}
+                data-design={design.id}
+              >
                 <span class="name">
-                  {design.meta.accent ? <span class="chip" style={`--chip:${design.meta.accent}`}></span> : null}
+                  {design.meta.accent ? (
+                    <span class="chip" style={`--chip:${design.meta.accent}`}></span>
+                  ) : null}
                   {design.meta.displayName}
+                  <span class="lang-badge" data-lang-badge hidden>
+                    {m.switcher.currentBadge}
+                  </span>
                 </span>
-                <span class="desc">{design.meta.description}</span>
+                <span class="desc">{designDescriptions[design.id]?.[locale.code as DescriptionLocale] ?? design.meta.description}</span>
               </a>
             </li>
           ))

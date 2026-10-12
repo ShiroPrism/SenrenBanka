@@ -1,13 +1,32 @@
-# 站点信息与设计行为配置。
+# 站点信息、多语言与设计行为配置。
 # design.default 必须是某个已启用设计（design.json 中 "enabled": true）的 id。
 # 设计清单不在这里维护：src/designs/<id>/ 目录存在即注册（SPEC §6）。
+#
+# 语言清单只在本文件的 i18n 段维护一处；路由、资料选择、SEO 元数据
+# 都从这里派生，不在其他文件重复列出语言（SPEC §5.5）。
 
 site:
-  title: "林遥 / Lin Yao"
-  description: "独立开发者与界面工程师的个人主页——同一个人的四种样子。"
-  lang: "zh-CN"
   # url: "https://your-domain.example"   # 可选；构建时优先使用 SITE_URL 环境变量
   # storageKey: "my-portfolio"           # 可选；默认按 base 路径自动派生命名空间
+
+i18n:
+  defaultLocale: zh-CN
+  locales:
+    - code: zh-CN       # HTML lang / 翻译字典键（BCP 47）
+      path: zh-cn       # URL 前缀 + 资料文件名（src/data/profiles/zh-cn.yaml）
+      label: 简体中文        # 语言自称
+      title: "田所浩二 / Tadokoro Koji (野獣先輩)"
+      description: "独立开发者与界面工程师的个人主页。"
+    - code: ja
+      path: ja
+      label: 日本語
+      title: "田所浩二 / 野獣先輩"
+      description: "個人ポートフォリオサイト。"
+    - code: en
+      path: en
+      label: English
+      title: "Tadokoro Koji (野獣先輩)"
+      description: "Personal portfolio of an independent developer."
 
 design:
   mode: random        # random | fixed

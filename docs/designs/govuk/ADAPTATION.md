@@ -38,6 +38,10 @@
 - 核心字段全部渲染（name / headline / bio / links——links 以正文链接列表呈现）；扩展区块四类全取：projects（标题 + 段落 + 蓝标签）、experience（summary list 键值行）、skills（蓝标签行）、contact（inset text + 绿色按钮）。
 - 实现细节与实测数值在 `docs/verification/govuk.md` 记录。
 
+## 语言切换入口适配（v0.9.0 · 2026-10-12）
+
+官方规范未定义语言切换入口。v0.9.0 起语言切换入口并入共享右键菜单的语言分组（`.cm-lang`），本设计**不再**单独渲染可见语言切换器，其 `style.css` 中亦无语言切换样式——语言项属项目 chrome 的中性外观，不模仿本设计视觉语言。
+
 ## 未测 / 限制
 
 - 同 `docs/verification/govuk.md`；汇编原文见同目录 `DESIGN.md`（只读，不随项目适配改写）。

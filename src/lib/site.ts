@@ -2,16 +2,32 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { allDesigns, enabledDesigns, type DesignEntry } from '../designs/registry';
 import { storageKeyFor } from './router-script';
-import { BASE, withBase } from './urls';
+import { BASE, pathSegments, withBase } from './urls';
 import type { ContextMenuRuntimeConfig } from './context-menu';
+import { messages as sharedMessages, type LocaleMessages, type MessageLocaleCode } from '../i18n/messages';
+import { sharedMessagesFor } from '../i18n/resolve';
 
 export type ProfileData = CollectionEntry<'profile'>['data'];
 export type SiteConfigData = CollectionEntry<'site'>['data'];
+export type LocaleCode = MessageLocaleCode;
 
 /** avatar 解析结果：本地图片（ImageMetadata）或外部 URL（string）或 null。 */
 export type ResolvedProfile = Omit<ProfileData, 'avatar'> & {
   avatar: ImageMetadata | string | null;
 };
+
+/** 语言配置（来自 site.config.yaml 的 i18n.locales，构建期已校验唯一性）。 */
+export interface LocaleEntry {
+  /** BCP 47 语言代码：HTML lang、翻译字典键。 */
+  code: string;
+  /** URL 语言前缀（同时是 src/data/profiles/<path>.yaml 的文件名）。 */
+  path: string;
+  /** 语言自称，用于语言选择器。 */
+  label: string;
+  /** 该语言的站点 SEO 元数据。 */
+  title: string;
+  description: string;
+}
 
 /** 桌面右键快捷操作菜单的构建期配置（SPEC §7.5；运行时见 src/lib/context-menu.ts）。 */
 export interface ContextMenuConfig extends ContextMenuRuntimeConfig {
@@ -21,15 +37,40 @@ export interface ContextMenuConfig extends ContextMenuRuntimeConfig {
   designName: string;
   /** 当前设计的强调色（design.json.accent，可选）——身份条圆点用，与切换页芯片同源。 */
   accent?: string;
+  /** 当前语言的共享文案：组件静态标签 + 运行时 Toast（组件本身不判断语言）。 */
+  messages: LocaleMessages;
+  /** 语言切换项（已并入右键菜单）：目标 = 同一设计的其他语言版本。 */
+  languages: LanguageSwitcherData['items'];
+  /**
+   * 是否渲染主题切换项（随机 / 切换设计…）。
+   * `manualSwitch: false` 时为 false——但**语言项仍渲染**（SPEC §7.5）。
+   */
+  designActionsEnabled: boolean;
+}
+
+/** 语言切换器所需的最小数据（共享组件只负责结构，不引入任何主题 CSS）。 */
+export interface LanguageSwitcherData {
+  /** 当前语言 code（用于 aria-current 与 hreflang）。 */
+  current: string;
+  /** 各语言的展示名与目标 URL（目标 = 同设计的该语言版本）。 */
+  items: Array<{
+    code: string;
+    label: string;
+    href: string;
+    isCurrent: boolean;
+  }>;
+  navLabel: string;
+  /** 可见标签文本；传 null 表示该设计选择纯图标式呈现。 */
+  label: string;
 }
 
 /** 传给每套设计页面的统一数据接口（SPEC §6.4）。 */
 export interface DesignView {
   profile: ResolvedProfile;
+  locale: LocaleEntry;
+  locales: LocaleEntry[];
+  messages: LocaleMessages;
   site: {
-    title: string;
-    description: string;
-    lang: string;
     manualSwitch: boolean;
   };
   design: {
@@ -45,6 +86,8 @@ export interface DesignView {
     canonical: string;
     robots: string;
     lang: string;
+    /** hreflang 关联：各语言默认主题页面 + x-default（仅默认设计非空）。 */
+    alternates: Array<{ hreflang: string; href: string }>;
   };
   /** 设计切换入口：桌面右键快捷操作菜单（manualSwitch 语义见 SPEC §7.5）。 */
   contextMenu: ContextMenuConfig;
@@ -52,7 +95,10 @@ export interface DesignView {
 
 export interface SiteModel {
   site: SiteConfigData['site'] & { url: string | null };
-  profile: ResolvedProfile;
+  defaultLocale: string;
+  locales: LocaleEntry[];
+  /** locale path → 资料条目（构建期校验一一对应）。 */
+  profiles: Map<string, ResolvedProfile>;
   mode: 'random' | 'fixed';
   random: { cacheHours: number; avoidRepeat: boolean };
   base: string;
@@ -68,7 +114,7 @@ const assetModules = import.meta.glob('../data/assets/*', { eager: true }) as Re
   { default: ImageMetadata }
 >;
 
-function resolveAvatar(avatar: string | undefined): ImageMetadata | string | null {
+function resolveAvatar(avatar: string | undefined, localePath: string): ImageMetadata | string | null {
   if (!avatar) return null;
   if (/^https?:\/\//i.test(avatar)) return avatar;
   const key = `../data/assets/${avatar.replace(/^assets\//, '')}`;
@@ -79,7 +125,7 @@ function resolveAvatar(avatar: string | undefined): ImageMetadata | string | nul
         .map((k) => k.replace('../data/assets/', ''))
         .join(', ') || '（目录为空）';
     throw new Error(
-      `[senrenbanka] profile.yaml 的 avatar "${avatar}" 未找到。请把文件放入 src/data/assets/，可选：${available}`,
+      `[senrenbanka] profiles/${localePath}.yaml 的 avatar "${avatar}" 未找到。请把文件放入 src/data/assets/，可选：${available}`,
     );
   }
   return asset.default;
@@ -93,16 +139,49 @@ export async function loadSite(): Promise<SiteModel> {
     getCollection('profile'),
     getCollection('site'),
   ]);
-  if (profileEntries.length !== 1) {
-    throw new Error('[senrenbanka] src/data/ 下必须恰好有一个 profile.yaml（内容集合 profile）');
-  }
   if (siteEntries.length !== 1) {
     throw new Error('[senrenbanka] src/data/ 下必须恰好有一个 site.config.yaml（内容集合 site）');
   }
-  const profileEntry = profileEntries[0]!;
   const siteEntry = siteEntries[0]!;
-
   const cfg = siteEntry.data;
+
+  const locales: LocaleEntry[] = cfg.i18n.locales.map((locale) => ({ ...locale }));
+  const localeByPath = new Map(locales.map((locale) => [locale.path, locale]));
+
+  // 每种语言必须有且仅有一份资料；缺失即构建失败，不静默回退（SPEC §5.5）
+  // glob loader 的条目 id 含目录前缀（如 'profiles/zh-cn'），此处按路径末段匹配 locale.path。
+  const profileIdByPath = new Map(
+    profileEntries.map((entry) => [entry.id.split('/').pop()!, entry] as const),
+  );
+  const profiles = new Map<string, ResolvedProfile>();
+  for (const locale of locales) {
+    const entry = profileIdByPath.get(locale.path);
+    if (!entry) {
+      throw new Error(
+        `[senrenbanka] 语言 "${locale.code}"（path: ${locale.path}）缺少资料文件：期望 src/data/profiles/${locale.path}.yaml。现有：${[...profileIdByPath.keys()].join(', ') || '（无）'}`,
+      );
+    }
+    profiles.set(locale.path, {
+      ...entry.data,
+      avatar: resolveAvatar(entry.data.avatar, locale.path),
+    });
+  }
+  const extraProfiles = [...profileIdByPath.keys()].filter((id) => !localeByPath.has(id));
+  if (extraProfiles.length > 0) {
+    throw new Error(
+      `[senrenbanka] src/data/profiles/ 存在未在 i18n.locales 中声明的资料：${extraProfiles.join(', ')}。请在 site.config.yaml 的 i18n.locales 补充，或删除多余文件。`,
+    );
+  }
+
+  // 语言字典必须覆盖全部语言（缺键在构建期暴露，不在运行时回退）
+  for (const locale of locales) {
+    if (!(locale.code in sharedMessages)) {
+      throw new Error(
+        `[senrenbanka] 语言 "${locale.code}" 缺少共享文案字典（src/i18n/messages.ts）。现有：${Object.keys(sharedMessages).join(', ')}`,
+      );
+    }
+  }
+
   if (enabledDesigns.length === 0) {
     throw new Error(
       '[senrenbanka] 没有已启用的设计：请在至少一个 design.json 中设置 "enabled": true',
@@ -121,13 +200,16 @@ export async function loadSite(): Promise<SiteModel> {
 
   return {
     site: { ...cfg.site, url: siteUrl },
-    profile: { ...profileEntry.data, avatar: resolveAvatar(profileEntry.data.avatar) },
+    defaultLocale: cfg.i18n.defaultLocale,
+    locales,
+    profiles,
     mode: cfg.design.mode,
     random: {
       cacheHours: cfg.design.random.cacheHours,
       avoidRepeat: cfg.design.random.avoidImmediateRepeat,
     },
     base: BASE,
+    // 主题偏好跨语言共享：storageKey 只按 base 派生，不含locale（SPEC §7.5）
     storageKey: storageKeyFor(BASE, cfg.site.storageKey),
     designs: allDesigns,
     enabled: enabledDesigns,
@@ -136,16 +218,59 @@ export async function loadSite(): Promise<SiteModel> {
   };
 }
 
+/**
+ * 从请求路径解析当前语言（SPEC §5.5）。
+ * 语言识别只认路径的**第一段**并与 i18n.locales 的 path 精确匹配，
+ * 因此部署 base（/demo）不会被误当成语言代码。解析不到时回退默认语言。
+ */
+export function resolveLocale(model: SiteModel, pathname: string): LocaleEntry {
+  const [first] = pathSegments(pathname);
+  return (
+    model.locales.find((locale) => locale.path === first) ??
+    model.locales.find((locale) => locale.code === model.defaultLocale)!
+  );
+}
+
+/** 某语言下某设计的固定 URL（带语言前缀）。 */
+export function localeDesignHref(localePath: string, designId: string): string {
+  return withBase(`${localePath}/${designId}/`);
+}
+
+/** 某语言下切换页 / locale 根入口的 URL。sub 省略时返回语言根；传入以 / 结尾则原样保留。 */
+export function localeHref(localePath: string, sub = ''): string {
+  const suffix = sub ? sub.replace(/^\/+/, '') : '';
+  return withBase(suffix ? `${localePath}/${suffix}` : `${localePath}/`);
+}
+
 /** 由 SiteModel 与某套设计派生页面数据（含 head 元信息与索引策略，SPEC §7.4）。 */
-export function buildDesignView(model: SiteModel, design: DesignEntry): DesignView {
+export function buildDesignView(model: SiteModel, design: DesignEntry, locale: LocaleEntry): DesignView {
   const isDefault = design.id === model.default.id;
-  const headTitle = isDefault ? model.site.title : `${design.meta.displayName} · ${model.site.title}`;
+  const headTitle = isDefault ? locale.title : `${design.meta.displayName} · ${locale.title}`;
+  const messages = sharedMessages[locale.code as LocaleCode];
+
+  // hreflang 只在**各语言的默认设计页**之间互指；noindex 的非默认主题不参与（SPEC §7.4）
+  const alternates = isDefault
+    ? [
+        ...model.locales.map((entry) => ({
+          hreflang: entry.code,
+          href: `${model.site.url ?? ''}${localeDesignHref(entry.path, design.id)}`,
+        })),
+        {
+          hreflang: 'x-default',
+          href: `${model.site.url ?? ''}${localeDesignHref(
+            (model.locales.find((entry) => entry.code === model.defaultLocale) ?? model.locales[0]!).path,
+            design.id,
+          )}`,
+        },
+      ]
+    : [];
+
   return {
-    profile: model.profile,
+    profile: model.profiles.get(locale.path)!,
+    locale,
+    locales: model.locales,
+    messages,
     site: {
-      title: model.site.title,
-      description: model.site.description,
-      lang: model.site.lang,
       manualSwitch: model.switcherEnabled,
     },
     design: {
@@ -156,30 +281,75 @@ export function buildDesignView(model: SiteModel, design: DesignEntry): DesignVi
     },
     head: {
       title: headTitle,
-      description: model.site.description,
-      canonical: `${model.site.url ?? ''}${withBase(`${design.id}/`)}`,
+      description: locale.description,
+      canonical: `${model.site.url ?? ''}${localeDesignHref(locale.path, design.id)}`,
       robots: isDefault ? 'index, follow' : 'noindex, follow',
-      lang: model.site.lang,
+      lang: locale.code,
+      alternates,
     },
     contextMenu: {
-      enabled: model.switcherEnabled,
+      // 菜单整体随 manualSwitch 开关（既有约定不变）；菜单内的语言项是语言切换的唯一入口，
+      // 因此 manualSwitch 关闭时菜单仍会渲染，只是没有主题切换项（见 SPEC §7.5）。
+      enabled: true,
       designName: design.meta.displayName,
       accent: design.meta.accent,
       currentId: design.id,
-      switcherHref: withBase('designs/'),
+      // 主题切换目标保留当前语言前缀（SPEC §7.5）
+      switcherHref: localeHref(locale.path, 'designs/'),
       shareTitle: headTitle,
-      // 随机池 = 全部启用设计（含自身；运行时执行"排除当前"与 avoidRepeat，见 SPEC §7.5）
-      targets: model.enabled.map((entry) => ({ id: entry.id, href: withBase(`${entry.id}/`) })),
+      messages,
+      toast: messages.toast,
+      // 随机池 = 全部启用设计（含自身；运行时执行"排除当前"与 avoidRepeat）
+      targets: model.enabled.map((entry) => ({
+        id: entry.id,
+        href: localeDesignHref(locale.path, entry.id),
+      })),
       mode: model.mode,
       cacheHours: model.random.cacheHours,
       avoidRepeat: model.random.avoidRepeat,
       storageKey: model.storageKey,
+      // 语言切换已并入右键菜单；目标保持同一设计 id（SPEC §7.5）
+      languages: languageItems(model, locale, design.id),
+      designActionsEnabled: model.switcherEnabled,
     },
   };
 }
 
-/** 供设计页使用：按 id 取自己的 view（含 head 元信息与索引策略等框架计算结果）。 */
-export async function loadDesignView(id: string): Promise<DesignView> {
+/** 语言切换项（右键菜单与基础设施页共用）：目标 = 同一设计的各语言版本。 */
+export function languageItems(
+  model: SiteModel,
+  locale: LocaleEntry,
+  designId: string,
+): LanguageSwitcherData['items'] {
+  return model.locales.map((entry) => ({
+    code: entry.code,
+    label: entry.label,
+    href: localeDesignHref(entry.path, designId),
+    isCurrent: entry.code === locale.code,
+  }));
+}
+
+/** 语言切换器的完整数据（基础设施页用；href 由调用方按目标决定）。 */
+export function languageSwitcherData(
+  model: SiteModel,
+  locale: LocaleEntry,
+  hrefFor: (entry: LocaleEntry) => string,
+): LanguageSwitcherData {
+  return {
+    current: locale.code,
+    items: model.locales.map((entry) => ({
+      code: entry.code,
+      label: entry.label,
+      href: hrefFor(entry),
+      isCurrent: entry.code === locale.code,
+    })),
+    navLabel: sharedMessagesFor(locale.code).language.navLabel,
+    label: sharedMessagesFor(locale.code).language.label,
+  };
+}
+
+/** 供设计页使用：按 id + 当前请求路径取自己的 view（locale 由路径统一解析，页面不各自判断）。 */
+export async function loadDesignView(id: string, pathname: string): Promise<DesignView> {
   const model = await loadSite();
   const design = model.designs.find((entry) => entry.id === id);
   if (!design) {
@@ -187,5 +357,5 @@ export async function loadDesignView(id: string): Promise<DesignView> {
       `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / style.css。`,
     );
   }
-  return buildDesignView(model, design);
+  return buildDesignView(model, design, resolveLocale(model, pathname));
 }

@@ -4,17 +4,19 @@ import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { Mail } from '@lucide/astro';
 import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
-const view = await loadDesignView('oxide');
+const view = await loadDesignView('oxide', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█';
 // 流动波形：4 份首尾相接；动画位移恰好一份（-25%）即无缝循环
 const waveFlow = wave.repeat(4);
 ---
-<html lang={view.site.lang}>
+<html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
     <Reveal />
@@ -24,7 +26,7 @@ const waveFlow = wave.repeat(4);
     <div class="ox-frame">
       <header class="ox-top">
         <span class="ox-brand">SENRENBANKA<span class="ox-brand-dot" aria-hidden="true"> ●</span></span>
-        <span class="ox-top-meta">{profile.location ?? 'REMOTE'}</span>
+        <span class="ox-top-meta">{profile.location ?? t.locationFallback}</span>
       </header>
       <p class="ox-wave" aria-hidden="true"><span class="ox-wave-track">{waveFlow}</span></p>
 
@@ -96,7 +98,7 @@ const waveFlow = wave.repeat(4);
               <ul class="ox-rows">
                 {profile.experience.map((item) => (
                   <li class="ox-row" data-reveal>
-                    <span class="ox-num tabular-nums">{item.period ?? '----'}</span>
+                    <span class="ox-num tabular-nums">{item.period ?? t.periodFallback}</span>
                     <div>
                       <h2 class="ox-row-title">
                         {item.org}
@@ -121,7 +123,7 @@ const waveFlow = wave.repeat(4);
                 <span class="ox-link-arrow" aria-hidden="true">▸</span>{profile.contact.email}
               </a>
             ) : (
-              <p class="ox-dim">no channel configured</p>
+              <p class="ox-dim">{t.noChannel}</p>
             )
           }
         </div>

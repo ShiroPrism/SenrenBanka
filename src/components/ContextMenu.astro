@@ -4,12 +4,27 @@
  *
  * - 中性基础设施 UI：外观与 /designs/ 切换页同属项目 chrome，不模仿任何一套设计；
  *   样式以 `<style is:inline>` 内联（不新增 <link>，每设计页仍只链接自己的 CSS）。
+ * - **语言切换入口也在这里**（v0.9.0 修订）：各设计页不再单独渲染可见的语言切换器，
+ *   语言项作为菜单的一个分组呈现，消除 8 套设计重复排版的成本。语言项是普通 `<a>`，
+ *   不依赖运行时即可导航。主题切换项（随机 / 切换设计…）仍受 `manualSwitch` 门控，
+ *   但语言项**不受影响**——`manualSwitch: false` 时菜单依然渲染（见 SPEC §7.5）。
  * - 行为全部在共享运行时 src/lib/context-menu.ts：仅在 `(hover: hover) and (pointer: fine)`
  *   环境按需加载（触屏设备不加载菜单逻辑）；只接管非交互区域的右键，链接 / 图片 /
  *   输入控件 / 已选文字保留浏览器原生菜单。
  * - `manualSwitch: false` 时页面不渲染本组件（整菜单不启用，SPEC §7.5）。
  */
-import { ArrowUp, Link as LinkIcon, Palette, Printer, RotateCw, Share2, Shuffle } from '@lucide/astro';
+import {
+  ArrowUp,
+  Check,
+  ChevronRight,
+  Globe,
+  Link as LinkIcon,
+  Palette,
+  Printer,
+  RotateCw,
+  Share2,
+  Shuffle,
+} from '@lucide/astro';
 import type { ContextMenuConfig } from '../lib/site';
 
 interface Props {
@@ -17,6 +32,7 @@ interface Props {
 }
 
 const { config } = Astro.props;
+const t = config.messages.contextMenu;
 const runtimeConfig = {
   currentId: config.currentId,
   switcherHref: config.switcherHref,
@@ -26,6 +42,8 @@ const runtimeConfig = {
   cacheHours: config.cacheHours,
   avoidRepeat: config.avoidRepeat,
   storageKey: config.storageKey,
+  toast: config.messages.toast,
+  languages: config.languages,
 };
 // 转义 '<'，防止 JSON 串提前闭合 <script>（与 router-script.ts 同法）
 const configJson = JSON.stringify(runtimeConfig).replace(/</g, '\\u003c');
@@ -102,6 +120,28 @@ const randomDisabled = config.targets.length < 2;
     height: 1px;
     margin: 0.3rem 0.45rem;
     background: light-dark(#ececec, #34343a);
+  }
+  /* 语言二级菜单：悬浮 / 键盘打开。主菜单高度与语言数量无关——
+     语言项全部收进子菜单，子菜单自身可滚动（见下方 max-height）。 */
+  .cm-sub-trigger .cm-arrow {
+    flex: none;
+    margin-left: auto;
+    opacity: 0.55;
+  }
+  .cm-sub-trigger[aria-expanded='true'] {
+    background: light-dark(#f4f4f5, #2b2b31);
+  }
+  .cm-submenu {
+    position: fixed;
+    min-width: 9.5rem;
+    max-height: min(60vh, 26rem);
+    overflow-y: auto;
+    padding: 0.3rem;
+  }
+  .cm-lang .cm-check {
+    flex: none;
+    margin-left: auto;
+    color: light-dark(#0b7a3b, #6ede9f);
   }
   .cm-item {
     display: flex;
@@ -206,37 +246,78 @@ const randomDisabled = config.targets.length < 2;
   <header class="cm-head">
     <span class="cm-dot" aria-hidden="true"></span>
     <span class="cm-design">{config.designName}</span>
-    <span class="cm-tag">当前设计</span>
+    <span class="cm-tag">{t.currentDesignTag}</span>
   </header>
-  <div class="cm-menu" role="menu" aria-label="快捷操作 / Quick actions">
+  <div class="cm-menu" role="menu" aria-label={t.menuLabel}>
     <button class="cm-item" type="button" role="menuitem" data-cm-action="reload">
-      <RotateCw class="cm-icon" aria-hidden="true" /><span class="cm-label">重新加载</span>
+      <RotateCw class="cm-icon" aria-hidden="true" /><span class="cm-label">{t.reload}</span>
     </button>
     <button class="cm-item" type="button" role="menuitem" data-cm-action="top">
-      <ArrowUp class="cm-icon" aria-hidden="true" /><span class="cm-label">回到页面顶部</span>
+      <ArrowUp class="cm-icon" aria-hidden="true" /><span class="cm-label">{t.toTop}</span>
     </button>
     <button class="cm-item" type="button" role="menuitem" data-cm-action="copy">
-      <LinkIcon class="cm-icon" aria-hidden="true" /><span class="cm-label">复制当前页面链接</span>
+      <LinkIcon class="cm-icon" aria-hidden="true" /><span class="cm-label">{t.copyLink}</span>
     </button>
     <button class="cm-item" type="button" role="menuitem" data-cm-action="print">
-      <Printer class="cm-icon" aria-hidden="true" /><span class="cm-label">打印 / 保存为 PDF</span>
+      <Printer class="cm-icon" aria-hidden="true" /><span class="cm-label">{t.print}</span>
     </button>
     <button class="cm-item" type="button" role="menuitem" data-cm-action="share">
-      <Share2 class="cm-icon" aria-hidden="true" /><span class="cm-label">分享页面</span>
+      <Share2 class="cm-icon" aria-hidden="true" /><span class="cm-label">{t.share}</span>
     </button>
+    {
+      config.designActionsEnabled && (
+        <>
+          <div class="cm-sep" role="separator"></div>
+          <button
+            class="cm-item"
+            type="button"
+            role="menuitem"
+            data-cm-action="random"
+            aria-disabled={randomDisabled ? 'true' : undefined}
+          >
+            <Shuffle class="cm-icon" aria-hidden="true" />
+            <span class="cm-label">{t.random}</span>
+          </button>
+          <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
+            <Palette class="cm-icon" aria-hidden="true" />
+            <span class="cm-label">{t.switchDesign}</span>
+          </a>
+        </>
+      )
+    }
     <div class="cm-sep" role="separator"></div>
     <button
-      class="cm-item"
+      class="cm-item cm-sub-trigger"
       type="button"
       role="menuitem"
-      data-cm-action="random"
-      aria-disabled={randomDisabled ? 'true' : undefined}
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-controls="cm-lang-submenu"
+      data-cm-submenu-trigger
     >
-      <Shuffle class="cm-icon" aria-hidden="true" /><span class="cm-label">随机一个设计</span>
+      <Globe class="cm-icon" aria-hidden="true" />
+      <span class="cm-label">{t.languageGroup}</span>
+      <ChevronRight class="cm-icon cm-arrow" aria-hidden="true" />
     </button>
-    <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
-      <Palette class="cm-icon" aria-hidden="true" /><span class="cm-label">切换设计…</span>
-    </a>
+    <!-- 二级菜单：语言项。语言数量再多也只占一行（子菜单自身滚动），
+         主菜单高度与语言数量无关。 -->
+    <div class="cm cm-submenu" id="cm-lang-submenu" role="menu" aria-label={t.languageGroup} data-cm-submenu hidden>
+      {
+        config.languages.map((item) => (
+          <a
+            class="cm-item cm-lang"
+            role="menuitem"
+            href={item.href}
+            hreflang={item.code}
+            lang={item.code}
+            aria-current={item.isCurrent ? 'page' : undefined}
+          >
+            <span class="cm-label">{item.label}</span>
+            {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+          </a>
+        ))
+      }
+    </div>
   </div>
 </div>
 <div class="cm-toast" data-cm-toast role="status" aria-live="polite" hidden></div>

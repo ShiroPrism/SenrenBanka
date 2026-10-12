@@ -42,6 +42,10 @@
 - 核心字段全部渲染（name = Large Title h1 + 导航 Headline；headline / bio / links）；扩展区块四类全取：projects（分组卡内行 + 芯片）、experience（分组卡内行）、skills（芯片组）、contact（22px 大幅面卡 + Filled 胶囊）。
 - 实现细节与实测数值在 `docs/verification/frost.md` 记录。
 
+## 语言切换入口适配（v0.9.0 · 2026-10-12）
+
+官方规范未定义语言切换入口。v0.9.0 起语言切换入口并入共享右键菜单的语言分组（`.cm-lang`），本设计**不再**单独渲染可见语言切换器，其 `style.css` 中亦无语言切换样式——语言项属项目 chrome 的中性外观，不模仿本设计视觉语言。
+
 ## 未测 / 限制
 
 - 同 `docs/verification/frost.md`；复刻规范为自撰、可修订（修订时同步实现与验证记录）。

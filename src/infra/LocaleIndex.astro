@@ -1,0 +1,61 @@
+---
+import InfraStyles from '../components/InfraStyles.astro';
+import { renderRouterScript } from '../lib/router-script';
+import { loadSite, localeHref, resolveLocale } from '../lib/site';
+import { sharedMessagesFor } from '../i18n/resolve';
+
+/**
+ * 语言根入口 `/<locale.path>/`（SPEC §7.3）：零外部请求的内联脚本选择设计并立即跳转，
+ * 与根路径共用同一套 random / fixed 机制，只是跳转目标带上当前语言前缀。
+ * 无 JS → noscript 内 meta refresh 到该语言的默认设计 + 手动链接列表。
+ * SEO → noindex, follow（唯一可索引入口是各语言的默认设计页，SPEC §7.4）。
+ */
+const model = await loadSite();
+const locale = resolveLocale(model, Astro.url.pathname);
+const m = sharedMessagesFor(locale.code);
+const script = renderRouterScript({
+  mode: model.mode,
+  manualSwitch: model.switcherEnabled,
+  defaultId: model.default.id,
+  enabled: model.enabled.map((design) => design.id),
+  cacheHours: model.random.cacheHours,
+  avoidRepeat: model.random.avoidRepeat,
+  base: model.base,
+  storageKey: model.storageKey,
+  localePrefix: locale.path,
+});
+const fallbackUrl = localeHref(locale.path, `${model.default.id}/`);
+---
+<html lang={locale.code}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{locale.title}</title>
+    <meta name="robots" content="noindex, follow" />
+    <script is:inline set:html={script} />
+    <noscript>
+      <meta http-equiv="refresh" content={`0;url=${fallbackUrl}`} />
+    </noscript>
+  </head>
+  <body>
+    <InfraStyles />
+    <main class="infra">
+      <p class="infra-redirect">{m.entry.redirecting}</p>
+      <noscript>
+        <h1>{m.entry.noscriptHeading}</h1>
+        <p>{m.entry.noscriptBody}</p>
+        <ul class="infra-list">
+          {
+            model.enabled.map((design) => (
+              <li>
+                <a class="infra-card" href={localeHref(locale.path, `${design.id}/`)}>
+                  <span class="name">{design.meta.displayName}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </noscript>
+    </main>
+  </body>
+</html>

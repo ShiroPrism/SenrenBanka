@@ -2,14 +2,19 @@
 import InfraStyles from '../components/InfraStyles.astro';
 import { renderRouterScript } from '../lib/router-script';
 import { loadSite } from '../lib/site';
-import { withBase } from '../lib/urls';
+import { localeDesignHref } from '../lib/site';
+import { sharedMessagesFor } from '../i18n/resolve';
 
 /**
- * 根路由页（SPEC §7.3）：零外部请求的内联脚本选择设计并立即跳转。
- * 无 JS → noscript 内 meta refresh 到默认设计 + 手动链接列表。
- * SEO → noindex, follow（唯一可索引入口是默认设计页，SPEC §7.4）。
+ * 根路由 `/`（SPEC §7.3）：零外部请求的内联脚本选择设计并立即跳转。
+ * 语言固定为**默认语言**（不按浏览器语言改写 URL，也不做 Cookie 语言检测）。
+ * 无 JS → noscript 内 meta refresh 到默认语言的默认设计 + 手动链接列表。
+ * SEO → noindex, follow（唯一可索引入口是各语言的默认设计页，SPEC §7.4）。
  */
 const model = await loadSite();
+const locale =
+  model.locales.find((entry) => entry.code === model.defaultLocale) ?? model.locales[0]!;
+const m = sharedMessagesFor(locale.code);
 const script = renderRouterScript({
   mode: model.mode,
   manualSwitch: model.switcherEnabled,
@@ -19,14 +24,15 @@ const script = renderRouterScript({
   avoidRepeat: model.random.avoidRepeat,
   base: model.base,
   storageKey: model.storageKey,
+  localePrefix: locale.path,
 });
-const fallbackUrl = withBase(`${model.default.id}/`);
+const fallbackUrl = localeDesignHref(locale.path, model.default.id);
 ---
-<html lang={model.site.lang}>
+<html lang={locale.code}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{model.site.title}</title>
+    <title>{locale.title}</title>
     <meta name="robots" content="noindex, follow" />
     <script is:inline set:html={script} />
     <noscript>
@@ -36,15 +42,15 @@ const fallbackUrl = withBase(`${model.default.id}/`);
   <body>
     <InfraStyles />
     <main class="infra">
-      <p class="infra-redirect">正在进入你的设计… / Taking you to a design…</p>
+      <p class="infra-redirect">{m.entry.redirecting}</p>
       <noscript>
-        <h1>{model.site.title}</h1>
-        <p>JavaScript 已禁用，正在跳转到默认设计；若未自动跳转，请手动选择：</p>
+        <h1>{m.entry.noscriptHeading}</h1>
+        <p>{m.entry.noscriptBody}</p>
         <ul class="infra-list">
           {
             model.enabled.map((design) => (
               <li>
-                <a class="infra-card" href={withBase(`${design.id}/`)}>
+                <a class="infra-card" href={localeDesignHref(locale.path, design.id)}>
                   <span class="name">{design.meta.displayName}</span>
                 </a>
               </li>

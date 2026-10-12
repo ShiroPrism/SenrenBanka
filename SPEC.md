@@ -182,10 +182,11 @@
 
 ### 5.1 文件与校验【已定】
 
-- `src/data/profile.yaml`（个人资料）与 `src/data/site.config.yaml`（站点/行为配置），均为内容层集合（glob loader），Zod schema 校验（`strict()` 拒绝未知键，防拼写错误）。
+- `src/data/profiles/<locale.path>.yaml`（各语言的个人资料）与 `src/data/site.config.yaml`（站点/多语言/行为配置），均为内容层集合（glob loader），Zod schema 校验（`strict()` 拒绝未知键，防拼写错误）。
 - 所有设计通过统一数据接口（`src/lib/site.ts`）获取资料，**禁止每套设计重复维护信息**。
+- 三种语言共用**同一套** `profileSchema`，不为语言拆分字段契约。
 
-### 5.2 profile.yaml 示例
+### 5.2 profile 示例（以 `src/data/profiles/zh-cn.yaml` 为例）
 
 ```yaml
 name: "Your Name"
@@ -221,18 +222,35 @@ contact:                      # 扩展区块
 - **核心（必填，所有设计必须呈现）**：`name`、`headline`、`bio`、`links`。
 - **可选字段**：`avatar`（部分风格不放照片）、`location`。
 - **扩展词汇表（一期仅 4 个）**：`projects`、`experience`、`skills`、`contact`。设计按自身风格**自行决定取舍、排列与样式**；不提供逐区块开关配置。
-- 设计可添加装饰性文案（如 "Selected Works" 标签），**不得编造**个人事实（项目、经历、数据）。
+- 设计可添加装饰性文案，**不得编造**个人事实（项目、经历、数据）。
 - 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由实现约定（`AGENTS.md`）+ `design-page-verify` 流程约束。
 
 ### 5.4 site.config.yaml 示例
 
 ```yaml
 site:
-  title: "Your Name — Portfolio"
-  description: "SEO 描述"
-  lang: "en"
   url: null          # 可选；构建时优先使用 SITE_URL 环境变量
   storageKey: null   # 可选覆盖；默认由 base 路径自动派生（见 §7）
+
+i18n:                # 语言清单只在此处维护一处，路由/资料/SEO 均由此派生
+  defaultLocale: zh-CN
+  locales:
+    - code: zh-CN    # BCP 47：HTML lang 与文案字典键
+      path: zh-cn    # URL 前缀 + 资料文件名（src/data/profiles/zh-cn.yaml）
+      label: 简体中文     # 语言自称，用于语言选择器
+      title: "Your Name — Portfolio"      # 该语言 SEO 标题
+      description: "SEO 描述"             # 该语言 SEO 描述
+    - code: ja
+      path: ja
+      label: 日本語
+      title: "…"
+      description: "…"
+    - code: en
+      path: en
+      label: English
+      title: "…"
+      description: "…"
+
 design:
   mode: random       # random | fixed
   default: editorial # 必填；random 模式下是无 JS/SEO 回退设计，fixed 模式下是固定展示
@@ -243,6 +261,26 @@ design:
 ```
 
 校验规则：`default` 必须是存在的启用设计；至少 1 个启用设计；`cacheHours >= 0`。
+
+### 5.5 多语言契约【已定，v0.9.0】
+
+**语言清单的唯一来源**是 `site.config.yaml` 的 `i18n.locales`；路由注册、资料选择、文案字典与 SEO 元数据都从它派生，任何其他文件不得重复列出语言。
+
+| 字段 | 职责 |
+|---|---|
+| `code` | HTML `lang`、翻译字典键使用的标准语言标识（BCP 47） |
+| `path` | URL 语言前缀，同时是对应资料文件的标识（要求唯一、合法） |
+| `label` | 语言选择器展示的**语言自称** |
+| `title` / `description` | 该语言的站点 SEO 元数据 |
+
+**文案分两层**：
+
+- **共享文案**（`src/i18n/messages.ts`）：项目 chrome 与基础设施页——右键快捷操作菜单（含运行时 Toast）、切换页、根入口页、404、语言选择器。必须覆盖全部语言，缺键在**构建期**报错。
+- **主题文案**（`src/designs/<id>/messages.ts`）：每套设计自身的界面文案，按该设计的视觉语言撰写，**不得**把 8 套设计统一翻译成相同表述。
+
+翻译原则：个人简介、headline、项目描述、工作职责、链接标签、联系说明等**需要本地化的内容要翻译**；项目名称、公司名称、URL、邮箱、技术标记等**专有名词不机械翻译**。承担设计意图而非信息传达的文本（终端命令、ASCII 装饰、刻意的双语标识、法律署名）保持原样，且**必须在该设计 `messages.ts` 的注释中写明理由**。
+
+**配置强校验**（Zod `superRefine`，构建期失败而非静默回退）：语言 `code` 与 `path` 均不得重复；`defaultLocale` 必须存在于 `locales`；每种语言必须有完整元数据与对应资料文件；`src/data/profiles/` 中存在未声明的资料文件同样报错。
 
 ---
 
@@ -329,33 +367,68 @@ src/designs/<id>/
 
 局限（如实文档化）：清除浏览器存储后无法保证"连续两次不重复"；存储按浏览器而非访客身份；跨设备不共享。
 
-### 7.3 根路径路由页【已定】
+### 7.3 路由与语言入口【v0.9.0 修订】
 
-- 构建期将运行配置序列化为内联 JSON 注入（mode、enabled 池、default、cacheHours、avoidRepeat、base、storageKey），`<head>` 顶部内联脚本**同步**执行选择逻辑并 `location.replace(base + id + '/')`（`replace` 防止后退死循环）。
-- 页面**零外部请求**（无 CSS/JS/字体加载）；极慢网络下显示一行极简提示文字。
-- 无 JS 降级：`<noscript>` 内 `meta http-equiv="refresh" 0 秒 → default`，并附全部启用设计的链接列表（可访问性兜底）。注意：Googlebot 执行 JS、不解析 noscript，该降级仅面向真人。
-- 影响说明：跳转在解析早期完成，真实用户≈瞬时；CDN/浏览器缓存无影响（同一份 HTML 服务所有访客，选择逻辑纯客户端）。
+**路由形态**（`astro.config.mjs` 的 `injectRoute`，理由见 `docs/adr/0006-multilingual-static-routing.md`）：
 
-### 7.4 索引策略（SEO）【已定】
+| 路径 | 页面 | 说明 |
+|---|---|---|
+| `/` | `src/pages/index.astro` | 进入**默认语言**，沿用既有 random / fixed 机制 |
+| `/<locale.path>/` | `src/infra/LocaleIndex.astro` | 每种语言的入口页，目标带该语言前缀 |
+| `/<locale.path>/<design>/` | `src/designs/<id>/Page.astro` | 每套设计在每种语言下的页面 |
+| `/<locale.path>/designs/` | `src/infra/SwitcherPage.astro` | 每种语言的切换页；`manualSwitch: false` 时不构建 |
+| `/<design>/`、`/designs/` | `src/infra/LegacyRedirect.astro` | 旧无前缀路径的兼容入口 |
+
+- 同一 `Page.astro` 被注册到多个语言前缀；语言由 `resolveLocale(model, Astro.url.pathname)` **在构建期**从路径首段解析，页面不各自判断。
+- **不启用 Astro 原生 `i18n`**：实测其开关两种配置产物完全相同，唯一作用是让 `Astro.currentLocale` 有值（不配时为 `UNDEFINED`）。采用自解析可让 `/demo` 这类部署 base 与语言前缀的边界完全可控。
+- 入口页零外部请求、无 JS 降级与既有行为一致，只是 `location.replace(base + localePrefix + '/' + id + '/')` 的目标带上语言前缀。
+- **不按浏览器语言自动改写 URL，也不做 Cookie 语言检测**：根路径与各 locale 入口都保持既定 random / fixed 行为。
+- **语言识别只认路径首段**并与 `locales[].path` 精确匹配，因此部署 base（`/demo`）不会被误当成语言代码。
+
+**旧路径兼容的降级行为（明确声明）**：静态托管无法在代码内实现真正的 HTTP 301（重定向由平台配置决定），因此 `/<design>/` 与 `/designs/` 采用**静态 meta refresh + `canonical` + `noindex, follow`** 的降级方案——旧链接仍可用，无 JavaScript 依赖，且不与 locale 页面形成重复可索引内容。权威地址只有带语言前缀的那一份。真正的 301 如有需要，应在托管平台侧另行配置。
+
+### 7.4 索引策略（SEO）【已定；v0.9.0 多语言修订】
 
 | 页面 | robots |
 |---|---|
-| 根路径 | `noindex, follow` |
-| default 设计 | `index, follow` + self-canonical（唯一可索引入口） |
+| 根路径 / 各 locale 入口页 | `noindex, follow` |
+| default 设计（**每种语言各一个**） | `index, follow` + self-canonical |
 | 其他设计 | `noindex, follow` + self-canonical（可直达、可分享，不进搜索） |
 | 切换页 | `noindex, follow` |
+| 旧无前缀兼容路径 | `noindex, follow` + `canonical` 指向默认语言版本 |
 
-### 7.5 切换页与入口【已定；v0.5.0 入口形态修订】
+延续"每种语言只有默认主题可索引"的策略，避免 24 个视觉不同但内容相近的主题页全部参与索引。
 
-- `/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出全部启用设计（displayName + description + 可选 accent 色块 + 当前标记）。
+**hreflang**：只标注在**各语言的默认主题页面**上，三种语言互指 + `x-default` 指向默认语言版本。`noindex` 的非默认主题**不标注** hreflang——它们不是可索引的等价翻译页。
+
+`canonical` 必须包含实际 locale 路径与部署 base 前缀。
+
+### 7.5 切换页与入口【已定；v0.5.0 入口形态修订；v0.9.0 多语言修订】
+
+- `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出全部启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
 - **设计切换入口 = 桌面端共享右键快捷操作菜单**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
   - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。
-  - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。
-  - **随机语义**：复用 §7.1 存储键与格式、`withBase()` URL；必须排除当前设计；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后导航目标固定 URL；直达固定 URL 不覆盖既有选择。
+  - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。**菜单标签与 Toast 文案均随当前语言**（由 `view.messages` 注入，组件本身不判断语言）。
+  - **随机语义**：复用 §7.1 存储键与格式、`withBase()` URL；必须排除当前设计；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后导航目标固定 URL；直达固定 URL 不覆盖既有选择。**所有目标保留当前语言前缀**。
   - **键盘 / a11y**：`role="menu"` + `role="menuitem"`（icon `aria-hidden`，文本承担可访问名）；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困焦点；菜单随视口边界自动翻转收敛，点击外部 / 滚动 / 尺寸变化 / 再次右键关闭；打开时不锁定页面滚动。
   - **移动端（项目决策）**：不提供页面内切换菜单、不模拟长按、**不加载菜单运行时**（能力门控 + 动态 import，见 §3.2-14）；设计页不保留任何移动端替代入口。
-- `manualSwitch:false` → `/designs/` **不构建**（404，见 §10.4 实现注记）、菜单不渲染（设计页零菜单标记 / 零脚本）；各设计固定 URL 不受影响。
+- **语言切换入口 = 右键菜单内的语言二级菜单**（`ContextMenu.astro`，v0.9.0 修订）：各设计页**不再**单独渲染可见的语言切换器，**也不需要**在自己的 `style.css` 中排版语言切换——这消除了 8 套设计重复排版的成本（实测移除约 9.4 KB 重复 CSS）。
+  - **二级菜单（而非平铺）是硬性要求**：语言项全部收进子菜单，**主菜单高度与语言数量无关**。平铺方案在语言数增多时菜单会长到超出视口而不可用；实测注入 18 种语言后主菜单仍为 8 项 / 374px（与 3 语言时完全一致），子菜单自身 `max-height: min(60vh, 26rem)` + 滚动。
+  - **触发**：`语言` 行（`[data-cm-submenu-trigger]`，带 `ChevronRight` 箭头与 `aria-haspopup` / `aria-expanded` / `aria-controls`）。鼠标**悬浮**（120ms 延迟开启、180–220ms 延迟关闭，避免横扫误触与斜向移动误关）、**点击**（切换开合）或键盘 **→** 均可打开。
+  - **定位**：默认贴触发项右侧；右侧放不下则**翻转到左侧**；纵向对齐触发项并收敛进视口。
+  - 语言项是**普通 `<a>`**（非 button），逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记；语言名用各语言**自称**；子菜单带翻译后的 `aria-label`。
+  - 目标保持**同一主题 id**（`languageItems(model, locale, design.id)`），不重置随机有效期。
+  - **键盘**：`↑↓` 在当前层级内移动；移到触发项时展开子菜单、移开时收起；`→` 进入子菜单并聚焦首项，`←` 返回触发项；`Esc` 关闭整个菜单。导航层级由 `activeMenu` 跟踪——**子菜单的项不会混进主菜单的 `↑↓` 序列**（这是二级菜单最易出错的地方）。
+  - **`manualSwitch` 只控制主题切换项**（随机 / 切换设计…，由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这两项不渲染，**但菜单与语言分组照常渲染**——语言切换不受 `manualSwitch` 影响。
+  - **已知取舍：触屏不可达**。右键菜单受 `(hover: hover) and (pointer: fine)` 门控，触屏设备不加载运行时，因此移动端没有语言切换入口（2026-10-12 由项目所有者裁定：接受此代价以消除 8 套设计的重复排版）。若后续需要移动端语言切换，应另加页面内入口而非改回逐设计排版。
+  - **基础设施页例外**：切换页与 404 不使用右键菜单，保留独立的可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）。
+- `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、菜单不渲染（设计页零菜单标记 / 零脚本）；各设计固定 URL 与语言切换不受影响。
+
+### 7.6 主题偏好与语言的耦合【v0.9.0】
+
+- 主题选择的 `localStorage` 格式与 `storageKeyFor()` 命名空间策略**保持兼容**，且**不含 locale**——主题偏好跨语言共享，不因切换语言而形成互相覆盖的不同选择。
+- 切换语言只改变 locale，**不改变当前主题、不重置随机有效期**；切换主题必须保留当前语言前缀。
 
 ---
 
@@ -436,18 +509,25 @@ SenrenBanka/
 │  └─ favicon.svg                    # 唯一公共静态资源（自定义域名时此处加 CNAME）
 ├─ src/
 │  ├─ data/                          # ★ 使用者日常只改这里
-│  │  ├─ profile.yaml                #   个人资料（唯一真相，Zod strict 校验）
-│  │  ├─ site.config.yaml            #   站点信息与行为（mode/default/manualSwitch/cacheHours…）
+│  │  ├─ profiles/                   #   各语言的个人资料（文件名 = i18n.locales[].path）
+│  │  │  ├─ zh-cn.yaml               #   简体中文资料（共用同一套 schema）
+│  │  │  ├─ ja.yaml                  #   日语资料
+│  │  │  └─ en.yaml                  #   英语资料
+│  │  ├─ site.config.yaml            #   站点 + i18n 语言清单 + 行为配置（mode/default/manualSwitch…）
 │  │  └─ assets/
 │  │     └─ avatar.jpg               #   可选：本地资料图片
 │  ├─ content.config.ts              # 内容层：profile / site 两个集合（glob loader + Zod）
 │  ├─ lib/                           # 框架共享逻辑（设计不重复实现）
-│  │  ├─ site.ts                     #   loadSite()：配置+注册表+资料合并、交叉校验、类型化数据接口
-│  │  ├─ urls.ts                     #   base 前缀 helper（所有内部链接必须经此拼接）
+│  │  ├─ site.ts                     #   loadSite()：多语言资料合并与交叉校验、resolveLocale()、类型化数据接口
+│  │  ├─ urls.ts                     #   base 前缀 helper（所有内部链接必须经此拼接）+ 路径分段解析
 │  │  ├─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（随机/缓存/手选）
 │  │  └─ context-menu.ts             #   桌面右键菜单运行时（动作/键盘/随机语义；无 CSS 边）
+│  ├─ i18n/
+│  │  ├─ messages.ts                # 共享文案（右键菜单/切换页/入口/404/语言选择器；纯数据，无 CSS 边）
+│  │  └─ resolve.ts                 # 按语言取共享文案的唯一入口（缺键构建期报错，不静默回退）
 │  ├─ components/
-│  │  ├─ HeadMeta.astro              # 共享 <head> 元信息（title/canonical/robots；零 Tailwind 类）
+│  │  ├─ HeadMeta.astro              # 共享 <head> 元信息（title/description/canonical/robots/hreflang）
+│  │  ├─ LanguageSwitcher.astro      # 语言切换入口（可见静态链接、不依赖 JS；仅结构，样式由各设计提供）
 │  │  ├─ InfraStyles.astro           # 基础设施页共享极简样式（<style is:inline>，保证根页零外部请求）
 │  │  ├─ Reveal.astro                # 滚动显现装配（内联 boot + 共享 IO 触发，不 import CSS）
 │  │  └─ ContextMenu.astro           # 共享右键快捷操作菜单（中性 chrome；is:inline 样式 + 按需加载运行时）
@@ -456,6 +536,7 @@ SenrenBanka/
 │  │  ├─ editorial/                  # ── 单套设计示例（自产：编辑杂志风）──
 │  │  │  ├─ DESIGN.md                #    设计规范快照
 │  │  │  ├─ design.json              #    元数据：显示名/描述/enabled/来源与许可
+│  │  │  ├─ messages.ts              #    该设计的三语言界面文案（缺文件或缺键构建期报错）
 │  │  │  ├─ Page.astro               #    完整页面（含 <html> 文档）
 │  │  │  ├─ style.css                #    CSS 入口（source(none) + @source + 原生 CSS）
 │  │  │  ├─ components/              #    该设计私有组件（可选）
@@ -466,10 +547,12 @@ SenrenBanka/
 │  │  └─ fast/                       # 官方来源（microsoft/fast，MIT）
 │  │     └─ …                        #   四件套 + SOURCE-LICENSE.txt
 │  ├─ infra/
-│  │  └─ SwitcherPage.astro          # 切换页（astro.config 在 manualSwitch 时 injectRoute 为 /designs/）
+│  │  ├─ SwitcherPage.astro          # 切换页（injectRoute 为 /<locale>/designs/，manualSwitch 时才注入）
+│  │  ├─ LocaleIndex.astro           # 语言入口页（injectRoute 为 /<locale>/）
+│  │  └─ LegacyRedirect.astro        # 旧无前缀路径的静态跳转页（meta refresh + canonical + noindex）
 │  └─ pages/
-│     ├─ index.astro                 # 根路由页：零外部请求（内联脚本 + noscript 降级，noindex）
-│     └─ 404.astro                   # 中性 404（noindex，GH Pages 自动使用）
+│     ├─ index.astro                 # 根路由页：进入默认语言（内联脚本 + noscript 降级，noindex）
+│     └─ 404.astro                   # 中性 404（noindex，提供各语言入口）
 ├─ .gitignore
 ├─ .nvmrc                            # Node 24
 ├─ AGENTS.md                         # 项目级实现约定（编码 Agent 必读的强制规则）
@@ -482,7 +565,7 @@ SenrenBanka/
 │  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
 ├─ SPEC.md                           # 本规格（唯一契约文档）
-├─ astro.config.mjs                  # Tailwind vite 插件 / fonts(npm provider) / site+base(env) / injectRoute 设计路由与切换页
+├─ astro.config.mjs                  # Tailwind vite 插件 / fonts(npm provider) / site+base(env) / injectRoute 多语言设计路由·语言入口·切换页·旧路径跳转
 ├─ package.json                      # scripts: dev/check/build/preview；engines.node >= 22.12
 ├─ package-lock.json
 └─ tsconfig.json                     # 继承 astro/tsconfigs/strict

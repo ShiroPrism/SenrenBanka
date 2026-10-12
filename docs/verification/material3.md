@@ -134,6 +134,14 @@
 | editorial | 80px | 非缺陷：`ed-hero-grid` 3fr/2fr 已构成两栏，非头像问题 |
 | fast / oxide | 0px | 非缺陷：首屏通栏，无死白 |
 
+## 多语言（v0.9.0，2026-10-12）
+
+- **语言切换入口 = 右键菜单的语言二级菜单**（`.cm-lang`，主菜单高度与语言数量无关）：本设计**不再**渲染可见语言切换器，`style.css` 中也**没有**语言切换样式（v0.9.0 修订：消除 8 套设计重复排版）。语言项由共享 `ContextMenu.astro` 提供，中性外观属项目 chrome，不模仿本设计。
+- 三语言页面：`<html lang>` 正确、robots 与 hreflang 策略正确（仅默认设计标注 hreflang）、二级菜单内 3 个语言项且目标**保持本设计 id**、**恰好 1 个** `aria-current="page"`、0 console 错误。
+- 键盘可达：↑↓ 可遍历至语言项，焦点环可见（实测 `outline: 1.6px solid`）。
+- 本设计 `style.css` 与改动前**逐字节一致**（仅末尾换行差异）——文案本地化与语言入口重构**未造成任何视觉漂移**。
+- 跨语言路由与共享机制的完整测试矩阵见 `docs/verification/shared.md`。
+
 ## 未测 / 限制
 
 - 真机（iOS / Android）与 Safari / Firefox 引擎未实测；触控与降级均基于 Chromium 1200 仿真。**`:has()` 选择器未在 Safari / Firefox 实测**（Safari 15.4+ / Firefox 121+ 原生支持；仅影响「头像缺省」兜底路径，且失败时退化为单列正文右缘差一个 `column-gap`，不影响内容可见性）。
