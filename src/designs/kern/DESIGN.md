@@ -247,6 +247,6 @@ components:
 
 - **核心字段必须渲染**：`name`（Display 档 h1）/ `headline`（Lede）/ `bio` / `links`（幽灵按钮组，含映射标记）。
 - **扩展区块取舍**：四类全取——`projects`（单元网格）/ `experience`（规则线行）/ `skills`（等宽芯片）/ `contact`（声明 + 反转主按钮）。
-- `<HeadMeta {...view.head} />` 必须原样引入；设计切换由**全站共享的桌面右键快捷操作菜单**承担（`manualSwitch` 时接入 `<ContextMenu config={view.contextMenu} />`；项目级 chrome、中性外观，不属于本设计视觉系统）——本页不再保留任何可见切换入口。
+- `<HeadMeta {...view.head} />` 必须原样引入；页面操作、主题切换与语言切换由**全站共享操作菜单**承担（无条件接入 `<ContextMenu config={view.contextMenu} />`；桌面为右键 / `Shift+F10` 打开的浮层菜单，移动端为悬浮球打开的底部动作面板——项目级 chrome、中性外观，不属于本设计视觉系统）——本页不保留任何可见切换入口。
 - 字体：`--font-geist` / `--font-geist-mono`（astro.config 的 fonts 注册 + 页面 `<Font>` + 本文件 `@theme inline`）；CSS 入口保持 `@import "tailwindcss" source(none); @source "./";`。
 - 本设计为**第三方分析复刻**（`third-party-analysis`）：规范与实现均为自有产出，不含上游文本 / 素材 / 品牌资产；来源定性见 `design.json` 与 `docs/designs/kern/ADAPTATION.md`。

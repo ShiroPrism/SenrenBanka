@@ -1,18 +1,28 @@
 /**
- * 共享基础设施文案（SPEC §5.5 / §7.5）。
+ * 共享基础设施文案（SPEC §5.5 / §7.5 · ADR 0007）。
  *
- * - 只覆盖**项目 chrome** 与基础设施页的用户可见文案：右键快捷操作菜单（含运行时
- *   Toast）、切换页、根入口页、404、语言选择器。
+ * - 只覆盖**项目 chrome** 与基础设施页的用户可见文案：全站共享操作菜单（含桌面浮层
+ *   形态、移动端底部动作面板、悬浮球与运行时 Toast）、切换页、根入口页、404、语言选择器。
  * - 各套设计自身的文案在 `src/designs/<id>/messages.ts`，按其视觉语言单独撰写。
  * - 本模块是纯数据：**不得 import 任何 CSS、Page.astro 或 style.css**（否则会破坏
  *   每套设计只加载自身样式的隔离约定，见 SPEC §3.2）。
  */
 
 export interface LocaleMessages {
-  /** 右键快捷操作菜单（组件内静态文案）。 */
+  /** 共享操作菜单（Action menu）的组件内静态文案；桌面浮层与移动端面板共用。 */
   contextMenu: {
     currentDesignTag: string;
     menuLabel: string;
+    /** 移动端悬浮球的无障碍名称。 */
+    launcherLabel: string;
+    /** 底部面板关闭按钮的无障碍名称。 */
+    closeLabel: string;
+    /** 面板底部「取消」按钮文案（iOS action sheet 的关闭位）。 */
+    cancel: string;
+    /** 面板内「页面操作」分组的组标题。 */
+    pageGroup: string;
+    /** 面板内「设计操作」分组的组标题。 */
+    designGroup: string;
     reload: string;
     toTop: string;
     copyLink: string;
@@ -23,7 +33,7 @@ export interface LocaleMessages {
     /** 语言分组的组标题。 */
     languageGroup: string;
   };
-  /** 右键菜单运行时 Toast 文案（src/lib/context-menu.ts 消费）。 */
+  /** 菜单运行时 Toast 文案（src/lib/context-menu.ts 消费）。 */
   toast: {
     copied: string;
     copyFailed: string;
@@ -69,6 +79,11 @@ const zhCN: LocaleMessages = {
   contextMenu: {
     currentDesignTag: '当前设计',
     menuLabel: '快捷操作',
+    launcherLabel: '打开快捷操作菜单',
+    closeLabel: '关闭菜单',
+    cancel: '取消',
+    pageGroup: '页面',
+    designGroup: '设计',
     reload: '重新加载',
     toTop: '回到页面顶部',
     copyLink: '复制当前页面链接',
@@ -117,6 +132,11 @@ const ja: LocaleMessages = {
   contextMenu: {
     currentDesignTag: '現在のデザイン',
     menuLabel: 'クイック操作',
+    launcherLabel: 'クイック操作メニューを開く',
+    closeLabel: 'メニューを閉じる',
+    cancel: 'キャンセル',
+    pageGroup: 'ページ',
+    designGroup: 'デザイン',
     reload: '再読み込み',
     toTop: 'ページ先頭へ',
     copyLink: 'このページのリンクをコピー',
@@ -165,6 +185,11 @@ const en: LocaleMessages = {
   contextMenu: {
     currentDesignTag: 'Current design',
     menuLabel: 'Quick actions',
+    launcherLabel: 'Open quick actions menu',
+    closeLabel: 'Close menu',
+    cancel: 'Cancel',
+    pageGroup: 'Page',
+    designGroup: 'Design',
     reload: 'Reload',
     toTop: 'Back to top',
     copyLink: 'Copy link to this page',

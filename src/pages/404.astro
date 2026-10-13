@@ -1,29 +1,47 @@
 ---
+/**
+ * 中性 404（SPEC §11 · ADR 0007）：noindex，GH Pages 会自动使用 dist/404.html。
+ * 共享操作菜单（context.kind = 'not-found'）在此接入：本页没有"当前主题"，
+ * 因此不渲染身份条、随机抽选不排除任何主题；语言切换指向各语言的入口页
+ * （404 不承载主题上下文，切语言后交给入口页分配）。
+ */
+import ContextMenu from '../components/ContextMenu.astro';
 import HeadMeta from '../components/HeadMeta.astro';
 import InfraStyles from '../components/InfraStyles.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
-import { loadSite, languageSwitcherData, localeDesignHref, localeHref, resolveLocale } from '../lib/site';
+import {
+  buildActionMenuConfig,
+  languageSwitcherData,
+  loadSite,
+  localeDesignHref,
+  localeHref,
+  resolveLocale,
+} from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 
-/** 中性 404（SPEC §11）：noindex，GH Pages 会自动使用 dist/404.html。 */
 const model = await loadSite();
 // 404 由托管服务器在任意路径上返回，路径本身不含语言前缀 → 按默认语言呈现，
 // 并提供各语言入口链接（不残留错误的旧路由）。
 const locale = resolveLocale(model, '');
 const m = sharedMessagesFor(locale.code);
+const heading = `404 · ${m.notFound.titleSuffix} · ${locale.title}`;
+const contextMenu = buildActionMenuConfig(model, locale, { kind: 'not-found' }, heading);
 ---
 
 <!doctype html>
 <html lang={locale.code}>
   <head>
-    <HeadMeta title={`404 · ${m.notFound.titleSuffix} · ${locale.title}`} robots="noindex, follow" />
+    <HeadMeta title={heading} robots="noindex, follow" />
   </head>
   <body>
     <InfraStyles />
     <main class="infra">
       <h1>404</h1>
       <p>{m.notFound.body}</p>
-      <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path))} />
+      <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。 -->
+      <noscript>
+        <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path))} />
+      </noscript>
       <ul class="infra-list">
         <li>
           <a class="infra-card" href={localeHref(locale.path)}>
@@ -46,5 +64,6 @@ const m = sharedMessagesFor(locale.code);
         </li>
       </ul>
     </main>
+    <ContextMenu config={contextMenu} />
   </body>
 </html>

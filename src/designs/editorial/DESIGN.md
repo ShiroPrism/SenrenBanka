@@ -213,6 +213,6 @@ components:
 - **核心字段必须渲染**：`name` / `headline` / `bio` / `links`。
 - **扩展区块取舍（编辑决定）**：渲染 `projects`（Selected Works）与 `contact`（Elsewhere 联系段）；
   **不渲染** `experience` / `skills`——杂志式"精选作品"叙事取代履历清单，这是本设计的编辑立场。
-- `<HeadMeta {...view.head} />` 必须原样引入；设计切换由**全站共享的桌面右键快捷操作菜单**承担（`manualSwitch` 时接入 `<ContextMenu config={view.contextMenu} />`；项目级 chrome、中性外观，不属于本设计视觉系统）——本页不再保留任何可见切换入口。
+- `<HeadMeta {...view.head} />` 必须原样引入；页面操作、主题切换与语言切换由**全站共享操作菜单**承担（无条件接入 `<ContextMenu config={view.contextMenu} />`；桌面为右键 / `Shift+F10` 打开的浮层菜单，移动端为悬浮球打开的底部动作面板——项目级 chrome、中性外观，不属于本设计视觉系统）——本页不保留任何可见切换入口。
 - 字体：`--font-fraunces`（astro.config 的 fonts 注册 + 页面 `<Font>` + 本文件 `@theme inline`）；
   CSS 入口保持 `@import "tailwindcss" source(none); @source "./";`。

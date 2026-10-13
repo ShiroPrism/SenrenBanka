@@ -171,7 +171,7 @@ components:
 ### Screen Chrome
 - **Style:** 三个描边圆点 + `guest@senrenbanka: ~` 标题条；底边 1px Deep Phosphor。
 - **Role:** 让页面像一台"正在运行的机器"，而不是一条聊天记录。
-- **Entry:** 无入口（v0.5.0 起切换改由全站共享的桌面右键快捷操作菜单承担，chrome 条仅保留圆点 + 标题）。
+- **Entry:** 无入口（v0.5.0 起切换改由全站共享操作菜单承担，桌面右键 / 移动端悬浮球，chrome 条仅保留圆点 + 标题）。
 
 ### Footer
 - 52 字符 ASCII 横线（Dim 档）→ 结束语（v0.5.0 移除切换设计入口行）。
@@ -203,6 +203,6 @@ components:
 - **核心字段必须渲染**：`name` / `headline` / `bio` / `links`。
 - **扩展区块取舍**：终端可以承载密集输出，四个扩展区块全部渲染——
   `experience`（`cat experience.log`）、`projects`（`ls -l projects/`）、`skills`（`cat skills.txt`）、`contact`（`mail`）。
-- `<HeadMeta {...view.head} />` 必须原样引入；设计切换由**全站共享的桌面右键快捷操作菜单**承担（`manualSwitch` 时接入 `<ContextMenu config={view.contextMenu} />`）——本页不再保留 `[switch design]` 等可见入口。菜单是项目级 chrome（中性外观，不属于终端页面自身的视觉系统）：其 lucide 功能图标**不受**本规范「Don't 引入 SVG 图标」的约束；该约束仍适用于终端页面自身的标记语言。
+- `<HeadMeta {...view.head} />` 必须原样引入；页面操作、主题切换与语言切换由**全站共享操作菜单**承担（无条件接入 `<ContextMenu config={view.contextMenu} />`，桌面右键 / 移动端悬浮球）——本页不保留 `[switch design]` 等可见入口。菜单是项目级 chrome（中性外观，不属于终端页面自身的视觉系统）：其 lucide 功能图标**不受**本规范「Don't 引入 SVG 图标」的约束；该约束仍适用于终端页面自身的标记语言。
 - 字体：`--font-jetbrains-mono`（astro.config 的 fonts 注册 + 页面 `<Font>`（不 preload，子集过多）+ 本文件 `@theme inline`）；
   CSS 入口保持 `@import "tailwindcss" source(none); @source "./";`。

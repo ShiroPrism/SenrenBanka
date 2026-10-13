@@ -37,7 +37,7 @@
 | Q1 | 设计规范来源与合规 | 只用两类来源：**厂商官方发布**（official-design-md 索引）+ **自产**（impeccable `document --seed`）。第三方整理源（awesome-design-md）需逐份核实许可并标注"非官方"后可选入库；designmd.co **排除**（许可无法核实）。 |
 | Q2 | 个人资料字段契约 | 核心必填（name/headline/bio/links，所有设计必须呈现）+ 可选字段（avatar/location）+ 扩展区块词汇表（projects/experience/skills/contact，**设计自行取舍**）。设计可加装饰性文案，不得虚构个人信息。 |
 | Q3 | 切换与持久化语义 | 随机：存储有效→用存储；过期→重随机（排除上次）并写新窗口；手选=写入+重开窗口。固定：手选**永久记住**，无则用 default；手选在随机模式下**按 cacheHours 过期**。直达 URL 不写存储。 |
-| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **桌面端统一右键快捷操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；移动端不提供菜单与任何替代入口）。`manualSwitch:false` → 菜单不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
+| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **全站共享操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；v0.10.0 起扩展到移动端：桌面右键 / `Shift+F10`，移动端悬浮球 → 底部动作面板，见 ADR 0007）。菜单本体与语言切换在任何配置下都渲染；`manualSwitch:false` → 主题组不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
 | Q5 | 根路径与 SEO | 根路径=零外部请求的轻量路由页（内联脚本 `location.replace`；noscript meta refresh→default+链接列表）。索引策略 **B**：仅 default 设计可索引，其余 `noindex,follow`。 |
 | Q6 | 设计注册机制 | **目录自动发现**：`src/designs/<id>/` 存在即注册，元数据在同目录 `design.json`；站点配置不含设计清单；`_` 前缀目录忽略；构建期校验强制完整性。`enabled:false` = 页面仍构建可直达，退出随机池与切换页。 |
 | Q7 | 部署基线 | `site`/`base` 由环境变量驱动（`SITE_URL` / `BASE_PATH`，默认 `/`）；GH workflow 自动注入本仓库上下文 → fork 后零配置；CF Pages/Vercel 用面板配置（文档说明）。一期验证深度：本地构建 + 文档核实，不做实际部署。 |
@@ -80,7 +80,7 @@
 11. **CSS 聚合陷阱**【已核实，本机实测】：多页共享模块中任何对设计 `Page.astro` / `style.css` 的**动态导入边**（如非 eager `import.meta.glob('./*/Page.astro')`）会把**所有**设计的 CSS 聚合进**每个**引用页面的 `<link>`（实测：根页曾携带全部设计 CSS）。对策：设计路由改用 `injectRoute`（每页只带自己的 CSS），注册表的存在性检查改用 `node:fs`。
 12. **内容层条目 id 会归一化**【已核实，本机实测】：glob loader 把 `site.config.yaml` 的条目 id 归一化为 `siteconfig`；按"单文件集合取唯一条目"处理（`getCollection()[0]`）。
 13. **字体 npm provider**【已核实，本机实测】：`fontProviders.npm({ remote:false })` + `options.package` 可从已安装 `@fontsource-variable/*` 包在构建期自托管（无需联网）；族名必须与包内 CSS 完全一致（`Fraunces Variable`、`JetBrains Mono Variable`）；传 `weights` 范围过滤会解析不到（省略即可，variable 包自带完整字重轴）。**修订（2026-10-11）**：provider 即使 `remote: false`，仍把字体文件 URL 重写为 jsdelivr 地址——构建期 fallback metrics（Capsize）会拉取主字体二进制并按 URL 哈希缓存至 `node_modules/.astro/fonts/`；**新增字体族的首次构建需可访问 jsdelivr**（本机 Node fetch 走代理需 `NODE_USE_ENV_PROXY=1`），缓存就绪后离线构建成立（2026-10-11 新字体族接入实测）。
-14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia('(hover: hover) and (pointer: fine)')` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`，**触屏设备零菜单 JS 请求**（375×812 触控仿真实测 chunk 请求数 0）。
+14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`。门控为「桌面鼠标 **或** 触控能力任一命中」（v0.10.0 修订：移动端也需要该运行时）。
 15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
 16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。
 
@@ -275,7 +275,7 @@ design:
 
 **文案分两层**：
 
-- **共享文案**（`src/i18n/messages.ts`）：项目 chrome 与基础设施页——右键快捷操作菜单（含运行时 Toast）、切换页、根入口页、404、语言选择器。必须覆盖全部语言，缺键在**构建期**报错。
+- **共享文案**（`src/i18n/messages.ts`）：项目 chrome 与基础设施页——共享操作菜单（桌面浮层 / 移动面板 / 悬浮球，含运行时 Toast）、切换页、根入口页、404、语言选择器。必须覆盖全部语言，缺键在**构建期**报错。
 - **主题文案**（`src/designs/<id>/messages.ts`）：每套设计自身的界面文案，按该设计的视觉语言撰写，**不得**把 8 套设计统一翻译成相同表述。
 
 翻译原则：个人简介、headline、项目描述、工作职责、链接标签、联系说明等**需要本地化的内容要翻译**；项目名称、公司名称、URL、邮箱、技术标记等**专有名词不机械翻译**。承担设计意图而非信息传达的文本（终端命令、ASCII 装饰、刻意的双语标识、法律署名）保持原样，且**必须在该设计 `messages.ts` 的注释中写明理由**。
@@ -335,7 +335,7 @@ src/designs/<id>/
   - `profile`（类型化个人资料，头像已解析为可直接渲染的图片引用）；
   - `site`（title/description/lang/manualSwitch）；
   - `design`（自身元信息：id、displayName、isDefault）；
-  - `contextMenu`（桌面右键菜单的构建期配置：当前设计与强调色 / 目标池 / `switcherHref` / 模式与存储语义；`manualSwitch:false` 时 `enabled:false`，见 §7.5）；
+  - `contextMenu`（共享操作菜单的构建期配置：`context` 页面上下文判别联合 `design` / `switcher` / `not-found` / 目标池 / `switcherHref` / 模式与存储语义 / `designActionsEnabled`；v0.10.0 起**没有** `enabled` 字段——菜单本体恒渲染，见 §7.5）；
   - URL helper（`src/lib/urls.ts`，所有内部链接必须经它拼接 base 前缀）。
 - 每套设计 **必须**在 `<head>` 引入共享组件 `HeadMeta.astro`（title/description/canonical/robots/favicon；robots 规则见 §7.4）。
 
@@ -363,7 +363,7 @@ src/designs/<id>/
 | 直达某设计固定 URL（分享链接） | 正常渲染该设计 | **不写存储** |
 | 启用设计仅 1 套 | 永远进入它（排除逻辑自然失效） | 随机模式照常写窗口 |
 
-表注（v0.5.0）："手动切换"同时指 `/designs/` 切换页点击与右键菜单「随机一个设计」；后者额外**必须排除当前设计**（保证点击后确实发生切换），`avoidRepeat` 时再尽量排除上次，随后按上表写存储并**直接导航目标设计的固定 URL**（不回根路径）；页面加载 / 打开菜单本身不写存储。
+表注（v0.5.0，v0.10.0 补充页面上下文）："手动切换"同时指 `/designs/` 切换页点击与菜单内「随机一个设计」；后者在**主题页**额外**必须排除当前设计**（保证点击后确实发生切换），在**切换页 / 404** 没有当前主题、走全池；`avoidRepeat` 时再尽量排除上次，随后按上表写存储并**直接导航目标设计的固定 URL**（不回根路径）；页面加载 / 打开菜单本身不写存储。
 
 局限（如实文档化）：清除浏览器存储后无法保证"连续两次不重复"；存储按浏览器而非访客身份；跨设备不共享。
 
@@ -407,13 +407,15 @@ src/designs/<id>/
 
 - `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出全部启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
-- **设计切换入口 = 桌面端共享右键快捷操作菜单**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
+- **页面级操作入口 = 全站共享操作菜单（Action menu）**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
   - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。
   - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。**菜单标签与 Toast 文案均随当前语言**（由 `view.messages` 注入，组件本身不判断语言）。
   - **随机语义**：复用 §7.1 存储键与格式、`withBase()` URL；必须排除当前设计；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后导航目标固定 URL；直达固定 URL 不覆盖既有选择。**所有目标保留当前语言前缀**。
   - **键盘 / a11y**：`role="menu"` + `role="menuitem"`（icon `aria-hidden`，文本承担可访问名）；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困焦点；菜单随视口边界自动翻转收敛，点击外部 / 滚动 / 尺寸变化 / 再次右键关闭；打开时不锁定页面滚动。
-  - **移动端（项目决策）**：不提供页面内切换菜单、不模拟长按、**不加载菜单运行时**（能力门控 + 动态 import，见 §3.2-14）；设计页不保留任何移动端替代入口。
-- **语言切换入口 = 右键菜单内的语言二级菜单**（`ContextMenu.astro`，v0.9.0 修订）：各设计页**不再**单独渲染可见的语言切换器，**也不需要**在自己的 `style.css` 中排版语言切换——这消除了 8 套设计重复排版的成本（实测移除约 9.4 KB 重复 CSS）。
+  - **移动端（v0.10.0 修订 · ADR 0007）**：提供**悬浮球**入口，点击打开**底部动作面板**；**不模拟长按**、不拦截原生长按与文本选择。面板与桌面菜单**共享同一份文案 / 动作语义 / 状态语义**，但**动作清单按端裁剪**（见下条），容器形态与语言项呈现也分叉（桌面二级子菜单、移动平铺）。移动形态按 **action sheet** 契约实现（`bar` / `body` / `foot` 三段）：面板内自带**头部 ✕ 按钮**与**底部取消条**，遮罩仅作兜底——触屏没有指针、没有 hover、没有 Esc，关闭控件必须出现在面板内部。
+  - **动作清单按端裁剪**（`ContextMenu.astro` 的 `desktopActions` 5 项 / `sheetActions` **2 项**），判断标准只有一条：**移动端浏览器 / 系统是否已原生提供这个动作**。移动端只保留「复制链接 / 分享」——原生长按地址栏拷贝要 2~3 步且把用户带离页面，`navigator.share()` 唤起的正是系统原生分享表单，二者都属于**缩短路径**而非重复。删除三项：**重新加载**（移动浏览器页首内置下拉刷新，且本项目上一轮刚主动把这条通道还给浏览器——保留此项等于自相矛盾）、**回到页面顶部**（NNGroup：4 屏以内属 overkill；iOS 另有"点屏幕顶端回顶"原生手势）、**打印 / 保存为 PDF**（iOS Safari 16+ 完全忽略 `window.print()`，Android Chrome 默认隐藏打印入口，两端都是"点了没反应"）。
+  - **不做下拉关闭手势**：实现它需要 `touch-action: none` 抢占触屏手势，代价是**整站页面顶部的下拉刷新被一并禁用**。移动浏览器把"在页首下拉"理解为用户要求重新加载；为"少点一次 ✕"牺牲刷新能力不成立。抓手降级为纯装饰。
+- **语言切换入口 = 共享操作菜单内的语言分组**（`ContextMenu.astro`，v0.9.0 修订；v0.10.0 起桌面与移动端都可达）：各设计页**不再**单独渲染可见的语言切换器，**也不需要**在自己的 `style.css` 中排版语言切换——这消除了 8 套设计重复排版的成本（实测移除约 9.4 KB 重复 CSS）。
   - **二级菜单（而非平铺）是硬性要求**：语言项全部收进子菜单，**主菜单高度与语言数量无关**。平铺方案在语言数增多时菜单会长到超出视口而不可用；实测注入 18 种语言后主菜单仍为 8 项 / 374px（与 3 语言时完全一致），子菜单自身 `max-height: min(60vh, 26rem)` + 滚动。
   - **触发**：`语言` 行（`[data-cm-submenu-trigger]`，带 `ChevronRight` 箭头与 `aria-haspopup` / `aria-expanded` / `aria-controls`）。鼠标**悬浮**（120ms 延迟开启、180–220ms 延迟关闭，避免横扫误触与斜向移动误关）、**点击**（切换开合）或键盘 **→** 均可打开。
   - **定位**：默认贴触发项右侧；右侧放不下则**翻转到左侧**；纵向对齐触发项并收敛进视口。
@@ -421,8 +423,8 @@ src/designs/<id>/
   - 目标保持**同一主题 id**（`languageItems(model, locale, design.id)`），不重置随机有效期。
   - **键盘**：`↑↓` 在当前层级内移动；移到触发项时展开子菜单、移开时收起；`→` 进入子菜单并聚焦首项，`←` 返回触发项；`Esc` 关闭整个菜单。导航层级由 `activeMenu` 跟踪——**子菜单的项不会混进主菜单的 `↑↓` 序列**（这是二级菜单最易出错的地方）。
   - **`manualSwitch` 只控制主题切换项**（随机 / 切换设计…，由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这两项不渲染，**但菜单与语言分组照常渲染**——语言切换不受 `manualSwitch` 影响。
-  - **已知取舍：触屏不可达**。右键菜单受 `(hover: hover) and (pointer: fine)` 门控，触屏设备不加载运行时，因此移动端没有语言切换入口（2026-10-12 由项目所有者裁定：接受此代价以消除 8 套设计的重复排版）。若后续需要移动端语言切换，应另加页面内入口而非改回逐设计排版。
-  - **基础设施页例外**：切换页与 404 不使用右键菜单，保留独立的可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）。
+  - **触屏不可达的取舍已于 v0.10.0 解除**。上一版预留的路径是"另加页面内入口而非改回逐设计排版"，v0.10.0 据此新增共享悬浮球与底部动作面板；移动端面板的静态 DOM 同时充当无 JavaScript 时的语言切换回退。
+  - **基础设施页例外**：切换页与 404 也接入共享菜单（v0.10.0 起），其可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）**包进 `<noscript>`**——运行时只有菜单一个可见入口，无 JS 时靠它回退。设计页不渲染它。
 - `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、菜单不渲染（设计页零菜单标记 / 零脚本）；各设计固定 URL 与语言切换不受影响。
 
 ### 7.6 主题偏好与语言的耦合【v0.9.0】
@@ -521,16 +523,16 @@ SenrenBanka/
 │  │  ├─ site.ts                     #   loadSite()：多语言资料合并与交叉校验、resolveLocale()、类型化数据接口
 │  │  ├─ urls.ts                     #   base 前缀 helper（所有内部链接必须经此拼接）+ 路径分段解析
 │  │  ├─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（随机/缓存/手选）
-│  │  └─ context-menu.ts             #   桌面右键菜单运行时（动作/键盘/随机语义；无 CSS 边）
+│  │  └─ context-menu.ts             #   共享操作菜单运行时（形态判定/动作/键盘/随机语义；无 CSS 边）
 │  ├─ i18n/
-│  │  ├─ messages.ts                # 共享文案（右键菜单/切换页/入口/404/语言选择器；纯数据，无 CSS 边）
+│  │  ├─ messages.ts                # 共享文案（操作菜单/切换页/入口/404/语言选择器；纯数据，无 CSS 边）
 │  │  └─ resolve.ts                 # 按语言取共享文案的唯一入口（缺键构建期报错，不静默回退）
 │  ├─ components/
 │  │  ├─ HeadMeta.astro              # 共享 <head> 元信息（title/description/canonical/robots/hreflang）
-│  │  ├─ LanguageSwitcher.astro      # 语言切换入口（可见静态链接、不依赖 JS；仅结构，样式由各设计提供）
+│  │  ├─ LanguageSwitcher.astro      # 语言切换的无 JS 回退（可见静态链接；仅基础设施页在 <noscript> 内使用，样式由 InfraStyles 提供）
 │  │  ├─ InfraStyles.astro           # 基础设施页共享极简样式（<style is:inline>，保证根页零外部请求）
 │  │  ├─ Reveal.astro                # 滚动显现装配（内联 boot + 共享 IO 触发，不 import CSS）
-│  │  └─ ContextMenu.astro           # 共享右键快捷操作菜单（中性 chrome；is:inline 样式 + 按需加载运行时）
+│  │  └─ ContextMenu.astro           # 共享操作菜单（中性 chrome；桌面浮层 + 移动面板 + 悬浮球三件；is:inline 样式 + 按需加载运行时）
 │  ├─ designs/                       # ★ 设计库：目录存在即注册（自动发现 + 构建期强校验）
 │  │  ├─ registry.ts                 #   glob design.json + Page.astro → 校验 → 派生注册表
 │  │  ├─ editorial/                  # ── 单套设计示例（自产：编辑杂志风）──
@@ -592,8 +594,8 @@ SenrenBanka/
 1. 干净克隆后 `npm ci && npm run build` 成功；`astro check` 无错误；注册表校验对缺失文件/缺 provenance 能明确报错（人为制造一次验证）。
 2. `dist/` 含：`index.html`（根路由）、`designs/index.html`（切换页）、每套设计 `dist/<id>/index.html`；`manualSwitch:false` 构建时无 `designs/`。
 3. CSS 隔离抽查：任取两套设计，A 的 CSS 不含 B 独有工具类（对 dist 产物 grep 抽查一次）。
-4. 随机行为矩阵（人工，dev 或 preview）：首访落地启用池内；窗口内刷新一致；过期（手改 `expiresAt`）后重随机且不与上次重复；仅 1 套启用时永远它；禁用设计从不出现在随机结果与切换页；右键菜单「随机一个设计」遵循同一矩阵且**永不落在当前设计**（仅 1 套启用时该项禁用、点击不产生任何导航）。
-5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用，菜单随机写入 `expiresAt:null`）；`manualSwitch:false` 无菜单、无可见切换入口、`/designs/` 返回 404。
+4. 随机行为矩阵（人工，dev 或 preview）：首访落地启用池内；窗口内刷新一致；过期（手改 `expiresAt`）后重随机且不与上次重复；仅 1 套启用时永远它；禁用设计从不出现在随机结果与切换页；菜单「随机一个设计」在**主题页**遵循同一矩阵且**永不落在当前设计**，在切换页 / 404 走全池（不排除任何主题）；仅 1 套启用时该项禁用、点击不产生任何导航。
+5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用，菜单随机写入 `expiresAt:null`）；`manualSwitch:false` 时菜单本体与语言分组仍渲染（无可见主题切换入口）、`/designs/` 返回 404。
 6. 手选持久化：随机模式手选后窗口内保持、过期后恢复轮换；直达设计 URL 不改变后续根路径归属。
 7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
@@ -602,7 +604,7 @@ SenrenBanka/
 11. 每套设计含 `DESIGN.md` + `design.json`（provenance 完整）；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本与切换页链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。
-14. 右键快捷菜单（`manualSwitch:true`）：四套设计桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下无菜单且不请求菜单运行时；四套设计均不存在旧的可见 `Switch design` 入口。
+14. 共享操作菜单（`manualSwitch:true`）：八套设计桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「切换设计…」项；八套设计均不存在旧的可见 `Switch design` 入口。
 
 ---
 
@@ -618,7 +620,7 @@ SenrenBanka/
 | GH Pages 同域存储冲突 | 存储键含 base 命名空间 + 可覆盖 |
 | GH 子路径与根路径产物差异 | env 驱动 site/base + `urls.ts` 统一前缀 + 验收第 12 条 |
 | 近重复内容 SEO | 仅 default 可索引（§7.4） |
-| 设计质量不可自动校验的部分（右键菜单接入、随机语义等） | `design-page-verify` 流程与通过标准（一期接受） |
+| 设计质量不可自动校验的部分（共享操作菜单接入、随机语义等） | `design-page-verify` 流程与通过标准（一期接受）；菜单跨设计 / 跨输入环境的实测矩阵见 `docs/verification/action-menu.md` |
 
 ---
 

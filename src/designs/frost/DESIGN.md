@@ -247,6 +247,6 @@ components:
 
 - **核心字段必须渲染**：`name`（Large Title h1 + 导航 Headline）/ `headline`（Title 2）/ `bio`（Body 档 secondary）/ `links`（Fill 胶囊组，含映射标记）。
 - **扩展区块取舍**：四类全取——`projects`（分组卡 · 行 + 芯片）、`experience`（分组卡 · 行）、`skills`（芯片组）、`contact`（大幅面卡 + Filled 胶囊）。
-- `<HeadMeta {...view.head} />` 必须原样引入；设计切换由**全站共享的桌面右键快捷操作菜单**承担（`manualSwitch` 时接入 `<ContextMenu config={view.contextMenu} />`；项目级 chrome、中性外观，不属于本设计视觉系统）——本页不再保留任何可见切换入口。
+- `<HeadMeta {...view.head} />` 必须原样引入；页面操作、主题切换与语言切换由**全站共享操作菜单**承担（无条件接入 `<ContextMenu config={view.contextMenu} />`；桌面为右键 / `Shift+F10` 打开的浮层菜单，移动端为悬浮球打开的底部动作面板——项目级 chrome、中性外观，不属于本设计视觉系统）——本页不保留任何可见切换入口。
 - 字体：`--font-inter`（astro.config 的 fonts 注册 + 页面 `<Font>` + 本文件 `@theme inline`）；CSS 入口保持 `@import "tailwindcss" source(none); @source "./";`。
 - 本设计为**第三方分析复刻**（`third-party-analysis`）：规范与实现均为自有产出，不含上游文本 / 素材 / 品牌资产；来源定性见 `design.json` 与 `docs/designs/frost/ADAPTATION.md`。

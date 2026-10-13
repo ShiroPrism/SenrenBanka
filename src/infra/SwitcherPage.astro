@@ -1,33 +1,46 @@
 ---
+/**
+ * 切换页 `/<locale>/designs`（SPEC §7.5 · ADR 0007）：共享基础设施页，中性极简，不模仿任何一套设计。
+ * 由 astro.config 在 manualSwitch 开启时注入各语言路由（关闭时不构建 → 404）。
+ * 点击 = 写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
+ * 设计说明取自各设计 messages 的本地化描述，而非单一语言的 design.json.description。
+ * 共享操作菜单（context.kind = 'switcher'）在本页同样接入：页面上没有"当前主题"，
+ * 因此不渲染身份条、随机抽选不排除任何主题、「切换设计…」是重复动作故不渲染；
+ * 语言切换保持"同一切换页"的上下文（→ /{目标语言}/designs/）。
+ */
+import ContextMenu from '../components/ContextMenu.astro';
 import HeadMeta from '../components/HeadMeta.astro';
 import InfraStyles from '../components/InfraStyles.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
 import { renderSwitcherScript } from '../lib/router-script';
-import { loadSite, languageSwitcherData, localeDesignHref, localeHref, resolveLocale } from '../lib/site';
+import {
+  buildActionMenuConfig,
+  languageSwitcherData,
+  loadSite,
+  localeDesignHref,
+  localeHref,
+  resolveLocale,
+} from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 import { designDescriptions, type DescriptionLocale } from '../designs/descriptions';
 
-/**
- * 切换页 `/<locale>/designs`（SPEC §7.5）：共享基础设施页，中性极简，不模仿任何一套设计。
- * 由 astro.config 在 manualSwitch 开启时注入各语言路由（关闭时不构建 → 404）。
- * 点击 = 写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
- * 设计说明取自各设计 messages 的本地化描述，而非单一语言的 design.json.description。
- */
 const model = await loadSite();
 const locale = resolveLocale(model, Astro.url.pathname);
 const m = sharedMessagesFor(locale.code);
+const heading = `${m.switcher.heading} · ${locale.title}`;
 const script = renderSwitcherScript({
   mode: model.mode,
   cacheHours: model.random.cacheHours,
   storageKey: model.storageKey,
 });
+const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, heading);
 ---
 
 <!doctype html>
 <html lang={locale.code}>
   <head>
     <HeadMeta
-      title={`${m.switcher.heading} · ${locale.title}`}
+      title={heading}
       description={m.switcher.description}
       robots="noindex, follow"
     />
@@ -37,7 +50,11 @@ const script = renderSwitcherScript({
     <main class="infra">
       <h1>{m.switcher.heading}</h1>
       <p>{m.switcher.body.replace('{count}', String(model.enabled.length))}</p>
-      <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path, 'designs/'))} />
+      <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。
+           JS 开启时本段完全不渲染，运行时不会出现两个可见的语言入口。 -->
+      <noscript>
+        <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path, 'designs/'))} />
+      </noscript>
       <ul class="infra-list">
         {
           model.enabled.map((design) => (
@@ -63,6 +80,7 @@ const script = renderSwitcherScript({
         }
       </ul>
     </main>
+    <ContextMenu config={contextMenu} />
     <script is:inline set:html={script} />
   </body>
 </html>

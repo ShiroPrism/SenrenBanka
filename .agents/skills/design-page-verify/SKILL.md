@@ -51,16 +51,19 @@ npm run check        # 仅类型检查（可按需）
    - canonical 含 locale 前缀与 base；
    - **仅默认设计**有 `<link rel="alternate" hreflang>`（各语言互指 + `x-default`）；非默认设计该计数必须为 **0**。
 4. **文案**：抽查该页面的分区标题来自本设计 `messages.ts`（随语言变化），且**模板中无残留的用户可见字面量**。
-5. **语言切换（右键菜单的二级菜单，`.cm-lang`）**：打开右键菜单 → **悬浮「语言」行展开子菜单** → 断言 3 个 `.cm-lang` 项、**恰好 1 个** `aria-current="page"`、每个带正确 `hreflang`、目标 URL **保持同一 `<id>`**、子菜单 `aria-label` 已本地化、触发项 `aria-expanded="true"`。
-   - **主菜单高度必须与语言数量无关**（二级菜单契约）：对比「语言项平铺」时的菜单高度，确认现在恒为固定项数；子菜单限高且可滚动、完全落在视口内。
-   - **键盘**：`↑↓` 在主菜单项间循环**不得飞出菜单**（焦点不能落到 `BODY`）；移到「语言」自动展开、移开收起；`→` 进入子菜单、`←` 返回。
-   - **设计页不应再有可见的 `.lang-switch`**（基础设施页切换页 / 404 除外）。
+5. **语言切换（共享操作菜单，`.cm-lang`；桌面二级菜单 / 移动端平铺，ADR 0007）**：
+   - **桌面**：右键菜单 → 「语言」行展开子菜单 → 断言 3 个 `.cm-lang` 项、**恰好 1 个** `aria-current="page"`、每个带正确 `hreflang`、目标 URL **保持同一 `<id>`**、子菜单 `aria-label` 已本地化、触发项 `aria-expanded="true"`。
+   - **移动端**（375×812 + 触控，见步骤 5）：悬浮球点击打开底部动作面板 → 语言项**平铺**可直达，3 项 + 1 个 `aria-current`。
+   - **两种形态都合计 6 个 `.cm-lang`、2 个 `aria-current`（两份各一）**——这是 SSR 双份 DOM 的预期数量，不是重复渲染缺陷；运行时只有一份可见（另一份带 `hidden`）。
+   - **主菜单高度必须与语言数量无关**（桌面二级菜单契约）：对比「语言项平铺进主菜单」时的菜单高度，确认现在恒为固定项数；子菜单限高且可滚动、完全落在视口内。移动端平铺不受此约束（面板容器本身限高滚动）。
+   - **不得依赖 hover**：子菜单必须能由**点击 / `→` / Enter** 打开。键盘：`↑↓` 在当前层级内循环**不得飞出菜单**（焦点不能落到 `BODY`）；移到「语言」自动展开、移开收起；`→` 进入子菜单后 `↑↓` 必须在**子菜单内**循环、`←` 归还焦点到触发项。
+   - **设计页不应有可见的 `.lang-switch`**（基础设施页切换页 / 404 也有——它们包在 `<noscript>` 内，JS 开启时不渲染）。
 6. **语言/主题正交性**：实点击一次语言链接，断言落点为 `/{目标locale}/{原id}/`（切换语言不改主题）。
 7. **配置开关**（临时改 `site.config.yaml` 后构建，**测完必须恢复**）：
    - `manualSwitch: false` → 各语言切换页与旧 `/designs/` **不构建**、菜单内**主题切换项不渲染**（`data-cm-action="random"` / `switch` 计数为 0），**但菜单与语言分组照常渲染**（`.cm-lang` 仍为 3 项）；
    - `mode: fixed` → 入口页仍落到默认设计且带 locale 前缀。
 8. **旧路径兼容**：`/<id>/` 与 `/designs/` 存在 meta refresh → 默认语言版本，且带 `canonical` + `noindex, follow`。
-9. **触控命中区**：375px + 触控下 `.lang-switch-link` 命中高度 ≥44px（各设计 `style.css` 的 `@media (pointer: coarse)`）。
+9. **触控命中区**：375px + 触控下**悬浮球 ≥44×44px**、**移动面板内每项 ≥44px**（项目 chrome，见 `action-menu.md` 实测：球 52×52、项 50px、关闭 ✕ 44px、取消条 48px、抓手条 56px）；设计自身的 `.lang-switch-link` 不再存在（语言切换已移入菜单）。
 
 ## 步骤 3 · impeccable 检测器
 
@@ -102,7 +105,15 @@ npm run check        # 仅类型检查（可按需）
 在 375×812 + 触控仿真下断言并回报**实测值**（用 `browser_run_code_unsafe` 直接建上下文，或派子代理）：
 
 - `matchMedia('(pointer: coarse)').matches === true`（触控媒体查询真实生效）；
-- 无横向滚动：`document.documentElement.scrollWidth <= innerWidth + 1`；
+- 无横向滚动：`document.documentElement.scrollWidth <= innerWidth + 1`；**固定定位元素（悬浮球 / 面板）也不得引入横向溢出**；
+- **共享操作菜单（ADR 0007，必做）**：
+  - 悬浮球可见且命中 ≥44×44px、有 `aria-label` / `aria-haspopup` / `aria-expanded` / `aria-controls`；**点击图标本身**（不是按钮空白）也能打开面板 —— 这一条专门抓 `target === 元素` 类型的判定 bug（点在 `<svg>` 上时 `event.target` 不是按钮）。
+  - 点击后底部面板打开、**`rect.bottom === innerHeight`**（定位正确）、面板内各项命中 ≥44px、语言项平铺可达。
+  - **面板内必须有可见关闭控件**（ADR 0007）：头部 ✕ 按钮（`.cm-sheet-close`，44px）与底部取消条（`.cm-sheet-cancel`，≥48px）**两条必须存在**；**点遮罩不能是唯一关闭路径**。逐条点一遍，每条都应隐藏面板 + 隐藏遮罩 + 解锁背景滚动 + `aria-expanded` 回 `false`。
+    > 下拉关闭手势已于v0.10.0 移除（它需要 `touch-action: none`，会让页面顶部的下拉刷新一并失效）。**验证时不要断言存在下拉手势，反而应断言全页 `getComputedStyle(el).touchAction !== 'none'`**（这是下拉刷新可用的充分条件）。
+  - **动作清单按端裁剪**（ADR 0007）：移动面板的 `[data-cm-action]` 只能是 `copy` / `share`（+ 条件项 `random` / `switch`）——**不得出现** `reload` / `top` / `print`，这三项移动端已有原生能力（下拉刷新 / 点顶端回顶 / iOS 无打印）。而**桌面浮层必须仍含全部 5 项**，裁剪精确落在移动容器内才算通过。
+  - 打开时 `<html>` 计算样式 `overflow: hidden` 且面板 `overscroll-behavior: contain`；`Esc` 关闭并解锁，再次点击悬浮球可重开。
+  - **测量面板位置前必须等入场动画播完**（面板入场起点为 `translateY(14%)`，未播完时 `getBoundingClientRect()` 返回动画中途位置，会被误判为 `position: fixed` 失效）。
 - 触控命中高度：主要链接/按钮 `getBoundingClientRect().height >= 40`（目标 44）；
 - 折行/对齐：关键列表、导航、工具条在窄屏的换行与左缘对齐；
 - 截图 ≥1 张，并给出路径；**fullPage 截图前先滚动到底触发全部 `[data-reveal]` 显现**，否则未触发区块在图面呈隐藏态（2026-10-11 实测口径，属记录方法问题而非页面缺陷）。
@@ -127,7 +138,7 @@ npm run check        # 仅类型检查（可按需）
 
 ## 步骤 7 · 记录与收口
 
-- **记录收口（`docs/verification/`）**：更新 `docs/verification/<id>.md` 的当前完整验证状态（改动内容 + 实测证据 + 未测项声明）；重复验证**改写**本文件，不追加历史快照（历史由 Git 保留）。共享机制改动更新 `docs/verification/shared.md`。
+- **记录收口（`docs/verification/`）**：更新 `docs/verification/<id>.md` 的当前完整验证状态（改动内容 + 实测证据 + 未测项声明）；重复验证**改写**本文件，不追加历史快照（历史由 Git 保留）。共享机制改动更新 `docs/verification/shared.md`；**共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的跨设计 / 跨输入环境 / 跨配置实测矩阵更新 `docs/verification/action-menu.md`**（ADR 0007 起独立成文）。
 - **例外与适配的归属**：自撰设计（自产 / 复刻）——新 token、有意保留的检测器信号（格式：信号名 + 日期 + 理由）写入该 `DESIGN.md`；厂商来源设计（快照 / 汇编，规范只读、汇编为整合完成即冻结）——适配与检测器例外写入 `docs/designs/<id>/ADAPTATION.md`。
 - **版本发布**：在 `change-log/<version>.md` 保留精简结论（成果 / 修复 / 验证结论），不写调试流水账。
 - 最终状态：`npm run build` 绿 + 检测器 0 发现（或全部为已记录例外）。
@@ -145,12 +156,12 @@ npm run check        # 仅类型检查（可按需）
 
 - [ ] `npm run build` 通过（含 astro check），注册表校验无 `[senrenbanka]` 报错
 - [ ] 产物抽查：CSS 隔离、base 前缀、字体资源、核心字段全部通过
-- [ ] 多语言（步骤 2b）：24 页齐备、CSS 未按语言分裂、`lang`/`robots`/`canonical`/`hreflang` 正确、菜单二级菜单内语言项 3 个 + 1 个 `aria-current` + 键盘不飞出菜单、语言/主题正交、旧路径跳转与配置开关均符合
+- [ ] 多语言（步骤 2b）：24 页齐备、CSS 未按语言分裂、`lang`/`robots`/`canonical`/`hreflang` 正确、菜单语言项桌面与移动端均 3 项 + 各自 1 个 `aria-current` + 键盘不飞出菜单且子菜单内循环、语言/主题正交、旧路径跳转与配置开关均符合
 - [ ] 检测器 0 发现（或均已记录为例外）
 - [ ] 桌面：console 0、仅自身资源、token 实测符合 DESIGN.md
 - [ ] a11y：标题层级无跳级、每个分区有可访问名称、链接可访问名不含装饰符、装饰元素 `aria-hidden`
 - [ ] 动效（若引入 `<Reveal />`）：门控写入、首屏 animation 生效、滚动到底全部 `data-reveal-in`、**跳转滚动不留隐藏元素**、console 0（无动效设计显式跳过并注明）
 - [ ] 降级：reduced-motion / 无 JS / 无 IO / IO 抛错 四种情形下隐藏元素均为 0
-- [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常（或如实降级声明）。**注意**：语言切换在右键菜单内，触屏不提供（项目取舍），故 375px 下**不**断言语言切换可用性
+- [ ] 375px + 触控：无横向溢出、命中 ≥40px、折行正常、**悬浮球 ≥44×44px 且点击可开合底部动作面板、语言项平铺可达、面板贴视口底、背景滚动被锁**（ADR 0007）
 - [ ] 对比度达标（或记录例外）
 - [ ] `docs/verification/<id>.md`（或 `shared.md`）已更新为最新状态；例外按归属记录（自撰 `DESIGN.md` / 厂商来源 `ADAPTATION.md`）；截图留档且记录路径

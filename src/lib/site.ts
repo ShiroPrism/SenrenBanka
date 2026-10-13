@@ -3,7 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { allDesigns, enabledDesigns, type DesignEntry } from '../designs/registry';
 import { storageKeyFor } from './router-script';
 import { BASE, pathSegments, withBase } from './urls';
-import type { ContextMenuRuntimeConfig } from './context-menu';
+import type { ContextMenuRuntimeConfig, PageContext } from './context-menu';
 import { messages as sharedMessages, type LocaleMessages, type MessageLocaleCode } from '../i18n/messages';
 import { sharedMessagesFor } from '../i18n/resolve';
 
@@ -29,17 +29,16 @@ export interface LocaleEntry {
   description: string;
 }
 
-/** 桌面右键快捷操作菜单的构建期配置（SPEC §7.5；运行时见 src/lib/context-menu.ts）。 */
-export interface ContextMenuConfig extends ContextMenuRuntimeConfig {
-  /** manualSwitch 关闭时为 false：整菜单不渲染（运行时与样式也不注入）。 */
-  enabled: boolean;
-  /** 身份条展示的当前设计名。 */
-  designName: string;
-  /** 当前设计的强调色（design.json.accent，可选）——身份条圆点用，与切换页芯片同源。 */
-  accent?: string;
-  /** 当前语言的共享文案：组件静态标签 + 运行时 Toast（组件本身不判断语言）。 */
+/**
+ * 全站共享操作菜单的构建期配置（ADR 0007；运行时见 src/lib/context-menu.ts）。
+ *
+ * 菜单本体恒渲染（页面操作与语言切换在任何配置下都可达）；`designActionsEnabled`
+ * 只控制主题切换项组（随机 / 切换设计…），`manualSwitch: false` 时它为 false。
+ */
+export interface ActionMenuConfig extends ContextMenuRuntimeConfig {
+  /** 当前语言的共享文案：组件静态标签（组件本身不判断语言）。 */
   messages: LocaleMessages;
-  /** 语言切换项（已并入右键菜单）：目标 = 同一设计的其他语言版本。 */
+  /** 语言切换项：目标由 `context.kind` 决定——design 页保持同一主题，切换页保持同一切换页，404 指向语言入口。 */
   languages: LanguageSwitcherData['items'];
   /**
    * 是否渲染主题切换项（随机 / 切换设计…）。
@@ -89,8 +88,8 @@ export interface DesignView {
     /** hreflang 关联：各语言默认主题页面 + x-default（仅默认设计非空）。 */
     alternates: Array<{ hreflang: string; href: string }>;
   };
-  /** 设计切换入口：桌面右键快捷操作菜单（manualSwitch 语义见 SPEC §7.5）。 */
-  contextMenu: ContextMenuConfig;
+  /** 全站共享操作菜单（Action menu）的配置。design 页 = kind 'design'（ADR 0007）。 */
+  contextMenu: ActionMenuConfig;
 }
 
 export interface SiteModel {
@@ -242,6 +241,65 @@ export function localeHref(localePath: string, sub = ''): string {
   return withBase(suffix ? `${localePath}/${suffix}` : `${localePath}/`);
 }
 
+/**
+ * 页面上下文 → 语言切换目标（ADR 0007）。
+ * 切换语言时**保持页面上下文**：design 页进同一主题，切换页进同一切换页，404 进语言入口。
+ */
+export function actionMenuLanguageItems(
+  model: SiteModel,
+  locale: LocaleEntry,
+  context: PageContext,
+): LanguageSwitcherData['items'] {
+  return model.locales.map((entry) => ({
+    code: entry.code,
+    label: entry.label,
+    href:
+      context.kind === 'design'
+        ? localeDesignHref(entry.path, context.designId)
+        : context.kind === 'switcher'
+          ? localeHref(entry.path, 'designs/')
+          : localeHref(entry.path),
+    isCurrent: entry.code === locale.code,
+  }));
+}
+
+/**
+ * 由页面上下文派生共享操作菜单的完整配置（ADR 0007）。
+ * design 页 / 切换页 / 404 共用此函数——只有 `context` 不同，
+ * 操作数据、随机池、存储语义与文案在三种页面间完全一致。
+ */
+export function buildActionMenuConfig(
+  model: SiteModel,
+  locale: LocaleEntry,
+  context: PageContext,
+  shareTitle: string,
+): ActionMenuConfig {
+  const messages = sharedMessages[locale.code as LocaleCode];
+  return {
+    context,
+    // 主题切换目标保留当前语言前缀（SPEC §7.5）
+    switcherHref: localeHref(locale.path, 'designs/'),
+    shareTitle,
+    // 随机池 = 全部启用设计（含 design 页的自身；"排除当前"由运行时按 context 执行）
+    targets: model.enabled.map((entry) => ({
+      id: entry.id,
+      href: localeDesignHref(locale.path, entry.id),
+    })),
+    mode: model.mode,
+    cacheHours: model.random.cacheHours,
+    avoidRepeat: model.random.avoidRepeat,
+    storageKey: model.storageKey,
+    toast: messages.toast,
+    launcherLabel: messages.contextMenu.launcherLabel,
+    menuLabel: messages.contextMenu.menuLabel,
+    closeLabel: messages.contextMenu.closeLabel,
+    cancel: messages.contextMenu.cancel,
+    messages,
+    languages: actionMenuLanguageItems(model, locale, context),
+    designActionsEnabled: model.switcherEnabled,
+  };
+}
+
 /** 由 SiteModel 与某套设计派生页面数据（含 head 元信息与索引策略，SPEC §7.4）。 */
 export function buildDesignView(model: SiteModel, design: DesignEntry, locale: LocaleEntry): DesignView {
   const isDefault = design.id === model.default.id;
@@ -287,35 +345,16 @@ export function buildDesignView(model: SiteModel, design: DesignEntry, locale: L
       lang: locale.code,
       alternates,
     },
-    contextMenu: {
-      // 菜单整体随 manualSwitch 开关（既有约定不变）；菜单内的语言项是语言切换的唯一入口，
-      // 因此 manualSwitch 关闭时菜单仍会渲染，只是没有主题切换项（见 SPEC §7.5）。
-      enabled: true,
+    contextMenu: buildActionMenuConfig(model, locale, {
+      kind: 'design',
+      designId: design.id,
       designName: design.meta.displayName,
       accent: design.meta.accent,
-      currentId: design.id,
-      // 主题切换目标保留当前语言前缀（SPEC §7.5）
-      switcherHref: localeHref(locale.path, 'designs/'),
-      shareTitle: headTitle,
-      messages,
-      toast: messages.toast,
-      // 随机池 = 全部启用设计（含自身；运行时执行"排除当前"与 avoidRepeat）
-      targets: model.enabled.map((entry) => ({
-        id: entry.id,
-        href: localeDesignHref(locale.path, entry.id),
-      })),
-      mode: model.mode,
-      cacheHours: model.random.cacheHours,
-      avoidRepeat: model.random.avoidRepeat,
-      storageKey: model.storageKey,
-      // 语言切换已并入右键菜单；目标保持同一设计 id（SPEC §7.5）
-      languages: languageItems(model, locale, design.id),
-      designActionsEnabled: model.switcherEnabled,
-    },
+    }, headTitle),
   };
 }
 
-/** 语言切换项（右键菜单与基础设施页共用）：目标 = 同一设计的各语言版本。 */
+/** 语言切换项（切换页与 404 的独立 `LanguageSwitcher` 用）：目标由调用方按上下文决定。 */
 export function languageItems(
   model: SiteModel,
   locale: LocaleEntry,
