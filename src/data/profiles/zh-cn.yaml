@@ -5,11 +5,11 @@
 # 三份资料（zh-cn / ja / en）共用同一套 schema，字段契约与顺序保持一致；
 # 项目名称、组织名、URL、邮箱、技术标记等专有名词不翻译（SPEC §5.5）。
 
-name: "田所浩二 / Tadokoro Koji (野獣先輩)"
+name: "田所浩二"
 headline: "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星"
 bio: "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！"
 avatar: "TadokoroKoji.png"
-location: "Shimokitazawa, Tokyo / 東京都世田谷区下北沢"
+location: "東京都世田谷区下北沢"
 
 links:
   - label: niconico
