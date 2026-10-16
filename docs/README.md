@@ -13,6 +13,7 @@
 | `src/i18n/messages.ts` | 共享文案（chrome 与基础设施页）；`src/designs/<id>/messages.ts` | 各主题界面文案 | 界面文案新增 / 变更；**不得**在其中记录实现细节 |
 | `src/data/profiles/*.yaml` | 各语言的个人资料（共用同一套 schema） | 资料内容变更（文件名须与 `i18n.locales[].path` 对应） |
 | `docs/designs/<id>/ADAPTATION.md` | 主题**适配记录**：厂商快照偏差、实现增补、检测器例外 | 仅当存在特殊适配 / 重要例外时创建；普通主题不建空文件 |
+| `docs/fonts/selection-guide.md` | 新增主题的**字体选型流程与工具契约**（设计隐喻 → 本地候选 → 样张目检 → 许可闸门 → 生产接线与记录模板）；不含本机字体清单 | 选型流程 / 隔离规则变化 |
 | `docs/verification/<id>.md`、`shared.md`、`action-menu.md` | 各主题与共享机制的**当前完整验证状态**（含跨语言测试矩阵）。`action-menu.md` 专收共享操作菜单的跨设计 / 跨输入环境 / 跨配置实测矩阵（独立职责，ADR 0007） | 每次验证**更新**对应文件；不追加历史快照（历史由 Git 保留） |
 | `change-log/<version>.md` | 版本**成果 / 修复 / 验证结论**摘要 | 一个版本一个文件（版本号命名）；不写调试流水账 |
 | `src/designs/<id>/DESIGN.md` | 主题视觉规范、设计意图与设计层实现要求 | 自产 / 复刻规范可修订（先规范、后实现）；厂商来源（快照 / 汇编）**只读**（汇编 = 整合完成即冻结），偏差记入该主题 `ADAPTATION.md` |
@@ -24,6 +25,7 @@
 - 规则（`AGENTS.md`）→ 执行（`design-page-verify` skill）→ 状态（`docs/verification/`）→ 版本结论（`change-log/`）。
 - 多语言链路：语言清单唯一来源 `site.config.yaml` 的 `i18n.locales` → 资料 `src/data/profiles/<path>.yaml` → 共享文案 `src/i18n/messages.ts` / 主题文案 `src/designs/<id>/messages.ts` → 路由 `astro.config.mjs` 的 `injectRoute` → 决策 `docs/adr/0006-multilingual-static-routing.md`。
 - 操作入口链路：`AGENTS.md`「页面级操作入口」节（规则）→ `ContextMenu.astro` + `context-menu.ts`（唯一实现）→ `docs/verification/action-menu.md`（实测）→ 决策 `docs/adr/0007-action-menu-site-wide-with-touch-launcher.md`（取代 `0004` 的决定 2 与被否决项 2，并修订 `0003` 决定 4）。
+- 字体链路：`AGENTS.md`「字体」节（规则）→ `docs/fonts/selection-guide.md`（流程与工具契约）→ 本地工作台 `.local-fonts/`（目录联接字体库 / 扫描清单 / 样张工具，均不入库）→ 生产注册在 `astro.config.mjs` 的 `fonts`；决策见 `docs/adr/0008-local-font-library-isolation.md`。
 - 决策（`docs/adr/`）被 `AGENTS.md` / `DESIGN.md` / `ADAPTATION.md` 引用；主题适配互引 ADR 与 change-log。
 - **检测器规则分层**：通用规则在 skill 步骤 3；主题特有例外——自产 → 该设计 `DESIGN.md`；厂商 → 该主题 `ADAPTATION.md`。
 - 历史：`SPEC.md §18` 曾承载逐次实施记录（v0.1.0–v0.5.2），2026-10-11 迁移至上述归属；此前全文见 Git 历史。

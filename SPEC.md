@@ -448,7 +448,7 @@ src/designs/<id>/
 2. **动态类名禁止**（实测不可靠）；确需安全列表时用 `@source inline("…")`。
 3. **原生 CSS 自由使用**（同文件或设计私有文件）；不为强行使用工具类牺牲设计还原度——复杂动画、伪元素、独特装饰、非标准布局优先原生 CSS。
 4. 共享组件（`HeadMeta` 等）原则上**保持零 Tailwind 类**，避免把共享目录拖进每个设计的扫描范围。
-5. **字体**：在 `astro.config` 的 `fonts` 注册（每新增设计同步注册其字体，注意：配置项是项目级的，唯一的中央登记点）；页面 `<Font cssVariable preload?>`；`@theme inline` 注册进 Tailwind。provider 以"构建期自托管、运行时零第三方请求"为目标（NPM/Fontsource 二选一，按网络可及性在实施时定）；回退栈须含系统中文字体（示例资料含中文用于验证）。【待实施验证】
+5. **字体**：在 `astro.config` 的 `fonts` 注册（每新增设计同步注册其字体，注意：配置项是项目级的，唯一的中央登记点）；页面 `<Font cssVariable preload?>`；`@theme inline` 注册进 Tailwind。provider 以"构建期自托管、运行时零第三方请求"为目标（NPM/Fontsource 二选一，按网络可及性在实施时定）；回退栈须含系统中文字体（示例资料含中文用于验证）。【待实施验证】新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，决策见 `docs/adr/0008-local-font-library-isolation.md`）。
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
 
@@ -560,10 +560,11 @@ SenrenBanka/
 ├─ AGENTS.md                         # 项目级实现约定（编码 Agent 必读的强制规则）
 ├─ LICENSE                           # MIT
 ├─ change-log/                       # 版本记录（一个版本一个文件；成果 / 修复 / 验证结论）
-├─ docs/                             # 文档索引 / ADR / 主题适配 / 验证状态（见 docs/README.md）
+├─ docs/                             # 文档索引 / ADR / 主题适配 / 字体选型 / 验证状态（见 docs/README.md）
 │  ├─ README.md                      #   文档职责索引与维护规则
 │  ├─ adr/                           #   长期技术决策（一事一文件）
 │  ├─ designs/<id>/ADAPTATION.md     #   主题适配记录（仅确有适配 / 例外时创建）
+│  ├─ fonts/selection-guide.md       #   字体选型流程（本地字体库仅发现 / 预览，不入库、不进构建）
 │  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
 ├─ SPEC.md                           # 本规格（唯一契约文档）

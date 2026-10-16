@@ -54,7 +54,7 @@
 
    （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）
 4. 必须接入共享操作菜单（`<ContextMenu config={view.contextMenu} />`，放于 `<body>` 末尾，**无条件**渲染）；**不得**再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口
-5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind
+5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind；**新增主题的字体选型必须先走 `docs/fonts/selection-guide.md` 流程（先隐喻、后样张目检、过许可闸门），见「字体（Typography & Fonts）」节**
 6. `design.json` 的 `source`：非自产（`official-vendor` / `official-docs-derived` / `third-party-analysis`）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`（汇编为逐来源许可合集）
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
 8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；语言切换由共享操作菜单承担，设计页**不渲染** `<LanguageSwitcher />`（它是基础设施页的无 JS 回退，见下节）
@@ -172,6 +172,17 @@
 - 自定义光标必须提供标准 CSS 回退，并限制在适合桌面鼠标的环境使用（`(hover: hover) and (pointer: fine)`）；不得影响触屏浏览、文本选择、可访问性或正常点击。
 - 不得用跟随鼠标的 JavaScript 特效替代普通 CSS 光标，除非该效果是明确的设计需求且经过性能与交互评估。
 - 不论使用图片还是光标素材，都必须遵循对应设计的视觉规范，并在新增设计验证中检查移动端、构建产物和许可记录。
+
+## 字体（Typography & Fonts）
+
+- **选型顺序（强制）**：新增主题必须先确定**设计隐喻与信息结构**（标题 / 正文 / 数字·技术标记的角色划分），再到本地字体库发现候选、经**真实文件样张目检**、过**许可闸门**后接入生产。**不得**按字体名关键词或审美形容词直接指定字体；**不得**跳过样张目检（名称含 `CJK` / `Japanese` 等词不代表实际覆盖）。完整流程与工具见 `docs/fonts/selection-guide.md`。
+- **本地字体库（本机工作台）**：唯一入口 `.local-fonts/library/`（Windows 目录联接），唯一扫描工具 `.local-fonts/tools/scan-fonts.mjs`；扫描清单、样张工具与候选记录**只存 `.local-fonts/`**（已被 `.gitignore` 的 `.*/` 规则排除，**勿重复添加规则**），**不得**写入公开文档。
+- **在线候选（补充通道）**：本地库不能满足设计意图时，可从不限于 Google Fonts 的开源来源补充候选——**先核验官方许可（OFL 注意 RFN）、再下载**，存 `.local-fonts/online-candidates/`（许可文件同目录），用同一扫描器与样张工具（第二实例）验证；清单见 `.local-fonts/online-font-candidates.json`。未核验许可**不得下载、不得预览、不得进入生产**；不得因站名含 Free / Open / Fonts 假定可再分发；CJK 优先子集 / 分片分发，禁止为少数字符引入超大字体。
+- **本地 ≠ 生产（硬隔离）**：`.local-fonts/` 与 `F:\Fonts` 等本机路径**不得**被 `astro.config.mjs` / `src/` / `public/` 引用；字体库文件**不得**进入 `dist/`；扫描 / 预览工具**不得**引入新依赖（深解析复用 Astro 自带的 `fontkitten` / `fontace`）。
+- **许可闸门**：只有**确认允许网站嵌入与再分发**的字体才能进入正式字体资源管线（字体内嵌许可字段与 `fsType` 嵌入位只作线索，必须人工核实；未核实 = 不可用，只能停留在本地候选）。需要保留声明的字体随该设计附 `SOURCE-LICENSE.txt`。
+- **记录（强制）**：每次选型的六项记录（隐喻 → 角色分配 → 取舍理由 → 简中 / 日 / 英实际覆盖与回退 → 字重 / 可变轴 / 体积 / 许可 → 缺失回退顺序）写入：自产与复刻 → 该设计 `DESIGN.md`；厂商来源 → 该主题 `ADAPTATION.md`（`DESIGN.md` 只读）。
+- **生产接线（现状不变）**：`astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。
+- 字体不能替代对布局、信息架构与交互的独立设计；不得为显得专业机械增加字体数量。
 
 ## 无障碍与响应式（Accessibility & Responsive）
 
