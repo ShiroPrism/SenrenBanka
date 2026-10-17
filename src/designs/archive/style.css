@@ -1,0 +1,673 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-archive-display: var(--font-sorts-mill-goudy);
+  --font-archive-record: var(--font-courier-prime);
+}
+
+/* ---------- 调色板（全部量值登记在 DESIGN.md） ---------- */
+
+:root {
+  --ar-back: #2b211a; /* 深胡桃木桌面 */
+  --ar-back-rise: #3a2c21; /* 桌面受光档 */
+  --ar-back-deep: #1a120d; /* 抽屉内影 */
+  --ar-paper: #eee4cf; /* 马尼拉卡纸 */
+  --ar-paper-2: #e6dbc2; /* 卡纸下缘 / 凸片 */
+  --ar-ink: #2b241a; /* 打字墨 */
+  --ar-dim: #6b5e4a; /* 淡墨（次级信息） */
+  --ar-line: #cfc3a9; /* 印刷横线 / 引导线 */
+  --ar-stamp: #8a3a2f; /* 唯一彩色：图章与类目编号 */
+}
+
+html {
+  background: var(--ar-back-deep);
+  scrollbar-color: var(--ar-dim) var(--ar-back-deep);
+}
+
+.ar {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(
+    130% 100% at 50% -15%,
+    var(--ar-back-rise) 0%,
+    var(--ar-back) 58%,
+    var(--ar-back-deep) 100%
+  );
+  color: var(--ar-ink);
+  font-family:
+    var(--font-archive-record), "Courier New", var(--font-zhuque), "Songti SC", "SimSun", monospace;
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  display: grid;
+  place-items: start center;
+  padding: clamp(1.25rem, 5vw, 3.25rem) clamp(0.75rem, 4vw, 2rem) clamp(2.5rem, 7vw, 4.5rem);
+}
+
+/* ---------- 抽屉：木框 + 内腔 ---------- */
+
+.ar-desk {
+  width: min(44rem, 100%);
+}
+
+.ar-drawer {
+  padding: 0.55rem;
+  border-radius: 4px;
+  background: linear-gradient(
+    180deg,
+    var(--ar-back-rise) 0%,
+    var(--ar-back) 42%,
+    var(--ar-back-deep) 100%
+  );
+  box-shadow: 0 32px 64px -34px var(--ar-back-deep);
+}
+
+.ar-cavity {
+  position: relative;
+  border-radius: 2px;
+  padding: clamp(2.9rem, 7vw, 4.2rem) clamp(1rem, 5vw, 2.4rem) clamp(1.8rem, 4vw, 2.6rem);
+  background: linear-gradient(
+    180deg,
+    var(--ar-back-deep) 0%,
+    color-mix(in srgb, var(--ar-back-deep) 82%, var(--ar-back)) 100%
+  );
+  box-shadow:
+    inset 0 14px 24px color-mix(in srgb, var(--ar-back-deep) 92%, transparent),
+    inset 0 -10px 20px color-mix(in srgb, var(--ar-back-deep) 80%, transparent);
+}
+
+/* 内腔两侧的阴影收边：卡片不是浮在网格里，而是立进抽屉 */
+.ar-cavity::before,
+.ar-cavity::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.9rem;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ar-back-deep) 80%, transparent),
+    transparent
+  );
+}
+
+.ar-cavity::before {
+  left: 0;
+}
+
+.ar-cavity::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.ar-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 索引卡 ---------- */
+
+.ar-card {
+  position: relative;
+  padding: 2rem 1.55rem 2.4rem;
+  border-radius: 2px;
+  background-color: var(--ar-paper);
+  background-image:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 1.6rem,
+      color-mix(in srgb, var(--ar-line) 42%, transparent) 1.6rem calc(1.6rem + 1px)
+    ),
+    linear-gradient(180deg, var(--ar-paper) 0%, var(--ar-paper) 64%, var(--ar-paper-2) 100%);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--ar-paper) 65%, var(--ar-line)),
+    0 22px 30px -24px var(--ar-back-deep);
+  transform: rotate(var(--ar-rot, 0deg));
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out;
+}
+
+.ar-card + .ar-card {
+  margin-top: 2.35rem;
+}
+
+/* 叠放而不是网格：相邻卡片交替 ±0.25deg，像被手推进抽屉的卡列 */
+.ar-card:nth-child(odd) {
+  --ar-rot: -0.25deg;
+}
+
+.ar-card:nth-child(even) {
+  --ar-rot: 0.25deg;
+}
+
+/* 卡底打孔：一排 5px 的暗孔，露出抽屉 */
+.ar-card::after {
+  content: "";
+  position: absolute;
+  right: 1.55rem;
+  bottom: 0.62rem;
+  left: 1.55rem;
+  height: 0.5rem;
+  pointer-events: none;
+  opacity: 0.55;
+  background-image: radial-gradient(
+    circle at 0.25rem 50%,
+    var(--ar-back-deep) 0 0.2rem,
+    transparent 0.21rem
+  );
+  background-size: 2.5rem 100%;
+  background-repeat: repeat-x;
+}
+
+/* ---------- 凸出的类目签（h2 就在签上） ---------- */
+
+.ar-tab {
+  position: absolute;
+  top: -1.5rem;
+  left: 1.15rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9ch;
+  padding: 0.36rem 0.85rem 0.3rem;
+  border: 1px solid color-mix(in srgb, var(--ar-line) 82%, var(--ar-dim));
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ar-paper-2) 96%, var(--ar-paper)) 0%,
+    var(--ar-paper-2) 100%
+  );
+}
+
+.ar-tab-title {
+  margin: 0;
+  font-family:
+    var(--font-archive-record), "Courier New", var(--font-zhuque), "Songti SC", "SimSun", monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ar-tab-no {
+  font-family:
+    var(--font-archive-record), "Courier New", var(--font-zhuque), "Songti SC", "SimSun", monospace;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  color: var(--ar-stamp);
+}
+
+/* ---------- 卡头 ---------- */
+
+.ar-head {
+  position: relative;
+}
+
+.ar-brand {
+  margin: 0 0 0.9rem;
+  padding-right: 4rem; /* 给右上角铅笔架位号留位 */
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.ar-name {
+  margin: 0 0 0.4rem;
+  font-family:
+    var(--font-archive-display), Georgia, var(--font-zhuque), "Songti SC", "SimSun", serif;
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.ar-headline {
+  margin: 0;
+  max-width: 48ch;
+  font-family:
+    var(--font-archive-display), Georgia, var(--font-zhuque), "Songti SC", "SimSun", serif;
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* 中日文副标题不用合成斜体：仿宋保持正体，斜体只属于拉丁声部 */
+:lang(zh-CN) .ar-headline,
+:lang(ja) .ar-headline {
+  font-style: normal;
+}
+
+.ar-loc {
+  margin: 0.85rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.ar-field {
+  display: inline-block;
+  margin-right: 1ch;
+  color: var(--ar-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ar-head-foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.ar-callno {
+  margin: 0;
+  color: var(--ar-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+}
+
+.ar-pencil {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.1rem;
+  transform: rotate(-8deg);
+  color: var(--ar-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  opacity: 0.55;
+}
+
+/* 图章：全页唯一彩色；落章见 motion */
+.ar-stamp {
+  flex: none;
+  transform: rotate(-7deg);
+  opacity: 0.9;
+  padding: 0.38rem 0.55rem;
+  border: 2px solid var(--ar-stamp);
+  border-radius: 2px;
+  color: var(--ar-stamp);
+  font-family:
+    var(--font-archive-record), "Courier New", var(--font-zhuque), "Songti SC", "SimSun", monospace;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- 卡面正文 ---------- */
+
+.ar-bio {
+  margin: 0;
+  max-width: 56ch;
+}
+
+.ar-dim {
+  color: var(--ar-dim);
+}
+
+.ar-entries,
+.ar-projects,
+.ar-logs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 索引行：编号 + 标签 + 点引导 + URL，同一基线拉平 */
+.ar-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75ch;
+}
+
+.ar-entry + .ar-entry {
+  margin-top: 0.15rem;
+}
+
+.ar-entry-no {
+  flex: none;
+  color: var(--ar-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+.ar-dots {
+  align-self: center;
+  flex: 1;
+  min-width: 2ch;
+  border-top: 2px dotted var(--ar-line);
+}
+
+.ar-url {
+  display: inline-block;
+  max-width: 42%;
+  overflow: hidden;
+  vertical-align: baseline;
+  color: var(--ar-dim);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ar-project + .ar-project,
+.ar-log + .ar-log {
+  margin-top: 1rem;
+}
+
+.ar-project-title,
+.ar-log-head {
+  margin: 0;
+}
+
+.ar-note {
+  margin: 0.2rem 0 0;
+  max-width: 58ch;
+  color: var(--ar-dim);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.ar-tags {
+  margin: 0.25rem 0 0;
+  color: var(--ar-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ar-tags-label {
+  letter-spacing: 0.16em;
+}
+
+.ar-period {
+  margin-right: 0.6ch;
+  color: var(--ar-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.ar-role {
+  color: var(--ar-dim);
+}
+
+.ar-skills {
+  margin: 0;
+}
+
+/* ---------- 借阅（contact + 合计） ---------- */
+
+.ar-total {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin: 0.15rem 0 0.65rem;
+}
+
+.ar-total-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.ar-total-num {
+  font-family:
+    var(--font-archive-display), Georgia, var(--font-zhuque), "Songti SC", "SimSun", serif;
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.ar-total-unit {
+  color: var(--ar-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.ar-contact {
+  margin: 0.2rem 0 0;
+}
+
+.ar-mailto {
+  word-break: break-all;
+}
+
+/* ---------- 页脚：抽屉前沿的著录签 ---------- */
+
+.ar-card.ar-foot {
+  margin-top: 2.6rem;
+  padding: 1.35rem 1.55rem 1.45rem;
+  text-align: center;
+  background-image: linear-gradient(180deg, var(--ar-paper) 0%, var(--ar-paper-2) 100%);
+  --ar-rot: 0deg;
+}
+
+.ar-foot::after {
+  display: none;
+}
+
+.ar-foot-title {
+  margin: 0 0 0.7rem;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* 借阅日期虚线戳：装饰语气，不进无障碍树 */
+.ar-due {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8ch;
+  margin: 0 0 0.85rem;
+  padding: 0.28rem 0.6rem;
+  border: 1px dashed var(--ar-line);
+  transform: rotate(-1.5deg);
+  color: var(--ar-dim);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ar-due-rule {
+  width: 5.5rem;
+  border-bottom: 1px dashed var(--ar-line);
+}
+
+.ar-thanks {
+  margin: 0.45rem 0 0;
+  font-family:
+    var(--font-archive-display), Georgia, var(--font-zhuque), "Songti SC", "SimSun", serif;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.ar-drawer-line {
+  margin: 0.35rem 0 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+}
+
+.ar-sample {
+  margin: 0.7rem 0 0;
+  color: var(--ar-dim);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+}
+
+/* ---------- 链接与浏览器表面 ---------- */
+
+.ar-link {
+  color: var(--ar-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ar-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ar-link:hover {
+    background: var(--ar-ink);
+    color: var(--ar-paper);
+    text-decoration: none;
+  }
+
+  /* 卡被抽出来一点：转正 + 抬起，仍是同一条叠放轴 */
+  .ar-card:hover,
+  .ar-card:focus-within {
+    transform: rotate(0deg) translateY(-0.2rem);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--ar-paper) 65%, var(--ar-line)),
+      0 30px 36px -26px var(--ar-back-deep);
+  }
+}
+
+@media (pointer: coarse) {
+  .ar-link {
+    padding-block: 0.5rem;
+  }
+}
+
+.ar a:focus-visible {
+  outline: 2px solid var(--ar-ink);
+  outline-offset: 3px;
+}
+
+.ar ::selection {
+  background: var(--ar-stamp);
+  color: var(--ar-paper);
+}
+
+/* ---------- motion：唯一的作者时刻 ----------
+   卡片从抽屉里被抽出（60ms 步进，translateY + 短 ease-out），图章最后落下。
+   动完即静止：卡片是档案，不是持续播放的界面。
+   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-ready] .ar-card:not([data-reveal-in]) {
+    opacity: 0;
+    transform: translateY(1.1rem) rotate(var(--ar-rot, 0deg));
+  }
+
+  html[data-reveal-ready] .ar-card[data-reveal-in] {
+    animation: ar-rise 380ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+
+  html[data-reveal-ready] .ar-card-head[data-reveal-in] .ar-stamp {
+    animation: ar-stamp 220ms cubic-bezier(0.3, 0.7, 0.4, 1) backwards;
+    animation-delay: 820ms;
+  }
+}
+
+@keyframes ar-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.1rem) rotate(var(--ar-rot, 0deg));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(var(--ar-rot, 0deg));
+  }
+}
+
+@keyframes ar-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-1deg) scale(1.4);
+  }
+  to {
+    opacity: 0.9;
+    transform: rotate(-7deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ar-card {
+    transition: none;
+  }
+
+  .ar-card:hover,
+  .ar-card:focus-within {
+    transform: rotate(var(--ar-rot, 0deg));
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--ar-paper) 65%, var(--ar-line)),
+      0 22px 30px -24px var(--ar-back-deep);
+  }
+}
+
+/* ---------- 移动端：单列，旋转取消，签变成顶部条 ---------- */
+
+@media (max-width: 640px) {
+  .ar-drawer {
+    padding: 0.35rem;
+  }
+
+  .ar-cavity {
+    padding: 2.6rem 0.7rem 1.6rem;
+  }
+
+  .ar-stack .ar-card {
+    --ar-rot: 0deg;
+    padding: 1.85rem 1.05rem 2.15rem;
+  }
+
+  .ar-card + .ar-card {
+    margin-top: 2.2rem;
+  }
+
+  .ar-tab {
+    top: -1.45rem;
+    right: 0;
+    left: 0;
+    padding: 0.32rem 1.05rem 0.36rem;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  .ar-tab-title {
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+  }
+
+  .ar-tab-no {
+    font-size: 0.625rem;
+  }
+
+  .ar-name {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
+
+  .ar-brand {
+    padding-right: 3rem;
+  }
+
+  .ar-headline {
+    font-size: 1rem;
+  }
+
+  .ar-head-foot {
+    gap: 0.75rem;
+  }
+
+  .ar-stamp {
+    padding: 0.3rem 0.42rem;
+    letter-spacing: 0.2em;
+  }
+
+  .ar-url,
+  .ar-dots {
+    display: none;
+  }
+
+  .ar-card.ar-foot {
+    margin-top: 2.3rem;
+    padding: 1.2rem 1.05rem 1.3rem;
+  }
+}

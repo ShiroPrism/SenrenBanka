@@ -1,0 +1,701 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-poster-display: var(--font-league-gothic);
+  --font-poster-mark: var(--font-blackout);
+  --font-poster-text: var(--font-prociono);
+}
+
+/* ==========================================================================
+   poster — 丝网印刷海报
+   两色油墨（ink + flare）、一张纸（paper / paper-2）、一条淡墨（muted）。
+   所有分隔都是"印"的：粗规线 6–10px、裁切角线 1px、套准标记（细线圆 + 十字）。
+   ========================================================================== */
+
+/* ---------- 纸与看片灯 ---------- */
+
+/* 视口滚动条属于根元素——纸暗色轨道 + 淡墨滑块（色值与下方令牌相同） */
+html:has(.ps) {
+  color-scheme: light;
+  scrollbar-color: #5f5a4d #e7dfcc;
+}
+
+.ps {
+  --ps-paper: #f1ebdc;
+  --ps-paper-2: #e7dfcc;
+  --ps-ink: #111110;
+  --ps-flare: #ff4d1f; /* 唯一彩色：套准圆、悬停下划线、选区与焦点底 */
+  --ps-muted: #5f5a4d; /* 次级文本 / 细线，纸面对比 5.9:1 */
+
+  --ps-pad: clamp(1.6rem, 4.4vw, 3.25rem); /* 纸边：报头与栏目的内边距 */
+  --ps-gutter: clamp(1rem, 2.6vw, 2.25rem); /* 栏间距（栏间粗规线落在其中线上） */
+
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(0.75rem, 3vw, 2.5rem) clamp(0.5rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3.5rem);
+  background: var(--ps-paper-2);
+  color: var(--ps-ink);
+  font-family: var(--font-poster-text), var(--font-zhuque), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* 块级舞台 + 自动外边距：纸宽 min(60rem, 100%) 永远相对视口解析（grid 的 auto 列会被
+   max-content 撑破，是移动端横向溢出的经典来源）。 */
+.ps-stage {
+  display: block;
+}
+
+.ps-sheet {
+  position: relative;
+  width: min(60rem, 100%);
+  margin-inline: auto;
+  padding: var(--ps-pad);
+  background: var(--ps-paper);
+  box-shadow: 0 18px 44px rgba(17, 17, 16, 0.22);
+}
+
+/* ---------- 印刷定位装置（纯装饰） ---------- */
+
+.ps-crop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ps-crop-mark {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.ps-crop-mark--tl {
+  top: 0.35rem;
+  left: 0.35rem;
+  border-top: 1px solid var(--ps-ink);
+  border-left: 1px solid var(--ps-ink);
+}
+
+.ps-crop-mark--tr {
+  top: 0.35rem;
+  right: 0.35rem;
+  border-top: 1px solid var(--ps-ink);
+  border-right: 1px solid var(--ps-ink);
+}
+
+.ps-crop-mark--bl {
+  bottom: 0.35rem;
+  left: 0.35rem;
+  border-bottom: 1px solid var(--ps-ink);
+  border-left: 1px solid var(--ps-ink);
+}
+
+.ps-crop-mark--br {
+  bottom: 0.35rem;
+  right: 0.35rem;
+  border-bottom: 1px solid var(--ps-ink);
+  border-right: 1px solid var(--ps-ink);
+}
+
+/* 套准标记 = 细线圆 + 十字（十字伸出圆外，像印版的定位靶） */
+.ps-reg {
+  position: absolute;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1px solid var(--ps-ink);
+  border-radius: 50%;
+}
+
+.ps-reg::before,
+.ps-reg::after {
+  content: "";
+  position: absolute;
+  background: var(--ps-ink);
+}
+
+.ps-reg::before {
+  left: 50%;
+  top: -0.4rem;
+  bottom: -0.4rem;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.ps-reg::after {
+  top: 50%;
+  left: -0.4rem;
+  right: -0.4rem;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.ps-reg--top {
+  top: 0.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ps-reg--bottom {
+  bottom: 0.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ps-reg--left {
+  top: 50%;
+  left: 0.55rem;
+  transform: translateY(-50%);
+}
+
+.ps-reg--right {
+  top: 50%;
+  right: 0.55rem;
+  transform: translateY(-50%);
+}
+
+/* ---------- 报头 ---------- */
+
+.ps-masthead {
+  position: relative;
+}
+
+/* 巨幅窄体标题：League Gothic 的 wdth 轴压到 82%；中文自动落到 Zhuque（同一声部的"方正"版本） */
+.ps-name {
+  margin: 0;
+  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun",
+    sans-serif;
+  font-stretch: 82%;
+  font-size: clamp(2.6rem, 11vw, 6rem);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.ps-masthead-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.9rem 1.9rem;
+  margin-top: clamp(1rem, 2.4vw, 1.6rem);
+}
+
+.ps-headline {
+  flex: 1 1 22rem;
+  max-width: 40ch;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+.ps-imprint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 1.2rem;
+  margin: 0;
+  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", sans-serif;
+  font-stretch: 90%;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+/* 半调网点：全页唯一一小块"印刷材质"（径向点阵），荧光橙油墨 */
+.ps-halftone {
+  flex: 0 0 auto;
+  width: 5.5rem;
+  height: 3rem;
+  background-image: radial-gradient(var(--ps-flare) 0.9px, transparent 1px);
+  background-size: 6px 6px;
+  mix-blend-mode: multiply;
+}
+
+/* 报头下方的粗规线：10px，向两侧出血到纸边 */
+.ps-rule {
+  display: block;
+  height: 10px;
+  margin: clamp(1.2rem, 3vw, 2rem) calc(var(--ps-pad) * -1) 0;
+  background: var(--ps-ink);
+  transform-origin: left center;
+}
+
+/* ---------- 12 栏网格 ---------- */
+
+.ps-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--ps-gutter);
+  row-gap: clamp(1.9rem, 4vw, 3rem);
+  margin-top: clamp(1.6rem, 4vw, 2.5rem);
+}
+
+.ps-sec {
+  position: relative;
+  min-width: 0;
+}
+
+.ps-sec--7 {
+  grid-column: span 7;
+}
+
+.ps-sec--5 {
+  grid-column: span 5;
+}
+
+/* 分区上方的粗规线（6px）——随滚动画出，见 motion 一节 */
+.ps-sec::before {
+  content: "";
+  display: block;
+  height: 6px;
+  margin-bottom: 1rem;
+  background: var(--ps-ink);
+  transform-origin: left center;
+}
+
+/* 每行两栏之间的竖规线：落在栏间距的中线上 */
+.ps-sec--rule::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--ps-gutter) / -2 - 3px);
+  width: 6px;
+  background: var(--ps-ink);
+}
+
+/* 分区标题：镂空拉丁字（Blackout 2AM）+ 本地语言名 */
+.ps-sec-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.8rem;
+  margin: 0 0 0.7rem;
+}
+
+.ps-sec-mark {
+  font-family: var(--font-poster-mark), var(--font-poster-display), "Arial Black", sans-serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ps-sec-name {
+  font-family: var(--font-poster-text), var(--font-zhuque), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 0.9375rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ps-bio {
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* 编号：窄体数字（League Gothic），与标题同一油墨声部 */
+.ps-num {
+  flex: none;
+  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-stretch: 86%;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ps-muted);
+}
+
+/* ---------- 明细（links） ---------- */
+
+.ps-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ps-link-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding-block: 0.35rem;
+}
+
+.ps-link-row + .ps-link-row {
+  border-top: 1px solid var(--ps-muted);
+}
+
+.ps-link-url {
+  margin-left: auto;
+  max-width: 52%;
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--ps-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 订单（projects） ---------- */
+
+.ps-works {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ps-work + .ps-work {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--ps-muted);
+}
+
+.ps-work-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.ps-work-title {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+
+.ps-work-desc {
+  margin: 0.3rem 0 0;
+  max-width: 44ch;
+}
+
+.ps-tags {
+  margin: 0.4rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+/* ---------- 纪录（experience） ---------- */
+
+.ps-logs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ps-log + .ps-log {
+  margin-top: 1.15rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--ps-muted);
+}
+
+.ps-log-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.8rem;
+  margin: 0;
+}
+
+.ps-log-period {
+  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", sans-serif;
+  font-stretch: 100%;
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  color: var(--ps-muted);
+}
+
+.ps-log-org {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+}
+
+.ps-log-role {
+  margin: 0.1rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--ps-muted);
+}
+
+.ps-log-desc {
+  margin: 0.3rem 0 0;
+  max-width: 52ch;
+}
+
+/* ---------- 技能（skills） ---------- */
+
+.ps-skills {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(1.0625rem, 1.8vw, 1.3125rem);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.ps-skill + .ps-skill::before {
+  content: "/";
+  margin-inline: 0.6ch;
+  color: var(--ps-muted);
+}
+
+/* ---------- 结账（contact + 合计） ---------- */
+
+.ps-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 0 0 0.8rem;
+}
+
+.ps-total-label {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+.ps-total-num {
+  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-stretch: 78%;
+  font-size: clamp(2.4rem, 5vw, 3.25rem);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+}
+
+.ps-total-unit {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  color: var(--ps-muted);
+}
+
+.ps-pay {
+  margin: 0;
+}
+
+.ps-pay-label {
+  margin-right: 0.5ch;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+.ps-mail {
+  word-break: break-all;
+}
+
+.ps-note {
+  margin: 0.7rem 0 0;
+  max-width: 40ch;
+}
+
+/* ---------- 页脚 ---------- */
+
+.ps-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.6rem;
+  margin-top: clamp(2.2rem, 5vw, 3.2rem);
+  padding-top: 1.1rem;
+}
+
+/* 页脚的粗规线：作为 flex 首行占满宽度，同样随滚动画出 */
+.ps-foot::before {
+  content: "";
+  flex: 0 0 100%;
+  height: 6px;
+  margin-bottom: 0.5rem;
+  background: var(--ps-ink);
+  transform-origin: left center;
+}
+
+.ps-imprint-line {
+  margin: 0;
+  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-stretch: 85%;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ps-sample {
+  margin: 0;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ps-muted);
+}
+
+/* ---------- 链接 ---------- */
+
+.ps-link {
+  color: var(--ps-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ps-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ps-link:hover {
+    text-decoration-color: var(--ps-flare);
+    text-decoration-thickness: 3px;
+  }
+}
+
+@media (pointer: coarse) {
+  .ps-link {
+    display: inline-block;
+    padding-block: 0.5rem;
+  }
+}
+
+.ps a:focus-visible {
+  outline: 2px solid var(--ps-ink);
+  outline-offset: 3px;
+  background: var(--ps-flare);
+}
+
+.ps ::selection {
+  background: var(--ps-flare);
+  color: var(--ps-ink);
+}
+
+/* ---------- motion ----------
+   一个作者时刻：油墨辊从左侧压过标题（clip-path 展开一次），随后粗规线画出（scaleX）。
+   压完即静止——海报是印刷品，没有持续动效（论证见 DESIGN.md）。
+   滚动显现复用共享 IntersectionObserver；隐藏态一律以 html[data-reveal-ready] 为门控
+   （契约见 AGENTS.md），且只藏"规线"这一装饰，正文永远可见。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .ps-name {
+    animation: ps-ink-roll 860ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .ps-rule {
+    animation: ps-rule-draw 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 200ms;
+  }
+
+  html[data-reveal-ready] .ps-sec[data-reveal]:not([data-reveal-in])::before,
+  html[data-reveal-ready] .ps-foot[data-reveal]:not([data-reveal-in])::before {
+    transform: scaleX(0);
+  }
+
+  html[data-reveal-ready] .ps-sec[data-reveal][data-reveal-in]::before,
+  html[data-reveal-ready] .ps-foot[data-reveal][data-reveal-in]::before {
+    animation: ps-rule-draw 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes ps-ink-roll {
+  from {
+    clip-path: inset(-14% 100% -14% 0);
+  }
+  to {
+    clip-path: inset(-14% 0 -14% 0);
+  }
+}
+
+@keyframes ps-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 880px) {
+  .ps-grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2rem;
+  }
+
+  .ps-sec--7,
+  .ps-sec--5 {
+    grid-column: auto;
+  }
+
+  .ps-sec--rule::after {
+    display: none;
+  }
+
+  /* 单栏时只保留上下两枚套准标记（左右两枚与竖规线一同退场） */
+  .ps-reg--extra {
+    display: none;
+  }
+
+  .ps-reg {
+    width: 0.65rem;
+    height: 0.65rem;
+  }
+
+  .ps-reg::before {
+    top: -0.3rem;
+    bottom: -0.3rem;
+  }
+
+  .ps-reg::after {
+    left: -0.3rem;
+    right: -0.3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .ps-halftone {
+    display: none;
+  }
+
+  .ps-link-url {
+    display: none;
+  }
+
+  .ps-masthead-foot {
+    gap: 0.6rem;
+  }
+}
+
+/* ---------- 打印：海报就该能印 ---------- */
+
+@media print {
+  .ps {
+    background: #fff;
+    padding: 0;
+  }
+
+  .ps-sheet {
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .ps-name,
+  .ps-rule,
+  .ps-sec::before,
+  .ps-foot::before {
+    animation: none !important;
+    clip-path: none !important;
+    transform: none !important;
+  }
+}

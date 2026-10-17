@@ -1,0 +1,528 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+/* fax — 复古办公室 / 传真机
+   一张刚从传真机里吐出来的传输纸。纸是主体，桌面只是背景；
+   全页只有一个彩色（红章），其余层级由墨的明度 + 字距 + 字号表达。 */
+
+@theme inline {
+  --font-fax-label: var(--font-courier-prime);
+  --font-fax-body: var(--font-tt2020-styled);
+  --font-fax-cjk: var(--font-zhuque);
+}
+
+.fx {
+  /* 桌面 */
+  --fx-back: #242220;
+  --fx-back-deep: #191715;
+  /* 纸 */
+  --fx-paper: #f2eee4;
+  --fx-paper-2: #eae4d6;
+  /* 墨 */
+  --fx-ink: #322e26;
+  --fx-dim: #6f6656;
+  --fx-line: #c9c1af;
+  /* 唯一彩色：红章 */
+  --fx-red: #9c3b31;
+  /* 纸影（非纸面色，仅用于把纸从桌面托起） */
+  --fx-shadow: rgba(0, 0, 0, 0.55);
+  /* 字面：标签走 Courier Prime，正文走磨损的 TT2020 Style D，中文落朱雀仿宋 */
+  --fx-type-label: var(--font-courier-prime), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;
+  --fx-type-body: var(--font-tt2020-styled), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;
+
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(1.75rem, 5vw, 3.5rem) clamp(0.5rem, 3vw, 2rem) clamp(2.5rem, 7vw, 5rem);
+  background:
+    radial-gradient(120% 85% at 50% -12%, var(--fx-back) 0%, var(--fx-back) 38%, var(--fx-back-deep) 100%)
+    var(--fx-back-deep);
+  color: var(--fx-ink);
+  font-family: var(--fx-type-body);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  display: grid;
+  place-items: start center;
+}
+
+/* ---------- 场景与纸张 ---------- */
+
+.fx-scene {
+  width: 100%;
+  display: grid;
+  place-items: start center;
+}
+
+/* 纸影放在外层：clip-path 走纸动画会裁掉子元素自己的投影 */
+.fx-stage {
+  width: min(48rem, 100%);
+  filter: drop-shadow(0 20px 44px var(--fx-shadow));
+}
+
+.fx-sheet {
+  position: relative;
+  padding: 2.75rem clamp(1.25rem, 4vw, 3.25rem) 2rem;
+  /* 明度衰减只在最后 12%（页脚纸边）展开：正文所在的 88% 保持 paper，
+     淡墨 dim 因此在正文可能出现的最低处仍 ≥4.57:1（数值见 DESIGN.md） */
+  background: linear-gradient(180deg, var(--fx-paper) 0%, var(--fx-paper) 88%, var(--fx-paper-2) 100%);
+  counter-reset: fx-page 1;
+}
+
+/* 走纸孔：两侧小圆点列，桌面显示、窄屏隐藏（纯装饰） */
+.fx-tractor {
+  position: absolute;
+  inset-block: 0;
+  width: 1.5rem;
+  background-image: radial-gradient(circle at 50% 50%, var(--fx-back-deep) 0 3px, transparent 3.2px);
+  background-size: 1.5rem 0.95rem;
+  background-position: 0 0.7rem;
+  background-repeat: repeat-y;
+  opacity: 0.82;
+  pointer-events: none;
+}
+
+.fx-tractor-start {
+  left: 0;
+  border-right: 1px dashed var(--fx-line);
+}
+
+.fx-tractor-end {
+  right: 0;
+  border-left: 1px dashed var(--fx-line);
+}
+
+/* ---------- 传输表头（FAX TRANSMISSION 表格） ---------- */
+
+.fx-head {
+  position: relative;
+}
+
+.fx-meta {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fx-caption {
+  padding: 0 8rem 0.7rem 0;
+  border-bottom: 3px double var(--fx-ink);
+  text-align: left;
+  font-family: var(--fx-type-label);
+  font-size: 0.9375rem;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.fx-caption-brand {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--fx-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+}
+
+.fx-meta th {
+  width: 6.5rem;
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px dashed var(--fx-line);
+  text-align: left;
+  vertical-align: top;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  line-height: 1.6;
+}
+
+.fx-meta td {
+  padding: 0.5rem 0 0.55rem;
+  border-bottom: 1px dashed var(--fx-line);
+  vertical-align: top;
+  font-family: var(--fx-type-label);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.fx-meta tr:last-child th,
+.fx-meta tr:last-child td {
+  border-bottom: 0;
+}
+
+/* 姓名是纸面上最大的一行字：交给磨损字面（不加字距，保持 TT2020 自带的不稳定基线） */
+.fx-name {
+  margin: 0 0 0.2rem;
+  font-family: var(--fx-type-body);
+  font-size: clamp(1.5rem, 4.2vw, 1.875rem);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.fx-headline {
+  margin: 0;
+  max-width: 44ch;
+  font-family: var(--fx-type-body);
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.fx-loc {
+  margin: 0.6rem 0 0;
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+}
+
+/* 红章：全页唯一彩色；落章动效见文末 motion */
+.fx-stamp {
+  position: absolute;
+  top: -0.35rem;
+  right: 0;
+  transform: rotate(-7deg);
+  opacity: 0.86;
+  padding: 0.3rem 0.5rem;
+  border: 2px solid var(--fx-red);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--fx-red);
+  color: var(--fx-red);
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  line-height: 1.2;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---------- 分区 ---------- */
+
+.fx-block {
+  margin-top: 1.75rem;
+  counter-increment: fx-page;
+}
+
+/* 段末页码：由纸面计数器生成，不占 DOM（见 DESIGN.md） */
+.fx-block::after {
+  content: "P." counter(fx-page, decimal-leading-zero);
+  display: block;
+  margin-top: 0.55rem;
+  text-align: right;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+}
+
+.fx-sec {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 0.6rem;
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+/* 标签后的虚线拉到纸边（单侧虚线，与票机的两翼夹标不同） */
+.fx-sec::after {
+  content: "";
+  flex: 1;
+  border-top: 1px dashed var(--fx-line);
+}
+
+.fx-bio {
+  margin: 0;
+  max-width: 46ch;
+}
+
+.fx-note {
+  margin: 0.25rem 0 0;
+  max-width: 48ch;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.fx-dim {
+  color: var(--fx-dim);
+}
+
+/* ---------- 明细（links） ---------- */
+
+.fx-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fx-linkrow {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-block: 0.4rem;
+}
+
+.fx-linkrow + .fx-linkrow {
+  border-top: 1px dashed var(--fx-line);
+}
+
+.fx-idx {
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+.fx-handle {
+  justify-self: end;
+  max-width: 16rem;
+  overflow: hidden;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 订单（projects） / 纪录（experience） ---------- */
+
+.fx-orders,
+.fx-logs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fx-order + .fx-order,
+.fx-log + .fx-log {
+  margin-top: 0.95rem;
+}
+
+.fx-order-head,
+.fx-log-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.fx-tags {
+  margin: 0.2rem 0 0;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+}
+
+.fx-period {
+  font-family: var(--fx-type-label);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+
+.fx-skills {
+  margin: 0;
+}
+
+/* ---------- 结账（contact + 合计） ---------- */
+
+.fx-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+
+.fx-total-label {
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* 合计的数字与页码同一套打字机数字，不做段码 */
+.fx-total-num {
+  font-family: var(--fx-type-label);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.fx-return {
+  margin: 0;
+  word-break: break-word;
+}
+
+/* ---------- 页脚 ---------- */
+
+.fx-foot {
+  margin-top: 1.75rem;
+  padding-top: 0.8rem;
+  border-top: 3px double var(--fx-ink);
+  text-align: center;
+}
+
+.fx-end {
+  margin: 0;
+  font-family: var(--fx-type-label);
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+}
+
+.fx-sample {
+  margin: 0.3rem 0 0;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+}
+
+/* ---------- 链接 ---------- */
+
+.fx-link {
+  color: var(--fx-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--fx-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* 悬停 = 二次敲击：字重不变，下划线变墨色加粗 */
+@media (hover: hover) and (pointer: fine) {
+  .fx-link:hover {
+    text-decoration-color: var(--fx-ink);
+    text-decoration-thickness: 2px;
+  }
+}
+
+@media (pointer: coarse) {
+  .fx-link {
+    padding-block: 0.55rem;
+  }
+}
+
+.fx a:focus-visible {
+  outline: 2px solid var(--fx-ink);
+  outline-offset: 3px;
+}
+
+.fx ::selection {
+  background: var(--fx-ink);
+  color: var(--fx-paper);
+}
+
+/* ---------- motion ----------
+   动效语言 = 传真机走纸：纸从上方被送出来（clip 自上而下展开 + 轻微下移），
+   红章随后落下。只播一次，做完就静止——传真件不会自己动。
+   fill-mode 一律 none：动画若未推进，元素留在自然（完全可见）态。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .fx-sheet {
+    animation: fx-feed 640ms cubic-bezier(0.2, 0.75, 0.3, 1);
+  }
+
+  /* 落章前保持起始帧（opacity 0），避免"先全显、420ms 后再消失重落"的跳帧；
+     结束帧与自然态一致，因此不需要 forwards */
+  .fx-stamp {
+    animation: fx-stamp 240ms cubic-bezier(0.2, 0.7, 0.3, 1);
+    animation-delay: 420ms;
+    animation-fill-mode: backwards;
+  }
+
+  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md） */
+  html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    transition:
+      opacity 280ms ease-out var(--d, 0ms),
+      transform 280ms ease-out var(--d, 0ms);
+  }
+}
+
+@keyframes fx-feed {
+  from {
+    clip-path: inset(0 0 92% 0);
+    transform: translateY(-0.9rem);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes fx-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-3deg) scale(1.5);
+  }
+
+  to {
+    opacity: 0.86;
+    transform: rotate(-7deg) scale(1);
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 767px) {
+  .fx-sheet {
+    padding: 2rem 1.25rem 1.5rem;
+  }
+
+  .fx-tractor {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .fx-caption {
+    padding-right: 5.5rem;
+    font-size: 0.8125rem;
+    letter-spacing: 0.14em;
+  }
+
+  .fx-meta th {
+    width: 4.25rem;
+  }
+
+  .fx-handle {
+    display: none;
+  }
+
+  .fx-linkrow {
+    grid-template-columns: 2rem minmax(0, 1fr);
+  }
+
+  .fx-stamp {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.2em;
+  }
+}
+
+/* ---------- 打印：传真件本来就该能打印 ---------- */
+
+@media print {
+  .fx {
+    display: block;
+    padding: 0;
+    background: none;
+  }
+
+  .fx-stage {
+    width: 100%;
+    filter: none;
+  }
+
+  .fx-sheet {
+    background: none;
+  }
+}

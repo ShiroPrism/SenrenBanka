@@ -1,0 +1,201 @@
+---
+/**
+ * fax：一张刚从传真机里吐出来的传输纸，摊在暗色办公桌上。
+ *
+ * 数据：`loadDesignView` 返回当前语言的资料、locale 与共享菜单配置
+ * （语言只由 `Astro.url.pathname` 统一解析，页面不自行判断）。
+ *
+ * 版式：纸张 `min(48rem, 100%)` 居中；表头是 FAX TRANSMISSION 表单
+ * （TO / FROM / DATE / PAGES + 发信地），正文六个分区，段末自动页码，
+ * 页脚 END OF TRANSMISSION。纸张两侧走纸孔列纯装饰（`aria-hidden`，窄屏隐藏）。
+ *
+ * 动效：一个作者时刻：纸从上方走纸进入（clip-path 展开）+ 红章落下，
+ * 全部在 CSS 内、由 `prefers-reduced-motion` 门控；滚动显现复用共享 IntersectionObserver。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages, type FaxMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('fax', Astro.url.pathname);
+const t: FaxMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+const pad = (value: number) => String(value).padStart(2, '0');
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+
+// 传输日期 = 构建日（这份传真真实的传输时刻，不虚构个人事实）；ISO 形式与语言无关。
+const transmitted = new Date();
+const transmitDate = `${transmitted.getUTCFullYear()}-${pad(transmitted.getUTCMonth() + 1)}-${pad(transmitted.getUTCDate())}`;
+
+// 页数 = 封面一页 + 实际渲染的内容分区数（真实计数，与段末页码同源）。
+const sectionCount =
+  1 + // 备注
+  1 + // 明细
+  (profile.projects && profile.projects.length > 0 ? 1 : 0) +
+  (profile.experience && profile.experience.length > 0 ? 1 : 0) +
+  (profile.skills && profile.skills.length > 0 ? 1 : 0) +
+  1; // 结账
+const pageCount = pad(sectionCount + 1);
+---
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* 不预加载：正文一行字就是这套的主角，swap + 打字机回退在纸面上不刺眼 */}
+    <Font cssVariable="--font-courier-prime" />
+    <Font cssVariable="--font-tt2020-styled" />
+    <Font cssVariable="--font-zhuque" />
+    <Reveal />
+  </head>
+  <body class="fx">
+    <main class="fx-scene">
+      <div class="fx-stage">
+        <article class="fx-sheet" lang={view.locale.code} aria-labelledby="fx-name">
+          <span class="fx-tractor fx-tractor-start" aria-hidden="true"></span>
+          <span class="fx-tractor fx-tractor-end" aria-hidden="true"></span>
+
+          <header class="fx-head">
+            <table class="fx-meta">
+              <caption class="fx-caption">
+                {t.masthead}
+                <span class="fx-caption-brand">{t.brand}</span>
+              </caption>
+              <tbody>
+                <tr>
+                  <th scope="row">{t.fieldTo}</th>
+                  <td>{t.toValue}</td>
+                </tr>
+                <tr>
+                  <th scope="row">{t.fieldFrom}</th>
+                  <td>
+                    <h1 class="fx-name" id="fx-name">{profile.name}</h1>
+                    <p class="fx-headline">{profile.headline}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">{t.fieldDate}</th>
+                  <td>{transmitDate}</td>
+                </tr>
+                <tr>
+                  <th scope="row">{t.fieldPages}</th>
+                  <td>{pageCount}<span class="fx-dim"> {t.pagesUnit}</span></td>
+                </tr>
+              </tbody>
+            </table>
+            {profile.location && (
+              <p class="fx-loc">
+                <span class="fx-dim">{t.originLabel}</span> {profile.location}
+              </p>
+            )}
+            <div class="fx-stamp" aria-hidden="true">{t.stamp}</div>
+          </header>
+
+          <section class="fx-block" data-reveal aria-labelledby="fx-memo">
+            <h2 class="fx-sec" id="fx-memo">{t.memoTitle}</h2>
+            <p class="fx-bio">{profile.bio}</p>
+          </section>
+
+          <section class="fx-block" data-reveal aria-labelledby="fx-items">
+            <h2 class="fx-sec" id="fx-items">{t.itemsTitle}</h2>
+            <ul class="fx-links">
+              {
+                profile.links.map((link, index) => (
+                  <li class="fx-linkrow">
+                    <span class="fx-idx" aria-hidden="true">{pad(index + 1)}</span>
+                    <a class="fx-link" href={link.url}>{link.label}</a>
+                    <span class="fx-handle" aria-hidden="true">{shortUrl(link.url)}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          {
+            profile.projects && profile.projects.length > 0 && (
+              <section class="fx-block" data-reveal aria-labelledby="fx-orders">
+                <h2 class="fx-sec" id="fx-orders">{t.ordersTitle}</h2>
+                <ol class="fx-orders">
+                  {profile.projects.map((project, index) => (
+                    <li class="fx-order">
+                      <p class="fx-order-head">
+                        <span class="fx-idx" aria-hidden="true">{pad(index + 1)}</span>
+                        {project.url ? (
+                          <a class="fx-link" href={project.url}>{project.title}</a>
+                        ) : (
+                          <span>{project.title}</span>
+                        )}
+                        {project.url && (
+                          <span class="fx-handle" aria-hidden="true">{shortUrl(project.url)}</span>
+                        )}
+                      </p>
+                      {project.description && <p class="fx-note">{project.description}</p>}
+                      {project.tags && project.tags.length > 0 && (
+                        <p class="fx-tags">{project.tags.join(' / ')}</p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )
+          }
+
+          {
+            profile.experience && profile.experience.length > 0 && (
+              <section class="fx-block" data-reveal aria-labelledby="fx-log">
+                <h2 class="fx-sec" id="fx-log">{t.logTitle}</h2>
+                <ul class="fx-logs">
+                  {profile.experience.map((item) => (
+                    <li class="fx-log">
+                      <p class="fx-log-head">
+                        <span class="fx-period">{item.period ?? '----'}</span>
+                        <span>{item.org}</span>
+                        {item.role ? <span class="fx-dim"> · {item.role}</span> : null}
+                      </p>
+                      {item.description && <p class="fx-note fx-dim">{item.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            profile.skills && profile.skills.length > 0 && (
+              <section class="fx-block" data-reveal aria-labelledby="fx-skills">
+                <h2 class="fx-sec" id="fx-skills">{t.skillsTitle}</h2>
+                <p class="fx-skills">{profile.skills.join(' / ')}</p>
+              </section>
+            )
+          }
+
+          <section class="fx-block" data-reveal aria-labelledby="fx-checkout">
+            <h2 class="fx-sec" id="fx-checkout">{t.checkoutTitle}</h2>
+            <p class="fx-total">
+              <span class="fx-total-label">{t.totalLabel}</span>
+              <span class="fx-total-num">{pad(profile.links.length)}</span>
+              <span class="fx-dim">{t.totalUnit}</span>
+            </p>
+            {profile.contact?.email ? (
+              <p class="fx-return">
+                <span class="fx-dim">{t.returnLabel}</span>{' '}
+                <a class="fx-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+              </p>
+            ) : (
+              <p class="fx-dim">{t.noMail}</p>
+            )}
+            {profile.contact?.note && <p class="fx-note">{profile.contact.note}</p>}
+          </section>
+
+          <footer class="fx-foot" data-reveal>
+            <p class="fx-end">{t.footerEnd} · P.{pageCount}</p>
+            <p class="fx-sample">{t.sampleNote}</p>
+          </footer>
+        </article>
+      </div>
+    </main>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

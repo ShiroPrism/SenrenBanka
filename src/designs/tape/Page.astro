@@ -1,0 +1,238 @@
+---
+/**
+ * tape — 一盘卡式磁带与它的 J 卡内页（拟物 / 录音设备）。
+ *
+ * 数据：`loadDesignView` 取当前语言视图（与构建期校验同源）；页面不接触文件路径、
+ * 不自行判断语言。`view.head` / `view.contextMenu` 原样交给 HeadMeta / ContextMenu。
+ *
+ * 结构：左栏 = 磁带本体（纯 CSS 几何：壳身 + 贴标 + 双卷轴窗 + 螺钉，桌面 sticky），
+ * 右栏 = J 卡（h1 手写姓名 → 六个具名分区 → 页脚物件标记）。移动端单列、壳在上。
+ *
+ * 动效：一个作者时刻（磁带落桌 + 贴标展开，纯 CSS 一次性）；滚动显现走共享
+ * IntersectionObserver（`data-reveal`，见 AGENTS.md「动效」）。卷轴只在 hover /
+ * focus-within 时缓慢转动。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('tape', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+const pad = (value: number) => String(value).padStart(2, '0');
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+const total = profile.links.length;
+/** 走带计数：本行 / 本面总数（真实数据的行位置，不是虚构时长）。 */
+const counter = (index: number) => `${pad(index + 1)}/${pad(total)}`;
+
+// 每个分区 = 一首曲目：编号在渲染时按分区实际出现顺序顺延（缺区块不留空号）。
+let trackIndex = 0;
+const track = () => `A${(trackIndex += 1)}`;
+---
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* 不预加载：手写 / 等宽 / 中文三族各自一个子集，swap + 系统回退已足够（贴标闪一下是主题的一部分） */}
+    <Font cssVariable="--font-uglytypist" />
+    <Font cssVariable="--font-league-mono" />
+    <Font cssVariable="--font-zhuque" />
+    <Reveal />
+  </head>
+  <body class="tp">
+    <main class="tp-scene" aria-label="SenrenBanka tape">
+      <div class="tp-deck">
+        <div class="tp-deck-inner">
+          {/* 磁带本体：纯装饰（姓名 / 面别 / 标记均与 J 卡重复），整块不进无障碍树 */}
+          <div class="tp-cassette" aria-hidden="true">
+            <div class="tp-shell">
+              <span class="tp-screw tp-screw-nw"></span>
+              <span class="tp-screw tp-screw-ne"></span>
+              <span class="tp-screw tp-screw-sw"></span>
+              <span class="tp-screw tp-screw-se"></span>
+
+              <div class="tp-label">
+                <span class="tp-label-strip"></span>
+                <span class="tp-label-side">
+                  <span class="tp-play"></span>
+                  {t.sideLabel}
+                </span>
+                <span class="tp-label-name">{profile.name}</span>
+                <span class="tp-label-note">{t.labelNote}</span>
+                <span class="tp-rec">
+                  <span class="tp-rec-dot"></span>REC
+                </span>
+                <span class="tp-tape-corner"></span>
+              </div>
+
+              <div class="tp-reels">
+                <span class="tp-reel">
+                  <span class="tp-spokes"><span></span><span></span><span></span></span>
+                  <span class="tp-hub"></span>
+                </span>
+                <span class="tp-reel">
+                  <span class="tp-spokes"><span></span><span></span><span></span></span>
+                  <span class="tp-hub"></span>
+                </span>
+              </div>
+
+              <span class="tp-shell-mark">C-60<br />TYPE II</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <article class="tp-card">
+        <header class="tp-head">
+          <h1 class="tp-name">{profile.name}</h1>
+          <p class="tp-headline">{profile.headline}</p>
+          {
+            profile.location && (
+              <p class="tp-where">
+                <span class="tp-where-label">{t.recAt}</span>
+                {profile.location}
+              </p>
+            )
+          }
+        </header>
+
+        <section class="tp-track" data-reveal aria-labelledby="tp-memo-title">
+          <h2 class="tp-sec" id="tp-memo-title">
+            <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+            <span class="tp-sec-name">{t.memoTitle}</span>
+            <span class="tp-sec-rule" aria-hidden="true"></span>
+            <span class="tp-sec-count" aria-hidden="true">{t.sideLabel}</span>
+          </h2>
+          <p class="tp-bio">{profile.bio}</p>
+        </section>
+
+        <section class="tp-track" data-reveal aria-labelledby="tp-tracks-title">
+          <h2 class="tp-sec" id="tp-tracks-title">
+            <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+            <span class="tp-sec-name">{t.tracksTitle}</span>
+            <span class="tp-sec-rule" aria-hidden="true"></span>
+            <span class="tp-sec-count" aria-hidden="true">{pad(total)}</span>
+          </h2>
+          <ul class="tp-tracks">
+            {
+              profile.links.map((link, index) => (
+                <li class="tp-row">
+                  <span class="tp-row-idx" aria-hidden="true">{pad(index + 1)}</span>
+                  <a class="tp-link tp-row-title" href={link.url}>{link.label}</a>
+                  <span class="tp-row-leader" aria-hidden="true"></span>
+                  <span class="tp-row-count" aria-hidden="true">{counter(index)}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="tp-track" data-reveal aria-labelledby="tp-projects-title">
+              <h2 class="tp-sec" id="tp-projects-title">
+                <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+                <span class="tp-sec-name">{t.projectsTitle}</span>
+                <span class="tp-sec-rule" aria-hidden="true"></span>
+                <span class="tp-sec-count" aria-hidden="true">{pad(profile.projects.length)}</span>
+              </h2>
+              <ol class="tp-projects">
+                {profile.projects.map((project, index) => (
+                  <li class="tp-project">
+                    <p class="tp-project-head">
+                      <span class="tp-row-idx" aria-hidden="true">{pad(index + 1)}</span>
+                      {project.url ? (
+                        <a class="tp-link tp-project-title" href={project.url}>{project.title}</a>
+                      ) : (
+                        <span class="tp-project-title">{project.title}</span>
+                      )}
+                      <span class="tp-row-leader" aria-hidden="true"></span>
+                      {project.url && <span class="tp-url" aria-hidden="true">{shortUrl(project.url)}</span>}
+                    </p>
+                    {project.description && <p class="tp-note">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <p class="tp-tags">{project.tags.join(' · ')}</p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="tp-track" data-reveal aria-labelledby="tp-log-title">
+              <h2 class="tp-sec" id="tp-log-title">
+                <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+                <span class="tp-sec-name">{t.logTitle}</span>
+                <span class="tp-sec-rule" aria-hidden="true"></span>
+                <span class="tp-sec-count" aria-hidden="true">{pad(profile.experience.length)}</span>
+              </h2>
+              <ul class="tp-logs">
+                {profile.experience.map((item) => (
+                  <li class="tp-log">
+                    <p class="tp-log-head">
+                      <span class="tp-period">{item.period ?? '----'}</span>
+                      <span class="tp-org">{item.org}</span>
+                      {item.role && <span class="tp-role">{item.role}</span>}
+                    </p>
+                    {item.description && <p class="tp-note">{item.description}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="tp-track" data-reveal aria-labelledby="tp-skills-title">
+              <h2 class="tp-sec" id="tp-skills-title">
+                <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+                <span class="tp-sec-name">{t.skillsTitle}</span>
+                <span class="tp-sec-rule" aria-hidden="true"></span>
+                <span class="tp-sec-count" aria-hidden="true">{pad(profile.skills.length)}</span>
+              </h2>
+              <p class="tp-skills">{profile.skills.join(' · ')}</p>
+            </section>
+          )
+        }
+
+        <section class="tp-track" data-reveal aria-labelledby="tp-contact-title">
+          <h2 class="tp-sec" id="tp-contact-title">
+            <span class="tp-sec-no" aria-hidden="true">{track()}</span>
+            <span class="tp-sec-name">{t.contactTitle}</span>
+            <span class="tp-sec-rule" aria-hidden="true"></span>
+            <span class="tp-sec-count" aria-hidden="true">{pad(total)}</span>
+          </h2>
+          <p class="tp-total">
+            <span class="tp-total-label">{t.totalLabel}</span>
+            <span class="tp-total-num">{total}</span>
+            <span class="tp-total-unit">{t.totalUnit}</span>
+          </p>
+          <p class="tp-mail">
+            <span class="tp-mail-label">{t.mailLabel}</span>
+            {profile.contact?.email ? (
+              <a class="tp-link tp-mailto" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+            ) : (
+              <span class="tp-dim">{t.noMail}</span>
+            )}
+          </p>
+          {profile.contact?.note && <p class="tp-note">{profile.contact.note}</p>}
+        </section>
+
+        <footer class="tp-foot" data-reveal>
+          <p class="tp-marks">C-60 · TYPE II · NR ON</p>
+          <p class="tp-side-end">{t.sideEnd}</p>
+          <p class="tp-sample">SENRENBANKA · {t.cardTag} · {t.sampleNote}</p>
+        </footer>
+      </article>
+    </main>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

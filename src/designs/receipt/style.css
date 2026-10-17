@@ -1,0 +1,460 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-receipt: var(--font-cutive-mono);
+}
+
+/* ---------- 场景与纸张 ---------- */
+
+.rc {
+  --rc-back: #2a2723;
+  --rc-back-deep: #1e1b17;
+  --rc-paper: #f6f2e8;
+  --rc-paper-2: #eee8da;
+  --rc-ink: #2b2620;
+  --rc-dim: #6d6354;
+  --rc-faint: #b3a894; /* 引导线 / 装饰虚线，非文本 */
+  --rc-line: #cfc6b4; /* 分隔虚线 */
+  --rc-red: #b3372c; /* 唯一彩色：图章 */
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(120% 90% at 50% -10%, #36312a, var(--rc-back) 62%, var(--rc-back-deep))
+    var(--rc-back-deep);
+  color: var(--rc-ink);
+  font-family: var(--font-receipt), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  display: grid;
+  place-items: start center;
+  padding: clamp(1.1rem, 4vw, 2.75rem) clamp(0.6rem, 3vw, 1.5rem) clamp(2rem, 6vw, 4rem);
+}
+
+/* 撕边由页面构建期生成的 clip-path polygon 剪出（见 Page.astro）。 */
+.rc-paper {
+  width: min(30rem, 100%);
+  background: linear-gradient(180deg, var(--rc-paper) 0%, var(--rc-paper) 55%, var(--rc-paper-2) 100%);
+  padding: 2.6rem 1.6rem 1.5rem;
+  filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.5));
+}
+
+/* ---------- 头部 ---------- */
+
+.rc-head {
+  position: relative;
+}
+
+.rc-brand {
+  padding-right: 7rem; /* 给图章留位（窄屏进一步收紧） */
+  margin: 0 0 0.9rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+}
+
+.rc-name {
+  margin: 0 0 0.3rem;
+  font-size: clamp(1.7rem, 7vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.rc-headline {
+  margin: 0;
+  max-width: 40ch;
+}
+
+.rc-addr {
+  margin: 0.35rem 0 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+/* 图章：全页唯一彩色；旋转落章见 motion */
+.rc-stamp {
+  position: absolute;
+  top: -0.3rem;
+  right: 0;
+  transform: rotate(-9deg);
+  opacity: 0.88;
+  color: var(--rc-red);
+  border: 2px solid var(--rc-red);
+  box-shadow: inset 0 0 0 1px var(--rc-red);
+  border-radius: 4px;
+  padding: 0.4rem 0.55rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.34em;
+  line-height: 1.2;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- 分栏 ---------- */
+
+.rc-block {
+  margin: 1.7rem 0 0;
+}
+
+/* 分栏标题：两翼虚线夹一枚小型主题签（装饰虚线不进无障碍树） */
+.rc-sec {
+  display: flex;
+  align-items: center;
+  gap: 0.9ch;
+  margin: 0 0 0.7rem;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.rc-sec::before,
+.rc-sec::after {
+  content: "";
+  flex: 1;
+  border-top: 1px dashed var(--rc-line);
+}
+
+.rc-bio {
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* 淡墨档：序号 / URL / 注释 / 地址等次级信息 */
+.rc-dim {
+  color: var(--rc-dim);
+}
+
+/* ---------- 明细（links） ---------- */
+
+.rc-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rc-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8ch;
+}
+
+.rc-row + .rc-row {
+  margin-top: 0.35rem;
+}
+
+.rc-idx {
+  flex: none;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+/* 点引导线：装饰，居中于行内 */
+.rc-leader {
+  align-self: center;
+  flex: 1;
+  min-width: 2ch;
+  border-top: 2px dotted var(--rc-faint);
+}
+
+.rc-url {
+  display: inline-block;
+  vertical-align: baseline;
+  max-width: 46%;
+  overflow: hidden;
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 订单（projects） / 纪录（experience） ---------- */
+
+.rc-orders,
+.rc-logs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rc-order + .rc-order,
+.rc-log + .rc-log {
+  margin-top: 0.95rem;
+}
+
+.rc-order-head,
+.rc-log-head {
+  margin: 0;
+}
+
+.rc-note {
+  margin: 0.15rem 0 0;
+  max-width: 48ch;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.rc-tags {
+  margin: 0.1rem 0 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+}
+
+.rc-tags::before {
+  content: "[ ";
+}
+
+.rc-tags::after {
+  content: " ]";
+}
+
+/* 段码数字：日期与编号走 DSEG7，中文自动回落到像素字 */
+.rc-period {
+  margin-right: 0.4ch;
+  font-family: var(--font-dseg7), var(--font-receipt), var(--font-ark-pixel), monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+}
+
+.rc-skills {
+  margin: 0;
+}
+
+/* ---------- 结账（contact） ---------- */
+
+.rc-total {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin: 0.2rem 0 0.55rem;
+}
+
+.rc-total-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.rc-total-num {
+  font-family: var(--font-dseg7), var(--font-receipt), var(--font-ark-pixel), monospace;
+  font-size: 1.9rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+}
+
+.rc-payline {
+  margin: 0.2rem 0 0;
+}
+
+.rc-mailto {
+  word-break: break-all;
+}
+
+/* ---------- 页脚 ---------- */
+
+.rc-foot {
+  margin-top: 1.9rem;
+  border-top: 1px dashed var(--rc-line);
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.rc-thanks {
+  margin: 0.2rem 0 0;
+  font-size: 0.8125rem;
+  letter-spacing: 0.24em;
+}
+
+/* 条码：装饰性条纹（有意保留的检测器信号，见 DESIGN.md） */
+.rc-barcode {
+  width: min(17rem, 88%);
+  height: 44px;
+  margin: 1.1rem auto 0.55rem;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--rc-ink) 0 2px,
+    transparent 2px 4px,
+    var(--rc-ink) 4px 5px,
+    transparent 5px 9px,
+    var(--rc-ink) 9px 12px,
+    transparent 12px 14px,
+    var(--rc-ink) 14px 15px,
+    transparent 15px 20px,
+    var(--rc-ink) 20px 21px,
+    transparent 21px 24px,
+    var(--rc-ink) 24px 28px,
+    transparent 28px 30px
+  );
+}
+
+.rc-sample {
+  margin: 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+}
+
+/* ---------- 链接 ---------- */
+
+.rc-link {
+  color: var(--rc-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rc-faint);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rc-link:hover {
+    background: var(--rc-ink);
+    color: var(--rc-paper);
+    text-decoration: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .rc-link {
+    padding-block: 0.55rem;
+  }
+}
+
+.rc a:focus-visible {
+  outline: 2px solid var(--rc-ink);
+  outline-offset: 3px;
+}
+
+.rc ::selection {
+  background: var(--rc-red);
+  color: var(--rc-paper);
+}
+
+/* ---------- motion ----------
+   动效 = 票据机的印刷过程：整行离散步进出现（steps，不做补间），图章最后落章。
+   印完即静止——小票是印刷品，没有持续动效（论证见 DESIGN.md）。
+   首屏 = 纯 CSS 自启；滚动显现 = 共享 IO 机制（见 docs/adr/0001 / 0003）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 首屏：整行按印刷顺序出现（--d 为该行出现时刻），核心内容 ≤0.4s 落定 */
+  .rc-print {
+    animation: rc-print 1ms steps(1, end) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* 图章落章：缩放下压 + 轻微回正，最后停在静态角度 */
+  .rc-stamp {
+    animation: rc-stamp 220ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+    animation-delay: 320ms;
+  }
+
+  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+     隐藏态带 :not([data-reveal-in]) 兜底；过渡声明在"揭示后仍匹配"的规则上。 */
+  html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .rc-line {
+    opacity: 0;
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] .rc-line {
+    transition: opacity 1ms steps(1, end) var(--d, 0ms);
+  }
+}
+
+@keyframes rc-print {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rc-stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-1deg) scale(1.5);
+  }
+  to {
+    opacity: 0.88;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+/* ---------- 三联（≥1024px）/ 单联（<1024px） ----------
+   三联：同一张票的三种语言副本按 i18n.locales 顺序并排；装不下时由**窗口**横向滚动
+   （body 保持块级，避免 grid 居中把左侧裁出视口）。单联：只显示当前语言一联，
+   与既有行为逐像素一致（移动端不变）。 */
+
+.rc-scene {
+  display: block;
+}
+
+.rc-ticket {
+  width: min(30rem, 100%);
+  margin-inline: auto;
+}
+
+.rc-ticket:not(.is-primary) {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .rc {
+    display: block;
+  }
+
+  .rc-scene {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    width: max-content;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .rc-ticket {
+    flex: 0 0 auto;
+    width: 30rem;
+    margin-inline: 0;
+  }
+
+  .rc-ticket:not(.is-primary) {
+    display: block;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 560px) {
+  .rc-paper {
+    padding: 2.3rem 1.1rem 1.2rem;
+  }
+
+  .rc-name {
+    font-size: clamp(1.5rem, 8vw, 1.8rem);
+  }
+
+  .rc-brand {
+    padding-right: 5.5rem;
+  }
+
+  .rc-stamp {
+    padding: 0.3rem 0.4rem;
+    letter-spacing: 0.24em;
+  }
+
+  .rc-url {
+    display: none;
+  }
+}
+
+/* ---------- 打印：小票就该能打印 ---------- */
+
+@media print {
+  .rc {
+    display: block;
+    background: #fff;
+    padding: 0;
+  }
+
+  .rc-paper {
+    width: 100%;
+    max-width: 34rem;
+    margin: 0 auto;
+    filter: none;
+    clip-path: none !important;
+  }
+}

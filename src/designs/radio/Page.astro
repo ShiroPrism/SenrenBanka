@@ -1,0 +1,247 @@
+---
+/**
+ * radio — 1970s 短波收信机正面板。
+ *
+ * 数据：`loadDesignView('radio', Astro.url.pathname)`（语言由路径统一解析，页面不自行判断）。
+ * 结构：面板头（品牌 + 指示灯）→ 刻度盘（呼号 h1 + 刻度尺 + 指针）→ 模块栅格
+ *       （备注 / 频道 / 节目 / 日志 / 技能 / 联络）→ 页脚（VU 表 + 波段铭牌）。
+ * 装饰：螺钉、刻度尺、指针、指示灯、VU 条、模块编号一律 aria-hidden；
+ *       它们只描述「一台机器」，不承载资料，可访问名由 h1 / h2 / 文本标签承担。
+ * 动效：唯一作者时刻 = 上电（指针扫到固定刻度 + 指示灯两段点亮），一次性；
+ *       滚动显现走共享 IO（页头放一次 <Reveal />），模块的错落由 style.css 的
+ *       nth-child 计时给出，页面不写内联样式。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages, type RadioMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('radio', Astro.url.pathname);
+const t: RadioMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+
+// 刻度尺：61 格、每 10 格标数字（6–12 MHz）。量程标记是机面装饰，不承载任何个人资料。
+const TICK_COUNT = 61;
+const TICK_STEP = 10;
+const TICK_START = 6;
+const ticks = Array.from({ length: TICK_COUNT }, (_, i) => ({
+  major: i % TICK_STEP === 0,
+  label: i % TICK_STEP === 0 ? String(TICK_START + i / TICK_STEP) : '',
+  edge: i === 0 ? 'is-first' : i === TICK_COUNT - 1 ? 'is-last' : '',
+}));
+
+// VU 表：竖条栅格（装饰，高度与红区都在 style.css 里按 nth-child 排定）。
+// 红只属于「过载」这一件事。
+const VU_BARS = 12;
+const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
+  red: i >= VU_BARS - 2,
+}));
+
+// 模块上台顺序（60ms/格）与 VU 条高度是纯装饰参数，全部写在 style.css 的
+// nth-child 规则里，页面不写内联样式。
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* 不预加载：四份文件都很小（13.5 / 12.9 / 5.8 / 40KB），swap + 系统回退已足够。上电瞬间的字体替换本来就是这台机器的开机手感。 */}
+    <Font cssVariable="--font-share-tech-mono" />
+    <Font cssVariable="--font-format-1452" />
+    <Font cssVariable="--font-dseg14" />
+    <Font cssVariable="--font-ark-pixel" />
+    <Reveal />
+  </head>
+  <body class="rd">
+    <main class="rd-panel" aria-label={`SENRENBANKA · ${t.panelLabel}`}>
+      <span class="rd-screw is-tl" aria-hidden="true"></span>
+      <span class="rd-screw is-tr" aria-hidden="true"></span>
+      <span class="rd-screw is-bl" aria-hidden="true"></span>
+      <span class="rd-screw is-br" aria-hidden="true"></span>
+
+      <header class="rd-head">
+        <p class="rd-brand">
+          SENRENBANKA<span class="rd-brand-sep" aria-hidden="true"> · </span>
+          <span class="rd-brand-tag">{t.brandTag}</span>
+        </p>
+        <div class="rd-lamps" aria-hidden="true">
+          <span class="rd-lamp is-on"></span>
+          <span class="rd-lamp is-warn"></span>
+          <span class="rd-lamp"></span>
+        </div>
+      </header>
+
+      <div class="rd-dial">
+        <div class="rd-glass">
+          <p class="rd-readout-label">{t.callSignLabel}</p>
+          <h1 class="rd-name">{profile.name}</h1>
+          <p class="rd-headline">{profile.headline}</p>
+
+          <div class="rd-scale" aria-hidden="true">
+            <div class="rd-ticks">
+              {
+                ticks.map((tick) => (
+                  <span class:list={['rd-tick', tick.major && 'is-major']}>
+                    {tick.label ? <span class:list={['rd-tick-label', tick.edge]}>{tick.label}</span> : null}
+                  </span>
+                ))
+              }
+            </div>
+            <div class="rd-needle">
+              <span class="rd-needle-bar"><span class="rd-needle-tip"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rd-dial-meta">
+          <p class="rd-meta-item">
+            <span class="rd-meta-key">{t.channelKey}</span>
+            <span class="rd-meta-num">{String(profile.links.length).padStart(2, '0')}</span>
+          </p>
+          {
+            profile.location && (
+              <p class="rd-meta-item">
+                <span class="rd-meta-key">{t.qthLabel}</span>
+                <span class="rd-meta-val">{profile.location}</span>
+              </p>
+            )
+          }
+        </div>
+      </div>
+
+      <div class="rd-modules">
+        <section class="rd-mod" data-reveal aria-labelledby="rd-memo-title">
+          <h2 class="rd-mod-title" id="rd-memo-title">
+            <span class="rd-mod-no" aria-hidden="true">{pad(0)}</span>{t.memoTitle}
+          </h2>
+          <p class="rd-bio">{profile.bio}</p>
+        </section>
+
+        <section class="rd-mod" data-reveal aria-labelledby="rd-channels-title">
+          <h2 class="rd-mod-title" id="rd-channels-title">
+            <span class="rd-mod-no" aria-hidden="true">{pad(1)}</span>{t.channelsTitle}
+          </h2>
+          <ul class="rd-channels">
+            {
+              profile.links.map((link, index) => (
+                <li class="rd-chan">
+                  <span class="rd-chan-no" aria-hidden="true">{pad(index)}</span>
+                  <a class="rd-link" href={link.url}>{link.label}</a>
+                  <span class="rd-leader" aria-hidden="true"></span>
+                  <span class="rd-chan-url" aria-hidden="true">{shortUrl(link.url)}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="rd-mod" data-reveal aria-labelledby="rd-programs-title">
+              <h2 class="rd-mod-title" id="rd-programs-title">
+                <span class="rd-mod-no" aria-hidden="true">{pad(2)}</span>{t.programsTitle}
+              </h2>
+              <ol class="rd-programs">
+                {profile.projects.map((project, index) => (
+                  <li class="rd-program">
+                    <p class="rd-program-head">
+                      <span class="rd-chan-no" aria-hidden="true">{pad(index)}</span>
+                      {project.url ? <a class="rd-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
+                    </p>
+                    {project.description && <p class="rd-note">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <ul class="rd-tags">
+                        {project.tags.map((tag) => (
+                          <li class="rd-tag">{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="rd-mod" data-reveal aria-labelledby="rd-log-title">
+              <h2 class="rd-mod-title" id="rd-log-title">
+                <span class="rd-mod-no" aria-hidden="true">{pad(3)}</span>{t.logTitle}
+              </h2>
+              <ul class="rd-logs">
+                {profile.experience.map((item) => (
+                  <li class="rd-log">
+                    <p class="rd-log-head">
+                      {item.period && <span class="rd-period">{item.period}</span>}
+                      <span class="rd-org">{item.org}</span>
+                      {item.role ? <span class="rd-role">{item.role}</span> : null}
+                    </p>
+                    {item.description && <p class="rd-note">{item.description}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="rd-mod" data-reveal aria-labelledby="rd-skills-title">
+              <h2 class="rd-mod-title" id="rd-skills-title">
+                <span class="rd-mod-no" aria-hidden="true">{pad(4)}</span>{t.skillsTitle}
+              </h2>
+              <ul class="rd-tags rd-skills">
+                {profile.skills.map((skill) => (
+                  <li class="rd-tag">{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <section class="rd-mod" data-reveal aria-labelledby="rd-contact-title">
+          <h2 class="rd-mod-title" id="rd-contact-title">
+            <span class="rd-mod-no" aria-hidden="true">{pad(5)}</span>{t.contactTitle}
+          </h2>
+          <p class="rd-total">
+            <span class="rd-total-label">{t.totalLabel}</span>
+            <span class="rd-total-num">{String(profile.links.length).padStart(2, '0')}</span>
+            <span class="rd-total-unit">{t.totalUnit}</span>
+          </p>
+          {
+            profile.contact?.email ? (
+              <p class="rd-contact">
+                <span class="rd-meta-key">{t.contactVia}</span>
+                <a class="rd-link rd-mailto" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+              </p>
+            ) : (
+              <p class="rd-note">{t.noMail}</p>
+            )
+          }
+          {profile.contact?.note && <p class="rd-note">{profile.contact.note}</p>}
+        </section>
+      </div>
+
+      <footer class="rd-foot" aria-labelledby="rd-foot-label">
+        <div class="rd-vu" aria-hidden="true">
+          {
+            vuBars.map((bar) => (
+              <span class:list={['rd-vu-bar', bar.red && 'is-red']}></span>
+            ))
+          }
+        </div>
+        <div class="rd-foot-meta">
+          <p class="rd-band" id="rd-foot-label">{t.band}</p>
+          <p class="rd-sample">{t.sampleNote}</p>
+        </div>
+      </footer>
+    </main>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

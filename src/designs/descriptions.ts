@@ -51,4 +51,44 @@ export const designDescriptions: Record<string, Record<DescriptionLocale, string
     ja: '本物のターミナルセッション——コマンドとタイピング表示。',
     en: 'A real terminal session: commands, a typing cascade and output-shaped sections.',
   },
+  receipt: {
+    'zh-CN': '热敏小票机：一卷从票机吐出的长票，撕边、点引导线与七段数字。',
+    ja: 'サーマルレシート——レシート機から出てくる長い紙、ミシン目とセグメント数字。',
+    en: 'A thermal receipt: a long printed slip with torn edges, dot leaders and seven-segment digits.',
+  },
+  archive: {
+    'zh-CN': '图书馆卡片目录：一屉拉开的索引卡，打字机条目与归档印章。',
+    ja: '図書館のカード目録——引き出した索引カードとタイプの記録、収蔵印。',
+    en: 'A library card catalogue: a pulled-open drawer of index cards, typed entries and an archive stamp.',
+  },
+  radio: {
+    'zh-CN': '短波收音机面板：刻度盘、琥珀指示灯与仪表模块。',
+    ja: '短波受信機のパネル——ダイヤル、琥珀色のランプ、計器モジュール。',
+    en: 'A shortwave receiver faceplate: tuning dial, amber lamps and instrument modules.',
+  },
+  fax: {
+    'zh-CN': '传真机传输纸：传输表头、走纸孔与磨损的打字机字面。',
+    ja: 'ファックスの送信紙——ヘッダー表、送り穴、かすれたタイプ文字。',
+    en: 'A fax transmission sheet: header table, tractor holes and worn typewriter type.',
+  },
+  pager: {
+    'zh-CN': '寻呼机：单色 LCD、状态栏与逐条消息。',
+    ja: 'ポケットベル——単色 LCD、ステータスバー、メッセージ一覧。',
+    en: 'A pager: monochrome LCD, status bar and a list of messages.',
+  },
+  tape: {
+    'zh-CN': '磁带与 J 卡：手写标签、曲目单与卷轴窗。',
+    ja: 'カセットと J カード——手書きラベル、曲目リスト、リール窓。',
+    en: 'A cassette and its J-card: handwritten label, track list and reel windows.',
+  },
+  poster: {
+    'zh-CN': '丝网印刷海报：巨幅窄体标题、镂空字与套准标记。',
+    ja: 'シルクスクリーンのポスター——巨大なコンデンス体、ステンシル、見当マーク。',
+    en: 'A screen-print poster: oversized condensed display, stencil cuts and registration marks.',
+  },
+  lexicon: {
+    'zh-CN': '三语辞典跨页：词条头、释义与参照项。',
+    ja: '三言語の辞書見開き——見出し語、語義、参照項目。',
+    en: 'A trilingual dictionary spread: headwords, definitions and cross-references.',
+  },
 };

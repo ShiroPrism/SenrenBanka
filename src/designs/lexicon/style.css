@@ -1,0 +1,518 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-lexicon: var(--font-sorts-mill-goudy);
+}
+
+/* lexicon — 中日英混排辞书（Read 模式）。
+   token / Named Rules / 动效论证见 src/designs/lexicon/DESIGN.md。
+   前缀 lx-；拉丁走 Goudy、汉字与假名落到 Zhuque（同一 font-family 栈内自然分声部）。 */
+
+.lx {
+  --lx-back: #2a251f;
+  --lx-paper: #f4eee0;
+  --lx-ink: #2a251d;
+  --lx-dim: #675c48;
+  --lx-line: #c8bda4; /* 细线 / 1px 规线 / 索引签边框，非文本 */
+  --lx-oxblood: #7c2f2a; /* 唯一彩色：词条头 / 参照箭头 / 索引签 / 选区 */
+
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(0.9rem, 4vw, 2.6rem) clamp(0.5rem, 3vw, 2rem) clamp(1.8rem, 6vw, 3.5rem);
+  background: var(--lx-back);
+  color: var(--lx-ink);
+  font-family: var(--font-lexicon), var(--font-zhuque), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  display: grid;
+  place-items: start center;
+}
+
+/* ---------- 书页 ---------- */
+
+.lx-page {
+  position: relative;
+  width: min(46rem, 100%);
+  background: var(--lx-paper);
+  /* 书边不对称：装订侧（左）留白略大，像摊开的一页而不是居中的卡片 */
+  padding: clamp(1.5rem, 4vw, 2.7rem) clamp(1.15rem, 3.2vw, 2.3rem) clamp(1.5rem, 4vw, 2.2rem)
+    clamp(1.5rem, 4.5vw, 3.3rem);
+}
+
+/* ---------- 书眉（running head） ---------- */
+
+.lx-running {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin: 0 0 1.7rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--lx-line);
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lx-dim);
+}
+
+.lx-running-brand {
+  color: var(--lx-ink);
+}
+
+.lx-running-folio {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- 主词条 ---------- */
+
+.lx-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.9ch;
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.lx-title-lemma {
+  font-size: clamp(1.75rem, 5.5vw, 2.125rem);
+  letter-spacing: 0.04em;
+  color: var(--lx-oxblood);
+}
+
+.lx-title-latin {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--lx-oxblood);
+}
+
+.lx-title-pos {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--lx-dim);
+}
+
+.lx-headline {
+  margin: 0.9rem 0 0;
+  max-width: 42ch;
+}
+
+.lx-origin {
+  margin: 0.4rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--lx-dim);
+}
+
+.lx-origin-label {
+  margin-right: 0.6ch;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+}
+
+/* ---------- 双栏与词条 ---------- */
+
+.lx-columns {
+  margin-top: 1.5rem;
+}
+
+.lx-entry {
+  margin: 0 0 1.6rem;
+  break-inside: avoid;
+}
+
+.lx-entry:last-child {
+  margin-bottom: 0;
+}
+
+/* 词条细规线：全页唯一的动效由它承担（自左生长 scaleX，只播一次） */
+.lx-rule {
+  display: block;
+  height: 0;
+  border-top: 1px solid var(--lx-line);
+  transform-origin: left center;
+}
+
+.lx-entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.7ch;
+  margin: 0.6rem 0 0;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.lx-num {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  color: var(--lx-dim);
+}
+
+.lx-lemma {
+  font-size: 1.125rem;
+  letter-spacing: 0.06em;
+  color: var(--lx-oxblood);
+}
+
+.lx-latin {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lx-oxblood);
+}
+
+.lx-pos {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--lx-dim);
+}
+
+.lx-entry-body {
+  margin-top: 0.55rem;
+}
+
+.lx-bio {
+  margin: 0;
+}
+
+/* 首字下沉：只用于 bio 首段，高度不超过三行 */
+.lx-bio::first-letter {
+  float: left;
+  margin-right: 0.1em;
+  font-size: 3.4em;
+  line-height: 1;
+}
+
+/* 次级文本：释义补充、注释、联系方式注解 */
+.lx-note {
+  margin: 0.35rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.85;
+  color: var(--lx-dim);
+}
+
+/* ---------- 明细（参照项） ---------- */
+
+.lx-refs {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+}
+
+.lx-ref {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6ch;
+}
+
+.lx-ref + .lx-ref {
+  margin-top: 0.25rem;
+}
+
+.lx-arrow {
+  flex: none;
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.9375rem;
+  color: var(--lx-oxblood);
+}
+
+/* ---------- 订单（projects） ---------- */
+
+.lx-works {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+}
+
+.lx-work + .lx-work {
+  margin-top: 0.85rem;
+}
+
+.lx-work-title {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.lx-tags {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--lx-dim);
+}
+
+/* ---------- 纪录（experience） ---------- */
+
+.lx-logs {
+  list-style: none;
+  margin: 0.45rem 0 0;
+  padding: 0;
+}
+
+.lx-log + .lx-log {
+  margin-top: 0.8rem;
+}
+
+.lx-log-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.8ch;
+  margin: 0;
+}
+
+.lx-period {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--lx-dim);
+}
+
+.lx-org {
+  font-size: 1rem;
+}
+
+.lx-role {
+  font-size: 0.875rem;
+  color: var(--lx-dim);
+}
+
+/* ---------- 技能 ---------- */
+
+.lx-skills {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.45rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lx-skill {
+  font-size: 0.9375rem;
+}
+
+.lx-skill + .lx-skill::before {
+  content: "・";
+  margin: 0 0.2em 0 0.05em;
+  color: var(--lx-dim);
+}
+
+/* ---------- 结账（contact + 合计） ---------- */
+
+.lx-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.9ch;
+  margin: 0;
+}
+
+.lx-field-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  color: var(--lx-dim);
+}
+
+.lx-mail {
+  word-break: break-all;
+}
+
+/* 合计 = 参照项条数（真实数据） */
+.lx-tally {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7ch;
+  margin: 0.9rem 0 0;
+}
+
+.lx-tally-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lx-dim);
+}
+
+.lx-tally-num {
+  font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.lx-tally-unit {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--lx-dim);
+}
+
+/* ---------- 页脚 ---------- */
+
+.lx-foot {
+  margin-top: 1.9rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--lx-line);
+  text-align: center;
+}
+
+.lx-finis {
+  margin: 0;
+  font-size: 0.8125rem;
+  letter-spacing: 0.32em;
+}
+
+.lx-sample {
+  margin: 0.55rem 0 0;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  color: var(--lx-dim);
+}
+
+/* ---------- 链接 ---------- */
+
+.lx a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--lx-dim);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* hover = 词组下加细点线（辞书的指引符号，不做色块 / 反白） */
+@media (hover: hover) and (pointer: fine) {
+  .lx a:hover {
+    text-decoration-style: dotted;
+    text-decoration-color: var(--lx-ink);
+  }
+}
+
+@media (pointer: coarse) {
+  .lx a {
+    padding-block: 0.5rem;
+  }
+}
+
+.lx a:focus-visible {
+  outline: 2px solid var(--lx-ink);
+  outline-offset: 2px;
+}
+
+.lx ::selection {
+  background: var(--lx-oxblood);
+  color: var(--lx-paper);
+}
+
+/* ---------- 页边索引签（桌面，纯装饰） ---------- */
+
+.lx-tabs {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  /* 双栏：分区 = 词条，栏间细线 1px */
+  .lx-columns {
+    columns: 2;
+    column-gap: 2.6rem;
+    column-rule: 1px solid var(--lx-line);
+  }
+
+  .lx-tabs {
+    display: block;
+  }
+
+  .lx-tab {
+    position: absolute;
+    top: var(--lx-tab-top, 12%);
+    right: -0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 2.6rem;
+    border: 1px solid var(--lx-line);
+    border-left: 0;
+    background: var(--lx-paper);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-family: var(--font-lexicon), Georgia, "Times New Roman", serif;
+    font-size: 0.625rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    color: var(--lx-oxblood);
+    pointer-events: none;
+  }
+}
+
+/* ---------- 动效：一个作者时刻 ----------
+   词条细规线自左端生长（scaleX），一次性；其余全部静态。
+   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）；
+   动画不填满终帧，动画未推进时线仍处于自然可见态（transform: none）。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .lx-rule {
+    transform: scaleX(0);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] .lx-rule {
+    animation: lx-rule-grow 620ms cubic-bezier(0.22, 0.68, 0.24, 1) var(--lx-rule-delay, 0ms) 1;
+  }
+
+  .lx-entry:nth-child(2) .lx-rule {
+    --lx-rule-delay: 70ms;
+  }
+
+  .lx-entry:nth-child(3) .lx-rule {
+    --lx-rule-delay: 140ms;
+  }
+
+  .lx-entry:nth-child(4) .lx-rule {
+    --lx-rule-delay: 210ms;
+  }
+
+  .lx-entry:nth-child(5) .lx-rule {
+    --lx-rule-delay: 280ms;
+  }
+
+  .lx-entry:nth-child(6) .lx-rule {
+    --lx-rule-delay: 350ms;
+  }
+}
+
+@keyframes lx-rule-grow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- 响应式：单栏 + 简化书眉 ---------- */
+
+@media (max-width: 560px) {
+  .lx-title-lemma {
+    font-size: 1.6rem;
+  }
+
+  .lx-running {
+    margin-bottom: 1.35rem;
+    letter-spacing: 0.14em;
+  }
+
+  .lx-lemma {
+    font-size: 1.0625rem;
+  }
+}

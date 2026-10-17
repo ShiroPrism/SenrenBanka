@@ -1,0 +1,193 @@
+---
+/**
+ * poster：一张丝网印刷的实验海报（单页，无复印件、无三联）。
+ *
+ * 版式：桌面 12 栏、两栏一组（7+5 / 5+7 / 7+5），栏间一条粗规线；窄屏收成单栏。
+ * 报头：巨幅窄体标题 + 副标 + 印刷附注；套准标记与裁切角线是纯 CSS 装饰（aria-hidden）。
+ *
+ * 动效：全页只有一个"作者时刻"：油墨辊压过标题（clip-path 从左展开一次）+ 规线画出
+ * （scaleX，按分区随滚动画出）。隐藏态以 `html[data-reveal-ready]` 为唯一门控
+ * （契约见 AGENTS.md「动效」节），减动态 / 无 JS / 无 IO 时内容与规线全部原样可见。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('poster', Astro.url.pathname);
+const { profile, contextMenu } = view;
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+const linkCount = profile.links.length;
+---
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* 四款字体各一份：展示（可变 wdth）、镂空分区字、正文、中文。不 preload：海报的纸面先出现，油墨随后压上。 */}
+    <Font cssVariable="--font-league-gothic" />
+    <Font cssVariable="--font-blackout" />
+    <Font cssVariable="--font-prociono" />
+    <Font cssVariable="--font-zhuque" />
+    <Reveal />
+  </head>
+  <body class="ps">
+    <main class="ps-stage" aria-label={t.sheetLabel}>
+      <article class="ps-sheet">
+        {/* 裁切角线 + 套准标记：印刷版的定位装置，纯装饰 */}
+        <div class="ps-crop" aria-hidden="true">
+          <span class="ps-crop-mark ps-crop-mark--tl"></span>
+          <span class="ps-crop-mark ps-crop-mark--tr"></span>
+          <span class="ps-crop-mark ps-crop-mark--bl"></span>
+          <span class="ps-crop-mark ps-crop-mark--br"></span>
+        </div>
+        <span class="ps-reg ps-reg--top" aria-hidden="true"></span>
+        <span class="ps-reg ps-reg--bottom" aria-hidden="true"></span>
+        <span class="ps-reg ps-reg--left ps-reg--extra" aria-hidden="true"></span>
+        <span class="ps-reg ps-reg--right ps-reg--extra" aria-hidden="true"></span>
+
+        <header class="ps-masthead">
+          <h1 class="ps-name">{profile.name}</h1>
+          <div class="ps-masthead-foot">
+            <p class="ps-headline">{profile.headline}</p>
+            <p class="ps-imprint">
+              <span>{t.medium}</span>
+              {profile.location && <span>{t.placeLabel} {profile.location}</span>}
+            </p>
+            <span class="ps-halftone" aria-hidden="true"></span>
+          </div>
+          <span class="ps-rule" aria-hidden="true"></span>
+        </header>
+
+        <div class="ps-grid">
+          <section class="ps-sec ps-sec--7" data-reveal aria-labelledby="ps-memo-title">
+            <h2 class="ps-sec-title" id="ps-memo-title">
+              <span class="ps-sec-mark">{t.memoMark}</span>
+              <span class="ps-sec-name">{t.memoTitle}</span>
+            </h2>
+            <p class="ps-bio">{profile.bio}</p>
+          </section>
+
+          <section class="ps-sec ps-sec--5 ps-sec--rule" data-reveal aria-labelledby="ps-links-title">
+            <h2 class="ps-sec-title" id="ps-links-title">
+              <span class="ps-sec-mark">{t.itemsMark}</span>
+              <span class="ps-sec-name">{t.itemsTitle}</span>
+            </h2>
+            <ul class="ps-links">
+              {
+                profile.links.map((link, index) => (
+                  <li class="ps-link-row">
+                    <span class="ps-num" aria-hidden="true">{pad(index)}</span>
+                    <a class="ps-link" href={link.url}>{link.label}</a>
+                    <span class="ps-link-url">{shortUrl(link.url)}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </section>
+
+          {
+            profile.projects && profile.projects.length > 0 && (
+              <section class="ps-sec ps-sec--5" data-reveal aria-labelledby="ps-orders-title">
+                <h2 class="ps-sec-title" id="ps-orders-title">
+                  <span class="ps-sec-mark">{t.ordersMark}</span>
+                  <span class="ps-sec-name">{t.ordersTitle}</span>
+                </h2>
+                <ol class="ps-works">
+                  {profile.projects.map((project, index) => (
+                    <li class="ps-work">
+                      <p class="ps-work-head">
+                        <span class="ps-num" aria-hidden="true">{pad(index)}</span>
+                        {project.url ? (
+                          <a class="ps-link ps-work-title" href={project.url}>{project.title}</a>
+                        ) : (
+                          <span class="ps-work-title">{project.title}</span>
+                        )}
+                      </p>
+                      {project.description && <p class="ps-work-desc">{project.description}</p>}
+                      {project.tags && project.tags.length > 0 && (
+                        <p class="ps-tags">{project.tags.join(' / ')}</p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )
+          }
+
+          {
+            profile.experience && profile.experience.length > 0 && (
+              <section class="ps-sec ps-sec--7 ps-sec--rule" data-reveal aria-labelledby="ps-log-title">
+                <h2 class="ps-sec-title" id="ps-log-title">
+                  <span class="ps-sec-mark">{t.logMark}</span>
+                  <span class="ps-sec-name">{t.logTitle}</span>
+                </h2>
+                <ul class="ps-logs">
+                  {profile.experience.map((item) => (
+                    <li class="ps-log">
+                      <p class="ps-log-head">
+                        <span class="ps-log-period">{item.period ?? '----'}</span>
+                        <span class="ps-log-org">{item.org}</span>
+                      </p>
+                      {item.role && <p class="ps-log-role">{item.role}</p>}
+                      {item.description && <p class="ps-log-desc">{item.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          {
+            profile.skills && profile.skills.length > 0 && (
+              <section class="ps-sec ps-sec--7" data-reveal aria-labelledby="ps-skills-title">
+                <h2 class="ps-sec-title" id="ps-skills-title">
+                  <span class="ps-sec-mark">{t.skillsMark}</span>
+                  <span class="ps-sec-name">{t.skillsTitle}</span>
+                </h2>
+                <ul class="ps-skills">
+                  {profile.skills.map((skill) => (
+                    <li class="ps-skill">{skill}</li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+
+          <section class="ps-sec ps-sec--5 ps-sec--rule" data-reveal aria-labelledby="ps-checkout-title">
+            <h2 class="ps-sec-title" id="ps-checkout-title">
+              <span class="ps-sec-mark">{t.checkoutMark}</span>
+              <span class="ps-sec-name">{t.checkoutTitle}</span>
+            </h2>
+            <p class="ps-total">
+              <span class="ps-total-label">{t.totalLabel}</span>
+              <span class="ps-total-num">{linkCount}</span>
+              <span class="ps-total-unit">{t.totalUnit}</span>
+            </p>
+            {
+              profile.contact?.email ? (
+                <p class="ps-pay">
+                  <span class="ps-pay-label">{t.payVia}</span>{' '}
+                  <a class="ps-link ps-mail" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+                </p>
+              ) : (
+                <p class="ps-pay ps-note">{t.noMail}</p>
+              )
+            }
+            {profile.contact?.note && <p class="ps-note">{profile.contact.note}</p>}
+          </section>
+        </div>
+
+        <footer class="ps-foot" data-reveal>
+          <p class="ps-imprint-line">{t.imprint}</p>
+          <p class="ps-sample">{t.sampleNote}</p>
+        </footer>
+      </article>
+    </main>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

@@ -1,0 +1,606 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-pager: var(--font-silkscreen);
+  --font-pager-dot: var(--font-handjet);
+}
+
+/* ===========================================================
+   令牌 —— CSS 里出现的每个色值 / 字号 / 字距都登记在 DESIGN.md
+   =========================================================== */
+
+:root {
+  /* 场景（桌面台面） */
+  --pg-back: #141613;
+  --pg-back-rise: #1b1e19;
+  /* 机壳（塑料） */
+  --pg-shell: #3b403a;
+  --pg-shell-2: #2c302b;
+  --pg-shell-hi: #565c53;
+  /* LCD 与像素墨 */
+  --pg-lcd: #b9c6a6;
+  --pg-lcd-2: #a9b795;
+  --pg-ink: #20281c;
+  /* 淡墨：简报给的淡墨在 LCD 上实测 4.39:1（低于正文 4.5:1 硬底线），故下调一档（见 DESIGN.md「偏差」） */
+  --pg-dim: #46503c;
+  /* 唯一彩色：背光绿（状态 / 选区 / 焦点，极小面积） */
+  --pg-green: #7fae4e;
+  /* 厚度：全部阴影收在这里，避免散落 rgba 字面量 */
+  --pg-shadow-device: 0 24px 50px rgba(0, 0, 0, 0.55), 0 6px 14px rgba(0, 0, 0, 0.35);
+  --pg-shadow-shell: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+  --pg-shadow-screen: inset 0 2px 7px rgba(0, 0, 0, 0.34), inset 0 0 0 1px rgba(0, 0, 0, 0.36);
+  --pg-shadow-key: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 0 rgba(0, 0, 0, 0.48);
+  --pg-shadow-wheel: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  --pg-glow-led: 0 0 6px rgba(127, 174, 78, 0.7);
+  /* 字体栈（拉丁落在像素字 / 点阵字，汉字落在 12px 像素字，最后回退系统中文） */
+  --pg-stack: var(--font-pager), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+  --pg-stack-dot: var(--font-pager-dot), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+}
+
+html {
+  scrollbar-color: var(--pg-shell) var(--pg-back);
+}
+
+/* ===========================================================
+   场景
+   =========================================================== */
+
+.pg {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(1.1rem, 4vw, 2.4rem) clamp(0.75rem, 3vw, 1.5rem) clamp(2.4rem, 7vw, 4rem);
+  background: radial-gradient(120% 80% at 50% -10%, var(--pg-back-rise), var(--pg-back) 58%) var(--pg-back);
+  color: var(--pg-ink);
+  font-family: var(--pg-stack);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  display: grid;
+  place-items: start center;
+}
+
+/* ===========================================================
+   机壳
+   =========================================================== */
+
+.pg-device {
+  width: min(27rem, 100%);
+  padding: 0.8rem 0.8rem 0.65rem;
+  border-radius: 1.15rem;
+  background: linear-gradient(180deg, var(--pg-shell), var(--pg-shell-2) 74%);
+  box-shadow: var(--pg-shadow-device), var(--pg-shadow-shell);
+}
+
+.pg-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.05rem 0.15rem 0.55rem;
+}
+
+/* 扬声器槽：横向开缝（装饰） */
+.pg-grille {
+  flex: none;
+  width: 3.4rem;
+  height: 0.6rem;
+  background: repeating-linear-gradient(180deg, var(--pg-shell-hi) 0 2px, transparent 2px 5px);
+  opacity: 0.85;
+}
+
+.pg-brand {
+  flex: 1;
+  margin: 0;
+  color: var(--pg-lcd);
+  font-size: 0.625rem;
+  letter-spacing: 0.26em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* 电源灯：全页唯一的「亮着」的绿 */
+.pg-led {
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--pg-green);
+  box-shadow: var(--pg-glow-led);
+}
+
+/* ===========================================================
+   LCD 屏
+   =========================================================== */
+
+.pg-screen {
+  position: relative;
+  overflow: hidden;
+  padding: 0.65rem 0.85rem 0.9rem;
+  border-radius: 0.4rem;
+  background: var(--pg-lcd);
+  box-shadow: var(--pg-shadow-screen);
+  color: var(--pg-ink);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+/* 关机帘：开机时两段亮度跳变（见 motion），静止时全透明 */
+.pg-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pg-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- 状态栏：信号格 / 电池 / MSG 计数 ---------- */
+
+.pg-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.75rem;
+  padding: 0.28rem 0.45rem;
+  border-radius: 0.2rem;
+  background: var(--pg-lcd-2);
+  color: var(--pg-ink);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.pg-signal {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 0.65rem;
+}
+
+.pg-bar {
+  display: inline-block;
+  width: 2px;
+  background: var(--pg-ink);
+}
+
+.pg-bar:nth-child(1) {
+  height: 0.2rem;
+}
+
+.pg-bar:nth-child(2) {
+  height: 0.35rem;
+}
+
+.pg-bar:nth-child(3) {
+  height: 0.5rem;
+}
+
+/* 第四格留空（未满格），只用描边表示刻度 */
+.pg-bar:nth-child(4) {
+  height: 0.65rem;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--pg-dim);
+}
+
+.pg-batt {
+  position: relative;
+  flex: none;
+  width: 1.1rem;
+  height: 0.6rem;
+  box-shadow: inset 0 0 0 1px var(--pg-ink);
+}
+
+.pg-batt::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  width: 62%;
+  background: var(--pg-green);
+}
+
+.pg-batt::after {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  right: -3px;
+  width: 2px;
+  height: 0.3rem;
+  background: var(--pg-ink);
+}
+
+.pg-count {
+  white-space: nowrap;
+}
+
+/* 点阵数字：Handjet 的可变轴（wght / ELGR / ELSH）在这里被刻意使用 */
+.pg-digit {
+  font-family: var(--pg-stack-dot);
+  font-size: 1.125rem;
+  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- 屏幕头（h1） ---------- */
+
+.pg-head {
+  margin: 0 0 0.85rem;
+}
+
+.pg-name {
+  margin: 0 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+.pg-headline {
+  margin: 0;
+}
+
+.pg-loc {
+  margin: 0.4rem 0 0;
+  color: var(--pg-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+/* 屏显小标签（地点 / 回信）：只负责大写与字距，字号颜色随所在行 */
+.pg-k {
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---------- 消息（分区） ---------- */
+
+.pg-msg {
+  margin: 0;
+  padding: 0.7rem 0 0;
+  border-top: 1px dotted var(--pg-dim);
+}
+
+.pg-msg-head {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.45rem;
+}
+
+/* 消息编号：装饰（aria-hidden），点阵大数字 */
+.pg-msg-no {
+  flex: none;
+  font-family: var(--pg-stack-dot);
+  font-size: 2.25rem;
+  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.pg-msg-title {
+  flex: none;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+/* 标题后的点线：只把标题拉到行尾，不画第二个分隔区 */
+.pg-msg-rule {
+  flex: 1;
+  min-width: 1.5rem;
+  border-top: 1px dotted var(--pg-dim);
+}
+
+.pg-body {
+  margin: 0;
+}
+
+.pg-note {
+  margin: 0.15rem 0 0;
+  color: var(--pg-dim);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.pg-meta {
+  margin: 0.1rem 0 0;
+  color: var(--pg-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.pg-tags {
+  margin: 0.15rem 0 0;
+  color: var(--pg-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+.pg-dim {
+  color: var(--pg-dim);
+}
+
+/* ---------- 明细 / 订单 / 纪录 ---------- */
+
+.pg-links,
+.pg-projects,
+.pg-history {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pg-links > li + li,
+.pg-projects > li + li,
+.pg-history > li + li {
+  margin-top: 0.45rem;
+}
+
+.pg-row-head {
+  margin: 0;
+}
+
+/* 日期：点阵数字（中文自动回落到像素字） */
+.pg-period {
+  font-family: var(--pg-stack-dot);
+  font-size: 1.125rem;
+  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* 行尾 URL：次级信息，装饰（aria-hidden） */
+.pg-url {
+  display: inline-block;
+  max-width: 46%;
+  overflow: hidden;
+  color: var(--pg-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+/* ---------- 联系（contact） ---------- */
+
+.pg-mail {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.pg-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin: 0.7rem 0 0;
+}
+
+.pg-total-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pg-total-num {
+  font-family: var(--pg-stack-dot);
+  font-size: 1.75rem;
+  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* ---------- 屏显收尾 ---------- */
+
+.pg-end {
+  margin: 0.9rem 0 0;
+  padding: 0.7rem 0 0;
+  border-top: 1px dotted var(--pg-dim);
+  text-align: center;
+}
+
+.pg-end-line {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.pg-end-note {
+  margin: 0.3rem 0 0;
+  color: var(--pg-dim);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+}
+
+/* ---------- 按键行与滚轮（纯装饰） ---------- */
+
+.pg-keys {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.15rem 0.1rem;
+}
+
+.pg-key {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.6rem;
+  height: 1.05rem;
+  border-radius: 0.4rem;
+  background: var(--pg-shell-2);
+  box-shadow: var(--pg-shadow-key);
+}
+
+/* 方向键的三角用 clip-path 剪出（不用单侧粗边框——那是「卡片侧边条」的形状语言） */
+.pg-key-arrow {
+  width: 5px;
+  height: 8px;
+  background: var(--pg-shell-hi);
+}
+
+.pg-key-prev {
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+.pg-key-next {
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.pg-wheel {
+  width: 2.2rem;
+  height: 0.62rem;
+  margin-left: auto;
+  border-radius: 0.31rem;
+  background: repeating-linear-gradient(90deg, var(--pg-shell-2) 0 2px, var(--pg-shell-hi) 2px 3px);
+  box-shadow: var(--pg-shadow-wheel);
+}
+
+/* ---------- 链接 ---------- */
+
+.pg-link {
+  color: var(--pg-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--pg-dim);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pg-link:hover {
+    background: var(--pg-ink);
+    color: var(--pg-lcd);
+    text-decoration: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .pg-link {
+    padding-block: 0.6rem; /* 15px × 1.7 + 2 × 9.6px ≈ 44px 命中区 */
+  }
+}
+
+/* 焦点：反白块 + 背光绿描边（绿在小尺寸下与 LCD 的对比不足 3:1，不能单独承担焦点） */
+.pg a:focus-visible {
+  outline: 2px solid var(--pg-green);
+  outline-offset: 2px;
+  background: var(--pg-ink);
+  color: var(--pg-lcd);
+  text-decoration-color: var(--pg-lcd);
+}
+
+.pg ::selection {
+  background: var(--pg-green);
+  color: var(--pg-ink);
+}
+
+/* ===========================================================
+   motion —— 一个作者时刻：开机 + 消息逐条 2 步载入。
+   屏幕是机器，不是纸：只有「通电」这一件事被允许发声；无扫描线、无持续闪烁。
+   =========================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* 开机：关机帘两段跳变（0.94 → 0.45 → 0）。用部分不透明度起步，
+     即使动画未推进也仍能读出屏幕内容（不重复 ADR 0007 的「起始帧固化」坑）。 */
+  .pg-screen::after {
+    animation: pg-boot 380ms steps(1, end) both;
+  }
+
+  /* 消息逐条载入：每条消息一次两段跳变（0 → 0.45 → 1），不是淡入 */
+  .pg-line {
+    animation: pg-load 180ms steps(1, end) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+     隐藏态带 :not([data-reveal-in]) 兜底；载入动画声明在「揭示后仍匹配」的规则上。 */
+  html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .pg-line {
+    opacity: 0;
+    animation: none;
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] .pg-line {
+    animation: pg-load 180ms steps(1, end) both;
+    animation-delay: var(--d, 0ms);
+  }
+}
+
+@keyframes pg-boot {
+  0% {
+    opacity: 0.94;
+  }
+  34% {
+    opacity: 0.45;
+  }
+  68%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pg-load {
+  0% {
+    opacity: 0;
+  }
+  42% {
+    opacity: 0.45;
+  }
+  86%,
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ===========================================================
+   响应式：窄屏机器满宽、机壳减薄、屏幕内边距收紧
+   =========================================================== */
+
+@media (max-width: 560px) {
+  .pg {
+    padding: 0;
+  }
+
+  .pg-device {
+    width: 100%;
+    padding: 0.55rem 0.55rem 0.5rem;
+    border-radius: 0;
+    box-shadow: var(--pg-shadow-shell);
+  }
+
+  .pg-screen {
+    padding: 0.5rem 0.6rem 0.75rem;
+  }
+
+  .pg-msg-head {
+    gap: 0.4rem;
+  }
+
+  .pg-msg-no {
+    font-size: 1.875rem;
+  }
+
+  .pg-name {
+    font-size: 1.25rem;
+  }
+
+  .pg-url {
+    display: none;
+  }
+
+  .pg-keys {
+    padding-top: 0.5rem;
+  }
+}

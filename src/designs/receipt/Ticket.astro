@@ -1,0 +1,157 @@
+---
+/**
+ * receipt 单联渲染（私有组件，不属于设计注册表四件套）。
+ * 三联小票 = 同一张票的三种语言副本，由 Page.astro 按 i18n.locales 顺序拼排；
+ * 本组件只负责「一联」的完整内容与计时，宽窄屏行为全部由 style.css 决定。
+ */
+import type { LocaleEntry, ResolvedProfile } from '../../lib/site';
+import { messages as designMessages, type ReceiptMessages } from './messages';
+
+interface Props {
+  locale: LocaleEntry;
+  profile: ResolvedProfile;
+  isCurrent: boolean;
+}
+
+const { locale, profile, isCurrent } = Astro.props;
+const t: ReceiptMessages = designMessages[locale.code as 'zh-CN' | 'ja' | 'en'];
+
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+
+// 印刷步进（首屏）：每行一个出现时刻，整屏 ≤0.4s 落定；核心内容不等待。
+const STEP = 45;
+const T0 = 80;
+const d = (n: number) => `${T0 + n * STEP}ms`;
+// 滚动显现的段内节奏：从 0 起、单行 45ms；段内超过 8 行的部分回落为满延迟。
+const seg = (n: number) => `${Math.min(n, 8) * STEP}ms`;
+
+// 撕边：构建期生成上/下锯齿 polygon（36 齿，随纸宽自适应），不依赖运行时脚本。
+const teeth = 36;
+const crest: string[] = [];
+for (let i = 0; i <= teeth; i++) {
+  crest.push(`${((i / teeth) * 100).toFixed(3)}% ${i % 2 === 0 ? '10px' : '0px'}`);
+}
+const flipY = (point: string) => point.replace(/(\d+)px$/, (_, n) => `calc(100% - ${n}px)`);
+const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY).join(', ')})`;
+---
+<div class:list={['rc-ticket', isCurrent && 'is-primary']}>
+  <article class="rc-paper" lang={locale.code} aria-label={`${locale.label} ${t.receiptTag}`} style={`clip-path: ${clipPath}`}>
+    <header class="rc-head">
+      <p class="rc-brand rc-print" style={`--d:${d(0)}`}>
+        <span class="rc-brand-mark">SENRENBANKA</span><span class="rc-dim"> · {t.receiptTag}</span>
+      </p>
+      <h1 class="rc-name rc-print" style={`--d:${d(1)}`}>{profile.name}</h1>
+      <p class="rc-headline rc-print" style={`--d:${d(2)}`}>{profile.headline}</p>
+      {profile.location && (
+        <p class="rc-addr rc-dim rc-print" style={`--d:${d(3)}`}>
+          <span aria-hidden="true"># </span>{t.addrLabel} {profile.location}
+        </p>
+      )}
+      <div class="rc-stamp" aria-hidden="true">{t.stamp}</div>
+    </header>
+
+    <section class="rc-block" aria-labelledby={`rc-memo-title-${locale.path}`}>
+      <h2 class="rc-sec rc-print" id={`rc-memo-title-${locale.path}`} style={`--d:${d(4)}`}>{t.memoTitle}</h2>
+      <p class="rc-bio rc-print" style={`--d:${d(5)}`}>{profile.bio}</p>
+    </section>
+
+    <section class="rc-block" data-reveal aria-labelledby={`rc-items-title-${locale.path}`}>
+      <h2 class="rc-sec rc-line" id={`rc-items-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.itemsTitle}</h2>
+      <ul class="rc-items">
+        {
+          profile.links.map((link, index) => (
+            <li class="rc-row rc-line" style={`--d:${seg(index + 1)}`}>
+              <span class="rc-idx rc-dim" aria-hidden="true">{pad(index)}</span>
+              <a class="rc-link" href={link.url}>{link.label}</a>
+              <span class="rc-leader" aria-hidden="true"></span>
+              <span class="rc-url rc-dim" aria-hidden="true">{shortUrl(link.url)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {
+      profile.projects && profile.projects.length > 0 && (
+        <section class="rc-block" data-reveal aria-labelledby={`rc-orders-title-${locale.path}`}>
+          <h2 class="rc-sec rc-line" id={`rc-orders-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.ordersTitle}</h2>
+          <ol class="rc-orders">
+            {profile.projects.map((project, index) => (
+              <li class="rc-order">
+                <p class="rc-line rc-order-head" style={`--d:${seg(index * 3 + 1)}`}>
+                  <span class="rc-idx rc-dim" aria-hidden="true">{pad(index)}</span>{' '}
+                  {project.url ? <a class="rc-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
+                  {project.url && <span class="rc-url rc-dim" aria-hidden="true"> → {shortUrl(project.url)}</span>}
+                </p>
+                {project.description && (
+                  <p class="rc-line rc-note rc-dim" style={`--d:${seg(index * 3 + 2)}`}>{project.description}</p>
+                )}
+                {project.tags && project.tags.length > 0 && (
+                  <p class="rc-line rc-tags rc-dim" style={`--d:${seg(index * 3 + 3)}`}>{project.tags.join(' · ')}</p>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    {
+      profile.experience && profile.experience.length > 0 && (
+        <section class="rc-block" data-reveal aria-labelledby={`rc-log-title-${locale.path}`}>
+          <h2 class="rc-sec rc-line" id={`rc-log-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.logTitle}</h2>
+          <ul class="rc-logs">
+            {profile.experience.map((item, index) => (
+              <li class="rc-log">
+                <p class="rc-line rc-log-head" style={`--d:${seg(index * 2 + 1)}`}>
+                  <span class="rc-period">{item.period ?? '----'}</span>{' '}
+                  <span class="rc-org">{item.org}</span>
+                  {item.role ? <span class="rc-dim"> — {item.role}</span> : null}
+                </p>
+                {item.description && (
+                  <p class="rc-line rc-note rc-dim" style={`--d:${seg(index * 2 + 2)}`}>{item.description}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    {
+      profile.skills && profile.skills.length > 0 && (
+        <section class="rc-block" data-reveal aria-labelledby={`rc-skills-title-${locale.path}`}>
+          <h2 class="rc-sec rc-line" id={`rc-skills-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.skillsTitle}</h2>
+          <p class="rc-line rc-skills" style={`--d:${seg(1)}`}>{profile.skills.join(' ・ ')}</p>
+        </section>
+      )
+    }
+
+    <section class="rc-block rc-pay" data-reveal aria-labelledby={`rc-pay-title-${locale.path}`}>
+      <h2 class="rc-sec rc-line" id={`rc-pay-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.contactTitle}</h2>
+      <p class="rc-line rc-total" style={`--d:${seg(1)}`}>
+        <span class="rc-total-label">{t.totalLabel}</span>
+        <span class="rc-total-num">{profile.links.length}</span>
+        <span class="rc-dim">{t.totalUnit}</span>
+      </p>
+      {profile.contact?.email ? (
+        <p class="rc-line rc-payline" style={`--d:${seg(2)}`}>
+          <span class="rc-dim">{t.payVia}</span>{' '}
+          <a class="rc-link rc-mailto" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+        </p>
+      ) : (
+        <p class="rc-line rc-dim" style={`--d:${seg(2)}`}>{t.noMail}</p>
+      )}
+      {profile.contact?.note && (
+        <p class="rc-line rc-note rc-dim" style={`--d:${seg(3)}`}>{profile.contact.note}</p>
+      )}
+    </section>
+
+    <footer class="rc-foot" data-reveal>
+      <p class="rc-thanks rc-line" style={`--d:${seg(0)}`}>{t.footerThanks}</p>
+      <div class="rc-barcode rc-line" style={`--d:${seg(1)}`} aria-hidden="true"></div>
+      <p class="rc-sample rc-line rc-dim" style={`--d:${seg(2)}`}>{t.sampleNote}</p>
+    </footer>
+  </article>
+</div>

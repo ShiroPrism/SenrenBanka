@@ -1,0 +1,753 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+@theme inline {
+  --font-radio: var(--font-share-tech-mono);
+  --font-radio-plate: var(--font-format-1452);
+  --font-radio-digits: var(--font-dseg14);
+  --font-radio-cjk: var(--font-ark-pixel);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   radio — 1970s 短波收信机正面板。
+   直角世界：除螺钉与灯罩（物理圆形）外没有任何圆角；深度只来自
+   内阴影 / 凹槽 / 1px 高光，不用外投影与柔和投影。
+   全部色值、字号、字距都是令牌（见 DESIGN.md「令牌登记」表）。
+   ═══════════════════════════════════════════════════════════════════ */
+
+.rd {
+  --rd-back: #171a17;
+  --rd-panel: #232724;
+  --rd-panel-deep: #1b1f1b;
+  --rd-cream: #e9e3d2;
+  --rd-dim: #a9ad98;
+  --rd-amber: #e0a13f;
+  --rd-needle: #c14b32;
+  --rd-line: #3c413a;
+  --rd-groove: #0e110e;
+  --rd-highlight: rgba(233, 227, 210, 0.14);
+  --rd-shade: rgba(0, 0, 0, 0.55);
+  --rd-glow: rgba(224, 161, 63, 0.45);
+  /* 指针行程：从左端（--rd-from）扫到固定刻度（--rd-at） */
+  --rd-at: 62%;
+  --rd-from: -62%;
+
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: start center;
+  padding: clamp(0.9rem, 3vw, 2.25rem) clamp(0.5rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3rem);
+  background: radial-gradient(120% 78% at 50% -6%, var(--rd-panel), var(--rd-back) 58%) var(--rd-back);
+  color: var(--rd-cream);
+  font-family: var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+/* ---------- 面板 ---------- */
+
+.rd-panel {
+  position: relative;
+  width: min(56rem, 100%);
+  padding: clamp(0.9rem, 2.2vw, 1.5rem);
+  background: var(--rd-panel);
+  box-shadow:
+    inset 0 1px 0 var(--rd-highlight),
+    inset 0 -1px 0 var(--rd-groove),
+    inset 0 0 0 1px var(--rd-line);
+}
+
+/* 角螺钉：小圆形径向高光（物理圆形，不是圆角卡片） */
+.rd-screw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, var(--rd-dim) 0 16%, var(--rd-line) 46%, var(--rd-panel-deep) 80%);
+  box-shadow: inset 0 0 0 1px var(--rd-groove);
+}
+
+.rd-screw.is-tl {
+  top: 7px;
+  left: 7px;
+}
+
+.rd-screw.is-tr {
+  top: 7px;
+  right: 7px;
+}
+
+.rd-screw.is-bl {
+  bottom: 7px;
+  left: 7px;
+}
+
+.rd-screw.is-br {
+  bottom: 7px;
+  right: 7px;
+}
+
+/* ---------- 面板头：品牌行 + 指示灯 ---------- */
+
+.rd-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1.4rem 0.55rem;
+  border-bottom: 1px solid var(--rd-line);
+}
+
+.rd-brand {
+  margin: 0;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  /* 压印：丝印下缘压出一道深槽，像敲进面板的字 */
+  text-shadow: 0 1px 0 var(--rd-groove);
+}
+
+.rd-brand-sep,
+.rd-brand-tag {
+  color: var(--rd-dim);
+}
+
+.rd-lamps {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.rd-lamp {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, var(--rd-panel), var(--rd-panel-deep) 72%);
+  box-shadow:
+    inset 0 0 0 1px var(--rd-groove),
+    inset 0 1px 0 var(--rd-highlight);
+}
+
+.rd-lamp::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  background: var(--rd-dim);
+  opacity: 0.08;
+}
+
+.rd-lamp.is-on::after {
+  background: var(--rd-amber);
+  box-shadow: 0 0 7px var(--rd-glow);
+  opacity: 1;
+}
+
+.rd-lamp.is-warn::after {
+  background: var(--rd-needle);
+  opacity: 0.24;
+}
+
+/* ---------- 刻度盘 ---------- */
+
+.rd-dial {
+  margin-top: clamp(0.7rem, 2vw, 1rem);
+}
+
+.rd-glass {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(0.85rem, 2.4vw, 1.25rem) clamp(0.9rem, 2.4vw, 1.4rem) clamp(0.7rem, 2vw, 1rem);
+  background: var(--rd-panel-deep);
+  box-shadow:
+    inset 0 2px 6px var(--rd-shade),
+    inset 0 0 0 1px var(--rd-line);
+}
+
+.rd-readout-label {
+  margin: 0;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.34em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--rd-amber);
+}
+
+.rd-name {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.rd-headline {
+  margin: 0.45rem 0 0;
+  max-width: 46ch;
+  color: var(--rd-dim);
+}
+
+/* 刻度尺：61 格、每 10 格标数字；数字是量程标记，不是数据 */
+.rd-scale {
+  position: relative;
+  margin-top: clamp(1rem, 3vw, 1.5rem);
+  padding-bottom: 1.4rem;
+}
+
+.rd-ticks {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 1.1rem;
+}
+
+.rd-tick {
+  position: relative;
+  width: 1px;
+  height: 5px;
+  background: var(--rd-line);
+}
+
+.rd-tick.is-major {
+  height: 1.1rem;
+  background: var(--rd-dim);
+}
+
+.rd-tick-label {
+  position: absolute;
+  top: calc(100% + 0.3rem);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-radio-digits), var(--font-radio), monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  color: var(--rd-amber);
+}
+
+.rd-tick-label.is-first {
+  left: 0;
+  transform: none;
+}
+
+.rd-tick-label.is-last {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+
+/* 指针：整条轨道平移（width:100% 的包装层，translateX 的百分比 = 盘宽比例） */
+.rd-needle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.1rem;
+  transform: translateX(var(--rd-at));
+  pointer-events: none;
+}
+
+.rd-needle-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--rd-amber);
+  box-shadow: 0 0 6px var(--rd-glow);
+}
+
+.rd-needle-tip {
+  position: absolute;
+  top: -0.4rem;
+  left: -2.5px;
+  width: 6px;
+  height: 6px;
+  background: var(--rd-needle);
+}
+
+/* ---------- 盘下读数条 ---------- */
+
+.rd-dial-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rd-line);
+}
+
+.rd-meta-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--rd-dim);
+}
+
+.rd-meta-key {
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rd-amber);
+}
+
+.rd-meta-num,
+.rd-mod-no,
+.rd-chan-no,
+.rd-period,
+.rd-total-num {
+  font-family: var(--font-radio-digits), var(--font-radio), var(--font-radio-cjk), monospace;
+}
+
+/* ---------- 模块栅格 ---------- */
+
+.rd-modules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.65rem, 1.8vw, 1rem);
+  margin-top: clamp(0.85rem, 2.4vw, 1.25rem);
+}
+
+.rd-mod {
+  position: relative;
+  min-width: 0;
+  padding: clamp(0.8rem, 2vw, 1.05rem);
+  background: var(--rd-panel);
+  box-shadow:
+    inset 0 0 0 1px var(--rd-line),
+    inset 0 1px 0 var(--rd-highlight);
+}
+
+/* 模块的两枚小螺钉（右上 / 左下，避开左上角的标签牌） */
+.rd-mod::before,
+.rd-mod::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, var(--rd-dim) 0 16%, var(--rd-line) 48%, var(--rd-panel-deep) 80%);
+  box-shadow: inset 0 0 0 1px var(--rd-groove);
+  pointer-events: none;
+}
+
+.rd-mod::before {
+  top: 6px;
+  right: 6px;
+}
+
+.rd-mod::after {
+  bottom: 6px;
+  left: 6px;
+}
+
+.rd-mod-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7ch;
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rd-line);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+}
+
+.rd-mod-no {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--rd-amber);
+}
+
+.rd-bio {
+  margin: 0;
+}
+
+/* ---------- 频道（links） ---------- */
+
+.rd-channels,
+.rd-programs,
+.rd-logs,
+.rd-tags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rd-chan {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7ch;
+}
+
+.rd-chan + .rd-chan {
+  margin-top: 0.3rem;
+}
+
+.rd-chan-no {
+  flex: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--rd-dim);
+}
+
+/* 刻度短线而非卡片边框：行内对齐靠一根点线 */
+.rd-leader {
+  align-self: center;
+  flex: 1;
+  min-width: 1.5ch;
+  border-top: 1px dotted var(--rd-line);
+}
+
+.rd-chan-url {
+  min-width: 0;
+  max-width: 40%;
+  overflow: hidden;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--rd-dim);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- 节目（projects） / 日志（experience） ---------- */
+
+.rd-program + .rd-program,
+.rd-log + .rd-log {
+  margin-top: 0.8rem;
+}
+
+.rd-program-head,
+.rd-log-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4ch 0.7ch;
+  margin: 0;
+}
+
+.rd-note {
+  margin: 0.15rem 0 0;
+  max-width: 46ch;
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  color: var(--rd-dim);
+}
+
+.rd-period {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--rd-amber);
+}
+
+.rd-role {
+  color: var(--rd-dim);
+}
+
+/* 蚀刻标签：1px 刻线方框，无圆角、无底色 */
+.rd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.rd-skills {
+  margin-top: 0;
+}
+
+.rd-tag {
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--rd-line);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--rd-dim);
+}
+
+/* ---------- 交信（contact + 合计） ---------- */
+
+.rd-total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8ch;
+  margin: 0 0 0.6rem;
+}
+
+.rd-total-label {
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--rd-dim);
+}
+
+.rd-total-num {
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--rd-amber);
+}
+
+.rd-total-unit {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--rd-dim);
+}
+
+.rd-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6ch;
+  margin: 0;
+}
+
+.rd-mailto {
+  word-break: break-all;
+}
+
+/* ---------- 链接 ---------- */
+
+.rd-link {
+  color: var(--rd-cream);
+  text-decoration: underline;
+  text-decoration-color: var(--rd-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .rd-link:hover {
+    color: var(--rd-amber);
+    text-decoration-color: var(--rd-amber);
+  }
+}
+
+@media (pointer: coarse) {
+  .rd-link {
+    padding-block: 0.55rem;
+  }
+}
+
+.rd a:focus-visible {
+  outline: 2px solid var(--rd-amber);
+  outline-offset: 3px;
+}
+
+.rd ::selection {
+  background: var(--rd-amber);
+  color: var(--rd-back);
+}
+
+/* ---------- 页脚：VU 表 + 波段铭牌 ---------- */
+
+.rd-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.85rem 1.5rem;
+  margin-top: clamp(0.85rem, 2.4vw, 1.25rem);
+  padding: 0.8rem 1.4rem 0.2rem;
+  border-top: 1px solid var(--rd-line);
+}
+
+/* VU 条：高度是纯装饰参数（一条刻度的读数形状），按顺序排定 */
+.rd-vu {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 1.75rem;
+}
+
+.rd-vu-bar {
+  width: 4px;
+  height: calc(var(--rd-h, 0.5) * 1.75rem);
+  background: var(--rd-amber);
+  opacity: 0.72;
+}
+
+.rd-vu-bar:nth-child(1) {
+  --rd-h: 0.26;
+}
+
+.rd-vu-bar:nth-child(2) {
+  --rd-h: 0.42;
+}
+
+.rd-vu-bar:nth-child(3) {
+  --rd-h: 0.32;
+}
+
+.rd-vu-bar:nth-child(4) {
+  --rd-h: 0.58;
+}
+
+.rd-vu-bar:nth-child(5) {
+  --rd-h: 0.46;
+}
+
+.rd-vu-bar:nth-child(6) {
+  --rd-h: 0.72;
+}
+
+.rd-vu-bar:nth-child(7) {
+  --rd-h: 0.6;
+}
+
+.rd-vu-bar:nth-child(8) {
+  --rd-h: 0.86;
+}
+
+.rd-vu-bar:nth-child(9) {
+  --rd-h: 0.68;
+}
+
+.rd-vu-bar:nth-child(10) {
+  --rd-h: 0.52;
+}
+
+.rd-vu-bar:nth-child(11) {
+  --rd-h: 0.92;
+}
+
+.rd-vu-bar:nth-child(12) {
+  --rd-h: 0.74;
+}
+
+.rd-vu-bar.is-red {
+  background: var(--rd-needle);
+  opacity: 0.9;
+}
+
+.rd-foot-meta {
+  text-align: right;
+}
+
+.rd-band {
+  margin: 0;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--rd-dim);
+}
+
+.rd-sample {
+  margin: 0.15rem 0 0;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  color: var(--rd-dim);
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 720px) {
+  .rd-modules {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .rd-panel {
+    padding: 0.75rem;
+  }
+
+  .rd-head,
+  .rd-foot {
+    padding-inline: 1.15rem;
+  }
+
+  .rd-chan-url {
+    display: none;
+  }
+
+  .rd-foot-meta {
+    text-align: left;
+  }
+}
+
+/* ---------- motion ----------
+   唯一作者时刻 = 上电：指针从刻度左端扫到固定刻度（700ms，一次性），
+   指示灯分两步点亮（180ms 与 55% 处各一次跳变）。不做持续闪烁——
+   这台机器稳定之后就该是安静的。全部动画只动 opacity / transform。
+   滚动显现 = 共享 IO；隐藏态以 html[data-reveal-ready] 为唯一门控。 */
+
+@media (prefers-reduced-motion: no-preference) {
+  .rd-needle {
+    animation: rd-sweep 700ms cubic-bezier(0.2, 0.72, 0.24, 1) both;
+  }
+
+  .rd-lamp.is-on::after {
+    animation: rd-lamp-light 300ms steps(1, end) 180ms both;
+  }
+
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 220ms linear var(--rd-d, 0ms),
+      transform 220ms linear var(--rd-d, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 模块上台顺序：60ms/格（与指针扫动同时开始的机械推进，一次性） */
+  .rd-mod:nth-child(2) {
+    --rd-d: 60ms;
+  }
+
+  .rd-mod:nth-child(3) {
+    --rd-d: 120ms;
+  }
+
+  .rd-mod:nth-child(4) {
+    --rd-d: 180ms;
+  }
+
+  .rd-mod:nth-child(5) {
+    --rd-d: 240ms;
+  }
+
+  .rd-mod:nth-child(6) {
+    --rd-d: 300ms;
+  }
+}
+
+@keyframes rd-sweep {
+  from {
+    transform: translateX(var(--rd-from));
+  }
+  to {
+    transform: translateX(var(--rd-at));
+  }
+}
+
+@keyframes rd-lamp-light {
+  0% {
+    opacity: 0.08;
+  }
+  55% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

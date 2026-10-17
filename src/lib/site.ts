@@ -398,3 +398,35 @@ export async function loadDesignView(id: string, pathname: string): Promise<Desi
   }
   return buildDesignView(model, design, resolveLocale(model, pathname));
 }
+
+/** 多语言轨道式设计（如 receipt 的三联小票）用的一条语言资料。 */
+export interface DesignLocaleStrip {
+  locale: LocaleEntry;
+  profile: ResolvedProfile;
+  isCurrent: boolean;
+}
+
+/**
+ * 供**多语言同屏**设计使用：返回当前 view 与全部语言的资料条。
+ * 与 loadDesignView 同一数据源与构建期校验，仅额外取齐各语言 profile；
+ * 页面仍然不接触文件路径、不自行判断语言（语言识别只经 resolveLocale）。
+ */
+export async function loadDesignStrips(
+  id: string,
+  pathname: string,
+): Promise<{ view: DesignView; strips: DesignLocaleStrip[] }> {
+  const model = await loadSite();
+  const design = model.designs.find((entry) => entry.id === id);
+  if (!design) {
+    throw new Error(
+      `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / style.css。`,
+    );
+  }
+  const view = buildDesignView(model, design, resolveLocale(model, pathname));
+  const strips: DesignLocaleStrip[] = model.locales.map((locale) => ({
+    locale,
+    profile: model.profiles.get(locale.path)!,
+    isCurrent: locale.code === view.locale.code,
+  }));
+  return { view, strips };
+}

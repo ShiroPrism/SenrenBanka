@@ -5,6 +5,7 @@
 ## 数据接口
 
 - 每个设计页面在 frontmatter 取数：`const view = await loadDesignView('<自己的 id>', Astro.url.pathname)`（`src/lib/site.ts`）。**第二个参数是当前请求路径**——语言由它统一解析，页面**不得**各自实现语言判断逻辑
+- **多语言同屏**的设计（如 receipt 三联票）：改用 `loadDesignStrips('<自己的 id>', Astro.url.pathname)`——与 `loadDesignView` 同一数据源与构建期校验，额外返回全部语言的资料条（`strips: { locale, profile, isCurrent }[]`）；页面仍不接触文件路径、不自行判断语言
 - `view` 结构：
   - `profile`：核心字段 `name` / `headline` / `bio` / `links` **必须全部渲染**；
     `avatar` / `location` 可选；扩展区块 `projects` / `experience` / `skills` / `contact` 由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）。资料**按当前语言**选取，页面不需要关心文件路径
@@ -248,3 +249,24 @@
 - skill 只入库**仓库定制化**的 `.agents/skills/design-page-verify/`；通用 skill（impeccable、grill-me 等）不入库
 - `.trae/`、`.codex/`、`.impeccable/` 等本地工具目录不入库（规则见 `.gitignore`）
 - 通用 skill 由使用者自行安装（如 impeccable：用于设计文档化 / 检测器 / 评审；`design-page-verify` 流程中的检测器步骤依赖它）
+<!-- TRELLIS:START -->
+# Trellis Instructions
+
+These instructions are for AI assistants working in this project.
+
+This project is managed by Trellis. The working knowledge you need lives under `.trellis/`:
+
+- `.trellis/workflow.md` — development phases, when to create tasks, skill routing
+- `.trellis/spec/` — package- and layer-scoped coding guidelines (read before writing code in a given layer)
+- `.trellis/workspace/` — per-developer journals and session traces
+- `.trellis/tasks/` — active and archived tasks (PRDs, research, jsonl context)
+
+If a Trellis command is available on your platform (e.g. `/trellis:finish-work`, `/trellis:continue`), prefer it over manual steps. Not every platform exposes every command.
+
+If you're using Codex or another agent-capable tool, additional project-scoped helpers may live in:
+- `.agents/skills/` — reusable Trellis skills
+- `.codex/agents/` — optional custom subagents
+
+Managed by Trellis. Edits outside this block are preserved; edits inside may be overwritten by a future `trellis update`.
+
+<!-- TRELLIS:END -->
