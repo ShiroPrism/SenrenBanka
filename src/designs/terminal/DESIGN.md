@@ -124,6 +124,20 @@ components:
 **Character:** 终端没有排版花活：一个等宽族、三条字号（24–38px 显示 / 15px 正文 / 12px chrome），
 层级由颜色档位与缩进承担，weight 几乎不动（仅 display 一处 500）。中文直接落在等宽网格中，不翻译内容。
 
+### 字体选型记录（六项，依据 docs/fonts/selection-guide.md 流程）
+1. **隐喻与特征**: 琥珀磷光终端 → 单一等宽声部必须同时承担命令、输出、正文与 ASCII 框线；字形要像工程终端而不是玩具像素屏，15px 正文要有足够 x-height 与清晰的 `l / 1 / 0` 区分，`└─`、`→`、块状光标等符号不能靠偶然字形。
+2. **角色分配**: 姓名、正文、命令、列表、chrome 标题与页脚全部 = JetBrains Mono Variable；层级只靠字号、颜色档位与缩进，不引入第二字体族。显示档 500，其余 400（The Weightless Rule）。
+3. **为什么是它而非其他**:
+   - JetBrains Mono 而非 VT323 / Share Tech Mono：两者在真实文件样张中缺少现有波形、框线与状态符号的必要覆盖，VT323 的像素字面在 15px 正文上可读性明显不足；把它们用于正文会同时牺牲覆盖与阅读效率。
+   - JetBrains Mono 而非系统 `ui-monospace`：系统等宽在 Windows / macOS / Linux 的字形与字宽差异大，`└─` 与箭头也未必由同一族承接；JetBrains Mono 提供稳定的 400–800 可变轴与工程感字形，同时保留系统回退。
+   - 保留现字体而非换新：浏览器实测已由 `<Font>` 加载约 40,404 B 的 latin 文件，计算字体命中 JetBrains Mono；现有缺陷是缺字回退未显式声明，不是主字体不合格。
+4. **实际覆盖与回退**:
+   - JetBrains Mono Variable：latin 95/95 ASCII、latin-ext；无 CJK / 假名；不覆盖 `● ■ → ▸ ↗` 等符号。英文与命令实测命中，中文与日文回退系统字体。
+   - `└─`、`→`、`●` 等装饰由 `Segoe UI Symbol` / `Apple Symbols` 先承接，再回退 `PingFang SC` / `Microsoft YaHei` / `Hiragino Sans` / `Yu Gothic UI`；正文汉字与假名同样走这条系统回退链。
+   - 装饰符均 `aria-hidden`，缺字只影响视觉纹理，不改变可访问文本。
+5. **字重 / 轴 / 体积 / 许可**: JetBrains Mono Variable 提供 100–800 `wght`；本站使用 400 / 500。latin 主文件约 40,404 B，OFL-1.1（无 RFN 障碍，原样分发）；不 preload，按 `unicode-range` 子集惰性加载。
+6. **缺失回退顺序**: `--font-jetbrains-mono → ui-monospace → SFMono-Regular → Menlo → Consolas → Segoe UI Symbol → Apple Symbols → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → monospace`。字体加载失败时命令与正文仍以系统等宽可读。
+
 ### Hierarchy
 - **Display**（500, `clamp(1.6rem, 5vw, 2.4rem)`, 1.3）：`whoami` 输出的姓名，后随块状光标。
 - **Body**（400, 0.9375rem, 1.6）：命令、输出、列表、正文的唯一档位。

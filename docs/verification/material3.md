@@ -116,8 +116,16 @@
 - **视觉签名**：大圆角面层、分组标签、tonal / filled 双按钮与三级 surface 层次；预览保留 M3 的面层与控件语言，不是通用卡片。
 - **令牌抽取**：浅 / 深两套系统色与状态参数抽入 `tokens.css`，作用域 `:is(.m3, .m3-pv)`；正式页只改声明位置。
 - **字体**：导出 `--font-roboto-flex`，与其它设计按族去重；不额外引入图标字体。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **隔离与字体边界**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；本轮字体回退链有预期变化，故不再沿用“与 HEAD 基线 sha256 相等”的旧等价结论。
 - **检测器**：目录扫描零发现；缩略预览未引入新的 design-system 信号。
+
+## 字体审计（2026-10-19）
+
+- **接线**：Roboto Flex Variable 经 `astro.config.mjs` 注册、`Page.astro` `<Font>` 加载、`style.css` `@theme inline` 别名 `--font-m3`；浏览器实测 Roboto Flex 命中，latin 主文件约 34,320 B。
+- **保留理由**：Roboto 是 M3 baseline token 的参考字体，Roboto Flex 与其同源并以单文件覆盖 400–700；Inter / Geist 会把 Apple 或工程网格的视觉记忆带进 Material 型阶，不符合上游口径。
+- **覆盖与回退**：Roboto Flex 无 CJK / 假名；中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`；按钮、芯片与正文的型阶尺寸不依赖字体加载。
+- **加载**：0 preload；三语言无第三方字体域名；CJK 子集按 `unicode-range` 惰性加载。
+- **记录归属**：完整六项记录见 `docs/designs/material3/ADAPTATION.md`「字体选型记录」。
 
 ## 已定事项（结论）
 

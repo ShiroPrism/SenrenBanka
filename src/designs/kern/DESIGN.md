@@ -171,6 +171,23 @@ components:
 **Character:** 一套几何无衬线做主声音（姓名到正文），一套等宽做仪表（分区标签、日期、标签、页脚）。
 中文回退苹方 / 微软雅黑；等宽场景仅用于 ASCII 元数据。
 
+### 字体选型记录（六项，依据 docs/fonts/selection-guide.md 流程）
+1. **隐喻与特征**: 单色工程坐标网格 → 无衬线负责人的声音，必须有几何骨架、紧凑字面和清楚的 600 字重；等宽只负责仪表读数、日期、分区标签与页脚，要能与无衬线形成“声音 / 测量”分工，而不是把整页伪装成代码编辑器。
+2. **角色分配**: 姓名、定位、正文、项目标题、经历 = Geist Variable；分区标签、芯片、日期、页脚与十字号附近元数据 = Geist Mono Variable。两种声音永不互换角色，等宽字号始终小于相邻无衬线（The Split Rule）。
+3. **为什么是它而非其他**:
+   - Geist 而非 Inter：Inter 已在 frost 承担 iOS 系统材料声部；Geist 的几何骨架更硬、字面更紧，和黑白坐标网格、反转按钮的工程语气一致，也避免两套设计共享同一种“通用现代无衬线”。
+   - Geist Mono 而非 JetBrains Mono：本套只需要短标签和数字，不需要终端代码感；Geist Mono 与 Geist 同源，笔画粗细和字面比例更接近，能在不引入第二种风格的情况下完成仪表声部。
+   - 保留双声部而非全站单一字体：网格标签需要等宽对齐，正文需要更自然的阅读节奏；两者职责明确，样张在 72px 姓名与 11px 标签上均成立。
+4. **实际覆盖与回退**:
+   - Geist Variable：latin 95/95 ASCII、latin-ext；无 CJK / 假名。英文实测命中，中文与日文回退系统无衬线。
+   - Geist Mono Variable：latin ASCII、数字与常用标点；无 CJK / 假名，也不覆盖全部状态符号；等宽场景仅用于 ASCII 元数据，中文回退系统无衬线。
+   - 中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`，通用族 `sans-serif` / `monospace` 收尾。
+5. **字重 / 轴 / 体积 / 许可**: Geist Variable 使用 400–600 `wght`，latin 主文件约 29,400 B；Geist Mono Variable 使用 400–500，latin 主文件约 23,128 B、symbols2 约 5,812 B。两族均 OFL-1.1（无 RFN 障碍，原样分发）。
+6. **缺失回退顺序**:
+   - 声音：`--font-geist → system-ui → -apple-system → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。
+   - 仪表：`--font-geist-mono → ui-monospace → SFMono-Regular → Menlo → Consolas → Segoe UI Symbol → Apple Symbols → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → monospace`。
+   - 两链均含系统中文与通用族；字体失败时网格与内容仍可读。
+
 ### Hierarchy
 - **Display**（600, `clamp(2.75rem, 6vw, 4.5rem)`, 1.04, -0.02em）：姓名，唯一的超大字号；`text-wrap: balance`。
 - **Lede**（500, `clamp(1.125rem, 2.2vw, 1.375rem)`, 1.5）：一句话定位，位于姓名下方。

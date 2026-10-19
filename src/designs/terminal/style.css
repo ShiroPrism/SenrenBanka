@@ -16,7 +16,19 @@
   min-height: 100vh;
   background: var(--tm-bg);
   color: var(--tm-fg);
-  font-family: var(--font-terminal), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-family:
+    var(--font-terminal),
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    'Segoe UI Symbol',
+    'Apple Symbols',
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Hiragino Sans',
+    'Yu Gothic UI',
+    monospace;
   font-size: 0.9375rem;
   line-height: 1.6;
   display: grid;

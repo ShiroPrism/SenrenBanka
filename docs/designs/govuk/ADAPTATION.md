@@ -14,6 +14,14 @@
 - 上游品牌字体 **GDS Transport** 仅限 GOV.UK 服务使用、不对外分发；官方回退口径即 Arial / Helvetica 系统栈（govuk-frontend 默认字族栈为 `"GDS Transport", arial, sans-serif`）。
 - 页面按官方回退实施：`Arial, Helvetica, sans-serif` 系统栈，不注册 `astro.config` 字体、不新增依赖（本项目首个无自托管字体的设计，与 fast 同机制）。
 
+### 字体选型记录（六项，2026-10-19 字体审计）
+1. **隐喻与特征**: 公共服务信息页 → 字体首先服务可读性与制度可信度，正文要有高 x-height、清楚的数字与标点、低装饰性；标题不应比信息结构更抢眼，表单、标签与正文应共享一套可预测的系统声部。
+2. **角色分配**: 页眉姓名、h1、正文、summary list、标签、按钮与页脚全部 = `Arial, Helvetica, sans-serif`；不引入展示字体或第二正文族，层级由字号、粗体、颜色与间距承担。
+3. **为什么是它而非其他**: GDS Transport 是 GOV.UK 服务专用品牌字体，不可随本项目再分发；Arial 是上游明确回退口径，也是跨 Windows / macOS / Linux 都稳定存在的系统无衬线。用 Inter / Geist “提升个性”会偏离上游忠实度，并增加切换页字体请求；GOV.UK 的识别力来自蓝黑页眉、方形网格、强对比与信息层级，不是字体装饰。
+4. **实际覆盖与回退**: Arial 覆盖英文、数字与常用标点；无 CJK / 假名。简体中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`；中文正文使用系统无衬线，不伪装成 Arial 覆盖。
+5. **字重 / 轴 / 体积 / 许可**: 系统字体，零自托管文件、零网络请求；使用 400 / 700 两档，无可变轴与体积预算。随操作系统许可使用，不随仓库再分发；不附 GDS Transport 文件。
+6. **缺失回退顺序**: `Arial → Helvetica → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。Arial 缺失时由 Helvetica 或系统中文字体承接，版式与行高不依赖网络字体。
+
 ## 图标与标记（项目约定）
 
 - 不引入 GDS 图标资源；需要标记处沿用项目通用方案：`github` → 共享品牌 mark、`mail` → `@lucide/astro` Mail、外链 → `ArrowUpRight`（ADR 0002；仅映射存在才渲染，0.5.3 口径）。

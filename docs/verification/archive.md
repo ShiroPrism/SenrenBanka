@@ -46,6 +46,14 @@
 - **预览缩略档位登记**：`DESIGN.md` 的 `typography` 增补 `preview-micro`（0.5rem）/ `preview-display`（1.2rem）/ `preview-display-compact`（1.05rem）三档——预览是卡片的**缩微引述**，不并入正式页阶梯。据此检测器保持 0 条。
 - **全铺复验**：三语言切换页均渲染本套预览；预览导出 3 个字体变量（Sorts Mill Goudy / Courier Prime / Zhuque Fangsong），由切换页按族去重；预览内 0 可聚焦元素，卡片可访问名不含预览文字。
 
+## 字体审计（2026-10-19）
+
+- **接线**：Sorts Mill Goudy / Courier Prime / Zhuque Fangsong 均经 `astro.config.mjs` local provider 注册、`Page.astro` 三个 `<Font>` 加载、`style.css` `@theme inline` 别名；浏览器实测三族均命中。
+- **保留理由**：现有六项记录完整，卡头旧式衬线、打字机记录与中文仿宋的组合与“图书馆卡片目录”隐喻一致；没有发现接线断裂或可复核的可读性缺陷，不为“更艺术”新增第四族。
+- **覆盖与回退**：Sorts Mill Goudy / Courier Prime 无 CJK / 假名，中文由 Zhuque Fangsong 承接，再回退 `Songti SC` / `SimSun`；Zhuque 的日文汉字 / 假名按已核子集覆盖，缺字回退系统宋体。
+- **加载**：local provider 构建期零网络，0 preload；三语言无第三方字体域名。
+- **记录归属**：完整六项记录见 `src/designs/archive/DESIGN.md`「字体选型记录」。
+
 ## 设计要点与已知偏差
 
 - 卡片叠放 + 类目签 h2；页脚为抽屉前沿著录签（可见 h2「著录」）。

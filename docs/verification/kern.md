@@ -73,8 +73,16 @@
 - **视觉签名**：纯黑底、发丝网格、骑线十字号、黑白反转按钮与等宽元数据；缩略版仍是零阴影骨架，不借用切换页卡片样式。
 - **令牌抽取**：13 个灰度、动效参数与节奏抽入 `tokens.css`，作用域 `:is(.kern, .kern-pv)`；正式页只改声明位置。
 - **字体**：导出 `--font-geist` / `--font-geist-mono`，预览直接引用这两个框架变量（不使用正式页 `@theme inline` 的别名），由切换页按族去重。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **隔离与字体边界**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；本轮字体回退链有预期变化，故不再沿用“与 HEAD 基线 sha256 相等”的旧等价结论。
 - **检测器**：缩略档位登记进 `DESIGN.md` 的四个 `preview-*` 字号后零发现；正式页既有 `cross` / `invert-hover` 颜色仍保留在规范中。
+
+## 字体审计（2026-10-19）
+
+- **接线**：Geist Variable / Geist Mono Variable 经 `astro.config.mjs` 注册、`Page.astro` 两个 `<Font>` 加载、`style.css` `@theme inline` 别名 `--font-kern` / `--font-kern-mono`；浏览器实测两族均命中，latin 主文件约 29,400 B / 23,128 B。
+- **保留理由**：Geist 的几何骨架承担姓名与正文，Geist Mono 只承担分区标签、日期与页脚；与 Inter（frost）和 JetBrains Mono（terminal）相比，这组更贴近黑白坐标网格的工程语气，且双声部职责明确。
+- **覆盖与回退**：Geist 无 CJK / 假名；中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`。等宽只用于 ASCII 元数据，缺字由系统等宽与符号字体承接。
+- **加载**：0 preload；三语言无第三方字体域名；断网 / 字体失败时系统无衬线仍可读。
+- **记录归属**：完整六项记录见 `src/designs/kern/DESIGN.md`「字体选型记录」。
 
 ## 已定事项（结论）
 

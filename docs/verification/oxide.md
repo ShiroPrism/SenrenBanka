@@ -47,9 +47,17 @@
 
 - **视觉签名**：等宽频道标签、ASCII 波形、发丝分隔与青绿信号点；缩略版保留“仪表读数”而非首屏大段落。
 - **令牌抽取**：背景、线、前景、品牌与强调色抽入 `tokens.css`，作用域 `:is(.ox, .ox-pv)`；正式页仅将同值 token 改到共享文件。
-- **字体**：导出 `fonts: []`，继续使用系统等宽栈，不新增请求。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **字体**：导出 `--font-geist` / `--font-geist-mono`，与正式页同源、由切换页按族去重；不新增字体族或 preload。
+- **隔离**：预览不 import 正式页 `style.css`，无 `:root` 设计令牌、无可聚焦元素；本轮正式页字体栈按字体审计预期改变，不再沿用“与 HEAD 基线 sha256 相等”的旧等价结论。
 - **检测器**：仍为 1 条 `codex-grid-background` 既有例外；预览未新增字号、颜色或圆角发现。
+
+## 字体审计（2026-10-19）
+
+- **接线**：`astro.config.mjs` 注册 Geist Variable / Geist Mono Variable → `Page.astro` 两个 `<Font>` → `style.css` `@theme inline` 别名 `--font-oxide` / `--font-oxide-mono`。浏览器实测 `document.fonts` 非空，两族均命中；不再保留无文件的 `SuisseIntl` / `GT America Mono` 字符串。
+- **实际请求**：latin 主文件 Geist 约 29,400 B、Geist Mono 约 23,128 B；Geist Mono symbols2 约 5,812 B（波形块字符按需）。三语言均无第三方字体域名，0 preload。
+- **覆盖与回退**：Geist 无 CJK / 假名；中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`。Geist Mono 覆盖 `▁▂▃▄▅▆▇█└─`，不覆盖 `● ■ → ▸ ↗ ▣ □ ○ ▲ ▶ ▼ ◀`；这些装饰由 `Segoe UI Symbol` / `Apple Symbols` 先行承接。页脚 `▸`、品牌 `●`、预览 `↗` 均保留原字符。
+- **降级**：字体加载失败 / 断网时正文仍按系统无衬线可读；装饰符由系统符号字体承接或自然缺字，不改变可访问文本。预览文字允许触发 CJK 子集下载，但切换页不 preload。
+- **记录归属**：厂商 `DESIGN.md` 未改；完整六项记录见 `docs/designs/oxide/ADAPTATION.md`「字体（2026-10-19 字体审计）」。
 
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 

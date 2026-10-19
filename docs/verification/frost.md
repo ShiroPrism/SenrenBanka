@@ -71,8 +71,16 @@
 - **视觉签名**：极光作为背景内容，前层保留导航玻璃、大标题、Filled / tonal 胶囊与分组卡；这是 HIG 材料层次而不是通用卡片。
 - **令牌抽取**：浅 / 深两套系统色与材料参数抽入 `tokens.css`，作用域 `:is(.fr, .fr-pv)`；正式页只改声明位置。
 - **字体**：导出 `--font-inter`，与其它设计按族去重；切换页不 preload。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **隔离与字体边界**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；本轮字体回退链有预期变化，故不再沿用“与 HEAD 基线 sha256 相等”的旧等价结论。
 - **检测器**：新增 `preview-body` / `preview-pill` 两个缩略字号档后，预览零新增发现；仍余 2 条既有 `bounce-easing` 例外。
+
+## 字体审计（2026-10-19）
+
+- **接线**：Inter Variable 经 `astro.config.mjs` 注册、`Page.astro` `<Font>` 加载、`style.css` `@theme inline` 别名 `--font-fr`；浏览器实测 Inter 命中，latin normal 约 48,256 B、italic 约 51,832 B。
+- **保留理由**：SF Pro 受 Apple 平台字体许可限制，不能随站点再分发；Inter 是开放许可、字面比例接近系统 UI 的替代，17px 正文与 34px Large Title 样张成立。Roboto Flex 会带来 Material 视觉记忆，不适合 frost 的系统材料声部。
+- **覆盖与回退**：Inter 无 CJK / 假名；中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`，通用族 `sans-serif` 收尾。字体加载失败时 iOS 型阶尺寸与行高不变。
+- **加载**：0 preload；三语言无第三方字体域名；CJK 子集按 `unicode-range` 惰性加载。
+- **记录归属**：完整六项记录见 `src/designs/frost/DESIGN.md`「字体选型记录」。
 
 ## 已定事项（结论）
 

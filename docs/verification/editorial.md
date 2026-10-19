@@ -44,8 +44,16 @@
 - **视觉签名**：暖纸底、不对称双栏、发丝线与单点焦赭；预览保留杂志报头与带序号的作品 / 链接栏，不缩成通用信息卡。
 - **令牌抽取**：纸张、墨、灰、线与焦赭五种颜色抽入同目录 `tokens.css`，作用域 `:is(.ed, .ed-pv)`；`style.css` 改为导入该文件，量值不变。
 - **字体**：导出 `--font-fraunces`，由切换页按族去重声明一次；系统无衬线只承担报头元数据。
-- **隔离与等价**：预览不 import 正式页 `style.css`、无 `:root`、无可聚焦元素；正式页 zh-cn 产物与 HEAD 基线归一化 CSS 文件名后 sha256 相等。
+- **隔离与字体边界**：预览不 import 正式页 `style.css`、无 `:root`、无可聚焦元素；本轮字体回退链有预期变化，故不再沿用“与 HEAD 基线 sha256 相等”的旧等价结论。
 - **检测器**：预览缩略字号登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
+## 字体审计（2026-10-19）
+
+- **接线**：Fraunces Variable 经 `astro.config.mjs` 注册、`Page.astro` `<Font>` 加载、`style.css` `@theme inline` 别名 `--font-editorial`；浏览器实测仅 Fraunces 被加载，Georgia 与系统无衬线由操作系统提供。
+- **保留理由**：Fraunces 的 `opsz` 轴与真斜体承担展示声部；Georgia 在 17px 正文的灰度与阅读节奏稳定，系统无衬线只用于 11px 大写标签。新增正文衬线会扩大字体并集，但没有修复明确缺陷。
+- **覆盖与回退**：Fraunces / Georgia 均无 CJK / 假名；中文回退 `Songti SC` / `SimSun`，日文回退 `Hiragino Mincho ProN` / `Yu Mincho`，通用族 `serif` 收尾。标签链加入 `PingFang SC` / `Microsoft YaHei` / `Hiragino Sans` / `Yu Gothic UI` / `sans-serif`。
+- **加载**：Fraunces 不 preload，按 `unicode-range` 惰性加载；断网 / 字体失败时 Georgia 与宋体链仍可读。
+- **记录归属**：完整六项记录见 `src/designs/editorial/DESIGN.md`「字体选型记录」。
 
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 

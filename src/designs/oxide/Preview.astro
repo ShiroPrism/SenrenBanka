@@ -7,7 +7,7 @@ import { messages } from './messages';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
-export const fonts: import('astro:assets').CssVariable[] = [];
+export const fonts: import('astro:assets').CssVariable[] = ['--font-geist', '--font-geist-mono'];
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
 const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
@@ -40,7 +40,19 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
       var(--ox-bg);
     background-size: 2.5rem 2.5rem, 2.5rem 2.5rem, auto;
     color: var(--ox-fg);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family:
+      var(--font-geist-mono),
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Consolas,
+      'Segoe UI Symbol',
+      'Apple Symbols',
+      'PingFang SC',
+      'Microsoft YaHei',
+      'Hiragino Sans',
+      'Yu Gothic UI',
+      monospace;
     font-size: 0.5625rem;
     line-height: 1.55;
   }
@@ -90,7 +102,19 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
   .ox-pv-name {
     margin: 0;
     color: var(--ox-strong);
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-family:
+      var(--font-geist),
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI Symbol',
+      'Apple Symbols',
+      'PingFang SC',
+      'Microsoft YaHei',
+      'Hiragino Sans',
+      'Yu Gothic UI',
+      Helvetica,
+      Arial,
+      sans-serif;
     font-size: 1.45rem;
     font-weight: 500;
     line-height: 1.05;
@@ -102,7 +126,19 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
     margin: 0.25rem 0 0;
     overflow: hidden;
     color: var(--ox-fg);
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-family:
+      var(--font-geist),
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI Symbol',
+      'Apple Symbols',
+      'PingFang SC',
+      'Microsoft YaHei',
+      'Hiragino Sans',
+      'Yu Gothic UI',
+      Helvetica,
+      Arial,
+      sans-serif;
     font-size: 0.625rem;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

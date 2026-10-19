@@ -144,6 +144,24 @@ components:
 **Character:** 两档衬线声音（Fraunces 做标题、Georgia 做正文）+ 一支极小的无衬线做标签。
 中文回退宋体系，与西文衬线气韵一致；混排时全角标点。
 
+### 字体选型记录（六项，依据 docs/fonts/selection-guide.md 流程）
+1. **隐喻与特征**: 一期暖纸特刊与纸上编辑 → 需要一支带高对比、旧式笔形但不过分装饰的展示衬线，一支适合长文阅读、灰度稳定的正文衬线，以及只承担小号大写元数据的中性无衬线。字体应让版面像“被编辑过的纸”，而不是复古海报或企业年报。
+2. **角色分配**: 姓名、栏目名、作品标题与作品序号 = Fraunces Variable；定位语、简介、作品描述与联系段 = Georgia；期号、栏目副标、标签与页脚 = 系统无衬线。无衬线不进入正文，衬线不进入小号大写标签（The Two-Voice Rule）。
+3. **为什么是它而非其他**:
+   - Fraunces 而非 IM Fell / Prociono：Fraunces 的 `opsz` 轴能在 5.5rem 姓名与 1.35rem 作品标题之间改变笔形对比，真斜体也可用于定位语；IM Fell 更接近古籍影印，Prociono 只有单一罗马体，二者都不如 Fraunces 适合“现代编辑使用旧印刷声部”。
+   - Georgia 而非再自托管一支正文衬线：Georgia 在 Windows / macOS 上都有稳定字形与较宽字面，17px 长文灰度经样张复核可读；再增加正文族会扩大切换页字体并集，却没有解决明确缺陷。
+   - 系统无衬线而非第三支品牌字体：标签只有 11px 大写、字距 0.18em，数量少且承担元数据而非声音；系统栈可零请求完成，与“纸面克制”一致。
+4. **实际覆盖与回退**:
+   - Fraunces Variable：latin 95/95 ASCII、latin-ext；无 CJK / 假名。英文实测命中；简体中文与日文由 Georgia 之后的中文系统衬线承接。
+   - Georgia：ASCII 与常用西文标点由系统覆盖；无 CJK / 假名，中文与日文回退 `Songti SC` / `SimSun` / `Hiragino Mincho ProN` / `Yu Mincho`。
+   - 系统无衬线：英文与数字由 `system-ui` 承接；中文与日文分别回退 `PingFang SC` / `Microsoft YaHei` 与 `Hiragino Sans` / `Yu Gothic UI`。
+5. **字重 / 轴 / 体积 / 许可**: Fraunces Variable 为可变字体，站点实际使用 `wght` 400–600 与 `opsz`；normal / italic 两个 latin 文件约 36,620 B / 45,656 B，OFL-1.1（无 RFN 障碍，原样分发）。Georgia 与系统无衬线为零网络请求、随系统许可使用，不随仓库再分发。
+6. **缺失回退顺序**:
+   - 展示：`--font-fraunces → Georgia → Songti SC → SimSun → Hiragino Mincho ProN → Yu Mincho → serif`。
+   - 正文：`Georgia → Songti SC → SimSun → Hiragino Mincho ProN → Yu Mincho → serif`。
+   - 标签：`system-ui → -apple-system → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。
+   - 三条链均以系统中文与通用族收尾；字体加载失败或断网时正文仍可读。
+
 ### Hierarchy
 - **Display**（560, `clamp(2.75rem, 8vw, 5.5rem)`, 1.02）：姓名，唯一一次出现的最大字号；`text-wrap: balance`。
 - **Headline**（400, `clamp(1.1rem, 2vw, 1.4rem)`, 1.5）：一句话定位，斜体。

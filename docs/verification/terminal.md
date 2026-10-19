@@ -45,11 +45,19 @@
 
 - **形态**：琥珀磷光屏 + 屏框与三枚 chrome 圆点 + 扫描线 + 内辉光 + `$ whoami` / `ls links/` 命令行与块状光标。与本设计正式页「一眼可认」。
 - **令牌抽取**：调色板原为 `style.css` 内散落字面量，集中到同目录 `tokens.css`，作用域为命名空间类 `:is(.tm, .tm-pv)`；`style.css` 改为 `@import "./tokens.css"`。
-- **等价重构**：`dist/zh-cn/terminal/index.html` 与改动前基线**逐字节一致**（归一化 `Page.*.css` 文件名后 sha256 相等）。
+- **重构边界**：预览抽取 `tokens.css` 时曾保持正式页等价；本轮字体审计显式补强正式页的符号与中日文回退链，因此当前正式页 CSS **不再**与改动前基线 sha256 相等，差异限于字体栈。
 - **`@source not "./Preview.astro"`**：本页 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把 `.flex` / `.border` / `.transform` / `.flex-wrap` / `.ease-in-out` 与 5–7 个 `@property` 注进**正式页** CSS（约 +1.3KB/页）；已排除。
 - **预览缩略档位登记**：`DESIGN.md` 增补 `typography.preview-body`（0.625rem）/ `preview-label`（0.5625rem）/ `preview-body-compact`（0.875rem）与 `rounded.preview-frame`（6px）——预览是琥珀屏的**缩微引述**，不并入正式页阶梯。据此检测器保持 0 条。
 - **已知微差（非缺陷）**：`--tm-scan` / `--tm-glow` 的 `rgba()` 值迁入自定义属性后不再被压缩器折叠为 `#ffb00006` / `#ffb00012`，渲染 alpha 相差 ≤0.0015（1px 扫描线与一处内辉光），视觉不可辨；「修」它等于把压缩器的舍入产物写进令牌、与 `DESIGN.md` 记录的值背离，故保留。
 - **全铺复验**：三语言切换页均渲染本套预览；预览导出 `--font-jetbrains-mono`，与其它设计按族去重；预览内 0 可聚焦元素，卡片可访问名不含预览文字。
+
+## 字体审计（2026-10-19）
+
+- **接线**：JetBrains Mono Variable 经 `astro.config.mjs` 注册、`Page.astro` `<Font>` 加载、`style.css` `@theme inline` 别名 `--font-terminal`；浏览器实测计算字体命中 JetBrains Mono，latin 主文件约 40,404 B。
+- **保留理由**：15px 正文样张下字面清晰、字宽稳定；VT323 的像素字形不适合正文，Share Tech Mono 与两者均缺少现有波形 / 框线 / 状态符号的完整覆盖。替换不会带来可复核的可读性收益，只会新增字体族。
+- **覆盖与回退**：JetBrains Mono 无 CJK / 假名，且不覆盖 `● ■ → ▸ ↗`；正式页与预览均显式加入 `Segoe UI Symbol` / `Apple Symbols` → `PingFang SC` / `Microsoft YaHei` → `Hiragino Sans` / `Yu Gothic UI` → `monospace`。`└─`、`→` 等装饰缺字只影响视觉纹理，不改变可访问文本。
+- **加载**：0 preload；三语言无第三方字体域名，CJK 子集按 `unicode-range` 惰性加载；断网 / 字体失败时系统等宽仍可读。
+- **记录归属**：完整六项记录见 `src/designs/terminal/DESIGN.md`「字体选型记录」。
 
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 

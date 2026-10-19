@@ -54,8 +54,16 @@
 - **视觉签名**：蓝色页眉、白底正文、方角链接与绿色实体按钮、底部粗横线；保留 GDS 的强对比与方形网格，不套用圆角卡片。
 - **令牌抽取**：18 个颜色抽入 `tokens.css`，作用域 `:is(.gv, .gv-pv)`；正式页仅改声明位置。
 - **字体**：预览与正式页共用 Arial / Helvetica 系统栈，导出 `fonts: []`，不新增请求。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **隔离与字体边界**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；本套未改字体接线与回退链，正式页仍与 HEAD 基线等价。
 - **检测器**：预览与正式页各 1 条 `overused-font`，均属既有 Arial 上游回退例外；预览未新增字号或颜色发现。
+
+## 字体审计（2026-10-19）
+
+- **接线**：无自托管字体、无 `<Font>`、`Preview.astro` 导出 `fonts: []`；正式页与预览均使用 `Arial, Helvetica, sans-serif`。
+- **保留理由**：GDS Transport 仅限 GOV.UK 服务使用、不可再分发；Arial 是上游明确回退口径。替换为 Inter / Geist 会偏离汇编忠实度并增加切换页请求，GOV.UK 的识别力来自蓝黑页眉、方形网格与信息层级。
+- **覆盖与回退**：Arial 覆盖英文、数字与常用标点；无 CJK / 假名，中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`，通用族 `sans-serif` 收尾。
+- **加载**：零字体请求、0 preload、无第三方字体域名；断网不影响版式。
+- **记录归属**：完整六项记录见 `docs/designs/govuk/ADAPTATION.md`「字体选型记录」。
 
 ## 已定事项（结论）
 

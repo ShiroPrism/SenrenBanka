@@ -14,6 +14,14 @@
 - 页面只使用 400 / 500 / 700 三档（regular / medium / bold），与型阶表一致。
 - 接线：`astro.config.mjs` 注册（npm provider、`remote: false`）→ 页面 `<Font cssVariable="--font-roboto-flex" />` → `style.css` `@theme inline` 注册。
 
+### 字体选型记录（六项，2026-10-19 字体审计）
+1. **隐喻与特征**: Material 3 面层系统 → 字体必须与型阶 token 对齐，在 display / headline / title / body / label 五类角色中保持同一骨架；字形要中性、几何、可压缩到小号标签，不能带强烈历史风格。
+2. **角色分配**: display、headline、title、body、label 与按钮 / 芯片文字全部 = Roboto Flex Variable；数字与标签不另起字体族，层级由 M3 型阶的字号、行高、字重与字距承担。
+3. **为什么是它而非其他**: Roboto 是 M3 baseline token 的参考字体，Roboto Flex 与其同源并以单文件覆盖 400–700，避免为三个字重引入三套静态文件；Inter 更接近 Apple 系统声部，Geist 更偏工程网格，都会与 Material 的型阶记忆错位。上游明确 Roboto Flex 尚未纳入 M3 型阶，因此只把它当同源实现，不把其可变轴当作规范新增档位。
+4. **实际覆盖与回退**: Roboto Flex 的 latin 子集覆盖英文、数字与常用标点；无 CJK / 假名。简体中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`；中文标题与正文不依赖 Roboto 提供字形。
+5. **字重 / 轴 / 体积 / 许可**: Roboto Flex Variable 使用 `wght` 400–700，latin 主文件约 34,320 B；OFL-1.1（无 RFN 障碍，原样分发）。构建期由 npm provider 自托管，不 preload，按 `unicode-range` 子集惰性加载。
+6. **缺失回退顺序**: `--font-roboto-flex → Roboto → system-ui → -apple-system → Arial → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。字体加载失败时 M3 型阶尺寸与布局不变，正文仍可读。
+
 ## 图标（Material Symbols + 品牌 mark）
 
 - 上游默认图标集为 Material Symbols；项目侧**不引入可变字体**（不为个位数标记付出完整字体成本），改为 **vendored 单色 SVG**（outlined 风格、24px、fill 0 / wght 400 / grad 0 默认档）：

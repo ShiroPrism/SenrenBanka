@@ -12,6 +12,15 @@
 
 - hero 按钮前置图标（品牌 mark / Mail；无 icon 配置不打标——2026-10-11 修订）+ 项目卡外链箭头；行内 svg 显式 `inline-block`（Preflight 兼容，坑已记入 `AGENTS.md` 已知坑）。
 
+## 字体（2026-10-19 字体审计）
+
+1. **隐喻与特征**: 企业级设计系统 → 字体应像一套可部署的 UI 基础设施：中性、清晰、无强性格展示笔形，正文与控件在 14–16px 保持稳定灰度，标签用同一系统声部的半粗字重完成层级。
+2. **角色分配**: hero 标题、正文、按钮、卡片标题、经历与页脚全部使用 `'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif`；不引入第二字体族，层级由字号 / 字重 / 颜色承担。
+3. **为什么是它而非其他**: FAST 官方快照的 UI 语境以 Microsoft 系统字为基线；Segoe UI 在 Windows 上与 Fluent 控件、系统菜单、DPI 渲染一致，macOS 则以系统无衬线接管。替换为 Geist / Inter 会制造“设计系统组件 + 另一套品牌字”的错位，并增加切换页字体并集；本套的识别力来自 token、控件与布局，不来自字体个性。
+4. **实际覆盖与回退**: 英文、数字与常用标点由 Segoe UI / 系统无衬线覆盖；Segoe UI 无 CJK / 假名，简体中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`。Windows 缺 Segoe UI Variable 时由 Segoe UI 承接，再落到系统无衬线。
+5. **字重 / 轴 / 体积 / 许可**: 系统字体，零自托管文件、零网络请求；字重由系统 UI 字体提供 400 / 600 / 700，无站点可变轴与体积预算。随操作系统许可使用，不随仓库再分发。
+6. **缺失回退顺序**: `Segoe UI Variable Text → Segoe UI → -apple-system → BlinkMacSystemFont → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。断网或字体缺失时版式与控件仍保持系统 UI 可读性。
+
 ## 触控增补（快照未规定）
 
 - `@media (pointer: coarse)`：`.fs-btn` `padding-block: 0.8rem`、其余 0.78rem（实测 46.8 / 44.2px）。

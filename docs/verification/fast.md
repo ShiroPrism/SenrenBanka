@@ -51,6 +51,14 @@
 - **检测器**：预览未新增发现——本套 `DESIGN.md` 是厂商快照、无 `typography` frontmatter 阶梯，检测器不对其判 `design-system-*`。厂商快照**只读**，故本套 `DESIGN.md` 无改动；如需登记缩略档位应写入 `docs/designs/fast/ADAPTATION.md`（本次无需）。
 - **全铺复验**：三语言切换页均渲染本套预览；`fonts: []` 保持，预览内 0 可聚焦元素，卡片可访问名不含预览文字。
 
+## 字体审计（2026-10-19）
+
+- **接线**：无自托管字体、无 `<Font>`、`Preview.astro` 导出 `fonts: []`；正式页与预览均使用 `Segoe UI Variable Text` / `Segoe UI` / `-apple-system` / `BlinkMacSystemFont` 系统栈。
+- **保留理由**：FAST 官方快照的 UI 基线就是 Microsoft 系统字；替换为 Geist / Inter 会让控件、菜单与正文出现两套品牌声部，并增加切换页字体并集。本套识别力来自 token、控件与网格，不来自字体个性。
+- **覆盖与回退**：英文与数字由 Segoe UI 覆盖；无 CJK / 假名，中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`。Windows 缺 Segoe UI Variable 时由 Segoe UI 承接。
+- **加载**：零字体请求、0 preload、无第三方字体域名；断网不影响版式。
+- **记录归属**：完整六项记录见 `docs/designs/fast/ADAPTATION.md`「字体（2026-10-19 字体审计）」。
+
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 
 - 触控命中增强：本页曾为唯一遗漏触控配置的设计（`design-page-verify` 首次全流程演练暴露），已补 `@media (pointer: coarse)` 块并复测通过。

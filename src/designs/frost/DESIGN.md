@@ -161,6 +161,19 @@ components:
 
 **字体：Inter Variable**（SF Pro 的不可内嵌替代，见 ADAPTATION；回退 system-ui / PingFang SC）。
 
+### 字体选型记录（六项，依据 docs/fonts/selection-guide.md 流程）
+1. **隐喻与特征**: iOS 材料与层次 → 字体必须接近系统 UI 的中性人文主义骨架，正文在 17px 有稳定灰度，标题在 34px 仍保持克制；它不能抢走玻璃、圆角与系统色的主角地位，也不能像展示字体那样把页面变成品牌海报。
+2. **角色分配**: Large Title、Title 2、Headline、Body、Subheadline、Footnote、Caption 与 Group Label 全部 = Inter Variable；层级由 iOS 型阶的字号 / 行高 / 字重承担，不引入第二字体族。
+3. **为什么是它而非其他**:
+   - Inter 而非 SF Pro：SF Pro 受 Apple 平台字体许可限制，不能随站点再分发；Inter 是开放许可、可在构建期自托管的中性替代，字面比例与系统 UI 接近，17px 正文样张灰度稳定。
+   - Inter 而非 Roboto Flex：Roboto 的几何骨架与 Android / Material 的视觉记忆更强，会与 frost 的 Apple 材料语言错位；Inter 更接近系统 UI 的紧凑字形。
+   - 保留单一族而非再加展示字体：iOS 的层级来自型阶而非换族；加入展示衬线或无衬线会破坏系统感，也会增加切换页字体并集。
+4. **实际覆盖与回退**:
+   - Inter Variable：latin 95/95 ASCII、latin-ext；无 CJK / 假名。英文、数字与系统 UI 标点实测命中；中文与日文回退系统字体。
+   - 中文回退 `PingFang SC` / `Microsoft YaHei`，日文回退 `Hiragino Sans` / `Yu Gothic UI`，通用族 `sans-serif` 收尾；日文页面不依赖 Inter 提供假名字形。
+5. **字重 / 轴 / 体积 / 许可**: Inter Variable 使用 400 / 600 / 700 `wght`；latin normal 约 48,256 B、italic 约 51,832 B；OFL-1.1（无 RFN 障碍，原样分发）。站点不 preload，按 `unicode-range` 惰性加载。
+6. **缺失回退顺序**: `--font-inter → system-ui → -apple-system → PingFang SC → Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif`。字体加载失败时仍保留系统 UI 的字号与行高，正文可读。
+
 ### iOS 型阶（本页子集）
 
 | 样式 | 字号 / 行高 | 字重 | 用途 |
