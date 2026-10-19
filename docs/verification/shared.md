@@ -1,14 +1,14 @@
 # verification — 共享机制与基础设施（shared）
 
-> 本文件维护**共享机制**（不属于任何单一设计）的当前完整验证状态：根路由页、各语言入口页、`/<locale>/designs/` 切换页、旧路径跳转页、404、语言切换器、滚动显现机制（Reveal）、字体与 base 处理、行为矩阵、**多语言路由测试矩阵**、资产 provenance。
+> 本文件维护**共享机制**（不属于任何单一设计）的当前完整验证状态：根路由页、各语言入口页、`/<locale>/designs/` 切换页（含**设计预览碎片**）、旧路径跳转页、404、语言切换器、滚动显现机制（Reveal）、字体与 base 处理、行为矩阵、**多语言路由测试矩阵**、资产 provenance。
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
-> 最近全流程验证：**2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）**；此前 2026-10-12（v0.9.0 多语言）；2026-10-10（v0.4.0）＋ v0.5.0 / v0.5.1（菜单）；2026-10-11 文档治理迁移，无代码改动。
+> 最近全流程验证：**2026-10-18（切换页设计预览碎片，3 套原型）**；此前 2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）；2026-10-12（v0.9.0 多语言）；2026-10-10（v0.4.0）＋ v0.5.0 / v0.5.1（菜单）；2026-10-11 文档治理迁移，无代码改动。
 
 ## 构建与产物隔离
 
-- `npm run build` **41 页**绿（`astro check` 0 错误）；`manualSwitch:false` 时构建 **37 页**（三语言的 `/designs/` 均不构建 → 404）。
+- `npm run build` **73 页**绿（`astro check` 0 错误 / 0 警告 / 1 条既有提示）；`manualSwitch:false` 时三语言的 `/designs/` 均不构建 → 404。
 - 根页 / 旧路径跳转页：**零**设计 CSS 链接、**零**菜单字节（它们不接共享菜单，ADR 0007 决策 6）。切换页与 404：**零**设计 CSS 链接（菜单样式为 `is:inline`），不含 `data-reveal-ready`（reveal 脚本仅存在于设计页）。
 - 菜单样式为 `<style is:inline>`（不新增 `<link>`，"每设计页只链接自己的 CSS" 成立）；运行时 chunk（`context-menu.*.js`）独立、无 `modulepreload`。详见 `action-menu.md`。
 - `BASE_PATH=/demo` 全链路前缀正确（根脚本 / noscript / 切换页链接 / canonical / favicon / 菜单配置 JSON / 随机导航均带前缀）。
@@ -43,6 +43,50 @@
 - 结论：npm provider 不填 face 的 subset 元数据、family 级 `subsets` 为空操作——**无法子集过滤**（preload 会带入未使用子集；latin 子集仍按 `unicode-range` 按需加载）。
 - 回退栈含系统中文字体（示例资料中英混排验证通过）。
 - `import.meta.env.BASE_URL` 在带 base 时不带尾斜杠（如 `'/demo'`）→ `src/lib/urls.ts` 归一化；`BASE_PATH=/demo` 前缀自检通过。
+
+## 切换页设计预览（`Preview.astro`，2026-10-18）
+
+切换页 `/{locale}/designs/` 为每套设计渲染一枚**装饰性缩略引述**。本轮落地 **3 套原型**（`terminal` 极端视觉 / `archive` `:root` 令牌风险 / `fast` 零字体成本），铺开范围待用户验收后决定。
+
+**架构（三条硬约束，均由实测推导）**
+
+1. 预览**不 import** 本设计 `style.css`（否则带进 Tailwind preflight 与整页规则）；样式走组件 `<style>`，目标 1–3KB。
+2. 令牌**不得**在 `:root`——迁入同目录 `tokens.css`，作用域为命名空间类 `:is(.ar, .ar-pv)`。组件内联的 `:root` 不被 Astro 作用域化，会成为切换页的全局令牌泄漏。
+3. 预览组件**不得**从共享模块 glob——glob 写在**切换页 entrypoint 内**（eager），既可自动发现、容忍缺失，又不建立到设计 CSS 的聚合边。
+
+**令牌抽取是等价重构**：`dist/zh-cn/{archive,terminal,fast}/index.html` 与改动前基线**逐字节一致**（归一化 `Page.*.css` 文件名后 sha256 相等）。`archive` 的 `html` 规则是 `.ar` 的**祖先**，取不到后代作用域的自定义属性，故其取值改为字面量（`#1a120d` / `#6b5e4a`，与令牌同值）——实测计算值不变。
+
+**本轮修复的真实缺陷**：`style.css` 的 `@source "./"` 会连带扫描同目录 `Preview.astro`，把其 `<style>` 里的属性文本（`display: flex` / `border:` / `transform:` / `flex-wrap:` / `ease-in-out`）当作候选工具类，把 `.flex` / `.border` / `.transform` / `.flex-wrap` / `.ease-in-out` 与配套 `@property` **注进正式页 CSS**（约 +1.3KB/页，且「改预览」会静默影响正式页样式）。已加 `@source not "./Preview.astro";`（Tailwind 4 否定来源语法，实测 4.3.3 支持）——修复后正式页新增工具类归零，仅剩既有 Tailwind 基线。
+
+**验收实测（本机 Chromium + 产物断言）**
+
+| 断言 | 结果 |
+|---|---|
+| `npm run build` / `astro check` | **73 页**绿；0 错误 / 0 警告 / 1 条既有提示（`lexicon/Page.astro` 未用参数，与本任务无关） |
+| 切换页样式表链接 | **恰好 1 条**（`/_astro/SwitcherPage.*.css`，10 149 B）；**0** `--tw-`（无 preflight）、**0** 任一设计的整页选择器（`.ar-drawer` / `.tm-screen` / `.fs-page` / `.m3-` / `.gv-` / … 全 false） |
+| 切换页 `:root` 设计令牌 | **0**（框架 `--font-*` 变量属不可避免一类） |
+| 设计页预览选择器 | **0**（16 套 × 3 语言逐一核对）；每设计页仍**恰好 1 条**自身 CSS |
+| 根页 / 404 / 语言入口页 | **0** 样式表链接 |
+| `@font-face` 计数 | **21**（4 族去重）；**反证**：向 `terminal` 的 `fonts` 临时加入 `archive` 已用的族 → 仍为 21（非 30），已还原 |
+| A7 无障碍（CDP 无障碍树） | 卡片链接可访问名 = displayName + 本地化描述；**预览文字零泄漏**（三语言）；预览 `aria-hidden="true"`、内部 **0** 可聚焦元素；Tab 走查 6 步均停在 `a.infra-card` |
+| A8 回退 | 移出 `archive/Preview.astro` → 构建仍绿、卡片回退为 accent 色点、不破版；还原后哈希一致 |
+| A6 视觉 | 三套预览对照正式页「一眼可认」：terminal 琥珀屏 + 扫描线 + `$ whoami`；archive 木抽屉 + 马尼拉卡 + 类目签 + 点引导 + 红章；fast 企业 hero + 品牌蓝按钮 + 三卡网格 |
+| 降级 | reduced-motion 下动画全 `none`、内容可见；无 JS / 无 IO 内容齐备；三语言 console **0** 错误 |
+| 375px 触控 | `pointer: coarse` 生效、**0** 横向溢出（三语言） |
+| 对比度 | 预览内最低 5.00 / 6.75 / 5.16，均 ≥ 4.5:1 |
+
+**成本实测与规模评估（A9）**
+
+| 口径 | 基线（0 预览） | 3 套预览 | 外推 16 套 | 外推 114 套 |
+|---|---|---|---|---|
+| 切换页 CSS | 0 | **10.1KB**（单资源） | ≈ 54KB | ≈ 386KB |
+| 切换页 HTML（zh-cn） | 35.6KB | **46.8KB** | ≈ 57KB | ≈ 188KB |
+| `@font-face` | 0 | **21**（4 族） | 随**族数**增长，不随设计数 | 同左 |
+
+- **瓶颈是 CSS 体积与 DOM 节点数，不是请求数**——预览 CSS 在切换页聚合为**单个**样式表（三语言共享同一 entrypoint）。
+- 已否决方案（实测）：各设计 `style.css` 全量引入 = 16 套 209KB / 114 套 ~1.5MB；iframe 真实页 = 16 套 ~1MB / 114 套 ~7MB。
+- 缓解次序：① `content-visibility: auto`（零 JS、静态兼容）兜底离屏卡片；② 保持预览极简（实测 2.1–3.8KB/套）。**分页 / 按需加载属过早优化，本轮不引入**（R7）。
+- CJK 成本：预览文字**允许**触发 CJK 子集下载（用户 2026-10-18 批准）；仅 `archive` 预览渲染中文，其余不引入 CJK。
 
 ## 多语言路由测试矩阵（v0.9.0，2026-10-12）
 

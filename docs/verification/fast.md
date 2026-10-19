@@ -41,6 +41,15 @@
 
 - 最近状态：**零发现**（无例外）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-18）
+
+- **形态**：企业级 hero（wordmark + 分隔线 → eyebrow → 大标题 → 品牌蓝实心按钮 + 描边按钮）+ 三列卡片网格（6px 圆角 + 1px 描边）。与本设计正式页「一眼可认」。
+- **零字体成本**：`Preview.astro` 导出 `fonts: []`——全部走系统字体栈，切换页不为本套声明任何 `@font-face`（这正是本套作为原型 3 的覆盖点）。
+- **令牌抽取**：自 `.fs` 规则体内迁出到同目录 `tokens.css`，作用域为命名空间类 `:is(.fs, .fs-pv)`；`light-dark()` 依赖的 `color-scheme` 由两个宿主各自声明，本文件只负责量值。`style.css` 改为 `@import "./tokens.css"`。
+- **等价重构**：`dist/zh-cn/fast/index.html` 与改动前基线**逐字节一致**（归一化 `Page.*.css` 文件名后 sha256 相等）。
+- **`@source not "./Preview.astro"`**：本页 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把其 `<style>` 属性文本当工具类注进**正式页** CSS（约 +1.3KB/页）；已排除。
+- **检测器**：预览未新增发现——本套 `DESIGN.md` 是厂商快照、无 `typography` frontmatter 阶梯，检测器不对其判 `design-system-*`。厂商快照**只读**，故本套 `DESIGN.md` 无改动；如需登记缩略档位应写入 `docs/designs/fast/ADAPTATION.md`（本次无需）。
+
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 
 - 触控命中增强：本页曾为唯一遗漏触控配置的设计（`design-page-verify` 首次全流程演练暴露），已补 `@media (pointer: coarse)` 块并复测通过。

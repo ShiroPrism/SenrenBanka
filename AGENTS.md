@@ -60,6 +60,20 @@
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
 8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；语言切换由共享操作菜单承担，设计页**不渲染** `<LanguageSwitcher />`（它是基础设施页的无 JS 回退，见下节）
 
+### 可选 · 切换页预览碎片（`Preview.astro` / `tokens.css`）
+
+切换页 `/{locale}/designs/` 为每套设计渲染一枚**装饰性缩略引述**。它**可选**——缺失时该卡片回退为 accent 色点形态，注册表四件套契约不因此变更。
+
+1. **文件**：`src/designs/<id>/Preview.astro`（自包含碎片，样式放组件 `<style>`，目标 1–3KB）。组件**必须**导出 `fonts`（`import('astro:assets').CssVariable[]`），列出自己真正渲染用到的字体族；切换页据此**按族去重**、页面级声明一次 `<Font>`（同族重复声明会产生重复 `@font-face`，实测确认）。
+2. **不得 import 本设计 `style.css`**：那会带进 Tailwind preflight 与整页规则。预览只做"视觉签名"（布局骨架 / 字体角色 / 配色 / 签名装饰），**不是**完整页面、不带动效机制、不引交互依赖，也**不得**退化为统一的通用卡片模板。
+3. **令牌单一来源**：与正式页共享 `src/designs/<id>/tokens.css`（纯 CSS，无 Tailwind 指令）。令牌作用域**必须是命名空间类**（`:is(.ar, .ar-pv)` 形式），**不得**用 `:root`——预览会把该文件内联进切换页，`:root` 在那里就是全局令牌泄漏。
+4. **令牌只放调色板**：字体角色留在 `style.css` 的 `@theme inline`（`html` 层）与预览各自引用同一个 `--font-*` 框架变量。把字体角色也做成令牌会因"祖先取不到后代作用域变量"而让正式页字体静默回退（2026-10-18 实测）。`html` 等**祖先**选择器消费令牌时必须改写为字面量。
+5. **发现机制**：切换页**在页面 entrypoint 内** glob `../designs/*/Preview.astro`（eager）——这是安全的，且能自动发现新预览、容忍缺失。**不得**从共享模块 glob 预览组件（会触发"已知坑"的 CSS 聚合）。
+6. **`style.css` 必须排除预览文件**：`@source "./"` 会连带扫描 `Preview.astro`，把 `<style>` 里的属性文本（`display: flex` / `border:` / `transform:` 等）当作候选工具类注进**正式页** CSS（实测 +1.3KB/页）。用 `@source not "./Preview.astro";` 排除（Tailwind 4 否定来源语法）。
+7. **无障碍**：预览是装饰——调用方加 `aria-hidden="true"`，内部**不得**放可聚焦元素，文字**不得**进入卡片链接的可访问名。
+8. **规模**：预览 CSS 在切换页聚合为**单个**样式表（不是每套一条 `<link>`）。设计数扩至 114 时的瓶颈是 CSS 体积与 DOM 节点数，**不是**请求数；缓解次序为先 `content-visibility: auto`、再保持预览极简，**不引入**分页 / 按需加载等复杂机制。
+9. **检测器**：预览的缩略档位（缩小的字号 / 圆角）应**登记进该设计 `DESIGN.md` 的阶梯**（自产 / 复刻）或 `ADAPTATION.md`（厂商来源），而不是加忽略规则——检测器的提示正是"新步进若属有意为之就写进设计系统"。
+
 ## 页面级操作入口：共享操作菜单（Action menu · ADR 0007）
 
 术语：菜单本体叫**共享操作菜单**（`Action menu`），**桌面形态**叫 `Context menu`，**移动形态**叫**底部动作面板**，**移动端入口**叫**悬浮球**（`Launcher`）。`CONTEXT.md` 有完整定义。
@@ -221,6 +235,8 @@
 - **菜单运行时必须按能力门控动态加载**：`ContextMenu.astro` 用内联 `matchMedia` + 动态 `import()`（Vite 不给该 chunk 生成 `modulepreload`，dist 实测）；**不要改成静态 import**，否则纯文本浏览器会白白下载菜单逻辑。门控是「桌面鼠标 **或** 触控能力任一命中」（ADR 0007 修订——移动端也需要该运行时）。菜单样式用 `<style is:inline>`：不新增 `<link>`（"每设计页只链接自己的 CSS" 仍成立）。
 - **`document.execCommand` 必须保持以 `document` 为 `this` 调用**：解构出的裸方法引用会抛 `Illegal invocation`（2026-10-10 降级复制路径实测踩坑）；该 API 虽被废弃，仍是 Clipboard API 不可用时的唯一同步降级路径，经自定义类型引用以避开 TS 废弃告警。
 - **新增字体族的首次构建需联网**：npm provider（unifont）即使 `remote: false` 也把字体文件 URL 重写为 jsdelivr 地址；构建期 fallback metrics 会拉取该字体的二进制并缓存于 `node_modules/.astro/fonts/`（缓存后离线构建成立）。受限网络下先联网构建一次即可（本机 Node fetch 走代理需 `NODE_USE_ENV_PROXY=1`；2026-10-11 新字体族接入实测，SPEC §3.2 第 13 条）。
+- **设计 `style.css` 的 `@source "./"` 会连带扫描同目录的 `Preview.astro`**：预览 `<style>` 里的属性文本（`display: flex`、`border:`、`transform:`、`flex-wrap:`、`ease-in-out`）会被 Tailwind 当作候选工具类，把 `.flex` / `.border` / `.transform` / `.flex-wrap` / `.ease-in-out` 等规则与配套 `@property` **注进正式页 CSS**（实测约 +1.3KB/页），并让「改预览」静默影响正式页样式。必须加 `@source not "./Preview.astro";` 排除（2026-10-18 实测）。
+- **`Preview.astro` 里绝不能出现 `:root` 规则**：组件内联的 `:root` **不被 Astro 作用域化**，会泄漏成切换页的全局令牌。预览令牌一律走命名空间类（`:is(.ar, .ar-pv)`）。同理，预览**不得**声明 `<Font>`（同族重复声明会产出重复 `@font-face`），也**不得**从**共享模块** glob 预览组件（会触发上面的 CSS 聚合陷阱）——glob 只能写在切换页页面 entrypoint 内。
 
 ## 构建
 

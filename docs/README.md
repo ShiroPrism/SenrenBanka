@@ -17,6 +17,7 @@
 | `docs/verification/<id>.md`、`shared.md`、`action-menu.md` | 各主题与共享机制的**当前完整验证状态**（含跨语言测试矩阵）。`action-menu.md` 专收共享操作菜单的跨设计 / 跨输入环境 / 跨配置实测矩阵（独立职责，ADR 0007） | 每次验证**更新**对应文件；不追加历史快照（历史由 Git 保留） |
 | `change-log/<version>.md` | 版本**成果 / 修复 / 验证结论**摘要 | 一个版本一个文件（版本号命名）；不写调试流水账 |
 | `src/designs/<id>/DESIGN.md` | 主题视觉规范、设计意图与设计层实现要求 | 自产 / 复刻规范可修订（先规范、后实现）；厂商来源（快照 / 汇编）**只读**（汇编 = 整合完成即冻结），偏差记入该主题 `ADAPTATION.md` |
+| `src/designs/<id>/tokens.css`、`Preview.astro` | 可选：设计令牌单一来源（正式页与预览共用）与切换页预览碎片 | 预览层新增 / 变更；约束见 `AGENTS.md`「每套设计必须满足 · 可选 · 切换页预览碎片」 |
 | `.agents/skills/design-page-verify/SKILL.md` | **验证流程唯一载体**：步骤、通过标准、记录收口 | 流程变化 |
 | `CONTEXT.md` | 领域术语表（只收项目特有概念，不含实现细节） | 术语新增 / 修订 |
 
@@ -25,6 +26,7 @@
 - 规则（`AGENTS.md`）→ 执行（`design-page-verify` skill）→ 状态（`docs/verification/`）→ 版本结论（`change-log/`）。
 - 多语言链路：语言清单唯一来源 `site.config.yaml` 的 `i18n.locales` → 资料 `src/data/profiles/<path>.yaml` → 共享文案 `src/i18n/messages.ts` / 主题文案 `src/designs/<id>/messages.ts` → 路由 `astro.config.mjs` 的 `injectRoute` → 决策 `docs/adr/0006-multilingual-static-routing.md`。
 - 操作入口链路：`AGENTS.md`「页面级操作入口」节（规则）→ `ContextMenu.astro` + `context-menu.ts`（唯一实现）→ `docs/verification/action-menu.md`（实测）→ 决策 `docs/adr/0007-action-menu-site-wide-with-touch-launcher.md`（取代 `0004` 的决定 2 与被否决项 2，并修订 `0003` 决定 4）。
+- 预览链路：`AGENTS.md`「每套设计必须满足 · 可选 · 切换页预览碎片」（规则）→ `src/designs/<id>/{Preview.astro,tokens.css}`（各设计私有）+ `src/infra/SwitcherPage.astro`（唯一聚合点）→ `docs/verification/shared.md`（实测与成本）。
 - 字体链路：`AGENTS.md`「字体」节（规则）→ `docs/fonts/selection-guide.md`（流程与工具契约）→ 本地工作台 `.local-fonts/`（目录联接字体库 / 扫描清单 / 样张工具，均不入库）→ 生产注册在 `astro.config.mjs` 的 `fonts`；决策见 `docs/adr/0008-local-font-library-isolation.md`。
 - 决策（`docs/adr/`）被 `AGENTS.md` / `DESIGN.md` / `ADAPTATION.md` 引用；主题适配互引 ADR 与 change-log。
 - **检测器规则分层**：通用规则在 skill 步骤 3；主题特有例外——自产 → 该设计 `DESIGN.md`；厂商 → 该主题 `ADAPTATION.md`。

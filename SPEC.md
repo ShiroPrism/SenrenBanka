@@ -83,6 +83,13 @@
 14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`。门控为「桌面鼠标 **或** 触控能力任一命中」（v0.10.0 修订：移动端也需要该运行时）。
 15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
 16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。
+17. **切换页预览碎片（`Preview.astro`）**【已核实，本机实测，2026-10-18】：
+   - 预览碎片**不 import** 本设计 `style.css`、不声明 `<Font>`、样式走组件 `<style>`；组件导出 `fonts`（`CssVariable[]`），切换页收集后**按族去重**、页面级声明一次——同族重复声明会产出重复 `@font-face`（实测：组件内再声明同族使 `@font-face` 由 15 增至 22）。
+   - 预览令牌来自与正式页同源的 `tokens.css`，作用域为**命名空间类**（`:is(.ar, .ar-pv)`）。组件内联的 `:root` **不被 Astro 作用域化**，会成为切换页的全局令牌泄漏。
+   - 组件内联 CSS 超出 `build.inlineStylesheets: 'auto'` 的 4KB 阈值时会产出一个**独立 `<link>`**（实测 10.1KB）——该样式表归属切换页 entrypoint，不含 Tailwind preflight、不含任何设计整页选择器；设计页仍恰好 1 个 `<link>`、0 个预览选择器。
+   - 切换页**在页面 entrypoint 内** eager glob `../designs/*/Preview.astro` 安全且可自动发现、容忍缺失；从**共享模块** glob 预览组件会触发第 11 条的聚合陷阱。
+   - `style.css` 的 `@source "./"` 会连带扫描同目录 `Preview.astro`，把其 `<style>` 的属性文本当候选工具类注进**正式页** CSS（实测约 +1.3KB/页）；须用 `@source not "./Preview.astro";` 排除（Tailwind 4 否定来源语法）。
+   - 实测成本（3 套预览，zh-cn 切换页）：CSS **10.1KB**（单资源）、HTML **35.6KB → 46.8KB**、`@font-face` **0 → 21**（4 族去重）。线性外推：16 套 ≈ 54KB CSS；114 套 ≈ 386KB CSS / ~188KB HTML。
 
 ---
 
@@ -294,6 +301,8 @@ src/designs/<id>/
 ├─ design.json        # 元数据（机器可读）
 ├─ Page.astro         # 该设计的完整页面（含 <html> 文档）
 ├─ style.css          # 该设计的 CSS 入口（Tailwind source(none) + @source + 原生 CSS）
+├─ tokens.css         # 可选：设计令牌单一来源（纯 CSS、命名空间类作用域，正式页与预览共用）
+├─ Preview.astro      # 可选：切换页预览碎片（自包含缩略引述，见 AGENTS.md「每套设计必须满足」）
 ├─ components/…       # 可选，该设计私有组件
 ├─ assets/…           # 可选，该设计私有资源
 └─ SOURCE-LICENSE.txt # 可选，来源许可要求时
@@ -451,6 +460,7 @@ src/designs/<id>/
 5. **字体**：在 `astro.config` 的 `fonts` 注册（每新增设计同步注册其字体，注意：配置项是项目级的，唯一的中央登记点）；页面 `<Font cssVariable preload?>`；`@theme inline` 注册进 Tailwind。provider 以"构建期自托管、运行时零第三方请求"为目标（NPM/Fontsource 二选一，按网络可及性在实施时定）；回退栈须含系统中文字体（示例资料含中文用于验证）。【待实施验证】新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，决策见 `docs/adr/0008-local-font-library-isolation.md`）。
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
+8. **预览碎片的样式隔离**（v0.10.0+，见 AGENTS.md）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
 
 ---
 
