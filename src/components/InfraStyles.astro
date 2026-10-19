@@ -51,28 +51,34 @@
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 1.5rem;
     align-items: stretch;
   }
   .infra-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem;
     border: 1px solid color-mix(in oklab, currentColor 30%, transparent);
-    border-radius: 0.75rem;
+    border-radius: 1rem;
     text-decoration: none;
     color: inherit;
+    background: color-mix(in oklab, Canvas 92%, currentColor 8%);
   }
   .infra-card:hover {
     border-color: currentColor;
   }
   .infra-card .name {
     display: block;
+    padding: 0 0.5rem;
     font-weight: 600;
   }
   .infra-card .desc {
     display: block;
+    padding: 0 0.5rem;
     font-size: 0.875rem;
+    line-height: 1.65;
+    min-height: calc(2 * 1.65em);
     opacity: 0.7;
   }
   /* 设计预览（可选，见 AGENTS.md「切换页预览碎片」）：
@@ -80,15 +86,17 @@
      这里只负责它在卡片里的**容器几何**——满宽、圆角裁切、与文案留出间距。 */
   .infra-card .pv {
     display: block;
-    margin: -1rem -1.25rem 0.85rem;
-    border-radius: 0.75rem 0.75rem 0 0;
+    flex: none;
+    aspect-ratio: 16 / 10;
+    margin: 0 0 0.9rem;
+    border-radius: 0.55rem;
     overflow: hidden;
   }
-  .infra-card[data-has-preview] {
-    padding-top: 0;
+  .infra-card .pv > * {
+    height: 100%;
   }
   .infra-card[data-has-preview] .name {
-    margin-top: 0.15rem;
+    margin-top: 0;
   }
   .infra-card[data-current='true'] {
     border-color: currentColor;

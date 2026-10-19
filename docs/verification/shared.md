@@ -56,7 +56,7 @@
 
 **三列响应式栅格**
 
-`.infra` 内容宽度为 `min(74rem, calc(100% - 3rem))`；`.infra-list` 使用 `repeat(3, minmax(0, 1fr))`。`<=60rem` 降为 2 列，`<=48rem` 强制 1 列。卡片 `align-items: stretch` + `height: 100%`，同一行等高；窄屏仍单列。没有 JS、分页或断点监听。
+`.infra` 内容宽度为 `min(74rem, calc(100% - 3rem))`；`.infra-list` 使用 `repeat(3, minmax(0, 1fr))`，间距 `1.5rem`。`<=60rem` 降为 2 列，`<=48rem` 强制 1 列。卡片内部为固定三段：`16 / 10` 预览画幅 + 标题 + 两行描述；所有卡片因此在同一栅格下尺寸一致，不靠 `stretch` 掩盖底部空洞。没有 JS、分页或断点监听。
 
 **验收实测（本机 Chromium + 产物断言）**
 
@@ -71,6 +71,7 @@
 | `@source not` | 16/16 套 `style.css` 均排除 `Preview.astro`；无预览属性文本注入正式页 |
 | 预览可聚焦元素 | **0**；预览统一 `aria-hidden="true"`；16 个卡片链接无障碍名不含预览文字 |
 | 栅格 | 1536 / 1280 / 1024 = 3 列；960 / 900 = 2 列；768 / 375 = 1 列；所有档位 0 横向溢出 |
+| 卡片几何 | 1536px 实测 16/16 卡片均约 `379×333px`、预览均约 `353×221px`、描述区均 `46.2px`；1536 / 960 / 375 三档实机截图确认留白与分组正常 |
 | 降级 | reduced-motion 下预览动画全停、无隐藏预览；无 JS（16 卡 / 16 预览 / 16 链接）、无 IO（0 隐藏、0 console 错误） |
 | 字体 | **82** 个 `@font-face` 声明、由 **38** 个生成族名承载；运行时三语言各实际请求 **22** 个唯一 woff2，全部 HTTP 200；0 preload |
 | 检测器 | 13 套零发现；既有已记录例外：frost 2 条 `bounce-easing`、govuk 2 条 `overused-font`、oxide 1 条 `codex-grid-background` |

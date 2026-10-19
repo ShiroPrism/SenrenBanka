@@ -89,7 +89,7 @@
    - 16 套预览的 CSS 在切换页聚合为**单个**独立 `<link>`（实测 **51 963 B**）——该样式表归属切换页 entrypoint，不含 Tailwind preflight、不含任何设计整页选择器；设计页仍恰好 1 个 `<link>`、0 个预览选择器。
    - 切换页**在页面 entrypoint 内** eager glob `../designs/*/Preview.astro` 安全且可自动发现、容忍缺失；从**共享模块** glob 预览组件会触发第 11 条的聚合陷阱。
    - `style.css` 的 `@source "./"` 会连带扫描同目录 `Preview.astro`，把其 `<style>` 的属性文本当候选工具类注进**正式页** CSS（实测约 +1.3KB/页）；须用 `@source not "./Preview.astro";` 排除（Tailwind 4 否定来源语法）。
-   - **栅格**：内容宽度 `min(74rem, calc(100% - 3rem))`；桌面 `repeat(3, minmax(0, 1fr))`（每行最多 3 张），`<=60rem` 2 列、`<=48rem` 单列；同一行卡片等高。
+   - **栅格与卡片几何**：内容宽度 `min(74rem, calc(100% - 3rem))`；桌面 `repeat(3, minmax(0, 1fr))`（每行最多 3 张），`<=60rem` 2 列、`<=48rem` 单列，栅格间距 `1.5rem`。卡片内部固定为 `16 / 10` 预览画幅 + 标题 + 两行描述，16 张卡片尺寸一致；实测 1536px 下均约 `379×333px`，预览均约 `353×221px`。
    - 实测成本（16 套全铺，zh-cn 切换页）：CSS **51 963 B**（单资源）、HTML **89 379 B**、`@font-face` **82**（38 个生成族名、23 个唯一字体变量）；运行时每种语言实际请求 **22** 个唯一 woff2，0 preload。线性外推 114 套 ≈ 370KB CSS / 637KB HTML——届时优先评估 `content-visibility: auto` 与分类，仍不引入分页 / 按需加载 / 服务器依赖。
 
 ---
