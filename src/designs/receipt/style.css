@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-receipt: var(--font-cutive-mono);
@@ -8,15 +10,6 @@
 /* ---------- 场景与纸张 ---------- */
 
 .rc {
-  --rc-back: #2a2723;
-  --rc-back-deep: #1e1b17;
-  --rc-paper: #f6f2e8;
-  --rc-paper-2: #eee8da;
-  --rc-ink: #2b2620;
-  --rc-dim: #6d6354;
-  --rc-faint: #b3a894; /* 引导线 / 装饰虚线，非文本 */
-  --rc-line: #cfc6b4; /* 分隔虚线 */
-  --rc-red: #b3372c; /* 唯一彩色：图章 */
   margin: 0;
   min-height: 100vh;
   background: radial-gradient(120% 90% at 50% -10%, #36312a, var(--rc-back) 62%, var(--rc-back-deep))

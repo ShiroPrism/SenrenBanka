@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-tape-hand: var(--font-uglytypist);
@@ -9,24 +11,6 @@
 /* ---------- 桌面、贴标与壳体令牌 ---------- */
 
 .tp {
-  --tp-back: #241f1b;
-  --tp-back-rise: #2e2822;
-  --tp-back-deep: #17120f;
-  --tp-label: #efe6d0;
-  --tp-label-2: #e6dabf;
-  --tp-ink: #2c241b;
-  --tp-dim: #6d5c45;
-  --tp-faint: #b3a58a; /* 点引导线 / 发丝线，非文本 */
-  --tp-shell: #1d1c1a;
-  --tp-shell-hi: #2a2724;
-  --tp-shell-edge: #0f0e0d;
-  --tp-shell-ink: #9c8f7a; /* 机身丝印（装饰） */
-  --tp-window: #3a3228;
-  --tp-window-hi: #4a4034;
-  --tp-window-lo: #2b251e;
-  --tp-hub: #6b5a44;
-  --tp-orange: #c2642d; /* 唯一彩色：贴标边条 + 播放键；不做文本 */
-  --tp-red: #a63b2f; /* REC 红点，全页仅此一处 */
   margin: 0;
   min-height: 100vh;
   background: radial-gradient(115% 85% at 50% -12%, var(--tp-back-rise), var(--tp-back) 58%, var(--tp-back-deep))

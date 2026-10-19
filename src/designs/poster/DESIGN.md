@@ -130,6 +130,36 @@ typography:
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "0.18em"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 body"
+    fontSize: "0.55rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-label:
+    fontFamily: "同 label"
+    fontSize: "0.42rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.14em"
+  preview-display:
+    fontFamily: "同 display"
+    fontSize: "clamp(1.7rem, 8vw, 2.9rem)"
+    fontWeight: 400
+    fontStretch: "82%"
+    lineHeight: 0.9
+    letterSpacing: "-0.02em"
+  preview-stencil:
+    fontFamily: "同 stencil"
+    fontSize: "0.88rem"
+    fontWeight: 400
+    lineHeight: 1
+  preview-micro:
+    fontFamily: "同 micro"
+    fontSize: "0.48rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.14em"
 rounded:
   paper: "0（纸张没有圆角）"
   registration: "50%（套准标记的细线圆）"

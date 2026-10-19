@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/lexicon` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：辞书书眉、双栏词条、页边索引签与牛血红词头；预览保留跨页辞典结构，不是通用卡片。
+- **令牌抽取**：纸、墨、灰、线与牛血红抽入 `tokens.css`，作用域 `:is(.lx, .lx-pv)`；正式页只改声明位置。
+- **字体**：导出 Sorts Mill Goudy / Zhuque Fangsong，切换页按族去重；CJK 子集按需下载，不 preload。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - 书眉是 header（唯一 h1）；六个词条各一枚具名 h2；索引签为装饰（aria-hidden）。

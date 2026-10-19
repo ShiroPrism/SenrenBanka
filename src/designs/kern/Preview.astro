@@ -1,0 +1,136 @@
+---
+/** kern 预览碎片：纯黑白、发丝网格、十字交点与反转按钮。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-geist',
+  '--font-geist-mono',
+];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="kern-pv">
+  <div class="kern-pv-bar">
+    <span>{t.portfolio}</span>
+    <span>{location ?? '33.6°N / 151.2°E'}</span>
+  </div>
+  <div class="kern-pv-body">
+    <p class="kern-pv-name">{name}</p>
+    <p class="kern-pv-headline">{headline}</p>
+    <div class="kern-pv-actions">
+      <span class="kern-pv-btn">{t.projects}</span>
+      <span class="kern-pv-btn kern-pv-btn-inv">{t.contact}</span>
+    </div>
+    <div class="kern-pv-grid">
+      <span>01 / {t.projects}</span><span>02 / {t.experience}</span><span>03 / {t.skills}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .kern-pv {
+    min-height: 9rem;
+    padding: 0.65rem 0.85rem 0.8rem;
+    background:
+      linear-gradient(var(--kern-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--kern-line) 1px, transparent 1px),
+      #000;
+    background-size: 3rem 3rem, 3rem 3rem, auto;
+    color: var(--kern-fg-body);
+    font-family: var(--font-geist), system-ui, sans-serif;
+    font-size: 0.5625rem;
+    line-height: 1.45;
+  }
+
+  .kern-pv-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--kern-line);
+    color: var(--kern-fg-faint);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .kern-pv-body {
+    position: relative;
+    padding-top: 0.7rem;
+  }
+
+  .kern-pv-body::before,
+  .kern-pv-body::after {
+    content: "+";
+    position: absolute;
+    top: -0.55rem;
+    color: var(--kern-line-strong);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.7rem;
+  }
+
+  .kern-pv-body::before {
+    left: -0.45rem;
+  }
+
+  .kern-pv-body::after {
+    right: -0.45rem;
+  }
+
+  .kern-pv-name {
+    margin: 0;
+    color: var(--kern-fg);
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+
+  .kern-pv-headline {
+    display: -webkit-box;
+    margin: 0.35rem 0 0;
+    overflow: hidden;
+    color: var(--kern-fg-muted);
+    font-size: 0.625rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .kern-pv-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+  }
+
+  .kern-pv-btn {
+    padding: 0.18rem 0.45rem;
+    border: 1px solid var(--kern-line-strong);
+    color: var(--kern-fg);
+  }
+
+  .kern-pv-btn-inv {
+    background: var(--kern-fg);
+    color: #000;
+  }
+
+  .kern-pv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.25rem;
+    margin-top: 0.65rem;
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--kern-line);
+    color: var(--kern-fg-faint);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 0.5rem;
+  }
+
+  @media (max-width: 360px) {
+    .kern-pv-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

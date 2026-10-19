@@ -1,30 +1,13 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 /* GOV.UK Design System（官方文档汇编）：直角 + 内容优先 + 黄黑焦点 + 实体感按钮。
    数值与来源见 src/designs/govuk/DESIGN.md；适配见 docs/designs/govuk/ADAPTATION.md。
    token 命名以功能色语义为骨架（--gv-<role>）。 */
 
 .gv {
-  --gv-brand: #1d70b8;
-  --gv-text: #0b0c0c;
-  --gv-secondary-text: #484949;
-  --gv-inverse-text: #ffffff;
-  --gv-link: #1a65a6;
-  --gv-link-hover: #0f385c;
-  --gv-link-visited: #54319f;
-  --gv-link-active: #0b0c0c;
-  --gv-border: #cecece;
-  --gv-focus: #ffdd00;
-  --gv-focus-text: #0b0c0c;
-  --gv-success: #0f7a52;
-  --gv-success-hover: #0b5c3e;
-  --gv-success-shadow: #083d29;
-  --gv-surface-bg: #f4f8fb;
-  --gv-surface-border: #8eb8dc;
-  --gv-tag-blue-text: #0f385c;
-  --gv-tag-blue-bg: #d2e2f1;
-
   margin: 0;
   background: #ffffff;
   color: var(--gv-text);

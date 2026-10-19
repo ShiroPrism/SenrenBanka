@@ -70,3 +70,10 @@
 
 - 同 `docs/verification/material3.md`；汇编原文见同目录 `DESIGN.md`（只读，不随项目适配改写）。
 - ripple / spring 等平台动效未还原（静态 web；按规范边界注记）；M3 Expressive 不在汇编内。
+
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **形态**：primary / tonal 双按钮、可扫描的分组标签、大圆角疏水面层；宽屏预览保留两层 surface 的层次，不缩成通用卡片。
+- **令牌抽取**：浅 / 深两套系统色彩与状态参数迁入 `tokens.css`，作用域 `:is(.m3, .m3-pv)`；正式页只改声明位置。
+- **字体**：导出 `--font-roboto-flex`，按族去重声明一次；无额外图标字体请求。
+- **检测器**：0 条；缩略预览未引入新的 design-system 信号。

@@ -1,0 +1,209 @@
+---
+/** fax 预览碎片：走纸孔、FAX TRANSMISSION 表头、机打字面与红章。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-courier-prime',
+  '--font-tt2020-styled',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="fx-pv">
+  <div class="fx-pv-sheet">
+    <span class="fx-pv-tractor fx-pv-tractor--left"></span>
+    <span class="fx-pv-tractor fx-pv-tractor--right"></span>
+    <div class="fx-pv-head">
+      <p class="fx-pv-caption">{t.masthead}<span>{t.brand}</span></p>
+      <p class="fx-pv-field"><b>{t.fieldTo}</b>{t.toValue}</p>
+      <p class="fx-pv-field"><b>{t.fieldFrom}</b>{name}</p>
+      <p class="fx-pv-field"><b>{t.fieldPages}</b>03 <span>{t.pagesUnit}</span></p>
+      <div class="fx-pv-stamp">{t.stamp}</div>
+    </div>
+    <p class="fx-pv-headline">{headline}</p>
+    {location && <p class="fx-pv-loc"><span>{t.originLabel}</span> {location}</p>}
+    <p class="fx-pv-sec">{t.memoTitle}</p>
+    <p class="fx-pv-bio">{headline ?? name}</p>
+    <p class="fx-pv-sec">{t.itemsTitle}</p>
+    <p class="fx-pv-link"><span>01</span>{t.ordersTitle}<i></i></p>
+    <p class="fx-pv-link"><span>02</span>{t.checkoutTitle}<i></i></p>
+    <p class="fx-pv-foot">{t.footerEnd} · P.03</p>
+  </div>
+</div>
+
+<style>
+  .fx-pv {
+    display: grid;
+    place-items: center;
+    min-height: 9rem;
+    padding: 0.55rem 0.8rem;
+    overflow: hidden;
+    background: radial-gradient(120% 85% at 50% -12%, var(--fx-back), var(--fx-back) 38%, var(--fx-back-deep));
+    color: var(--fx-ink);
+    font-family: var(--font-tt2020-styled), var(--font-zhuque), "Courier New", "Songti SC", monospace;
+    font-size: 0.52rem;
+    line-height: 1.45;
+  }
+
+  .fx-pv-sheet {
+    position: relative;
+    width: min(17.5rem, 100%);
+    padding: 0.55rem 1.25rem 0.6rem;
+    background: linear-gradient(180deg, var(--fx-paper), var(--fx-paper) 88%, var(--fx-paper-2));
+    box-shadow: 0 7px 16px var(--fx-shadow);
+  }
+
+  .fx-pv-tractor {
+    position: absolute;
+    inset-block: 0;
+    width: 0.75rem;
+    background-image: radial-gradient(circle at 50% 50%, var(--fx-back-deep) 0 2px, transparent 2.2px);
+    background-repeat: repeat-y;
+    background-size: 0.75rem 0.55rem;
+    opacity: 0.8;
+  }
+
+  .fx-pv-tractor--left {
+    left: 0;
+    border-right: 1px dashed var(--fx-line);
+  }
+
+  .fx-pv-tractor--right {
+    right: 0;
+    border-left: 1px dashed var(--fx-line);
+  }
+
+  .fx-pv-head {
+    position: relative;
+    padding-right: 3.5rem;
+  }
+
+  .fx-pv-caption {
+    margin: 0 0 0.22rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px double var(--fx-ink);
+    font-family: var(--font-courier-prime), var(--font-zhuque), "Courier New", monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.14em;
+  }
+
+  .fx-pv-caption span {
+    display: block;
+    margin-top: 0.1rem;
+    color: var(--fx-dim);
+    font-size: 0.38rem;
+    letter-spacing: 0.16em;
+  }
+
+  .fx-pv-field {
+    display: flex;
+    gap: 0.65rem;
+    margin: 0;
+    padding: 0.1rem 0;
+    border-bottom: 1px dashed var(--fx-line);
+    font-family: var(--font-courier-prime), var(--font-zhuque), "Courier New", monospace;
+    font-size: 0.42rem;
+  }
+
+  .fx-pv-field b {
+    width: 1.8rem;
+    color: var(--fx-dim);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+  }
+
+  .fx-pv-field span {
+    color: var(--fx-dim);
+  }
+
+  .fx-pv-stamp {
+    position: absolute;
+    top: 0.45rem;
+    right: 0;
+    padding: 0.13rem 0.24rem;
+    border: 1.5px solid var(--fx-red);
+    box-shadow: inset 0 0 0 1px var(--fx-red);
+    color: var(--fx-red);
+    font-family: var(--font-courier-prime), var(--font-zhuque), monospace;
+    font-size: 0.4rem;
+    letter-spacing: 0.14em;
+    transform: rotate(-7deg);
+  }
+
+  .fx-pv-headline {
+    display: -webkit-box;
+    margin: 0.35rem 0 0;
+    overflow: hidden;
+    font-size: 0.76rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .fx-pv-loc {
+    margin: 0.12rem 0 0;
+    color: var(--fx-dim);
+    font-family: var(--font-courier-prime), var(--font-zhuque), monospace;
+    font-size: 0.4rem;
+    letter-spacing: 0.08em;
+  }
+
+  .fx-pv-sec {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.34rem 0 0.1rem;
+    color: var(--fx-dim);
+    font-family: var(--font-courier-prime), var(--font-zhuque), monospace;
+    font-size: 0.42rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .fx-pv-sec::after {
+    content: "";
+    flex: 1;
+    border-top: 1px dashed var(--fx-line);
+  }
+
+  .fx-pv-bio {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .fx-pv-link {
+    display: flex;
+    gap: 0.5ch;
+    margin: 0.08rem 0 0;
+    font-family: var(--font-courier-prime), var(--font-zhuque), monospace;
+    font-size: 0.44rem;
+  }
+
+  .fx-pv-link span,
+  .fx-pv-link i {
+    color: var(--fx-dim);
+  }
+
+  .fx-pv-link i {
+    flex: 1;
+    border-top: 1px dotted var(--fx-line);
+  }
+
+  .fx-pv-foot {
+    margin: 0.45rem 0 0;
+    padding-top: 0.22rem;
+    border-top: 1px solid var(--fx-line);
+    color: var(--fx-dim);
+    font-family: var(--font-courier-prime), var(--font-zhuque), monospace;
+    font-size: 0.38rem;
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+</style>

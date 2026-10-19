@@ -36,7 +36,7 @@
 
 - `impeccable detect --json src/designs/archive` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
-## 切换页预览碎片（`Preview.astro`，2026-10-18）
+## 切换页预览碎片（`Preview.astro`，2026-10-19 全铺复验）
 
 - **形态**：木抽屉 + 马尼拉索引卡 + 凸出的类目签（`01 卡片头`）+ 印刷横线 + 点引导条目 + `SB · 03 · 03` 索书号 + 红章「已归档」+ 卡底打孔。与本设计正式页「一眼可认」。
 - **令牌抽取**：调色板自 `style.css` 的 `:root` 迁入同目录 `tokens.css`，作用域改为命名空间类 `:is(.ar, .ar-pv)`（原 `:root` 在预览内联时会成为切换页全局令牌泄漏）。`style.css` 改为 `@import "./tokens.css"`。
@@ -44,6 +44,7 @@
 - **等价重构**：`dist/zh-cn/archive/index.html` 与改动前基线**逐字节一致**（归一化 `Page.*.css` 文件名后 sha256 相等）。
 - **`@source not "./Preview.astro"`**：本页 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把其 `<style>` 属性文本当工具类注进**正式页** CSS（约 +1.3KB/页）；已排除。
 - **预览缩略档位登记**：`DESIGN.md` 的 `typography` 增补 `preview-micro`（0.5rem）/ `preview-display`（1.2rem）/ `preview-display-compact`（1.05rem）三档——预览是卡片的**缩微引述**，不并入正式页阶梯。据此检测器保持 0 条。
+- **全铺复验**：三语言切换页均渲染本套预览；预览导出 3 个字体变量（Sorts Mill Goudy / Courier Prime / Zhuque Fangsong），由切换页按族去重；预览内 0 可聚焦元素，卡片可访问名不含预览文字。
 
 ## 设计要点与已知偏差
 

@@ -1,0 +1,16 @@
+/**
+ * fax 设计令牌（单一来源）：正式页与切换页预览共用。
+ * 字体角色仍留在 style.css；这里只放场景与纸面调色板。
+ */
+
+:is(.fx, .fx-pv) {
+  --fx-back: #242220;
+  --fx-back-deep: #191715;
+  --fx-paper: #f2eee4;
+  --fx-paper-2: #eae4d6;
+  --fx-ink: #322e26;
+  --fx-dim: #6f6656;
+  --fx-line: #c9c1af;
+  --fx-red: #9c3b31;
+  --fx-shadow: rgba(0, 0, 0, 0.55);
+}

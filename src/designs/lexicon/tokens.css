@@ -1,0 +1,10 @@
+/** lexicon 设计令牌（单一来源）：正式页与切换页预览共用。 */
+
+:is(.lx, .lx-pv) {
+  --lx-back: #2a251f;
+  --lx-paper: #f4eee0;
+  --lx-ink: #2a251d;
+  --lx-dim: #675c48;
+  --lx-line: #c8bda4;
+  --lx-oxblood: #7c2f2a;
+}

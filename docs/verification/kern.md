@@ -68,6 +68,14 @@
 - 首轮 3 条 advisory（`design-system-color` ×2：`#555555` / `#e5e5e5`；`design-system-font-size` ×1：`0.875rem`）——均为**文档化缺口**而非漂移：已作为设计系统值补入 `DESIGN.md`（`colors.cross` / `colors.invert-hover` / `typography.button`）与正文，**规范先改、实现未动**；复跑 → `[]` 零发现。
 - 有效性反证：同命令对 oxide 命中 1 条已记录 advisory（`codex-grid-background`），检测器非空转。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：纯黑底、发丝网格、骑线十字号、黑白反转按钮与等宽元数据；缩略版仍是零阴影骨架，不借用切换页卡片样式。
+- **令牌抽取**：13 个灰度、动效参数与节奏抽入 `tokens.css`，作用域 `:is(.kern, .kern-pv)`；正式页只改声明位置。
+- **字体**：导出 `--font-geist` / `--font-geist-mono`，预览直接引用这两个框架变量（不使用正式页 `@theme inline` 的别名），由切换页按族去重。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：缩略档位登记进 `DESIGN.md` 的四个 `preview-*` 字号后零发现；正式页既有 `cross` / `invert-hover` 颜色仍保留在规范中。
+
 ## 已定事项（结论）
 
 - **十字号溢出修复**：`+` 采用骑线定位（9px 宽、±5px 偏移），在骨架触碰屏缘的窄视口会向右溢出 4px——375 首测 `innerWidth/scrollWidth = 379/379`；修复 = `@media (max-width: 69rem)` 隐藏十字号（骨架由竖线 / 横线继续承担），复测 **375/375** 零溢出；规范同步（DESIGN.md Layout 节）。1104px 以上保留完整十字签名（1280 桌面实测 9px 十字在位）。

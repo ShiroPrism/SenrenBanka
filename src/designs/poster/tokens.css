@@ -1,0 +1,11 @@
+/** poster 设计令牌（单一来源）：正式页与切换页预览共用。 */
+
+:is(.ps, .ps-pv) {
+  --ps-paper: #f1ebdc;
+  --ps-paper-2: #e7dfcc;
+  --ps-ink: #111110;
+  --ps-flare: #ff4d1f;
+  --ps-muted: #5f5a4d;
+  --ps-pad: clamp(1.6rem, 4.4vw, 3.25rem);
+  --ps-gutter: clamp(1rem, 2.6vw, 2.25rem);
+}

@@ -1,0 +1,22 @@
+/** tape 设计令牌（单一来源）：正式页与切换页预览共用。 */
+
+:is(.tp, .tp-pv) {
+  --tp-back: #241f1b;
+  --tp-back-rise: #2e2822;
+  --tp-back-deep: #17120f;
+  --tp-label: #efe6d0;
+  --tp-label-2: #e6dabf;
+  --tp-ink: #2c241b;
+  --tp-dim: #6d5c45;
+  --tp-faint: #b3a58a;
+  --tp-shell: #1d1c1a;
+  --tp-shell-hi: #2a2724;
+  --tp-shell-edge: #0f0e0d;
+  --tp-shell-ink: #9c8f7a;
+  --tp-window: #3a3228;
+  --tp-window-hi: #4a4034;
+  --tp-window-lo: #2b251e;
+  --tp-hub: #6b5a44;
+  --tp-orange: #c2642d;
+  --tp-red: #a63b2f;
+}

@@ -54,6 +54,14 @@
 - 最近状态：**零发现**。
 - 过程：首轮 10 条 `design-system-*` advisory（字面色 / 字号未登记进 DESIGN.md 量程）→ 按检测器指引将实际量程如实补入 `DESIGN.md` frontmatter（新增 `back-rise` / `paper-print` 两色与 `note` / `meta` / `micro` / `display-compact` 字阶）→ 归零。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：票据机口、长票、齿孔边、虚线分栏、点引导条目、红章、段码合计与条码；预览只取单联骨架，不复制正式页三语并排。
+- **令牌抽取**：票据纸、墨、灰、线与红抽入 `tokens.css`，作用域 `:is(.rc, .rc-pv)`；正式页只改声明位置。
+- **字体**：导出 Cutive Mono / Ark Pixel / DSEG7 三个变量，切换页按族去重；CJK 子集按需下载。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号与圆角已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 多语言（契约 + 新指令）
 
 - 三语言页面齐备；`<html lang>` = `zh-CN` / `ja` / `en`（随路径）；robots `noindex, follow`（非默认设计）；canonical 带 locale 前缀；**`<link rel="alternate">` = 0**（非默认设计正确）。

@@ -1,45 +1,16 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-pager: var(--font-silkscreen);
   --font-pager-dot: var(--font-handjet);
 }
 
-/* ===========================================================
-   令牌 —— CSS 里出现的每个色值 / 字号 / 字距都登记在 DESIGN.md
-   =========================================================== */
-
-:root {
-  /* 场景（桌面台面） */
-  --pg-back: #141613;
-  --pg-back-rise: #1b1e19;
-  /* 机壳（塑料） */
-  --pg-shell: #3b403a;
-  --pg-shell-2: #2c302b;
-  --pg-shell-hi: #565c53;
-  /* LCD 与像素墨 */
-  --pg-lcd: #b9c6a6;
-  --pg-lcd-2: #a9b795;
-  --pg-ink: #20281c;
-  /* 淡墨：简报给的淡墨在 LCD 上实测 4.39:1（低于正文 4.5:1 硬底线），故下调一档（见 DESIGN.md「偏差」） */
-  --pg-dim: #46503c;
-  /* 唯一彩色：背光绿（状态 / 选区 / 焦点，极小面积） */
-  --pg-green: #7fae4e;
-  /* 厚度：全部阴影收在这里，避免散落 rgba 字面量 */
-  --pg-shadow-device: 0 24px 50px rgba(0, 0, 0, 0.55), 0 6px 14px rgba(0, 0, 0, 0.35);
-  --pg-shadow-shell: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
-  --pg-shadow-screen: inset 0 2px 7px rgba(0, 0, 0, 0.34), inset 0 0 0 1px rgba(0, 0, 0, 0.36);
-  --pg-shadow-key: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 0 rgba(0, 0, 0, 0.48);
-  --pg-shadow-wheel: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
-  --pg-glow-led: 0 0 6px rgba(127, 174, 78, 0.7);
-  /* 字体栈（拉丁落在像素字 / 点阵字，汉字落在 12px 像素字，最后回退系统中文） */
-  --pg-stack: var(--font-pager), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
-  --pg-stack-dot: var(--font-pager-dot), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
-}
-
 html {
-  scrollbar-color: var(--pg-shell) var(--pg-back);
+  /* 祖先取不到 .pg 作用域令牌；字面量与 tokens.css 保持同值。 */
+  scrollbar-color: #3b403a #141613;
 }
 
 /* ===========================================================

@@ -55,6 +55,28 @@ typography:
     fontSize: "0.75rem"
     fontWeight: 400
     letterSpacing: "0.01em"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-meta:
+    fontFamily: "Geist Mono Variable, ui-monospace, SFMono-Regular, Menlo, monospace"
+    fontSize: "0.5rem"
+    fontWeight: 500
+    letterSpacing: "0.08em"
+  preview-label:
+    fontFamily: "Geist Mono Variable, ui-monospace, SFMono-Regular, Menlo, monospace"
+    fontSize: "0.5625rem"
+    fontWeight: 500
+    letterSpacing: "0.08em"
+  preview-body:
+    fontFamily: "Geist Variable, system-ui, -apple-system, sans-serif"
+    fontSize: "0.625rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-display:
+    fontFamily: "Geist Variable, system-ui, -apple-system, sans-serif"
+    fontSize: "1.65rem"
+    fontWeight: 600
+    lineHeight: 1.04
+    letterSpacing: "-0.02em"
 rounded:
   xs: "4px"
   sm: "6px"

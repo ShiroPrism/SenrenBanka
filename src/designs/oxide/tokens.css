@@ -1,0 +1,14 @@
+/**
+ * oxide 设计令牌（单一来源）：正式页与切换页预览共用。
+ * 原调色板散落在规则字面量中，此处先收拢预览需要的核心声部。
+ */
+
+:is(.ox, .ox-pv) {
+  --ox-bg: #17181c;
+  --ox-fg: #b9bbc0;
+  --ox-strong: #f2f3f4;
+  --ox-brand: #ececee;
+  --ox-dim: #8a8c93;
+  --ox-line: #34363c;
+  --ox-accent: #3fdaa0;
+}

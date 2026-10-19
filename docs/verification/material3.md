@@ -111,6 +111,14 @@
 - `detect --json src/designs/material3` → `[]` 零发现（无例外），2026-10-12 改版后复跑仍为 `[]`。
 - 有效性反证：同命令对 oxide 命中 1 条已记录 advisory（`codex-grid-background`，advisory / slop），检测器非空转。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：大圆角面层、分组标签、tonal / filled 双按钮与三级 surface 层次；预览保留 M3 的面层与控件语言，不是通用卡片。
+- **令牌抽取**：浅 / 深两套系统色与状态参数抽入 `tokens.css`，作用域 `:is(.m3, .m3-pv)`；正式页只改声明位置。
+- **字体**：导出 `--font-roboto-flex`，与其它设计按族去重；不额外引入图标字体。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：目录扫描零发现；缩略预览未引入新的 design-system 信号。
+
 ## 已定事项（结论）
 
 - **状态层不透明度取指南现值**（hover 8 / focus 10 / press 10 / drag 16）；tokens v0.192 中 focus/pressed 为 12% 的差异已在 DESIGN.md 注记与 ADAPTATION 记录。

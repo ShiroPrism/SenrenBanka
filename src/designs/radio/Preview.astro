@@ -1,0 +1,219 @@
+---
+/** radio 预览碎片：工业面板、刻度盘、琥珀段码、旋钮与螺钉。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-share-tech-mono',
+  '--font-format-1452',
+  '--font-dseg14',
+  '--font-ark-pixel',
+];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const ticks = [6, 7, 8, 9, 10, 11, 12];
+---
+
+<div class="rd-pv">
+  <div class="rd-pv-panel">
+    <span class="rd-pv-screw rd-pv-screw--tl"></span>
+    <span class="rd-pv-screw rd-pv-screw--tr"></span>
+    <span class="rd-pv-screw rd-pv-screw--bl"></span>
+    <span class="rd-pv-screw rd-pv-screw--br"></span>
+    <div class="rd-pv-head">
+      <span>SENRENBANKA · {t.brandTag}</span>
+      <span class="rd-pv-lamps"><i></i><i></i><i></i></span>
+    </div>
+    <div class="rd-pv-glass">
+      <p class="rd-pv-label">{t.callSignLabel}</p>
+      <p class="rd-pv-name">{name}</p>
+      <p class="rd-pv-headline">{headline}</p>
+      <div class="rd-pv-dial">
+        <span class="rd-pv-ticks">
+          {ticks.map((tick) => <i>{tick}</i>)}
+        </span>
+        <span class="rd-pv-needle"></span>
+      </div>
+    </div>
+    <div class="rd-pv-foot">
+      <span><b>{t.channelKey}</b><strong>04</strong></span>
+      {location && <span>{t.qthLabel} {location}</span>}
+      <span class="rd-pv-knob"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .rd-pv {
+    display: grid;
+    place-items: center;
+    min-height: 9rem;
+    padding: 0.7rem 0.8rem;
+    overflow: hidden;
+    background: radial-gradient(120% 78% at 50% -6%, var(--rd-panel), var(--rd-back) 58%);
+    color: var(--rd-cream);
+    font-family: var(--font-share-tech-mono), var(--font-ark-pixel), "PingFang SC", monospace;
+    font-size: 0.52rem;
+    line-height: 1.45;
+  }
+
+  .rd-pv-panel {
+    position: relative;
+    width: 100%;
+    padding: 0.55rem 0.65rem 0.6rem;
+    background: var(--rd-panel);
+    box-shadow: inset 0 1px 0 var(--rd-highlight), inset 0 -1px 0 var(--rd-groove), inset 0 0 0 1px var(--rd-line);
+  }
+
+  .rd-pv-screw {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, var(--rd-dim) 0 16%, var(--rd-line) 46%, var(--rd-panel-deep) 80%);
+    box-shadow: inset 0 0 0 1px var(--rd-groove);
+  }
+
+  .rd-pv-screw--tl { top: 4px; left: 4px; }
+  .rd-pv-screw--tr { top: 4px; right: 4px; }
+  .rd-pv-screw--bl { bottom: 4px; left: 4px; }
+  .rd-pv-screw--br { right: 4px; bottom: 4px; }
+
+  .rd-pv-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0 0.55rem 0.3rem;
+    border-bottom: 1px solid var(--rd-line);
+    color: var(--rd-dim);
+    font-family: var(--font-format-1452), var(--font-ark-pixel), sans-serif;
+    font-size: 0.4rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rd-pv-lamps {
+    display: flex;
+    gap: 0.22rem;
+  }
+
+  .rd-pv-lamps i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--rd-panel-deep);
+    box-shadow: inset 0 0 0 1px var(--rd-groove);
+  }
+
+  .rd-pv-lamps i:first-child {
+    background: var(--rd-amber);
+    box-shadow: 0 0 5px var(--rd-glow);
+  }
+
+  .rd-pv-glass {
+    margin-top: 0.35rem;
+    padding: 0.4rem 0.55rem 0.35rem;
+    background: var(--rd-panel-deep);
+    box-shadow: inset 0 2px 5px var(--rd-shade), inset 0 0 0 1px var(--rd-line);
+  }
+
+  .rd-pv-label {
+    margin: 0;
+    color: var(--rd-amber);
+    font-family: var(--font-format-1452), var(--font-ark-pixel), sans-serif;
+    font-size: 0.38rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .rd-pv-name {
+    margin: 0.1rem 0 0;
+    font-size: 1.15rem;
+    line-height: 1.15;
+  }
+
+  .rd-pv-headline {
+    display: -webkit-box;
+    margin: 0.1rem 0 0;
+    overflow: hidden;
+    color: var(--rd-dim);
+    font-size: 0.44rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .rd-pv-dial {
+    position: relative;
+    margin-top: 0.45rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .rd-pv-ticks {
+    display: flex;
+    justify-content: space-between;
+    color: var(--rd-amber);
+    font-family: var(--font-dseg14), var(--font-share-tech-mono), monospace;
+    font-size: 0.38rem;
+  }
+
+  .rd-pv-ticks i {
+    position: relative;
+    padding-top: 0.18rem;
+    border-top: 1px solid var(--rd-dim);
+    font-style: normal;
+  }
+
+  .rd-pv-needle {
+    position: absolute;
+    top: 0;
+    left: 62%;
+    width: 1px;
+    height: 0.7rem;
+    background: var(--rd-amber);
+    box-shadow: 0 0 4px var(--rd-glow);
+  }
+
+  .rd-pv-needle::before {
+    content: "";
+    position: absolute;
+    top: -0.15rem;
+    left: -2px;
+    width: 5px;
+    height: 5px;
+    background: var(--rd-needle);
+  }
+
+  .rd-pv-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 0.35rem;
+    padding: 0 0.15rem;
+    color: var(--rd-dim);
+    font-family: var(--font-format-1452), var(--font-ark-pixel), sans-serif;
+    font-size: 0.38rem;
+  }
+
+  .rd-pv-foot b {
+    margin-right: 0.25rem;
+    color: var(--rd-amber);
+    font-weight: 400;
+  }
+
+  .rd-pv-foot strong {
+    color: var(--rd-amber);
+    font-family: var(--font-dseg14), monospace;
+    font-size: 0.56rem;
+    font-weight: 400;
+  }
+
+  .rd-pv-knob {
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-left: auto;
+    border-radius: 50%;
+    background: radial-gradient(circle at 36% 28%, var(--rd-panel), var(--rd-panel-deep) 72%);
+    box-shadow: inset 0 0 0 1px var(--rd-groove), 0 0 0 2px var(--rd-line);
+  }
+</style>

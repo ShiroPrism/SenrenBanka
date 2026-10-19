@@ -41,6 +41,34 @@ typography:
     fontWeight: 400
     lineHeight: 1.65
     letterSpacing: "0.18em"
+  # 切换页预览层（`Preview.astro`）的缩略档位。预览是卡片的缩微引述，不是正式页；
+  # 这些档位只为 320–384px 卡宽登记，不并入上面的正式页阶梯（2026-10-19）。
+  preview-micro:
+    fontFamily: "同 label"
+    fontSize: "0.5rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  preview-meta:
+    fontFamily: "同 label"
+    fontSize: "0.5625rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  preview-body:
+    fontFamily: "Georgia, 'Songti SC', 'SimSun', serif"
+    fontSize: "0.625rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-number:
+    fontFamily: "同 label"
+    fontSize: "0.45rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  preview-display:
+    fontFamily: "Fraunces Variable, Georgia, 'Songti SC', serif"
+    fontSize: "1.8rem"
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: "-0.015em"
 rounded:
   none: "0"
 spacing:

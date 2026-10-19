@@ -5,6 +5,8 @@ colors:
   back: "#2a2723"
   back-rise: "#36312a"
   back-deep: "#1e1b17"
+  preview-machine: "#4a443b"
+  preview-machine-shadow: "rgba(0, 0, 0, 0.55)"
   paper: "#f6f2e8"
   paper-dim: "#eee8da"
   paper-print: "#ffffff"
@@ -53,9 +55,44 @@ typography:
     fontFamily: "'DSEG7 Classic', 'Cutive Mono', 'Ark Pixel 12px', monospace"
     fontSize: "1.9rem"
     fontWeight: 400
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 display"
+    fontSize: "0.5625rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  preview-display:
+    fontFamily: "同 display"
+    fontSize: "1rem"
+    fontWeight: 400
+    lineHeight: 1.25
+  preview-label:
+    fontFamily: "同 display"
+    fontSize: "0.5rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.16em"
+  preview-micro:
+    fontFamily: "同 display"
+    fontSize: "0.46rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.12em"
+  preview-note:
+    fontFamily: "同 display"
+    fontSize: "0.45rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  preview-digits:
+    fontFamily: "'DSEG7 Classic', 'Cutive Mono', monospace"
+    fontSize: "1.05rem"
+    fontWeight: 400
+    lineHeight: 1
 rounded:
   paper: "0（撕边由锯齿剪出）"
   stamp: "4px"
+  # 缩略票机出纸口按卡宽等比收敛（2026-10-19）。
+  preview-machine: "3px"
 spacing:
   step: "45ms（印刷步进）"
   block: "1.7rem"
@@ -78,6 +115,10 @@ components:
   stamp:
     textColor: "{colors.stamp}"
     borderColor: "{colors.stamp}"
+  preview-machine:
+    textColor: "{colors.ink}"
+    backgroundColor: "#4a443b"
+    shadow: "rgba(0, 0, 0, 0.55)"
 ---
 
 # Design System: Receipt — The Thermal Receipt

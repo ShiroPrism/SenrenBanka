@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 /* fax — 复古办公室 / 传真机
    一张刚从传真机里吐出来的传输纸。纸是主体，桌面只是背景；
@@ -12,20 +14,6 @@
 }
 
 .fx {
-  /* 桌面 */
-  --fx-back: #242220;
-  --fx-back-deep: #191715;
-  /* 纸 */
-  --fx-paper: #f2eee4;
-  --fx-paper-2: #eae4d6;
-  /* 墨 */
-  --fx-ink: #322e26;
-  --fx-dim: #6f6656;
-  --fx-line: #c9c1af;
-  /* 唯一彩色：红章 */
-  --fx-red: #9c3b31;
-  /* 纸影（非纸面色，仅用于把纸从桌面托起） */
-  --fx-shadow: rgba(0, 0, 0, 0.55);
   /* 字面：标签走 Courier Prime，正文走磨损的 TT2020 Style D，中文落朱雀仿宋 */
   --fx-type-label: var(--font-courier-prime), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;
   --fx-type-body: var(--font-tt2020-styled), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;

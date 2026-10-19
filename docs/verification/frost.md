@@ -66,6 +66,14 @@
 - `detect --json src/designs/frost` → **2 条 `bounce-easing`**（弹簧曲线，advisory）——**已记录例外**：弹簧过冲是 HIG 复刻的核心运动语言（受控幅度，1.25 控制点），见 `ADAPTATION.md`「检测器例外」。首轮 9 条 `design-system-color`（极光色）已作为设计系统值补入 `DESIGN.md`（`colors.aurora-*`）后复跑清零。
 - 有效性反证：同命令对 oxide 命中 1 条已记录 advisory，检测器非空转。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：极光作为背景内容，前层保留导航玻璃、大标题、Filled / tonal 胶囊与分组卡；这是 HIG 材料层次而不是通用卡片。
+- **令牌抽取**：浅 / 深两套系统色与材料参数抽入 `tokens.css`，作用域 `:is(.fr, .fr-pv)`；正式页只改声明位置。
+- **字体**：导出 `--font-inter`，与其它设计按族去重；切换页不 preload。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：新增 `preview-body` / `preview-pill` 两个缩略字号档后，预览零新增发现；仍余 2 条既有 `bounce-easing` 例外。
+
 ## 已定事项（结论）
 
 - **Accent Solid**：Filled 胶囊底固定 `#0071E3`（深浅同值）——白字在深色档系统蓝 `#0A84FF` 上仅 3.65:1（AA 不过）；浅色强调蓝亦取 `#0071E3`（`#007AFF` 不达 4.5）。两处收紧均已写入规范。

@@ -41,7 +41,7 @@
 
 - 最近状态：**零发现**（无例外）。
 
-## 切换页预览碎片（`Preview.astro`，2026-10-18）
+## 切换页预览碎片（`Preview.astro`，2026-10-19 全铺复验）
 
 - **形态**：企业级 hero（wordmark + 分隔线 → eyebrow → 大标题 → 品牌蓝实心按钮 + 描边按钮）+ 三列卡片网格（6px 圆角 + 1px 描边）。与本设计正式页「一眼可认」。
 - **零字体成本**：`Preview.astro` 导出 `fonts: []`——全部走系统字体栈，切换页不为本套声明任何 `@font-face`（这正是本套作为原型 3 的覆盖点）。
@@ -49,6 +49,7 @@
 - **等价重构**：`dist/zh-cn/fast/index.html` 与改动前基线**逐字节一致**（归一化 `Page.*.css` 文件名后 sha256 相等）。
 - **`@source not "./Preview.astro"`**：本页 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把其 `<style>` 属性文本当工具类注进**正式页** CSS（约 +1.3KB/页）；已排除。
 - **检测器**：预览未新增发现——本套 `DESIGN.md` 是厂商快照、无 `typography` frontmatter 阶梯，检测器不对其判 `design-system-*`。厂商快照**只读**，故本套 `DESIGN.md` 无改动；如需登记缩略档位应写入 `docs/designs/fast/ADAPTATION.md`（本次无需）。
+- **全铺复验**：三语言切换页均渲染本套预览；`fonts: []` 保持，预览内 0 可聚焦元素，卡片可访问名不含预览文字。
 
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 

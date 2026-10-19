@@ -41,7 +41,7 @@
 - 有意保留信号（已记录在该 `DESIGN.md`）：`blinking-cursor` / `repeating-stripes-gradient`——"琥珀终端机"的产品意图，2026-10-10 经项目所有者确认。
 - 曾出现 `em-dash-overuse` 伪命中（注释中的「——」与 `--d` 字样触发）→ 改写注释后归零（v0.4.0）。
 
-## 切换页预览碎片（`Preview.astro`，2026-10-18）
+## 切换页预览碎片（`Preview.astro`，2026-10-19 全铺复验）
 
 - **形态**：琥珀磷光屏 + 屏框与三枚 chrome 圆点 + 扫描线 + 内辉光 + `$ whoami` / `ls links/` 命令行与块状光标。与本设计正式页「一眼可认」。
 - **令牌抽取**：调色板原为 `style.css` 内散落字面量，集中到同目录 `tokens.css`，作用域为命名空间类 `:is(.tm, .tm-pv)`；`style.css` 改为 `@import "./tokens.css"`。
@@ -49,6 +49,7 @@
 - **`@source not "./Preview.astro"`**：本页 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把 `.flex` / `.border` / `.transform` / `.flex-wrap` / `.ease-in-out` 与 5–7 个 `@property` 注进**正式页** CSS（约 +1.3KB/页）；已排除。
 - **预览缩略档位登记**：`DESIGN.md` 增补 `typography.preview-body`（0.625rem）/ `preview-label`（0.5625rem）/ `preview-body-compact`（0.875rem）与 `rounded.preview-frame`（6px）——预览是琥珀屏的**缩微引述**，不并入正式页阶梯。据此检测器保持 0 条。
 - **已知微差（非缺陷）**：`--tm-scan` / `--tm-glow` 的 `rgba()` 值迁入自定义属性后不再被压缩器折叠为 `#ffb00006` / `#ffb00012`，渲染 alpha 相差 ≤0.0015（1px 扫描线与一处内辉光），视觉不可辨；「修」它等于把压缩器的舍入产物写进令牌、与 `DESIGN.md` 记录的值背离，故保留。
+- **全铺复验**：三语言切换页均渲染本套预览；预览导出 `--font-jetbrains-mono`，与其它设计按族去重；预览内 0 可聚焦元素，卡片可访问名不含预览文字。
 
 ## 已定事项与历史修复要点（结论保留；过程与中间快照见 Git）
 

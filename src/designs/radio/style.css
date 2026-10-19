@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-radio: var(--font-share-tech-mono);
@@ -16,22 +18,6 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 .rd {
-  --rd-back: #171a17;
-  --rd-panel: #232724;
-  --rd-panel-deep: #1b1f1b;
-  --rd-cream: #e9e3d2;
-  --rd-dim: #a9ad98;
-  --rd-amber: #e0a13f;
-  --rd-needle: #c14b32;
-  --rd-line: #3c413a;
-  --rd-groove: #0e110e;
-  --rd-highlight: rgba(233, 227, 210, 0.14);
-  --rd-shade: rgba(0, 0, 0, 0.55);
-  --rd-glow: rgba(224, 161, 63, 0.45);
-  /* 指针行程：从左端（--rd-from）扫到固定刻度（--rd-at） */
-  --rd-at: 62%;
-  --rd-from: -62%;
-
   margin: 0;
   min-height: 100vh;
   display: grid;

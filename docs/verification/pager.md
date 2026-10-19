@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/pager` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：塑料机身、单色 LCD、信号 / 电池 / MSG 状态栏与消息行；预览保留寻呼机外壳与绿屏，不是通用卡片。
+- **令牌抽取**：原 `:root` 中的 18 个设计令牌迁入 `tokens.css`，作用域改为 `:is(.pg, .pg-pv)`；`html` 侧改用同值字面量，避免祖先读取后代变量。
+- **字体**：导出 Silkscreen / Handjet / Ark Pixel 三个变量，切换页按族去重；CJK 子集按需下载。
+- **隔离与等价**：`:root` 设计令牌为 0；预览不 import 正式页 `style.css`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：缩略字号与圆角已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - LCD 像素感来自字体 + 1px 点线，无扫描线动画；正文 14–15px / 行高 1.7。

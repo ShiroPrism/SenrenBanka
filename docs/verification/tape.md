@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/tape` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：磁带壳、J 卡、双卷轴窗、四角螺钉、手写贴标与曲目栏；预览保留磁带与卡纸的双物件结构，不是通用卡片。
+- **令牌抽取**：壳体、窗口、标签、纸、墨、橙与阴影参数抽入 `tokens.css`，作用域 `:is(.tp, .tp-pv)`；正式页只改声明位置。
+- **字体**：导出 UglyTypist / League Mono / Zhuque Fangsong 三个变量，切换页按族去重。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号与圆角已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - 正文零 UglyTypist；曲目编号与计数走 tabular-nums；合计 = links.length。

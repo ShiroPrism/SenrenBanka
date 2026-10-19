@@ -1,0 +1,17 @@
+/** kern 设计令牌（单一来源）：正式页与切换页预览共用。 */
+
+:is(.kern, .kern-pv) {
+  --kern-surface: #111111;
+  --kern-surface-hover: #1a1a1a;
+  --kern-line: #262626;
+  --kern-line-strong: #666666;
+  --kern-fg: #ffffff;
+  --kern-fg-body: #ededed;
+  --kern-fg-muted: #a1a1a1;
+  --kern-fg-faint: #888888;
+  --kern-curve: cubic-bezier(0.22, 1, 0.36, 1);
+  --kern-dur-hover: 140ms;
+  --kern-dur-enter: 260ms;
+  --kern-dur-reveal: 300ms;
+  --kern-pad: clamp(1.25rem, 4vw, 3rem);
+}

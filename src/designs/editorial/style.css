@@ -1,17 +1,19 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-editorial: var(--font-fraunces);
 }
 
 .ed {
-  background: #f7f4ef;
-  color: #1c1917;
+  background: var(--ed-paper);
+  color: var(--ed-ink);
   font-family: Georgia, 'Songti SC', 'SimSun', serif;
   font-size: 1.0625rem;
   line-height: 1.75;
-  caret-color: #9a3412;
+  caret-color: var(--ed-accent);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -25,7 +27,7 @@
 
 .ed-hero {
   padding-bottom: clamp(3rem, 10vh, 6rem);
-  border-bottom: 1px solid #d6cfc4;
+  border-bottom: 1px solid var(--ed-line);
 }
 
 .ed-kicker {
@@ -33,7 +35,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #57534e;
+  color: var(--ed-muted);
   margin: 0;
 }
 
@@ -59,15 +61,15 @@
 }
 
 .ed-toc a {
-  color: #57534e;
+  color: var(--ed-muted);
   text-decoration: none;
   transition: color 120ms ease;
 }
 
 .ed-toc a:hover {
-  color: #1c1917;
+  color: var(--ed-ink);
   text-decoration: underline;
-  text-decoration-color: #9a3412;
+  text-decoration-color: var(--ed-accent);
   text-underline-offset: 4px;
 }
 
@@ -78,7 +80,7 @@
 }
 
 .ed-kicker-mark {
-  color: #9a3412;
+  color: var(--ed-accent);
 }
 
 .ed-name {

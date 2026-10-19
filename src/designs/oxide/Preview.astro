@@ -1,0 +1,127 @@
+---
+/**
+ * oxide 预览碎片：等宽频道标签、发丝分隔、ASCII 波形与青绿信号点。
+ * 不 import style.css；不声明 Font；仅供切换页装饰性引述。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
+---
+
+<div class="ox-pv">
+  <div class="ox-pv-bar">
+    <span class="ox-pv-brand">SENRENBANKA<span aria-hidden="true"> ●</span></span>
+    <span class="ox-pv-loc">{location ?? t.locationFallback}</span>
+  </div>
+  <p class="ox-pv-wave" aria-hidden="true">{wave}</p>
+  <p class="ox-pv-label">IDENTITY / 身份</p>
+  <p class="ox-pv-name">{name}</p>
+  <p class="ox-pv-headline">{headline}</p>
+  <p class="ox-pv-label">CHANNELS / 链接</p>
+  <p class="ox-pv-link"><span>01</span> niconico <i></i> ↗</p>
+  <p class="ox-pv-link"><span>02</span> bb-vault <i></i> ↗</p>
+</div>
+
+<style>
+  .ox-pv {
+    position: relative;
+    min-height: 9rem;
+    padding: 0.75rem 0.9rem 0.85rem;
+    overflow: hidden;
+    background:
+      linear-gradient(var(--ox-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--ox-line) 1px, transparent 1px),
+      var(--ox-bg);
+    background-size: 2.5rem 2.5rem, 2.5rem 2.5rem, auto;
+    color: var(--ox-fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.5625rem;
+    line-height: 1.55;
+  }
+
+  .ox-pv::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--ox-bg) 80%, transparent));
+  }
+
+  .ox-pv-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--ox-line);
+    color: var(--ox-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .ox-pv-brand {
+    color: var(--ox-brand);
+  }
+
+  .ox-pv-brand span {
+    color: var(--ox-accent);
+  }
+
+  .ox-pv-wave {
+    margin: 0.45rem 0 0;
+    overflow: hidden;
+    color: var(--ox-accent);
+    font-size: 0.5rem;
+    letter-spacing: -0.08em;
+    white-space: nowrap;
+  }
+
+  .ox-pv-label {
+    margin: 0.65rem 0 0.2rem;
+    color: var(--ox-dim);
+    letter-spacing: 0.12em;
+  }
+
+  .ox-pv-name {
+    margin: 0;
+    color: var(--ox-strong);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .ox-pv-headline {
+    display: -webkit-box;
+    margin: 0.25rem 0 0;
+    overflow: hidden;
+    color: var(--ox-fg);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.625rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .ox-pv-link {
+    display: flex;
+    gap: 0.55ch;
+    margin: 0.18rem 0 0;
+    color: var(--ox-fg);
+  }
+
+  .ox-pv-link span {
+    color: var(--ox-accent);
+  }
+
+  .ox-pv-link i {
+    flex: 1;
+    margin-top: 0.45em;
+    border-top: 1px solid var(--ox-line);
+  }
+</style>

@@ -69,6 +69,40 @@ typography:
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "0.08em"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 name"
+    fontSize: "0.52rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  preview-body-lg:
+    fontFamily: "同 name"
+    fontSize: "0.56rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  preview-label:
+    fontFamily: "同 name"
+    fontSize: "0.4rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.14em"
+  preview-display:
+    fontFamily: "同 name"
+    fontSize: "1.15rem"
+    fontWeight: 400
+    lineHeight: 1.1
+  preview-micro:
+    fontFamily: "同 micro"
+    fontSize: "0.38rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.1em"
+  preview-label-sm:
+    fontFamily: "同 name"
+    fontSize: "0.44rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.12em"
 rounded:
   screw: "50%（螺钉头与灯罩是物理圆形）"
   panel: "0"

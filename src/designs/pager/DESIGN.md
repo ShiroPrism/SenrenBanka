@@ -7,6 +7,8 @@ colors:
   shell: "#3b403a"
   shell-2: "#2c302b"
   shell-hi: "#565c53"
+  preview-shell-shadow: "rgba(0, 0, 0, 0.48)"
+  preview-shell-highlight: "rgba(255, 255, 255, 0.14)"
   lcd: "#b9c6a6"
   lcd-2: "#a9b795"
   ink: "#20281c"
@@ -87,6 +89,34 @@ typography:
     lineHeight: 1.4
     letterSpacing: "0.08em"
     fontVariationSettings: "'wght' 700, 'ELGR' 1, 'ELSH' 8"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 body"
+    fontSize: "0.55rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-label:
+    fontFamily: "同 display"
+    fontSize: "0.42rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.12em"
+  preview-label-lg:
+    fontFamily: "同 display"
+    fontSize: "0.5rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.12em"
+  preview-micro:
+    fontFamily: "同 body"
+    fontSize: "0.36rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  preview-digits:
+    fontFamily: "同 digit-lg"
+    fontSize: "1.15rem"
+    fontWeight: 700
+    lineHeight: 1
 rounded:
   device: "1.15rem（机壳；窄屏 0）"
   screen: "0.4rem"
@@ -94,6 +124,9 @@ rounded:
   key: "0.4rem"
   wheel: "0.31rem（胶囊的一半）"
   led: "50%"
+  # 缩略机壳按卡宽等比收敛（2026-10-19）。
+  preview-device: "0.8rem"
+  preview-screen: "0.25rem"
 spacing:
   device-gutter: "clamp(0.75rem, 3vw, 1.5rem)"
   device-width: "min(27rem, 100%)"

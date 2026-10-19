@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/radio` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：工业面板、刻度盘、琥珀段码、旋钮与四角螺钉；预览保留短波收信机的仪表密度，不缩成通用卡片。
+- **令牌抽取**：面板、玻璃、刻度、琥珀与阴影参数抽入 `tokens.css`，作用域 `:is(.rd, .rd-pv)`；正式页只改声明位置。
+- **字体**：导出 Share Tech Mono / Format 1452 / DSEG14 / Ark Pixel 四个变量，切换页按族去重。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - 面板零圆角、零外投影；深度用内阴影凹槽；模块编号 01–06（DSEG14）。

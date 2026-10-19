@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-poster-display: var(--font-league-gothic);
@@ -22,15 +24,6 @@ html:has(.ps) {
 }
 
 .ps {
-  --ps-paper: #f1ebdc;
-  --ps-paper-2: #e7dfcc;
-  --ps-ink: #111110;
-  --ps-flare: #ff4d1f; /* 唯一彩色：套准圆、悬停下划线、选区与焦点底 */
-  --ps-muted: #5f5a4d; /* 次级文本 / 细线，纸面对比 5.9:1 */
-
-  --ps-pad: clamp(1.6rem, 4.4vw, 3.25rem); /* 纸边：报头与栏目的内边距 */
-  --ps-gutter: clamp(1rem, 2.6vw, 2.25rem); /* 栏间距（栏间粗规线落在其中线上） */
-
   margin: 0;
   min-height: 100vh;
   padding: clamp(0.75rem, 3vw, 2.5rem) clamp(0.5rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3.5rem);

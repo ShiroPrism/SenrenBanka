@@ -1,0 +1,210 @@
+---
+/** lexicon 预览碎片：辞书书眉、双栏词条、页边索引签与牛血红词头。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-sorts-mill-goudy',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="lx-pv">
+  <div class="lx-pv-page">
+    <div class="lx-pv-tabs">
+      <span>1</span><span>2</span><span>3</span>
+    </div>
+    <div class="lx-pv-running">
+      <span>SENRENBANKA</span>
+      <span>{t.lexiconWord} · {t.rangeBefore} 1–3 {t.rangeAfter}</span>
+    </div>
+    <p class="lx-pv-title">
+      <span>{name}</span>
+      <i>SENRENBANKA</i>
+      <em>{t.posProper}</em>
+    </p>
+    {headline && <p class="lx-pv-headline">{headline}</p>}
+    {location && <p class="lx-pv-origin"><span>{t.originLabel}</span>{location}</p>}
+    <div class="lx-pv-columns">
+      <div class="lx-pv-entry">
+        <p class="lx-pv-head"><b>I</b>{t.memoTitle}<i>{t.memoLatin}</i></p>
+        <p class="lx-pv-text">{headline ?? name}</p>
+      </div>
+      <div class="lx-pv-entry">
+        <p class="lx-pv-head"><b>II</b>{t.linksTitle}<i>{t.linksLatin}</i></p>
+        <p class="lx-pv-ref">→ {t.projectsTitle}</p>
+        <p class="lx-pv-ref">→ {t.contactTitle}</p>
+      </div>
+    </div>
+    <p class="lx-pv-finis">{t.finis}</p>
+  </div>
+</div>
+
+<style>
+  .lx-pv {
+    display: grid;
+    place-items: start center;
+    min-height: 9rem;
+    padding: 0.55rem 0.7rem;
+    overflow: hidden;
+    background: var(--lx-back);
+    color: var(--lx-ink);
+    font-family: var(--font-sorts-mill-goudy), var(--font-zhuque), Georgia, "Songti SC", serif;
+    font-size: 0.55rem;
+    line-height: 1.5;
+  }
+
+  .lx-pv-page {
+    position: relative;
+    width: 100%;
+    padding: 0.55rem 1.15rem 0.55rem 0.7rem;
+    background: var(--lx-paper);
+  }
+
+  .lx-pv-tabs {
+    position: absolute;
+    top: 1.3rem;
+    right: -0.5rem;
+    display: grid;
+    gap: 0.18rem;
+  }
+
+  .lx-pv-tabs span {
+    display: grid;
+    place-items: center;
+    width: 0.8rem;
+    height: 1rem;
+    border: 1px solid var(--lx-line);
+    border-left: 0;
+    background: var(--lx-paper);
+    color: var(--lx-oxblood);
+    font-size: 0.38rem;
+    line-height: 1;
+  }
+
+  .lx-pv-running {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.22rem;
+    border-bottom: 1px solid var(--lx-line);
+    color: var(--lx-dim);
+    font-size: 0.42rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .lx-pv-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.55ch;
+    margin: 0.4rem 0 0;
+    line-height: 1.15;
+  }
+
+  .lx-pv-title span {
+    color: var(--lx-oxblood);
+    font-size: 1.35rem;
+    letter-spacing: 0.04em;
+  }
+
+  .lx-pv-title i {
+    color: var(--lx-oxblood);
+    font-size: 0.42rem;
+    font-style: normal;
+    letter-spacing: 0.18em;
+  }
+
+  .lx-pv-title em {
+    color: var(--lx-dim);
+    font-size: 0.48rem;
+    font-style: italic;
+  }
+
+  .lx-pv-headline {
+    display: -webkit-box;
+    margin: 0.28rem 0 0;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .lx-pv-origin {
+    margin: 0.18rem 0 0;
+    color: var(--lx-dim);
+    font-size: 0.45rem;
+    letter-spacing: 0.05em;
+  }
+
+  .lx-pv-origin span {
+    margin-right: 0.55ch;
+    letter-spacing: 0.12em;
+  }
+
+  .lx-pv-columns {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 0.8rem;
+    margin-top: 0.45rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid var(--lx-line);
+  }
+
+  .lx-pv-columns > div + div {
+    padding-left: 0.8rem;
+    border-left: 1px solid var(--lx-line);
+  }
+
+  .lx-pv-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.45ch;
+    margin: 0 0 0.18rem;
+    color: var(--lx-oxblood);
+  }
+
+  .lx-pv-head b {
+    color: var(--lx-dim);
+    font-size: 0.42rem;
+    font-weight: 400;
+  }
+
+  .lx-pv-head i {
+    color: var(--lx-oxblood);
+    font-size: 0.4rem;
+    font-style: normal;
+    letter-spacing: 0.12em;
+  }
+
+  .lx-pv-text {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--lx-dim);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .lx-pv-ref {
+    margin: 0.1rem 0 0;
+    color: var(--lx-dim);
+  }
+
+  .lx-pv-ref::first-letter {
+    color: var(--lx-oxblood);
+  }
+
+  .lx-pv-finis {
+    margin: 0.5rem 0 0;
+    text-align: center;
+    color: var(--lx-dim);
+    font-size: 0.42rem;
+    letter-spacing: 0.2em;
+  }
+</style>

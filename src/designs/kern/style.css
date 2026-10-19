@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-kern: var(--font-geist);
@@ -13,24 +15,6 @@
   color-scheme: dark;
   margin: 0;
   caret-color: #ffffff;
-
-  /* ---- tokens（单色三声部：底 / 线 / 字） ---- */
-  --kern-surface: #111111;
-  --kern-surface-hover: #1a1a1a;
-  --kern-line: #262626; /* 结构性发丝线（装饰性分隔） */
-  --kern-line-strong: #666666; /* 交互边界（≥3:1） */
-  --kern-fg: #ffffff;
-  --kern-fg-body: #ededed;
-  --kern-fg-muted: #a1a1a1;
-  --kern-fg-faint: #888888;
-
-  /* 动效（DESIGN.md motion.*） */
-  --kern-curve: cubic-bezier(0.22, 1, 0.36, 1);
-  --kern-dur-hover: 140ms;
-  --kern-dur-enter: 260ms;
-  --kern-dur-reveal: 300ms;
-
-  --kern-pad: clamp(1.25rem, 4vw, 3rem);
 
   background: #000000;
   color: var(--kern-fg-body);

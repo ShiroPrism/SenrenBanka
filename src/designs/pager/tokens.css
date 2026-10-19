@@ -1,0 +1,25 @@
+/**
+ * pager 设计令牌（单一来源）：正式页与切换页预览共用。
+ * 原 :root 全局令牌已迁到命名空间类；html 滚动条改用同值字面量（祖先不能读后代变量）。
+ */
+
+:is(.pg, .pg-pv) {
+  --pg-back: #141613;
+  --pg-back-rise: #1b1e19;
+  --pg-shell: #3b403a;
+  --pg-shell-2: #2c302b;
+  --pg-shell-hi: #565c53;
+  --pg-lcd: #b9c6a6;
+  --pg-lcd-2: #a9b795;
+  --pg-ink: #20281c;
+  --pg-dim: #46503c;
+  --pg-green: #7fae4e;
+  --pg-shadow-device: 0 24px 50px rgba(0, 0, 0, 0.55), 0 6px 14px rgba(0, 0, 0, 0.35);
+  --pg-shadow-shell: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -3px 0 rgba(0, 0, 0, 0.32);
+  --pg-shadow-screen: inset 0 2px 7px rgba(0, 0, 0, 0.34), inset 0 0 0 1px rgba(0, 0, 0, 0.36);
+  --pg-shadow-key: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 0 rgba(0, 0, 0, 0.48);
+  --pg-shadow-wheel: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  --pg-glow-led: 0 0 6px rgba(127, 174, 78, 0.7);
+  --pg-stack: var(--font-pager), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+  --pg-stack-dot: var(--font-pager-dot), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+}

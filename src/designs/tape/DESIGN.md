@@ -96,11 +96,35 @@ typography:
     fontWeight: 700
     letterSpacing: "0.02em"
     lineHeight: 1
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 body"
+    fontSize: "0.5rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-label:
+    fontFamily: "同 body"
+    fontSize: "0.56rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  preview-meta:
+    fontFamily: "同 body"
+    fontSize: "0.38rem"
+    fontWeight: 400
+    lineHeight: 1.45
+  preview-micro:
+    fontFamily: "同 body"
+    fontSize: "0.36rem"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "0.1em"
 rounded:
   shell: "10px"
   label: "3px"
   card: "2px"
   tape-corner: "1px"
+  # 缩略外壳按卡宽等比收敛（2026-10-19）。
+  preview-shell: "0.45rem"
 spacing:
   scene: "clamp(1.5rem, 4vw, 3rem)（两栏间距）"
   track: "1.9rem（分区上边距）"

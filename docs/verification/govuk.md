@@ -49,6 +49,14 @@
 - `detect --json src/designs/govuk` → **1 条** `overused-font`（`font-family: Arial`，severity warning）——**已记录例外**：Arial 为上游回退口径（GDS Transport 不可分发），非漂移（见 `ADAPTATION.md`「检测器例外」）。design/motion 类信号为零。
 - 有效性反证：同命令对 oxide 命中 1 条已记录 advisory（`codex-grid-background`），检测器非空转。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：蓝色页眉、白底正文、方角链接与绿色实体按钮、底部粗横线；保留 GDS 的强对比与方形网格，不套用圆角卡片。
+- **令牌抽取**：18 个颜色抽入 `tokens.css`，作用域 `:is(.gv, .gv-pv)`；正式页仅改声明位置。
+- **字体**：预览与正式页共用 Arial / Helvetica 系统栈，导出 `fonts: []`，不新增请求。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览与正式页各 1 条 `overused-font`，均属既有 Arial 上游回退例外；预览未新增字号或颜色发现。
+
 ## 已定事项（结论）
 
 - **2025 品牌刷新口径**：本次整合按当日上游现状（蓝页眉 / 功能 link `#1A65A6` / border `#CECECE` / 绿按钮 `#0F7A52` / 蓝 tint 标签），旧版黑页眉口径不在本汇编内——已记入 ADAPTATION。

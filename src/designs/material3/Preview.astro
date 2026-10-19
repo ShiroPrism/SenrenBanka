@@ -1,0 +1,139 @@
+---
+/** material3 预览碎片：大圆角面层、tonal/filled 按钮与紫 tonal 色。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = ['--font-roboto-flex'];
+
+const { locale, name, headline } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="m3-pv">
+  <div class="m3-pv-shell">
+    <div class="m3-pv-top">
+      <span>{name}</span>
+      <span>{t.portfolio}</span>
+    </div>
+    <div class="m3-pv-hero">
+      <p class="m3-pv-label">{t.portfolio}</p>
+      <p class="m3-pv-title">{headline ?? name}</p>
+      <div class="m3-pv-actions">
+        <span class="m3-pv-btn m3-pv-btn-tonal">{t.projects}</span>
+        <span class="m3-pv-btn m3-pv-btn-filled">{t.contact}</span>
+      </div>
+    </div>
+    <div class="m3-pv-cards">
+      <div><b>01</b><span>{t.projects}</span></div>
+      <div><b>02</b><span>{t.experience}</span></div>
+      <div><b>03</b><span>{t.skills}</span></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .m3-pv {
+    color-scheme: light dark;
+    min-height: 9rem;
+    padding: 0.65rem 0.8rem;
+    overflow: hidden;
+    background: var(--m3-surface);
+    color: var(--m3-on-surface);
+    font-family: var(--font-roboto-flex), Roboto, system-ui, "PingFang SC", sans-serif;
+    font-size: 0.55rem;
+    line-height: 1.45;
+  }
+
+  .m3-pv-shell {
+    padding: 0.55rem 0.65rem 0.65rem;
+    border-radius: var(--m3-corner-xl);
+    background: var(--m3-surface-container-low);
+  }
+
+  .m3-pv-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--m3-outline-variant);
+    color: var(--m3-on-surface-variant);
+    font-size: 0.48rem;
+  }
+
+  .m3-pv-hero {
+    padding: 0.55rem 0 0.45rem;
+  }
+
+  .m3-pv-label {
+    margin: 0 0 0.18rem;
+    color: var(--m3-primary);
+    font-size: 0.45rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .m3-pv-title {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.12;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .m3-pv-actions {
+    display: flex;
+    gap: 0.35rem;
+    margin-top: 0.45rem;
+  }
+
+  .m3-pv-btn {
+    padding: 0.18rem 0.55rem;
+    border-radius: var(--m3-corner-full);
+    font-size: 0.48rem;
+    font-weight: 500;
+  }
+
+  .m3-pv-btn-tonal {
+    background: var(--m3-secondary-container);
+    color: var(--m3-on-secondary-container);
+  }
+
+  .m3-pv-btn-filled {
+    background: var(--m3-primary);
+    color: var(--m3-on-primary);
+  }
+
+  .m3-pv-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+
+  .m3-pv-cards div {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.35rem 0.4rem;
+    border-radius: var(--m3-corner-m);
+    background: var(--m3-surface-container-high);
+  }
+
+  .m3-pv-cards b {
+    color: var(--m3-primary);
+    font-size: 0.42rem;
+    font-weight: 500;
+  }
+
+  .m3-pv-cards span {
+    font-size: 0.46rem;
+  }
+
+  @media (max-width: 360px) {
+    .m3-pv-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

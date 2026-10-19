@@ -83,13 +83,14 @@
 14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`。门控为「桌面鼠标 **或** 触控能力任一命中」（v0.10.0 修订：移动端也需要该运行时）。
 15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
 16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。
-17. **切换页预览碎片（`Preview.astro`）**【已核实，本机实测，2026-10-18】：
+17. **切换页预览碎片（`Preview.astro`）**【已核实，本机实测，2026-10-19 全铺】：
    - 预览碎片**不 import** 本设计 `style.css`、不声明 `<Font>`、样式走组件 `<style>`；组件导出 `fonts`（`CssVariable[]`），切换页收集后**按族去重**、页面级声明一次——同族重复声明会产出重复 `@font-face`（实测：组件内再声明同族使 `@font-face` 由 15 增至 22）。
    - 预览令牌来自与正式页同源的 `tokens.css`，作用域为**命名空间类**（`:is(.ar, .ar-pv)`）。组件内联的 `:root` **不被 Astro 作用域化**，会成为切换页的全局令牌泄漏。
-   - 组件内联 CSS 超出 `build.inlineStylesheets: 'auto'` 的 4KB 阈值时会产出一个**独立 `<link>`**（实测 10.1KB）——该样式表归属切换页 entrypoint，不含 Tailwind preflight、不含任何设计整页选择器；设计页仍恰好 1 个 `<link>`、0 个预览选择器。
+   - 16 套预览的 CSS 在切换页聚合为**单个**独立 `<link>`（实测 **51 963 B**）——该样式表归属切换页 entrypoint，不含 Tailwind preflight、不含任何设计整页选择器；设计页仍恰好 1 个 `<link>`、0 个预览选择器。
    - 切换页**在页面 entrypoint 内** eager glob `../designs/*/Preview.astro` 安全且可自动发现、容忍缺失；从**共享模块** glob 预览组件会触发第 11 条的聚合陷阱。
    - `style.css` 的 `@source "./"` 会连带扫描同目录 `Preview.astro`，把其 `<style>` 的属性文本当候选工具类注进**正式页** CSS（实测约 +1.3KB/页）；须用 `@source not "./Preview.astro";` 排除（Tailwind 4 否定来源语法）。
-   - 实测成本（3 套预览，zh-cn 切换页）：CSS **10.1KB**（单资源）、HTML **35.6KB → 46.8KB**、`@font-face` **0 → 21**（4 族去重）。线性外推：16 套 ≈ 54KB CSS；114 套 ≈ 386KB CSS / ~188KB HTML。
+   - **栅格**：内容宽度 `min(74rem, calc(100% - 3rem))`；桌面 `repeat(3, minmax(0, 1fr))`（每行最多 3 张），`<=60rem` 2 列、`<=48rem` 单列；同一行卡片等高。
+   - 实测成本（16 套全铺，zh-cn 切换页）：CSS **51 963 B**（单资源）、HTML **89 379 B**、`@font-face` **82**（38 个生成族名、23 个唯一字体变量）；运行时每种语言实际请求 **22** 个唯一 woff2，0 preload。线性外推 114 套 ≈ 370KB CSS / 637KB HTML——届时优先评估 `content-visibility: auto` 与分类，仍不引入分页 / 按需加载 / 服务器依赖。
 
 ---
 

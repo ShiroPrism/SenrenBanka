@@ -1,5 +1,7 @@
 @import "tailwindcss" source(none);
 @source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-fr: var(--font-inter);
@@ -13,29 +15,6 @@
   color-scheme: light dark;
   margin: 0;
 
-  /* ---- 系统声部（浅色） ---- */
-  --fr-accent: #0071e3; /* iOS 系统蓝深一档，过 AA 硬底线（见 DESIGN.md） */
-  --fr-accent-solid: #0071e3; /* 填充底固定档（深浅同值）：白字在深色档 #0A84FF 上仅 3.65:1 */
-  --fr-canvas: #f2f2f7;
-  --fr-label: #1c1c1e;
-  --fr-secondary: #636366;
-  --fr-tertiary: #6e6e73;
-  --fr-separator: #c6c6c8;
-
-  /* ---- 材料（浅色）：两层厚度 ---- */
-  --fr-nav-bg: rgba(250, 250, 250, 0.6);
-  --fr-card-bg: rgba(255, 255, 255, 0.78);
-  --fr-fill: rgba(120, 120, 128, 0.12);
-  --fr-hairline: rgba(0, 0, 0, 0.05);
-  --fr-nav-border: rgba(0, 0, 0, 0.12);
-
-  /* ---- 动效：弹簧族 ---- */
-  --fr-spring: cubic-bezier(0.32, 1.25, 0.5, 1);
-  --fr-enter: 500ms;
-  --fr-reveal: 450ms;
-  --fr-hover: 200ms;
-  --fr-press: 130ms;
-
   background: var(--fr-canvas);
   color: var(--fr-label);
   font-family:
@@ -43,23 +22,6 @@
   font-size: 1.0625rem; /* body 17 */
   line-height: 1.47;
   -webkit-font-smoothing: antialiased;
-}
-
-/* 深色（System appearance） */
-@media (prefers-color-scheme: dark) {
-  .fr {
-    --fr-accent: #0a84ff;
-    --fr-canvas: #000000;
-    --fr-label: #ffffff;
-    --fr-secondary: #a1a1a6;
-    --fr-tertiary: #8e8e93;
-    --fr-separator: #38383a;
-    --fr-nav-bg: rgba(22, 22, 24, 0.55);
-    --fr-card-bg: rgba(28, 28, 30, 0.72);
-    --fr-fill: rgba(120, 120, 128, 0.24);
-    --fr-hairline: rgba(255, 255, 255, 0.08);
-    --fr-nav-border: rgba(255, 255, 255, 0.12);
-  }
 }
 
 /* ---- 极光：玻璃的"背景内容"（固定装饰层，无动画，不进入无障碍树） ---- */
@@ -83,36 +45,6 @@
       radial-gradient(560px 460px at 88% 16%, rgba(104, 76, 190, 0.45), transparent 70%),
       radial-gradient(600px 520px at 72% 86%, rgba(22, 122, 114, 0.4), transparent 72%),
       radial-gradient(520px 420px at 16% 80%, rgba(158, 64, 106, 0.34), transparent 70%);
-  }
-}
-
-/* ---- 玻璃回退：不支持 backdrop-filter 或系统"降低透明度" → 近实底 ---- */
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .fr {
-    --fr-nav-bg: rgba(250, 250, 250, 0.97);
-    --fr-card-bg: rgba(255, 255, 255, 0.97);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .fr {
-      --fr-nav-bg: rgba(22, 22, 24, 0.97);
-      --fr-card-bg: rgba(28, 28, 30, 0.97);
-    }
-  }
-}
-
-@media (prefers-reduced-transparency: reduce) {
-  .fr {
-    --fr-nav-bg: rgba(250, 250, 250, 0.97);
-    --fr-card-bg: rgba(255, 255, 255, 0.97);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .fr {
-      --fr-nav-bg: rgba(22, 22, 24, 0.97);
-      --fr-card-bg: rgba(28, 28, 30, 0.97);
-    }
   }
 }
 

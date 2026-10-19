@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/poster` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：双色丝印纸、巨幅窄体姓名、套准十字、粗规线与镂空分区头；预览把字号当图形，不套用切换页卡片。
+- **令牌抽取**：纸、墨、灰、强调与套准色抽入 `tokens.css`，作用域 `:is(.ps, .ps-pv)`；正式页只改声明位置。
+- **字体**：导出 League Gothic / Blackout 2AM / Prociono / Zhuque Fangsong 四个变量，切换页按族去重。
+- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - 报头只有 h1（无 kicker/eyebrow）；六个内容分区各有可见 h2（镂空拉丁词 + 本地语言名）。

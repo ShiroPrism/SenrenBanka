@@ -1,0 +1,103 @@
+---
+/** govuk 预览碎片：粗蓝头栏、黑白文字、方形控件与黄色焦点。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="gv-pv">
+  <div class="gv-pv-header">
+    <span class="gv-pv-name">{name}</span>
+    {location && <span class="gv-pv-loc">{location}</span>}
+  </div>
+  <div class="gv-pv-body">
+    <p class="gv-pv-headline">{headline}</p>
+    <p class="gv-pv-link">↗ {t.projects}</p>
+    <p class="gv-pv-button">→ {t.contact}</p>
+    <div class="gv-pv-footer"><span>{t.skills}</span><strong>{t.experience}</strong></div>
+  </div>
+</div>
+
+<style>
+  .gv-pv {
+    min-height: 9rem;
+    background: #fff;
+    color: var(--gv-text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.625rem;
+    line-height: 1.35;
+  }
+
+  .gv-pv-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 0.75rem;
+    padding: 0.55rem 0.8rem 0.48rem;
+    border-bottom: 1px solid transparent;
+    background: var(--gv-brand);
+    color: var(--gv-inverse-text);
+  }
+
+  .gv-pv-name {
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .gv-pv-loc {
+    font-size: 0.5625rem;
+    opacity: 0.92;
+  }
+
+  .gv-pv-body {
+    padding: 0.75rem 0.8rem 0.8rem;
+  }
+
+  .gv-pv-headline {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.12;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .gv-pv-link {
+    margin: 0.5rem 0 0.4rem;
+    color: var(--gv-link);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+  }
+
+  .gv-pv-button {
+    display: inline-block;
+    margin: 0;
+    padding: 0.26rem 0.55rem;
+    background: var(--gv-success);
+    box-shadow: 0 2px 0 var(--gv-success-shadow);
+    color: var(--gv-inverse-text);
+  }
+
+  .gv-pv-footer {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.7rem;
+    padding-top: 0.4rem;
+    border-top: 4px solid var(--gv-border);
+    color: var(--gv-secondary-text);
+    letter-spacing: 0.06em;
+  }
+
+  .gv-pv-footer strong {
+    color: var(--gv-text);
+  }
+</style>

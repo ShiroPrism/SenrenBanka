@@ -1,0 +1,12 @@
+/**
+ * editorial 设计令牌（单一来源）：正式页与切换页预览共用。
+ * 作用域是类，不是 :root；字体角色仍由 style.css 的 @theme inline 承担。
+ */
+
+:is(.ed, .ed-pv) {
+  --ed-paper: #f7f4ef;
+  --ed-ink: #1c1917;
+  --ed-muted: #57534e;
+  --ed-line: #d6cfc4;
+  --ed-accent: #9a3412;
+}

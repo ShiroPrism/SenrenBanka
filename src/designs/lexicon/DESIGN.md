@@ -91,6 +91,35 @@ typography:
     fontWeight: 400
     lineHeight: 1.85
     letterSpacing: "0.16em"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontFamily: "同 display"
+    fontSize: "0.55rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  preview-display:
+    fontFamily: "同 display"
+    fontSize: "1.35rem"
+    fontWeight: 400
+    lineHeight: 1.15
+    letterSpacing: "0.04em"
+  preview-meta:
+    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontSize: "0.42rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.14em"
+  preview-note:
+    fontFamily: "同 display"
+    fontSize: "0.48rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  preview-micro:
+    fontFamily: "同 display"
+    fontSize: "0.38rem"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.12em"
 rounded:
   all: "0（书页与索引签均为直角）"
 spacing:

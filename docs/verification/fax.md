@@ -36,6 +36,14 @@
 
 - `impeccable detect --json src/designs/fax` → **0 条**（DESIGN.md 已登记 CSS 字面量）。
 
+## 切换页预览碎片（`Preview.astro`，2026-10-19）
+
+- **视觉签名**：传真纸、两侧走纸孔、`FAX TRANSMISSION` 字段表头、磨损打字机字面与红章；预览是单页传输，不借用切换页卡片语言。
+- **令牌抽取**：纸张、墨、暗、线、红与台面色抽入 `tokens.css`，作用域 `:is(.fx, .fx-pv)`；正式页只改声明位置。
+- **字体**：导出 Courier Prime / TT2020 Style D / Zhuque Fangsong 三个变量，由切换页按族去重；CJK 子集按需下载，不 preload。
+- **隔离与等价**：预览独立组件样式，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
+- **检测器**：预览缩略字号已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
+
 ## 设计要点与已知偏差
 
 - 与 receipt 明确区分：宽幅纸、传输表头、走纸孔、磨损字面；未复用撕边 / 点引导线 / 三联排列。

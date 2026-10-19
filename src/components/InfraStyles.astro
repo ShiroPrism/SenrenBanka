@@ -30,7 +30,7 @@
     }
   }
   .infra {
-    width: min(42rem, calc(100% - 3rem));
+    width: min(74rem, calc(100% - 3rem));
     padding: 2rem 0 4rem;
   }
   .infra h1 {
@@ -50,10 +50,13 @@
     margin: 2rem 0 0;
     padding: 0;
     display: grid;
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
   }
   .infra-card {
     display: block;
+    height: 100%;
     padding: 1rem 1.25rem;
     border: 1px solid color-mix(in oklab, currentColor 30%, transparent);
     border-radius: 0.75rem;
@@ -72,7 +75,7 @@
     font-size: 0.875rem;
     opacity: 0.7;
   }
-  /* 设计预览（可选，见 .trellis/tasks/10-18-switcher-design-preview）：
+  /* 设计预览（可选，见 AGENTS.md「切换页预览碎片」）：
      预览是卡片内的装饰性引述，样式全部来自各设计自己的 Preview.astro；
      这里只负责它在卡片里的**容器几何**——满宽、圆角裁切、与文案留出间距。 */
   .infra-card .pv {
@@ -109,6 +112,16 @@
     border-radius: 999px;
     background: var(--chip, currentColor);
     margin-right: 0.5em;
+  }
+  @media (max-width: 60rem) {
+    .infra-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 48rem) {
+    .infra-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
   /* 基础设施页上的语言切换器（项目 chrome，中性外观） */
   .lang-switch {

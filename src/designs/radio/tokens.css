@@ -1,0 +1,18 @@
+/** radio 设计令牌（单一来源）：正式页与切换页预览共用。 */
+
+:is(.rd, .rd-pv) {
+  --rd-back: #171a17;
+  --rd-panel: #232724;
+  --rd-panel-deep: #1b1f1b;
+  --rd-cream: #e9e3d2;
+  --rd-dim: #a9ad98;
+  --rd-amber: #e0a13f;
+  --rd-needle: #c14b32;
+  --rd-line: #3c413a;
+  --rd-groove: #0e110e;
+  --rd-highlight: rgba(233, 227, 210, 0.14);
+  --rd-shade: rgba(0, 0, 0, 0.55);
+  --rd-glow: rgba(224, 161, 63, 0.45);
+  --rd-at: 62%;
+  --rd-from: -62%;
+}

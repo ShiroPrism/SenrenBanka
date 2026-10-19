@@ -1,0 +1,206 @@
+---
+/** poster 预览碎片：双色丝印、巨幅窄体、套准十字与粗规线。 */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-league-gothic',
+  '--font-blackout',
+  '--font-prociono',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="ps-pv">
+  <div class="ps-pv-sheet">
+    <span class="ps-pv-reg ps-pv-reg--tl"></span>
+    <span class="ps-pv-reg ps-pv-reg--br"></span>
+    <p class="ps-pv-imprint">
+      <span>{t.medium}</span>
+      <span>{location ? `${t.placeLabel} ${location}` : 'SENRENBANKA'}</span>
+    </p>
+    <p class="ps-pv-name">{name}</p>
+    <p class="ps-pv-headline">{headline}</p>
+    <span class="ps-pv-rule"></span>
+    <div class="ps-pv-grid">
+      <section>
+        <p class="ps-pv-mark">{t.memoMark}</p>
+        <p class="ps-pv-title">{t.memoTitle}</p>
+        <p class="ps-pv-copy">{headline ?? name}</p>
+      </section>
+      <section>
+        <p class="ps-pv-mark">{t.itemsMark}</p>
+        <p class="ps-pv-title">{t.itemsTitle}</p>
+        <p class="ps-pv-link"><span>01</span>{t.ordersTitle}</p>
+        <p class="ps-pv-link"><span>02</span>{t.checkoutTitle}</p>
+      </section>
+    </div>
+    <p class="ps-pv-foot">{t.imprint}</p>
+  </div>
+</div>
+
+<style>
+  .ps-pv {
+    min-height: 9rem;
+    padding: 0.6rem 0.75rem;
+    overflow: hidden;
+    background: var(--ps-paper-2);
+    color: var(--ps-ink);
+    font-family: var(--font-prociono), var(--font-zhuque), Georgia, "Songti SC", serif;
+    font-size: 0.55rem;
+    line-height: 1.4;
+  }
+
+  .ps-pv-sheet {
+    position: relative;
+    min-height: 7.7rem;
+    padding: 0.65rem 0.75rem 0.55rem;
+    background: var(--ps-paper);
+    box-shadow: 0 5px 14px rgba(17, 17, 16, 0.18);
+  }
+
+  .ps-pv-reg {
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    border: 1px solid var(--ps-ink);
+    border-radius: 50%;
+  }
+
+  .ps-pv-reg::before,
+  .ps-pv-reg::after {
+    content: "";
+    position: absolute;
+    background: var(--ps-ink);
+  }
+
+  .ps-pv-reg::before {
+    top: -0.3rem;
+    bottom: -0.3rem;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+  }
+
+  .ps-pv-reg::after {
+    top: 50%;
+    right: -0.3rem;
+    left: -0.3rem;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+
+  .ps-pv-reg--tl {
+    top: 0.35rem;
+    left: 0.35rem;
+  }
+
+  .ps-pv-reg--br {
+    right: 0.35rem;
+    bottom: 0.35rem;
+  }
+
+  .ps-pv-imprint {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin: 0 0 0.2rem 0.75rem;
+    color: var(--ps-muted);
+    font-family: var(--font-league-gothic), var(--font-zhuque), "Arial Narrow", sans-serif;
+    font-size: 0.42rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .ps-pv-name {
+    margin: 0;
+    font-family: var(--font-league-gothic), var(--font-zhuque), "Arial Narrow", sans-serif;
+    font-stretch: 82%;
+    font-size: clamp(1.7rem, 8vw, 2.9rem);
+    font-weight: 400;
+    line-height: 0.82;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .ps-pv-headline {
+    display: -webkit-box;
+    margin: 0.25rem 0 0;
+    overflow: hidden;
+    font-size: 0.58rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .ps-pv-rule {
+    display: block;
+    height: 0.3rem;
+    margin: 0.4rem -0.75rem 0;
+    background: var(--ps-ink);
+  }
+
+  .ps-pv-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 0.8rem;
+    margin-top: 0.45rem;
+  }
+
+  .ps-pv-grid section {
+    position: relative;
+  }
+
+  .ps-pv-grid section + section {
+    padding-left: 0.8rem;
+    border-left: 0.18rem solid var(--ps-ink);
+  }
+
+  .ps-pv-mark {
+    margin: 0;
+    font-family: var(--font-blackout), var(--font-league-gothic), "Arial Black", sans-serif;
+    font-size: 0.88rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+
+  .ps-pv-title {
+    margin: 0.15rem 0 0.3rem;
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .ps-pv-copy {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--ps-muted);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .ps-pv-link {
+    display: flex;
+    gap: 0.45rem;
+    margin: 0.15rem 0 0;
+  }
+
+  .ps-pv-link span {
+    color: var(--ps-flare);
+  }
+
+  .ps-pv-foot {
+    margin: 0.55rem 0 0;
+    padding-top: 0.3rem;
+    border-top: 0.12rem solid var(--ps-ink);
+    color: var(--ps-muted);
+    font-family: var(--font-league-gothic), "Arial Narrow", sans-serif;
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+</style>

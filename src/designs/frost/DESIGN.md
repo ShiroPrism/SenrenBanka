@@ -68,6 +68,15 @@ typography:
     lineHeight: 1.38
     textTransform: "uppercase"
     letterSpacing: "0.04em"
+  # 切换页预览层（`Preview.astro`）的缩略档位；不并入正式页阶梯（2026-10-19）。
+  preview-body:
+    fontSize: "0.55rem"
+    fontWeight: 400
+    lineHeight: 1.4
+  preview-pill:
+    fontSize: "0.48rem"
+    fontWeight: 400
+    lineHeight: 1.4
 rounded:
   sm: "10px"
   md: "16px"
