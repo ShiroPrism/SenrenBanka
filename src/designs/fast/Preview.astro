@@ -1,0 +1,197 @@
+---
+/**
+ * fast 预览碎片（切换页用）：保留该设计最有辨识度的形态——
+ * 企业级明暗双主题、顶部 wordmark 分隔线、eyebrow + 大标题 + lead 的 hero 层级、
+ * 品牌蓝按钮与三列卡片网格（含 6px 圆角与 1px 描边）。
+ *
+ * 约束（来源：.trellis/tasks/10-18-switcher-design-preview/design.md 的三条硬约束）：
+ * - **不 import `style.css`**：那会带进 Tailwind preflight 与整页规则。
+ * - 令牌来自 `./tokens.css`（与正式页同源），**不得含 `:root`**。
+ * - **不声明 `<Font>`**：fast 用系统字体栈，字体成本为 0（这正是它作为原型 3 的覆盖点）。
+ * - 纯装饰：调用方加 `aria-hidden`；内部不放可聚焦元素。
+ * - 动效：仅入场 rise（纯 CSS，复用本设计的 duration / curve 令牌），
+ *   包在 `prefers-reduced-motion: no-preference` 内；不接共享 Reveal（预览不是页面）。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+// 令牌**单一来源**：与正式页 `style.css` 同一个文件。纯 CSS 顶层 import 会被内联。
+import './tokens.css';
+
+/**
+ * 本预览渲染用到的字体族（cssVariable）。
+ * fast 全部走系统字体栈 → **空数组**：切换页不为它声明任何 `@font-face`。
+ */
+export const fonts: import('astro:assets').CssVariable[] = [];
+
+const { locale, name, headline, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="fs-pv">
+  <div class="fs-pv-page">
+    <div class="fs-pv-top">
+      <span class="fs-pv-wordmark">{name}</span>
+      <span class="fs-pv-meta">{location ?? t.portfolio}</span>
+    </div>
+    <p class="fs-pv-eyebrow">{t.portfolio}</p>
+    <p class="fs-pv-title">{headline}</p>
+    <div class="fs-pv-actions">
+      <span class="fs-pv-btn fs-pv-btn-primary">{t.contact}</span>
+      <span class="fs-pv-btn">{t.projects}</span>
+    </div>
+    <ul class="fs-pv-cards">
+      <li class="fs-pv-card"><span class="fs-pv-num">01</span><span class="fs-pv-cardtitle">{t.projects}</span></li>
+      <li class="fs-pv-card"><span class="fs-pv-num">02</span><span class="fs-pv-cardtitle">{t.experience}</span></li>
+      <li class="fs-pv-card"><span class="fs-pv-num">03</span><span class="fs-pv-cardtitle">{t.skills}</span></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  /* 预览样式一律走组件作用域（Astro 自动加 [data-astro-cid-*]），
+     且**不得**出现 `:root`——组件内联的 `:root` 不被作用域化，会泄漏到切换页全局。 */
+  .fs-pv {
+    /* color-scheme 必须由宿主声明：light-dark() 令牌在 `no-preference` 之外无意义 */
+    color-scheme: light dark;
+    min-height: 7.5rem;
+    padding: 0.7rem 0.85rem 0.85rem;
+    background: var(--fast-background-web-page-primary);
+    color: var(--fast-foreground-ctrl-neutral-primary-rest);
+    font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont,
+      'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 0.625rem;
+    line-height: 1.375;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .fs-pv-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--fast-stroke-divider-rest);
+    font-size: 0.5625rem;
+    color: var(--fast-foreground-ctrl-neutral-secondary-rest);
+  }
+
+  .fs-pv-wordmark {
+    font-weight: 600;
+    color: var(--fast-foreground-ctrl-neutral-primary-rest);
+  }
+
+  .fs-pv-eyebrow {
+    margin: 0.6rem 0 0.25rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fast-foreground-ctrl-brand-rest);
+  }
+
+  .fs-pv-title {
+    margin: 0 0 0.5rem;
+    max-width: 30ch;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .fs-pv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 0.7rem;
+  }
+
+  /* 品牌蓝实心按钮 + 描边按钮：FAST 最可辨识的两个控件形态 */
+  .fs-pv-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--fast-stroke-ctrl-on-outline-rest);
+    border-radius: var(--fast-corner-large);
+    background: var(--fast-background-layer-primary);
+    color: var(--fast-foreground-ctrl-brand-rest);
+    font-size: 0.5625rem;
+    line-height: 1.4;
+  }
+
+  .fs-pv-btn-primary {
+    background: var(--fast-background-ctrl-brand-rest);
+    border-color: transparent;
+    color: var(--fast-foreground-ctrl-on-brand-rest);
+  }
+
+  /* 三列卡片网格：FAST 的分区卡片语言（圆角 + 描边 + 面层） */
+  .fs-pv-cards {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .fs-pv-card {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid var(--fast-stroke-divider-rest);
+    border-radius: var(--fast-corner-large);
+    background: var(--fast-background-layer-primary);
+  }
+
+  .fs-pv-num {
+    color: var(--fast-foreground-ctrl-neutral-secondary-rest);
+    font-size: 0.5rem;
+  }
+
+  .fs-pv-cardtitle {
+    font-size: 0.5625rem;
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fs-pv-page > * {
+      animation: fs-pv-rise var(--fast-duration-normal) var(--fast-curve-easy-ease) both;
+      animation-delay: var(--fs-pv-delay, 0ms);
+    }
+
+    .fs-pv-page > :nth-child(2) {
+      --fs-pv-delay: 30ms;
+    }
+    .fs-pv-page > :nth-child(3) {
+      --fs-pv-delay: 60ms;
+    }
+    .fs-pv-page > :nth-child(4) {
+      --fs-pv-delay: 90ms;
+    }
+    .fs-pv-page > :nth-child(5) {
+      --fs-pv-delay: 120ms;
+    }
+  }
+
+  @keyframes fs-pv-rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fs-pv-page > * {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .fs-pv-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

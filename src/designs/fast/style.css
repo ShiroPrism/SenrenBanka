@@ -1,5 +1,11 @@
 @import "tailwindcss" source(none);
 @source "./";
+/* 预览碎片**不得**被本页的 Tailwind 扫描：它含 `display: flex` / `border:` / `transform:`
+   等属性文本，会被扫描器当作候选工具类，把 .flex / .border / .transform 等规则注进**正式页** CSS
+   （2026-10-18 实测：正式页 CSS 多出 ~1.3KB 与配套 @property，且与预览文件产生耦合）。
+   `@source not` 是 Tailwind 4 的否定来源语法（实测 4.3.3 支持）。 */
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 /* FAST: 语义化 token + light-dark() 双主题、分区卡片、克制的品牌蓝。
    token 命名遵循规范：category-subcategory-slot-variant-state（SPEC 来源 DESIGN.md）。 */
@@ -13,25 +19,10 @@
   font-size: 1rem;
   line-height: 1.375;
   -webkit-font-smoothing: antialiased;
-
-  /* --- tokens（light-dark 驱动，跟随系统主题） --- */
-  --fast-background-web-page-primary: light-dark(#fafafa, #1f1f1f);
-  --fast-background-layer-primary: light-dark(#ffffff, #292929);
-  --fast-background-layer-secondary: light-dark(#f5f5f5, #242424);
-  --fast-foreground-ctrl-neutral-primary-rest: light-dark(#242424, #ffffff);
-  --fast-foreground-ctrl-neutral-secondary-rest: light-dark(#616161, #c7c7c7);
-  --fast-foreground-ctrl-brand-rest: light-dark(#0f6cbd, #479ef5);
-  --fast-foreground-ctrl-on-brand-rest: #ffffff;
-  --fast-background-ctrl-brand-rest: #0f6cbd;
-  --fast-background-ctrl-brand-hover: #115ea3;
-  --fast-stroke-divider-rest: light-dark(#e0e0e0, #3d3d3d);
-  --fast-stroke-ctrl-on-outline-rest: light-dark(#d1d1d1, #4a4a4a);
-  --fast-corner-large: 6px;
-  --fast-corner-circular: 9999px;
-  --fast-padding-content-medium: 16px;
-  --fast-duration-normal: 200ms;
-  --fast-curve-easy-ease: cubic-bezier(0.33, 0, 0.67, 1);
 }
+
+/* --- tokens（light-dark 驱动，跟随系统主题） ---
+   量值已迁至同目录 `tokens.css`（单一来源，正式页与预览共用）。 */
 
 .fs-page {
   max-width: 64rem;

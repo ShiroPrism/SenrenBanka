@@ -105,6 +105,23 @@ typography:
     fontWeight: 400
     lineHeight: 1.9
     letterSpacing: "0.04em"
+  # 切换页预览层（`Preview.astro`）的缩略档位。预览是卡片的**缩微引述**，不是正式页；
+  # 这三个档位只为缩略比例而设，**不并入**上面的正式页阶梯（2026-10-18 登记）。
+  preview-micro:
+    fontFamily: "同 body"
+    fontSize: "0.5rem"
+    fontWeight: 400
+    lineHeight: 1.7
+  preview-display:
+    fontFamily: "同 display"
+    fontSize: "1.2rem"
+    fontWeight: 400
+    lineHeight: 1.15
+  preview-display-compact:
+    fontFamily: "同 display"
+    fontSize: "1.05rem"
+    fontWeight: 400
+    lineHeight: 1.15
 rounded:
   card: "2px"
   tab: "3px"

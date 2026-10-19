@@ -1,28 +1,26 @@
 @import "tailwindcss" source(none);
 @source "./";
+/* 预览碎片**不得**被本页的 Tailwind 扫描：它含 `display: flex` / `border:` / `transform:`
+   等属性文本，会被扫描器当作候选工具类，把 .flex / .border / .transform 等规则注进**正式页** CSS
+   （2026-10-18 实测：正式页 CSS 多出 ~1.3KB 与配套 @property，且与预览文件产生耦合）。
+   `@source not` 是 Tailwind 4 的否定来源语法（实测 4.3.3 支持）。 */
+@source not "./Preview.astro";
+@import "./tokens.css";
 
 @theme inline {
   --font-archive-display: var(--font-sorts-mill-goudy);
   --font-archive-record: var(--font-courier-prime);
 }
 
-/* ---------- 调色板（全部量值登记在 DESIGN.md） ---------- */
-
-:root {
-  --ar-back: #2b211a; /* 深胡桃木桌面 */
-  --ar-back-rise: #3a2c21; /* 桌面受光档 */
-  --ar-back-deep: #1a120d; /* 抽屉内影 */
-  --ar-paper: #eee4cf; /* 马尼拉卡纸 */
-  --ar-paper-2: #e6dbc2; /* 卡纸下缘 / 凸片 */
-  --ar-ink: #2b241a; /* 打字墨 */
-  --ar-dim: #6b5e4a; /* 淡墨（次级信息） */
-  --ar-line: #cfc3a9; /* 印刷横线 / 引导线 */
-  --ar-stamp: #8a3a2f; /* 唯一彩色：图章与类目编号 */
-}
+/* ---------- 调色板 ----------
+   令牌已迁至同目录 `tokens.css`（单一来源，正式页与预览共用）。
+   迁移原因：预览会把这套令牌内联进切换页，`:root` 在那里会成为全局泄漏。 */
 
 html {
-  background: var(--ar-back-deep);
-  scrollbar-color: var(--ar-dim) var(--ar-back-deep);
+  /* `html` 是 `.ar` 的祖先，取不到作用域在 `.ar` / `.ar-pv` 上的自定义属性，
+     故此处保留字面量（与 `--ar-back-deep` / `--ar-dim` 同值，2026-10-18 迁移时逐值核对）。 */
+  background: #1a120d;
+  scrollbar-color: #6b5e4a #1a120d;
 }
 
 .ar {

@@ -1,0 +1,172 @@
+---
+/**
+ * terminal 预览碎片（切换页用）：保留该设计最有辨识度的形态——
+ * 琥珀磷光屏、屏框与三枚圆点、扫描线、命令行提示行 `$ whoami` 与光标。
+ *
+ * 约束（来源：.trellis/tasks/10-18-switcher-design-preview/design.md 的三条硬约束）：
+ * - **不 import `style.css`**：那会带进 Tailwind preflight 与整页规则。
+ * - 令牌来自 `./tokens.css`（与正式页同源），**不得含 `:root`**。
+ * - **不声明 `<Font>`**：字体由切换页页面级按族去重声明。
+ * - 纯装饰：调用方加 `aria-hidden`；内部不放可聚焦元素。
+ * - 动效遵循 AGENTS.md「持续动效仅限小范围、有视觉价值的形态类装饰」：
+ *   仅光标呼吸（与正式页同源），包在 `prefers-reduced-motion: no-preference` 内。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+// 令牌**单一来源**：与正式页 `style.css` 同一个文件。纯 CSS 顶层 import 会被内联。
+import './tokens.css';
+
+/**
+ * 本预览渲染用到的字体族（cssVariable）。切换页收集后**按族去重**、页面级声明一次。
+ * terminal 只有等宽一族。
+ */
+export const fonts: import('astro:assets').CssVariable[] = ['--font-jetbrains-mono'];
+
+const { locale, name, location } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="tm-pv">
+  <div class="tm-pv-screen">
+    <div class="tm-pv-chrome">
+      <span class="tm-pv-dot"></span><span class="tm-pv-dot"></span><span class="tm-pv-dot"></span>
+      <span class="tm-pv-title">guest@senrenbanka: ~</span>
+    </div>
+    <div class="tm-pv-body">
+      <p class="tm-pv-cmd"><span class="tm-pv-lit">$</span> whoami</p>
+      <p class="tm-pv-name">{name}<span class="tm-pv-cursor"></span></p>
+      {location && <p class="tm-pv-dim"><span class="tm-pv-lit">#</span> {t.basedIn} {location}</p>}
+      <p class="tm-pv-cmd"><span class="tm-pv-lit">$</span> ls links/</p>
+      <p class="tm-pv-dim">01 niconico &nbsp; 02 bb-vault &nbsp; 03 dispatch</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 预览样式一律走组件作用域（Astro 自动加 [data-astro-cid-*]），
+     且**不得**出现 `:root`——组件内联的 `:root` 不被作用域化，会泄漏到切换页全局。 */
+  .tm-pv {
+    display: grid;
+    place-items: center;
+    min-height: 7.5rem;
+    padding: 1rem;
+    background: var(--tm-bg);
+    font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.625rem;
+    line-height: 1.55;
+    color: var(--tm-fg);
+  }
+
+  /* 屏框 + 扫描线 + 内辉光：正式页 .tm-screen 的缩略引述 */
+  .tm-pv-screen {
+    position: relative;
+    width: 100%;
+    border: 1px solid var(--tm-frame);
+    border-radius: 6px;
+    background-image:
+      repeating-linear-gradient(to bottom, var(--tm-scan) 0 1px, transparent 1px 3px),
+      linear-gradient(var(--tm-bg-rise), var(--tm-bg));
+    box-shadow:
+      inset 0 0 28px var(--tm-glow),
+      0 8px 20px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+  }
+
+  .tm-pv-chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.55rem;
+    border-bottom: 1px solid var(--tm-frame);
+    color: var(--tm-dim);
+    font-size: 0.5625rem;
+  }
+
+  .tm-pv-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border: 1px solid var(--tm-dim);
+    border-radius: 50%;
+  }
+
+  .tm-pv-title {
+    margin-left: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tm-pv-body {
+    padding: 0.6rem 0.7rem 0.7rem;
+  }
+
+  .tm-pv-cmd {
+    margin: 0;
+    color: var(--tm-dim);
+  }
+
+  .tm-pv-lit {
+    color: var(--tm-fg);
+  }
+
+  .tm-pv-name {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin: 0.15rem 0 0.35rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .tm-pv-dim {
+    margin: 0;
+    color: var(--tm-dim);
+  }
+
+  /* 光标呼吸：唯一持续动效，与正式页同源（小范围、有视觉价值） */
+  .tm-pv-cursor {
+    display: inline-block;
+    width: 0.5em;
+    height: 1em;
+    margin-left: 0.15em;
+    transform: translateY(0.15em);
+    background: var(--tm-fg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .tm-pv-cursor {
+      animation: tm-pv-blink 1.1s steps(1) infinite;
+    }
+
+    .tm-pv-dot:first-of-type {
+      animation: tm-pv-live 2.6s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes tm-pv-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes tm-pv-live {
+    to {
+      opacity: 0.35;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tm-pv-cursor {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .tm-pv {
+      padding: 0.8rem;
+    }
+
+    .tm-pv-name {
+      font-size: 0.875rem;
+    }
+  }
+</style>

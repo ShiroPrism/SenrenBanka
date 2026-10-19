@@ -12,6 +12,8 @@ import ContextMenu from '../components/ContextMenu.astro';
 import HeadMeta from '../components/HeadMeta.astro';
 import InfraStyles from '../components/InfraStyles.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { Font } from 'astro:assets';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { renderSwitcherScript } from '../lib/router-script';
 import {
   buildActionMenuConfig,
@@ -23,10 +25,46 @@ import {
 } from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 import { designDescriptions, type DescriptionLocale } from '../designs/descriptions';
-
 const model = await loadSite();
 const locale = resolveLocale(model, Astro.url.pathname);
+const profile = model.profiles.get(locale.path)!;
 const m = sharedMessagesFor(locale.code);
+
+/**
+ * 设计预览组件的发现。
+ *
+ * **这里的 glob 是安全的，且是本页专属**：AGENTS.md「已知坑」禁止的是**多页共享模块**对设计
+ * 样式建立动态导入边（那会把所有设计 CSS 聚合进每个引用方的 `<link>`）。本 glob 位于**页面
+ * entrypoint 本身**——切换页是这些预览 CSS 的唯一合法宿主，它承担这份体积正是预期行为。
+ * 实测（2026-10-18，probe）：设计页 / 根页 / 404 的产物**不受**影响（预览选择器 0 命中）。
+ *
+ * 用 glob 而非逐行静态 import 的两个理由：
+ * - `Preview.astro` 是**可选**文件（R1）：glob 天然容忍缺失，无需维护一份 114 行的 import 清单（R7）。
+ * - 移除某预览后构建仍绿，卡片自动回退到 accent 色点形态（A8 / R6），不留悬空导入。
+ */
+interface PreviewModule {
+  default: AstroComponentFactory;
+  fonts?: import('astro:assets').CssVariable[];
+}
+
+const previewModules = import.meta.glob('../designs/*/Preview.astro', {
+  eager: true,
+  import: '*',
+}) as Record<string, PreviewModule>;
+
+/** 设计 id → 预览组件与它用到的字体族（`fonts` 具名导出，实测可被调用方读取）。 */
+const previews: Record<string, { Component: AstroComponentFactory; fonts: import('astro:assets').CssVariable[] }> = {};
+for (const [key, mod] of Object.entries(previewModules)) {
+  const id = key.split('/').at(-2);
+  if (id && mod?.default) previews[id] = { Component: mod.default, fonts: mod.fonts ?? [] };
+}
+
+// 字体**按族去重**后声明一次：Astro 的 <Font> 不去重（同族声明 N 次 → N 份 @font-face），
+// 若由每个预览各自声明，@font-face 数量会随预览数量线性膨胀（A5 断言的对象）。
+const previewFonts = [
+  ...new Set(model.enabled.flatMap((design) => previews[design.id]?.fonts ?? [])),
+];
+
 const heading = `${m.switcher.heading} · ${locale.title}`;
 const script = renderSwitcherScript({
   mode: model.mode,
@@ -44,6 +82,9 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
       description={m.switcher.description}
       robots="noindex, follow"
     />
+    {/* 预览字体：按族去重后页面级声明一次（A5）。不 preload——预览是辅助信息，
+        `display: swap` + 系统回退已足够，不值得为它抢首屏带宽。 */}
+    {previewFonts.map((cssVariable) => <Font cssVariable={cssVariable} />)}
   </head>
   <body>
     <InfraStyles />
@@ -57,26 +98,44 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
       </noscript>
       <ul class="infra-list">
         {
-          model.enabled.map((design) => (
-            <li>
-              <a
-                class="infra-card"
-                href={localeDesignHref(locale.path, design.id)}
-                data-design={design.id}
-              >
-                <span class="name">
-                  {design.meta.accent ? (
-                    <span class="chip" style={`--chip:${design.meta.accent}`}></span>
+          model.enabled.map((design) => {
+            const preview = previews[design.id];
+            const Preview = preview?.Component;
+            return (
+              <li>
+                <a
+                  class="infra-card"
+                  href={localeDesignHref(locale.path, design.id)}
+                  data-design={design.id}
+                  data-has-preview={preview ? '' : undefined}
+                >
+                  {/* 预览是**装饰性引述**：aria-hidden 使其不进入链接可访问名、
+                      内部无可聚焦元素、不进焦点顺序（A7）。链接的可访问名仍由 name + desc 承担。 */}
+                  {Preview ? (
+                    <span class="pv" aria-hidden="true">
+                      <Preview
+                        locale={locale.code}
+                        name={profile.name}
+                        headline={profile.headline}
+                        location={profile.location}
+                        links={profile.links}
+                      />
+                    </span>
                   ) : null}
-                  {design.meta.displayName}
-                  <span class="lang-badge" data-lang-badge hidden>
-                    {m.switcher.currentBadge}
+                  <span class="name">
+                    {design.meta.accent ? (
+                      <span class="chip" style={`--chip:${design.meta.accent}`}></span>
+                    ) : null}
+                    {design.meta.displayName}
+                    <span class="lang-badge" data-lang-badge hidden>
+                      {m.switcher.currentBadge}
+                    </span>
                   </span>
-                </span>
-                <span class="desc">{designDescriptions[design.id]?.[locale.code as DescriptionLocale] ?? design.meta.description}</span>
-              </a>
-            </li>
-          ))
+                  <span class="desc">{designDescriptions[design.id]?.[locale.code as DescriptionLocale] ?? design.meta.description}</span>
+                </a>
+              </li>
+            );
+          })
         }
       </ul>
     </main>

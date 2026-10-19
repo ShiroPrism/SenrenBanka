@@ -1,0 +1,263 @@
+---
+/**
+ * archive 预览碎片（切换页用）：只呈现该设计最有辨识度的视觉签名——
+ * 胡桃木桌面、抽屉内腔、马尼拉索引卡、凸出的类目签、印刷横线、
+ * 点引导条目与红色「已归档」图章。
+ *
+ * 约束（来源：.trellis/tasks/10-18-switcher-design-preview/design.md 的三条硬约束）：
+ * - **不 import `style.css`**：那会带进 Tailwind preflight 与整页规则。
+ * - 令牌来自 `./tokens.css`（与正式页同源），**不得含 `:root`**。
+ * - **不声明 `<Font>`**：字体由切换页页面级按族去重声明，预览只引用 `--font-*` 变量。
+ * - 纯装饰：调用方加 `aria-hidden`；内部不放可聚焦元素，文字不进入链接可访问名。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+// 令牌**单一来源**：与正式页 `style.css` 同一个文件。纯 CSS 顶层 import 会被内联，
+// 令牌选择器 `:is(.ar, .ar-pv)` 保持未作用域（命名空间化，安全）。
+import './tokens.css';
+
+/**
+ * 本预览真正渲染用到的字体族（cssVariable）。
+ * 切换页收集全部预览的这份清单后**按族去重**、页面级声明一次——
+ * 预览组件自己**不得**声明 `<Font>`（同族重复声明会产生重复 `@font-face`，实测确认）。
+ * 三个角色：卡头衬线（姓名/副标题）/ 记录打字机（正文与条目）/ 中文仿宋（尾链回退）。
+ */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-sorts-mill-goudy',
+  '--font-courier-prime',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+const rows = links.slice(0, 2);
+---
+
+<div class="ar-pv">
+  <div class="ar-pv-drawer">
+    <div class="ar-pv-card">
+      <span class="ar-pv-tab"><span class="ar-pv-tabno">01</span>{t.headTab}</span>
+      <p class="ar-pv-brand">SENRENBANKA<span class="ar-pv-dim"> · {t.archiveTag}</span></p>
+      <p class="ar-pv-name">{name}</p>
+      <p class="ar-pv-headline">{headline}</p>
+      <ul class="ar-pv-entries">
+        {rows.map((link, index) => (
+          <li class="ar-pv-entry">
+            <span class="ar-pv-no">{String(index + 1).padStart(2, '0')}</span>
+            <span class="ar-pv-label">{link.label}</span>
+            <span class="ar-pv-dots"></span>
+            <span class="ar-pv-url">{shortUrl(link.url)}</span>
+          </li>
+        ))}
+      </ul>
+      {/* 图章独立成行（正式页同样是卡头下沿的独立 foot 行），
+          绝对定位会与条目 URL 撞在一起——2026-10-18 目检发现并修正。 */}
+      <div class="ar-pv-foot">
+        <span class="ar-pv-callno">SB · 03 · 03</span>
+        <span class="ar-pv-stamp">{t.stamp}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 预览样式一律走组件作用域（Astro 自动加 [data-astro-cid-*]），
+     且**不得**出现 `:root`——组件内联的 `:root` 不被作用域化，会泄漏到切换页全局。 */
+  .ar-pv {
+    display: grid;
+    place-items: center;
+    min-height: 7.5rem;
+    padding: 1.35rem 1rem 1.15rem;
+    background: radial-gradient(
+      130% 100% at 50% -15%,
+      var(--ar-back-rise) 0%,
+      var(--ar-back) 58%,
+      var(--ar-back-deep) 100%
+    );
+    font-family:
+      var(--font-courier-prime), "Courier New", var(--font-zhuque), "Songti SC", "SimSun", monospace;
+    font-size: 0.625rem;
+    line-height: 1.7;
+    color: var(--ar-ink);
+    overflow: hidden;
+  }
+
+  .ar-pv-drawer {
+    width: 100%;
+    padding: 0.4rem;
+    border-radius: 4px;
+    background: linear-gradient(
+      180deg,
+      var(--ar-back-rise) 0%,
+      var(--ar-back) 42%,
+      var(--ar-back-deep) 100%
+    );
+    box-shadow:
+      inset 0 10px 16px color-mix(in srgb, var(--ar-back-deep) 90%, transparent),
+      inset 0 -6px 14px color-mix(in srgb, var(--ar-back-deep) 78%, transparent);
+  }
+
+  .ar-pv-card {
+    position: relative;
+    padding: 0.95rem 0.8rem 1.35rem;
+    border-radius: 2px;
+    background-color: var(--ar-paper);
+    background-image:
+      repeating-linear-gradient(
+        180deg,
+        transparent 0 1.05rem,
+        color-mix(in srgb, var(--ar-line) 42%, transparent) 1.05rem calc(1.05rem + 1px)
+      ),
+      linear-gradient(180deg, var(--ar-paper) 0%, var(--ar-paper) 64%, var(--ar-paper-2) 100%);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--ar-paper) 65%, var(--ar-line)),
+      0 12px 16px -13px var(--ar-back-deep);
+    transform: rotate(-0.35deg);
+  }
+
+  /* 卡底打孔：一排暗孔，露出抽屉（正式页同款 motif，尺寸按缩略比例） */
+  .ar-pv-card::after {
+    content: "";
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.4rem;
+    left: 0.8rem;
+    height: 0.35rem;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image: radial-gradient(
+      circle at 0.18rem 50%,
+      var(--ar-back-deep) 0 0.13rem,
+      transparent 0.14rem
+    );
+    background-size: 1.6rem 100%;
+    background-repeat: repeat-x;
+  }
+
+  /* 凸出的类目签：正式页的 h2 就长在签上，这里是它的缩略引述 */
+  .ar-pv-tab {
+    position: absolute;
+    top: -0.9rem;
+    left: 0.6rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7ch;
+    padding: 0.16rem 0.45rem 0.12rem;
+    border: 1px solid color-mix(in srgb, var(--ar-line) 82%, var(--ar-dim));
+    border-bottom: 0;
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--ar-paper-2) 96%, var(--ar-paper)) 0%,
+      var(--ar-paper-2) 100%
+    );
+    font-size: 0.5rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ar-pv-tabno {
+    color: var(--ar-stamp);
+    letter-spacing: 0.08em;
+  }
+
+  .ar-pv-brand {
+    margin: 0 0 0.45rem;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .ar-pv-dim {
+    color: var(--ar-dim);
+  }
+
+  .ar-pv-name {
+    margin: 0 0 0.1rem;
+    font-family: var(--font-sorts-mill-goudy), Georgia, var(--font-zhuque), "Songti SC", "SimSun",
+      serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .ar-pv-headline {
+    margin: 0 0 0.6rem;
+    max-width: 34ch;
+    font-family: var(--font-sorts-mill-goudy), Georgia, var(--font-zhuque), "Songti SC", "SimSun",
+      serif;
+    font-size: 0.6875rem;
+  }
+
+  .ar-pv-entries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ar-pv-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5ch;
+  }
+
+  .ar-pv-no {
+    color: var(--ar-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .ar-pv-label {
+    text-decoration: underline;
+    text-decoration-color: var(--ar-line);
+    text-underline-offset: 2px;
+  }
+
+  /* 点引导线：条目名与 URL 之间的印刷引导（正式页 .ar-dots 的缩略版） */
+  .ar-pv-dots {
+    flex: 1;
+    border-bottom: 2px dotted var(--ar-line);
+  }
+
+  .ar-pv-url {
+    color: var(--ar-dim);
+  }
+
+  /* 卡头下沿的著录行：索书号（左）与「已归档」图章（右）。
+     正式页也是同一位置关系（.ar-head-foot），这里保持同构。 */
+  .ar-pv-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .ar-pv-callno {
+    margin: 0;
+    color: var(--ar-dim);
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+  }
+
+  .ar-pv-stamp {
+    padding: 0.08rem 0.3rem;
+    border: 2px solid var(--ar-stamp);
+    color: var(--ar-stamp);
+    font-size: 0.5rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transform: rotate(-7deg);
+    opacity: 0.85;
+  }
+
+  @media (max-width: 560px) {
+    .ar-pv {
+      padding: 1.2rem 0.8rem 1rem;
+    }
+
+    .ar-pv-name {
+      font-size: 1.05rem;
+    }
+  }
+</style>

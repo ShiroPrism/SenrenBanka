@@ -26,9 +26,28 @@ typography:
     fontSize: "0.75rem"
     fontWeight: 400
     lineHeight: 1.6
+  # 切换页预览层（`Preview.astro`）的缩略档位。预览是琥珀屏的**缩微引述**，不是正式页；
+  # 这三档只为缩略比例而设，**不并入**上面的正式页三档阶梯（2026-10-18 登记）。
+  preview-body:
+    fontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontSize: "0.625rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  preview-label:
+    fontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontSize: "0.5625rem"
+    fontWeight: 400
+    lineHeight: 1.55
+  preview-body-compact:
+    fontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    fontSize: "0.875rem"
+    fontWeight: 500
+    lineHeight: 1.25
 rounded:
   screen: "12px"
   none: "0"
+  # 缩略屏框圆角：12px 在缩略尺寸上会显得比正式页更圆，按比例收到 6px（2026-10-18 登记）。
+  preview-frame: "6px"
 spacing:
   char: "1ch"
   line: "1.6em"
