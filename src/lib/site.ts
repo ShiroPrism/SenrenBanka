@@ -399,7 +399,7 @@ export async function loadDesignView(id: string, pathname: string): Promise<Desi
   return buildDesignView(model, design, resolveLocale(model, pathname));
 }
 
-/** 多语言轨道式设计（如 receipt 的三联小票）用的一条语言资料。 */
+/** 多语言同屏设计用的一条语言资料。 */
 export interface DesignLocaleStrip {
   locale: LocaleEntry;
   profile: ResolvedProfile;

@@ -2,26 +2,47 @@
 
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
-> 首次全流程验证：2026-10-17（八方向新主题 · 样板页）；同日三联布局修订（桌面宽屏三语并排 + 窗口横向滚动、移动端不变）后**全节复测**，数据为该修订后的当前状态；同日复修（移除三联语言标签、修复台面背景变量）后针对相关小节复测。
+> 首次全流程验证：2026-10-17（八方向新主题 · 样板页）；2026-10-19 桌面折叠双栏重构（三联轨道 → 单张当前语言宽票）后重测；本次只记录实际执行的检查，未执行项在文末列明。
+
+## 本轮改动（2026-10-19）
+
+- `Page.astro` 改用 `loadDesignView('receipt', Astro.url.pathname)`，只渲染当前语言的一张票据；`ContextMenu`、`HeadMeta`、`Reveal`、字体接线未变。
+- `Ticket.astro` 移除 `isCurrent` / `is-primary`，正文五枚 section 直接包进 `.rc-fold-body`；DOM 顺序保持明细 → 订单 → 纪录 → 技能 → 结账。
+- `style.css` 删除三联轨道规则；≥1024px 使用 72rem 上限的宽纸与 CSS 多列（`column-count: 2`）自动平衡双栏，1024px 以下单栏 30rem；折痕为 1px `column-rule` 压线，无纸内阴影 / 卡片 / 圆角。
+- `messages.ts` 三语言同步删除仅服务旧三联的 `railTitle`；`loadDesignStrips` 在 `src/lib/site.ts` 中保留。
 
 ## 构建与产物
 
-- `npm run build` 绿：45 页（3 语言 × 9 设计 + 切换页 / 旧路径 / 404 / 根页）；`astro check` 0 错误 / 0 警告 / 0 提示；注册表校验通过。
-- CSS 隔离成立：本页恰 1 条自身样式链接（`Page.CtoelhIr.css`，10.7KB）；该文件仅被三语言 receipt 页引用；未混入其他设计的选择器（`ed-` / `ox-` 的粗筛命中实为 `reduced-motion` / `box-sizing` 误匹配，逐条核对通过）；dist CSS 文件总数 = 设计数（每套恰 1 个）。
-- 核心字段全部渲染：`name` / `headline` / `bio` / `links` + `location`；扩展区块四个全渲染（experience → 纪录、projects → 订单、skills → 技能、contact → 结账台）。
-- 字体以 local provider 进入产物：`Cutive Mono-*`、`Ark Pixel 12px-*`、`DSEG7 Classic-*`；**字形级验证**——实际渲染堆栈的 CJK 像素指纹与 Ark 字面完全一致（canvas 指纹 1666165054 == arkFace，≠ monospace 719983133）；`document.fonts` 中三族对应面均为 `loaded`；无第三方域名请求。
-- **三联（2026-10-17 修订，≥1024px）**：`main` 横向轨道，3 × `.rc-paper` 各 480px；1440 视口 `scrollWidth` 1624 → 窗口横向滚动成立（滚到最右收边实测通过）；每联分区 id 带语言后缀（`rc-memo-title-zh-cn/ja/en`）、`is-primary` 恰 1 个；无语言标签（复修：按反馈移除三联语言标签，DOM 计数 0）。台面背景（径向渐变）恢复原样式并经像素采样实测：左缘 `rgb(44,40,36)` 与改动前逐像素一致、顶部光晕 `rgb(51,46,40)`、最右滚动位 `rgb(45,42,37)`——无白底、无接缝。
-- 探针证据（本机 `.local-fonts/dev/receipt-probe-fix.json`，2026-10-17 复修后；首轮为 `receipt-probe-trio.json`）：console **0 错误 0 警告**；背景实测——`background-color` = `rgb(30,27,23)`、`background-image` = `radial-gradient(...)` 均正确解析。
+- `npm run build` 绿（2026-10-19）：`astro check` **0 errors / 0 warnings / 1 hint**（hint 为 `src/designs/lexicon/Page.astro` 的既有未用变量，非本设计）；构建 **73 页**，注册表校验通过。
+- 三语言 receipt HTML 均恰 **1 个主 `article`、1 个 `h1`、6 个 `h2`、6 个 `data-reveal`**（共享菜单的身份条可能另有一个 `article`）；`is-primary`、`railTitle`、`.rc-ticket` 在产物中计数均为 **0**。
+- 三语言页面引用**同一个**样式文件 `/_astro/Page.BQ77cP9I.css`（13,498 B）；该文件含 `rc-fold-body` / `column-count:2`，不含 `.ed-` / `.ox-` / `.tm-` 等其他设计选择器；链接样式表恰 1 条。
+- 字体预载计数 **0**；渲染字体栈仍为 Cutive Mono → Courier New / Courier → Ark Pixel 12px → Songti SC / SimSun；DSEG7 仍加载。浏览器实测三族 `document.fonts.check()` 均为 true，CJK 像素指纹 `1666165054` 与 Ark 字面一致、不同于 monospace `719983133`。
+- 核心字段全部渲染：`name` / `headline` / `bio` / `links` 与 `location`；扩展区块四个全渲染（projects → 订单、experience → 纪录、skills → 技能、contact → 结账台）。
+
+## 桌面布局（Chromium 实测）
+
+探针：`node .local-fonts/dev/design-probe.mjs http://127.0.0.1:4321/zh-cn/receipt/`（本地 preview :4321；中 / 英各跑一次）。
+
+| 视口 | 纸张宽度 | 左 / 右台面 | `scrollWidth` / `innerWidth` | 分栏计算值 | 折痕 |
+|---|---:|---:|---|---:|---:|
+| 1440×900 | **1152px** | 137 / 151px（约 9.5% / 10.5%） | 1425 / 1440（无横向滚动） | `column-count: 2` | **1px** |
+| 1024×800 | **879px** | 65 / 80px | 1009 / 1024（无横向滚动） | `column-count: 2` | 1px |
+| 1000×800 | **480px** | 252 / 268px | 985 / 1000（无横向滚动） | `column-count: auto`（单栏） | 不显示 |
+
+- 1440 下 `.rc-fold-body` 为两列多列，按内容高度自动平衡；正文 / 注释最大行宽约 46ch，`nestedOverflow`（超出纸张矩形 1px 以上的后代）为 **0**。
+- 1024 下仍为两列多列，英文长词 / 邮箱 / URL 未产生越界（`nestedOverflow = 0`）；1000 下退回单栏，两档之间没有第三档布局。
+- 1440 实测 `column-count: 2`、`column-gap: 100.8px`；1024 实测 `column-gap: 80px`；1000 / 375 实测 `column-count: auto`。中英两种语言的纸面高度都明显小于旧的纵向单栏版本。
+- 顶部撕边 / 红章 / 页脚 / 条码仍属于同一张 `.rc-paper`；纸内唯一 `box-shadow` 是红章的双层内描边，不是纸面投影；折痕不是投影。
+- 票头、备注 / 简介、页脚均位于 `.rc-fold-body` 之外，横跨整张纸。
 
 ## 结构、内容与 a11y
 
-- 标题层级：**h1×3**（三联各一份完整副本的文档标题，各自以 `lang` 标注）→ h2×18（每联 6 枚、全部可见、带语言后缀 id），无跳级；18/18 分区均有可访问名称（可见 h2）。
-- 每联 `article` 以 `aria-label`（`<语言自称> <该语言票头词>`，如「日本語 レシート」）具名。
-- 装饰一律 `aria-hidden`：序号、URL、点引导线、条码、图章、`#` 前缀、方括号（伪元素）。
-- 链接可访问名干净（niconico / BB素材库 / 下北沢通信 / 王道征途… / 邮箱，无装饰符前缀）。
-- 本页自身**零 SVG**：撕边为构建期 polygon、条码 / 引导线 / 虚线为 CSS、图章为文字 + 边框。
+- 标题层级：**h1×1** → **h2×6**（备注 / 明细 / 订单 / 纪录 / 技能 / 结账台），无跳级；六枚 section 全部以可见 `<h2>` 的 `aria-labelledby` 具名（`sectionsNamed = 6/6`）。
+- DOM 阅读顺序为简介 → 明细 → 订单 → 纪录 → 技能 → 结账；双栏只改变视觉位置，不使用 `order`。
+- 链接可访问名干净：`niconico` / `BB素材库` / `下北沢通信` / `王道征途 (The Royal Road)` / `特制红茶配方 (Iced Tea Formula)` / `114514@shimokitazawa.jp`，不以前缀装饰符开头。
+- 装饰一律 `aria-hidden`：序号、URL、点引导线、条码、图章、`#` 前缀；本页自身 **0 SVG**（共享菜单的图标属于项目 chrome，不计入本设计内容区）。
 
-## 对比度（2026-10-17 实测，node 精算）
+## 对比度（沿用 2026-10-17 node 精算；本轮未改色值）
 
 | 组合 | 比值 | 结论 |
 |---|---|---|
@@ -32,44 +53,59 @@
 | red `#b3372c` / paper（图章，大字） | 5.37 | ✓ |
 | faint `#b3a894` / paper | 2.10 | 装饰线条，非文本（声明） |
 
-- 每次新增 / 调整色值必须实测并更新本表。
-
 ## 动效（Motion language「票据机印刷」）
 
-- 首屏：整行离散步进出现（45ms/行、80ms 起；姓名 ≤0.13s；整屏 ≤0.4s 落定）；图章 0.32s 落章（220ms 缩放回正）。三联三份用同一套计时**同时印刷**。
-- 滚动显现：18 个 `[data-reveal]` 区块（三联 × 6）；**二维判定口径**——「视口内隐藏」= opacity≠1 且同时在水平与垂直视口内；加载时、滚到底、跳转兜底（新加载直接跳到底）、横向平移（滚回顶部 → 滚到最右）四种场景**视口内隐藏均为 0**；1440 视口滚到底后 `[data-reveal-in]` = 18/18、总隐藏 0。
-- 降级四情形：reduced-motion（不写门控、`animationName: none`、隐藏 0）；无 IntersectionObserver（不写门控、隐藏 0）；无 JS / 脚本异常按共享机制契约（`Reveal.astro` 不写门控，内容伪默认可见）——前两项实测、后两项由共享机制既有验证覆盖。
-- 持续动效：**无**（论证见 DESIGN.md：小票是印刷品，印完即静止）。
+- 首屏：`.rc-name` 计算 `animation-name: rc-print`，`.rc-stamp` 为 `rc-stamp`；整行仍按 45ms 步进、80ms 起，图章 0.32s 落章。
+- 滚动显现：**6 个 `[data-reveal]`**（非旧记录的 18）；1440 加载后 `hiddenInViewport = 0`，滚到底后 `[data-reveal-in] = 6/6`、隐藏行 **0**；新加载直接跳到底后 `inCount = 6`、隐藏行 **0**。
+- 左右两栏共用同一套 `--d` 段内节奏，没有让右栏等待左栏的额外延迟。
+- 降级实测：
+  - `prefers-reduced-motion: reduce`：不写 `data-reveal-ready`，`animationName: none`，隐藏 **0**；
+  - 删除 `IntersectionObserver`：不写门控，隐藏 **0**；
+  - `IntersectionObserver` 构造抛错：不写门控，隐藏 **0**；
+  - 禁用 JavaScript：DOM 仍为 1 article / 1 h1 / 6 h2，隐藏 **0**（同步探针，截图见下）。
+- 持续动效：**无**（小票印完即静止）。
 
-## 触控与移动端（375×812 + 触控仿真）与断点
+## 触控与移动端（375×812 + CDP 触控仿真）
 
-- **断点边界实测**：1000px → 单联（visible tickets = 1、标签隐藏、无横向滚动）；1024px → 三联（visible = 3、标签 3、`scrollWidth` 1587 > 1024 可滚动）；两档之间不得出现第三种联数（Triplicate Rule）。
-- 移动端：`pointer: coarse` 生效；零横向溢出（`scrollWidth 375 == innerWidth 375`）；只显示当前语言一联（visible = 1、标签隐藏）——与既有单联行为一致。
-- 共享操作菜单集成（ADR 0007）：悬浮球 52×52 可见、有可访问名；**点击图标本身**可打开底部面板；面板贴视口底（bottom gap = 0）；动作项 `copy / share / random / switch`；语言项 3 个平铺；✕ 与取消条均在；打开时 `html` `overflow: hidden`（背景滚动锁定）；点击 ✕ 后面板关闭。
-- 触控命中：链接行高 45px（≥44）。
-- ≤560px：URL 隐藏（行仅序号 + 标签）、纸内边距收紧、图章缩小、无横向溢出；撕边与条码随宽度自适应。
+- `pointer: coarse = true`；`scrollWidth = innerWidth = 375`，无横向溢出；`.rc-paper` 338px 宽，左右各 11px 台面。
+- `.rc-fold-body` 为 `display: block`；URL 隐藏；纸张单栏顺序与桌面 DOM 一致。
+- 共享操作菜单（ADR 0007）：悬浮球 **52×52**、有「打开快捷操作菜单」标签；点击图标本身可打开面板，面板贴底（bottom gap = 0），动作项 `copy / share / random / switch`、语言项 3 个、✕ 与取消条都在；打开时 `html overflow: hidden`，点击 ✕ 后关闭。
+- 触控链接命中：探针测得首个 `.rc-link` 高度 **45px**（≥44）；全页 `touch-action: none` 元素计数 **0**。
+
+## 多语言与语言切换
+
+- `dist/zh-cn|ja|en/receipt/index.html` 均存在；`<html lang>` 分别为 `zh-CN` / `ja` / `en`；页面正文随语言切换（h2：备注… / ご案内… / MEMO…）。
+- 两份共享菜单 DOM 合计 **6 个 `.cm-item.cm-lang`**，每份 **1 个** `aria-current="page"`；三语言目标均保持 `/receipt/` 且带 `hreflang` / `lang`。
+- `messages.ts` 的三语言键集合一致，旧 `railTitle` 已删除；预览 `Preview.astro` 仍只表现单联视觉签名。
+
+## 共享菜单与键盘
+
+- 桌面 `Shift+F10` 打开：焦点落首项「重新加载」；`↑↓` 到「语言」时 `aria-expanded="true"`，`→` 进入子菜单后焦点为「简体中文」；子菜单内 `↓` 到「日本語」；`←` 返回触发项并收起。整个过程 `submenu.contains(activeElement)` 正确，未飞出菜单。
+- 三语言 `.cm-item.cm-lang` 目标保持同一 `receipt` id；无语言前缀硬编码。
 
 ## 检测器（impeccable）
 
-- 最近状态：**零发现**。
-- 过程：首轮 10 条 `design-system-*` advisory（字面色 / 字号未登记进 DESIGN.md 量程）→ 按检测器指引将实际量程如实补入 `DESIGN.md` frontmatter（新增 `back-rise` / `paper-print` 两色与 `note` / `meta` / `micro` / `display-compact` 字阶）→ 归零。
+- `.agents/skills/impeccable/scripts/impeccable.cmd detect --json src/designs/receipt` → **`[]`**（零发现，exit 0）。
+- 检测器有效性反证本轮未重做；上一轮已有 `repeating-stripes-gradient` / 预览缩略档位等记录。
 
-## 切换页预览碎片（`Preview.astro`，2026-10-19）
+## 截图与证据
 
-- **视觉签名**：票据机口、长票、齿孔边、虚线分栏、点引导条目、红章、段码合计与条码；预览只取单联骨架，不复制正式页三语并排。
-- **令牌抽取**：票据纸、墨、灰、线与红抽入 `tokens.css`，作用域 `:is(.rc, .rc-pv)`；正式页只改声明位置。
-- **字体**：导出 Cutive Mono / Ark Pixel / DSEG7 三个变量，切换页按族去重；CJK 子集按需下载。
-- **隔离与等价**：预览不 import 正式页 `style.css`，无 `:root`、无可聚焦元素；正式页产物与 HEAD 基线 sha256 相等。
-- **检测器**：预览缩略字号与圆角已登记进 `DESIGN.md` 的 `preview-*` 档位，目录扫描零发现。
-
-## 多语言（契约 + 新指令）
-
-- 三语言页面齐备；`<html lang>` = `zh-CN` / `ja` / `en`（随路径）；robots `noindex, follow`（非默认设计）；canonical 带 locale 前缀；**`<link rel="alternate">` = 0**（非默认设计正确）。
-- 菜单语言项（共享 chrome）：两份 DOM 共 6 个 `.cm-lang`、目标保持 receipt id、`aria-current` 恰好每份 1 个、带 `hreflang` / `lang`。
-- 本设计文案全部来自 `messages.ts`（zh 备注/明细/订单/纪录/技能/结账台；ja ご案内/明細/ご注文/記録/スキル/お会計；en MEMO/ITEMS/ORDERS/LOG/SKILLS/CHECKOUT）；ja 版页面目检通过。
+- 本机截图（不随仓库分发）：
+  - `.local-fonts/dev/preview/receipt-folded-1440-zh.png`（1440 中文双栏全页）
+  - `.local-fonts/dev/preview/receipt-folded-1440-ja.png`（1440 日文双栏全页）
+  - `.local-fonts/dev/preview/receipt-folded-1440-en.png`（1440 英文双栏全页）
+  - `.local-fonts/dev/preview/receipt-folded-1024-en.png`（1024 英文双栏）
+  - `.local-fonts/dev/preview/receipt-folded-375.png`（375 中文单栏全页）
+  - `.local-fonts/dev/preview/receipt-folded-probe-1440.png`（CDP 探针 1440 视口）
+  - `.local-fonts/dev/preview/receipt-folded-probe-375.png`（375 触控视口）
+  - `.local-fonts/dev/preview/receipt-folded-probe-nojs.png`（禁用 JavaScript）
+- 探针原始输出：本次运行未另存 JSON；关键数值均记录在上文各节。
 
 ## 未测 / 限制
 
-- 真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放未实测；触控与降级基于 Chromium 仿真。
-- base 前缀（`/demo`）全链路批检与「旧路径跳转 / 配置开关」项并入八方向收口批次统一执行。
-- 截图归档（本机路径，不随仓库分发）：`.local-fonts/dev/preview/` 下三联版 `trio-1440.png`（首屏）/ `trio-full-1800.png`（三张完整）/ `trio-1280.png` / `trio-panned-right.png`（滚到最右）/ `trio-mobile.png`；单联版留存 `receipt-closeup2.png` / `receipt-zoom-head.png`。
+- base 前缀 `/demo`：`MSYS2_ARG_CONV_EXCL='*' npx astro build --outDir dist-demo --base /demo` 通过；三语言 receipt 页全部 18 个 `href/src` 均带 `/demo/`，canonical 分别为 `/demo/{locale}/receipt/`。
+- `manualSwitch: false` 临时构建通过（69 页）：三语言切换页与旧 `/designs/` 不构建；页面 `random` / `switch` 动作计数 0，`.cm-item.cm-lang` 仍为 6、`aria-current` 2。
+- `mode: fixed` 临时构建通过（73 页）：`/zh-cn/index.html` 的 refresh 目标为 `/zh-cn/editorial/`。两项配置测试后均已恢复原 `random` / `true`，`git diff` 无配置残留。
+- 真机 iOS / Android、Safari / Firefox 引擎、横屏、200% 缩放未实测；触控与降级基于 Chromium 仿真。
+- 对比度沿用上一轮实测值，本轮没有重新采样色值；若后续改色必须重算。
+- 英文页面在 1024 下经计算值检查无溢出；建议验收时再看一次真实屏幕观感（长邮件的换行主要落在 1024 边界）。
