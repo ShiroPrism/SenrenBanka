@@ -177,6 +177,11 @@
   margin: 0;
 }
 
+.rc-order,
+.rc-log {
+  overflow-wrap: anywhere;
+}
+
 .rc-note {
   margin: 0.15rem 0 0;
   max-width: 48ch;
@@ -204,6 +209,12 @@
   font-family: var(--font-dseg7), var(--font-receipt), var(--font-ark-pixel), monospace;
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
+}
+
+/* 英文任期是句子而非段码；DSEG7 对同一文本会报出远大于可见字形的宽度，导致叠印。 */
+.rc-period-text {
+  font-family: var(--font-receipt), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+  letter-spacing: 0;
 }
 
 .rc-skills {
@@ -366,22 +377,22 @@
   }
 }
 
-/* ---------- 三联（≥1024px）/ 单联（<1024px） ----------
-   三联：同一张票的三种语言副本按 i18n.locales 顺序并排；装不下时由**窗口**横向滚动
-   （body 保持块级，避免 grid 居中把左侧裁出视口）。单联：只显示当前语言一联，
-   与既有行为逐像素一致（移动端不变）。 */
+/* ---------- 一张票：桌面纸内折双栏 / 窄屏单栏 ----------
+   宽票仍是一张完整纸面：头部、简介、页脚横跨全宽，只有正文在纸内折成两栏。
+   双栏只改变视觉位置；DOM 始终保持明细 → 订单 → 纪录 → 技能 → 结账的顺序。 */
 
 .rc-scene {
   display: block;
 }
 
-.rc-ticket {
+.rc-paper {
   width: min(30rem, 100%);
   margin-inline: auto;
 }
 
-.rc-ticket:not(.is-primary) {
-  display: none;
+.rc-fold-body {
+  display: block;
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
@@ -390,22 +401,52 @@
   }
 
   .rc-scene {
-    display: flex;
-    align-items: flex-start;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    width: max-content;
+    width: min(72rem, calc(100% - 2 * clamp(1rem, 4vw, 3rem)));
     margin-inline: auto;
-    padding-inline: clamp(1rem, 3vw, 2.5rem);
   }
 
-  .rc-ticket {
-    flex: 0 0 auto;
-    width: 30rem;
+  .rc-paper {
+    width: 100%;
     margin-inline: 0;
+    padding: clamp(2.6rem, 4vw, 3.5rem) clamp(2rem, 4vw, 4rem) clamp(1.6rem, 3vw, 2.2rem);
   }
 
-  .rc-ticket:not(.is-primary) {
-    display: block;
+  .rc-head,
+  .rc-memo,
+  .rc-foot {
+    width: 100%;
+  }
+
+  .rc-headline,
+  .rc-bio,
+  .rc-note {
+    max-width: 62ch;
+  }
+
+  .rc-fold-body {
+    position: relative;
+    column-count: 2;
+    column-gap: clamp(5rem, 7vw, 7rem);
+    column-rule: 1px solid color-mix(in srgb, var(--rc-line) 72%, transparent);
+  }
+
+  /* Keep blocks and individual orders / log entries intact; balanced columns may
+     still break between entries when one language is substantially taller. */
+  .rc-fold-body > .rc-block,
+  .rc-fold-body .rc-order,
+  .rc-fold-body .rc-log {
+    break-inside: avoid;
+  }
+
+  /* Column balancing ignores child margins at the top of the fragmentainer;
+     this gives both columns the same first-baseline inset. */
+  .rc-fold-body > .rc-block:first-child {
+    padding-top: 1.7rem;
+  }
+
+  .rc-fold-body .rc-note,
+  .rc-fold-body .rc-bio {
+    max-width: 46ch;
   }
 }
 
@@ -449,5 +490,11 @@
     margin: 0 auto;
     filter: none;
     clip-path: none !important;
+  }
+
+  .rc-fold-body {
+    display: block;
+    column-count: auto;
+    column-rule: none;
   }
 }

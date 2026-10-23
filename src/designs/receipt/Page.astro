@@ -1,24 +1,22 @@
 ---
 /**
- * receipt — 三联小票（宽屏）/ 单联（窄屏）。
+ * receipt — 一张当前语言的热敏小票：桌面宽票内折双栏，窄屏单栏。
  *
- * 数据：`loadDesignStrips` 返回当前视图 + 全部语言的资料条（同一数据源与构建期校验；
+ * 数据：`loadDesignView` 只取当前语言（同一数据源与构建期校验；
  * 页面不接触文件路径、不自行判断语言）。
  *
- * 布局：≥1024px 时三张票按 i18n.locales 顺序并排（窗口允许横向滚动）；
- * <1024px 只显示当前语言一联（mobile 与既有行为逐像素一致）。
- * 三个 `[data-reveal]` 集合共用共享 IntersectionObserver——横向未入画的整列保持
- * 未显现，进入视口后完成显现（口径与验证见 docs/verification/receipt.md）。
+ * 布局：≥1024px 为一张约 68rem 的宽票，正文在纸内折成两栏；
+ * <1024px 为一张 30rem 的单栏票。共享 IntersectionObserver 驱动六个显现区块。
  */
 import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
-import { loadDesignStrips } from '../../lib/site';
+import { loadDesignView } from '../../lib/site';
 import Ticket from './Ticket.astro';
 import './style.css';
 
-const { view, strips } = await loadDesignStrips('receipt', Astro.url.pathname);
+const view = await loadDesignView('receipt', Astro.url.pathname);
 const { contextMenu } = view;
 ---
 <html lang={view.head.lang}>
@@ -31,8 +29,8 @@ const { contextMenu } = view;
     <Reveal />
   </head>
   <body class="rc">
-    <main class="rc-scene" aria-label="SenrenBanka receipt">
-      {strips.map(({ locale, profile, isCurrent }) => <Ticket locale={locale} profile={profile} isCurrent={isCurrent} />)}
+    <main class="rc-scene">
+      <Ticket locale={view.locale} profile={view.profile} />
     </main>
     <ContextMenu config={contextMenu} />
   </body>

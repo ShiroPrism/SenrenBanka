@@ -3,8 +3,7 @@
  *
  * - 不翻译项：`SENRENBANKA`（站名 / 品牌）与段码数字本身；小数票上的 `NO.` 之类的
  *   纯符号标记不承载语义，不进本文件（由 CSS 伪元素承担、不进无障碍树）。
- * - 页面为**三语言三联**结构（横向轨道）：每联小票使用**该语言自己的**一套文案；
- *   页面级 `railTitle` 使用当前语言的一套。语言自称（简体中文 / 日本語 / English）
+ * - 页面只渲染当前语言的一张票据；语言自称（简体中文 / 日本語 / English）
  *   直接取配置 `locales[].label`，不进本文件。
  * - 本文件承载全部随语言切换的可见文案；分栏标题原则上保持"小票帮腔"的语域
  *   （zh：明细/订单/纪录；ja：明細/ご注文/記録；en：ITEMS/ORDERS/LOG），
@@ -12,7 +11,6 @@
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface ReceiptMessages {
-  railTitle: string;
   receiptTag: string;
   addrLabel: string;
   memoTitle: string;
@@ -32,7 +30,6 @@ export interface ReceiptMessages {
 
 export const messages: Record<'zh-CN' | 'ja' | 'en', ReceiptMessages> = {
   'zh-CN': {
-    railTitle: '小票 · 三种语言',
     receiptTag: '小票',
     addrLabel: '地址',
     memoTitle: '备注',
@@ -50,7 +47,6 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', ReceiptMessages> = {
     sampleNote: '示例小票・仅作演示',
   },
   ja: {
-    railTitle: 'レシート・三つの言語',
     receiptTag: 'レシート',
     addrLabel: '住所',
     memoTitle: 'ご案内',
@@ -68,7 +64,6 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', ReceiptMessages> = {
     sampleNote: 'サンプルレシート・デモ用',
   },
   en: {
-    railTitle: 'RECEIPT — THREE LANGUAGES',
     receiptTag: 'RECEIPT',
     addrLabel: 'ADDR',
     memoTitle: 'MEMO',

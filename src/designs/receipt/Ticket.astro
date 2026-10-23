@@ -1,8 +1,7 @@
 ---
 /**
- * receipt 单联渲染（私有组件，不属于设计注册表四件套）。
- * 三联小票 = 同一张票的三种语言副本，由 Page.astro 按 i18n.locales 顺序拼排；
- * 本组件只负责「一联」的完整内容与计时，宽窄屏行为全部由 style.css 决定。
+ * receipt 单票渲染（私有组件，不属于设计注册表四件套）。
+ * 只渲染当前语言的一份内容；桌面纸内折双栏与窄屏单栏均由 style.css 决定。
  */
 import type { LocaleEntry, ResolvedProfile } from '../../lib/site';
 import { messages as designMessages, type ReceiptMessages } from './messages';
@@ -10,10 +9,9 @@ import { messages as designMessages, type ReceiptMessages } from './messages';
 interface Props {
   locale: LocaleEntry;
   profile: ResolvedProfile;
-  isCurrent: boolean;
 }
 
-const { locale, profile, isCurrent } = Astro.props;
+const { locale, profile } = Astro.props;
 const t: ReceiptMessages = designMessages[locale.code as 'zh-CN' | 'ja' | 'en'];
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
@@ -35,27 +33,27 @@ for (let i = 0; i <= teeth; i++) {
 const flipY = (point: string) => point.replace(/(\d+)px$/, (_, n) => `calc(100% - ${n}px)`);
 const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY).join(', ')})`;
 ---
-<div class:list={['rc-ticket', isCurrent && 'is-primary']}>
-  <article class="rc-paper" lang={locale.code} aria-label={`${locale.label} ${t.receiptTag}`} style={`clip-path: ${clipPath}`}>
-    <header class="rc-head">
-      <p class="rc-brand rc-print" style={`--d:${d(0)}`}>
-        <span class="rc-brand-mark">SENRENBANKA</span><span class="rc-dim"> · {t.receiptTag}</span>
+<article class="rc-paper" lang={locale.code} aria-label={`${locale.label} ${t.receiptTag}`} style={`clip-path: ${clipPath}`}>
+  <header class="rc-head">
+    <p class="rc-brand rc-print" style={`--d:${d(0)}`}>
+      <span class="rc-brand-mark">SENRENBANKA</span><span class="rc-dim"> · {t.receiptTag}</span>
+    </p>
+    <h1 class="rc-name rc-print" style={`--d:${d(1)}`}>{profile.name}</h1>
+    <p class="rc-headline rc-print" style={`--d:${d(2)}`}>{profile.headline}</p>
+    {profile.location && (
+      <p class="rc-addr rc-dim rc-print" style={`--d:${d(3)}`}>
+        <span aria-hidden="true"># </span>{t.addrLabel} {profile.location}
       </p>
-      <h1 class="rc-name rc-print" style={`--d:${d(1)}`}>{profile.name}</h1>
-      <p class="rc-headline rc-print" style={`--d:${d(2)}`}>{profile.headline}</p>
-      {profile.location && (
-        <p class="rc-addr rc-dim rc-print" style={`--d:${d(3)}`}>
-          <span aria-hidden="true"># </span>{t.addrLabel} {profile.location}
-        </p>
-      )}
-      <div class="rc-stamp" aria-hidden="true">{t.stamp}</div>
-    </header>
+    )}
+    <div class="rc-stamp" aria-hidden="true">{t.stamp}</div>
+  </header>
 
-    <section class="rc-block" aria-labelledby={`rc-memo-title-${locale.path}`}>
-      <h2 class="rc-sec rc-print" id={`rc-memo-title-${locale.path}`} style={`--d:${d(4)}`}>{t.memoTitle}</h2>
-      <p class="rc-bio rc-print" style={`--d:${d(5)}`}>{profile.bio}</p>
-    </section>
+  <section class="rc-block rc-memo" aria-labelledby={`rc-memo-title-${locale.path}`}>
+    <h2 class="rc-sec rc-print" id={`rc-memo-title-${locale.path}`} style={`--d:${d(4)}`}>{t.memoTitle}</h2>
+    <p class="rc-bio rc-print" style={`--d:${d(5)}`}>{profile.bio}</p>
+  </section>
 
+  <div class="rc-fold-body">
     <section class="rc-block" data-reveal aria-labelledby={`rc-items-title-${locale.path}`}>
       <h2 class="rc-sec rc-line" id={`rc-items-title-${locale.path}`} style={`--d:${seg(0)}`}>{t.itemsTitle}</h2>
       <ul class="rc-items">
@@ -105,7 +103,9 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
             {profile.experience.map((item, index) => (
               <li class="rc-log">
                 <p class="rc-line rc-log-head" style={`--d:${seg(index * 2 + 1)}`}>
-                  <span class="rc-period">{item.period ?? '----'}</span>{' '}
+                  <span class:list={['rc-period', item.period && /^[0-9.\-–—: ]+$/.test(item.period) ? 'rc-period-digits' : 'rc-period-text']}>
+                    {item.period ?? '----'}
+                  </span>{' '}
                   <span class="rc-org">{item.org}</span>
                   {item.role ? <span class="rc-dim"> — {item.role}</span> : null}
                 </p>
@@ -147,11 +147,11 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
         <p class="rc-line rc-note rc-dim" style={`--d:${seg(3)}`}>{profile.contact.note}</p>
       )}
     </section>
+  </div>
 
-    <footer class="rc-foot" data-reveal>
-      <p class="rc-thanks rc-line" style={`--d:${seg(0)}`}>{t.footerThanks}</p>
-      <div class="rc-barcode rc-line" style={`--d:${seg(1)}`} aria-hidden="true"></div>
-      <p class="rc-sample rc-line rc-dim" style={`--d:${seg(2)}`}>{t.sampleNote}</p>
-    </footer>
-  </article>
-</div>
+  <footer class="rc-foot" data-reveal>
+    <p class="rc-thanks rc-line" style={`--d:${seg(0)}`}>{t.footerThanks}</p>
+    <div class="rc-barcode rc-line" style={`--d:${seg(1)}`} aria-hidden="true"></div>
+    <p class="rc-sample rc-line rc-dim" style={`--d:${seg(2)}`}>{t.sampleNote}</p>
+  </footer>
+</article>
