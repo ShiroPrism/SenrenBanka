@@ -1,6 +1,6 @@
 {
   "name": "senrenbanka",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "check": "astro check",
+    "check:docs": "node --test scripts/verify-agent-docs.test.mjs && node scripts/verify-agent-docs.mjs",
+    "check": "npm run check:docs && astro check",
     "test:html-only": "node --test scripts/verify-html-only.test.mjs",
     "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
     "build": "npm run check && astro build && npm run verify:html-only",

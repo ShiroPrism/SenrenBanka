@@ -7,6 +7,16 @@
 > 最近全流程验证：**2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）**；此后 2026-10-28 新增第 17 套 `styled` 预览（homepage99）与第 18 套自包含预览（html-only），并完成构建、产物隔离与浏览器检查；此前 2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > 2026-10-28（HTML-only 子任务）：新增 `renderMode` 契约与构建末尾 `verify:html-only` 门禁。同日 `homepage99` styled 设计接入后，当前静态构建 **81 页**；HTML-only 的桌面 / 320–375px / 无 CSS / 无 JS / 键盘检查证据见 `docs/verification/html-only.md`，Homepage '99 的浏览器实测见 `docs/verification/homepage99.md`。
 
+## 规则文档入口（2026-10-29）
+
+- 根 `AGENTS.md`：**26,568 → 4,010 字符**（减少 84.9%）；Trellis 托管区块逐字保留。
+- 规则正文：`docs/rules/README.md` + 7 个主题文件；原 14 个二级章节、7 个三级章节全部有归口。
+- 现行引用迁移：源码 29 处、现行 docs / SPEC / README / skill 16 处、活跃任务 7 处；历史 change-log 与归档任务保持原样。
+- `npm run check:docs`：8 项 Node 内置测试通过，真实仓库门禁 `4010/7000 chars`；硬门禁还校验其链接指向正确正文。
+- `npm run check`：0 错误 / 0 警告 / 1 条既有 `lexicon` hint。
+- `npm run build`：81 页；HTML-only 门禁 20 项测试通过（1 设计 × 3 locale）。
+- 文档门禁覆盖：根预算、必需文件、相对链接、8 条硬门禁、Trellis 标记、跨文件重复二级标题。
+
 ## 设计渲染模式（ADR 0009）
 
 - `design.json.renderMode` 取 `styled`（缺省）或 `html-only`。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`styled` 必须提供 `style.css`，`html-only` 必须不提供。
@@ -150,7 +160,7 @@
 - `BASE_PATH=/demo`：内部链接 / CSS / canonical / hreflang **全部带 `/demo`**，全站无遗漏；`/demo/zh-cn/` 仍正确解析为 `zh-CN`（部署 base 未被误判为语言代码）；右键菜单随机目标同样带 base 与 locale。
   **环境坑**：Git Bash 下必须 `MSYS2_ARG_CONV_EXCL='*'` **与** `--base /demo` 同时使用；只给 `BASE_PATH=/demo` 或只给 `--base /demo` 都会被 MSYS 转换成 `/D:/Git/demo`。
 
-**文案纪律**：翻译只处理**已有**文案，不新增解释性 / 自我描述的句子（`AGENTS.md` 强制条款）。据此已删除 fast / frost / govuk / kern / material3 页脚的无意义直译「由同一份资料生成」——24 页页脚实测：fast / frost / kern 仅姓名；govuk 姓名 + OGL 许可声明；material3 姓名 + M3 来源署名；editorial / oxide / terminal 各保留其原有文案不变。
+**文案纪律**：翻译只处理**已有**文案，不新增解释性 / 自我描述的句子（`docs/rules/data-and-i18n.md` 强制条款）。据此已删除 fast / frost / govuk / kern / material3 页脚的无意义直译「由同一份资料生成」——24 页页脚实测：fast / frost / kern 仅姓名；govuk 姓名 + OGL 许可声明；material3 姓名 + M3 来源署名；editorial / oxide / terminal 各保留其原有文案不变。
 
 **共享文案本地化覆盖**：右键菜单静态标签（含新增的**语言分组标题**）+ `lib/context-menu.ts` 6 处运行时 Toast、切换页（标题/说明/计数句/当前标记）、入口页（含 noscript 文案）、404、语言选择器 `aria-label`——全部随语言切换。原 `InfraStyles.astro` 中由 CSS `content: ' · 当前 / current'` 生成的「当前」标记已改为切换页模板里的**真实元素**（可本地化、可被读屏读取），运行时按存储显隐。
 
