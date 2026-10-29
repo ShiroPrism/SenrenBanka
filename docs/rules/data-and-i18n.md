@@ -14,7 +14,7 @@
 - **多语言同屏**的设计：改用 `loadDesignStrips('<自己的 id>', Astro.url.pathname)`——与 `loadDesignView` 同一数据源与构建期校验，额外返回全部语言的资料条（`strips: { locale, profile, isCurrent }[]`）；页面仍不接触文件路径、不自行判断语言。收到 receipt 已改为单张宽票，不再使用该入口
 - `view` 结构：
   - `profile`：核心字段 `name` / `headline` / `bio` / `links` **必须全部渲染**；
-    `avatar` / `location` 可选；扩展区块 `projects` / `experience` / `skills` / `contact` 由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）。资料**按当前语言**选取，页面不需要关心文件路径
+    `avatar` / `location` 是普通可选字段；`projects` / `experience` / `skills` / `contact` 是兼容保留的高级可选扩展区块，由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）。资料**按当前语言**选取，页面不需要关心文件路径
   - `locale`：当前语言条目（`code` / `path` / `label` / `title` / `description`）；`locales` 为全部语言
   - `messages`：当前语言的共享文案（共享操作菜单 / 切换页 / 404 / 语言选择器）
   - `site`：manualSwitch
@@ -24,6 +24,13 @@
 - `<html lang>` 必须用 `view.head.lang`（即当前语言的 BCP 47 code），**不得**使用固定的 `zh-CN`
 - 所有内部链接必须经 `withBase()`（`src/lib/urls.ts`）拼接 base 前缀，或用 `localeDesignHref()` / `localeHref()`（`src/lib/site.ts`）生成**带语言前缀**的地址；禁止硬编码绝对路径
 - 禁止虚构个人事实
+
+## 资料契约边界（强制）
+
+- 资料契约是固定 schema：字段集合不随语言、设计或使用者增减，也不提供用户自定义字段、自定义内容区块、任意内容模型或通用内容渲染兜底
+- 新需求**不得直接解释为**新的自定义字段或自定义区块，也不得在设计页面或数据层自行增加通用渲染兜底；契约边界有变化时先回到产品层确认
+- `projects` / `experience` / `skills` / `contact` 仅为兼容现有设计而保留的高级可选扩展区块；它们不是可继续扩充的词汇表或插件机制，不新增同类字段或区块
+- 超出固定契约的更多个人信息应通过核心 `links` 指向站外页面或联系方式。站点只负责呈现入口，不托管目标内容；其可用性、可访问性、归属与持久性由外部平台控制
 
 ## 多语言（i18n）
 

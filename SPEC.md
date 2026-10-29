@@ -21,12 +21,13 @@
 5. fork 后修改资料与少量配置，即可部署到 GitHub Pages / Cloudflare Pages / Vercel。
 6. 一期用 4 套差异明显的设计验证完整工作流。
 
-### 非目标（一期不做）
+### 非目标（明确不承诺）
 
 - 运行时 AI 服务、设计规范运行时解析/下载
 - 动态服务端、数据库、账号系统、在线编辑器、设计市场
 - 访客统计（二期评估第三方分析或无服务器 API）
 - 每套设计的逐区块内容开关（内容取舍由设计自行决定）
+- **不提供用户自定义字段、自定义内容区块、任意内容模型或通用内容渲染兜底，且不将其纳入后续路线图**。Profile 契约保持固定；现有 `projects` / `experience` / `skills` / `contact` 仅为兼容保留的高级可选扩展区块，不再新增同类字段或区块。更多信息经核心 `links` 指向站外页面，站外内容的可用性、可访问性、归属与持久性由外部平台控制。
 
 ---
 
@@ -35,7 +36,7 @@
 | # | 议题 | 结论 |
 |---|------|------|
 | Q1 | 设计规范来源与合规 | 只用两类来源：**厂商官方发布**（official-design-md 索引）+ **自产**（impeccable `document --seed`）。第三方整理源（awesome-design-md）需逐份核实许可并标注"非官方"后可选入库；designmd.co **排除**（许可无法核实）。 |
-| Q2 | 个人资料字段契约 | 核心必填（name/headline/bio/links，所有设计必须呈现）+ 可选字段（avatar/location）+ 扩展区块词汇表（projects/experience/skills/contact，**设计自行取舍**）。设计可加装饰性文案，不得虚构个人信息。 |
+| Q2 | 个人资料字段契约 | 核心必填（name/headline/bio/links，所有设计必须呈现）+ 普通可选字段（avatar/location）+ 兼容保留的高级可选扩展区块（projects/experience/skills/contact，**设计自行取舍**）。契约固定，不提供用户自定义字段 / 区块或通用内容兜底；更多信息经 `links` 指向站外。设计可加装饰性文案，不得虚构个人信息。 |
 | Q3 | 切换与持久化语义 | 随机：存储有效→用存储；过期→重随机（排除上次）并写新窗口；手选=写入+重开窗口。固定：手选**永久记住**，无则用 default；手选在随机模式下**按 cacheHours 过期**。直达 URL 不写存储。 |
 | Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **全站共享操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；v0.10.0 起扩展到移动端：桌面右键 / `Shift+F10`，移动端悬浮球 → 底部动作面板，见 ADR 0007）。共享操作菜单用于 `styled` 页面；`html-only` 按 ADR 0009 使用普通链接。`manualSwitch:false` → 主题入口不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
 | Q5 | 根路径与 SEO | 根路径=零外部请求的轻量路由页（内联脚本 `location.replace`；noscript meta refresh→default+链接列表）。索引策略 **B**：仅 default 设计可索引，其余 `noindex,follow`。 |
@@ -194,14 +195,16 @@
 - 所有设计通过统一数据接口（`src/lib/site.ts`）获取资料，**禁止每套设计重复维护信息**。
 - 三种语言共用**同一套** `profileSchema`，不为语言拆分字段契约。
 
-### 5.2 profile 示例（以 `src/data/profiles/zh-cn.yaml` 为例）
+### 5.2 profile 完整示例（以 `src/data/profiles/zh-cn.yaml` 为例）
+
+最小资料只需核心字段；下例同时展示普通可选字段与兼容保留的高级可选扩展区块，**不是必填模板**。日常使用可从 README 的最小片段开始，只在确实需要时添加可选内容。
 
 ```yaml
 name: "Your Name"
 headline: "一句话定位（每套设计必须呈现）"
 bio: "1–3 句简介。"
-avatar: "assets/avatar.jpg"   # 可选；本地文件（相对 src/data/assets/）或 https URL
-location: "Shanghai, China"   # 可选
+avatar: "assets/avatar.jpg"   # 普通可选；本地文件（相对 src/data/assets/）或 https URL
+location: "Shanghai, China"   # 普通可选
 links:                        # 核心必填（可空数组，但强烈建议填写）
   - label: GitHub
     url: "https://github.com/you"
@@ -209,18 +212,18 @@ links:                        # 核心必填（可空数组，但强烈建议填
   - label: Email
     url: "mailto:you@example.com"
     icon: mail
-projects:                     # 扩展区块（设计自行取舍）
+projects:                     # 高级可选扩展区块（兼容保留；设计自行取舍）
   - title: "Project A"
     description: "…"
     url: "https://…"
     tags: ["TypeScript", "Astro"]
-experience:                   # 扩展区块
+experience:                   # 高级可选扩展区块（兼容保留）
   - org: "Company"
     role: "Engineer"
     period: "2022 – now"
     description: "…"
-skills: ["TypeScript", "Astro", "Tailwind"]   # 扩展区块
-contact:                      # 扩展区块
+skills: ["TypeScript", "Astro", "Tailwind"]   # 高级可选扩展区块（兼容保留）
+contact:                      # 高级可选扩展区块（兼容保留）
   email: "you@example.com"
   note: "欢迎交流合作"
 ```
@@ -228,8 +231,10 @@ contact:                      # 扩展区块
 ### 5.3 契约规则【已定】
 
 - **核心（必填，所有设计必须呈现）**：`name`、`headline`、`bio`、`links`。
-- **可选字段**：`avatar`（部分风格不放照片）、`location`。
-- **扩展词汇表（一期仅 4 个）**：`projects`、`experience`、`skills`、`contact`。设计按自身风格**自行决定取舍、排列与样式**；不提供逐区块开关配置。
+- **普通可选字段**：`avatar`（部分风格不放照片）、`location`。
+- **高级可选扩展区块（兼容保留）**：`projects`、`experience`、`skills`、`contact`。它们是固定的兼容集合，不是可继续扩充的词汇表，也不是自定义内容机制；设计按自身风格**自行决定取舍、排列与样式**，不提供逐区块开关配置，不新增同类字段或区块。
+- **资料模型边界**：不提供用户自定义字段、自定义内容区块、任意内容模型或通用内容渲染兜底。新需求不得由实现任务直接升级为新的字段或区块。
+- **站外内容出口**：`links` 承载超出固定契约的更多个人信息，可指向作品集、文章、社交资料或联系方式。站点只负责呈现入口，不托管目标内容；其可用性、可访问性、归属与持久性由外部平台控制。
 - 设计可添加装饰性文案，**不得编造**个人事实（项目、经历、数据）。
 - 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由规则正文（`docs/rules/`）+ `design-page-verify` 流程约束。
 

@@ -23,7 +23,22 @@ npm run build      # astro check + 构建到 dist/
 npm run preview
 ```
 
-- 改资料：`src/data/profiles/{zh-cn,ja,en}.yaml`（三份，**共用同一套字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
+最小资料只需以下四个核心字段，可直接替换 `src/data/profiles/zh-cn.yaml`（`ja.yaml` / `en.yaml` 同理）：
+
+```yaml
+name: "你的名字"
+headline: "一句话定位"
+bio: "1–3 句简介。"
+links:
+  - label: GitHub
+    url: "https://github.com/you"
+```
+
+- 改资料：`src/data/profiles/{zh-cn,ja,en}.yaml`（三份，**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
+- 普通可选字段：`avatar`（部分风格不放照片）/ `location`
+- 高级可选扩展区块：`projects` / `experience` / `skills` / `contact`。它们仅为兼容现有设计而保留，可整体省略；不是自定义内容机制，也不会继续扩充同类字段或区块
+- 站外内容：通过 `links` 指向作品集、文章或社交资料等更多信息；内容离开本站后，其可用性、可访问性、归属与持久性由外部平台控制
+- 仓库中的三份完整 Profile 是用于验证多套设计内容呈现的设计样张，不是必填模板
 - 改语言：`src/data/site.config.yaml` 的 `i18n.locales`（**语言清单只在这里维护一处**：增删语言 = 加一份 `locales` 条目 + 一份同名 `profiles/<path>.yaml`）
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
