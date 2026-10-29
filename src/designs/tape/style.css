@@ -578,7 +578,7 @@
 /* ---------- motion ----------
    一个作者时刻：磁带落桌 + 贴标以顶边为铰链展开（一次性，620ms 内落定）。
    之后页面静止；卷轴只在 hover / focus-within 时以 60s 一周缓慢转动。
-   滚动显现走共享 IntersectionObserver（机制见 AGENTS.md「动效」）。 */
+   滚动显现走共享 IntersectionObserver（机制见 docs/rules/visual-language.md「动效（Motion）」）。 */
 
 @media (prefers-reduced-motion: no-preference) {
   .tp-shell {
@@ -595,7 +595,7 @@
     animation: tp-reel 60s linear infinite;
   }
 
-  /* 隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）：
+  /* 隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）：
      boot 未成立（无 JS / 无 IO / 减动态）时内容始终可见。 */
   html[data-reveal-ready] [data-reveal] {
     opacity: 0;

@@ -371,7 +371,7 @@ VU 条高度比例 `0.26–0.92`；指针停位 `62%`（起点 `-62%`，即刻�
   两次"咔哒"，不是呼吸。
 - **持续动效：无。** 论证：收信机的表盘在锁定后就是静止的读数；闪烁 = 故障，不是设计。
 - **滚动显现**：共享 `IntersectionObserver`（页头放一次 `<Reveal />`），模块按 60ms 依次上台（220ms linear，
-  `opacity` + `translateY(8px)`）。隐藏态以 `html[data-reveal-ready]` 为唯一门控（契约见 `AGENTS.md`）。
+  `opacity` + `translateY(8px)`）。隐藏态以 `html[data-reveal-ready]` 为唯一门控（契约见 `docs/rules/visual-language.md`）。
 - `prefers-reduced-motion: reduce`：不生成任何动画，指针停在 62%、灯保持点亮，内容原样可见。
 
 ## Do's and Don'ts

@@ -10,7 +10,7 @@
 
 ## 图标（ADR 0002）
 
-- hero 按钮前置图标（品牌 mark / Mail；无 icon 配置不打标——2026-10-11 修订）+ 项目卡外链箭头；行内 svg 显式 `inline-block`（Preflight 兼容，坑已记入 `AGENTS.md` 已知坑）。
+- hero 按钮前置图标（品牌 mark / Mail；无 icon 配置不打标——2026-10-11 修订）+ 项目卡外链箭头；行内 svg 显式 `inline-block`（Preflight 兼容，坑已记入 `docs/rules/pitfalls.md` 已知坑）。
 
 ## 字体（2026-10-19 字体审计）
 
@@ -31,13 +31,13 @@
 
 ## 切换页预览碎片（`Preview.astro`，2026-10-18）
 
-快照未规定切换页预览。本套按 `AGENTS.md`「每套设计必须满足 · 可选 · 切换页预览碎片」新增自包含碎片：
+快照未规定切换页预览。本套按 `docs/rules/design-contract.md`「可选 · 切换页预览碎片」新增自包含碎片：
 
 - **形态**：企业级 hero（wordmark + 分隔线 → eyebrow → 大标题 → 品牌蓝实心按钮 + 描边按钮）+ 三列卡片网格（6px 圆角 + 1px 描边），保留 FAST 最可辨识的控件与分区语言。
 - **令牌抽取**：调色板自 `.fs` 规则体内迁出到同目录 `tokens.css`，作用域为命名空间类 `:is(.fs, .fs-pv)`——快照的 token 命名（`category-subcategory-slot-variant-state`）与量值不变，仅改变**声明位置与作用域**。`light-dark()` 依赖的 `color-scheme` 由两个宿主各自声明。
 - **零字体成本**：碎片导出 `fonts: []`，全部走系统字体栈；切换页不为本套声明任何 `@font-face`。
 - **等价重构**：正式页产物与改动前逐字节一致（见 `docs/verification/fast.md`）。
-- **`@source not "./Preview.astro"`**：本套 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把其属性文本当工具类注进**正式页** CSS（约 +1.3KB/页）；已按 `AGENTS.md` 已知坑排除。
+- **`@source not "./Preview.astro"`**：本套 `style.css` 的 `@source "./"` 曾连带扫描预览文件，把其属性文本当工具类注进**正式页** CSS（约 +1.3KB/页）；已按 `docs/rules/pitfalls.md` 已知坑排除。
 - **检测器**：预览未新增发现——快照 `DESIGN.md` 无 `typography` frontmatter 阶梯，检测器不对其判 `design-system-*`；快照**只读**，故本套无 `DESIGN.md` 改动。
 
 2026-10-19 铺开复验：三语言卡片均渲染，预览内 0 可聚焦元素；`fonts: []` 保持，切换页不需要为系统字体再加请求。

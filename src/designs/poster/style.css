@@ -577,7 +577,7 @@ html:has(.ps) {
    一个作者时刻：油墨辊从左侧压过标题（clip-path 展开一次），随后粗规线画出（scaleX）。
    压完即静止——海报是印刷品，没有持续动效（论证见 DESIGN.md）。
    滚动显现复用共享 IntersectionObserver；隐藏态一律以 html[data-reveal-ready] 为门控
-   （契约见 AGENTS.md），且只藏"规线"这一装饰，正文永远可见。 */
+   （契约见 docs/rules/visual-language.md），且只藏"规线"这一装饰，正文永远可见。 */
 
 @media (prefers-reduced-motion: no-preference) {
   .ps-name {

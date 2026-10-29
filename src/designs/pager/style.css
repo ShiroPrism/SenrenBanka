@@ -496,7 +496,7 @@ html {
     animation-delay: var(--d, 0ms);
   }
 
-  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）。
      隐藏态带 :not([data-reveal-in]) 兜底；载入动画声明在「揭示后仍匹配」的规则上。 */
   html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .pg-line {
     opacity: 0;

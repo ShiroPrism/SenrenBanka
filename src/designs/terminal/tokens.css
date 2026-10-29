@@ -2,7 +2,7 @@
  * terminal 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
  *
  * - 作用域是**类**（`:is(.tm, .tm-pv)`），不是 `:root`：预览会把本文件内联进切换页 HTML，
- *   `:root` 在那里会成为全局令牌泄漏（AGENTS.md「已知坑」的隔离约束）。
+ *   `:root` 在那里会成为全局令牌泄漏（docs/rules/pitfalls.md「已知坑」的隔离约束）。
  * - 纯 CSS，不含任何 Tailwind 指令；量值登记见同目录 `DESIGN.md`。
  * - 2026-10-18：调色板原为 `style.css` 内散落的字面量，集中到此文件（预览与正式页同源）。
  */

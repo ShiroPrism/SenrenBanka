@@ -15,7 +15,7 @@
 - **用 `@media (scripting: enabled)` 隐藏**：脚本启用但加载失败时内容会被永久隐藏，违反降级契约。
 - **把隐藏态写进各设计 CSS 的默认分支**：同样会在无 JS 时永久隐藏内容。
 - **只用 CSS `animation-timeline: view()` 做滚动触发**：浏览器支持不足、降级语义不可控，且与"用原生 IntersectionObserver"的项目决定冲突。
-- **改厂商 `DESIGN.md` 补 Motion 章节**：项目约定（`AGENTS.md`「动效（Motion）」）规定厂商规范为不可修改的原始快照，偏差记入该主题的 `ADAPTATION.md`。
+- **改厂商 `DESIGN.md` 补 Motion 章节**：项目约定（`docs/rules/visual-language.md`「动效（Motion）」）规定厂商规范为不可修改的原始快照，偏差记入该主题的 `ADAPTATION.md`。
 
 ## 后果
 

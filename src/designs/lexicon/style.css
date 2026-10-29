@@ -452,7 +452,7 @@
 
 /* ---------- 动效：一个作者时刻 ----------
    词条细规线自左端生长（scaleX），一次性；其余全部静态。
-   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）；
+   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）；
    动画不填满终帧，动画未推进时线仍处于自然可见态（transform: none）。 */
 
 @media (prefers-reduced-motion: no-preference) {

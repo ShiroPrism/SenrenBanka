@@ -10,7 +10,7 @@
 - `npm run build` 7 页绿（`astro check` 0 错误 / 0 警告 / 0 提示）；注册表校验通过。
 - CSS 隔离成立：本页恰 1 条自身样式链接；`.fs-*` 选择器只出现在自身 CSS；根页 / 切换页 / 404 不链接任何设计 CSS。
 - `BASE_PATH=/demo` 全链路前缀正确；`rel="preload"` 计数 0；无外链资源（`src="http` = 0）。
-- 图标（不含共享菜单 chrome）：hero 按钮 4 枚（品牌 mark ×2 / Mail ×2）+ 项目卡外链箭头 ×2，全部 `aria-hidden`；未配置 icon 的链接不打标（2026-10-11 修订，Globe 残留 0）；行内图标显式 `inline-block`（Preflight 兼容，记入 `AGENTS.md` 已知坑）。
+- 图标（不含共享菜单 chrome）：hero 按钮 4 枚（品牌 mark ×2 / Mail ×2）+ 项目卡外链箭头 ×2，全部 `aria-hidden`；未配置 icon 的链接不打标（2026-10-11 修订，Globe 残留 0）；行内图标显式 `inline-block`（Preflight 兼容，记入 `docs/rules/pitfalls.md` 已知坑）。
 
 ## 结构、内容与 a11y
 

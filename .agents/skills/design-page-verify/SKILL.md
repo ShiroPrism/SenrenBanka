@@ -5,7 +5,7 @@ description: "SenrenBanka 设计页验证流程：新建或修改设计页（或
 
 # 设计页验证流程（SenrenBanka）
 
-本 skill 是已验证过的"设计页完整验证"可执行版（对应 SPEC §13 验收标准；规则见 `AGENTS.md`，记录归属见 `docs/README.md`）。
+本 skill 是已验证过的"设计页完整验证"可执行版（对应 SPEC §13 验收标准；规则见 `docs/rules/README.md`，记录归属见 `docs/README.md`）。
 **新设计按 DESIGN.md 实现完成后，或任一设计页 / 样式 / 构建配置 / `src/lib/` / `src/components/`（共享机制）改动后**，按本流程逐步执行，不得跳步；无法验证的项必须如实标注（如仿真限制、真机未测），禁止虚构结果。
 **先读取 `design.json.renderMode` 分流**：省略 / `styled` 走完整设计管线；`html-only` 只验证语义 HTML、普通链接、metadata、产物禁令与无 CSS / 无 JS 呈现。不得把共享菜单、字体、Tailwind、Reveal 或动效测试套到 HTML-only 页面，也不得把 HTML-only 的普通链接称为“菜单回退”。
 **动效相关断言（步骤 4b / 5b）只对"引入了 `<Reveal />` 的设计"生效**；无动效的设计（若某设计按规范保持静止）应显式跳过，并在记录中注明是"设计上无动效"，而不是当成漏测。

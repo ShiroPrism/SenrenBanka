@@ -1,6 +1,6 @@
 # 字体选型指南（新增主题）
 
-> 适用范围：为 `src/designs/<id>/` 新增或替换主题字体时的完整流程与记录要求。强制条款在 `AGENTS.md`「字体（Typography & Fonts）」节，本文件是其展开流程与工具契约。
+> 适用范围：为 `src/designs/<id>/` 新增或替换主题字体时的完整流程与记录要求。强制条款在 `docs/rules/visual-language.md`「字体（Typography & Fonts）」节，本文件是其展开流程与工具契约。
 >
 > **本文件不含任何本机字体清单**——个人字体文件、扫描结果与候选目检记录只存于被忽略的 `.local-fonts/`（本机工作台），不得写入公开文档。
 
@@ -125,5 +125,5 @@
 ## 5. 与验收、文档的关系
 
 - 字体改动 = 设计页改动：完成后按 `.agents/skills/design-page-verify/SKILL.md` 执行验证流程；生产字体相关结论更新到 `docs/verification/`。
-- 规则变更 → `AGENTS.md`「字体（Typography & Fonts）」节；**流程与工具契约变更 → 本文件**；长期决策 → `docs/adr/`。
+- 规则变更 → `docs/rules/visual-language.md`「字体（Typography & Fonts）」节；**流程与工具契约变更 → 本文件**；长期决策 → `docs/adr/`。
 - 分工：本文件只写**流程与规则**；本机字体清单、候选与目检记录留在 `.local-fonts/`（如 `font-candidates.md`）。

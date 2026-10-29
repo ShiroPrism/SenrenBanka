@@ -249,7 +249,7 @@ components:
 - **显现**（滚动，共享 `Reveal`）：450ms；行错落 50ms、卡片组错落 70ms。
 - **反馈**：`hover` 200ms（材料 / 颜色变化）、`:active` 缩放 130ms。
 - **无持续动效**（论证：材料的"深度"由透明与模糊表达；极光是静止的底——循环运动会与"安静的系统界面"立场冲突）。
-- `prefers-reduced-motion: reduce` 全部关闭；无 JS / 脚本失败时内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `AGENTS.md`）。
+- `prefers-reduced-motion: reduce` 全部关闭；无 JS / 脚本失败时内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `docs/rules/visual-language.md`）。
 
 ## Do's and Don'ts
 

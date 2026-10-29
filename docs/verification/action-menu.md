@@ -31,7 +31,7 @@
 
 ## 移动触控环境（375×812）
 
-- 悬浮球：实测 **52×52px**（≥ `AGENTS.md` 要求的 44px），让开 `env(safe-area-inset-*)`；反相配色（深色药丸 / 浅色药丸随系统明暗翻转），`:active` 缩放 0.94 提供按压反馈；`aria-label` 三语言分别为「打开快捷操作菜单」/「クイック操作メニューを開く」/「Open quick actions menu」，`aria-haspopup="true"`、`aria-expanded` 随开合翻转、`aria-controls="cm-sheet"`。面板打开时球淡出并 `pointer-events: none`（它的职责是"打开"，展开态下留在原位只会让人再点一次关闭）。
+- 悬浮球：实测 **52×52px**（≥ `docs/rules/accessibility-responsive.md` 要求的 44px），让开 `env(safe-area-inset-*)`；反相配色（深色药丸 / 浅色药丸随系统明暗翻转），`:active` 缩放 0.94 提供按压反馈；`aria-label` 三语言分别为「打开快捷操作菜单」/「クイック操作メニューを開く」/「Open quick actions menu」，`aria-haspopup="true"`、`aria-expanded` 随开合翻转、`aria-controls="cm-sheet"`。面板打开时球淡出并 `pointer-events: none`（它的职责是"打开"，展开态下留在原位只会让人再点一次关闭）。
 - **命中尺寸实测**（切换页 375×812）：关闭 ✕ **44px**、取消条 **48px**、操作项 **48px** —— 全部 ≥ 44px。
 - **动作清单按端裁剪**（构建期，`ContextMenu.astro` 的 `desktopActions` 5 项 / `sheetActions` **2 项**）：
   - 移动端面板实测 `[data-cm-action]` = `copy` / `share`（切换页 + 随机 = 3 项、主题页 + 随机 + 切换设计 = 4 项）——**无 `reload`、无 `top`、无 `print`**。

@@ -284,7 +284,7 @@ components:
   折痕不参与动画，不做翻折 / 3D / 拖动交互。
 - **持续动效：无。** 论证：小票是印刷品——印完就该静止；票据机不会持续闪烁。
   页面把全部"动"的配额花在"印出来"这一件事上。
-- `prefers-reduced-motion: reduce`：全部静止、内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `AGENTS.md`）。
+- `prefers-reduced-motion: reduce`：全部静止、内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `docs/rules/visual-language.md`）。
 
 ### Footer
 - 虚线切出；致谢居中字距 0.24em → 条码 → 示例声明（0.625rem 字距 0.18em）。

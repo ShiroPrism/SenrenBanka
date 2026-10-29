@@ -261,7 +261,7 @@ components:
 - 语言是"仪表"：**快出发、平滑落定**——曲线 `cubic-bezier(0.22, 1, 0.36, 1)`（motion.curve），只有三个动作：
   **进场**（首屏逐项淡入 + 10px 上浮，260ms，40ms 错落）、**显现**（滚动进入视口，300ms，单元 60ms / 经历行 50ms 错落）、**反馈**（hover / active 140ms 颜色与描边过渡）。
 - **无持续动效**（论证：静止是默认状态；装饰性循环运动会与"工程仪表"的克制立场冲突——独有表现力来自网格骨架与反转，不需要动画背书）。
-- 滚动显现复用共享 `IntersectionObserver`（机制见 `docs/adr/0001`、`docs/adr/0003`）；`prefers-reduced-motion: reduce` 时全部关闭；无 JS / 脚本失败时内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `AGENTS.md`）。
+- 滚动显现复用共享 `IntersectionObserver`（机制见 `docs/adr/0001`、`docs/adr/0003`）；`prefers-reduced-motion: reduce` 时全部关闭；无 JS / 脚本失败时内容原样呈现（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `docs/rules/visual-language.md`）。
 
 ### Footer
 - 骨架底盖：横规则线 + 等宽单行 `{name} · built from a single profile`。

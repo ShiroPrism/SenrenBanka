@@ -25,6 +25,6 @@ v0.5.0 前，每套设计必须自留一个可见的 `Switch design` 入口（Q4
 ## 后果
 
 - 桌面端无 JS 用户没有页内切换入口（可直达 `/designs/`）；这是接受的取舍。
-- 新增设计时"切换入口"= 接入共享组件（AGENTS.md 已更新），不再自建链接；`manualSwitch:false` 时组件整体不渲染且 `/designs/` 404。
+- 新增设计时"切换入口"= 接入共享组件（docs/rules/action-menu.md 已更新），不再自建链接；`manualSwitch:false` 时组件整体不渲染且 `/designs/` 404。
 - oxide / fast 的 `DESIGN.md` 为厂商快照未修改；terminal 自产规范的"禁止 SVG 图标"约束在 Project Contract 中注明不适用于项目级 chrome 的菜单图标（lucide）。
 - 菜单样式与运行时属项目 chrome，其改动（尺寸 / 图标 / 项）应保持中性语言，并重跑 `design-page-verify`。

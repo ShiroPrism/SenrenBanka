@@ -194,7 +194,7 @@ components:
 - **首屏**：`$ whoami` 逐字打出（16ms/字），姓名、定位、简介依次落屏——姓名 0.3s 内、整屏 0.5s 内全部可见，核心内容不等待。
 - **滚动进入视口**（复用共享 `IntersectionObserver`，只播一次；机制见 `docs/adr/0001`、`docs/adr/0003`）：`$ 命令`先逐字打出，随后输出行 / 列表项按 50ms 节奏依次落屏（每块错落上限 6 项）。打字只发生在命令与装饰行（≤18 字符）；正文数据永远直接出现，不逐字打印。
 - **状态**：chrome 首个圆点以 2.6s 缓慢明暗呼吸（机器指示灯）；块状光标保持 1.1s steps 闪烁（唯二的持续动效，均为小范围元素）。
-- `prefers-reduced-motion: reduce`：全部静止、内容原样呈现；无 JS / 脚本失败同样（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `AGENTS.md`）。
+- `prefers-reduced-motion: reduce`：全部静止、内容原样呈现；无 JS / 脚本失败同样（隐藏态以 `html[data-reveal-ready]` 为唯一门控，契约见 `docs/rules/visual-language.md`）。
 
 ### List Rows
 - **Style:** `└─ marker`（Dim 档）+ 链接（琥珀）+ `→ URL`（Dim 档，外链标识）；项目行以序号列开头，带 `url` 的标题后接 `→ url`。

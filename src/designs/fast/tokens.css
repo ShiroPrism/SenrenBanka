@@ -2,7 +2,7 @@
  * fast 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
  *
  * - 作用域是**类**（`:is(.fs, .fs-pv)`），不是 `:root`：预览会把本文件内联进切换页 HTML，
- *   `:root` 在那里会成为全局令牌泄漏（AGENTS.md「已知坑」的隔离约束）。
+ *   `:root` 在那里会成为全局令牌泄漏（docs/rules/pitfalls.md「已知坑」的隔离约束）。
  * - 纯 CSS，不含任何 Tailwind 指令；量值登记见同目录 `DESIGN.md`。
  * - token 命名遵循 `category-subcategory-slot-variant-state`（来源 DESIGN.md）。
  * - `light-dark()` 依赖 `color-scheme`：两个宿主（`.fs` / `.fs-pv`）各自声明，

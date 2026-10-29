@@ -421,7 +421,7 @@
     animation-fill-mode: backwards;
   }
 
-  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md） */
+  /* 滚动显现：隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md） */
   html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) {
     opacity: 0;
     transform: translateY(8px);

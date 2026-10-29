@@ -321,7 +321,7 @@ components:
 - **只播一次**：Reveal 揭示后取消观察；图章只在卡头揭示后落下一次。
 - **持续动效：无。** 卡片是档案——归档完成后不再移动；没有扫描线、没有呼吸灯、没有循环渐变。
 - `prefers-reduced-motion: reduce`：全部静态，旋转保留为静态角度、hover 不抬起；内容原样呈现。
-- 无 JS / 无 IntersectionObserver：`html[data-reveal-ready]` 不写入，隐藏态不生效，全部内容可见（契约见 `AGENTS.md`）。
+- 无 JS / 无 IntersectionObserver：`html[data-reveal-ready]` 不写入，隐藏态不生效，全部内容可见（契约见 `docs/rules/visual-language.md`）。
 
 ## Do's and Don'ts
 

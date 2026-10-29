@@ -372,7 +372,7 @@
     animation: ed-rule-draw 520ms ease-out 220ms backwards;
   }
 
-  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）。
      transition 声明在持续匹配的规则上，保证揭示瞬间过渡一定触发。 */
   html[data-reveal-ready] .ed-section-head[data-reveal] .ed-section-title,
   html[data-reveal-ready] .ed-section-head[data-reveal] .ed-label {

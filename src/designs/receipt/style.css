@@ -346,7 +346,7 @@
     animation-delay: 320ms;
   }
 
-  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。
+  /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）。
      隐藏态带 :not([data-reveal-in]) 兜底；过渡声明在"揭示后仍匹配"的规则上。 */
   html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .rc-line {
     opacity: 0;

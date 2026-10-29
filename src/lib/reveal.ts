@@ -1,7 +1,7 @@
 /**
  * 滚动显现机制（共享）——只负责"触发"，不规定任何视觉。
  *
- * 契约（见 docs/adr/0001-motion-reveal-mechanism.md 与 AGENTS.md「动效（Motion）」）：
+ * 契约（见 docs/adr/0001-motion-reveal-mechanism.md 与 docs/rules/visual-language.md「动效（Motion）」）：
  * - 观察目标：`[data-reveal]`
  * - 首次到达视口：置 `[data-reveal-in]`，随即 unobserve（只播一次）
  * - 门控：`<html data-reveal-ready>` 由 `Reveal.astro` 的内联 boot 同步写入，

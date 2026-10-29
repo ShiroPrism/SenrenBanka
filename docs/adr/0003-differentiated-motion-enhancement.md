@@ -24,5 +24,5 @@ v0.2.0 的动效只覆盖"厂商规范已授权"的 oxide / fast；editorial / t
 ## 后果
 
 - 四套设计均加载共享 reveal 脚本并接受门控契约（无 JS / 无 IO / 减动态 / 脚本失败 → 内容始终可见）。
-- editorial / terminal 的 `DESIGN.md` Motion 章节与 Don't 条款已同步修订（2026-10-10）；`AGENTS.md` 动效约定、`CONTEXT.md` 术语同步。
+- editorial / terminal 的 `DESIGN.md` Motion 章节与 Don't 条款已同步修订（2026-10-10）；`docs/rules/visual-language.md` 动效约定、`CONTEXT.md` 术语同步。
 - oxide / fast 的偏差与取舍记录在各自 `docs/designs/<id>/ADAPTATION.md`；验证按 `design-page-verify` 全流程执行（含四套动效实测与降级仿真）。

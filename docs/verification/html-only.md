@@ -1,6 +1,6 @@
 # verification — HTML Only
 
-> 当前完整验证状态（更新式；历史由 Git 保留）。规则见 `AGENTS.md`，验证流程见 `design-page-verify` skill，长期决策见 `docs/adr/0009-html-only-design-rendering.md`。
+> 当前完整验证状态（更新式；历史由 Git 保留）。规则见 `docs/rules/README.md`，验证流程见 `design-page-verify` skill，长期决策见 `docs/adr/0009-html-only-design-rendering.md`。
 > 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；本轮复核了产物、截图与验证器负向用例，未把未重跑的检查记为通过。
 
 ## 设计状态

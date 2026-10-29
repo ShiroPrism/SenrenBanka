@@ -544,7 +544,7 @@ html {
 /* ---------- motion：唯一的作者时刻 ----------
    卡片从抽屉里被抽出（60ms 步进，translateY + 短 ease-out），图章最后落下。
    动完即静止：卡片是档案，不是持续播放的界面。
-   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 AGENTS.md）。 */
+   隐藏态以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）。 */
 
 @media (prefers-reduced-motion: no-preference) {
   html[data-reveal-ready] .ar-card:not([data-reveal-in]) {

@@ -5,7 +5,7 @@
  * 这样切换页只需一份渲染逻辑，新增预览不必改动切换页的调用代码。
  *
  * 注意：本文件**只导出类型**。不得在此建立指向任何设计模块（`Page.astro` / `style.css` /
- * `Preview.astro`）的导入边——那正是 AGENTS.md「已知坑」描述的 CSS 聚合陷阱。
+ * `Preview.astro`）的导入边——那正是 docs/rules/pitfalls.md「已知坑」描述的 CSS 聚合陷阱。
  */
 
 export interface PreviewProps {

@@ -1,7 +1,7 @@
 # verification — Homepage '99
 
 > Current verification state for `homepage99` (update in place; history is
-> kept by Git). Rules: `AGENTS.md`. Process:
+> kept by Git). Rules: `docs/rules/README.md`. Process:
 > `.agents/skills/design-page-verify/SKILL.md`. Render-mode boundary:
 > `docs/adr/0009-html-only-design-rendering.md`.
 >

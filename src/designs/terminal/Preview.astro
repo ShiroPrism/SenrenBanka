@@ -3,12 +3,12 @@
  * terminal 预览碎片（切换页用）：保留该设计最有辨识度的形态——
  * 琥珀磷光屏、屏框与三枚圆点、扫描线、命令行提示行 `$ whoami` 与光标。
  *
- * 约束（来源：AGENTS.md「切换页预览碎片」的三条硬约束）：
+ * 约束（来源：docs/rules/design-contract.md「可选 · 切换页预览碎片」的三条硬约束）：
  * - **不 import `style.css`**：那会带进 Tailwind preflight 与整页规则。
  * - 令牌来自 `./tokens.css`（与正式页同源），**不得含 `:root`**。
  * - **不声明 `<Font>`**：字体由切换页页面级按族去重声明。
  * - 纯装饰：调用方加 `aria-hidden`；内部不放可聚焦元素。
- * - 动效遵循 AGENTS.md「持续动效仅限小范围、有视觉价值的形态类装饰」：
+ * - 动效遵循 docs/rules/visual-language.md「持续动效仅限小范围、有视觉价值的形态类装饰」：
  *   仅光标呼吸（与正式页同源），包在 `prefers-reduced-motion: no-preference` 内。
  */
 import { messages } from './messages';
