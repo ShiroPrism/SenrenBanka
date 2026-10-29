@@ -231,7 +231,7 @@ contact:                      # 扩展区块
 - **可选字段**：`avatar`（部分风格不放照片）、`location`。
 - **扩展词汇表（一期仅 4 个）**：`projects`、`experience`、`skills`、`contact`。设计按自身风格**自行决定取舍、排列与样式**；不提供逐区块开关配置。
 - 设计可添加装饰性文案，**不得编造**个人事实（项目、经历、数据）。
-- 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由实现约定（`AGENTS.md`）+ `design-page-verify` 流程约束。
+- 不做"设计是否渲染了核心字段"的自动检查（难以可靠实现）；由规则正文（`docs/rules/`）+ `design-page-verify` 流程约束。
 
 ### 5.4 site.config.yaml 示例
 
@@ -466,16 +466,16 @@ src/designs/<id>/
 5. **字体**：在 `astro.config` 的 `fonts` 注册（每新增设计同步注册其字体，注意：配置项是项目级的，唯一的中央登记点）；页面 `<Font cssVariable preload?>`；`@theme inline` 注册进 Tailwind。provider 以"构建期自托管、运行时零第三方请求"为目标（NPM/Fontsource 二选一，按网络可及性在实施时定）；回退栈须含系统中文字体（示例资料含中文用于验证）。【待实施验证】新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，决策见 `docs/adr/0008-local-font-library-isolation.md`）。
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
-8. **预览碎片的样式隔离**（v0.10.0+，见 AGENTS.md）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
+8. **预览碎片的样式隔离**（v0.10.0+，见 `docs/rules/design-contract.md`）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
 9. **`html-only` 例外**（ADR 0009）：不提供 `style.css` / `tokens.css`，不 import Tailwind，不渲染字体、Reveal、共享菜单或基础设施样式；页面使用浏览器默认呈现。可选的 `Preview.astro` 只用于切换页，样式自包含，不改变正式页面的资源契约。
 
 ---
 
 ## 9. 项目级实现约定
 
-【已定】项目级实现约定统一由仓库根目录 `AGENTS.md` 承载（编码 Agent 必读的**强制规则**，覆盖数据接口、每套设计必须满足、共享 chrome、动效、图标、素材、无障碍与响应式、已知坑、构建与文档维护）；本规格不再复制其条文。交付门槛（新设计完成、设计页或共享机制改动后的完整验证）由 `design-page-verify` skill 执行，其**当前状态**记录在 `docs/verification/`；文档职责索引见 `docs/README.md`。
+【已定】项目级实现约定由仓库根目录 `AGENTS.md` 与 `docs/rules/` 共同承载：根文件只保留编码 Agent 每次会话必须立即知道的硬门禁与任务路由，`docs/rules/` 是全部规则的唯一完整正文来源；本规格不再复制其条文。交付门槛（新设计完成、设计页或共享机制改动后的完整验证）由 `design-page-verify` skill 执行，其**当前状态**记录在 `docs/verification/`；文档职责索引见 `docs/README.md`。
 
-（历史：2026-10-11 文档治理前，本节曾列出 AGENTS.md 的最低内容清单；此后规则唯一载体为 `AGENTS.md`，旧清单原文见 Git 历史。）
+（历史：2026-10-11 文档治理前，本节曾列出 AGENTS.md 的最低内容清单；2026-10-29 起根文件改为入口，完整正文迁入 `docs/rules/`；旧清单原文见 Git 历史。）
 
 ---
 
@@ -577,11 +577,12 @@ SenrenBanka/
 │     └─ 404.astro                   # 中性 404（noindex，提供各语言入口）
 ├─ .gitignore
 ├─ .nvmrc                            # Node 24
-├─ AGENTS.md                         # 项目级实现约定（编码 Agent 必读的强制规则）
+├─ AGENTS.md                         # 项目规则入口（硬门禁 + 任务路由；完整正文在 docs/rules/）
 ├─ LICENSE                           # MIT
 ├─ change-log/                       # 版本记录（一个版本一个文件；成果 / 修复 / 验证结论）
 ├─ docs/                             # 文档索引 / ADR / 主题适配 / 字体选型 / 验证状态（见 docs/README.md）
 │  ├─ README.md                      #   文档职责索引与维护规则
+│  ├─ rules/                         #   项目级规则唯一完整正文来源
 │  ├─ adr/                           #   长期技术决策（一事一文件）
 │  ├─ designs/<id>/ADAPTATION.md     #   主题适配记录（仅确有适配 / 例外时创建）
 │  ├─ fonts/selection-guide.md       #   字体选型流程（本地字体库仅发现 / 预览，不入库、不进构建）
@@ -604,11 +605,11 @@ SenrenBanka/
 2. 数据层：`content.config.ts`（glob loader + Zod）→ 示例 `profile.yaml` / `site.config.yaml` → `lib/site.ts` / `lib/urls.ts`。
 3. 骨架：`registry.ts`（含校验）+ `HeadMeta` + `pages/index.astro`（根路由）+ `[design]` 动态路由 + 切换页（条件构建），用 2 个临时最小设计跑通构建。
 4. 选型定稿：抓取 Oxide / Vercel 的完整 DESIGN.md（核实可获取性 + 许可 + provenance；不行则换备选）；用 impeccable `document --seed` 生成 editorial、terminal 两份 DESIGN.md。
-5. 逐套实现 4 套设计（按 `AGENTS.md` 约定；每套完成后：`design-page-verify` 全流程，状态写入 `docs/verification/`）。
+5. 逐套实现 4 套设计（按 `docs/rules/` 约定；每套完成后：`design-page-verify` 全流程，状态写入 `docs/verification/`）。
 6. 行为完善：随机/固定/缓存/避免重复/手选持久化全套 + 边界（单设计、过期、禁用设计、模式切换遗留存储）。
 7. 部署：GH workflow + CF/Vercel 文档 + 自定义域名说明 + base 前缀全链路自检（`BASE_PATH=/x npm run build` 抽查）。
-8. 验收：跑完 §13 全部条目；补全 README/AGENTS.md。
-9. 交付：MIT `LICENSE`、AGENTS.md/README 定稿；一期不做实际部署（工作流就位，由使用者按需启用）。
+8. 验收：跑完 §13 全部条目；补全 README、AGENTS.md 入口与 `docs/rules/` 正文。
+9. 交付：MIT `LICENSE`、AGENTS.md/README 与 `docs/rules/` 定稿；一期不做实际部署（工作流就位，由使用者按需启用）。
 
 ---
 
@@ -638,7 +639,7 @@ SenrenBanka/
 |---|---|
 | 许可风险（第三方规范再分发） | §4 策略：仅许可可确认来源入库；provenance 强制；designmd.co 排除；保留声明文件；不确定即不入库 |
 | CSS 体积失控（多设计类名互泄） | 从第一套设计起固定 `source(none)+@source` 协议；验收抽查隔离 |
-| DESIGN.md 格式参差、单份不足以成页 | `AGENTS.md` 项目级实现约定层 + `design-page-verify` 流程 |
+| DESIGN.md 格式参差、单份不足以成页 | `docs/rules/` 项目级规则正文层 + `AGENTS.md` 入口 + `design-page-verify` 流程 |
 | 来源漂移（上游改 URL/删文件） | 快照归档入库 + `fetchedAt` 记录；构建不依赖上游 |
 | 工具版本漂移（impeccable 等） | `generatedBy` 记录生成工具与版本；技能升级不影响已归档设计 |
 | GH Pages 同域存储冲突 | 存储键含 base 命名空间 + 可覆盖 |

@@ -27,7 +27,7 @@ npm run preview
 - 改语言：`src/data/site.config.yaml` 的 `i18n.locales`（**语言清单只在这里维护一处**：增删语言 = 加一份 `locales` 条目 + 一份同名 `profiles/<path>.yaml`）
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
-- 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `AGENTS.md`。新增目录后需重启 `npm run dev`。
+- 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `docs/rules/`。新增目录后需重启 `npm run dev`。
 
 ### URL 规则
 
@@ -57,7 +57,7 @@ npm run preview
 `styled` 页面的同一套菜单还提供重新加载、回到顶部、复制链接、打印 / 保存为 PDF、分享页面，以及随机切换主题。`html-only` 页面不提供这些菜单动作，只保留普通链接导航。
 
 - 主题页的「随机一个设计」会排除当前设计；切换页与 404 没有"当前设计"，走全部主题。
-- 菜单样式属项目 chrome，中性外观，不模仿任何一套主题的视觉语言（见 `AGENTS.md` 与 ADR 0007）。
+- 菜单样式属项目 chrome，中性外观，不模仿任何一套主题的视觉语言（见 `docs/rules/action-menu.md` 与 ADR 0007）。
 
 ## 部署
 
@@ -87,5 +87,5 @@ npm run preview
 
 - `docs/README.md`：文档职责索引与维护规则（改文档前先看它）
 - `SPEC.md`：项目规格与事实来源（决策记录、运行时规则、目录结构、验收标准）
-- `AGENTS.md`：编码 Agent 的强制实现约定（新增设计必读；完整验证流程见 `design-page-verify` skill）
+- `AGENTS.md`：编码 Agent 的规则入口（硬门禁 + 任务路由；完整正文在 `docs/rules/`；验证流程见 `design-page-verify` skill）
 - `docs/adr/` 长期技术决策 · `docs/designs/<id>/ADAPTATION.md` 主题适配记录 · `docs/verification/` 各主题与共享机制的当前验证状态 · `change-log/` 版本记录
