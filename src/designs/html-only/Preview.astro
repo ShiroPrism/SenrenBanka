@@ -1,0 +1,96 @@
+---
+/**
+ * HTML Only switcher preview: a deliberately unstyled HTML document.
+ *
+ * Constraints:
+ * - no style.css import and no tokens.css; styles are component-scoped only
+ * - no <Font>, no focusable elements, no animation
+ * - caller supplies aria-hidden; this component stays decorative
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+
+export const fonts: import('astro:assets').CssVariable[] = [];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const rows = links.slice(0, 3);
+---
+
+<div class="ho-pv">
+  <div class="ho-pv-sheet">
+    <p class="ho-pv-doc">HTML</p>
+    <p class="ho-pv-name">{name}</p>
+    {headline && <p class="ho-pv-headline">{headline}</p>}
+    <p class="ho-pv-heading">{t.contents}</p>
+    <p class="ho-pv-link">1. {t.links}</p>
+    <p class="ho-pv-link">2. {t.projects}</p>
+    <p class="ho-pv-heading">{t.links}</p>
+    {rows.map((link) => (
+      <p class="ho-pv-link">+ {link.label}</p>
+    ))}
+  </div>
+</div>
+
+<style>
+  .ho-pv {
+    display: grid;
+    height: 100%;
+    min-height: 7.5rem;
+    place-items: center;
+    padding: 0.5rem;
+    background: #e9e9e9;
+    font-family: "Times New Roman", Times, Georgia, "Songti SC", SimSun, "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-size: 0.625rem;
+    line-height: 1.35;
+    color: #111;
+  }
+
+  .ho-pv-sheet {
+    width: 100%;
+    min-height: 100%;
+    padding: 0.55rem 0.65rem;
+    background: #fff;
+  }
+
+  .ho-pv p {
+    margin: 0;
+  }
+
+  .ho-pv-doc {
+    color: #666;
+    font-family: "Courier New", Courier, ui-monospace, monospace;
+    font-size: 0.45rem;
+    letter-spacing: 0.08em;
+  }
+
+  .ho-pv-name {
+    margin-top: 0.2rem !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .ho-pv-headline {
+    margin-top: 0.15rem !important;
+    font-size: 0.56rem;
+    line-height: 1.3;
+  }
+
+  .ho-pv-heading {
+    margin-top: 0.45rem !important;
+    padding-top: 0.2rem;
+    border-top: 1px solid #888;
+    font-size: 0.56rem;
+    font-weight: 700;
+  }
+
+  .ho-pv-link {
+    padding-left: 0.55rem;
+    color: #0000ee;
+    font-size: 0.45rem;
+    line-height: 1.55;
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -11,6 +11,16 @@
 export type DescriptionLocale = 'zh-CN' | 'ja' | 'en';
 
 export const designDescriptions: Record<string, Record<DescriptionLocale, string>> = {
+  homepage99: {
+    'zh-CN': '1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。',
+    ja: '1999年の個人ホームページ——左の目次、密度のある本文、バッジの列。太い二重罫線とシステム書体、オフラインのカウンター。',
+    en: "A 1999 personal homepage: left directory, dense main column and badge rail, with double rules, system fonts and an offline counter.",
+  },
+  'html-only': {
+    'zh-CN': '原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。',
+    ja: '素の HTML——意味構造とブラウザ既定の表示だけでプロフィールを提示し、独自の CSS や JavaScript を読み込まない。',
+    en: 'Native HTML: the complete profile through semantic structure and browser defaults, with no custom CSS or JavaScript.',
+  },
   editorial: {
     'zh-CN': '杂志编排：一期一人，克制而讲究的留白与发丝线。',
     ja: '雑誌の組版——一期に一人。抑制的で、余白と罫線を重んじる。',

@@ -393,7 +393,7 @@ export async function loadDesignView(id: string, pathname: string): Promise<Desi
   const design = model.designs.find((entry) => entry.id === id);
   if (!design) {
     throw new Error(
-      `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / style.css。`,
+      `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / messages.ts；styled 设计还需 style.css，html-only 设计不得包含 style.css。`,
     );
   }
   return buildDesignView(model, design, resolveLocale(model, pathname));
@@ -419,7 +419,7 @@ export async function loadDesignStrips(
   const design = model.designs.find((entry) => entry.id === id);
   if (!design) {
     throw new Error(
-      `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / style.css。`,
+      `[senrenbanka] 未找到设计 "${id}"。请检查 src/designs/${id}/ 是否包含 design.json / DESIGN.md / Page.astro / messages.ts；styled 设计还需 style.css，html-only 设计不得包含 style.css。`,
     );
   }
   const view = buildDesignView(model, design, resolveLocale(model, pathname));

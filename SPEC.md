@@ -15,7 +15,7 @@
 ### 目标
 
 1. 使用者只维护**一份**个人资料配置（`profile.yaml`），即可拥有多套由 AI 依据各自 `DESIGN.md` 生成的、视觉与页面结构完全不同的静态个人主页。
-2. 每套设计拥有独立的 HTML 结构、排版、CSS 与必要交互，不是换色/换字体的简单主题。
+2. 每套 `styled` 设计拥有独立的 HTML 结构、排版、CSS 与必要交互，不是换色/换字体的简单主题；`html-only` 设计以无自定义 CSS/JS 的原生语义 HTML 作为显式例外。
 3. 支持 `fixed` / `random` 两种模式、可配置手动切换、浏览器缓存与避免连续重复。
 4. 构建期预生成全部静态 HTML；访客访问时不调用 AI、不需要服务端。
 5. fork 后修改资料与少量配置，即可部署到 GitHub Pages / Cloudflare Pages / Vercel。
@@ -37,7 +37,7 @@
 | Q1 | 设计规范来源与合规 | 只用两类来源：**厂商官方发布**（official-design-md 索引）+ **自产**（impeccable `document --seed`）。第三方整理源（awesome-design-md）需逐份核实许可并标注"非官方"后可选入库；designmd.co **排除**（许可无法核实）。 |
 | Q2 | 个人资料字段契约 | 核心必填（name/headline/bio/links，所有设计必须呈现）+ 可选字段（avatar/location）+ 扩展区块词汇表（projects/experience/skills/contact，**设计自行取舍**）。设计可加装饰性文案，不得虚构个人信息。 |
 | Q3 | 切换与持久化语义 | 随机：存储有效→用存储；过期→重随机（排除上次）并写新窗口；手选=写入+重开窗口。固定：手选**永久记住**，无则用 default；手选在随机模式下**按 cacheHours 过期**。直达 URL 不写存储。 |
-| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **全站共享操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；v0.10.0 起扩展到移动端：桌面右键 / `Shift+F10`，移动端悬浮球 → 底部动作面板，见 ADR 0007）。菜单本体与语言切换在任何配置下都渲染；`manualSwitch:false` → 主题组不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
+| Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **全站共享操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；v0.10.0 起扩展到移动端：桌面右键 / `Shift+F10`，移动端悬浮球 → 底部动作面板，见 ADR 0007）。共享操作菜单用于 `styled` 页面；`html-only` 按 ADR 0009 使用普通链接。`manualSwitch:false` → 主题入口不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
 | Q5 | 根路径与 SEO | 根路径=零外部请求的轻量路由页（内联脚本 `location.replace`；noscript meta refresh→default+链接列表）。索引策略 **B**：仅 default 设计可索引，其余 `noindex,follow`。 |
 | Q6 | 设计注册机制 | **目录自动发现**：`src/designs/<id>/` 存在即注册，元数据在同目录 `design.json`；站点配置不含设计清单；`_` 前缀目录忽略；构建期校验强制完整性。`enabled:false` = 页面仍构建可直达，退出随机池与切换页。 |
 | Q7 | 部署基线 | `site`/`base` 由环境变量驱动（`SITE_URL` / `BASE_PATH`，默认 `/`）；GH workflow 自动注入本仓库上下文 → fork 后零配置；CF Pages/Vercel 用面板配置（文档说明）。一期验证深度：本地构建 + 文档核实，不做实际部署。 |
@@ -284,7 +284,7 @@ design:
 **文案分两层**：
 
 - **共享文案**（`src/i18n/messages.ts`）：项目 chrome 与基础设施页——共享操作菜单（桌面浮层 / 移动面板 / 悬浮球，含运行时 Toast）、切换页、根入口页、404、语言选择器。必须覆盖全部语言，缺键在**构建期**报错。
-- **主题文案**（`src/designs/<id>/messages.ts`）：每套设计自身的界面文案，按该设计的视觉语言撰写，**不得**把 8 套设计统一翻译成相同表述。
+- **主题文案**（`src/designs/<id>/messages.ts`）：每套设计自身的界面文案，按该设计的视觉语言撰写，**不得**把所有设计统一翻译成相同表述。
 
 翻译原则：个人简介、headline、项目描述、工作职责、链接标签、联系说明等**需要本地化的内容要翻译**；项目名称、公司名称、URL、邮箱、技术标记等**专有名词不机械翻译**。承担设计意图而非信息传达的文本（终端命令、ASCII 装饰、刻意的双语标识、法律署名）保持原样，且**必须在该设计 `messages.ts` 的注释中写明理由**。
 
@@ -301,9 +301,10 @@ src/designs/<id>/
 ├─ DESIGN.md          # 设计规范快照（来源见 §4）
 ├─ design.json        # 元数据（机器可读）
 ├─ Page.astro         # 该设计的完整页面（含 <html> 文档）
-├─ style.css          # 该设计的 CSS 入口（Tailwind source(none) + @source + 原生 CSS）
-├─ tokens.css         # 可选：设计令牌单一来源（纯 CSS、命名空间类作用域，正式页与预览共用）
-├─ Preview.astro      # 可选：切换页预览碎片（自包含缩略引述，见 AGENTS.md「每套设计必须满足」）
+├─ messages.ts        # 该设计的各语言界面文案（必需）
+├─ style.css          # styled 必需；html-only 禁止存在
+├─ tokens.css         # styled 可选：设计令牌单一来源；html-only 不使用
+├─ Preview.astro      # 可选：切换页预览碎片；html-only 若提供必须完全自包含
 ├─ components/…       # 可选，该设计私有组件
 ├─ assets/…           # 可选，该设计私有资源
 └─ SOURCE-LICENSE.txt # 可选，来源许可要求时
@@ -316,6 +317,7 @@ src/designs/<id>/
   "displayName": "Editorial",            // 切换页显示名
   "description": "杂志排版风，强调字体层级与留白",  // 一句话描述
   "enabled": true,                       // false = 不随机、不上切换页，但页面仍构建可直达
+  "renderMode": "styled",                // styled | html-only；省略时默认 styled
   "accent": "#b45309",                   // 可选，切换页色块
   "source": {
     "type": "official-vendor",           // official-vendor | third-party-analysis | self-produced
@@ -330,22 +332,24 @@ src/designs/<id>/
 
 ### 6.3 注册与校验【已定】
 
-- `src/designs/registry.ts`：`import.meta.glob('./*/design.json', { eager: true })` 取元数据 + `import.meta.glob('./*/Page.astro')` 取惰性页面组件。
+- `src/designs/registry.ts`：`import.meta.glob('./*/design.json', { eager: true })` 取元数据；`astro.config.mjs` 扫描 `Page.astro` 并通过 `injectRoute` 注入路由。
 - **构建期强制校验**（失败即构建终止，报错必须指明目录与原因）：
   - 目录名（id）：`^[a-z0-9][a-z0-9-]*$`；不得使用保留字 `designs`；`_` 前缀目录忽略（放未完成设计）；
-  - 四件套齐备：`DESIGN.md`、`design.json`、`Page.astro`、`style.css`；
+  - 共同必交：`DESIGN.md`、`design.json`、`Page.astro`、`messages.ts`；
+  - `renderMode: "styled"`（默认）：`style.css` 必须存在；
+  - `renderMode: "html-only"`：`style.css` / `tokens.css` 必须不存在；`Preview.astro` 可选但必须自包含，且不得 import 正式页 CSS。显式声明后最终页面只允许语义 HTML 与 `canonical` / `alternate` / `icon` metadata 链接；
   - `design.json` 通过 Zod 校验；非自产来源的 provenance 字段齐全；
   - 至少 1 个启用设计；`site.config.default` 存在且已启用。
 - 派生数据：全部设计列表、启用设计列表（随机池）、default 设计。
 
 ### 6.4 页面接口【已定】
 
-- 设计 `Page.astro` 是**完整文档**（含 `<html>`），渲染于 `src/pages/[design]/index.astro` 动态路由。
+- 设计 `Page.astro` 是**完整文档**（含 `<html>`），由 `astro.config.mjs` 为每种 locale 注入固定路由。
 - 统一数据接口 `src/lib/site.ts`（async `loadSite()`）：合并 site 配置 + 注册表 + profile，完成交叉校验，向设计提供：
   - `profile`（类型化个人资料，头像已解析为可直接渲染的图片引用）；
   - `site`（title/description/lang/manualSwitch）；
   - `design`（自身元信息：id、displayName、isDefault）；
-  - `contextMenu`（共享操作菜单的构建期配置：`context` 页面上下文判别联合 `design` / `switcher` / `not-found` / 目标池 / `switcherHref` / 模式与存储语义 / `designActionsEnabled`；v0.10.0 起**没有** `enabled` 字段——菜单本体恒渲染，见 §7.5）；
+  - `contextMenu`（共享操作菜单的构建期配置：`context` 页面上下文判别联合 `design` / `switcher` / `not-found` / 目标池 / `switcherHref` / 模式与存储语义 / `designActionsEnabled`；v0.10.0 起**没有** `enabled` 字段）。`styled` 页面必须渲染该配置；`html-only` 不渲染菜单，见 §7.5 与 ADR 0009；
   - URL helper（`src/lib/urls.ts`，所有内部链接必须经它拼接 base 前缀）。
 - 每套设计 **必须**在 `<head>` 引入共享组件 `HeadMeta.astro`（title/description/canonical/robots/favicon；robots 规则见 §7.4）。
 
@@ -425,17 +429,18 @@ src/designs/<id>/
   - **移动端（v0.10.0 修订 · ADR 0007）**：提供**悬浮球**入口，点击打开**底部动作面板**；**不模拟长按**、不拦截原生长按与文本选择。面板与桌面菜单**共享同一份文案 / 动作语义 / 状态语义**，但**动作清单按端裁剪**（见下条），容器形态与语言项呈现也分叉（桌面二级子菜单、移动平铺）。移动形态按 **action sheet** 契约实现（`bar` / `body` / `foot` 三段）：面板内自带**头部 ✕ 按钮**与**底部取消条**，遮罩仅作兜底——触屏没有指针、没有 hover、没有 Esc，关闭控件必须出现在面板内部。
   - **动作清单按端裁剪**（`ContextMenu.astro` 的 `desktopActions` 5 项 / `sheetActions` **2 项**），判断标准只有一条：**移动端浏览器 / 系统是否已原生提供这个动作**。移动端只保留「复制链接 / 分享」——原生长按地址栏拷贝要 2~3 步且把用户带离页面，`navigator.share()` 唤起的正是系统原生分享表单，二者都属于**缩短路径**而非重复。删除三项：**重新加载**（移动浏览器页首内置下拉刷新，且本项目上一轮刚主动把这条通道还给浏览器——保留此项等于自相矛盾）、**回到页面顶部**（NNGroup：4 屏以内属 overkill；iOS 另有"点屏幕顶端回顶"原生手势）、**打印 / 保存为 PDF**（iOS Safari 16+ 完全忽略 `window.print()`，Android Chrome 默认隐藏打印入口，两端都是"点了没反应"）。
   - **不做下拉关闭手势**：实现它需要 `touch-action: none` 抢占触屏手势，代价是**整站页面顶部的下拉刷新被一并禁用**。移动浏览器把"在页首下拉"理解为用户要求重新加载；为"少点一次 ✕"牺牲刷新能力不成立。抓手降级为纯装饰。
-- **语言切换入口 = 共享操作菜单内的语言分组**（`ContextMenu.astro`，v0.9.0 修订；v0.10.0 起桌面与移动端都可达）：各设计页**不再**单独渲染可见的语言切换器，**也不需要**在自己的 `style.css` 中排版语言切换——这消除了 8 套设计重复排版的成本（实测移除约 9.4 KB 重复 CSS）。
+- **语言切换入口按渲染模式分叉**：`styled` 设计使用共享操作菜单内的语言分组（`ContextMenu.astro`，v0.9.0 修订；v0.10.0 起桌面与移动端都可达），不再单独渲染可见语言切换器，也不需要在自己的 `style.css` 中排版语言切换；`html-only` 设计在原生导航中直接提供普通语言链接。两种模式都必须带 `hreflang` / `lang`，当前语言标 `aria-current="page"`。
   - **二级菜单（而非平铺）是硬性要求**：语言项全部收进子菜单，**主菜单高度与语言数量无关**。平铺方案在语言数增多时菜单会长到超出视口而不可用；实测注入 18 种语言后主菜单仍为 8 项 / 374px（与 3 语言时完全一致），子菜单自身 `max-height: min(60vh, 26rem)` + 滚动。
   - **触发**：`语言` 行（`[data-cm-submenu-trigger]`，带 `ChevronRight` 箭头与 `aria-haspopup` / `aria-expanded` / `aria-controls`）。鼠标**悬浮**（120ms 延迟开启、180–220ms 延迟关闭，避免横扫误触与斜向移动误关）、**点击**（切换开合）或键盘 **→** 均可打开。
   - **定位**：默认贴触发项右侧；右侧放不下则**翻转到左侧**；纵向对齐触发项并收敛进视口。
   - 语言项是**普通 `<a>`**（非 button），逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记；语言名用各语言**自称**；子菜单带翻译后的 `aria-label`。
   - 目标保持**同一主题 id**（`languageItems(model, locale, design.id)`），不重置随机有效期。
   - **键盘**：`↑↓` 在当前层级内移动；移到触发项时展开子菜单、移开时收起；`→` 进入子菜单并聚焦首项，`←` 返回触发项；`Esc` 关闭整个菜单。导航层级由 `activeMenu` 跟踪——**子菜单的项不会混进主菜单的 `↑↓` 序列**（这是二级菜单最易出错的地方）。
-  - **`manualSwitch` 只控制主题切换项**（随机 / 切换设计…，由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这两项不渲染，**但菜单与语言分组照常渲染**——语言切换不受 `manualSwitch` 影响。
-  - **触屏不可达的取舍已于 v0.10.0 解除**。上一版预留的路径是"另加页面内入口而非改回逐设计排版"，v0.10.0 据此新增共享悬浮球与底部动作面板；移动端面板的静态 DOM 同时充当无 JavaScript 时的语言切换回退。
+  - **`manualSwitch` 只控制主题切换入口**（`styled` 的随机 / 切换设计…由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这些入口不渲染，`html-only` 的「全部设计」链接也不渲染，**但语言入口在两种模式下照常可用**。
+  - **移动菜单的静态 DOM 不是无 JavaScript 回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与菜单交互依赖运行时，因此无 JS 时这些语言链接不可见、不可达。该表述曾是已知文档错误，ADR 0009 已更正。
   - **基础设施页例外**：切换页与 404 也接入共享菜单（v0.10.0 起），其可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）**包进 `<noscript>`**——运行时只有菜单一个可见入口，无 JS 时靠它回退。设计页不渲染它。
-- `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、菜单不渲染（设计页零菜单标记 / 零脚本）；各设计固定 URL 与语言切换不受影响。
+- `html-only` 以普通链接提供页内目录、同主题语言链接，并在 `manualSwitch:true` 时提供一条「全部设计」链接；不得渲染随机入口、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或 `LanguageSwitcher`。
+- `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、`styled` 菜单的「设计」组不渲染、`html-only` 的「全部设计」链接不渲染；两种模式的语言入口与各设计固定 URL 均不受影响。
 
 ### 7.6 主题偏好与语言的耦合【v0.9.0】
 
@@ -446,7 +451,7 @@ src/designs/<id>/
 
 ## 8. Tailwind CSS 4 与原生 CSS 使用约定
 
-1. **每设计独立 CSS 入口**（强制模板）：
+1. **每设计独立 CSS 入口**（`styled` 强制模板）：
 
 ```css
 @import "tailwindcss" source(none);
@@ -462,6 +467,7 @@ src/designs/<id>/
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
 8. **预览碎片的样式隔离**（v0.10.0+，见 AGENTS.md）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
+9. **`html-only` 例外**（ADR 0009）：不提供 `style.css` / `tokens.css`，不 import Tailwind，不渲染字体、Reveal、共享菜单或基础设施样式；页面使用浏览器默认呈现。可选的 `Preview.astro` 只用于切换页，样式自包含，不改变正式页面的资源契约。
 
 ---
 
@@ -481,13 +487,16 @@ src/designs/<id>/
 {
   "dev": "astro dev",
   "check": "astro check",
-  "build": "npm run check && astro build",   // 注册表校验在构建期执行（fail fast）
+  "test:html-only": "node --test scripts/verify-html-only.test.mjs",
+  "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
+  "build": "npm run check && astro build && npm run verify:html-only",
   "preview": "astro preview"
 }
 ```
 
 - `engines.node >= 22.12`；提交 `package-lock.json`。
-- 校验机制：注册表构建期强校验（§6.3）+ `astro check`（TS/astro 类型）。一期不做自动化 e2e/视觉回归（二期）。
+- `scripts/verify-html-only.mjs` 使用 Node 标准库与现有 `yaml`，读取 `site.config.yaml` / `design.json`，逐 `html-only` 设计 × locale 检查最终 HTML；无候选、缺页面或违规资源均非零退出，支持 `--dist <dir>`。注册表校验在 Astro 构建期 fail-fast。
+- 校验机制：注册表构建期强校验（§6.3）+ `astro check` + HTML-only 产物门禁。一期不做自动化 e2e/视觉回归（二期）。
 
 ### 10.2 GitHub Pages【已定】【待实施验证】
 
@@ -545,20 +554,20 @@ SenrenBanka/
 │  │  ├─ Reveal.astro                # 滚动显现装配（内联 boot + 共享 IO 触发，不 import CSS）
 │  │  └─ ContextMenu.astro           # 共享操作菜单（中性 chrome；桌面浮层 + 移动面板 + 悬浮球三件；is:inline 样式 + 按需加载运行时）
 │  ├─ designs/                       # ★ 设计库：目录存在即注册（自动发现 + 构建期强校验）
-│  │  ├─ registry.ts                 #   glob design.json + Page.astro → 校验 → 派生注册表
+│  │  ├─ registry.ts                 #   glob design.json → 按 renderMode 校验 → 派生注册表
 │  │  ├─ editorial/                  # ── 单套设计示例（自产：编辑杂志风）──
 │  │  │  ├─ DESIGN.md                #    设计规范快照
 │  │  │  ├─ design.json              #    元数据：显示名/描述/enabled/来源与许可
 │  │  │  ├─ messages.ts              #    该设计的三语言界面文案（缺文件或缺键构建期报错）
 │  │  │  ├─ Page.astro               #    完整页面（含 <html> 文档）
-│  │  │  ├─ style.css                #    CSS 入口（source(none) + @source + 原生 CSS）
+│  │  │  ├─ style.css                #    styled 的 CSS 入口（source(none) + @source + 原生 CSS）
 │  │  │  ├─ components/              #    该设计私有组件（可选）
 │  │  │  └─ assets/                  #    该设计私有资源（可选）
 │  │  ├─ terminal/                   # 自产：复古终端风（结构同 editorial）
 │  │  ├─ oxide/                      # 官方来源（oxidecomputer/design-system，MPL-2.0）
-│  │  │  └─ …                        #   四件套 + SOURCE-LICENSE.txt
+│  │  │  └─ …                        #   必交文件 + SOURCE-LICENSE.txt
 │  │  └─ fast/                       # 官方来源（microsoft/fast，MIT）
-│  │     └─ …                        #   四件套 + SOURCE-LICENSE.txt
+│  │     └─ …                        #   必交文件 + SOURCE-LICENSE.txt
 │  ├─ infra/
 │  │  ├─ SwitcherPage.astro          # 切换页（injectRoute 为 /<locale>/designs/，manualSwitch 时才注入）
 │  │  ├─ LocaleIndex.astro           # 语言入口页（injectRoute 为 /<locale>/）
@@ -578,9 +587,11 @@ SenrenBanka/
 │  ├─ fonts/selection-guide.md       #   字体选型流程（本地字体库仅发现 / 预览，不入库、不进构建）
 │  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
+├─ scripts/
+│  └─ verify-html-only.mjs           # html-only 最终 HTML 资源门禁（支持 --dist）
 ├─ SPEC.md                           # 本规格（唯一契约文档）
 ├─ astro.config.mjs                  # Tailwind vite 插件 / fonts(npm provider) / site+base(env) / injectRoute 多语言设计路由·语言入口·切换页·旧路径跳转
-├─ package.json                      # scripts: dev/check/build/preview；engines.node >= 22.12
+├─ package.json                      # scripts: dev/check/test:html-only/build/verify:html-only/preview；engines.node >= 22.12
 ├─ package-lock.json
 └─ tsconfig.json                     # 继承 astro/tsconfigs/strict
 ```
@@ -603,20 +614,21 @@ SenrenBanka/
 
 ## 13. 验收标准（可验证）
 
-1. 干净克隆后 `npm ci && npm run build` 成功；`astro check` 无错误；注册表校验对缺失文件/缺 provenance 能明确报错（人为制造一次验证）。
+1. 干净克隆后 `npm ci && npm run build` 成功（末尾执行 HTML-only 产物门禁）；`astro check` 无错误；注册表校验对缺失文件、错误的 `renderMode` 文件组合与缺 provenance 能明确报错（人为制造一次验证）。
 2. `dist/` 含：`index.html`（根路由）、`designs/index.html`（切换页）、每套设计 `dist/<id>/index.html`；`manualSwitch:false` 构建时无 `designs/`。
-3. CSS 隔离抽查：任取两套设计，A 的 CSS 不含 B 独有工具类（对 dist 产物 grep 抽查一次）。
+3. CSS 隔离抽查：任取两套 `styled` 设计，A 的 CSS 不含 B 独有工具类（对 dist 产物 grep 抽查一次）；`html-only` 页面链接的 stylesheet 数必须为 0。
 4. 随机行为矩阵（人工，dev 或 preview）：首访落地启用池内；窗口内刷新一致；过期（手改 `expiresAt`）后重随机且不与上次重复；仅 1 套启用时永远它；禁用设计从不出现在随机结果与切换页；菜单「随机一个设计」在**主题页**遵循同一矩阵且**永不落在当前设计**，在切换页 / 404 走全池（不排除任何主题）；仅 1 套启用时该项禁用、点击不产生任何导航。
-5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用，菜单随机写入 `expiresAt:null`）；`manualSwitch:false` 时菜单本体与语言分组仍渲染（无可见主题切换入口）、`/designs/` 返回 404。
+5. 固定模式：根路径永远 default；`manualSwitch:true` 时手选后永久生效（清空过期逻辑不适用，菜单随机写入 `expiresAt:null`）；`manualSwitch:false` 时 `styled` 菜单本体与语言分组仍渲染（无可见主题切换入口）、`html-only` 无“全部设计”链接但语言链接仍可用、`/designs/` 返回 404。
 6. 手选持久化：随机模式手选后窗口内保持、过期后恢复轮换；直达设计 URL 不改变后续根路径归属。
-7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。
+7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。`styled` 设计页的菜单语言入口仍不可达（这是已知取舍，不得把隐藏菜单 DOM 声称为回退）；`html-only` 的目录、语言与资料链接必须以普通锚点保持可达。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
 9. 根路径零第三方请求（Network 面板确认，无字体/CSS/JS 请求）；切换在首屏前完成（无明显闪烁）。
 10. 字体：dist 内自托管（无 `fonts.googleapis.com` 等第三方引用）；回退栈含系统字体（含中文），断网/屏蔽字体时版式可读。
-11. 每套设计含 `DESIGN.md` + `design.json`（provenance 完整）；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
-12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本与切换页链接）。
+11. 每套设计含 `DESIGN.md` + `design.json` + `Page.astro` + `messages.ts`（provenance 完整）；`design.json.renderMode` 缺省按 `styled` 处理，`html-only` 不提供 `style.css` / `tokens.css`，但可提供自包含 `Preview.astro`；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
+12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本、切换页链接与 html-only 语言 / 设计链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。
-14. 共享操作菜单（`manualSwitch:true`）：八套设计桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「切换设计…」项；八套设计均不存在旧的可见 `Switch design` 入口。
+14. 共享操作菜单（`manualSwitch:true`，所有 `styled` 设计）：桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「切换设计…」项；所有 `styled` 设计均不存在旧的可见 `Switch design` 入口。`html-only` 不接入菜单。
+15. HTML-only 产物门禁：每个 `html-only` 设计 × locale 的最终 HTML 不含 `<style>`、`style` 属性、`<script>`、事件处理器、`iframe` / `object` / `embed`、`javascript:` URL 或 meta refresh；`<link>` 只含 `canonical` / `alternate` / `icon`，无 stylesheet / preload。缺少候选或页面、任一项违规均让 `npm run verify:html-only` 非零退出；该命令先跑 Node 内置回归测试，`--dist` 可检查指定产物目录。
 
 ---
 

@@ -22,6 +22,24 @@ _Avoid_: 文档汇总、二手整理、摘抄
 仅借鉴目标设计系统的视觉语言、规范完全自撰的设计（`source.type: third-party-analysis`）；不移植上游文本与素材，标注"非官方"，命名不含厂商商标。
 _Avoid_: 仿制、克隆、致敬版
 
+### Design Rendering
+
+**Design render mode（设计渲染模式）**:
+由 `design.json` 显式声明、决定必需交付物与允许浏览器资源的契约：`styled` 遵循标准设计管线，`html-only` 禁止自定义 CSS/JS 与共享交互 chrome。
+_Avoid_: 主题类型、模板模式、render flag
+
+**Styled design（常规设计）**:
+页面可加载自身 CSS、使用已注册字体与动效，并接入共享操作菜单的设计。
+_Avoid_: 普通主题、CSS 主题
+
+**HTML-only design（原生 HTML 设计）**:
+最终页面只含语义化 HTML 与获准的 metadata 链接，不加载样式表、内联样式、脚本、字体资源或共享操作菜单的设计。
+_Avoid_: 无样式页面、裸 HTML、零前端设计
+
+**Native HTML navigation（原生 HTML 导航）**:
+HTML-only 设计用于替代共享操作菜单的普通链接集合：页内区段、同主题的其他语言，以及手动切换开启时的设计切换页。
+_Avoid_: 菜单回退、自建 Context Menu
+
 ### Localization
 
 **Locale（语言）**:

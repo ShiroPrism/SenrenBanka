@@ -4,6 +4,7 @@
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill。
 > 最近全流程验证：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断。
+> 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。本文件原有浏览器实测仍对应当时的 8 套 `styled` 设计；当前 17 套 `styled` 中，本日新增的 homepage99 已在桌面与 375px 触控环境实测菜单，其余 16 套的完整浏览器矩阵仍以 2026-10-13 / 10-19 记录为准。
 
 ## 形态与接入面
 
@@ -11,7 +12,8 @@
 
 | 页面上下文 | 接入 | 身份条 | 随机主题 | 「切换设计…」 | 语言项目标 |
 |---|---|---|---|---|---|
-| `design`（8 套 × 3 语言 = 24 页） | ✅ | ✅ | 排除当前 | ✅ | `/{locale}/{同一主题}/` |
+| `design`（`styled`；当前 17 套 × 3 语言 = 51 页） | ✅ | ✅ | 排除当前 | ✅ | `/{locale}/{同一主题}/` |
+| `design`（`html-only`；3 页） | ❌（ADR 0009 显式例外） | — | — | — | 原生同主题语言链接 |
 | `switcher`（3 页） | ✅ | ❌ | 全池（不排除不存在的当前） | ❌ 构建期不渲染 | `/{locale}/designs/` |
 | `not-found`（`404.html`） | ✅ | ❌ | 全池 | ✅（受 `manualSwitch` 门控） | `/{locale}/` |
 | `entry`（`/`、`/{locale}/`、旧路径跳转页） | ❌ | — | — | — | 现有 `<noscript>` 列表 |
@@ -71,12 +73,13 @@
 - `manualSwitch: false` 实测：构建 **37 页**（切换页 3 页消失）；设计页 `data-cm-action="random"` / `"switch"` 计数均为 **0**，而 `data-cm-sheet` 与 `cm-lang` × 6 **仍在**——菜单本体与语言分组照常渲染，页面操作与语言切换不受影响。
 - `navigator.share` 不可用：两份容器内的分享项均被移除（桌面 + 面板同时处理）。
 - 剪贴板双失败：模拟 `navigator.clipboard.writeText` reject 且 `execCommand` 返回 false → Toast 显示「复制失败，请手动复制地址栏链接」、`data-cm-tone="error"`、`hidden: false`。
-- 无 JS 回退：切换页与 404 的 `<noscript>` 各含 **3** 个 `.lang-switch-link`，目标分别为 `/{locale}/designs/` 与 `/{locale}/`；设计页**不含**该回退（维持 v0.9.0 已裁定的取舍）。
+- 无 JS 回退：切换页与 404 的 `<noscript>` 各含 **3** 个 `.lang-switch-link`，目标分别为 `/{locale}/designs/` 与 `/{locale}/`；`styled` 设计页**不含**该回退（维持 v0.9.0 已裁定的取舍）。`html-only` 由 ADR 0009 的原生 `<nav>` 提供可见语言链接，不依赖菜单。
+- **隐藏菜单 DOM 不是回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与交互逻辑也依赖运行时；无 JS 时其中的语言链接不可见、不可达。此前把移动面板静态 DOM 说成“无 JS 语言切换回退”的表述已更正。
 
 ## 构建与产物隔离
 
-- `npm run build` **41 页**绿，`npx tsc --noEmit` 0 错误。
-- 每设计页 CSS `<link>` 计数 = **1**；切换页与 404 = **0**（不误带设计样式）。菜单样式全部 `<style is:inline>`，不新增 `<link>`。
+- 2026-10-13 的菜单浏览器矩阵记录为 **41 页**（当时 8 套 `styled`）；2026-10-28 当前静态构建为 **81 页**，并新增 HTML-only 产物门禁。homepage99 的桌面菜单、触控面板、语言导航与背景滚动锁已在本轮实测，见 `docs/verification/homepage99.md`。
+- 每个 `styled` 设计页 CSS `<link>` 计数 = **1**；`html-only` 页面 = **0**，切换页与 404 = **0**（不误带设计样式）。菜单样式全部 `<style is:inline>`，不新增 `<link>`。
 - 运行时 chunk `context-menu.*.js` 独立，页面内 `modulepreload` 计数 = **0**。启动门控为 `matchMedia('(hover: hover) and (any-pointer: fine)')` **或** `matchMedia('(any-pointer: coarse)')` 任一命中即动态 `import()`。
 - 三语言 `launcherLabel` 与语言目标 URL 均正确本地化。
 

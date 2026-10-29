@@ -6,9 +6,9 @@ One profile, many AI-designed homepages, in three languages. Astro + TypeScript 
 
 ## 特性
 
-- 8 套视觉与结构完全不同的设计（Editorial / Terminal / Oxide / Fast / Frost / GOV.UK / Kern / Material 3），共用同一份资料契约
+- 18 套视觉与结构不同的设计（17 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
 - **三语言**（`zh-CN` / `ja` / `en`）：每套设计在每种语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离
-- **语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）
+- **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
 - 根路径是零外部请求的客户端路由；每种语言仅其默认设计对外可索引（避免近重复内容）
@@ -27,7 +27,7 @@ npm run preview
 - 改语言：`src/data/site.config.yaml` 的 `i18n.locales`（**语言清单只在这里维护一处**：增删语言 = 加一份 `locales` 条目 + 一份同名 `profiles/<path>.yaml`）
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
-- 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册；五件套：`DESIGN.md` / `design.json` / `Page.astro` / `style.css` / `messages.ts`），流程与合规要求见 `SPEC.md` §4–§6 与 `AGENTS.md`。新增目录后需重启 `npm run dev`。
+- 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `AGENTS.md`。新增目录后需重启 `npm run dev`。
 
 ### URL 规则
 
@@ -44,16 +44,17 @@ npm run preview
 
 ### 语言切换
 
-语言切换入口是**共享操作菜单**里的一个分组。切换语言会**保持当前页面上下文**——在主题页保持当前设计，在切换页保持切换页，在 404 回到对应语言的入口。
+`styled` 页面的语言切换入口是**共享操作菜单**里的一个分组；`html-only` 页面在正文导航中直接列出普通语言链接。两种模式切换语言都会**保持当前页面上下文**——在主题页保持当前设计，在切换页保持切换页，在 404 回到对应语言的入口。
 
 - 桌面鼠标环境：右键或 `Shift+F10` 打开菜单，语言项收在二级子菜单里。
 - 移动端：右下角**悬浮球**打开**底部动作面板**，语言项直接平铺（触屏没有 hover 二级菜单的心智模型）。
-- 主题偏好（`localStorage`）跨语言共享：切换语言**不会**重置随机结果。
-- 无 JavaScript 时，移动端面板的静态标记与基础设施页的 `<noscript>` 语言链接提供可达路径。
+- 以上两条适用于 `styled` 页面；`html-only` 的普通语言链接不受输入环境影响。
+- 主题偏好（`localStorage`）跨语言共享：在 `styled` 页面切换语言**不会**重置随机结果。
+- 无 JavaScript 时，`styled` 设计页的语言入口不可达（共享菜单依赖运行时）；切换页与 404 由 `<noscript>` 语言链接回退，`html-only` 设计页使用始终可见的原生语言链接。
 
 ### 页面操作
 
-同一套菜单还提供重新加载、回到顶部、复制链接、打印 / 保存为 PDF、分享页面，以及随机切换主题。这些操作在所有页面都可用。
+`styled` 页面的同一套菜单还提供重新加载、回到顶部、复制链接、打印 / 保存为 PDF、分享页面，以及随机切换主题。`html-only` 页面不提供这些菜单动作，只保留普通链接导航。
 
 - 主题页的「随机一个设计」会排除当前设计；切换页与 404 没有"当前设计"，走全部主题。
 - 菜单样式属项目 chrome，中性外观，不模仿任何一套主题的视觉语言（见 `AGENTS.md` 与 ADR 0007）。

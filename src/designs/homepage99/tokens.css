@@ -1,0 +1,27 @@
+/**
+ * Homepage '99 design tokens (single source for the page and Preview.astro).
+ *
+ * - Scope is a namespace class (`:is(.h99, .h99-pv)`), never `:root`: the
+ *   switcher inlines this file and `:root` would leak into every card.
+ * - Palette only. Font roles stay in `style.css` / `Preview.astro` because
+ *   `html` cannot read variables scoped to a descendant `.h99` body class.
+ * - Contrast values are recorded in DESIGN.md.
+ */
+
+:is(.h99, .h99-pv) {
+  --h99-paper: #fffbea;
+  --h99-panel: #f1edcf;
+  --h99-white: #ffffff;
+  --h99-ink: #111111;
+  --h99-muted: #5c4b2a;
+  --h99-navy: #000080;
+  --h99-blue: #0000ee;
+  --h99-visited: #551a8b;
+  --h99-teal: #006b6b;
+  --h99-lime: #d7ff9e;
+  --h99-rule: #202020;
+  --h99-red: #b00020;
+  --h99-silver: #c0c0c0;
+  --h99-grid: #e7e0c2;
+  --h99-stripe: rgba(17, 17, 17, 0.14);
+}

@@ -14,7 +14,7 @@
   - `site`：manualSwitch
   - `design`：id / displayName / description / isDefault
   - `head`：**必须原样传给 `HeadMeta`**（title / description / canonical / robots / lang / alternates 由框架统一计算，robots 索引策略不可自行更改）
-  - `contextMenu`：共享操作菜单的构建期配置（`context` 页面上下文 / 目标池 / storageKey / `languages` / `designActionsEnabled` 等，含随机与固定模式的存储语义）。页面**无条件**接入共享组件 `<ContextMenu config={view.contextMenu} />`（见下节；v0.10.0 起无 `enabled` 开关）
+  - `contextMenu`：共享操作菜单的构建期配置（`context` 页面上下文 / 目标池 / storageKey / `languages` / `designActionsEnabled` 等，含随机与固定模式的存储语义）。`styled` 页面**无条件**接入 `<ContextMenu config={view.contextMenu} />`；`html-only` 页面**不得渲染该组件**，改用普通链接导航（见「每套设计必须满足」；v0.10.0 起无 `enabled` 开关）
 - `<html lang>` 必须用 `view.head.lang`（即当前语言的 BCP 47 code），**不得**使用固定的 `zh-CN`
 - 所有内部链接必须经 `withBase()`（`src/lib/urls.ts`）拼接 base 前缀，或用 `localeDesignHref()` / `localeHref()`（`src/lib/site.ts`）生成**带语言前缀**的地址；禁止硬编码绝对路径
 - 禁止虚构个人事实
@@ -32,37 +32,46 @@
   - 若某句原文本身语义不清、拿不准，**先问项目所有者**，不要自行"润色"或保留。
   - 译文必须**能被该语言的读者读懂并获得与原文等量的信息**；做不到就说明原文该删，而不是硬译。
 - 共享 chrome 文案集中在 `src/i18n/messages.ts`；该模块与各设计 `messages.ts` **都是纯数据，不得 import 任何 CSS / `Page.astro` / `style.css`**
-- **语言切换入口 = 共享操作菜单内的语言分组**（`ContextMenu.astro` 内渲染，`.cm-lang`）：各设计页**不再**单独渲染可见的语言切换器，也**不需要**在自己的 `style.css` 中排版语言切换（v0.9.0 修订：消除 8 套设计的重复排版成本）。语言项是普通 `<a>`，逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记。**桌面与移动端都可达**（v0.10.0 修订）。
+- **语言切换入口按渲染模式分叉**：`styled` 设计使用共享操作菜单内的语言分组（`ContextMenu.astro` 内渲染，`.cm-lang`），不再单独渲染可见语言切换器，也不需要在 `style.css` 中排版语言切换；`html-only` 设计在原生导航中直接列出普通 `<a>`。两种模式的每个语言项都逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"`。共享菜单的桌面与移动形态都必须可达（v0.10.0 修订）。
 - **语言项的呈现按输入环境分叉**（ADR 0007）：
   - **桌面**：收在二级子菜单里，**不得平铺进主菜单**——语言数量由配置决定且可能很多，平铺会让主菜单长到超出视口。契约：主菜单高度与语言数量**无关**；子菜单自身限高并可滚动。
   - **移动**：在底部动作面板内**平铺**（触屏没有 hover 二级菜单的心智模型，用户会滑到列表底部而不是"点开子菜单去看语言"）。限高与滚动由面板容器承担，语言再多也不会顶出视口。
   - **两种形态都不得依赖 hover**：桌面子菜单必须支持点击 / `→` / Enter 打开；移动端平铺项本身即入口。
-- **`manualSwitch` 只控制菜单内的主题切换项**（随机 / 切换设计…）：`designActionsEnabled` 为 false 时这两项不渲染，但**菜单与语言分组仍渲染**——语言切换不受 `manualSwitch` 影响
+- **`manualSwitch` 只控制主题切换入口**：`styled` 菜单中的随机 / 切换设计项由 `designActionsEnabled` 门控；`html-only` 的「全部设计」普通链接同样受它门控。语言入口在两种模式下都照常渲染——语言切换不受 `manualSwitch` 影响
 - 切换语言时**保持页面上下文**（`context.kind` 派生，ADR 0007）：主题页 → 目标语言的同一主题；切换页 → 目标语言的切换页；404 → 目标语言的入口页
 - 切换语言只改 locale，**不改当前主题、不重置随机窗口**；`storageKey` 不含 locale（主题偏好跨语言共享）
 - 语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码
 
 ## 每套设计必须满足
 
-1. 四件套齐备：`DESIGN.md`、`design.json`、`Page.astro`、`style.css`，**加** `messages.ts`（见「多语言（i18n）」节）
-2. `Page.astro` 是完整文档（含 `<html>`），`<head>` 中必须包含 `<HeadMeta {...view.head} />`
-3. `style.css` 首两行必须为：
+`design.json.renderMode` 显式区分两种渲染契约；省略时默认 `styled`，`html-only` 必须显式声明。
+
+| 文件 / 能力 | `styled`（默认） | `html-only` |
+|---|---|---|
+| `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts` | 必需 | 必需 |
+| `style.css` / `tokens.css` / `Preview.astro` | `style.css` 必需；其余可选 | `style.css` / `tokens.css` **禁止存在**；`Preview.astro` 可选，但必须完全自包含 |
+| 最终页面 CSS / JS | 自身样式、字体、动效与共享菜单 | 仅语义 HTML + 获准 metadata 链接 |
+| 操作 / 语言入口 | 共享操作菜单 | 普通链接导航 |
+
+1. 共同必交文件：`DESIGN.md`、`design.json`、`Page.astro`、`messages.ts`（见「多语言（i18n）」节）；`style.css` 只由 `styled` 设计提供。
+2. `Page.astro` 是完整文档（含 `<html>`），`<head>` 中必须原样包含 `<HeadMeta {...view.head} />`。
+3. `styled` 的 `style.css` 首两行必须为：
 
    ```css
    @import "tailwindcss" source(none);
    @source "./";
    ```
 
-   （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）
-4. 必须接入共享操作菜单（`<ContextMenu config={view.contextMenu} />`，放于 `<body>` 末尾，**无条件**渲染）；**不得**再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口
-5. 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind；**新增主题的字体选型必须先走 `docs/fonts/selection-guide.md` 流程（先隐喻、后样张目检、过许可闸门），见「字体（Typography & Fonts）」节**
+   （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）。`html-only` 不得提供 `style.css`、`tokens.css`、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或任何自定义页面样式 / 脚本；最终 HTML 禁止 `<style>`、`style` 属性、`<script>`、事件处理器、`iframe` / `object` / `embed`、stylesheet / preload、`javascript:` URL 与 meta refresh，`<link>` 只允许 `canonical` / `alternate` / `icon`。其可选的 `Preview.astro` 只属于切换页，样式必须自包含，且不得 import 正式页 CSS。
+4. `styled` 必须接入共享操作菜单（`<ContextMenu config={view.contextMenu} />`，放于 `<body>` 末尾，**无条件**渲染）；不得再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口。`html-only` 不接入菜单，必须提供页内目录、同主题语言普通链接，并在 `manualSwitch: true` 时提供一条「全部设计」普通链接。
+5. `styled` 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind；**新增主题的字体选型必须先走 `docs/fonts/selection-guide.md` 流程（先隐喻、后样张目检、过许可闸门），见「字体（Typography & Fonts）」节**。`html-only` 不选字体、不注册字体、不加载字体资源，采用浏览器用户默认排版。
 6. `design.json` 的 `source`：非自产（`official-vendor` / `official-docs-derived` / `third-party-analysis`）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`（汇编为逐来源许可合集）
-7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）
-8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；语言切换由共享操作菜单承担，设计页**不渲染** `<LanguageSwitcher />`（它是基础设施页的无 JS 回退，见下节）
+7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；`styled` 采用共享滚动显现时必须接入 `<Reveal />`（见「动效（Motion）」节）。`html-only` 必须在规范中论证完全静止，且不得渲染 Reveal。
+8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；`styled` 语言切换由共享操作菜单承担，`html-only` 由原生链接承担。所有设计页都**不渲染** `<LanguageSwitcher />`（它是基础设施页的 `<noscript>` 回退，见下节）
 
 ### 可选 · 切换页预览碎片（`Preview.astro` / `tokens.css`）
 
-切换页 `/{locale}/designs/` 为每套设计渲染一枚**装饰性缩略引述**。它**可选**——缺失时该卡片回退为 accent 色点形态，注册表四件套契约不因此变更。
+切换页 `/{locale}/designs/` 为每套提供 `Preview.astro` 的设计渲染一枚**装饰性缩略引述**。它**可选**——缺失时该卡片回退为 accent 色点形态，必交文件契约不因此变更。`html-only` 可以提供自包含预览碎片，但不得提供 `tokens.css`；预览不得改变正式 HTML-only 页面零 CSS / JS 的资源契约。
 
 1. **文件**：`src/designs/<id>/Preview.astro`（自包含碎片，样式放组件 `<style>`，目标 1–8KB）。组件**必须**导出 `fonts`（`import('astro:assets').CssVariable[]`），列出自己真正渲染用到的字体族；切换页据此**按族去重**、页面级声明一次 `<Font>`（同族重复声明会产生重复 `@font-face`，实测确认）。
 2. **不得 import 本设计 `style.css`**：那会带进 Tailwind preflight 与整页规则。预览只做"视觉签名"（布局骨架 / 字体角色 / 配色 / 签名装饰），**不是**完整页面、不带动效机制、不引交互依赖，也**不得**退化为统一的通用卡片模板。
@@ -78,8 +87,8 @@
 
 术语：菜单本体叫**共享操作菜单**（`Action menu`），**桌面形态**叫 `Context menu`，**移动形态**叫**底部动作面板**，**移动端入口**叫**悬浮球**（`Launcher`）。`CONTEXT.md` 有完整定义。
 
-- **唯一实现**：`src/components/ContextMenu.astro`（标记 / 样式 / 配置注入）+ `src/lib/context-menu.ts`（运行时）。**禁止**每套设计复制菜单实现或自建切换入口；数据来自 `view.contextMenu`（设计页）或 `buildActionMenuConfig()`（基础设施页），构建期都在 `src/lib/site.ts` 派生。
-- **一份数据，两种容器形态**：SSR 同时输出两份 DOM（`.cm` 桌面浮层 / `.cm-sheet` 移动面板），运行时按输入能力把不需要的那份设为 `hidden`——**必须用 `hidden` 属性**（它同时移出无障碍树，不会被重复朗读），不要用 `display: none` 类。两份共享同一批 `<a href>` / `<button data-cm-action>` / Toast 容器与事件委托。被摘除的移动面板那份静态 DOM 顺带充当无 JS 时的语言切换回退。
+- **唯一实现（`styled` 页面）**：`src/components/ContextMenu.astro`（标记 / 样式 / 配置注入）+ `src/lib/context-menu.ts`（运行时）。**禁止**每套 `styled` 设计复制菜单实现或自建切换入口；数据来自 `view.contextMenu`（设计页）或 `buildActionMenuConfig()`（基础设施页），构建期都在 `src/lib/site.ts` 派生。`html-only` 不渲染菜单，使用契约规定的原生链接导航。
+- **一份数据，两种容器形态**：SSR 同时输出两份 DOM（`.cm` 桌面浮层 / `.cm-sheet` 移动面板），运行时按输入能力把不需要的那份设为 `hidden`——**必须用 `hidden` 属性**（它同时移出无障碍树，不会被重复朗读），不要用 `display: none` 类。两份共享同一批 `<a href>` / `<button data-cm-action>` / Toast 容器与事件委托。**静态 DOM 不是无 JS 回退**：两份容器初始都带 `hidden`，悬浮球与菜单交互也依赖运行时；无 JS 时这些语言链接不可见、不可达。基础设施页的回退是单独的 `<noscript><LanguageSwitcher /></noscript>`。
 - **触发方式**（与菜单本体解耦）：
   - 桌面：非交互区域右键 / `Shift+F10`，门控 `(hover: hover) and (any-pointer: fine)`。
   - 移动：点击悬浮球，门控 `(any-pointer: coarse)`。
@@ -111,13 +120,13 @@
 - **同一个能力不得在页面里出现两个入口**：上一轮刚论证「下拉刷新比下拉手势重要」、把面板上的 `touch-action: none` 移除以还给浏览器，下一轮却在同一块面板里留了「重新加载」——两处互相打脸。裁剪动作项时要从**整个平台的既有能力**出发检查，不是从「桌面菜单里有什么」出发。**移动端面板只有 2 项（复制链接 / 分享）是对的，不要为了对称把重新加载加回来。**
 - **全站不得出现 `touch-action: none`**（除确有需要的元素）：它会一并禁掉该元素所在滚动链的**下拉刷新**。项目 chrome 一律 `auto`，靠 `overscroll-behavior` 控制滚动传递，两者职责不同（见 `m2.material.io` 与 `apostleacademy` 的对照）。
 - **「点在面板外」的判定必须用 `contains()`，不能用 `=== 元素`**：点在按钮**内部的 `<svg>` 图标**上时 `event.target` 是图标而不是按钮，`===` 会漏判，后果是悬浮球刚打开面板就被同一笔点击的冒泡立刻关掉（v0.10.0 实测踩坑）。图标另外加 `pointer-events: none` 作为第二道保险。
-- **接入范围**：8 套主题 × 3 语言、`/{locale}/designs/`、404。**四类"立即跳转"页不接**（`/`、`/{locale}/`、`/{design}/`、`/designs/`）——它们在 `<head>` 内同步跳转、停留不足一帧，挂菜单自相矛盾；其自带的 `<noscript>` 链接列表本身就是回退。
-- **`manualSwitch: false`**：主题组整体不渲染（`designActionsEnabled: false`），`/designs/` 不构建（404）；**菜单本体与语言分组照常渲染**，页面操作与语言切换不受影响。配置中**没有** `enabled` 字段（v0.10.0 已删除——它恒为 `true`，无信息量，且与 `designActionsEnabled` 职责重复）。
+- **接入范围**：所有 `styled` 设计 × 各语言、`/{locale}/designs/`、404。`html-only` 设计不接菜单，以原生导航替代。**四类"立即跳转"页不接**（`/`、`/{locale}/`、`/{design}/`、`/designs/`）——它们在 `<head>` 内同步跳转、停留不足一帧，挂菜单自相矛盾；其自带的 `<noscript>` 链接列表本身就是回退。
+- **`manualSwitch: false`**：`styled` 菜单的主题组整体不渲染（`designActionsEnabled: false`），`html-only` 的「全部设计」链接不渲染，`/designs/` 不构建（404）；`styled` 的**菜单本体与语言分组照常渲染**，`html-only` 的语言导航也照常渲染。配置中**没有** `enabled` 字段（v0.10.0 已删除——它恒为 `true`，无信息量，且与 `designActionsEnabled` 职责重复）。
 
 ## 动效（Motion）
 
 - 机制见 `docs/adr/0001-motion-reveal-mechanism.md`（基础触发）与 `docs/adr/0003-differentiated-motion-enhancement.md`（差异化增强），术语见 `CONTEXT.md`；各设计当前采用情况见 `docs/verification/`。
-- **定位：设计语言维度**。目标不是给所有元素增加动画，而是让每套设计拥有更丰富、更有辨识度的动态表现，同时保持各自的设计语言。每套设计必须在 `DESIGN.md` 中定义自己的动效语言（形态 / 节奏 / 参数）；允许极简（单一过渡、单动作），决定静止必须给出论证。
+- **定位：设计语言维度**。目标不是给所有元素增加动画，而是让每套设计拥有更丰富、更有辨识度的动态表现，同时保持各自的设计语言。每套设计必须在 `DESIGN.md` 中定义自己的动效语言（形态 / 节奏 / 参数）；允许极简（单一过渡、单动作），决定静止必须给出论证。`html-only` 必须完全静止且不接入下列样式 / 脚本机制。
 - **入场动画**：各设计私有纯 CSS `@keyframes`（无 JS 依赖），整体包在 `@media (prefers-reduced-motion: no-preference)` 内；减动态时不生成动画、元素保持自然可见态。
 - **滚动显现**：共享 `src/lib/reveal.ts`（`IntersectionObserver`）只负责触发；目标加 `data-reveal`，首次进入视口置 `data-reveal-in` 并取消观察（只播一次）。时长 / 缓动 / 位移 / 错落顺序由各设计 `style.css` 自行维护。采用共享机制的设计在 `<head>` 放一次 `<Reveal />`；不用共享机制的设计必须在 `DESIGN.md` 说明替代触发方式，且仍须满足下文可见性契约。
 - **装饰性滚动进度**：CSS Scroll-Driven Animations（`animation-timeline: scroll()`）仅允许用于装饰性进度指示，**不得用于内容显隐**；`@supports` 门控 + 不支持 / 减动态时整条隐藏；注意压缩器可能把 `animation-timeline` 合并进 `animation` 简写（产物中该简写在当前 Chromium 不被接受、整条失效），须以 `var()` 传入 timeline 阻断合并（本机已实测；记录见 `docs/verification/`）。
@@ -172,7 +181,7 @@
 - **当前实现**：通用功能图标库采用 `@lucide/astro`（构建期内联 SVG、零客户端 JS）；复用既有方案，不重复引入相似库。
 - **接线**：`links[].icon` 为可选 slug；slug → 标记的映射写在各设计 `Page.astro`（私有、条件渲染）；**仅当映射存在时才渲染标记——未配置 / 未映射一律不打图标**（2026-10-11 修订：按配置逐条标记；旧「Globe 回退 / 列表 100% 标记」被项目所有者否决）。列表面之外的页脚 / CTA 保留各设计原生 affordance；装饰性标记一律 `aria-hidden`（可访问名由文本标签承担）。
 - **品牌标志**：vendored 至 `src/assets/brand/`（simple-icons / CC0、单色 `currentColor`）；逐品牌核对商标规范，provenance（url / 日期 / 许可 / 核对结论）记入 `docs/verification/shared.md`。
-- **样式归属**：尺寸 / 描边 / 颜色 / 间距 / hover 由各设计 `style.css` 控制；不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：共享操作菜单组件（项目级 chrome，见「页面级操作入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
+- **样式归属**：`styled` 设计的尺寸 / 描边 / 颜色 / 间距 / hover 由其 `style.css` 控制；`html-only` 不设置样式，采用浏览器默认呈现。不建共享图标封装组件（隔离约束见"已知坑"）。**唯一例外**：共享操作菜单组件（项目级 chrome，见「页面级操作入口」节）统一使用 `@lucide/astro`、单一中性外观，不属于任何设计的图标系统，也不受各设计图标规范约束；各设计内容区的图标语言不受其影响。
 - **现行语言**：各设计图标语言见各自 `DESIGN.md`；厂商来源（快照 / 汇编 / 复刻）的适配记录与各设计当前采用情况见 `docs/designs/*/ADAPTATION.md` 与 `docs/verification/`。
 
 ## Visual Assets & Cursor Rules
@@ -190,13 +199,13 @@
 
 ## 字体（Typography & Fonts）
 
-- **选型顺序（强制）**：新增主题必须先确定**设计隐喻与信息结构**（标题 / 正文 / 数字·技术标记的角色划分），再到本地字体库发现候选、经**真实文件样张目检**、过**许可闸门**后接入生产。**不得**按字体名关键词或审美形容词直接指定字体；**不得**跳过样张目检（名称含 `CJK` / `Japanese` 等词不代表实际覆盖）。完整流程与工具见 `docs/fonts/selection-guide.md`。
+- **选型顺序（`styled` 强制）**：新增 `styled` 主题必须先确定**设计隐喻与信息结构**（标题 / 正文 / 数字·技术标记的角色划分），再到本地字体库发现候选、经**真实文件样张目检**、过**许可闸门**后接入生产。**不得**按字体名关键词或审美形容词直接指定字体；**不得**跳过样张目检（名称含 `CJK` / `Japanese` 等词不代表实际覆盖）。完整流程与工具见 `docs/fonts/selection-guide.md`。`html-only` 不进入字体选型或生产管线。
 - **本地字体库（本机工作台）**：唯一入口 `.local-fonts/library/`（Windows 目录联接），唯一扫描工具 `.local-fonts/tools/scan-fonts.mjs`；扫描清单、样张工具与候选记录**只存 `.local-fonts/`**（已被 `.gitignore` 的 `.*/` 规则排除，**勿重复添加规则**），**不得**写入公开文档。
 - **在线候选（补充通道）**：本地库不能满足设计意图时，可从不限于 Google Fonts 的开源来源补充候选——**先核验官方许可（OFL 注意 RFN）、再下载**，存 `.local-fonts/online-candidates/`（许可文件同目录），用同一扫描器与样张工具（第二实例）验证；清单见 `.local-fonts/online-font-candidates.json`。未核验许可**不得下载、不得预览、不得进入生产**；不得因站名含 Free / Open / Fonts 假定可再分发；CJK 优先子集 / 分片分发，禁止为少数字符引入超大字体。
 - **本地 ≠ 生产（硬隔离）**：`.local-fonts/` 与 `F:\Fonts` 等本机路径**不得**被 `astro.config.mjs` / `src/` / `public/` 引用；字体库文件**不得**进入 `dist/`；扫描 / 预览工具**不得**引入新依赖（深解析复用 Astro 自带的 `fontkitten` / `fontace`）。
 - **许可闸门**：只有**确认允许网站嵌入与再分发**的字体才能进入正式字体资源管线（字体内嵌许可字段与 `fsType` 嵌入位只作线索，必须人工核实；未核实 = 不可用，只能停留在本地候选）。需要保留声明的字体随该设计附 `SOURCE-LICENSE.txt`。
 - **记录（强制）**：每次选型的六项记录（隐喻 → 角色分配 → 取舍理由 → 简中 / 日 / 英实际覆盖与回退 → 字重 / 可变轴 / 体积 / 许可 → 缺失回退顺序）写入：自产与复刻 → 该设计 `DESIGN.md`；厂商来源 → 该主题 `ADAPTATION.md`（`DESIGN.md` 只读）。
-- **生产接线（现状不变）**：`astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。
+- **生产接线（`styled`，现状不变）**：`astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。`html-only` 不进入字体管线，使用浏览器用户默认字体。
 - 字体不能替代对布局、信息架构与交互的独立设计；不得为显得专业机械增加字体数量。
 
 ## 无障碍与响应式（Accessibility & Responsive）
@@ -230,7 +239,7 @@
 - **内容层 glob loader 会归一化条目 id**（`site.config.yaml` → `"siteconfig"`）：取数用 `getCollection()` 取唯一条目，不要猜 id（见 `src/lib/site.ts`）。
 - **Tailwind 不识别动态拼接的类名**（如 `border-${color}` 不会被扫描到）；需要安全列表时用 `@source inline("...")`。
 - **`@astrojs/tailwind` 已弃用**，勿引入；Tailwind 4 官方集成 = `@tailwindcss/vite`（已配置）。
-- 切换页 `/designs/` 在 `manualSwitch: false` 时**不构建**（404）；任一设计页不得留可见 / 可聚焦的切换入口（入口即共享操作菜单的**主题组**，与切换页同受 `manualSwitch` 门控——菜单本体与语言分组不受影响）。
+- 切换页 `/designs/` 在 `manualSwitch: false` 时**不构建**（404）；`styled` 设计页不得另留可见 / 可聚焦的切换入口（唯一入口是共享操作菜单的**主题组**，与切换页同受 `manualSwitch` 门控——菜单本体与语言分组不受影响）。`html-only` 按 ADR 0009 提供契约规定的「全部设计」普通链接，且同样受 `manualSwitch` 门控。
 - **Tailwind Preflight 把 `svg` 置为 `display: block`**：行内语境中的 svg 图标（文本旁的品牌 mark / 外链箭头）会折到下一行——必须显式 `display: inline-block`（flex 语境不受影响）。2026-10-10 由图标改动验证期 rect 实测暴露。
 - **菜单运行时必须按能力门控动态加载**：`ContextMenu.astro` 用内联 `matchMedia` + 动态 `import()`（Vite 不给该 chunk 生成 `modulepreload`，dist 实测）；**不要改成静态 import**，否则纯文本浏览器会白白下载菜单逻辑。门控是「桌面鼠标 **或** 触控能力任一命中」（ADR 0007 修订——移动端也需要该运行时）。菜单样式用 `<style is:inline>`：不新增 `<link>`（"每设计页只链接自己的 CSS" 仍成立）。
 - **`document.execCommand` 必须保持以 `document` 为 `this` 调用**：解构出的裸方法引用会抛 `Illegal invocation`（2026-10-10 降级复制路径实测踩坑）；该 API 虽被废弃，仍是 Clipboard API 不可用时的唯一同步降级路径，经自定义类型引用以避开 TS 废弃告警。

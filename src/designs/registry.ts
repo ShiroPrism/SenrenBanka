@@ -8,7 +8,10 @@ import { z } from 'astro/zod';
  * - 文件存在性用 node:fs 检查（而不是 import.meta.glob）：任何页面对本模块的引用
  *   都不应产生指向 Page.astro / style.css 的动态 import 边，否则 Vite 会把所有设计的
  *   CSS 聚合进每个引用方的 <link>（本机已实测的坑，见 SPEC §3.2）。
- * - 强制齐备：DESIGN.md / design.json / Page.astro / style.css。
+ * - 共同齐备：DESIGN.md / design.json / Page.astro / messages.ts。
+ * - styled 设计必须提供 style.css；html-only 设计必须不提供 style.css。
+ * - html-only 设计不得提供 tokens.css 或 style.css；可提供自包含 Preview.astro
+ *   （ADR 0009：预览只属于切换页，不改变正式 HTML-only 页面的资源契约）。
  * - 任何违规在构建期抛错并明确指出目录与原因。
  */
 
@@ -49,6 +52,7 @@ export const designMetaSchema = z
     displayName: z.string().min(1),
     description: z.string().min(1),
     enabled: z.boolean(),
+    renderMode: z.enum(['styled', 'html-only']).default('styled'),
     accent: z.string().min(1).optional(),
     source: sourceSchema,
     generatedBy: z.string().min(1).optional(),
@@ -98,9 +102,6 @@ for (const [key, rawMeta] of Object.entries(metaModules)) {
   if (!hasFile(id, 'DESIGN.md')) {
     fail(id, '缺少 DESIGN.md（设计规范快照）');
   }
-  if (!hasFile(id, 'style.css')) {
-    fail(id, '缺少 style.css（CSS 入口）');
-  }
   if (!hasFile(id, 'Page.astro')) {
     fail(id, '缺少 Page.astro（该设计的完整页面）');
   }
@@ -111,12 +112,22 @@ for (const [key, rawMeta] of Object.entries(metaModules)) {
       '缺少 messages.ts（该设计的三语言文案）。契约：export const messages 需同时提供 site.config.yaml 中 i18n.locales 声明的每种语言 code，缺键在构建期报错。',
     );
   }
+  const hasStyleEntry = hasFile(id, 'style.css');
+  if (parsed.data.renderMode === 'styled' && !hasStyleEntry) {
+    fail(id, 'renderMode 为 "styled" 时必须提供 style.css（CSS 入口）');
+  }
+  if (parsed.data.renderMode === 'html-only' && hasStyleEntry) {
+    fail(id, 'renderMode 为 "html-only" 时禁止提供 style.css');
+  }
+  if (parsed.data.renderMode === 'html-only' && hasFile(id, 'tokens.css')) {
+    fail(id, 'renderMode 为 "html-only" 时禁止提供 tokens.css');
+  }
   entries.push({ id, meta: parsed.data });
 }
 
 if (entries.length === 0) {
   throw new Error(
-    '[senrenbanka] src/designs/ 下没有发现任何设计。至少需要一个 <id>/ 目录，内含 design.json / DESIGN.md / Page.astro / style.css。',
+    '[senrenbanka] src/designs/ 下没有发现任何设计。至少需要一个 <id>/ 目录，内含 design.json / DESIGN.md / Page.astro / messages.ts；styled 设计还必须提供 style.css。',
   );
 }
 

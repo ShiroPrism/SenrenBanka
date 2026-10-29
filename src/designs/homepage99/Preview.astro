@@ -1,0 +1,252 @@
+---
+/**
+ * Homepage '99 switcher preview: a miniature hand-built homepage.
+ *
+ * Constraints:
+ * - no style.css import; styles live in this component only
+ * - palette comes from ./tokens.css, scoped to .h99 / .h99-pv
+ * - no <Font>, no focusable elements, no animation
+ * - caller supplies aria-hidden; this component stays decorative
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** System fonts only: the switcher does not need to declare any font face. */
+export const fonts: import('astro:assets').CssVariable[] = [];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const rows = links.slice(0, 3);
+---
+
+<div class="h99-pv">
+  <div class="h99-pv-frame">
+    <div class="h99-pv-topbar">
+      <span class="h99-pv-brand">{t.brand}</span>
+      <span class="h99-pv-volume">{t.volume}</span>
+    </div>
+
+    <div class="h99-pv-grid">
+      <div class="h99-pv-nav">
+        <p class="h99-pv-nav-title">{t.contentsTitle}</p>
+        <p><span>01</span> {t.links}</p>
+        <p><span>02</span> {t.projects}</p>
+        <p><span>03</span> {t.experience}</p>
+      </div>
+
+      <div class="h99-pv-main">
+        <p class="h99-pv-kicker">{t.homepageLabel}</p>
+        <p class="h99-pv-name">{name}</p>
+        {headline && <p class="h99-pv-headline">{headline}</p>}
+        <div class="h99-pv-rule"></div>
+        <div class="h99-pv-links">
+          {rows.map((link) => <p><span aria-hidden="true">+</span> {link.label}</p>)}
+        </div>
+      </div>
+
+      <div class="h99-pv-rail">
+        <p class="h99-pv-construction">{t.construction}</p>
+        <div class="h99-pv-badge">{t.badges[0]}</div>
+        <div class="h99-pv-badge h99-pv-badge-alt">{t.badges[1]}</div>
+      </div>
+    </div>
+
+    <div class="h99-pv-foot">
+      <span>{t.statusLine}</span>
+      <span>{t.counterOffline}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .h99-pv {
+    display: grid;
+    height: 100%;
+    min-height: 7.5rem;
+    place-items: center;
+    padding: 0.55rem;
+    background-color: var(--h99-paper);
+    background-image: radial-gradient(circle, var(--h99-grid) 1px, transparent 1.1px);
+    background-size: 8px 8px;
+    color: var(--h99-ink);
+    font-family:
+      Arial, Helvetica, "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: 0.625rem;
+    line-height: 1.4;
+    overflow: hidden;
+  }
+
+  .h99-pv-frame {
+    width: 100%;
+    border: 2px double var(--h99-rule);
+    background: var(--h99-paper);
+  }
+
+  .h99-pv-topbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.25rem 0.35rem;
+    background: var(--h99-navy);
+    color: var(--h99-white);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.5rem;
+    line-height: 1.35;
+  }
+
+  .h99-pv-brand {
+    font-weight: 700;
+  }
+
+  .h99-pv-grid {
+    display: grid;
+    grid-template-columns: 4.1rem minmax(0, 1fr) 4.6rem;
+    gap: 0.35rem;
+    padding: 0.35rem;
+  }
+
+  .h99-pv-nav {
+    border: 1px solid var(--h99-rule);
+    background: var(--h99-panel);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.45rem;
+    line-height: 1.55;
+  }
+
+  .h99-pv-nav p {
+    margin: 0;
+    padding: 0.08rem 0.2rem;
+  }
+
+  .h99-pv-nav-title {
+    border-bottom: 1px solid var(--h99-rule);
+    background: var(--h99-lime);
+    font-weight: 700;
+  }
+
+  .h99-pv-nav p:not(.h99-pv-nav-title) {
+    display: grid;
+    grid-template-columns: 1.7ch minmax(0, 1fr);
+    gap: 0.2rem;
+    border-bottom: 1px dotted var(--h99-muted);
+  }
+
+  .h99-pv-nav span {
+    color: var(--h99-muted);
+  }
+
+  .h99-pv-main {
+    min-width: 0;
+    padding: 0.1rem 0.15rem;
+  }
+
+  .h99-pv-kicker {
+    margin: 0;
+    color: var(--h99-muted);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.45rem;
+    letter-spacing: 0.06em;
+  }
+
+  .h99-pv-name {
+    margin: 0.05rem 0 0;
+    font-family:
+      Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+      "Yu Mincho", serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .h99-pv-headline {
+    margin: 0.15rem 0 0;
+    color: var(--h99-navy);
+    font-family:
+      Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+      "Yu Mincho", serif;
+    font-size: 0.56rem;
+    line-height: 1.3;
+  }
+
+  .h99-pv-rule {
+    margin: 0.35rem 0 0.2rem;
+    border-top: 2px double var(--h99-rule);
+  }
+
+  .h99-pv-links {
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.47rem;
+    line-height: 1.45;
+  }
+
+  .h99-pv-links p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .h99-pv-links span {
+    color: var(--h99-blue);
+  }
+
+  .h99-pv-rail {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.35rem;
+    border: 1px solid var(--h99-rule);
+    padding: 0.25rem;
+    background: var(--h99-panel);
+  }
+
+  .h99-pv-construction {
+    margin: 0;
+    padding: 0.2rem;
+    border: 1px solid var(--h99-rule);
+    background-color: var(--h99-lime);
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0 4px,
+      var(--h99-stripe) 4px 8px
+    );
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.42rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .h99-pv-badge {
+    display: flex;
+    width: 100%;
+    min-height: 1.15rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--h99-rule);
+    border-top: 3px solid var(--h99-navy);
+    background: var(--h99-white);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.38rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .h99-pv-badge-alt {
+    border-top-color: var(--h99-teal);
+  }
+
+  .h99-pv-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.22rem 0.35rem;
+    border-top: 1px solid var(--h99-rule);
+    background: var(--h99-panel);
+    color: var(--h99-muted);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.42rem;
+    line-height: 1.3;
+  }
+</style>

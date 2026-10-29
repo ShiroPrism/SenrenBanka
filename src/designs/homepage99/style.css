@@ -1,0 +1,908 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
+
+/* ---------- page ground and masthead ---------- */
+
+.h99 {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--h99-paper);
+  background-image: radial-gradient(circle, var(--h99-grid) 1px, transparent 1.1px);
+  background-size: 16px 16px;
+  color: var(--h99-ink);
+  font-family:
+    Arial, Helvetica, "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+    "Yu Gothic UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.h99-page {
+  width: min(74rem, calc(100% - 3rem));
+  margin: 1.5rem auto;
+  border: 4px double var(--h99-rule);
+  background: var(--h99-paper);
+}
+
+.h99-skip {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 20;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--h99-rule);
+  background: var(--h99-lime);
+  color: var(--h99-ink);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  transform: translateY(-160%);
+}
+
+.h99-skip:focus {
+  transform: translateY(0);
+}
+
+.h99-skip:focus-visible {
+  outline: 3px solid var(--h99-rule);
+  outline-offset: 2px;
+}
+
+.h99-masthead {
+  border-bottom: 3px double var(--h99-rule);
+}
+
+.h99-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.55rem 1rem;
+  background: var(--h99-navy);
+  color: var(--h99-white);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.h99-brand {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.h99-topbar-mark {
+  opacity: 0.7;
+}
+
+.h99-topbar-meta {
+  letter-spacing: 0.06em;
+}
+
+.h99-topbar-status {
+  margin-left: auto;
+  letter-spacing: 0.04em;
+}
+
+.h99-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  gap: 1.5rem;
+  align-items: start;
+  padding: clamp(1.1rem, 3vw, 1.8rem);
+}
+
+.h99-intro-copy {
+  min-width: 0;
+}
+
+.h99-kicker {
+  margin: 0 0 0.25rem;
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  letter-spacing: 0.12em;
+}
+
+.h99-name {
+  margin: 0;
+  font-family:
+    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  font-size: clamp(2rem, 5.5vw, 3.35rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.h99-headline {
+  max-width: 52ch;
+  margin: 0.4rem 0 0;
+  color: var(--h99-navy);
+  font-family:
+    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  line-height: 1.45;
+}
+
+.h99-bio {
+  max-width: 68ch;
+  margin: 0.8rem 0 0;
+}
+
+.h99-location {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin: 0.8rem 0 0;
+  color: var(--h99-muted);
+}
+
+.h99-field-label {
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.h99-avatar {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border: 4px double var(--h99-rule);
+  background: var(--h99-white);
+}
+
+.h99-masthead-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  padding: 0.45rem 1rem;
+  border-top: 1px solid var(--h99-rule);
+  background: var(--h99-panel);
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.h99-foot-rule {
+  overflow: hidden;
+  min-width: 0;
+  flex: 1;
+  color: var(--h99-silver);
+  white-space: nowrap;
+}
+
+/* ---------- three-zone page skeleton ---------- */
+
+.h99-layout {
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr) 11rem;
+  grid-template-areas: "nav main rail";
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem;
+}
+
+.h99-directory {
+  grid-area: nav;
+  position: sticky;
+  top: 1rem;
+  min-width: 0;
+  border: 2px solid var(--h99-rule);
+  background: var(--h99-panel);
+}
+
+.h99-main {
+  grid-area: main;
+  min-width: 0;
+}
+
+.h99-rail {
+  grid-area: rail;
+  min-width: 0;
+  border: 2px solid var(--h99-rule);
+  background: var(--h99-panel);
+}
+
+.h99-directory-head,
+.h99-rail-head {
+  border-bottom: 2px solid var(--h99-rule);
+  background: var(--h99-lime);
+}
+
+.h99-directory-head h2,
+.h99-rail-head h2 {
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+}
+
+.h99-toc,
+.h99-navlinks,
+.h99-skills {
+  list-style: square;
+}
+
+.h99-toc {
+  margin: 0;
+  padding: 0.55rem 0.65rem 0.7rem;
+  list-style: none;
+}
+
+.h99-toc li {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr);
+  gap: 0.3rem;
+  margin: 0.15rem 0;
+}
+
+.h99-toc-no {
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  list-style: none;
+}
+
+.h99-toc li::marker {
+  content: "";
+}
+
+.h99-directory-subtitle {
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  border-top: 1px solid var(--h99-rule);
+  border-bottom: 1px solid var(--h99-rule);
+  background: var(--h99-white);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+}
+
+.h99-navlinks {
+  margin: 0;
+  padding: 0.55rem 0.65rem 0.7rem 1.35rem;
+}
+
+.h99-navlinks li {
+  margin: 0.15rem 0;
+}
+
+.h99-contact-hint {
+  margin: 0.2rem 0.55rem 0.65rem;
+  padding: 0.5rem;
+  border-top: 1px dashed var(--h99-muted);
+  color: var(--h99-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.h99-contact-hint p {
+  margin: 0 0 0.3rem;
+}
+
+/* ---------- sections and dense content ---------- */
+
+.h99-section {
+  margin: 0 0 1.65rem;
+  border-top: 3px double var(--h99-rule);
+  padding-top: 0.7rem;
+}
+
+.h99-section:last-child {
+  margin-bottom: 0;
+}
+
+.h99-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  border-bottom: 2px solid var(--h99-rule);
+  padding-bottom: 0.25rem;
+}
+
+.h99-section h2 {
+  margin: 0;
+  font-family:
+    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  line-height: 1.2;
+}
+
+.h99-section-mark {
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.h99-link-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h99-link-row {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.55rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dotted var(--h99-muted);
+}
+
+.h99-link-no,
+.h99-project-no {
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+}
+
+.h99-link-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.h99-link-label,
+.h99-project-title a,
+.h99-project-url,
+.h99-mail {
+  overflow-wrap: anywhere;
+}
+
+.h99-link-url,
+.h99-project-url {
+  display: block;
+  min-width: 0;
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.h99-projects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.h99-project {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.55rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px dotted var(--h99-muted);
+}
+
+.h99-project-copy {
+  min-width: 0;
+}
+
+.h99-project-title {
+  margin: 0;
+  font-family:
+    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+
+.h99-project-desc {
+  margin: 0.3rem 0 0;
+}
+
+.h99-project-tags {
+  margin: 0.35rem 0 0;
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.h99-table-wrap {
+  min-width: 0;
+}
+
+.h99-exp {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: var(--h99-white);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.h99-exp caption {
+  padding: 0.45rem 0.5rem;
+  border: 1px solid var(--h99-rule);
+  border-bottom: 0;
+  background: var(--h99-panel);
+  color: var(--h99-muted);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  text-align: left;
+  letter-spacing: 0.05em;
+}
+
+.h99-exp th,
+.h99-exp td {
+  border: 1px solid var(--h99-rule);
+  padding: 0.55rem;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.h99-exp thead th {
+  background: var(--h99-navy);
+  color: var(--h99-white);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+.h99-exp thead th:nth-child(1) {
+  width: 23%;
+}
+
+.h99-exp thead th:nth-child(2) {
+  width: 22%;
+}
+
+.h99-exp thead th:nth-child(3) {
+  width: 18%;
+}
+
+.h99-exp thead th:nth-child(4) {
+  width: 37%;
+}
+
+.h99-exp tbody th {
+  background: var(--h99-panel);
+  font-weight: 700;
+}
+
+.h99-mobile-label {
+  display: none;
+}
+
+.h99-skills {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0.65rem 0 0.2rem 1.35rem;
+  list-style: none;
+}
+
+.h99-skills li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.h99-check {
+  margin-right: 0.35rem;
+  color: var(--h99-navy);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+}
+
+.h99-contact {
+  margin: 0.75rem 0 0;
+  padding: 0.65rem 0.85rem;
+  border-left: 6px solid var(--h99-navy);
+  background: var(--h99-white);
+  font-style: normal;
+}
+
+.h99-contact-note {
+  margin: 0 0 0.65rem;
+}
+
+.h99-mail-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin: 0;
+}
+
+/* ---------- notice rail ---------- */
+
+.h99-construction {
+  min-height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem;
+  border-bottom: 2px solid var(--h99-rule);
+  background-color: var(--h99-lime);
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 10px,
+    var(--h99-stripe) 10px 20px
+  );
+  background-size: 28px 28px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .h99-construction {
+    animation: h99-stripes 9s linear infinite;
+  }
+}
+
+.h99-construction-label {
+  margin: 0;
+  padding: 0.2rem 0.35rem;
+  border: 1px solid var(--h99-rule);
+  background: var(--h99-lime);
+  color: var(--h99-ink);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+@keyframes h99-stripes {
+  to {
+    background-position: 28px 28px;
+  }
+}
+
+.h99-badge-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.5rem;
+  border-bottom: 2px solid var(--h99-rule);
+}
+
+.h99-badge {
+  display: flex;
+  width: 88px;
+  height: 31px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--h99-rule);
+  background: var(--h99-white);
+  color: var(--h99-ink);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.h99-badge:nth-child(1) {
+  border-top: 4px solid var(--h99-navy);
+}
+
+.h99-badge:nth-child(2) {
+  border-top: 4px solid var(--h99-teal);
+}
+
+.h99-badge:nth-child(3) {
+  border-top: 4px solid var(--h99-red);
+}
+
+.h99-counter {
+  padding: 0.65rem 0.55rem 0.75rem;
+}
+
+.h99-counter h3 {
+  margin: 0;
+  color: var(--h99-navy);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
+.h99-counter-display {
+  margin: 0.4rem 0;
+  padding: 0.35rem 0.3rem;
+  border: 2px inset var(--h99-silver);
+  background: var(--h99-ink);
+  color: var(--h99-lime);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: center;
+  letter-spacing: 0.16em;
+}
+
+.h99-counter-offline {
+  margin: 0;
+  color: var(--h99-red);
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.h99-counter-note {
+  margin: 0.4rem 0 0;
+  color: var(--h99-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+/* ---------- footer, links, focus ---------- */
+
+.h99-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+  padding: 0.7rem 1rem;
+  border-top: 3px double var(--h99-rule);
+  background: var(--h99-panel);
+  color: var(--h99-muted);
+  font-size: 0.8125rem;
+}
+
+.h99-footer p {
+  margin: 0;
+}
+
+.h99-footer-name {
+  color: var(--h99-ink);
+  font-family:
+    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.h99-top-link {
+  margin-left: auto !important;
+  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 0.75rem;
+}
+
+.h99-page a {
+  color: var(--h99-blue);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.h99-page a:visited {
+  color: var(--h99-visited);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .h99-page a:hover {
+    background: var(--h99-lime);
+    color: var(--h99-ink);
+    text-decoration-thickness: 2px;
+  }
+}
+
+.h99-page a:focus-visible {
+  outline: 3px solid var(--h99-navy);
+  outline-offset: 2px;
+  background: var(--h99-lime);
+  color: var(--h99-ink);
+  text-decoration-thickness: 2px;
+}
+
+@media (pointer: coarse) {
+  .h99-toc a,
+  .h99-navlinks a,
+  .h99-link-label,
+  .h99-project-title a,
+  .h99-mail,
+  .h99-top-link a,
+  .h99-contact-hint a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    padding-block: 0.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h99-construction {
+    animation: none;
+  }
+}
+
+/* ---------- responsive skeleton ---------- */
+
+@media (max-width: 64rem) {
+  .h99-layout {
+    grid-template-columns: 10rem minmax(0, 1fr);
+    grid-template-areas:
+      "nav main"
+      "rail rail";
+  }
+
+  .h99-rail {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 11rem minmax(13rem, 1fr);
+    align-items: stretch;
+  }
+
+  .h99-rail-head {
+    grid-column: 1 / -1;
+  }
+
+  .h99-construction {
+    border-right: 2px solid var(--h99-rule);
+    border-bottom: 0;
+  }
+
+  .h99-badge-stack {
+    border-right: 2px solid var(--h99-rule);
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 48rem) {
+  .h99-page {
+    width: calc(100% - 1.25rem);
+    margin: 0.625rem auto;
+    border-width: 3px;
+  }
+
+  .h99-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .h99-avatar {
+    justify-self: start;
+  }
+
+  .h99-topbar-status {
+    margin-left: 0;
+  }
+
+  .h99-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "nav"
+      "main"
+      "rail";
+    padding: 0.7rem;
+  }
+
+  .h99-directory {
+    position: static;
+  }
+
+  .h99-rail {
+    display: block;
+  }
+
+  .h99-construction,
+  .h99-badge-stack {
+    border-right: 0;
+    border-bottom: 2px solid var(--h99-rule);
+  }
+
+  .h99-badge-stack {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .h99-link-list,
+  .h99-skills {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .h99-exp,
+  .h99-exp tbody,
+  .h99-exp tr,
+  .h99-exp th,
+  .h99-exp td {
+    display: block;
+    width: auto;
+  }
+
+  .h99-exp {
+    background: transparent;
+  }
+
+  .h99-exp thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .h99-exp caption {
+    display: block;
+    width: auto;
+    padding: 0.45rem 0.55rem;
+    border-bottom: 1px solid var(--h99-rule);
+    background: var(--h99-panel);
+  }
+
+  .h99-exp tr {
+    padding: 0.65rem 0.55rem;
+    border-bottom: 2px solid var(--h99-rule);
+    background: var(--h99-white);
+  }
+
+  .h99-exp tr:last-child {
+    border-bottom: 0;
+  }
+
+  .h99-exp th,
+  .h99-exp td {
+    border: 0;
+    padding: 0.25rem 0;
+  }
+
+  .h99-exp tbody th {
+    background: transparent;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .h99-exp td {
+    display: grid;
+    grid-template-columns: minmax(5rem, 7rem) minmax(0, 1fr);
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .h99-mobile-label {
+    display: block;
+    color: var(--h99-muted);
+    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+
+  .h99-cell-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 25rem) {
+  .h99-topbar,
+  .h99-masthead-foot,
+  .h99-footer {
+    align-items: flex-start;
+  }
+
+  .h99-topbar-status,
+  .h99-top-link {
+    margin-left: 0 !important;
+  }
+
+  .h99-badge-stack {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
