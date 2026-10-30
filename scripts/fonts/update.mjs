@@ -5,6 +5,7 @@ import { inspectFamilyPackageBuffer } from './lib/archive.mjs';
 import { fetchBuffer } from './lib/fetch.mjs';
 import { renderGeneratedSource } from './lib/generated.mjs';
 import { machinePathFindings, stableStringify, sha256 } from './lib/json.mjs';
+import { acquireFileLock } from './lib/lock.mjs';
 import { FONT_PATHS, PROJECT_ROOT, resolveProjectPath } from './lib/paths.mjs';
 import {
   catalogSchema,
@@ -19,7 +20,7 @@ async function readOptionalJson(filePath) {
     return JSON.parse(await fs.readFile(filePath, 'utf8'));
   } catch (error) {
     if (error.code === 'ENOENT') return null;
-    return null;
+    throw new Error(`cannot use the existing font lock: ${error.message}`);
   }
 }
 
@@ -219,11 +220,21 @@ export async function updateFonts({
   assertMachineFree(lock, FONT_PATHS.lock);
   assertMachineFree(generated, FONT_PATHS.generated);
 
-  await writeOutputsAtomically(projectRoot, [
-    { relative: FONT_PATHS.snapshot, data: stableStringify(snapshot) },
-    { relative: FONT_PATHS.lock, data: stableStringify(lock) },
-    { relative: FONT_PATHS.generated, data: generated },
-  ]);
+  const updateLock = await acquireFileLock({
+    projectRoot,
+    relativeDirectory: '.cache/fonts/.locks',
+    name: 'update',
+    label: 'fonts:update',
+  });
+  try {
+    await writeOutputsAtomically(projectRoot, [
+      { relative: FONT_PATHS.snapshot, data: stableStringify(snapshot) },
+      { relative: FONT_PATHS.lock, data: stableStringify(lock) },
+      { relative: FONT_PATHS.generated, data: generated },
+    ]);
+  } finally {
+    await updateLock.release();
+  }
 
   return {
     catalogVersion: catalog.catalogVersion,

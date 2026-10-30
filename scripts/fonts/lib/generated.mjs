@@ -45,18 +45,18 @@ export function buildLocalFontDefinitions(snapshot, config) {
         const override = overrides.get(`${id}:${fileName}`);
         const registration = { ...variant, ...override };
         return {
-        src: [`./${cacheDirectory}/${variant.file}`],
-        weight: registration.weight,
-        style: registration.style,
-        ...(registration.stretch ? { stretch: registration.stretch } : {}),
-        display: registration.display,
-        ...(registration.unicodeRange ? { unicodeRange: registration.unicodeRange } : {}),
-        ...(variantFeatureSettings(registration)
-          ? { featureSettings: variantFeatureSettings(registration) }
-          : {}),
-        ...(variantVariationSettings(registration)
-          ? { variationSettings: variantVariationSettings(registration) }
-          : {}),
+          src: [`./${cacheDirectory}/${variant.file}`],
+          weight: registration.weight,
+          style: registration.style,
+          ...(registration.stretch ? { stretch: registration.stretch } : {}),
+          display: registration.display,
+          ...(registration.unicodeRange ? { unicodeRange: registration.unicodeRange } : {}),
+          ...(variantFeatureSettings(registration)
+            ? { featureSettings: variantFeatureSettings(registration) }
+            : {}),
+          ...(variantVariationSettings(registration)
+            ? { variationSettings: variantVariationSettings(registration) }
+            : {}),
         };
       }),
     };

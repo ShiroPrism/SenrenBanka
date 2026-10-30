@@ -16,7 +16,26 @@ const CJK_RANGES = [
   [0x4e00, 0x9fff],
   [0xf900, 0xfaff],
   [0x20000, 0x2fa1f],
+  [0x30000, 0x3ffff],
 ];
+
+const VOID_TAGS = new Set([
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+]);
+const HIDDEN_RAW_TEXT_TAGS = new Set(['script', 'style', 'template', 'noscript']);
 
 const ENTITIES = new Map([
   ['amp', '&'],
@@ -32,6 +51,59 @@ const ENTITIES = new Map([
 
 export function isCjkCodePoint(codePoint) {
   return CJK_RANGES.some(([start, end]) => codePoint >= start && codePoint <= end);
+}
+
+function findTagEnd(html, start) {
+  let quote = null;
+  for (let index = start; index < html.length; index += 1) {
+    const character = html[index];
+    if (quote) {
+      if (character === quote) quote = null;
+      continue;
+    }
+    if (character === '"' || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (character === '>') return index;
+  }
+  return -1;
+}
+
+function startTagHasHiddenAttribute(html, tagStart, tagEnd, tagName) {
+  let index = tagStart + 1 + tagName.length;
+  while (index < tagEnd) {
+    while (index < tagEnd && /[\s/]/.test(html[index])) index += 1;
+    const nameStart = index;
+    while (index < tagEnd && !/[\s=/>]/.test(html[index])) index += 1;
+    if (nameStart === index) {
+      index += 1;
+      continue;
+    }
+    const attributeName = html.slice(nameStart, index).toLowerCase();
+    while (index < tagEnd && /\s/.test(html[index])) index += 1;
+    if (html[index] === '=') {
+      index += 1;
+      while (index < tagEnd && /\s/.test(html[index])) index += 1;
+      if (html[index] === '"' || html[index] === "'") {
+        const quote = html[index];
+        index += 1;
+        while (index < tagEnd && html[index] !== quote) index += 1;
+        index += 1;
+      } else {
+        while (index < tagEnd && !/[\s>]/.test(html[index])) index += 1;
+      }
+    }
+    if (attributeName === 'hidden') return true;
+  }
+  return false;
+}
+
+function findRawTextEnd(html, tagName, start) {
+  const pattern = new RegExp(`</\\s*${tagName}\\s*>`, 'ig');
+  pattern.lastIndex = start;
+  const match = pattern.exec(html);
+  return match ? { start: match.index, end: match.index + match[0].length } : null;
 }
 
 function decodeEntities(text) {
@@ -54,12 +126,92 @@ function decodeEntities(text) {
 
 export function extractVisibleText(html) {
   const body = /<body\b[^>]*>([\s\S]*?)<\/body>/i.exec(html)?.[1] ?? '';
-  return decodeEntities(
-    body
-      .replace(/<!--[\s\S]*?-->/g, ' ')
-      .replace(/<(script|style|template|noscript)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, ' ')
-      .replace(/<[^>]+>/g, ' '),
-  );
+  const stack = [];
+  let hiddenDepth = 0;
+  let index = 0;
+  let text = '';
+
+  while (index < body.length) {
+    const tagStart = body.indexOf('<', index);
+    if (tagStart === -1) {
+      if (hiddenDepth === 0) text += body.slice(index);
+      break;
+    }
+    if (tagStart > index && hiddenDepth === 0) text += body.slice(index, tagStart);
+    if (body.startsWith('<!--', tagStart)) {
+      const commentEnd = body.indexOf('-->', tagStart + 4);
+      index = commentEnd === -1 ? body.length : commentEnd + 3;
+      continue;
+    }
+    const tagEnd = findTagEnd(body, tagStart + 1);
+    if (tagEnd === -1) {
+      if (hiddenDepth === 0) text += body.slice(tagStart);
+      break;
+    }
+    const token = body.slice(tagStart, tagEnd + 1);
+    const match = /^<\s*(\/?)\s*([A-Za-z][A-Za-z0-9:-]*)/.exec(token);
+    if (!match) {
+      if (hiddenDepth === 0) text += token;
+      index = tagEnd + 1;
+      continue;
+    }
+
+    const closing = match[1] === '/';
+    const tagName = match[2].toLowerCase();
+    if (closing) {
+      let openIndex = -1;
+      for (let stackIndex = stack.length - 1; stackIndex >= 0; stackIndex -= 1) {
+        if (stack[stackIndex].name === tagName) {
+          openIndex = stackIndex;
+          break;
+        }
+      }
+      if (openIndex !== -1) {
+        for (let stackIndex = stack.length - 1; stackIndex >= openIndex; stackIndex -= 1) {
+          if (stack[stackIndex].hidden) hiddenDepth -= 1;
+        }
+        stack.length = openIndex;
+      }
+      index = tagEnd + 1;
+      continue;
+    }
+
+    if (HIDDEN_RAW_TEXT_TAGS.has(tagName)) {
+      const rawEnd = findRawTextEnd(body, tagName, tagEnd + 1);
+      index = rawEnd ? rawEnd.end : body.length;
+      continue;
+    }
+    if (tagName === 'textarea') {
+      const rawEnd = findRawTextEnd(body, tagName, tagEnd + 1);
+      if (hiddenDepth === 0) {
+        text += body.slice(tagEnd + 1, rawEnd?.start ?? body.length);
+      }
+      index = rawEnd ? rawEnd.end : body.length;
+      continue;
+    }
+
+    const selfClosing = /\/\s*>$/.test(token);
+    if (!selfClosing && !VOID_TAGS.has(tagName)) {
+      const hidden = startTagHasHiddenAttribute(body, tagStart, tagEnd, tagName);
+      stack.push({ name: tagName, hidden });
+      if (hidden) hiddenDepth += 1;
+    }
+    index = tagEnd + 1;
+  }
+
+  return decodeEntities(text);
+}
+
+function styleSources(html) {
+  const withoutComments = html.replace(/<!--[\s\S]*?-->/g, ' ');
+  const sources = [];
+  for (const match of withoutComments.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style\s*>/gi)) {
+    sources.push(match[1]);
+  }
+  for (const match of withoutComments.matchAll(/\bstyle\s*=\s*(["'])([\s\S]*?)\1/gi)) {
+    sources.push(match[2]);
+  }
+  return sources.join('\n');
 }
 
 function parseUnicodeRange(token) {
@@ -203,15 +355,18 @@ export async function auditFonts({
 
   const pages = [];
   const uncovered = [];
-  let skippedHtmlOnlyPages = 0;
+  let pagesWithoutActiveCoreFont = 0;
   let notedCodePoints = 0;
   for (const htmlFile of htmlFiles) {
     const html = await fs.readFile(htmlFile, 'utf8');
+    const styles = styleSources(html);
     const active = coreFamilies.filter((family) =>
-      new RegExp(`${family.cssVariable.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:`).test(html),
+      new RegExp(`${family.cssVariable.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:`).test(
+        styles,
+      ),
     );
     if (active.length === 0) {
-      skippedHtmlOnlyPages += 1;
+      pagesWithoutActiveCoreFont += 1;
       continue;
     }
     const page = `/${toPosixPath(path.relative(distRoot, htmlFile)).replace(/index\.html$/, '')}`;
@@ -264,7 +419,7 @@ export async function auditFonts({
     htmlFiles: htmlFiles.length,
     auditTextFiles,
     candidatePages: pages.length,
-    skippedHtmlOnlyPages,
+    pagesWithoutActiveCoreFont,
     checkedCodePoints: notedCodePoints,
     uncovered,
     pages,

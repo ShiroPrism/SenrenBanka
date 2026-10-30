@@ -222,14 +222,15 @@ components:
    **磨损是这套的主角**，故用重磨损的 Style D 而非 Base。中文没有用点阵（Ark Pixel）：
    点阵属热敏小票，传真纸是"打出来的"，需要仿宋。
 4. **实际覆盖与回退（fontkitten 实测 cmap）**: TT2020 Style D 子集 2008 字形，ASCII 95/95，CJK / 假名 0；
-   Courier Prime latin ASCII 95/95；Zhuque Fangsong 子集覆盖三份资料全部汉字
-   （zh 290/290、ja 227/227）与假名 72/72。**UI 文案中约 20 个字不在子集内**
-   （「细、订、纪、账、计、读、输、覧、項、書、稼、働、清、算、返、領」等）→ 回退 Songti SC / SimSun，
-   与 receipt 同一处境（它的「明细 / 订单 / 纪录 / 结账」也一样）。
+   Courier Prime latin ASCII 95/95；Zhuque Fangsong 由外部字体目录提供完整 core-cjk cmap
+   （12,882 个映射码位，GB2312 6763/6763），覆盖本页三语全部 CJK / 假名；
+   2026-10-30 `fonts:audit` 对本页无缺字警告。回退仍保留 Songti SC / SimSun 以应对字体加载失败。
 5. **字重 / 轴 / 体积 / 许可**: 三者均为单字重静态字体（无可变轴）。体积：TT2020 Style D 子集 310KB、
    Courier Prime latin-400-normal 18.6KB（astro.config 注册了 8 个变体，本页只用到 400 normal）、
-    Zhuque 由中国字体目录按完整 cmap 提供核心分片。许可：三者均 SIL OFL-1.1
-    （见 `fonts.catalog.json` 对应 package manifest 的 `licenses/` 记录），无需追加 SOURCE-LICENSE.txt。
+    Zhuque 核心包 161 个 WOFF2 分片 / 5,927,616 B，浏览器只请求 `unicode-range` 命中的分片。
+    许可：三者均 SIL OFL-1.1
+    （见 `fonts.catalog.json` 对应 package manifest 的 `licenses/` 记录）；许可全文随外部
+    package 提供，主仓不再复制。
 6. **缺失回退顺序**:
    - 标签 / 字段：`Courier Prime → Zhuque Fangsong → Courier New → Songti SC → SimSun → monospace`
    - 正文：`TT2020 Style D → Zhuque Fangsong → Courier New → Songti SC → SimSun → monospace`

@@ -21,6 +21,7 @@ function isSafeRelativePath(value) {
     value.length > 240 ||
     value.startsWith('/') ||
     value.includes('\\') ||
+    value.includes(':') ||
     /(^|\/)\.{1,2}(\/|$)/.test(value) ||
     /[\u0000-\u001f\u007f]/.test(value)
   ) {
@@ -28,7 +29,14 @@ function isSafeRelativePath(value) {
   }
   return value
     .split('/')
-    .every((part) => part.length > 0 && part !== '.' && part !== '..');
+    .every(
+      (part) =>
+        part.length > 0 &&
+        part !== '.' &&
+        part !== '..' &&
+        !part.endsWith('.') &&
+        !part.endsWith(' '),
+    );
 }
 
 function isSafeFileName(value) {
@@ -38,8 +46,11 @@ function isSafeFileName(value) {
     value.length <= 200 &&
     !value.includes('/') &&
     !value.includes('\\') &&
+    !value.includes(':') &&
     value !== '.' &&
     value !== '..' &&
+    !value.endsWith('.') &&
+    !value.endsWith(' ') &&
     !/[\u0000-\u001f\u007f]/.test(value)
   );
 }
@@ -250,7 +261,65 @@ export const familyManifestSchema = z
     css: z.literal('font.css'),
     variants: z.array(manifestVariantSchema).min(1),
   })
-  .strict();
+  .strict()
+  .superRefine((manifest, context) => {
+    const sourceFiles = new Set();
+    for (const [index, file] of manifest.source.files.entries()) {
+      if (sourceFiles.has(file.fileName)) {
+        context.addIssue({
+          code: 'custom',
+          path: ['source', 'files', index, 'fileName'],
+          message: `duplicate source file ${file.fileName}`,
+        });
+      }
+      sourceFiles.add(file.fileName);
+    }
+
+    const reservedNames = new Set();
+    for (const [index, name] of manifest.license.reservedFontNames.entries()) {
+      if (reservedNames.has(name)) {
+        context.addIssue({
+          code: 'custom',
+          path: ['license', 'reservedFontNames', index],
+          message: `duplicate reserved font name ${name}`,
+        });
+      }
+      reservedNames.add(name);
+    }
+    if (
+      manifest.license.reservedFontNames.length > 0 &&
+      manifest.license.rfn.status === 'not-applicable'
+    ) {
+      context.addIssue({
+        code: 'custom',
+        path: ['license', 'rfn', 'status'],
+        message: 'cannot be not-applicable when reserved font names are declared',
+      });
+    }
+    if (
+      manifest.license.rfn.status === 'permission-granted' &&
+      !manifest.license.rfn.permissionEvidenceUrl &&
+      !manifest.license.rfn.permissionText
+    ) {
+      context.addIssue({
+        code: 'custom',
+        path: ['license', 'rfn'],
+        message: 'permission-granted requires evidence URL or permission text',
+      });
+    }
+
+    if (manifest.role === 'core-cjk') {
+      for (const [index, variant] of manifest.variants.entries()) {
+        if (!variant.unicodeRange) {
+          context.addIssue({
+            code: 'custom',
+            path: ['variants', index, 'unicodeRange'],
+            message: 'core-cjk variants require unicode ranges for offline auditing',
+          });
+        }
+      }
+    }
+  });
 
 const variantOverrideSchema = z
   .object({

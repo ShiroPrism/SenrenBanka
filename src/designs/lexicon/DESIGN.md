@@ -204,7 +204,7 @@ components:
 ## Typography
 
 **Latin / Display / Italic:** Sorts Mill Goudy（`--font-sorts-mill-goudy`；Goudy 老式衬线，含真斜体）
-**CJK / Body:** Zhuque Fangsong（`--font-zhuque`；朱雀仿宋，站内用字子集）
+**CJK / Body:** Zhuque Fangsong（`--font-zhuque`；朱雀仿宋，外部 core-cjk 完整分片）
 
 **Character:** 一页两声部。拉丁字母走 Goudy 的旧式衬线：书眉的全大写、词条的拉丁对应词（NOTA / NEXVS /
 OPERA / CHRONICA / ARTES / RATIO）、文法缩写（`n.` / `n. pl.` / `n. prop.`）与斜体词性标记；
@@ -225,12 +225,14 @@ OPERA / CHRONICA / ARTES / RATIO）、文法缩写（`n.` / `n. pl.` / `n. prop.
    **带真斜体、字面偏小、灰度安静**的旧式衬线，适合书页正文与书眉。不新增字体族：两套足够，
    第三套只会把"一页两声部"拆成拼贴。
 4. **实际覆盖与回退**: Goudy 覆盖 ASCII 95/95 + latin-ext（`latin` / `latin-ext` 两个 `@font-face`
-   以 unicodeRange 区隔）；无 CJK。Zhuque 子集覆盖 GB2312 6763/6763 与假名 189 枚（站内用字已核），
-   日文汉字由同一子集承接。中文回退 `Songti SC` → `SimSun` → `serif`；
+   以 unicodeRange 区隔）；无 CJK。Zhuque 完整 core-cjk 覆盖 12,882 个映射码位，
+   其中 GB2312 6763/6763；日文汉字与假名由同一核心族的分片承接，2026-10-30 `fonts:audit`
+   对本页无缺字警告。中文回退 `Songti SC` → `SimSun` → `serif`；
    拉丁回退 `Georgia` → `Times New Roman` → `serif`。
 5. **字重 / 轴 / 体积 / 许可**: 两者均为单字重、无可变轴。Goudy 四个 WOFF2：
    latin 22.8KB（正）/ 24.7KB（斜）、latin-ext 10.2KB（正）/ 10.7KB（斜）；
-   Zhuque 子集 246KB。许可均为 **OFL-1.1**；Zhuque 无 Reserved Font Name，
+   Zhuque 核心包 161 个 WOFF2 分片 / 5,927,616 B，运行时按 `unicode-range` 取件。
+   许可均为 **OFL-1.1**；Zhuque 无 Reserved Font Name，
     Goudy 版权行随外部字体 package 的 `licenses/` 文件保留，并记录于
     `fonts.catalog.json` 对应 manifest。
 6. **缺失回退顺序**: 拉丁 / 数字 `Sorts Mill Goudy → Georgia → Times New Roman → Zhuque Fangsong →

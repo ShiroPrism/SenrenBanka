@@ -238,11 +238,13 @@ J 卡是**全部信息**的所在：手写姓名（一盘磁带只有一支笔�
 4. **实际覆盖与回退**（实测，来自外部字体目录 package manifest 与完整 cmap）：
    UglyTypist —— ASCII 95/95、Latin-1 **0/62**、GB2312 0/6763、假名 0/176（因此只用于中文/ASCII 短标签，
    带变音符的拉丁会落回下一个声部）；League Mono —— ASCII 95/95、Latin-1 62/62、GB2312 0、假名 0；
-   Zhuque Fangsong —— GB2312 6763/6763、假名 174/176（子集含站内全部用字）。
-   回退：拉丁 → `Consolas / Courier New`；中文 → `Songti SC / SimSun`；日文假名缺字 → 系统日文栈。
+   Zhuque Fangsong —— 外部 core-cjk 完整 cmap 的 12,882 个映射码位，其中 GB2312 6763/6763；
+   2026-10-30 `fonts:audit` 对本页三语无缺字警告。
+   回退：拉丁 → `Consolas / Courier New`；中文 → `Songti SC / SimSun`；字体加载失败 → 系统日文栈。
 5. **字重 / 轴 / 体积 / 许可**：UglyTypist 单字重 400、无可变轴、27KB woff2、OFL（Font Library 页面声明）；
    League Mono 静态 400 + 700、无轴、两个文件合计 51KB、OFL-1.1（无 RFN）；Zhuque 单字重 400、
-   站内用字子集 246KB、OFL。三者均允许网站嵌入与再分发，无需 `SOURCE-LICENSE.txt` 之外的处理。
+   核心包 161 个 WOFF2 分片 / 5,927,616 B、OFL。三者均允许网站嵌入与再分发；
+   许可全文随外部 package 的 `licenses/` 提供，主仓不再复制。
 6. **缺失回退顺序**：
    - 手写位：`--font-uglytypist → --font-zhuque → 'Songti SC' → serif`（中文姓名落仿宋，拉丁落系统手写感的 `Segoe Print / Comic Sans MS`，由 astro.config 的 fallbacks 兜底）。
    - 正文位：`--font-league-mono → --font-zhuque → Consolas → 'Courier New' → 'Songti SC' → 'SimSun' → monospace`。

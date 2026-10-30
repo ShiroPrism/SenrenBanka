@@ -19,10 +19,24 @@ function parseOctal(buffer, label) {
 function safeArchivePath(value) {
   if (
     !value ||
+    value.length > 240 ||
     value.startsWith('/') ||
     value.includes('\\') ||
+    value.includes(':') ||
     /(^|\/)\.{1,2}(\/|$)/.test(value) ||
     /[\u0000-\u001f\u007f]/.test(value)
+  ) {
+    throw new Error(`package archive contains an unsafe path: ${JSON.stringify(value)}`);
+  }
+  if (
+    value
+      .split('/')
+      .some(
+        (part) =>
+          part.length === 0 ||
+          part.endsWith('.') ||
+          part.endsWith(' '),
+      )
   ) {
     throw new Error(`package archive contains an unsafe path: ${JSON.stringify(value)}`);
   }

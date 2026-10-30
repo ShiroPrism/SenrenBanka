@@ -2,8 +2,14 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { sha256, stableStringify } from './json.mjs';
+import { acquireFileLock } from './lock.mjs';
 import { familyManifestSchema, parseWithSchema } from './schema.mjs';
-import { familyCacheRelativePath, resolveProjectPath } from './paths.mjs';
+import {
+  assertNoSymlinkAncestors,
+  ensureDirectoryWithoutSymlinks,
+  familyCacheRelativePath,
+  resolveProjectPath,
+} from './paths.mjs';
 
 async function lstatRequired(filePath, label) {
   try {
@@ -11,26 +17,6 @@ async function lstatRequired(filePath, label) {
   } catch (error) {
     if (error.code === 'ENOENT') throw new Error(`${label} is missing: ${filePath}`);
     throw new Error(`${label} cannot be inspected: ${error.message}`);
-  }
-}
-
-async function assertNoSymlinkAncestors(projectRoot, target) {
-  const root = path.resolve(projectRoot);
-  const relative = path.relative(root, path.resolve(target));
-  if (relative.startsWith('..') || path.isAbsolute(relative)) {
-    throw new Error(`cache path escapes the project root: ${target}`);
-  }
-  let current = root;
-  for (const part of relative.split(path.sep)) {
-    current = path.join(current, part);
-    let stat;
-    try {
-      stat = await fs.lstat(current);
-    } catch (error) {
-      if (error.code === 'ENOENT') return;
-      throw error;
-    }
-    if (stat.isSymbolicLink()) throw new Error(`font cache path contains a symlink: ${current}`);
   }
 }
 
@@ -182,10 +168,11 @@ async function copyVerifiedStage(temporary, destination) {
   await fs.copyFile(marker, path.join(destination, '.complete.json'));
 }
 
-async function replaceDirectoryAtomically(temporary, destination) {
+async function replaceDirectoryAtomically(temporary, destination, verifyInstalled) {
   const backup = `${destination}.previous-${process.pid}-${crypto.randomUUID()}`;
   let movedExisting = false;
   let installed = false;
+  let destinationOwnedByFallback = false;
   try {
     try {
       await fs.lstat(destination);
@@ -204,12 +191,34 @@ async function replaceDirectoryAtomically(temporary, destination) {
       }
       // Workspace file watchers can hold Windows directory handles even after
       // every file is closed. Fall back to a marker-last copy of the verified stage.
+      destinationOwnedByFallback = true;
       await copyVerifiedStage(temporary, destination);
+      await verifyInstalled(destination);
     }
+    installed = true;
     if (movedExisting) await fs.rm(backup, { recursive: true, force: true });
+  } catch (error) {
+    if (installed) throw error;
+    const rollbackErrors = [];
+    if (!installed && destinationOwnedByFallback) {
+      await fs.rm(destination, { recursive: true, force: true }).catch((rollbackError) => {
+        rollbackErrors.push(rollbackError);
+      });
+    }
+    if (movedExisting) {
+      await renameWithRetry(backup, destination).catch((rollbackError) => {
+        rollbackErrors.push(rollbackError);
+      });
+    }
+    if (rollbackErrors.length > 0) {
+      throw new AggregateError(
+        [error, ...rollbackErrors],
+        `font cache install failed and the previous cache could not be restored: ${destination}`,
+      );
+    }
+    throw error;
   } finally {
     await fs.rm(temporary, { recursive: true, force: true });
-    if (movedExisting && !installed) await fs.rm(backup, { recursive: true, force: true });
   }
 }
 
@@ -222,45 +231,72 @@ export async function installFamilyCache({
 }) {
   const family = snapshot.families[id];
   const lockFamily = lock.families[id];
-  const versionRoot = resolveProjectPath(
+  const installLock = await acquireFileLock({
     projectRoot,
-    `.cache/fonts/${snapshot.catalogVersion}`,
-  );
-  await fs.mkdir(versionRoot, { recursive: true });
-  await assertNoSymlinkAncestors(projectRoot, versionRoot);
-  const temporary = path.join(versionRoot, `.partial-${id}-${process.pid}-${crypto.randomUUID()}`);
-  await fs.rm(temporary, { recursive: true, force: true });
-  await fs.mkdir(temporary, { recursive: true });
+    relativeDirectory: `.cache/fonts/${snapshot.catalogVersion}/.locks`,
+    name: id,
+    label: `font install (${id})`,
+  });
   try {
-    for (const file of family.files) {
-      const data = inspected.entries.get(file.path);
-      if (!data) throw new Error(`verified package is missing ${file.path}`);
-      const destination = path.join(temporary, ...file.path.split('/'));
-      await fs.mkdir(path.dirname(destination), { recursive: true });
-      await fs.writeFile(destination, data);
-    }
-    await fs.writeFile(
-      path.join(temporary, '.complete.json'),
-      stableStringify(expectedMarker(snapshot, family, lockFamily)),
-    );
-    const verification = await verifyCacheDirectory(
-      temporary,
-      { ...snapshot, projectRoot },
-      family,
-      lockFamily,
-    );
-    if (verification.files !== family.files.length) {
-      throw new Error('temporary font cache verification returned an unexpected file count');
+    try {
+      const existing = await verifyFamilyCache({ projectRoot, snapshot, lock, id });
+      return existing.root;
+    } catch {
+      // Re-check under the install lock so concurrent prepares cannot replace
+      // the cache between verification and the marker-last install below.
     }
 
-    const destination = resolveProjectPath(
+    const versionRoot = resolveProjectPath(
       projectRoot,
-      familyCacheRelativePath(snapshot.catalogVersion, id, family.version),
+      `.cache/fonts/${snapshot.catalogVersion}`,
     );
-    await replaceDirectoryAtomically(temporary, destination);
-    return destination;
-  } catch (error) {
+    await ensureDirectoryWithoutSymlinks(projectRoot, versionRoot);
+    const temporary = path.join(
+      versionRoot,
+      `.partial-${id}-${process.pid}-${crypto.randomUUID()}`,
+    );
     await fs.rm(temporary, { recursive: true, force: true });
-    throw error;
+    await fs.mkdir(temporary, { recursive: true });
+    try {
+      for (const file of family.files) {
+        const data = inspected.entries.get(file.path);
+        if (!data) throw new Error(`verified package is missing ${file.path}`);
+        const destination = path.join(temporary, ...file.path.split('/'));
+        await fs.mkdir(path.dirname(destination), { recursive: true });
+        await fs.writeFile(destination, data);
+      }
+      await fs.writeFile(
+        path.join(temporary, '.complete.json'),
+        stableStringify(expectedMarker(snapshot, family, lockFamily)),
+      );
+      const verification = await verifyCacheDirectory(
+        temporary,
+        { ...snapshot, projectRoot },
+        family,
+        lockFamily,
+      );
+      if (verification.files !== family.files.length) {
+        throw new Error('temporary font cache verification returned an unexpected file count');
+      }
+
+      const destination = resolveProjectPath(
+        projectRoot,
+        familyCacheRelativePath(snapshot.catalogVersion, id, family.version),
+      );
+      await replaceDirectoryAtomically(temporary, destination, async (installedDirectory) => {
+        await verifyCacheDirectory(
+          installedDirectory,
+          { ...snapshot, projectRoot },
+          family,
+          lockFamily,
+        );
+      });
+      return destination;
+    } catch (error) {
+      await fs.rm(temporary, { recursive: true, force: true });
+      throw error;
+    }
+  } finally {
+    await installLock.release();
   }
 }
