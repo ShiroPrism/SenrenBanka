@@ -29,8 +29,10 @@
    ```
 
    （如 import 了共享组件且其含工具类，追加 `@source` 指向共享目录）。`html-only` 不得提供 `style.css`、`tokens.css`、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或任何自定义页面样式 / 脚本；最终 HTML 禁止 `<style>`、`style` 属性、`<script>`、事件处理器、`iframe` / `object` / `embed`、stylesheet / preload、`javascript:` URL 与 meta refresh，`<link>` 只允许 `canonical` / `alternate` / `icon`。其可选的 `Preview.astro` 只属于切换页，样式必须自包含，且不得 import 正式页 CSS。
+
+   `styled` 仅在设计隐喻的核心交互存在纯 CSS 表达缺口时，提供一个设计目录私有的客户端入口（ADR 0011）。该入口只在该设计页加载，不得成为共享视觉运行时，不得 import CSS，不得门控核心内容或真实链接；无 JS / 加载失败 / 初始化失败 / 减动态时必须保留完整可见终态。切换页预览不得执行设计脚本。
 4. `styled` 必须接入共享操作菜单（`<ContextMenu config={view.contextMenu} />`，放于 `<body>` 末尾，**无条件**渲染）；不得再放任何可见的「切换设计 / Switch design」链接、按钮或导航项，也不得留下隐藏但可聚焦的旧入口。`html-only` 不接入菜单，必须提供页内目录、同主题语言普通链接，并在 `manualSwitch: true` 时提供一条「全部设计」普通链接。
-5. `styled` 字体：在 `astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false` 离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind；**新增主题的字体选型必须先走 `../fonts/selection-guide.md` 流程（先隐喻、后样张目检、过许可闸门），见 [`visual-language.md`](./visual-language.md) 的字体章节**。`html-only` 不选字体、不注册字体、不加载字体资源，采用浏览器用户默认排版。
+5. `styled` 字体：在 `astro.config.mjs` 的 `fonts` 注册（项目内 `local` provider；既有 npm provider 必须 `remote: false`，离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 里用 `@theme inline` 注册进 Tailwind；**新增主题的字体选型必须先走 `../fonts/selection-guide.md` 流程（先隐喻、后样张目检、过许可闸门），见 [`visual-language.md`](./visual-language.md) 的字体章节**。`html-only` 不选字体、不注册字体、不加载字体资源，采用浏览器用户默认排版。
 6. `design.json` 的 `source`：非自产（`official-vendor` / `official-docs-derived` / `third-party-analysis`）必须填 `url` / `fetchedAt` / `license`，否则构建失败；许可要求保留声明时附 `SOURCE-LICENSE.txt`（汇编为逐来源许可合集）
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；`styled` 采用共享滚动显现时必须接入 `<Reveal />`（见 [`visual-language.md`](./visual-language.md) 的动效章节）。`html-only` 必须在规范中论证完全静止，且不得渲染 Reveal。
 8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；`styled` 语言切换由共享操作菜单承担，`html-only` 由原生链接承担。所有设计页都**不渲染** `<LanguageSwitcher />`（它是基础设施页的 `<noscript>` 回退，见 [`action-menu.md`](./action-menu.md)）
@@ -46,5 +48,5 @@
 5. **发现机制**：切换页**在页面 entrypoint 内** glob `../designs/*/Preview.astro`（eager）——这是安全的，且能自动发现新预览、容忍缺失。**不得**从共享模块 glob 预览组件（会触发"已知坑"的 CSS 聚合）。
 6. **`style.css` 必须排除预览文件**：`@source "./"` 会连带扫描 `Preview.astro`，把 `<style>` 里的属性文本（`display: flex` / `border:` / `transform:` 等）当作候选工具类注进**正式页** CSS（实测 +1.3KB/页）。用 `@source not "./Preview.astro";` 排除（Tailwind 4 否定来源语法）。
 7. **无障碍**：预览是装饰——调用方加 `aria-hidden="true"`，内部**不得**放可聚焦元素，文字**不得**进入卡片链接的可访问名。
-8. **布局与规模**：切换页内容宽度 `min(74rem, calc(100% - 3rem))`，桌面每行**最多 3 张**（`repeat(3, minmax(0, 1fr))`），`<=60rem` 降 2 列、`<=48rem` 强制单列；栅格间距 `1.5rem`。卡片内部固定为 **`16 / 10` 预览画幅 + 标题 + 两行描述**，16 张卡片尺寸必须一致，不得靠 `stretch` 掩盖单行描述造成的底部空洞。预览 CSS 在切换页聚合为**单个**样式表（不是每套一条 `<link>`）。设计数扩至 114 时的瓶颈是 CSS 体积与 DOM 节点数，**不是**请求数；缓解次序为先 `content-visibility: auto`、再保持预览极简，**不引入**分页 / 按需加载等复杂机制。
+8. **布局与规模**：切换页内容宽度 `min(74rem, calc(100% - 3rem))`，桌面每行**最多 3 张**（`repeat(3, minmax(0, 1fr))`），`<=60rem` 降 2 列、`<=48rem` 强制单列；栅格间距 `1.5rem`。卡片内部固定为 **`16 / 10` 预览画幅 + 标题 + 两行描述**，同一栅格中的全部卡片尺寸必须一致，不得靠 `stretch` 掩盖单行描述造成的底部空洞。预览 CSS 在切换页聚合为**单个**样式表（不是每套一条 `<link>`）。设计数扩至 114 时的瓶颈是 CSS 体积与 DOM 节点数，**不是**请求数；缓解次序为先 `content-visibility: auto`、再保持预览极简，**不引入**分页 / 按需加载等复杂机制。
 9. **检测器**：预览的缩略档位（缩小的字号 / 圆角）应**登记进该设计 `DESIGN.md` 的阶梯**（自产 / 复刻）或 `ADAPTATION.md`（厂商来源），而不是加忽略规则——检测器的提示正是"新步进若属有意为之就写进设计系统"。

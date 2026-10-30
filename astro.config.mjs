@@ -244,8 +244,8 @@ export default defineConfig({
       options: { package: '@fontsource-variable/inter' },
     },
     // ════════ 拟物方向新主题字体（2026-10-17 起接入）════════
-    // 机制：npm 包取件入库（.local-fonts/tools/vendor-fonts.sh）+ CJK 子集
-    //      （make-web-subsets.py）→ fontProviders.local() 读取。构建期零网络、全平台可复现。
+    // 机制：npm 包取件入库 + CJK 子集 → fontProviders.local() 读取。
+    //      构建期零网络、全平台可复现。
     // 原因（2026-10-17 实测）：npm provider 构建期取件依赖 cdn.jsdelivr.net，且 provider
     //      选项在配置管线中不生效；在本机受限网络下并发取件不可靠（大量 ECONNRESET）。
     // 来源 / 许可 / 子集说明：src/assets/fonts/README.md；选型依据：docs/fonts/selection-guide.md。
@@ -384,6 +384,28 @@ export default defineConfig({
         variants: [{ src: ['./src/assets/fonts/format-1452/Format_1452.woff2'], weight: '400', style: 'normal' }],
       },
     },
+    {
+      provider: fontProviders.local(),
+      name: 'Fredoka Variable',
+      cssVariable: '--font-fredoka',
+      fallbacks: ['system-ui', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'sans-serif'],
+      options: {
+        variants: [
+          {
+            src: ['./src/assets/fonts/fredoka/fredoka-latin-wght-normal.woff2'],
+            weight: '300 700',
+            style: 'normal',
+            unicodeRange: LATIN_RANGE,
+          },
+          {
+            src: ['./src/assets/fonts/fredoka/fredoka-latin-ext-wght-normal.woff2'],
+            weight: '300 700',
+            style: 'normal',
+            unicodeRange: LATIN_EXT_RANGE,
+          },
+        ],
+      },
+    },
 
     // —— 数字 / 段码 ——
     {
@@ -451,6 +473,21 @@ export default defineConfig({
       fallbacks: ['SimSun', 'monospace'],
       options: {
         variants: [{ src: ['./src/assets/fonts/ark-pixel-12px/ark-pixel-12px-monospaced-zh_hans-subset.woff2'], weight: '400', style: 'normal' }],
+      },
+    },
+    {
+      provider: fontProviders.local(),
+      name: 'LXGW WenKai GB',
+      cssVariable: '--font-lxgw',
+      fallbacks: ['PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'serif'],
+      options: {
+        variants: [
+          {
+            src: ['./src/assets/fonts/lxgw-wenkai/LXGWWenKaiGB-Medium-subset.woff2'],
+            weight: '500',
+            style: 'normal',
+          },
+        ],
       },
     },
   ],

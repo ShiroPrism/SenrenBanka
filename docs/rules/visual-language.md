@@ -18,6 +18,7 @@
 - **可见性契约（不可违反）**：内容默认可见；CSS 隐藏态必须以 `html[data-reveal-ready]` 为唯一门控，该属性只由 `src/components/Reveal.astro` 的内联 boot 在「非 reduced-motion 且支持 `IntersectionObserver`」时写入。无 JS / 脚本失败 / 无 IO / 减动态时内容必须始终可见。
 - **运动约束**：只动 `opacity` / `transform`（交互态允许短促的颜色 / 下划线过渡）；避免过长延迟与影响阅读节奏；**核心内容不等待**——首屏动画必须秒级内落定，正文不做逐字打印。
 - **持续动效（无限循环）**：仅限小范围、有明确视觉价值的形态类装饰（如流动波形、光标呼吸、进度指示），且必须在 `DESIGN.md` 中论证；其余一律只播一次；减动态时持续动效静止。
+- **设计专属 JavaScript**：只有纯 CSS 对某设计隐喻的核心交互存在具体表达缺口时，才允许接入设计目录私有的客户端脚本（ADR 0011）。每套最多一个入口、无第三方交互依赖、≤12KB gzip；脚本不得门控核心内容或真实链接，必须提供无 JS / 加载失败 / 减动态终态、键盘路径与停止条件。禁止滚动劫持、光标替代、Canvas-only 文本、WebGL、自动播放声音和主题级无限循环；切换页预览不得执行设计脚本。
 - `src/lib/reveal.ts` 与 `Reveal.astro` **不得 import 任何 CSS**（会触发 [`pitfalls.md`](./pitfalls.md) 的 CSS 聚合陷阱）。
 - **规范与实现同步**：自撰规范（`self-produced` / `third-party-analysis` 复刻）的 Motion 章节必须与实现一致，改动前先修订规范；厂商来源（`official-vendor` 快照 / `official-docs-derived` 汇编——汇编为"整合完成即冻结"）的 `DESIGN.md` **不得修改**，适配方式与偏差记录在 `../designs/<id>/ADAPTATION.md` 与 `change-log/`。
 
@@ -90,5 +91,5 @@
 - **本地 ≠ 生产（硬隔离）**：`.local-fonts/` 与 `F:\Fonts` 等本机路径**不得**被 `astro.config.mjs` / `src/` / `public/` 引用；字体库文件**不得**进入 `dist/`；扫描 / 预览工具**不得**引入新依赖（深解析复用 Astro 自带的 `fontkitten` / `fontace`）。
 - **许可闸门**：只有**确认允许网站嵌入与再分发**的字体才能进入正式字体资源管线（字体内嵌许可字段与 `fsType` 嵌入位只作线索，必须人工核实；未核实 = 不可用，只能停留在本地候选）。需要保留声明的字体随该设计附 `SOURCE-LICENSE.txt`。
 - **记录（强制）**：每次选型的六项记录（隐喻 → 角色分配 → 取舍理由 → 简中 / 日 / 英实际覆盖与回退 → 字重 / 可变轴 / 体积 / 许可 → 缺失回退顺序）写入：自产与复刻 → 该设计 `DESIGN.md`；厂商来源 → 该主题 `ADAPTATION.md`（`DESIGN.md` 只读）。
-- **生产接线（`styled`，现状不变）**：`astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。`html-only` 不进入字体管线，使用浏览器用户默认字体。
+- **生产接线（`styled`，现状不变）**：`astro.config.mjs` 的 `fonts` 注册（项目内 `local` provider；既有 npm provider 必须 `remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。`html-only` 不进入字体管线，使用浏览器用户默认字体。
 - 字体不能替代对布局、信息架构与交互的独立设计；不得为显得专业机械增加字体数量。
