@@ -1,0 +1,1438 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
+
+@theme inline {
+  --font-sd-hand: var(--font-uglytypist);
+  --font-sd-cjk: var(--font-lxgw);
+  --font-sd-body: var(--font-inter);
+}
+
+/* --------------------------------------------------------------------------
+   Base / paper environment
+   -------------------------------------------------------------------------- */
+
+.sd {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(1rem, 3.5vw, 3rem) 0 clamp(2rem, 5vw, 4rem);
+  color: var(--sd-ink);
+  background-color: var(--sd-page-bg);
+  background-image:
+    radial-gradient(circle at 14% 7%, color-mix(in srgb, var(--sd-paper) 56%, transparent) 0 11rem, transparent 30rem),
+    radial-gradient(circle at 88% 15%, color-mix(in srgb, var(--sd-blush) 34%, transparent) 0 7rem, transparent 24rem),
+    radial-gradient(circle at 52% 100%, color-mix(in srgb, var(--sd-teal-soft) 24%, transparent) 0 10rem, transparent 34rem),
+    repeating-linear-gradient(90deg, transparent 0 2.5rem, rgba(101, 82, 69, 0.035) 2.5rem calc(2.5rem + 1px)),
+    repeating-linear-gradient(0deg, transparent 0 2.5rem, rgba(101, 82, 69, 0.025) 2.5rem calc(2.5rem + 1px));
+  font-family:
+    var(--font-sd-body), var(--font-sd-cjk), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+
+.sd *,
+.sd *::before,
+.sd *::after {
+  box-sizing: border-box;
+}
+
+.sd-scene {
+  position: relative;
+  width: min(76rem, calc(100% - 1.5rem));
+  margin-inline: auto;
+}
+
+.sd-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.42rem;
+  margin: 0 0 1.15rem;
+  padding: 0;
+}
+
+.sd-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--sd-rose) 30%, var(--sd-paper-edge));
+  border-radius: 0.35rem 0.8rem 0.4rem 0.65rem;
+  color: var(--sd-ink);
+  background-color: var(--sd-paper-warm);
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 1.15rem, rgba(101, 82, 69, 0.07) 1.15rem calc(1.15rem + 1px)),
+    linear-gradient(105deg, var(--sd-paper) 0%, var(--sd-paper-warm) 100%);
+  box-shadow:
+    0 2px 0 var(--sd-paper-shadow),
+    0 7px 12px -10px var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS",
+    "PingFang SC", "Microsoft YaHei", cursive;
+  font-size: 0.82rem;
+  line-height: 1.15;
+  text-decoration: none;
+  transform: rotate(-0.8deg);
+}
+
+.sd-tab:nth-child(2n) {
+  transform: rotate(0.9deg);
+}
+
+.sd-tab:nth-child(3n) {
+  background-color: var(--sd-blue-soft);
+}
+
+.sd-tab[aria-current="page"] {
+  border-color: var(--sd-rose-deep);
+  color: var(--sd-paper);
+  background-color: var(--sd-rose);
+  background-image: linear-gradient(105deg, var(--sd-rose) 0%, var(--sd-rose-deep) 100%);
+  box-shadow:
+    0 2px 0 var(--sd-rose-deep),
+    0 0 0 3px color-mix(in srgb, var(--sd-paper) 66%, transparent);
+}
+
+.sd-tabno {
+  color: currentColor;
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+}
+
+.sd-tabtext {
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Cloth cover and open spread
+   -------------------------------------------------------------------------- */
+
+.sd-book {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(0.48rem, 1.15vw, 0.8rem);
+  border: 1px solid var(--sd-cover-dark);
+  border-radius: 0.75rem 1.25rem 1.3rem 0.8rem;
+  background-color: var(--sd-cover);
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12), transparent 10%, transparent 90%, rgba(0, 0, 0, 0.16)),
+    repeating-linear-gradient(45deg, transparent 0 5px, rgba(255, 255, 255, 0.04) 5px 6px),
+    linear-gradient(145deg, var(--sd-cover-light), var(--sd-cover) 38%, var(--sd-cover-dark));
+  box-shadow:
+    0 2px 0 color-mix(in srgb, var(--sd-cover-dark) 72%, black),
+    0 20px 36px -18px color-mix(in srgb, var(--sd-ink) 78%, transparent),
+    0 34px 60px -44px var(--sd-ink);
+}
+
+.sd-book::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0.38rem -0.32rem -0.42rem 0.42rem;
+  border-radius: 0.5rem 1rem 1.15rem 0.55rem;
+  background: var(--sd-paper-edge);
+  transform: rotate(0.35deg);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sd-paper-shadow) 60%, transparent);
+  pointer-events: none;
+}
+
+.sd-cover-stitch {
+  position: absolute;
+  z-index: 2;
+  top: 0.46rem;
+  right: 1rem;
+  bottom: 0.46rem;
+  left: 1rem;
+  border: 1px dashed color-mix(in srgb, var(--sd-paper) 45%, transparent);
+  border-radius: 0.38rem 0.85rem 0.9rem 0.42rem;
+  pointer-events: none;
+}
+
+.sd-spread {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 0.35rem 0.85rem 0.9rem 0.42rem;
+  background: var(--sd-paper);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--sd-paper-shadow) 58%, transparent),
+    0 3px 8px -5px var(--sd-ink);
+  scroll-margin-block-start: 1rem;
+}
+
+.sd-spread + .sd-spread {
+  margin-top: 1.25rem;
+}
+
+.sd[data-sd-ready] .sd-spread {
+  margin-top: 0;
+}
+
+.sd-spread::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: clamp(1.1rem, 2.4vw, 2.4rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--sd-paper-shadow) 12%, transparent) 28%,
+      color-mix(in srgb, var(--sd-ink) 19%, transparent) 50%,
+      color-mix(in srgb, var(--sd-paper-shadow) 12%, transparent) 72%,
+      transparent 100%
+    );
+}
+
+.sd-spread[hidden] {
+  display: none !important;
+}
+
+.sd-page {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.25rem, 3.2vw, 2.55rem);
+  padding-bottom: clamp(2.7rem, 5vw, 3.6rem);
+  background-color: var(--sd-paper);
+  background-image:
+    radial-gradient(circle at 15% 22%, rgba(104, 83, 68, 0.055) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 78% 68%, rgba(104, 83, 68, 0.035) 0 1px, transparent 1.5px),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 1.72rem,
+      color-mix(in srgb, var(--sd-faint) 22%, transparent) 1.72rem calc(1.72rem + 1px)
+    ),
+    linear-gradient(112deg, var(--sd-paper) 0%, var(--sd-paper) 72%, var(--sd-paper-warm) 100%);
+  background-size:
+    13rem 11rem,
+    17rem 15rem,
+    100% 1.73rem,
+    100% 100%;
+  font-size: 0.98rem;
+  line-height: 1.73rem;
+}
+
+.sd-page--left {
+  padding-inline-end: clamp(2rem, 4.1vw, 3.25rem);
+}
+
+.sd-page--right {
+  padding-inline-start: clamp(2rem, 4.1vw, 3.25rem);
+  background-image:
+    radial-gradient(circle at 82% 14%, rgba(104, 83, 68, 0.045) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 18% 76%, rgba(104, 83, 68, 0.04) 0 1px, transparent 1.5px),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 1.72rem,
+      color-mix(in srgb, var(--sd-faint) 22%, transparent) 1.72rem calc(1.72rem + 1px)
+    ),
+    linear-gradient(248deg, var(--sd-paper-warm) 0%, var(--sd-paper) 37%, var(--sd-paper) 100%);
+}
+
+.sd-page--left::after,
+.sd-page--right::before {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  bottom: 1.15rem;
+  width: 0;
+  border-left: 1px dashed color-mix(in srgb, var(--sd-rose) 22%, transparent);
+  pointer-events: none;
+}
+
+.sd-page--left::after {
+  right: 0.8rem;
+}
+
+.sd-page--right::before {
+  left: 0.8rem;
+}
+
+.sd-page-no {
+  position: absolute;
+  bottom: 0.85rem;
+  color: var(--sd-muted);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.7rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+.sd-page--left .sd-page-no {
+  left: clamp(1.25rem, 3.2vw, 2.55rem);
+}
+
+.sd-page--right .sd-page-no {
+  right: clamp(1.25rem, 3.2vw, 2.55rem);
+}
+
+/* --------------------------------------------------------------------------
+   Tape, marks and small hand-made details
+   -------------------------------------------------------------------------- */
+
+.sd-tape {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  width: clamp(4.8rem, 8vw, 7.2rem);
+  height: 1.35rem;
+  opacity: 0.86;
+  box-shadow: 0 1px 1px rgba(64, 45, 35, 0.08);
+  clip-path: polygon(2% 8%, 98% 0%, 100% 91%, 1% 100%);
+  pointer-events: none;
+}
+
+.sd-tape--rose {
+  background:
+    repeating-linear-gradient(45deg, transparent 0 0.45rem, rgba(255, 250, 240, 0.42) 0.45rem 0.9rem),
+    var(--sd-tape-rose);
+}
+
+.sd-tape--mustard {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 0.7rem, rgba(121, 85, 29, 0.17) 0.7rem 0.82rem),
+    var(--sd-tape-cream);
+}
+
+.sd-tape--teal {
+  background:
+    radial-gradient(circle at 0.35rem 50%, rgba(255, 250, 240, 0.55) 0 0.12rem, transparent 0.14rem) 0 0 / 0.8rem 100%,
+    var(--sd-tape-teal);
+}
+
+.sd-page--left > .sd-tape {
+  top: 0.6rem;
+  left: clamp(1.15rem, 3vw, 2.5rem);
+  transform: rotate(-4deg);
+}
+
+.sd-page--right > .sd-tape {
+  top: 0.7rem;
+  right: clamp(1.15rem, 3vw, 2.5rem);
+  transform: rotate(3.4deg);
+}
+
+.sd-tape--short {
+  width: 3.8rem;
+  height: 1.1rem;
+}
+
+.sd-kicker,
+.sd-hand-mark {
+  margin: 0 0 0.8rem;
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.11em;
+}
+
+.sd-kicker::after {
+  content: "";
+  display: inline-block;
+  width: 1.8rem;
+  margin-left: 0.55rem;
+  border-top: 1px solid color-mix(in srgb, var(--sd-rose) 42%, transparent);
+  vertical-align: middle;
+}
+
+.sd-hand-mark {
+  position: absolute;
+  top: 1.75rem;
+  right: clamp(1.35rem, 3.5vw, 2.7rem);
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  transform: rotate(2deg);
+}
+
+.sd-title {
+  margin: 0 0 1.15rem;
+  color: var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS",
+    "PingFang SC", "Microsoft YaHei", cursive;
+  font-size: clamp(2rem, 3.5vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.sd-doodle-star {
+  position: absolute;
+  display: block;
+  width: 3.6rem;
+  aspect-ratio: 1;
+  opacity: 0.34;
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 92%, 50% 70%, 21% 92%, 32% 57%, 2% 35%, 39% 35%);
+  pointer-events: none;
+}
+
+.sd-doodle-star--rose {
+  right: 1.9rem;
+  bottom: 3.2rem;
+  background: var(--sd-rose);
+  transform: rotate(9deg);
+}
+
+.sd-doodle-star--teal {
+  right: 2.6rem;
+  bottom: 3.7rem;
+  background: var(--sd-teal);
+  transform: rotate(-8deg);
+}
+
+.sd-doodle-star--mustard {
+  left: 2rem;
+  bottom: 3.7rem;
+  background: var(--sd-mustard-deep);
+  transform: rotate(12deg);
+}
+
+.sd-doodle-heart {
+  position: absolute;
+  right: 2rem;
+  bottom: 4rem;
+  width: 4.6rem;
+  height: 3.5rem;
+  opacity: 0.28;
+  border: 2px solid var(--sd-rose);
+  border-radius: 60% 42% 58% 50%;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.sd-doodle-heart::before,
+.sd-doodle-heart::after {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 1.5rem;
+  border-top: 2px solid var(--sd-rose);
+  border-radius: 50%;
+}
+
+.sd-doodle-heart::before {
+  top: -0.65rem;
+  left: 0.45rem;
+  transform: rotate(-14deg);
+}
+
+.sd-doodle-heart::after {
+  top: 0.35rem;
+  right: -0.6rem;
+  transform: rotate(78deg);
+}
+
+/* --------------------------------------------------------------------------
+   Profile spread
+   -------------------------------------------------------------------------- */
+
+.sd-page--profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.sd-identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(8rem, 34%, 12rem);
+  gap: clamp(1rem, 2.4vw, 1.8rem);
+  align-items: start;
+  margin-top: clamp(0.7rem, 2vw, 1.5rem);
+}
+
+.sd-identity--solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.sd-identity-copy {
+  min-width: 0;
+}
+
+.sd-name {
+  margin: 0 0 1.1rem;
+  color: var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS",
+    "PingFang SC", "Microsoft YaHei", cursive;
+  font-size: clamp(2.6rem, 4.6vw, 4.4rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+  transform: rotate(-1.2deg);
+  transform-origin: left center;
+}
+
+.sd-headline {
+  max-width: 35ch;
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: clamp(0.98rem, 1.5vw, 1.12rem);
+  font-weight: 500;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.sd-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  margin: 1.25rem 0 0;
+  padding: 0.38rem 0.7rem 0.32rem;
+  border: 1px solid color-mix(in srgb, var(--sd-teal) 34%, transparent);
+  border-radius: 0.2rem 0.8rem 0.45rem 0.7rem;
+  color: var(--sd-teal);
+  background: color-mix(in srgb, var(--sd-teal-soft) 45%, var(--sd-paper));
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  transform: rotate(-0.7deg);
+}
+
+.sd-location-pin {
+  flex: none;
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 50% 50% 50% 0;
+  background: var(--sd-rose);
+  transform: rotate(-45deg);
+}
+
+.sd-polaroid {
+  position: relative;
+  margin: 0;
+  padding: 0.55rem 0.55rem 1.25rem;
+  border: 1px solid var(--sd-paper-edge);
+  background: #fffdf8;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--sd-paper-shadow) 80%, transparent),
+    0 11px 16px -13px var(--sd-ink);
+  transform: rotate(2.2deg);
+}
+
+.sd-polaroid::after {
+  content: "";
+  position: absolute;
+  right: 18%;
+  bottom: 0.5rem;
+  left: 18%;
+  border-top: 1px solid color-mix(in srgb, var(--sd-faint) 70%, transparent);
+}
+
+.sd-polaroid-tape {
+  position: absolute;
+  z-index: 1;
+  top: -0.55rem;
+  left: 50%;
+  width: 3.5rem;
+  height: 1rem;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 0.32rem, rgba(255, 250, 240, 0.5) 0.32rem 0.64rem),
+    var(--sd-tape-rose);
+  opacity: 0.9;
+  transform: translateX(-50%) rotate(-2deg);
+}
+
+.sd-avatar {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  filter: saturate(0.84) contrast(0.96);
+}
+
+.sd-page--bio {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sd-page--bio .sd-title {
+  max-width: 12ch;
+  margin-bottom: 1.5rem;
+}
+
+.sd-bio {
+  max-width: 37ch;
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: clamp(0.98rem, 1.25vw, 1.06rem);
+  line-height: 1.88;
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   Links / keepsakes
+   -------------------------------------------------------------------------- */
+
+.sd-link-list,
+.sd-project-list,
+.sd-memory-list,
+.sd-skill-list,
+.sd-tag-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sd-link-list {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.4rem;
+}
+
+.sd-link-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.12rem 0.65rem;
+  align-items: baseline;
+  min-height: 3.4rem;
+  padding: 0.8rem 0.9rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--sd-teal) 28%, var(--sd-paper-edge));
+  border-radius: 0.35rem 0.9rem 0.5rem 0.75rem;
+  color: var(--sd-ink);
+  background-color: var(--sd-paper-warm);
+  background-image:
+    linear-gradient(108deg, color-mix(in srgb, var(--sd-teal-soft) 48%, var(--sd-paper)) 0%, var(--sd-paper) 68%),
+    repeating-linear-gradient(0deg, transparent 0 1rem, rgba(101, 82, 69, 0.05) 1rem calc(1rem + 1px));
+  box-shadow:
+    0 2px 0 color-mix(in srgb, var(--sd-teal) 18%, var(--sd-paper-edge)),
+    0 8px 14px -12px var(--sd-ink);
+  text-decoration: none;
+  transform: rotate(-0.45deg);
+}
+
+.sd-link-list li:nth-child(2n) .sd-link-card {
+  border-color: color-mix(in srgb, var(--sd-rose) 26%, var(--sd-paper-edge));
+  background-image:
+    linear-gradient(108deg, color-mix(in srgb, var(--sd-blush) 35%, var(--sd-paper)) 0%, var(--sd-paper) 68%),
+    repeating-linear-gradient(0deg, transparent 0 1rem, rgba(101, 82, 69, 0.05) 1rem calc(1rem + 1px));
+  transform: rotate(0.5deg);
+}
+
+.sd-link-list li:nth-child(3n) .sd-link-card {
+  border-color: color-mix(in srgb, var(--sd-mustard-deep) 24%, var(--sd-paper-edge));
+  background-image:
+    linear-gradient(108deg, color-mix(in srgb, var(--sd-tape-cream) 64%, var(--sd-paper)) 0%, var(--sd-paper) 68%),
+    repeating-linear-gradient(0deg, transparent 0 1rem, rgba(101, 82, 69, 0.05) 1rem calc(1rem + 1px));
+  transform: rotate(-0.2deg);
+}
+
+.sd-linkno {
+  color: var(--sd-muted);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.sd-link-label {
+  min-width: 0;
+  color: var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 1.18rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sd-rose) 36%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.sd-link-arrow {
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.sd-link-url {
+  grid-column: 2 / -1;
+  min-width: 0;
+  color: var(--sd-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.sd-count {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  margin: 1.8rem 0 1rem;
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  line-height: 1;
+  transform: rotate(2deg);
+}
+
+.sd-count > span {
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  letter-spacing: -0.04em;
+}
+
+.sd-count small {
+  color: var(--sd-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.sd-empty {
+  margin: 1.8rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px dashed color-mix(in srgb, var(--sd-muted) 40%, transparent);
+  color: var(--sd-muted);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  line-height: 1.6;
+  transform: rotate(-0.5deg);
+}
+
+/* --------------------------------------------------------------------------
+   Projects
+   -------------------------------------------------------------------------- */
+
+.sd-project-list {
+  display: grid;
+  gap: 1.2rem;
+  margin-top: 1.35rem;
+}
+
+.sd-project {
+  position: relative;
+  padding: 1.15rem 1.05rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--sd-mustard-deep) 22%, var(--sd-paper-edge));
+  border-radius: 0.25rem 0.9rem 0.4rem 0.7rem;
+  background-color: var(--sd-paper);
+  background-image:
+    linear-gradient(110deg, color-mix(in srgb, var(--sd-tape-cream) 54%, var(--sd-paper)) 0%, var(--sd-paper) 74%),
+    repeating-linear-gradient(0deg, transparent 0 1.35rem, rgba(101, 82, 69, 0.05) 1.35rem calc(1.35rem + 1px));
+  box-shadow:
+    0 2px 0 color-mix(in srgb, var(--sd-mustard) 18%, var(--sd-paper-edge)),
+    0 10px 18px -16px var(--sd-ink);
+  transform: rotate(-0.35deg);
+}
+
+.sd-project:nth-child(2n) {
+  background-image:
+    linear-gradient(110deg, color-mix(in srgb, var(--sd-blue-soft) 42%, var(--sd-paper)) 0%, var(--sd-paper) 74%),
+    repeating-linear-gradient(0deg, transparent 0 1.35rem, rgba(101, 82, 69, 0.05) 1.35rem calc(1.35rem + 1px));
+  transform: rotate(0.45deg);
+}
+
+.sd-project-tape {
+  position: absolute;
+  top: -0.48rem;
+  left: 1.15rem;
+  width: 3.7rem;
+  height: 0.9rem;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 0.55rem, rgba(255, 250, 240, 0.45) 0.55rem 0.68rem),
+    var(--sd-tape-teal);
+  opacity: 0.8;
+  transform: rotate(-3deg);
+}
+
+.sd-project-title {
+  margin: 0;
+  color: var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.sd-project-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--sd-rose) 44%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.sd-project-url {
+  margin: 0.18rem 0 0;
+  color: var(--sd-muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.sd-project-copy,
+.sd-memory-copy,
+.sd-contact-note {
+  margin: 0.65rem 0 0;
+  color: var(--sd-ink);
+  font-size: 0.9rem;
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.sd-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  margin-top: 0.75rem;
+}
+
+.sd-tag-list li {
+  padding: 0.18rem 0.48rem 0.15rem;
+  border: 1px solid color-mix(in srgb, var(--sd-blue) 28%, transparent);
+  border-radius: 0.25rem 0.65rem 0.35rem 0.55rem;
+  color: var(--sd-blue);
+  background: color-mix(in srgb, var(--sd-blue-soft) 58%, var(--sd-paper));
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+/* --------------------------------------------------------------------------
+   Experience / pressed tickets
+   -------------------------------------------------------------------------- */
+
+.sd-memory-list {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.35rem;
+}
+
+.sd-memory {
+  position: relative;
+  padding: 0.9rem 1rem 1rem 1.2rem;
+  border: 1px solid color-mix(in srgb, var(--sd-rose) 18%, transparent);
+  border-radius: 0.25rem 0.8rem 0.4rem 0.65rem;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--sd-blush) 25%, transparent), transparent 42%),
+    repeating-linear-gradient(0deg, transparent 0 1.48rem, rgba(101, 82, 69, 0.05) 1.48rem calc(1.48rem + 1px));
+  box-shadow: 0 7px 12px -12px var(--sd-ink);
+}
+
+.sd-memory::before {
+  content: "";
+  position: absolute;
+  top: 1rem;
+  left: -0.4rem;
+  width: 0.55rem;
+  aspect-ratio: 1;
+  border: 2px solid var(--sd-paper);
+  border-radius: 50%;
+  background: var(--sd-rose);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sd-rose) 55%, transparent);
+}
+
+.sd-period {
+  margin: 0 0 0.22rem;
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.sd-memory-title {
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.sd-role {
+  margin: 0.1rem 0 0;
+  color: var(--sd-teal);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.sd-memory-copy {
+  margin-top: 0.48rem;
+  font-size: 0.87rem;
+}
+
+/* --------------------------------------------------------------------------
+   Skill stickers
+   -------------------------------------------------------------------------- */
+
+.sd-skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+.sd-skill-list li {
+  max-width: 100%;
+  padding: 0.55rem 0.85rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--sd-teal) 34%, transparent);
+  border-radius: 0.35rem 0.95rem 0.45rem 0.75rem;
+  color: var(--sd-ink);
+  background-color: var(--sd-teal-soft);
+  background-image: linear-gradient(125deg, color-mix(in srgb, var(--sd-paper) 44%, transparent), transparent);
+  box-shadow:
+    0 2px 0 color-mix(in srgb, var(--sd-teal) 28%, var(--sd-paper-edge)),
+    0 8px 12px -11px var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: clamp(0.92rem, 1.3vw, 1.08rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  transform: rotate(-1.2deg);
+}
+
+.sd-skill-list li:nth-child(2n) {
+  border-color: color-mix(in srgb, var(--sd-rose) 30%, transparent);
+  background-color: var(--sd-blush);
+  transform: rotate(1.1deg);
+}
+
+.sd-skill-list li:nth-child(3n) {
+  border-color: color-mix(in srgb, var(--sd-mustard-deep) 26%, transparent);
+  background-color: var(--sd-tape-cream);
+  transform: rotate(-0.4deg);
+}
+
+.sd-skill-list li:nth-child(4n) {
+  border-color: color-mix(in srgb, var(--sd-blue) 30%, transparent);
+  background-color: var(--sd-blue-soft);
+  transform: rotate(0.7deg);
+}
+
+/* --------------------------------------------------------------------------
+   Last page / contact
+   -------------------------------------------------------------------------- */
+
+.sd-contact-mail {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1.6rem 0 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--sd-rose) 32%, var(--sd-paper-edge));
+  border-radius: 0.35rem 0.95rem 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--sd-blush) 28%, var(--sd-paper));
+  transform: rotate(-0.45deg);
+}
+
+.sd-contact-label {
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+.sd-contact-mail a {
+  color: var(--sd-ink);
+  font-size: clamp(0.95rem, 1.6vw, 1.12rem);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: var(--sd-rose);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.sd-contact-note {
+  max-width: 38ch;
+  font-size: 0.96rem;
+  line-height: 1.82;
+}
+
+.sd-page--closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.sd-closing-mark {
+  position: relative;
+  width: 8rem;
+  height: 5.5rem;
+  margin-bottom: 1.5rem;
+  transform: rotate(-4deg);
+}
+
+.sd-closing-mark span {
+  position: absolute;
+  display: block;
+  width: 4.8rem;
+  height: 3.2rem;
+  border: 2px solid var(--sd-rose);
+  border-radius: 50% 44% 52% 46%;
+  opacity: 0.48;
+}
+
+.sd-closing-mark span:first-child {
+  top: 0.35rem;
+  left: 0.2rem;
+  transform: rotate(-18deg);
+}
+
+.sd-closing-mark span:last-child {
+  right: 0.2rem;
+  bottom: 0.2rem;
+  border-color: var(--sd-teal);
+  transform: rotate(23deg);
+}
+
+.sd-closing {
+  max-width: 22ch;
+  margin: 0;
+  color: var(--sd-ink);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  line-height: 1.45;
+  transform: rotate(-0.6deg);
+}
+
+.sd-brand {
+  margin: 1.65rem 0 0;
+  color: var(--sd-rose);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+}
+
+.sd-sample {
+  margin: 0.3rem 0 0;
+  color: var(--sd-muted);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation / status / footer
+   -------------------------------------------------------------------------- */
+
+.sd-controls {
+  display: none;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.15rem;
+}
+
+.sd-controls[hidden] {
+  display: none !important;
+}
+
+.sd[data-sd-ready] .sd-controls {
+  display: grid;
+}
+
+.sd-flip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--sd-rose) 35%, var(--sd-paper-edge));
+  border-radius: 0.3rem 0.8rem 0.45rem 0.65rem;
+  color: var(--sd-ink);
+  background: var(--sd-paper-warm);
+  box-shadow: 0 2px 0 var(--sd-paper-shadow);
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  font-size: 0.86rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.sd-flip--prev {
+  justify-self: start;
+}
+
+.sd-flip--next {
+  justify-self: end;
+}
+
+.sd-flip:disabled {
+  color: var(--sd-muted);
+  background: color-mix(in srgb, var(--sd-paper-warm) 76%, var(--sd-page-bg));
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.sd-status {
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.sd-colophon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-top: 1.15rem;
+  padding-inline: 0.2rem;
+  color: var(--sd-ink);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+}
+
+.sd-colophon p {
+  margin: 0;
+}
+
+.sd-colophon span {
+  font-family:
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+  letter-spacing: 0.1em;
+}
+
+/* --------------------------------------------------------------------------
+   Interaction surfaces
+   -------------------------------------------------------------------------- */
+
+.sd a:focus-visible,
+.sd button:focus-visible,
+.sd [data-sd-focus]:focus {
+  outline: 3px solid var(--sd-rose-deep);
+  outline-offset: 3px;
+}
+
+.sd [data-sd-focus] {
+  scroll-margin-block-start: 1rem;
+}
+
+.sd [data-sd-focus]:focus:not(:focus-visible) {
+  outline: 3px solid var(--sd-rose-deep);
+  outline-offset: 3px;
+}
+
+.sd ::selection {
+  color: var(--sd-paper);
+  background: var(--sd-rose-deep);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sd-tab:hover,
+  .sd-flip:not(:disabled):hover {
+    border-color: var(--sd-rose-deep);
+  }
+
+  .sd-link-card:hover,
+  .sd-project-title a:hover,
+  .sd-contact-mail a:hover {
+    color: var(--sd-rose-deep);
+  }
+
+  .sd-link-card:hover {
+    border-color: var(--sd-rose);
+  }
+}
+
+@media (pointer: coarse) {
+  .sd-link-card {
+    min-height: 48px;
+  }
+
+  .sd-project-title a,
+  .sd-contact-mail a {
+    display: inline-block;
+    min-height: 44px;
+    padding-block: 0.5rem;
+  }
+
+  .sd-skill-list li {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Motion: the book arrives, then a new leaf settles into the binding.
+   Content remains visible by default; only a successful script adds the
+   data-sd-ready gate that combines with the native hidden state.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .sd-book {
+    animation: sd-book-arrive 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sd-tab,
+  .sd-link-card,
+  .sd-skill-list li,
+  .sd-flip {
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .sd-tab:hover {
+      transform: translateY(-2px) rotate(-0.8deg);
+    }
+
+    .sd-link-card:hover,
+    .sd-skill-list li:hover {
+      transform: translateY(-2px) rotate(0.35deg);
+    }
+
+    .sd-flip:not(:disabled):hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .sd[data-sd-ready] [data-sd-spread]:not([hidden]) .sd-page {
+    animation: sd-page-settle 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sd[data-sd-ready][data-sd-direction="previous"]
+    [data-sd-spread]:not([hidden])
+    .sd-page {
+    animation-name: sd-page-settle-back;
+  }
+}
+
+@keyframes sd-book-arrive {
+  from {
+    opacity: 0.72;
+    transform: translateY(14px) rotate(-0.4deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes sd-page-settle {
+  from {
+    opacity: 0.42;
+    transform: translateX(10px) rotate(0.18deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+@keyframes sd-page-settle-back {
+  from {
+    opacity: 0.42;
+    transform: translateX(-10px) rotate(-0.18deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Wide layout: real open book + protruding bookmark rail
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 60.01rem) {
+  .sd-scene {
+    width: min(76rem, calc(100% - 7rem));
+  }
+
+  .sd-book {
+    padding: clamp(0.65rem, 1vw, 0.92rem);
+  }
+
+  .sd-spread {
+    min-height: 38rem;
+  }
+
+  .sd-tabs {
+    position: absolute;
+    z-index: 6;
+    top: 6.3rem;
+    right: -2.8rem;
+    display: flex;
+    width: 2.8rem;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.42rem;
+    margin: 0;
+  }
+
+  .sd-tab {
+    width: 2.8rem;
+    min-height: 4.25rem;
+    padding: 0.6rem 0.33rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    border-radius: 0 0.55rem 0.55rem 0;
+    font-size: 0.74rem;
+    letter-spacing: 0.03em;
+  }
+
+  .sd-tabno {
+    writing-mode: horizontal-tb;
+    letter-spacing: 0.02em;
+  }
+
+  .sd-tabtext {
+    white-space: normal;
+  }
+
+  .sd-page--profile {
+    justify-content: flex-start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Narrow layout: one DOM-ordered column; no page-level horizontal scroll.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 60rem) {
+  .sd-spread {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sd-spread::after {
+    display: none;
+  }
+
+  .sd-page--left,
+  .sd-page--right {
+    padding-inline: clamp(1.25rem, 5vw, 2.4rem);
+  }
+
+  .sd-page--left::after,
+  .sd-page--right::before {
+    display: none;
+  }
+
+  .sd-page--right {
+    border-top: 1px dashed color-mix(in srgb, var(--sd-faint) 55%, transparent);
+  }
+
+  .sd-page--left .sd-page-no {
+    left: clamp(1.25rem, 5vw, 2.4rem);
+  }
+
+  .sd-page--right .sd-page-no {
+    right: clamp(1.25rem, 5vw, 2.4rem);
+  }
+
+  .sd-page--bio {
+    min-height: 25rem;
+  }
+
+  .sd-controls {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .sd-status {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .sd-flip--prev {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sd-flip--next {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 30rem) {
+  .sd-scene {
+    width: calc(100% - 1.25rem);
+  }
+
+  .sd-tabs {
+    justify-content: flex-start;
+  }
+
+  .sd-tab {
+    flex: 1 1 auto;
+  }
+
+  .sd-tabtext {
+    white-space: normal;
+  }
+
+  .sd-identity {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sd-polaroid {
+    width: min(11.5rem, 68%);
+    justify-self: center;
+    order: 2;
+  }
+
+  .sd-identity-copy {
+    order: 1;
+  }
+
+  .sd-name {
+    font-size: clamp(2.35rem, 12vw, 3.4rem);
+  }
+
+  .sd-page--bio .sd-title {
+    max-width: none;
+  }
+
+  .sd-flip {
+    padding-inline: 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sd *,
+  .sd *::before,
+  .sd *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

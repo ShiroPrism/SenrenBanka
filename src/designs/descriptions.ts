@@ -11,6 +11,36 @@
 export type DescriptionLocale = 'zh-CN' | 'ja' | 'en';
 
 export const designDescriptions: Record<string, Record<DescriptionLocale, string>> = {
+  'fairy-kei': {
+    'zh-CN': '复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。',
+    ja: 'レトロな少女の玩具コレクション——開いたショーケース、吊り下げチャームのリンク、パッケージカードのプロフィール。',
+    en: 'A retro-girl toy collection case: an open display, charm-like links and a packaging-card profile in candy colours.',
+  },
+  'sticker-diary': {
+    'zh-CN': '手帐贴纸日记：跨页笔记本、胶带、手写批注和页边书签，把所有资料逐页贴进一本自己的剪贴簿。',
+    ja: 'ステッカー手帳の日記——見開きノート、テープ、手書きの注釈と栞でプロフィールを綴る。',
+    en: 'A sticker diary: notebook spreads, tape, handwritten notes and bookmarks turn the profile into a scrapbook.',
+  },
+  'pixel-pet-rpg': {
+    'zh-CN': '像素宠物小镇：HUD、地图节点与地点面板组成可探索档案，项目是目的地，链接是物品栏。',
+    ja: 'ピクセルペットの町——HUD、マップ地点、場所パネルでプロフィールを探索。プロジェクトは目的地、リンクは持ち物。',
+    en: 'A pixel pet town: HUD, map stations and location panels turn links into inventory and projects into destinations.',
+  },
+  'little-forest': {
+    'zh-CN': '童话森林绘本：从入口木牌沿小径走向小屋，用路标、树轮与植物标本组织安静的资料叙事。',
+    ja: 'おとぎの森の絵本——入口の看板から小道をたどり、道しるべ、年輪、植物標本でプロフィールを綴る。',
+    en: 'A picture-book forest trail: an entrance sign, signposts, tree rings, botanical specimens and a cottage at the end.',
+  },
+  'cute-alism': {
+    'zh-CN': '硬核糖果拼贴：粗黑描边、硬阴影、夸张标题与错位色块贯穿全页，资料成为一套几何视觉系统。',
+    ja: 'ハードキャンディ・コラージュ——太い黒線、ハードシャドウ、巨大な見出しと色ブロックで全編を構成。',
+    en: 'Hard-candy collage: thick black outlines, hard shadows, oversized type and colour blocks across every section.',
+  },
+  'magical-girl': {
+    'zh-CN': '魔法少女档案：角色档案与舞台登场，用原创星轨、丝带、魔法阵和章回卡片组织华丽资料。',
+    ja: '魔法少女のプロフィール——キャラクターカードと舞台登場。オリジナルの星の軌跡、リボン、魔法陣、章カードで構成。',
+    en: 'A magical-girl dossier: a staged character entrance with original star trails, ribbons, magic circles and episode cards.',
+  },
   homepage99: {
     'zh-CN': '1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。',
     ja: '1999年の個人ホームページ——左の目次、密度のある本文、バッジの列。太い二重罫線とシステム書体、オフラインのカウンター。',

@@ -1,0 +1,12 @@
+/** cute-alism palette tokens shared by the full page and switcher preview. */
+
+:is(.cal, .cal-pv) {
+  --cal-ink: #111111;
+  --cal-paper: #fff8e8;
+  --cal-paper-bright: #fffdf5;
+  --cal-red: #ff5a5f;
+  --cal-yellow: #ffe14d;
+  --cal-mint: #59e3b2;
+  --cal-sky: #67c8ff;
+  --cal-pink: #ff92cf;
+}

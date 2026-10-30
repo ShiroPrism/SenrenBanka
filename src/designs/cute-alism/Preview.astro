@@ -1,0 +1,220 @@
+---
+/** cute-alism preview: a miniature candy-collage signature; no page CSS or focusable nodes. */
+import type { PreviewProps } from '../preview';
+import { messages } from './messages';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-fredoka',
+  '--font-lxgw',
+  '--font-inter',
+  '--font-league-mono',
+];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const previewLinks = links.slice(0, 2);
+---
+
+<div class="cal-pv">
+  <span class="cal-pv-slab" aria-hidden="true"></span>
+
+  <div class="cal-pv-card">
+    <p class="cal-pv-kicker">{t.heroStamp}</p>
+    <p class="cal-pv-name">{name}</p>
+    <p class="cal-pv-headline">{headline}</p>
+
+    <div class="cal-pv-tags">
+      {
+        previewLinks.map((link, index) => (
+          <span class="cal-pv-tag">
+            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            {link.label}
+          </span>
+        ))
+      }
+    </div>
+
+    <span class="cal-pv-shape cal-pv-shape--star" aria-hidden="true"></span>
+    <span class="cal-pv-shape cal-pv-shape--disc" aria-hidden="true"></span>
+  </div>
+
+  <p class="cal-pv-contact">
+    {t.contactTitle}
+    <span aria-hidden="true"></span>
+  </p>
+</div>
+
+<style>
+  .cal-pv {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: 8.5rem;
+    align-items: center;
+    overflow: hidden;
+    padding: 0.7rem;
+    background: var(--cal-paper);
+    color: var(--cal-ink);
+    font-family:
+      var(--font-inter), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: 0.55rem;
+    line-height: 1.4;
+  }
+
+  .cal-pv-slab {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.8rem;
+    width: 8rem;
+    height: 7rem;
+    border: 3px solid var(--cal-ink);
+    background: var(--cal-mint);
+    transform: rotate(10deg);
+  }
+
+  .cal-pv-card {
+    position: relative;
+    width: 78%;
+    padding: 0.55rem 0.65rem 0.6rem;
+    border: 3px solid var(--cal-ink);
+    border-radius: 0.65rem 0 0.65rem 0;
+    background: var(--cal-yellow);
+    box-shadow: 5px 5px 0 var(--cal-ink);
+    transform: rotate(-1.1deg);
+  }
+
+  .cal-pv-kicker {
+    width: fit-content;
+    margin: 0 0 0.35rem;
+    padding: 0.12rem 0.3rem;
+    border: 1.5px solid var(--cal-ink);
+    border-radius: 999px;
+    background: var(--cal-sky);
+    font-family: var(--font-league-mono), var(--font-inter), sans-serif;
+    font-size: 0.42rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .cal-pv-name {
+    margin: 0;
+    font-family:
+      var(--font-fredoka), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      sans-serif;
+    font-size: clamp(1.6rem, 6vw, 2.7rem);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
+  }
+
+  .cal-pv-headline {
+    display: -webkit-box;
+    margin: 0.35rem 0 0;
+    overflow: hidden;
+    font-size: 0.54rem;
+    font-weight: 700;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .cal-pv-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.4rem;
+  }
+
+  .cal-pv-tag {
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.1rem 0.28rem;
+    border: 1.5px solid var(--cal-ink);
+    border-radius: 999px;
+    background: var(--cal-paper-bright);
+    font-family: var(--font-league-mono), var(--font-inter), sans-serif;
+    font-size: 0.42rem;
+    font-weight: 700;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .cal-pv-shape {
+    position: absolute;
+    border: 2px solid var(--cal-ink);
+  }
+
+  .cal-pv-shape--star {
+    right: -1.35rem;
+    bottom: 0.35rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--cal-red);
+    clip-path: polygon(50% 0, 61% 33%, 96% 22%, 72% 50%, 96% 78%, 61% 67%, 50% 100%, 39% 67%, 4% 78%, 28% 50%, 4% 22%, 39% 33%);
+    transform: rotate(9deg);
+  }
+
+  .cal-pv-shape--disc {
+    top: 0.55rem;
+    right: -0.85rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    background: var(--cal-pink);
+  }
+
+  .cal-pv-contact {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0.2rem 0.42rem;
+    border: 2px solid var(--cal-ink);
+    border-radius: 999px;
+    background: var(--cal-ink);
+    color: var(--cal-paper);
+    font-family: var(--font-league-mono), var(--font-inter), sans-serif;
+    font-size: 0.42rem;
+    font-weight: 700;
+    line-height: 1.25;
+    transform: rotate(2deg);
+  }
+
+  .cal-pv-contact span {
+    position: relative;
+    display: inline-grid;
+    width: 0.75rem;
+    height: 0.75rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--cal-yellow);
+  }
+
+  .cal-pv-contact span::before,
+  .cal-pv-contact span::after {
+    content: "";
+    position: absolute;
+    background: var(--cal-ink);
+  }
+
+  .cal-pv-contact span::before {
+    width: 0.4rem;
+    height: 0.12rem;
+  }
+
+  .cal-pv-contact span::after {
+    width: 0.12rem;
+    height: 0.4rem;
+  }
+</style>

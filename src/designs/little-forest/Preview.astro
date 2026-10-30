@@ -1,0 +1,168 @@
+---
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = ['--font-fraunces', '--font-lxgw'];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const firstLink = links[0]?.label ?? t.linksTitle;
+---
+
+<div class="lf-pv">
+  <svg class="lf-pv-wash" viewBox="0 0 540 338" aria-hidden="true">
+    <circle class="lf-pv-sun" cx="463" cy="48" r="46"></circle>
+    <path class="lf-pv-green" d="M-26 62C61 41 101 82 143 56s76-3 109 24 72 8 108-10 101-4 207 11v91H-26Z"></path>
+    <path class="lf-pv-rose" d="M301 270c62-38 128-41 208-12s55 63 76 95H286Z"></path>
+  </svg>
+  <svg class="lf-pv-trail" viewBox="0 0 540 338" preserveAspectRatio="none" aria-hidden="true">
+    <path class="lf-pv-trail-soft" d="M100 143c72 17 49 64 117 80s86-2 127 28 9 52 42 74"></path>
+    <path class="lf-pv-trail-line" d="M100 143c72 17 49 64 117 80s86-2 127 28 9 52 42 74"></path>
+  </svg>
+
+  <div class="lf-pv-top"><p>{t.entranceKicker}</p><p>{t.observationLabel}</p></div>
+  <div class="lf-pv-sign">
+    <span class="lf-pv-nails"></span>
+    <p class="lf-pv-name">{name}</p>
+    <p class="lf-pv-headline">{headline}</p>
+  </div>
+  <p class="lf-pv-note">{t.entranceNote}</p>
+
+  <div class="lf-pv-post">
+    <span class="lf-pv-post-board">{firstLink}</span>
+    <span class="lf-pv-post-stem"></span>
+  </div>
+
+  <div class="lf-pv-ring">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <path class="lf-pv-ring-bark" d="M49 8c26-1 44 17 44 42s-19 43-45 42S7 75 8 50 23 9 49 8Z"></path>
+      <ellipse cx="50" cy="50" rx="31" ry="29"></ellipse>
+      <ellipse cx="50" cy="50" rx="19" ry="17"></ellipse>
+      <circle cx="50" cy="50" r="6"></circle>
+    </svg>
+    <span>{t.experienceTitle}</span>
+  </div>
+
+  <div class="lf-pv-cottage">
+    <svg viewBox="0 0 130 100" aria-hidden="true">
+      <path class="lf-pv-ground" d="M2 84c28-8 52-3 78 1s33 3 50-4v20H2Z"></path>
+      <path class="lf-pv-wall" d="M41 48h59v37H41Z"></path>
+      <path class="lf-pv-roof" d="m31 49 40-25 43 25-6 7-37-18-35 18Z"></path>
+      <path class="lf-pv-door" d="M61 61h17v24H61Z"></path>
+      <path class="lf-pv-window" d="M88 57h9v10h-9Z"></path>
+      <path class="lf-pv-tree" d="M24 85c3-23 3-43 1-61m-2 25C11 47 6 39 6 30c11 2 17 8 17 19Zm3-15c9-3 14-10 13-19-9 3-14 10-13 19Z"></path>
+      <path class="lf-pv-grass" d="M22 87c8-12 15-16 24-17m67 17c7-10 13-14 21-15"></path>
+    </svg>
+    <span>{t.contactTitle}</span>
+  </div>
+  <p class="lf-pv-footer">{t.footerColophon}</p>
+</div>
+
+<style>
+  .lf-pv {
+    position: relative; width: 100%; height: 100%; min-height: 0; overflow: hidden;
+    background: var(--lf-paper); color: var(--lf-ink); isolation: isolate;
+    font: 0.56rem/1.45 Georgia, var(--font-lxgw), "Songti SC", "SimSun", serif;
+  }
+  .lf-pv::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.16;
+    background-image: radial-gradient(circle at 0 0, var(--lf-bark-deep) 0 0.45px, transparent 0.72px);
+    background-size: 5px 7px;
+  }
+  .lf-pv-wash { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; }
+  .lf-pv-sun { fill: rgb(241 223 173 / 0.5); }
+  .lf-pv-green { fill: rgb(140 169 164 / 0.2); }
+  .lf-pv-rose { fill: rgb(185 131 125 / 0.15); }
+  .lf-pv-trail { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .lf-pv-trail-soft, .lf-pv-trail-line {
+    fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round;
+  }
+  .lf-pv-trail-soft { stroke: rgb(199 177 142 / 0.36); stroke-width: 10; }
+  .lf-pv-trail-line { stroke: var(--lf-path); stroke-width: 1.1; stroke-dasharray: 2 8; }
+  .lf-pv-top {
+    position: absolute; top: 0.65rem; right: 0.9rem; left: 0.9rem;
+    display: flex; justify-content: space-between; gap: 0.7rem;
+    color: var(--lf-muted); font-size: 0.45rem; letter-spacing: 0.11em; text-transform: uppercase;
+  }
+  .lf-pv-top p { margin: 0; }
+  .lf-pv-sign {
+    position: absolute; top: 2.7rem; left: 1.15rem; width: 10.4rem; min-height: 4.6rem;
+    padding: 0.55rem 0.75rem 0.6rem; border: 1px solid rgb(80 58 43 / 0.45);
+    background:
+      repeating-linear-gradient(7deg, transparent 0 0.75rem, rgb(255 246 220 / 0.08) 0.75rem 0.8rem),
+      linear-gradient(120deg, #846247, var(--lf-bark));
+    color: #fff4d8; box-shadow: 0 0.7rem 1rem -0.8rem rgb(80 58 43 / 0.6);
+    transform: rotate(-0.7deg);
+  }
+  .lf-pv-sign::after {
+    content: ""; position: absolute; top: 100%; left: 1.1rem;
+    width: 0.38rem; height: 1.35rem; background: var(--lf-bark-deep);
+  }
+  .lf-pv-nails {
+    position: absolute; top: 0.32rem; right: 0.4rem; width: 0.2rem; height: 0.2rem;
+    border-radius: 50%; background: #e5c78f; box-shadow: -9.6rem 0 #e5c78f;
+  }
+  .lf-pv-name {
+    margin: 0; overflow-wrap: anywhere;
+    font: 560 1.42rem/1.02 var(--font-fraunces), var(--font-lxgw), "Songti SC", serif;
+    letter-spacing: -0.02em;
+  }
+  .lf-pv-headline {
+    display: -webkit-box; margin: 0.28rem 0 0; overflow: hidden; color: #f2dfad;
+    font-size: 0.52rem; line-height: 1.35; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  }
+  .lf-pv-note {
+    position: absolute; top: 4.35rem; left: 12.5rem; width: 7.5rem; margin: 0;
+    padding-left: 0.65rem; border-left: 1px solid var(--lf-path-soft);
+    color: var(--lf-muted); font-size: 0.51rem; line-height: 1.55;
+  }
+  .lf-pv-post { position: absolute; top: 9.35rem; left: 2.1rem; width: 6.7rem; height: 2.2rem; }
+  .lf-pv-post-board {
+    position: absolute; top: 0; left: 0; display: grid; place-items: center;
+    width: 5.95rem; min-height: 1.55rem; padding: 0.2rem 0.4rem;
+    border: 1px solid rgb(80 58 43 / 0.4); color: #fff2d2; text-align: center;
+    background: linear-gradient(110deg, #856348, var(--lf-bark));
+    font: 0.58rem/1.25 var(--font-fraunces), var(--font-lxgw), "Songti SC", serif;
+    transform: rotate(-1.7deg);
+  }
+  .lf-pv-post-stem {
+    position: absolute; top: 1.5rem; left: 1.1rem; width: 0.25rem; height: 2.55rem;
+    background: var(--lf-bark);
+  }
+  .lf-pv-ring {
+    position: absolute; top: 8.4rem; left: 10.35rem; display: grid; justify-items: center;
+    gap: 0.1rem; width: 4.4rem; color: var(--lf-muted); font-size: 0.46rem; text-align: center;
+  }
+  .lf-pv-ring svg { width: 3.25rem; height: 3.25rem; }
+  .lf-pv-ring-bark { fill: #e8d8b5; stroke: var(--lf-bark); stroke-width: 1.1; }
+  .lf-pv-ring ellipse {
+    fill: none; stroke: var(--lf-bark); stroke-width: 1.2;
+  }
+  .lf-pv-ring ellipse:nth-child(2) { stroke-width: 1.6; stroke-dasharray: 1 2; }
+  .lf-pv-ring circle { fill: var(--lf-ochre); stroke: var(--lf-ochre-ink); stroke-width: 0.8; }
+  .lf-pv-cottage {
+    position: absolute; right: 0.8rem; bottom: 1.55rem; display: grid; justify-items: center;
+    width: 8.3rem; color: var(--lf-muted); font-size: 0.46rem;
+  }
+  .lf-pv-cottage svg { width: 7.2rem; height: auto; }
+  .lf-pv-ground { fill: rgb(140 169 164 / 0.28); }
+  .lf-pv-wall { fill: var(--lf-paper-light); stroke: var(--lf-bark-deep); stroke-width: 1.2; }
+  .lf-pv-roof { fill: var(--lf-bark); stroke: var(--lf-bark-deep); stroke-width: 1.2; }
+  .lf-pv-door { fill: var(--lf-moss-deep); }
+  .lf-pv-window { fill: var(--lf-highlight); stroke: var(--lf-bark-deep); stroke-width: 0.9; }
+  .lf-pv-tree, .lf-pv-grass {
+    fill: none; stroke: var(--lf-moss); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.1;
+  }
+  .lf-pv-footer {
+    position: absolute; right: 0.9rem; bottom: 0.52rem; left: 0.9rem; margin: 0;
+    padding-top: 0.34rem; border-top: 1px solid var(--lf-line); color: var(--lf-muted);
+    font-size: 0.43rem; letter-spacing: 0.08em; text-align: right; text-transform: uppercase;
+  }
+  @media (max-width: 560px) {
+    .lf-pv-sign { left: 0.85rem; width: 9.55rem; }
+    .lf-pv-note { top: 4.15rem; left: 11.7rem; width: 6rem; }
+    .lf-pv-post { left: 1.3rem; }
+    .lf-pv-ring { left: 8.6rem; }
+  }
+</style>

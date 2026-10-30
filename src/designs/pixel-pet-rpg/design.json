@@ -1,0 +1,9 @@
+{
+  "displayName": "Pixel Pet RPG",
+  "description": "像素宠物小镇：旅人 HUD、可探索地图、地点面板、物品栏与足迹日志共同组织个人资料。",
+  "enabled": true,
+  "renderMode": "styled",
+  "accent": "#f4c75b",
+  "source": { "type": "self-produced" },
+  "generatedBy": "impeccable · 2026-10-29（六套可爱风独立设计·像素宠物小镇）"
+}

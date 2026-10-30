@@ -1,0 +1,481 @@
+---
+/**
+ * pixel-pet-rpg — an explorable pixel-pet town.
+ *
+ * The map is navigation, not decoration: every label is a real in-page anchor
+ * to a server-rendered place panel. script.ts may later collapse the panel list
+ * to the active station, but the HTML below is already a complete document.
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages, type PixelPetMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('pixel-pet-rpg', Astro.url.pathname);
+const t: PixelPetMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile } = view;
+
+const hasProjects = Boolean(profile.projects?.length);
+const hasExperience = Boolean(profile.experience?.length);
+const hasSkills = Boolean(profile.skills?.length);
+const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
+const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const shortUrl = (url: string) =>
+  url.replace(/^https?:\/\//, '').replace(/^mailto:/, '').replace(/\/$/, '');
+
+const stationDefinitions = [
+  { id: 'identity', label: t.identityTitle, icon: 'hall', available: true },
+  { id: 'links', label: t.linksTitle, icon: 'shop', available: true },
+  { id: 'projects', label: t.projectsTitle, icon: 'flag', available: hasProjects },
+  { id: 'experience', label: t.experienceTitle, icon: 'board', available: hasExperience },
+  { id: 'skills', label: t.skillsTitle, icon: 'rack', available: hasSkills },
+  { id: 'contact', label: t.contactTitle, icon: 'post', available: hasContact },
+];
+const stations = stationDefinitions.filter((station) => station.available);
+const stationNo = (id: string) => {
+  const index = stations.findIndex((station) => station.id === id);
+  return index >= 0 ? pad(index) : '';
+};
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-silkscreen" />
+    <Font cssVariable="--font-handjet" />
+    <Font cssVariable="--font-ark-pixel" />
+  </head>
+  <body
+    class="pxt"
+    data-pxt-root
+    data-pxt-live-template={t.liveTemplate}
+  >
+    <a class="pxt-skip" href="#pxt-main">{t.skipLink}</a>
+
+    <div class="pxt-frame">
+      <header
+        class={`pxt-hud${profile.location ? '' : ' pxt-hud--no-location'}`}
+        aria-label={t.hudLabel}
+      >
+        <div class="pxt-brand">
+          <span class="pxt-brand-mark" aria-hidden="true">
+            <i></i><i></i><i></i><i></i>
+          </span>
+          <span class="pxt-brand-name">{t.gameTitle}</span>
+        </div>
+
+        <div class="pxt-player-heading">
+          <span class="pxt-player-label">{t.playerLabel}</span>
+          <h1 class="pxt-name" id="pxt-title">{profile.name}</h1>
+        </div>
+
+        {profile.location && (
+          <p class="pxt-hud-location">
+            <span class="pxt-pin-mark" aria-hidden="true"></span>
+            <span class="pxt-location-label">{t.locationLabel}</span>
+            <span class="pxt-location-value">{profile.location}</span>
+          </p>
+        )}
+
+        <span class="pxt-hud-checkers" aria-hidden="true"></span>
+      </header>
+
+      <main id="pxt-main" class="pxt-main" aria-label={t.pageLabel}>
+        <div class="pxt-workbench">
+          <section class="pxt-map-section" aria-labelledby="pxt-map-title">
+            <div class="pxt-map-heading">
+              <h2 id="pxt-map-title" class="pxt-map-title">{t.mapTitle}</h2>
+              <p class="pxt-map-hint">{t.mapHint}</p>
+            </div>
+
+            <div class="pxt-town">
+              <svg
+                class="pxt-terrain"
+                viewBox="0 0 960 600"
+                preserveAspectRatio="xMidYMid slice"
+                aria-hidden="true"
+                focusable="false"
+                shape-rendering="crispEdges"
+              >
+                <rect class="pxt-sky" width="960" height="226"></rect>
+                <rect class="pxt-sky-low" y="226" width="960" height="78"></rect>
+                <rect class="pxt-sun" x="824" y="44" width="64" height="64"></rect>
+                <rect class="pxt-sun-core" x="840" y="60" width="32" height="32"></rect>
+
+                <g class="pxt-cloud" transform="translate(82 62)">
+                  <rect x="0" y="24" width="112" height="24"></rect>
+                  <rect x="24" y="8" width="64" height="16"></rect>
+                  <rect x="16" y="48" width="88" height="8"></rect>
+                </g>
+                <g class="pxt-cloud pxt-cloud--two" transform="translate(510 42)">
+                  <rect x="0" y="24" width="90" height="20"></rect>
+                  <rect x="18" y="10" width="48" height="14"></rect>
+                  <rect x="72" y="18" width="34" height="26"></rect>
+                </g>
+
+                <path
+                  class="pxt-hill-back"
+                  d="M0 286V258h72v-16h64v-18h80v18h72v22h72v-18h88v-20h72v20h64v18h80v-14h88v18h88v20h80v-18h48v46z"
+                ></path>
+                <path
+                  class="pxt-ground"
+                  d="M0 286h960v314H0z"
+                ></path>
+                <path
+                  class="pxt-ground-shade"
+                  d="M0 408h48v-24h64v-18h72v16h80v-22h80v18h72v-30h96v28h80v-18h96v20h80v-16h112v20h100v38h-48v28h-80v-18h-72v24h-88v-18h-80v22h-80v-20h-96v26h-80v-18H320v22h-88v-24H112v24H0z"
+                ></path>
+                <path
+                  class="pxt-road"
+                  d="M402 600h156v-52h-24v-52h-24v-48h24v-50h-28v-48h-56v48h-30v52h24v48h-24v52h-18z"
+                ></path>
+                <path
+                  class="pxt-road-edge"
+                  d="M428 600v-54h18v-48h-24v-58h28v-46h40v46h28v58h-24v48h18v54z"
+                ></path>
+
+                <g class="pxt-pond">
+                  <path d="M32 486h32v-20h72v-16h72v18h32v82H92v-18H48v-20H32z"></path>
+                  <path class="pxt-pond-hi" d="M64 488h48v-8h64v10H64z"></path>
+                  <rect class="pxt-pond-hi" x="112" y="506" width="54" height="8"></rect>
+                </g>
+
+                <g class="pxt-town-hall" transform="translate(390 176)">
+                  <rect class="pxt-building-shadow" x="12" y="42" width="170" height="106"></rect>
+                  <rect class="pxt-building" x="0" y="32" width="170" height="112"></rect>
+                  <path class="pxt-roof" d="M0 32 26 4h118l26 28z"></path>
+                  <rect class="pxt-window" x="20" y="54" width="28" height="24"></rect>
+                  <rect class="pxt-window" x="122" y="54" width="28" height="24"></rect>
+                  <rect class="pxt-door" x="68" y="82" width="34" height="62"></rect>
+                  <rect class="pxt-door-hi" x="76" y="90" width="18" height="46"></rect>
+                  <rect class="pxt-flag-pole" x="82" y="-22" width="6" height="30"></rect>
+                  <path class="pxt-roof-flag" d="M88-20h38v18H88z"></path>
+                </g>
+
+                <g class="pxt-shop" transform="translate(72 276)">
+                  <rect class="pxt-building-shadow" x="10" y="38" width="178" height="116"></rect>
+                  <rect class="pxt-building" x="0" y="28" width="178" height="124"></rect>
+                  <rect class="pxt-shop-sign" x="22" y="44" width="134" height="28"></rect>
+                  <path class="pxt-awning" d="M0 28 18 2h24l12 26h22L88 2h24l12 26h22L158 2h20v26z"></path>
+                  <rect class="pxt-shop-window" x="24" y="88" width="54" height="40"></rect>
+                  <rect class="pxt-shop-door" x="108" y="94" width="42" height="58"></rect>
+                  <rect class="pxt-shop-knob" x="118" y="122" width="6" height="6"></rect>
+                </g>
+
+                <g class="pxt-project-hill" transform="translate(704 242)">
+                  <path class="pxt-project-ground" d="M0 92h48V72h48V46h56V18h72v28h48v26h40v20h32v84H0z"></path>
+                  <rect class="pxt-flag-pole" x="42" y="28" width="6" height="74"></rect>
+                  <path class="pxt-roof-flag" d="M48 30h48v28H48z"></path>
+                  <rect class="pxt-flag-pole" x="104" y="6" width="6" height="96"></rect>
+                  <path class="pxt-coral-flag" d="M110 8h58v30h-58z"></path>
+                  <rect class="pxt-flag-pole" x="182" y="42" width="6" height="60"></rect>
+                  <path class="pxt-mint-flag" d="M188 44h42v24h-42z"></path>
+                </g>
+
+                <g class="pxt-quest-board" transform="translate(92 456)">
+                  <rect class="pxt-building-shadow" x="10" y="10" width="138" height="94"></rect>
+                  <rect class="pxt-quest-frame" x="0" y="0" width="138" height="94"></rect>
+                  <rect class="pxt-quest-paper" x="12" y="12" width="114" height="70"></rect>
+                  <rect class="pxt-quest-line" x="24" y="26" width="58" height="8"></rect>
+                  <rect class="pxt-quest-line" x="24" y="44" width="84" height="8"></rect>
+                  <rect class="pxt-quest-line" x="24" y="62" width="66" height="8"></rect>
+                  <rect class="pxt-quest-post" x="18" y="94" width="12" height="34"></rect>
+                  <rect class="pxt-quest-post" x="108" y="94" width="12" height="34"></rect>
+                </g>
+
+                <g class="pxt-workshop" transform="translate(692 420)">
+                  <rect class="pxt-building-shadow" x="10" y="26" width="164" height="96"></rect>
+                  <rect class="pxt-building" x="0" y="18" width="164" height="104"></rect>
+                  <path class="pxt-roof" d="M0 18 22 0h120l22 18z"></path>
+                  <rect class="pxt-workshop-window" x="22" y="42" width="46" height="34"></rect>
+                  <rect class="pxt-shop-door" x="94" y="42" width="48" height="80"></rect>
+                  <rect class="pxt-workshop-tool" x="18" y="92" width="58" height="8"></rect>
+                  <rect class="pxt-workshop-tool" x="34" y="82" width="8" height="28"></rect>
+                </g>
+
+                <g class="pxt-postbox" transform="translate(436 492)">
+                  <rect class="pxt-building-shadow" x="10" y="12" width="76" height="86"></rect>
+                  <rect class="pxt-postbox-body" x="0" y="0" width="76" height="86"></rect>
+                  <path class="pxt-postbox-cap" d="M0 0 20-14h56v14z"></path>
+                  <rect class="pxt-postbox-slot" x="18" y="18" width="40" height="10"></rect>
+                  <rect class="pxt-postbox-door" x="18" y="40" width="40" height="34"></rect>
+                  <rect class="pxt-postbox-post" x="30" y="86" width="14" height="28"></rect>
+                </g>
+
+                <g class="pxt-tree" transform="translate(286 328)">
+                  <rect class="pxt-tree-trunk" x="18" y="52" width="16" height="42"></rect>
+                  <rect class="pxt-tree-crown" x="10" y="18" width="32" height="38"></rect>
+                  <rect class="pxt-tree-crown" x="0" y="30" width="54" height="22"></rect>
+                </g>
+                <g class="pxt-tree" transform="translate(612 302)">
+                  <rect class="pxt-tree-trunk" x="18" y="52" width="16" height="42"></rect>
+                  <rect class="pxt-tree-crown" x="10" y="18" width="32" height="38"></rect>
+                  <rect class="pxt-tree-crown" x="0" y="30" width="54" height="22"></rect>
+                </g>
+                <g class="pxt-tree" transform="translate(876 336)">
+                  <rect class="pxt-tree-trunk" x="18" y="52" width="16" height="42"></rect>
+                  <rect class="pxt-tree-crown" x="10" y="18" width="32" height="38"></rect>
+                  <rect class="pxt-tree-crown" x="0" y="30" width="54" height="22"></rect>
+                </g>
+              </svg>
+
+              <span class="pxt-pet pxt-pet--mint" aria-hidden="true"><i></i></span>
+              <span class="pxt-pet pxt-pet--gold" aria-hidden="true"><i></i></span>
+
+              <nav class="pxt-map-nav" aria-label={t.mapNavLabel}>
+                <ul class="pxt-map-nodes">
+                  {stations.map((station, index) => (
+                    <li>
+                      <a
+                        class={`pxt-node pxt-node--${station.id}`}
+                        href={`#pxt-${station.id}`}
+                        aria-controls={`pxt-${station.id}`}
+                        data-pxt-place-link
+                        data-pxt-label={station.label}
+                      >
+                        <span class="pxt-node-index" aria-hidden="true">{pad(index)}</span>
+                        <span
+                          class="pxt-node-pin"
+                          data-pxt-icon={station.icon}
+                          aria-hidden="true"
+                        ></span>
+                        <span class="pxt-node-label">{station.label}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <span class="pxt-player" data-pxt-player aria-hidden="true" hidden>
+                <i></i>
+              </span>
+            </div>
+          </section>
+
+          <section class="pxt-side" aria-label={t.panelLabel}>
+            <div class="pxt-readout">
+              <span class="pxt-readout-label">{t.currentStopLabel}</span>
+              <p
+                class="pxt-readout-value"
+                data-pxt-now
+                data-pxt-hint={t.mapHint}
+                aria-live="polite"
+                aria-atomic="true"
+              >{t.mapHint}</p>
+            </div>
+
+            <div class="pxt-panels">
+              <section
+                class="pxt-place pxt-place--identity"
+                id="pxt-identity"
+                data-pxt-panel="pxt-identity"
+                aria-labelledby="pxt-identity-title"
+              >
+                <div class="pxt-panel-head">
+                  <span class="pxt-panel-index" aria-hidden="true">{stationNo('identity')}</span>
+                  <h2 id="pxt-identity-title">{t.identityTitle}</h2>
+                </div>
+                <div
+                  class={`pxt-identity-body${profile.avatar ? '' : ' pxt-identity-body--no-avatar'}`}
+                >
+                  {profile.avatar && (
+                    <figure class="pxt-avatar-frame">
+                      <img
+                        class="pxt-avatar"
+                        src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                        alt={avatarAlt}
+                        width="128"
+                        height="128"
+                        loading="eager"
+                      />
+                    </figure>
+                  )}
+                  <div class="pxt-identity-copy">
+                    <p class="pxt-headline">{profile.headline}</p>
+                    <p class="pxt-bio">{profile.bio}</p>
+                    {profile.location && (
+                      <p class="pxt-field-line">
+                        <span class="pxt-field-label">{t.locationLabel}</span>
+                        <span class="pxt-field-value">{profile.location}</span>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </section>
+
+              <section
+                class="pxt-place pxt-place--links"
+                id="pxt-links"
+                data-pxt-panel="pxt-links"
+                aria-labelledby="pxt-links-title"
+              >
+                <div class="pxt-panel-head">
+                  <span class="pxt-panel-index" aria-hidden="true">{stationNo('links')}</span>
+                  <h2 id="pxt-links-title">{t.linksTitle}</h2>
+                </div>
+                {profile.links.length > 0 ? (
+                  <ul class="pxt-inventory">
+                    {profile.links.map((link) => (
+                      <li>
+                        <a
+                          class="pxt-item-link"
+                          href={link.url}
+                          data-pxt-link-kind={link.icon}
+                        >
+                          <span class="pxt-item-icon" aria-hidden="true"></span>
+                          <span class="pxt-item-copy">
+                            <span class="pxt-item-label">{link.label}</span>
+                            <span class="pxt-item-host" aria-hidden="true">{shortUrl(link.url)}</span>
+                          </span>
+                          <span class="pxt-item-arrow" aria-hidden="true"></span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="pxt-empty">{t.emptyLinks}</p>
+                )}
+              </section>
+
+              {hasProjects && (
+                <section
+                  class="pxt-place pxt-place--projects"
+                  id="pxt-projects"
+                  data-pxt-panel="pxt-projects"
+                  aria-labelledby="pxt-projects-title"
+                >
+                  <div class="pxt-panel-head">
+                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('projects')}</span>
+                    <h2 id="pxt-projects-title">{t.projectsTitle}</h2>
+                  </div>
+                  <ul class="pxt-destinations">
+                    {profile.projects?.map((project) => (
+                      <li>
+                        <span class="pxt-destination-pin" aria-hidden="true"></span>
+                        <div class="pxt-destination-copy">
+                          <h3 class="pxt-destination-title">
+                            {project.url ? (
+                              <a
+                                href={project.url}
+                              >{project.title}</a>
+                            ) : (
+                              project.title
+                            )}
+                          </h3>
+                          {project.url && (
+                            <span class="pxt-destination-host" aria-hidden="true">
+                              {shortUrl(project.url)}
+                            </span>
+                          )}
+                          {project.description && (
+                            <p class="pxt-destination-notes">{project.description}</p>
+                          )}
+                          {project.tags && project.tags.length > 0 && (
+                            <ul class="pxt-tags" aria-label={t.tagsLabel}>
+                              {project.tags.map((tag) => <li>{tag}</li>)}
+                            </ul>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {hasExperience && (
+                <section
+                  class="pxt-place pxt-place--experience"
+                  id="pxt-experience"
+                  data-pxt-panel="pxt-experience"
+                  aria-labelledby="pxt-experience-title"
+                >
+                  <div class="pxt-panel-head">
+                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('experience')}</span>
+                    <h2 id="pxt-experience-title">{t.experienceTitle}</h2>
+                  </div>
+                  <ol class="pxt-log">
+                    {profile.experience?.map((item) => (
+                      <li>
+                        <span class="pxt-log-dot" aria-hidden="true"></span>
+                        <div class="pxt-log-copy">
+                          <h3 class="pxt-log-org">{item.org}</h3>
+                          {item.role && <p class="pxt-log-role">{item.role}</p>}
+                          {item.period && (
+                            <p class="pxt-log-period">
+                              <span class="pxt-field-label">{t.periodLabel}</span>
+                              <span class="pxt-log-time">{item.period}</span>
+                            </p>
+                          )}
+                          {item.description && (
+                            <p class="pxt-log-notes">{item.description}</p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+
+              {hasSkills && (
+                <section
+                  class="pxt-place pxt-place--skills"
+                  id="pxt-skills"
+                  data-pxt-panel="pxt-skills"
+                  aria-labelledby="pxt-skills-title"
+                >
+                  <div class="pxt-panel-head">
+                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('skills')}</span>
+                    <h2 id="pxt-skills-title">{t.skillsTitle}</h2>
+                  </div>
+                  <ul class="pxt-tools">
+                    {profile.skills?.map((skill) => (
+                      <li>
+                        <span class="pxt-tool-icon" aria-hidden="true"></span>
+                        <span>{skill}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {hasContact && (
+                <section
+                  class="pxt-place pxt-place--contact"
+                  id="pxt-contact"
+                  data-pxt-panel="pxt-contact"
+                  aria-labelledby="pxt-contact-title"
+                >
+                  <div class="pxt-panel-head">
+                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('contact')}</span>
+                    <h2 id="pxt-contact-title">{t.contactTitle}</h2>
+                  </div>
+                  <address class="pxt-postbox-copy">
+                    {profile.contact?.note && (
+                      <p class="pxt-post-note">{profile.contact.note}</p>
+                    )}
+                    <p class="pxt-post-line">
+                      <span class="pxt-field-label">{t.emailLabel}</span>
+                      {profile.contact?.email ? (
+                        <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+                      ) : (
+                        <span>{t.noEmail}</span>
+                      )}
+                    </p>
+                  </address>
+                </section>
+              )}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      import './script.ts';
+    </script>
+    <ContextMenu config={view.contextMenu} />
+  </body>
+</html>

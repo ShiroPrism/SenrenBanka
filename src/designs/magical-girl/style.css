@@ -1,0 +1,1768 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
+
+@theme inline {
+  --font-mg-display: var(--font-fraunces);
+  --font-mg-writing: var(--font-lxgw);
+  --font-mg-text: var(--font-inter);
+}
+
+/* ==========================================================================
+   magical-girl
+   A stage dossier rather than a stack of cards: one arched identity plate,
+   one ribbon directory, a star-trail chapter column and a transformation rail.
+   ========================================================================== */
+
+html:has(.mg) {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  /* html is an ancestor of the namespaced token scope, so these use literals. */
+  scrollbar-color: #6d173f #f5e9de;
+  background: #fbf6ee;
+}
+
+.mg {
+  --mg-shadow: 0 1.2rem 3.2rem rgb(43 16 35 / 0.15);
+  --mg-shadow-soft: 0 0.55rem 1.5rem rgb(43 16 35 / 0.11);
+  --mg-radius-stage: clamp(1.5rem, 4vw, 3rem);
+  --mg-radius-soft: 0.9rem;
+  --mg-page-gutter: clamp(0.75rem, 3vw, 2rem);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  background-color: var(--mg-ivory);
+  background-image:
+    radial-gradient(circle at 13% 9%, rgb(242 201 214 / 0.42) 0 8.5rem, transparent 8.6rem),
+    radial-gradient(circle at 92% 28%, rgb(226 214 239 / 0.58) 0 10rem, transparent 10.1rem),
+    radial-gradient(circle at 50% 100%, rgb(244 213 141 / 0.24) 0 12rem, transparent 12.1rem);
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-text), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.mg *,
+.mg *::before,
+.mg *::after {
+  box-sizing: border-box;
+}
+
+.mg ::selection {
+  background: var(--mg-berry);
+  color: var(--mg-ivory-strong);
+}
+
+.mg a {
+  color: inherit;
+  text-decoration-color: var(--mg-rose);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    text-decoration-color 160ms ease;
+}
+
+.mg a:focus-visible {
+  outline: 3px solid var(--mg-ink);
+  outline-offset: 4px;
+}
+
+.mg-masthead a:focus-visible,
+.mg-relics-band a:focus-visible,
+.mg-panel--dark a:focus-visible,
+.mg-contact a:focus-visible,
+.mg-footer a:focus-visible {
+  outline-color: var(--mg-gold-light);
+}
+
+.mg-skip-link {
+  position: fixed;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--mg-gold-light);
+  border-radius: 999px;
+  background: var(--mg-berry-deep);
+  color: var(--mg-ivory-strong);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 1.5rem));
+}
+
+.mg-skip-link:focus-visible {
+  outline-color: var(--mg-gold-light);
+  transform: translateY(0);
+}
+
+/* ----- masthead: the narrow ribbon that names the archive ----- */
+
+.mg-masthead {
+  position: relative;
+  border-bottom: 0.3rem solid var(--mg-gold);
+  background-color: var(--mg-berry-deep);
+  background-image:
+    radial-gradient(circle, rgb(244 213 141 / 0.19) 0 1px, transparent 1.3px),
+    linear-gradient(90deg, transparent 0 72%, rgb(109 23 63 / 0.42) 72% 100%);
+  background-position:
+    right 1rem top 0.75rem,
+    0 0;
+  background-size:
+    0.75rem 0.75rem,
+    100% 100%;
+  color: var(--mg-ivory-strong);
+}
+
+.mg-masthead-inner {
+  display: flex;
+  width: min(78rem, calc(100% - (2 * var(--mg-page-gutter))));
+  min-height: 4.5rem;
+  margin-inline: auto;
+  padding-block: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+.mg-crest {
+  display: inline-flex;
+  min-width: 0;
+  margin: 0;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--mg-gold-light);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(0.92rem, 1.8vw, 1.15rem);
+  font-style: italic;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+}
+
+.mg-crest-star {
+  display: inline-block;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: none;
+  fill: currentColor;
+}
+
+.mg-index ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.12rem 0.2rem;
+  list-style: none;
+}
+
+.mg-index a {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.55rem 0.72rem;
+  border: 1px solid transparent;
+  border-radius: 0.2rem;
+  align-items: center;
+  color: var(--mg-ivory);
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.065em;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+/* ----- main stage ----- */
+
+.mg-main {
+  display: block;
+}
+
+.mg-hero {
+  position: relative;
+  isolation: isolate;
+  width: min(78rem, calc(100% - (2 * var(--mg-page-gutter))));
+  margin: clamp(1rem, 3.4vw, 2.75rem) auto 0;
+  padding: clamp(1.25rem, 4.2vw, 3.5rem);
+  overflow: hidden;
+  border: 2px solid var(--mg-ink);
+  border-radius: var(--mg-radius-stage) var(--mg-radius-soft) var(--mg-radius-stage)
+    var(--mg-radius-soft);
+  background: var(--mg-ivory-strong);
+  box-shadow: var(--mg-shadow);
+}
+
+.mg-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0.65rem;
+  z-index: 1;
+  border: 1px solid var(--mg-line);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.mg-hero::after {
+  content: "";
+  position: absolute;
+  inset-block-start: -2px;
+  inset-inline-end: -2px;
+  z-index: 3;
+  width: 3.7rem;
+  height: 3.7rem;
+  border-top: 3.7rem solid var(--mg-paper-deep);
+  border-left: 3.7rem solid transparent;
+  filter: drop-shadow(-0.2rem 0.25rem 0.2rem rgb(43 16 35 / 0.11));
+  pointer-events: none;
+}
+
+.mg-hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.mg-ribbon-art,
+.mg-trail-art,
+.mg-halftone-art {
+  position: absolute;
+  display: block;
+}
+
+.mg-ribbon-art {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mg-art-ribbon {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.mg-art-ribbon--berry {
+  fill: var(--mg-rose-soft);
+  opacity: 0.6;
+}
+
+.mg-art-ribbon--rose {
+  fill: var(--mg-gold-light);
+  opacity: 0.52;
+}
+
+.mg-art-ribbon-line {
+  fill: none;
+  stroke: var(--mg-berry);
+  stroke-width: 1.5;
+  opacity: 0.42;
+  vector-effect: non-scaling-stroke;
+}
+
+.mg-trail-art {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mg-star-trail {
+  fill: none;
+  stroke: var(--mg-berry);
+  stroke-width: 1.6;
+  stroke-dasharray: 0.018 0.028;
+  stroke-linecap: round;
+  opacity: 0.57;
+  vector-effect: non-scaling-stroke;
+}
+
+.mg-star-trail--fine {
+  stroke: var(--mg-rose);
+  stroke-width: 1;
+  opacity: 0.39;
+}
+
+.mg-trail-star {
+  fill: var(--mg-gold-ink);
+  opacity: 0.58;
+}
+
+.mg-halftone-art {
+  inset-block-start: 4.3rem;
+  inset-inline-end: 3.8rem;
+  width: clamp(7rem, 16vw, 13.5rem);
+  height: clamp(4.5rem, 10vw, 8.5rem);
+  color: var(--mg-berry);
+  opacity: 0.15;
+  transform: rotate(-7deg);
+}
+
+.mg-halftone-art circle {
+  fill: currentColor;
+}
+
+.mg-dossier-stamp {
+  position: absolute;
+  inset-block-start: clamp(4.8rem, 7vw, 6rem);
+  inset-inline-end: clamp(1.25rem, 3vw, 2.5rem);
+  z-index: 2;
+  margin: 0;
+  padding: 0.55rem 0.32rem;
+  border-block: 1px solid var(--mg-rose);
+  color: var(--mg-berry);
+  font-size: 0.67rem;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+}
+
+.mg-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-areas:
+    "portrait identity"
+    "portrait bio";
+  grid-template-columns: minmax(16rem, 0.82fr) minmax(0, 1.55fr);
+  column-gap: clamp(2.2rem, 5vw, 5rem);
+  row-gap: clamp(1.5rem, 3vw, 2.8rem);
+  min-height: 35rem;
+  align-items: center;
+}
+
+.mg-identity {
+  grid-area: identity;
+  min-width: 0;
+  align-self: end;
+  padding-block-start: clamp(2rem, 5vw, 4rem);
+}
+
+.mg-name {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(3.2rem, 7.1vw, 5.8rem);
+  font-style: italic;
+  font-variation-settings:
+    "SOFT" 36,
+    "WONK" 1,
+    "opsz" 96;
+  font-weight: 650;
+  letter-spacing: -0.028em;
+  line-height: 0.9;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.mg-headline {
+  max-width: 36rem;
+  margin: clamp(1.1rem, 2.4vw, 1.7rem) 0 0;
+  color: var(--mg-berry);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(1.16rem, 2.1vw, 1.55rem);
+  font-style: italic;
+  font-weight: 540;
+  letter-spacing: 0.002em;
+  line-height: 1.42;
+  text-wrap: pretty;
+}
+
+.mg-portrait-column {
+  position: relative;
+  grid-area: portrait;
+  display: flex;
+  min-width: 0;
+  padding: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: center;
+  justify-content: center;
+}
+
+.mg-medallion {
+  position: relative;
+  display: grid;
+  width: min(100%, 21rem);
+  aspect-ratio: 1;
+  place-items: center;
+  transform-origin: center;
+}
+
+.mg-medallion::before,
+.mg-medallion::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.mg-medallion::before {
+  inset: -0.9rem;
+  border: 1px solid var(--mg-gold);
+}
+
+.mg-medallion::after {
+  inset: -1.45rem;
+  border: 1px dashed var(--mg-line);
+}
+
+.mg-magic-circle {
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  display: block;
+  width: 124%;
+  height: 124%;
+  overflow: visible;
+  color: var(--mg-berry);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.mg-magic-orbit {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.mg-magic-circle circle,
+.mg-magic-circle path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.mg-magic-circle .mg-magic-stars {
+  fill: var(--mg-gold);
+  stroke: none;
+}
+
+.mg-magic-circle .mg-magic-center {
+  fill: var(--mg-rose-soft);
+  stroke: var(--mg-gold);
+  stroke-width: 1.5;
+  opacity: 0.25;
+}
+
+.mg-portrait-frame {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 84%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 0.55rem solid var(--mg-berry);
+  border-radius: 50%;
+  background: var(--mg-paper);
+  box-shadow:
+    inset 0 0 0 0.22rem var(--mg-gold-light),
+    0 0 0 0.24rem var(--mg-ivory-strong),
+    0 0 0 0.34rem var(--mg-berry-deep);
+  place-items: center;
+}
+
+.mg-avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mg-silhouette {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 33%, var(--mg-rose-soft) 0 17%, transparent 17.5%),
+    radial-gradient(circle at 50% 50%, var(--mg-gold-light) 0 44%, transparent 44.5%),
+    var(--mg-paper-deep);
+  color: var(--mg-berry-deep);
+  place-items: center;
+}
+
+.mg-silhouette svg {
+  position: absolute;
+  inset: 8% 4% 2%;
+  display: block;
+  width: 92%;
+  height: 90%;
+}
+
+.mg-silhouette-shoulders {
+  fill: currentColor;
+}
+
+.mg-silhouette-crown {
+  fill: var(--mg-gold);
+  stroke: var(--mg-berry-deep);
+  stroke-width: 2;
+}
+
+.mg-silhouette-star {
+  fill: var(--mg-ivory-strong);
+}
+
+.mg-initial {
+  position: absolute;
+  inset-block-end: 12%;
+  inset-inline-start: 50%;
+  color: var(--mg-gold-light);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 1.8rem;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 0 var(--mg-berry-deep);
+  transform: translateX(-50%);
+}
+
+.mg-medallion-jewel {
+  position: absolute;
+  inset-block-end: -0.15rem;
+  inset-inline-start: 50%;
+  z-index: 4;
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  border: 0.2rem solid var(--mg-berry-deep);
+  border-radius: 50%;
+  background: var(--mg-gold-light);
+  box-shadow: 0 0 0 0.18rem var(--mg-ivory-strong);
+  color: var(--mg-berry);
+  place-items: center;
+  transform: translateX(-50%);
+}
+
+.mg-medallion-jewel svg {
+  display: block;
+  width: 1.35rem;
+  height: 1.35rem;
+  fill: currentColor;
+}
+
+.mg-ribbon-tail {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: 43%;
+  height: 1.25rem;
+  background: var(--mg-berry);
+  border-block: 1px solid var(--mg-gold);
+  pointer-events: none;
+}
+
+.mg-ribbon-tail--left {
+  inset-block-start: calc(50% + 9.5rem);
+  inset-inline-start: 2%;
+  transform: rotate(8deg);
+  clip-path: polygon(0 0, 100% 0, 91% 50%, 100% 100%, 0 100%);
+}
+
+.mg-ribbon-tail--right {
+  inset-block-start: calc(50% + 9.5rem);
+  inset-inline-end: 2%;
+  background: var(--mg-rose);
+  transform: rotate(-8deg);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 9% 50%);
+}
+
+.mg-bio-column {
+  position: relative;
+  grid-area: bio;
+  min-width: 0;
+  max-width: 56rem;
+  align-self: start;
+}
+
+.mg-bio-star {
+  position: absolute;
+  inset-block-start: -0.45rem;
+  inset-inline-start: -2.75rem;
+  display: block;
+  width: 1.8rem;
+  height: 1.8rem;
+  color: var(--mg-gold-ink);
+}
+
+.mg-bio-star svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.mg-bio {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-text), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
+  line-height: 1.82;
+  text-wrap: pretty;
+}
+
+.mg-location {
+  display: flex;
+  margin: clamp(1.15rem, 2.2vw, 1.6rem) 0 0;
+  padding-block-start: 0.95rem;
+  border-top: 1px solid var(--mg-line);
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  color: var(--mg-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.mg-location svg {
+  display: inline-block;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  fill: var(--mg-rose);
+}
+
+.mg-location-label {
+  color: var(--mg-berry);
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.mg-location-value {
+  overflow-wrap: anywhere;
+}
+
+/* ----- enchanted keepsakes: one ribbon directory, not a card wall ----- */
+
+.mg-relics-band {
+  position: relative;
+  margin-block-start: clamp(1.2rem, 3vw, 2.5rem);
+  overflow: hidden;
+  border-block: 2px solid var(--mg-ink);
+  background-color: var(--mg-berry-deep);
+  background-image:
+    radial-gradient(circle, rgb(244 213 141 / 0.2) 0 1px, transparent 1.35px),
+    linear-gradient(112deg, transparent 0 63%, rgb(167 45 90 / 0.28) 63% 100%);
+  background-position:
+    right 2rem top 1.25rem,
+    0 0;
+  background-size:
+    0.85rem 0.85rem,
+    100% 100%;
+  color: var(--mg-ivory);
+}
+
+.mg-relics-band::before,
+.mg-relics-band::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: clamp(7rem, 18vw, 16rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--mg-gold);
+  border-radius: 50%;
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.mg-relics-band::before {
+  inset-block-start: -8rem;
+  inset-inline-start: -4rem;
+}
+
+.mg-relics-band::after {
+  inset-block-end: -10rem;
+  inset-inline-end: 5%;
+  border-style: dashed;
+}
+
+.mg-band-inner {
+  position: relative;
+  z-index: 1;
+  width: min(78rem, calc(100% - (2 * var(--mg-page-gutter))));
+  margin-inline: auto;
+  padding-block: clamp(2rem, 5vw, 4.25rem);
+}
+
+.mg-section-heading {
+  display: flex;
+  margin-block-end: clamp(1.5rem, 3vw, 2.2rem);
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.mg-section-heading h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(2rem, 3.8vw, 3.1rem);
+  font-style: italic;
+  font-variation-settings:
+    "SOFT" 28,
+    "WONK" 1,
+    "opsz" 72;
+  font-weight: 620;
+  letter-spacing: -0.018em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.mg-section-heading--light h2 {
+  color: var(--mg-ivory-strong);
+}
+
+.mg-heading-ornament {
+  display: block;
+  width: clamp(3.5rem, 7vw, 4.5rem);
+  height: 1.75rem;
+  flex: none;
+  color: var(--mg-berry);
+}
+
+.mg-section-heading--light .mg-heading-ornament {
+  color: var(--mg-gold-light);
+}
+
+.mg-heading-ornament svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1;
+}
+
+.mg-relics {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-block: 1px solid var(--mg-line-dark);
+  list-style: none;
+}
+
+.mg-relics > li {
+  min-width: 0;
+}
+
+.mg-relics > li + li {
+  border-inline-start: 1px solid var(--mg-line-dark);
+}
+
+.mg-relic {
+  display: grid;
+  min-height: 7rem;
+  padding: 1.25rem clamp(0.8rem, 2vw, 1.35rem);
+  align-items: center;
+  column-gap: 0.9rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  color: var(--mg-ivory);
+  text-decoration: none;
+}
+
+.mg-relic-charm {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--mg-gold);
+  border-radius: 50%;
+  color: var(--mg-gold-light);
+  place-items: center;
+  transition: transform 180ms ease;
+}
+
+.mg-relic-charm svg {
+  display: block;
+  width: 2.7rem;
+  height: 2.7rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.mg-relic-charm .mg-charm-solid {
+  fill: currentColor;
+  stroke: none;
+}
+
+.mg-relic-charm .mg-charm-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+}
+
+.mg-relic-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.28rem;
+}
+
+.mg-relic-label {
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.32rem);
+  font-style: italic;
+  font-weight: 630;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.mg-relic-url {
+  color: var(--mg-muted-on-dark);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.mg-empty {
+  margin: 0;
+  padding-block: 1.4rem;
+  border-block: 1px solid var(--mg-line-dark);
+  color: var(--mg-muted-on-dark);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+/* ----- runs of chapters and transformations ----- */
+
+.mg-runway,
+.mg-keepsakes {
+  display: grid;
+  width: min(78rem, calc(100% - (2 * var(--mg-page-gutter))));
+  margin-inline: auto;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.mg-runway {
+  margin-block-start: clamp(1.5rem, 3.4vw, 3rem);
+  grid-template-columns: minmax(0, 1.5fr) minmax(19rem, 0.82fr);
+  align-items: start;
+}
+
+.mg-keepsakes {
+  margin-block-start: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: minmax(0, 1.14fr) minmax(19rem, 0.86fr);
+  align-items: stretch;
+}
+
+.mg-runway > :only-child,
+.mg-keepsakes > :only-child {
+  grid-column: 1 / -1;
+}
+
+.mg-panel {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.35rem, 3.5vw, 2.8rem);
+  overflow: hidden;
+  border: 1px solid var(--mg-ink);
+  border-radius: var(--mg-radius-stage) var(--mg-radius-soft) var(--mg-radius-stage)
+    var(--mg-radius-soft);
+  background: var(--mg-ivory-strong);
+}
+
+.mg-panel::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 1.2rem;
+  inset-inline-end: 1.2rem;
+  width: 4.7rem;
+  height: 2.8rem;
+  background-image: radial-gradient(circle, var(--mg-rose) 0 1px, transparent 1.35px);
+  background-size: 0.58rem 0.58rem;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.mg-panel--dark {
+  border-color: var(--mg-berry-deep);
+  background-color: var(--mg-berry-deep);
+  background-image:
+    radial-gradient(circle at 88% 9%, rgb(244 213 141 / 0.2) 0 1.2px, transparent 1.45px),
+    linear-gradient(168deg, transparent 0 62%, rgb(109 23 63 / 0.5) 62% 100%);
+  background-position:
+    0 0,
+    0 0;
+  background-size:
+    0.85rem 0.85rem,
+    100% 100%;
+  color: var(--mg-ivory);
+}
+
+.mg-panel--dark::after {
+  background-image: radial-gradient(circle, var(--mg-gold-light) 0 1px, transparent 1.35px);
+  opacity: 0.24;
+}
+
+.mg-projects .mg-section-heading h2 {
+  max-width: 15ch;
+}
+
+.mg-episodes {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mg-episodes::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.65rem 1.7rem;
+  inset-inline-start: 0.57rem;
+  width: 1px;
+  border-inline-start: 1px dotted var(--mg-line);
+  pointer-events: none;
+}
+
+.mg-episode {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  padding-block: clamp(1.2rem, 2.8vw, 1.9rem);
+  border-block-end: 1px solid var(--mg-line);
+  grid-template-columns: 4.4rem minmax(0, 1fr);
+  column-gap: 1rem;
+}
+
+.mg-episode:first-child {
+  padding-block-start: 0;
+}
+
+.mg-episode:last-child {
+  padding-block-end: 0;
+  border-block-end: 0;
+}
+
+.mg-episode-marker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  margin: 0;
+  padding-block-start: 0.1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.42rem;
+  color: var(--mg-berry);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+}
+
+.mg-episode-marker svg {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: currentColor;
+  filter: drop-shadow(0 0 0.28rem var(--mg-ivory-strong));
+}
+
+.mg-episode-body {
+  min-width: 0;
+}
+
+.mg-item-title {
+  max-width: 24ch;
+  margin: 0;
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: clamp(1.25rem, 2.3vw, 1.6rem);
+  font-style: italic;
+  font-weight: 610;
+  letter-spacing: -0.008em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.mg-title-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.42rem;
+  text-decoration-color: var(--mg-line);
+}
+
+.mg-title-link svg {
+  display: inline-block;
+  width: 0.92rem;
+  height: 0.92rem;
+  flex: none;
+  fill: none;
+  stroke: var(--mg-rose);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.65;
+}
+
+.mg-item-copy {
+  max-width: 70ch;
+  margin: 0.72rem 0 0;
+  color: var(--mg-muted);
+  font-size: 0.94rem;
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.mg-panel--dark .mg-item-copy {
+  color: var(--mg-muted-on-dark);
+}
+
+.mg-tags {
+  display: flex;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.mg-tags li {
+  padding: 0.24rem 0.47rem;
+  border: 1px solid var(--mg-gold);
+  border-radius: 0.2rem;
+  background: var(--mg-gold-light);
+  color: var(--mg-ink);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.mg-chronicle {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.3rem;
+  list-style: none;
+}
+
+.mg-chronicle::before {
+  content: "";
+  position: absolute;
+  inset-block: 0.4rem 0.6rem;
+  inset-inline-start: 0.15rem;
+  width: 1px;
+  background: var(--mg-gold);
+  opacity: 0.66;
+}
+
+.mg-chronicle-item {
+  position: relative;
+  padding-block: 1.25rem;
+  border-block-end: 1px solid var(--mg-line-dark);
+}
+
+.mg-chronicle-item:first-child {
+  padding-block-start: 0.1rem;
+}
+
+.mg-chronicle-item:last-child {
+  padding-block-end: 0;
+  border-block-end: 0;
+}
+
+.mg-chronicle-item::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 1.45rem;
+  inset-inline-start: -1.55rem;
+  width: 0.58rem;
+  height: 0.58rem;
+  border: 1px solid var(--mg-gold-light);
+  border-radius: 50%;
+  background: var(--mg-berry-deep);
+}
+
+.mg-chronicle-item:first-child::before {
+  inset-block-start: 0.25rem;
+}
+
+.mg-period {
+  margin: 0 0 0.35rem;
+  color: var(--mg-gold-light);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 0.96rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.mg-chronicle-title {
+  max-width: 24ch;
+  margin: 0;
+  color: var(--mg-ivory-strong);
+  font-family:
+    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: clamp(1.05rem, 1.7vw, 1.22rem);
+  font-weight: 650;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.mg-role {
+  margin: 0.32rem 0 0;
+  color: var(--mg-muted-on-dark);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ----- seals and the wax-letter close ----- */
+
+.mg-skills {
+  background-color: var(--mg-paper);
+  background-image:
+    radial-gradient(circle at 92% 5%, rgb(167 45 90 / 0.12) 0 8rem, transparent 8.1rem),
+    radial-gradient(circle, rgb(109 23 63 / 0.11) 0 1px, transparent 1.35px);
+  background-position:
+    0 0,
+    right 1rem bottom 1rem;
+  background-size:
+    100% 100%,
+    0.65rem 0.65rem;
+}
+
+.mg-seals {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.7rem, 2vw, 1.25rem);
+  list-style: none;
+}
+
+.mg-seal {
+  display: flex;
+  width: clamp(7.3rem, 11vw, 8.75rem);
+  aspect-ratio: 1;
+  padding: 1rem;
+  border: 2px solid var(--mg-berry);
+  border-radius: 50%;
+  background: var(--mg-rose-soft);
+  box-shadow:
+    inset 0 0 0 0.22rem var(--mg-ivory-strong),
+    inset 0 0 0 0.3rem var(--mg-gold);
+  color: var(--mg-berry-deep);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family:
+    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: clamp(0.72rem, 1.1vw, 0.84rem);
+  font-weight: 620;
+  letter-spacing: 0.012em;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.mg-seal:nth-child(3n + 2) {
+  background: var(--mg-lilac);
+  transform: rotate(2.2deg);
+}
+
+.mg-seal:nth-child(3n) {
+  background: var(--mg-gold-light);
+  transform: rotate(-1.8deg);
+}
+
+.mg-seal:nth-child(3n + 1) {
+  transform: rotate(-1deg);
+}
+
+.mg-seal-star {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  fill: var(--mg-berry);
+}
+
+.mg-contact {
+  position: relative;
+  min-width: 0;
+  padding: clamp(1.35rem, 3.5vw, 2.8rem);
+  overflow: hidden;
+  border: 1px solid var(--mg-berry-deep);
+  border-radius: var(--mg-radius-soft) var(--mg-radius-stage) var(--mg-radius-soft)
+    var(--mg-radius-stage);
+  background-color: var(--mg-rose);
+  background-image:
+    radial-gradient(circle, rgb(255 250 243 / 0.19) 0 1px, transparent 1.35px),
+    linear-gradient(145deg, transparent 0 72%, rgb(63 15 43 / 0.2) 72% 100%);
+  background-position:
+    left 1rem bottom 1rem,
+    0 0;
+  background-size:
+    0.7rem 0.7rem,
+    100% 100%;
+  color: var(--mg-ivory);
+}
+
+.mg-contact .mg-section-heading h2 {
+  color: var(--mg-ivory-strong);
+}
+
+.mg-contact .mg-heading-ornament {
+  color: var(--mg-gold-light);
+}
+
+.mg-letter {
+  position: relative;
+  margin-block-start: clamp(2.2rem, 4vw, 3.2rem);
+  padding: clamp(2.4rem, 4vw, 3.2rem) clamp(1.2rem, 3vw, 2rem) clamp(1.3rem, 2.4vw, 1.8rem);
+  border: 1px solid var(--mg-berry-deep);
+  border-radius: 0.22rem;
+  background-color: var(--mg-ivory-strong);
+  background-image:
+    linear-gradient(
+      to right,
+      transparent 0 49.8%,
+      color-mix(in srgb, var(--mg-line) 38%, transparent) 50%,
+      transparent 50.2%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0 49.8%,
+      color-mix(in srgb, var(--mg-line) 28%, transparent) 50%,
+      transparent 50.2%
+    );
+  color: var(--mg-ink);
+  box-shadow: var(--mg-shadow-soft);
+}
+
+.mg-letter::before,
+.mg-letter::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0.9rem;
+  width: 1px;
+  height: 1.6rem;
+  background: var(--mg-line);
+  transform: rotate(31deg);
+}
+
+.mg-letter::before {
+  inset-inline-start: 1rem;
+}
+
+.mg-letter::after {
+  inset-inline-end: 1rem;
+  transform: rotate(-31deg);
+}
+
+.mg-wax {
+  position: absolute;
+  inset-block-start: -1.95rem;
+  inset-inline-end: clamp(1rem, 3vw, 2rem);
+  display: grid;
+  width: 4.1rem;
+  height: 4.1rem;
+  border: 0.22rem solid var(--mg-gold);
+  border-radius: 50%;
+  background: var(--mg-berry-deep);
+  box-shadow: 0 0 0 0.18rem var(--mg-rose);
+  color: var(--mg-gold-light);
+  place-items: center;
+  transform: rotate(7deg);
+}
+
+.mg-wax svg {
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+}
+
+.mg-wax path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.mg-letter-note {
+  position: relative;
+  z-index: 1;
+  max-width: 34ch;
+  margin: 0;
+  color: var(--mg-ink);
+  font-family:
+    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.mg-email {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 52px;
+  margin-block-start: 1.2rem;
+  padding: 0.65rem 0.85rem;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.7rem;
+  border: 1px solid var(--mg-berry-deep);
+  border-radius: 0.2rem;
+  background: var(--mg-berry-deep);
+  color: var(--mg-ivory-strong);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.mg-email-label {
+  padding-inline-end: 0.65rem;
+  border-inline-end: 1px solid var(--mg-line-dark);
+  color: var(--mg-gold-light);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+/* ----- final curtain ----- */
+
+.mg-footer {
+  margin-block-start: clamp(1.5rem, 3.5vw, 3rem);
+  border-block-start: 0.3rem solid var(--mg-gold);
+  background-color: var(--mg-berry-deep);
+  background-image:
+    radial-gradient(circle, rgb(244 213 141 / 0.17) 0 1px, transparent 1.35px),
+    linear-gradient(102deg, transparent 0 76%, rgb(109 23 63 / 0.52) 76% 100%);
+  background-position:
+    left 1rem top 1rem,
+    0 0;
+  background-size:
+    0.75rem 0.75rem,
+    100% 100%;
+  color: var(--mg-ivory);
+}
+
+.mg-footer-inner {
+  display: flex;
+  width: min(78rem, calc(100% - (2 * var(--mg-page-gutter))));
+  min-height: 5rem;
+  margin-inline: auto;
+  padding-block: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.5rem;
+}
+
+.mg-footer p {
+  margin: 0;
+  color: var(--mg-gold-light);
+  font-family:
+    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  font-weight: 580;
+  letter-spacing: 0.02em;
+}
+
+.mg-back-top {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--mg-ivory-strong);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.045em;
+  text-decoration-color: var(--mg-line-dark);
+}
+
+.mg-back-top svg {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: var(--mg-gold-light);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+/* ----- only deliberate pointer refinements; touch never depends on hover ----- */
+
+@media (hover: hover) and (pointer: fine) {
+  .mg-index a:hover {
+    border-color: var(--mg-gold);
+    background: var(--mg-berry);
+    color: var(--mg-gold-light);
+  }
+
+  .mg-relic:hover {
+    background: var(--mg-berry);
+    color: var(--mg-ivory-strong);
+    text-decoration-color: var(--mg-gold-light);
+  }
+
+  .mg-relic:hover .mg-relic-charm {
+    transform: rotate(12deg) scale(1.08);
+  }
+
+  .mg-title-link:hover {
+    color: var(--mg-berry);
+    text-decoration-color: var(--mg-rose);
+  }
+
+  .mg-panel--dark .mg-chronicle-title a:hover {
+    color: var(--mg-gold-light);
+  }
+
+  .mg-email:hover {
+    border-color: var(--mg-gold);
+    background: var(--mg-berry);
+    color: var(--mg-gold-light);
+  }
+
+  .mg-back-top:hover {
+    color: var(--mg-gold-light);
+    text-decoration-color: var(--mg-gold-light);
+  }
+}
+
+@media (pointer: coarse) {
+  .mg-index a {
+    padding-block: 0.72rem;
+  }
+
+  .mg-title-link {
+    padding-block: 0.35rem;
+  }
+
+  .mg-email {
+    min-height: 56px;
+  }
+}
+
+@media (max-width: 62rem) {
+  .mg-hero-grid {
+    grid-template-areas:
+      "identity"
+      "portrait"
+      "bio";
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    row-gap: 1.8rem;
+  }
+
+  .mg-identity {
+    max-width: 42rem;
+    padding-block-start: 1.8rem;
+    align-self: auto;
+  }
+
+  .mg-portrait-column {
+    padding-block: 1.4rem;
+  }
+
+  .mg-medallion {
+    width: min(19rem, 62vw);
+  }
+
+  .mg-ribbon-tail--left,
+  .mg-ribbon-tail--right {
+    inset-block-start: calc(50% + 8.4rem);
+  }
+
+  .mg-bio-column {
+    max-width: 48rem;
+    margin-inline: auto;
+    align-self: auto;
+  }
+
+  .mg-bio-star {
+    inset-inline-start: 0;
+    inset-block-start: -2.4rem;
+  }
+
+  .mg-runway,
+  .mg-keepsakes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mg-runway > :only-child,
+  .mg-keepsakes > :only-child {
+    grid-column: auto;
+  }
+
+  .mg-relics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mg-relics > li + li {
+    border-block-start: 1px solid var(--mg-line-dark);
+    border-inline-start: 0;
+  }
+}
+
+@media (max-width: 46rem) {
+  .mg-masthead-inner {
+    min-height: 0;
+    padding-block: 0.7rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mg-index {
+    width: 100%;
+  }
+
+  .mg-index ul {
+    justify-content: flex-start;
+    margin-inline-start: -0.35rem;
+  }
+
+  .mg-index a {
+    padding-inline: 0.55rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.035em;
+  }
+
+  .mg-hero {
+    margin-block-start: 0.75rem;
+    padding: clamp(1rem, 5vw, 1.75rem);
+    border-radius: 1.4rem 0.55rem 1.4rem 0.55rem;
+  }
+
+  .mg-hero::before {
+    inset: 0.38rem;
+    border-radius: inherit;
+  }
+
+  .mg-hero::after {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-top-width: 2.5rem;
+    border-left-width: 2.5rem;
+  }
+
+  .mg-dossier-stamp,
+  .mg-halftone-art {
+    display: none;
+  }
+
+  .mg-hero-grid {
+    row-gap: 1.2rem;
+  }
+
+  .mg-identity {
+    padding-block-start: 0.8rem;
+  }
+
+  .mg-name {
+    max-width: 100%;
+    font-size: clamp(2.75rem, 14vw, 4.2rem);
+    line-height: 0.94;
+  }
+
+  .mg-headline {
+    margin-block-start: 1rem;
+    font-size: clamp(1.05rem, 4.4vw, 1.28rem);
+  }
+
+  .mg-portrait-column {
+    padding-block: 1.25rem;
+  }
+
+  .mg-medallion {
+    width: min(16rem, 67vw);
+  }
+
+  .mg-medallion::after {
+    inset: -1.1rem;
+  }
+
+  .mg-ribbon-tail {
+    width: 39%;
+    height: 1rem;
+  }
+
+  .mg-ribbon-tail--left,
+  .mg-ribbon-tail--right {
+    inset-block-start: calc(50% + 7rem);
+  }
+
+  .mg-bio {
+    font-size: 0.96rem;
+    line-height: 1.74;
+  }
+
+  .mg-section-heading {
+    margin-block-end: 1.25rem;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .mg-section-heading h2 {
+    font-size: clamp(1.75rem, 8.5vw, 2.4rem);
+  }
+
+  .mg-heading-ornament {
+    width: 3rem;
+    height: 1.3rem;
+    margin-block-start: 0.35rem;
+  }
+
+  .mg-band-inner {
+    padding-block: 1.75rem;
+  }
+
+  .mg-relic {
+    min-height: 5.8rem;
+    padding-block: 1rem;
+  }
+
+  .mg-runway,
+  .mg-keepsakes {
+    margin-block-start: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .mg-panel,
+  .mg-contact {
+    padding: 1.2rem;
+    border-radius: 1.4rem 0.55rem 1.4rem 0.55rem;
+  }
+
+  .mg-episode {
+    grid-template-columns: 3.4rem minmax(0, 1fr);
+    column-gap: 0.7rem;
+  }
+
+  .mg-episodes::before {
+    inset-inline-start: 0.48rem;
+  }
+
+  .mg-episode-marker svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .mg-seals {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+  }
+
+  .mg-seal {
+    width: min(100%, 7.5rem);
+    padding: 0.85rem;
+    font-size: 0.74rem;
+  }
+
+  .mg-letter {
+    padding-inline: 1rem;
+  }
+
+  .mg-letter-note {
+    padding-inline-end: 2.8rem;
+  }
+
+  .mg-wax {
+    width: 3.5rem;
+    height: 3.5rem;
+    inset-block-start: -1.7rem;
+    inset-inline-end: 0.75rem;
+  }
+
+  .mg-wax svg {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+}
+
+@media (max-width: 22rem) {
+  .mg-index a {
+    padding-inline: 0.42rem;
+    font-size: 0.68rem;
+  }
+
+  .mg-relic {
+    padding-inline: 0.65rem;
+    column-gap: 0.65rem;
+  }
+
+  .mg-relic-charm {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
+  .mg-relic-charm svg {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
+
+  .mg-episode {
+    grid-template-columns: 2.85rem minmax(0, 1fr);
+    column-gap: 0.55rem;
+  }
+
+  .mg-seal {
+    font-size: 0.69rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(.mg) {
+    scroll-behavior: auto;
+  }
+
+  .mg *,
+  .mg *::before,
+  .mg *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

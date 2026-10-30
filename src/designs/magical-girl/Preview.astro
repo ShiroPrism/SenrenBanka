@@ -1,0 +1,314 @@
+---
+/** Self-contained miniature of the starlight dossier; fonts are deduped by the switcher. */
+import type { PreviewProps } from '../preview';
+import { messages, type MessageLocale } from './messages';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = ['--font-fraunces', '--font-lxgw', '--font-inter'];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as MessageLocale];
+const initial = Array.from(name.trim())[0] ?? '';
+const rows = links.slice(0, 2);
+---
+
+<div class="mg-pv">
+  <svg class="mg-pv-ribbons" viewBox="0 0 400 250" preserveAspectRatio="none" aria-hidden="true">
+    <path
+      class="mg-pv-ribbon mg-pv-ribbon--light"
+      d="M-30 60c79-34 139-15 184 48 35 49 78 61 135 37 47-20 87-16 144 8v44c-62-22-103-24-146-4-75 34-134 13-174-43-31-43-68-51-128-22Z"
+    ></path>
+    <path
+      class="mg-pv-ribbon mg-pv-ribbon--gold"
+      d="M-24 199c67-38 122-33 164 11 42 44 96 48 161 13 31-17 68-17 116-2v34c-48-12-83-11-111 4-86 46-157 39-209-16-28-29-64-33-121-4Z"
+    ></path>
+    <path
+      class="mg-pv-trail"
+      pathLength="1"
+      d="M14 43c62 26 108 16 144-24 27 50 65 73 119 80 48 6 75-10 111-45"
+    ></path>
+    <path
+      class="mg-pv-star"
+      d="M252 42c1.5 9 4.6 12.1 13.6 13.6-9 1.5-12.1 4.6-13.6 13.6-1.5-9-4.6-12.1-13.6-13.6 9-1.5 12.1-4.6 13.6-13.6Z"
+    ></path>
+  </svg>
+
+  <div class="mg-pv-frame">
+    <div class="mg-pv-top">
+      <span class="mg-pv-crest">{t.crest}</span>
+      <span>{t.stageStamp}</span>
+    </div>
+
+    <div class="mg-pv-stage">
+      <div class="mg-pv-medallion">
+        <svg class="mg-pv-circle" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="55"></circle>
+          <circle cx="60" cy="60" r="47" stroke-dasharray="2 6"></circle>
+          <path d="M60 5v8M60 107v8M5 60h8M107 60h8M21 21l6 6M93 93l6 6M99 21l-6 6M27 93l-6 6"></path>
+        </svg>
+        <span class="mg-pv-initial" aria-hidden="true">{initial}</span>
+      </div>
+
+      <div class="mg-pv-copy">
+        <p class="mg-pv-name">{name}</p>
+        {headline && <p class="mg-pv-headline">{headline}</p>}
+      </div>
+    </div>
+
+    <div class="mg-pv-foot">
+      <span class="mg-pv-count">{t.linksNav} {String(links.length).padStart(2, '0')}</span>
+      <span class="mg-pv-items">
+        {rows.map((link) => <span>{link.label}</span>)}
+      </span>
+      <span class="mg-pv-wax" aria-hidden="true">
+        <svg viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="14"></circle>
+          <path d="M16 4c1 7 4 10 11 12-7 2-10 5-11 12-1-7-4-10-11-12 7-2 10-5 11-12Z"></path>
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>
+<style>
+  .mg-pv {
+    position: relative;
+    min-height: 9rem;
+    height: 100%;
+    padding: 0.65rem;
+    overflow: hidden;
+    background: var(--mg-berry-deep);
+    color: var(--mg-ivory);
+    font-family:
+      var(--font-inter), var(--font-lxgw), system-ui, "PingFang SC", "Microsoft YaHei",
+      sans-serif;
+    font-size: 0.6rem;
+    line-height: 1.4;
+  }
+
+  .mg-pv-ribbons {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mg-pv-ribbon--light {
+    fill: var(--mg-rose);
+    opacity: 0.55;
+  }
+
+  .mg-pv-ribbon--gold {
+    fill: var(--mg-gold);
+    opacity: 0.65;
+  }
+
+  .mg-pv-trail {
+    fill: none;
+    stroke: var(--mg-gold-light);
+    stroke-width: 1;
+    stroke-dasharray: 0.02 0.025;
+    opacity: 0.7;
+  }
+
+  .mg-pv-star {
+    fill: var(--mg-gold-light);
+  }
+
+  .mg-pv-frame {
+    position: relative;
+    display: flex;
+    min-height: 7.7rem;
+    padding: 0.55rem 0.62rem 0.5rem;
+    border: 1px solid var(--mg-ink);
+    border-radius: 1.4rem 0.55rem 1.4rem 0.55rem;
+    background:
+      radial-gradient(circle, rgb(109 23 63 / 0.14) 0 1px, transparent 1.3px) right 0.35rem
+        top 0.35rem / 0.42rem 0.42rem,
+      var(--mg-ivory-strong);
+    color: var(--mg-ink);
+    flex-direction: column;
+    box-shadow: inset 0 0 0 0.18rem var(--mg-paper);
+  }
+
+  .mg-pv-top {
+    display: flex;
+    padding-bottom: 0.3rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.55rem;
+    border-bottom: 1px solid var(--mg-line);
+    color: var(--mg-berry);
+    font-size: 0.48rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+
+  .mg-pv-crest {
+    font-family:
+      var(--font-fraunces), var(--font-lxgw), Georgia, "Songti SC", "SimSun", serif;
+    font-size: 0.56rem;
+    font-style: italic;
+    letter-spacing: 0.03em;
+  }
+
+  .mg-pv-stage {
+    display: grid;
+    min-height: 4.35rem;
+    padding-block: 0.55rem 0.4rem;
+    align-items: center;
+    grid-template-columns: 4.7rem minmax(0, 1fr);
+    gap: 0.72rem;
+  }
+
+  .mg-pv-medallion {
+    position: relative;
+    display: grid;
+    width: 4.35rem;
+    aspect-ratio: 1;
+    border: 0.22rem solid var(--mg-berry);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 50% 36%, var(--mg-rose-soft) 0 20%, transparent 20.5%),
+      linear-gradient(145deg, var(--mg-gold-light), var(--mg-paper-deep));
+    box-shadow: 0 0 0 0.12rem var(--mg-gold);
+    place-items: center;
+  }
+
+  .mg-pv-circle {
+    position: absolute;
+    inset: -0.46rem;
+    width: calc(100% + 0.92rem);
+    height: calc(100% + 0.92rem);
+    overflow: visible;
+  }
+
+  .mg-pv-circle circle,
+  .mg-pv-circle path {
+    fill: none;
+    stroke: var(--mg-berry);
+    stroke-width: 0.8;
+    opacity: 0.52;
+  }
+
+  .mg-pv-initial {
+    position: relative;
+    z-index: 1;
+    color: var(--mg-berry-deep);
+    font-family:
+      var(--font-fraunces), var(--font-lxgw), Georgia, "Songti SC", "SimSun", serif;
+    font-size: 2rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .mg-pv-copy {
+    min-width: 0;
+  }
+
+  .mg-pv-name {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--mg-ink);
+    font-family:
+      var(--font-fraunces), var(--font-lxgw), Georgia, "Songti SC", "SimSun", serif;
+    font-size: clamp(1.28rem, 4.4vw, 1.72rem);
+    font-style: italic;
+    font-variation-settings:
+      "SOFT" 36,
+      "WONK" 1,
+      "opsz" 72;
+    font-weight: 650;
+    line-height: 0.96;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .mg-pv-headline {
+    display: -webkit-box;
+    margin: 0.34rem 0 0;
+    overflow: hidden;
+    color: var(--mg-berry);
+    font-family:
+      var(--font-fraunces), var(--font-lxgw), Georgia, "Songti SC", "SimSun", serif;
+    font-size: 0.55rem;
+    font-style: italic;
+    font-weight: 560;
+    line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .mg-pv-foot {
+    display: grid;
+    margin-block-start: auto;
+    padding-top: 0.35rem;
+    align-items: center;
+    border-top: 1px solid var(--mg-line);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    color: var(--mg-muted);
+    font-size: 0.46rem;
+    line-height: 1.25;
+  }
+
+  .mg-pv-count {
+    color: var(--mg-berry);
+    font-weight: 750;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .mg-pv-items {
+    display: flex;
+    min-width: 0;
+    overflow: hidden;
+    gap: 0.28rem;
+  }
+
+  .mg-pv-items span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mg-pv-items span::after {
+    content: "/";
+    padding-inline-start: 0.28rem;
+    color: var(--mg-rose);
+  }
+
+  .mg-pv-items span:last-child::after {
+    content: none;
+  }
+
+  .mg-pv-wax {
+    display: grid;
+    width: 1.45rem;
+    height: 1.45rem;
+    border: 1px solid var(--mg-gold);
+    border-radius: 50%;
+    background: var(--mg-berry-deep);
+    color: var(--mg-gold-light);
+    place-items: center;
+  }
+
+  .mg-pv-wax svg {
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .mg-pv-wax path {
+    fill: currentColor;
+    stroke: none;
+  }
+
+</style>

@@ -1,0 +1,24 @@
+/**
+ * magical-girl palette tokens shared by the page and switcher preview.
+ * The namespace keeps the preview from leaking values onto the switcher page.
+ */
+
+:is(.mg, .mg-pv) {
+  --mg-ivory: #fbf6ee;
+  --mg-ivory-strong: #fffaf3;
+  --mg-paper: #f5e9de;
+  --mg-paper-deep: #ead8ca;
+  --mg-ink: #2b1023;
+  --mg-berry: #6d173f;
+  --mg-berry-deep: #3f0f2b;
+  --mg-rose: #a72d5a;
+  --mg-rose-soft: #f2c9d6;
+  --mg-lilac: #e2d6ef;
+  --mg-gold: #c8993f;
+  --mg-gold-light: #f4d58d;
+  --mg-gold-ink: #8b631e;
+  --mg-muted: #684658;
+  --mg-muted-on-dark: #f0c5d4;
+  --mg-line: #d4b4bf;
+  --mg-line-dark: #8d4666;
+}

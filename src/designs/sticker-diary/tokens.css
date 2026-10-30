@@ -1,0 +1,35 @@
+/**
+ * sticker-diary palette tokens.
+ *
+ * The selector is deliberately namespaced for both the production page and the
+ * switcher preview. Never add :root rules here: the preview is inlined into a
+ * shared infrastructure page.
+ */
+
+:is(.sd, .sd-pv) {
+  --sd-page-bg: #d9cfc4;
+  --sd-page-glow: #f0e6d9;
+  --sd-page-deep: #b7a696;
+  --sd-cover: #8e4b5c;
+  --sd-cover-dark: #653341;
+  --sd-cover-light: #aa6274;
+  --sd-paper: #fffaf0;
+  --sd-paper-warm: #f8ecd4;
+  --sd-paper-edge: #e5d6c0;
+  --sd-paper-shadow: #c8b59e;
+  --sd-ink: #342b27;
+  --sd-muted: #66584e;
+  --sd-faint: #b8a78f;
+  --sd-rose: #a73e56;
+  --sd-rose-deep: #7f2e42;
+  --sd-blush: #f5bfca;
+  --sd-mustard: #e6b85a;
+  --sd-mustard-deep: #79551d;
+  --sd-teal: #276b64;
+  --sd-teal-soft: #b8d9d2;
+  --sd-blue: #4f6b85;
+  --sd-blue-soft: #d7e3ee;
+  --sd-tape-cream: #f3dfad;
+  --sd-tape-rose: #e8aabd;
+  --sd-tape-teal: #a9d2ca;
+}

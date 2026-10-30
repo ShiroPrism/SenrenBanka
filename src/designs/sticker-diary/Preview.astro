@@ -1,0 +1,289 @@
+---
+/** Decorative switcher preview; no focusable nodes or production CSS import. */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-uglytypist',
+  '--font-lxgw',
+  '--font-inter',
+];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+---
+
+<div class="sd-pv">
+  <div class="sd-pv-rail" aria-hidden="true">
+    <span class="sd-pv-rail-mark sd-pv-rail-mark--rose"></span>
+    <span class="sd-pv-rail-mark sd-pv-rail-mark--teal"></span>
+  </div>
+
+  <div class="sd-pv-book">
+    <span class="sd-pv-stitch" aria-hidden="true"></span>
+
+    <div class="sd-pv-leaf sd-pv-leaf--left">
+      <span class="sd-pv-tape sd-pv-tape--rose" aria-hidden="true"></span>
+      <span class="sd-pv-kicker">{t.profileTab}</span>
+      <span class="sd-pv-name">{name}</span>
+      <span class="sd-pv-headline">{headline}</span>
+      <span class="sd-pv-photo" aria-hidden="true"></span>
+      <span class="sd-pv-page">01</span>
+    </div>
+
+    <div class="sd-pv-leaf sd-pv-leaf--right">
+      <span class="sd-pv-tape sd-pv-tape--teal" aria-hidden="true"></span>
+      <span class="sd-pv-title">{t.aboutTitle}</span>
+      <span class="sd-pv-rule"></span>
+      <span class="sd-pv-rule"></span>
+      <span class="sd-pv-rule"></span>
+      {links[0] && <span class="sd-pv-sticker">{links[0].label}</span>}
+      <span class="sd-pv-page">02</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .sd-pv {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    padding: 1.3rem 1.15rem 1.05rem 1.5rem;
+    color: var(--sd-ink);
+    background-color: var(--sd-page-bg);
+    background-image:
+      radial-gradient(circle at 12% 8%, color-mix(in srgb, var(--sd-paper) 58%, transparent), transparent 42%),
+      radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--sd-blush) 31%, transparent), transparent 35%),
+      repeating-linear-gradient(90deg, transparent 0 1.4rem, rgba(101, 82, 69, 0.035) 1.4rem calc(1.4rem + 1px));
+    font-family:
+      var(--font-inter), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+
+  .sd-pv-rail {
+    position: absolute;
+    z-index: 3;
+    top: 2rem;
+    right: 0.42rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+  }
+
+  .sd-pv-rail-mark {
+    display: block;
+    width: 1rem;
+    height: 1.8rem;
+    border-radius: 0.15rem 0.35rem 0.35rem 0.15rem;
+  }
+
+  .sd-pv-rail-mark--rose {
+    background: var(--sd-rose);
+  }
+
+  .sd-pv-rail-mark--teal {
+    background: var(--sd-teal);
+  }
+
+  .sd-pv-book {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 24rem;
+    height: 100%;
+    max-height: 13.5rem;
+    overflow: hidden;
+    padding: 0.38rem;
+    border: 1px solid var(--sd-cover-dark);
+    border-radius: 0.3rem 0.7rem 0.72rem 0.32rem;
+    background:
+      repeating-linear-gradient(45deg, transparent 0 3px, rgba(255, 255, 255, 0.045) 3px 4px),
+      linear-gradient(145deg, var(--sd-cover-light), var(--sd-cover) 40%, var(--sd-cover-dark));
+    box-shadow: 0 1px 0 var(--sd-cover-dark), 0 10px 18px -14px var(--sd-ink);
+  }
+
+  .sd-pv-stitch {
+    position: absolute;
+    z-index: 3;
+    inset: 0.2rem;
+    border: 1px dashed color-mix(in srgb, var(--sd-paper) 46%, transparent);
+    border-radius: 0.18rem 0.52rem 0.55rem 0.22rem;
+  }
+
+  .sd-pv-leaf {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0.95rem 0.8rem 1rem;
+    background-color: var(--sd-paper);
+    background-image:
+      repeating-linear-gradient(
+        180deg,
+        transparent 0 0.82rem,
+        color-mix(in srgb, var(--sd-faint) 20%, transparent) 0.82rem calc(0.82rem + 1px)
+      ),
+      linear-gradient(112deg, var(--sd-paper), var(--sd-paper-warm));
+  }
+
+  .sd-pv-leaf--left {
+    border-radius: 0.14rem 0 0 0.18rem;
+    padding-right: 1.15rem;
+  }
+
+  .sd-pv-leaf--right {
+    border-radius: 0 0.43rem 0.45rem 0;
+    padding-left: 1.15rem;
+    background-image:
+      repeating-linear-gradient(180deg, transparent 0 0.82rem, color-mix(in srgb, var(--sd-faint) 20%, transparent) 0.82rem calc(0.82rem + 1px)),
+      linear-gradient(248deg, var(--sd-paper-warm), var(--sd-paper) 48%);
+  }
+
+  .sd-pv-leaf--left::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0.7rem;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--sd-ink) 16%, transparent));
+    pointer-events: none;
+  }
+
+  .sd-pv-tape {
+    position: absolute;
+    z-index: 2;
+    top: 0.23rem;
+    width: 2.9rem;
+    height: 0.65rem;
+    opacity: 0.86;
+    clip-path: polygon(2% 7%, 98% 0%, 100% 91%, 1% 100%);
+  }
+
+  .sd-pv-tape--rose {
+    left: 0.8rem;
+    background:
+      repeating-linear-gradient(45deg, transparent 0 0.22rem, rgba(255, 250, 240, 0.45) 0.22rem 0.44rem),
+      var(--sd-tape-rose);
+    transform: rotate(-4deg);
+  }
+
+  .sd-pv-tape--teal {
+    right: 0.75rem;
+    background:
+      radial-gradient(circle at 0.18rem 50%, rgba(255, 250, 240, 0.55) 0 0.06rem, transparent 0.08rem) 0 0 / 0.4rem 100%,
+      var(--sd-tape-teal);
+    transform: rotate(3deg);
+  }
+
+  .sd-pv-kicker,
+  .sd-pv-title {
+    position: relative;
+    z-index: 1;
+    display: block;
+    color: var(--sd-rose);
+    font-family:
+      var(--font-uglytypist), var(--font-lxgw), "Segoe Print", "Comic Sans MS", cursive;
+    font-size: 0.47rem;
+    line-height: 1.35;
+    letter-spacing: 0.08em;
+  }
+
+  .sd-pv-name {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 0.36rem;
+    color: var(--sd-ink);
+    font-family:
+      var(--font-uglytypist), var(--font-lxgw), "Segoe Print", "Comic Sans MS", cursive;
+    font-size: clamp(1.45rem, 4.6vw, 2.2rem);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    transform: rotate(-1.2deg);
+  }
+
+  .sd-pv-headline {
+    position: relative;
+    z-index: 1;
+    display: -webkit-box;
+    max-width: 18ch;
+    margin-top: 0.45rem;
+    overflow: hidden;
+    color: var(--sd-ink);
+    font-size: 0.55rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .sd-pv-photo {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 1.15rem;
+    display: block;
+    width: 3.3rem;
+    height: 3.65rem;
+    padding: 0.2rem 0.2rem 0.55rem;
+    border: 1px solid var(--sd-paper-edge);
+    background: #fffdf8;
+    background-image:
+      radial-gradient(circle at 53% 36%, var(--sd-paper-warm) 0 18%, transparent 19%),
+      linear-gradient(145deg, var(--sd-teal-soft), var(--sd-blush));
+    transform: rotate(2.5deg);
+  }
+
+  .sd-pv-title {
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+  }
+
+  .sd-pv-rule {
+    display: block;
+    width: 76%;
+    margin-top: 0.62rem;
+    border-top: 1px solid color-mix(in srgb, var(--sd-muted) 28%, transparent);
+  }
+
+  .sd-pv-sticker {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 1.4rem;
+    display: block;
+    max-width: 6.2rem;
+    padding: 0.32rem 0.45rem 0.27rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--sd-teal) 32%, transparent);
+    border-radius: 0.3rem 0.8rem 0.35rem 0.6rem;
+    color: var(--sd-ink);
+    background: var(--sd-teal-soft);
+    font-family:
+      var(--font-uglytypist), var(--font-lxgw), "Segoe Print", "Comic Sans MS", cursive;
+    font-size: 0.55rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: rotate(-2deg);
+  }
+
+  .sd-pv-page {
+    position: absolute;
+    right: 0.58rem;
+    bottom: 0.32rem;
+    color: var(--sd-muted);
+    font-family:
+      var(--font-uglytypist), var(--font-lxgw), "Segoe Print", "Comic Sans MS", cursive;
+    font-size: 0.38rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+  }
+
+  .sd-pv-leaf--left .sd-pv-page {
+    right: auto;
+    left: 0.58rem;
+  }
+</style>

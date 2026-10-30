@@ -1,0 +1,24 @@
+/**
+ * Pixel Pet RPG palette: one source for the page and Preview.astro.
+ * The namespace class is mandatory here because the switcher inlines this file.
+ * Font roles stay in style.css so html-level selectors never read descendant tokens.
+ */
+:is(.pxt, .pxt-pv) {
+  --pxt-night: #172338;
+  --pxt-night-soft: #294463;
+  --pxt-cream: #fff7dc;
+  --pxt-paper: #f6e8bc;
+  --pxt-white: #fffdf5;
+  --pxt-muted: #536275;
+  --pxt-sky: #a9d8ef;
+  --pxt-sky-low: #79bfd5;
+  --pxt-grass: #75b66b;
+  --pxt-grass-dark: #4c8a59;
+  --pxt-mint: #a8e6c1;
+  --pxt-water: #66b8cd;
+  --pxt-water-hi: #c6f2ef;
+  --pxt-gold: #f4c75b;
+  --pxt-coral: #ec775d;
+  --pxt-shadow: rgba(23, 35, 56, 0.28);
+  --pxt-shadow-deep: rgba(8, 15, 28, 0.42);
+}

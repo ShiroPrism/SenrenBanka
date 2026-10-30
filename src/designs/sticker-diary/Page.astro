@@ -1,0 +1,502 @@
+---
+/**
+ * sticker-diary — a handmade scrapbook opened across two paper leaves.
+ *
+ * Data: loadDesignView() resolves the current locale and profile. The page never
+ * reads profile files or locale paths itself. view.head and view.contextMenu are
+ * passed through unchanged.
+ *
+ * Progressive enhancement: every spread is rendered and visible by default.
+ * script.ts adds data-sd-ready only after it has successfully prepared the
+ * bookmark transport; if that never happens, the page remains the complete long
+ * document below.
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages, type StickerDiaryMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('sticker-diary', Astro.url.pathname);
+const t: StickerDiaryMessages =
+  designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+const hasProjects = Boolean(profile.projects && profile.projects.length > 0);
+const hasExperience = Boolean(profile.experience && profile.experience.length > 0);
+const hasSkills = Boolean(profile.skills && profile.skills.length > 0);
+const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
+
+const spreadDefs = [
+  { id: 'sd-profile', label: t.profileTab },
+  { id: 'sd-links', label: t.linksTab },
+  ...(hasProjects ? [{ id: 'sd-projects', label: t.projectsTab }] : []),
+  ...(hasExperience ? [{ id: 'sd-experience', label: t.experienceTab }] : []),
+  ...(hasSkills ? [{ id: 'sd-skills', label: t.skillsTab }] : []),
+  { id: 'sd-contact', label: t.contactTab },
+];
+
+const spreadIndex: Record<string, number> = Object.fromEntries(
+  spreadDefs.map((spread, index) => [spread.id, index]),
+);
+const pad = (value: number) => String(value).padStart(2, '0');
+const pageNo = (spreadId: string, side: 0 | 1) =>
+  pad(spreadIndex[spreadId] * 2 + side + 1);
+
+function split<T>(items: readonly T[]): [T[], T[]] {
+  const midpoint = Math.ceil(items.length / 2);
+  return [items.slice(0, midpoint), items.slice(midpoint)];
+}
+
+const [linksLeft, linksRight] = split(profile.links);
+const [projectsLeft, projectsRight] = split(profile.projects ?? []);
+const [experienceLeft, experienceRight] = split(profile.experience ?? []);
+const [skillsLeft, skillsRight] = split(profile.skills ?? []);
+
+const shortUrl = (url: string) =>
+  url.replace(/^https?:\/\//, '').replace(/^mailto:/, '').replace(/\/$/, '');
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    {/* Three voices, no preload: hand-drawn Latin, warm CJK, readable body. */}
+    <Font cssVariable="--font-uglytypist" />
+    <Font cssVariable="--font-lxgw" />
+    <Font cssVariable="--font-inter" />
+  </head>
+  <body class="sd" data-sd-root>
+    <main class="sd-scene" aria-label={`${profile.name} · ${t.bookLabel}`}>
+      <nav class="sd-tabs" aria-label={t.navLabel}>
+        {
+          spreadDefs.map((spread, index) => (
+            <a
+              class="sd-tab"
+              href={`#${spread.id}`}
+              data-sd-tab
+              data-sd-label={spread.label}
+              aria-controls={spread.id}
+            >
+              <span class="sd-tabno" aria-hidden="true">
+                {pad(index + 1)}
+              </span>
+              <span class="sd-tabtext">{spread.label}</span>
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="sd-book">
+        <span class="sd-cover-stitch" aria-hidden="true"></span>
+
+        <section
+          class="sd-spread"
+          id="sd-profile"
+          data-sd-spread
+          aria-labelledby="sd-profile-label"
+        >
+          <div class="sd-page sd-page--left sd-page--profile">
+            <span class="sd-tape sd-tape--rose" aria-hidden="true"></span>
+            <p class="sd-kicker" id="sd-profile-label">{t.profileTab}</p>
+
+            <div class:list={['sd-identity', !profile.avatar && 'sd-identity--solo']}>
+              {
+                profile.avatar && (
+                  <figure class="sd-polaroid" aria-hidden="true">
+                    <span class="sd-polaroid-tape" aria-hidden="true"></span>
+                    <img
+                      class="sd-avatar"
+                      src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                      alt=""
+                      width="640"
+                      height="640"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </figure>
+                )
+              }
+
+              <div class="sd-identity-copy">
+                <h1 class="sd-name" data-sd-focus tabindex="-1">{profile.name}</h1>
+                <p class="sd-headline">{profile.headline}</p>
+                {
+                  profile.location && (
+                    <p class="sd-location">
+                      <span class="sd-location-pin" aria-hidden="true"></span>
+                      {profile.location}
+                    </p>
+                  )
+                }
+              </div>
+            </div>
+
+            <span class="sd-doodle-star sd-doodle-star--rose" aria-hidden="true"></span>
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-profile', 0)}
+            </span>
+          </div>
+
+          <div class="sd-page sd-page--right sd-page--bio">
+            <span class="sd-tape sd-tape--mustard" aria-hidden="true"></span>
+            <p class="sd-hand-mark" aria-hidden="true">{t.bookLabel}</p>
+            <h2 class="sd-title" id="sd-about-title">
+              {t.aboutTitle}
+            </h2>
+            <p class="sd-bio">{profile.bio}</p>
+            <span class="sd-doodle-heart" aria-hidden="true"></span>
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-profile', 1)}
+            </span>
+          </div>
+        </section>
+
+        <section
+          class="sd-spread"
+          id="sd-links"
+          data-sd-spread
+          aria-labelledby="sd-links-title"
+        >
+          <div class="sd-page sd-page--left">
+            <span class="sd-tape sd-tape--teal" aria-hidden="true"></span>
+            <p class="sd-kicker">{t.linksTab}</p>
+            <h2 class="sd-title" id="sd-links-title" data-sd-focus tabindex="-1">
+              {t.linksTitle}
+            </h2>
+            {
+              linksLeft.length > 0 ? (
+                <ul class="sd-link-list">
+                  {linksLeft.map((link, index) => (
+                    <li>
+                      <a class="sd-link-card" href={link.url}>
+                        <span class="sd-linkno" aria-hidden="true">{pad(index + 1)}</span>
+                        <span class="sd-link-label">{link.label}</span>
+                        <span class="sd-link-url" aria-hidden="true">{shortUrl(link.url)}</span>
+                        <span class="sd-link-arrow" aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="sd-empty">{t.noLinks}</p>
+              )
+            }
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-links', 0)}
+            </span>
+          </div>
+
+          <div class="sd-page sd-page--right">
+            <span class="sd-tape sd-tape--rose sd-tape--short" aria-hidden="true"></span>
+            <p class="sd-count" aria-hidden="true">
+              <span>{pad(profile.links.length)}</span>
+              <small>{t.linksUnit}</small>
+            </p>
+            {
+              linksRight.length > 0 && (
+                <ul class="sd-link-list sd-link-list--right">
+                  {linksRight.map((link, index) => (
+                    <li>
+                      <a class="sd-link-card" href={link.url}>
+                        <span class="sd-linkno" aria-hidden="true">
+                          {pad(linksLeft.length + index + 1)}
+                        </span>
+                        <span class="sd-link-label">{link.label}</span>
+                        <span class="sd-link-url" aria-hidden="true">{shortUrl(link.url)}</span>
+                        <span class="sd-link-arrow" aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+            <span class="sd-doodle-star sd-doodle-star--teal" aria-hidden="true"></span>
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-links', 1)}
+            </span>
+          </div>
+        </section>
+
+        {
+          hasProjects && (
+            <section
+              class="sd-spread"
+              id="sd-projects"
+              data-sd-spread
+              aria-labelledby="sd-projects-title"
+            >
+              <div class="sd-page sd-page--left">
+                <span class="sd-tape sd-tape--mustard" aria-hidden="true"></span>
+                <p class="sd-kicker">{t.projectsTab}</p>
+                <h2
+                  class="sd-title"
+                  id="sd-projects-title"
+                  data-sd-focus
+                  tabindex="-1"
+                >
+                  {t.projectsTitle}
+                </h2>
+                <ol class="sd-project-list">
+                  {projectsLeft.map((project) => (
+                    <li class="sd-project">
+                      <span class="sd-project-tape" aria-hidden="true"></span>
+                      <h3 class="sd-project-title">
+                        {project.url ? (
+                          <a href={project.url}>
+                            {project.title}
+                            <span class="sd-link-arrow" aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          project.title
+                        )}
+                      </h3>
+                      {project.url && (
+                        <p class="sd-project-url" aria-hidden="true">
+                          {shortUrl(project.url)}
+                        </p>
+                      )}
+                      {project.description && (
+                        <p class="sd-project-copy">{project.description}</p>
+                      )}
+                      {project.tags && project.tags.length > 0 && (
+                        <ul class="sd-tag-list" aria-label={t.tagsLabel}>
+                          {project.tags.map((tag) => <li>{tag}</li>)}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-projects', 0)}
+                </span>
+              </div>
+
+              <div class="sd-page sd-page--right">
+                <span class="sd-tape sd-tape--teal sd-tape--short" aria-hidden="true"></span>
+                <p class="sd-count" aria-hidden="true">
+                  <span>{pad(profile.projects?.length ?? 0)}</span>
+                  <small>{t.projectsUnit}</small>
+                </p>
+                <ol class="sd-project-list sd-project-list--right">
+                  {projectsRight.map((project) => (
+                    <li class="sd-project">
+                      <span class="sd-project-tape" aria-hidden="true"></span>
+                      <h3 class="sd-project-title">
+                        {project.url ? (
+                          <a href={project.url}>
+                            {project.title}
+                            <span class="sd-link-arrow" aria-hidden="true">↗</span>
+                          </a>
+                        ) : (
+                          project.title
+                        )}
+                      </h3>
+                      {project.url && (
+                        <p class="sd-project-url" aria-hidden="true">
+                          {shortUrl(project.url)}
+                        </p>
+                      )}
+                      {project.description && (
+                        <p class="sd-project-copy">{project.description}</p>
+                      )}
+                      {project.tags && project.tags.length > 0 && (
+                        <ul class="sd-tag-list" aria-label={t.tagsLabel}>
+                          {project.tags.map((tag) => <li>{tag}</li>)}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-projects', 1)}
+                </span>
+              </div>
+            </section>
+          )
+        }
+
+        {
+          hasExperience && (
+            <section
+              class="sd-spread"
+              id="sd-experience"
+              data-sd-spread
+              aria-labelledby="sd-experience-title"
+            >
+              <div class="sd-page sd-page--left">
+                <span class="sd-tape sd-tape--rose" aria-hidden="true"></span>
+                <p class="sd-kicker">{t.experienceTab}</p>
+                <h2
+                  class="sd-title"
+                  id="sd-experience-title"
+                  data-sd-focus
+                  tabindex="-1"
+                >
+                  {t.experienceTitle}
+                </h2>
+                <ol class="sd-memory-list">
+                  {experienceLeft.map((item) => (
+                    <li class="sd-memory">
+                      {item.period && <p class="sd-period">{item.period}</p>}
+                      <h3 class="sd-memory-title">{item.org}</h3>
+                      {item.role && <p class="sd-role">{item.role}</p>}
+                      {item.description && (
+                        <p class="sd-memory-copy">{item.description}</p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-experience', 0)}
+                </span>
+              </div>
+
+              <div class="sd-page sd-page--right">
+                <span class="sd-tape sd-tape--mustard sd-tape--short" aria-hidden="true"></span>
+                <p class="sd-count" aria-hidden="true">
+                  <span>{pad(profile.experience?.length ?? 0)}</span>
+                  <small>{t.experienceUnit}</small>
+                </p>
+                <ol class="sd-memory-list sd-memory-list--right">
+                  {experienceRight.map((item) => (
+                    <li class="sd-memory">
+                      {item.period && <p class="sd-period">{item.period}</p>}
+                      <h3 class="sd-memory-title">{item.org}</h3>
+                      {item.role && <p class="sd-role">{item.role}</p>}
+                      {item.description && (
+                        <p class="sd-memory-copy">{item.description}</p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-experience', 1)}
+                </span>
+              </div>
+            </section>
+          )
+        }
+
+        {
+          hasSkills && (
+            <section
+              class="sd-spread"
+              id="sd-skills"
+              data-sd-spread
+              aria-labelledby="sd-skills-title"
+            >
+              <div class="sd-page sd-page--left">
+                <span class="sd-tape sd-tape--teal" aria-hidden="true"></span>
+                <p class="sd-kicker">{t.skillsTab}</p>
+                <h2 class="sd-title" id="sd-skills-title" data-sd-focus tabindex="-1">
+                  {t.skillsTitle}
+                </h2>
+                <ul class="sd-skill-list">
+                  {skillsLeft.map((skill) => <li>{skill}</li>)}
+                </ul>
+                <span class="sd-doodle-star sd-doodle-star--mustard" aria-hidden="true"></span>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-skills', 0)}
+                </span>
+              </div>
+
+              <div class="sd-page sd-page--right">
+                <span class="sd-tape sd-tape--rose sd-tape--short" aria-hidden="true"></span>
+                <p class="sd-count" aria-hidden="true">
+                  <span>{pad(profile.skills?.length ?? 0)}</span>
+                  <small>{t.skillsUnit}</small>
+                </p>
+                <ul class="sd-skill-list sd-skill-list--right">
+                  {skillsRight.map((skill) => <li>{skill}</li>)}
+                </ul>
+                <span class="sd-doodle-star sd-doodle-star--rose" aria-hidden="true"></span>
+                <span class="sd-page-no" aria-hidden="true">
+                  {pageNo('sd-skills', 1)}
+                </span>
+              </div>
+            </section>
+          )
+        }
+
+        <section
+          class="sd-spread"
+          id="sd-contact"
+          data-sd-spread
+          aria-labelledby="sd-contact-title"
+        >
+          <div class="sd-page sd-page--left sd-page--contact">
+            <span class="sd-tape sd-tape--mustard" aria-hidden="true"></span>
+            <p class="sd-kicker">{t.contactTab}</p>
+            <h2 class="sd-title" id="sd-contact-title" data-sd-focus tabindex="-1">
+              {t.contactTitle}
+            </h2>
+            {
+              hasContact ? (
+                <>
+                  {profile.contact?.email && (
+                    <p class="sd-contact-mail">
+                      <span class="sd-contact-label">{t.contactLabel}</span>
+                      <a href={`mailto:${profile.contact.email}`}>
+                        {profile.contact.email}
+                      </a>
+                    </p>
+                  )}
+                  {profile.contact?.note && (
+                    <p class="sd-contact-note">{profile.contact.note}</p>
+                  )}
+                </>
+              ) : (
+                <p class="sd-empty">{t.noContact}</p>
+              )
+            }
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-contact', 0)}
+            </span>
+          </div>
+
+          <div class="sd-page sd-page--right sd-page--closing">
+            <span class="sd-tape sd-tape--rose sd-tape--short" aria-hidden="true"></span>
+            <div class="sd-closing-mark" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+            <p class="sd-closing">{t.closing}</p>
+            <p class="sd-brand">{t.brand}</p>
+            <p class="sd-sample">{t.sampleNote}</p>
+            <span class="sd-page-no" aria-hidden="true">
+              {pageNo('sd-contact', 1)}
+            </span>
+          </div>
+        </section>
+      </div>
+
+      <div class="sd-controls" role="group" aria-label={t.navLabel} data-sd-controls hidden>
+        <button class="sd-flip sd-flip--prev" type="button" data-sd-prev>
+          <span aria-hidden="true">←</span>
+          <span>{t.prevLabel}</span>
+        </button>
+        <p
+          class="sd-status"
+          role="status"
+          aria-live="polite"
+          data-sd-status
+          data-sd-status-template={t.statusTemplate}
+        ></p>
+        <button class="sd-flip sd-flip--next" type="button" data-sd-next>
+          <span>{t.nextLabel}</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <footer class="sd-colophon">
+        <p><span>{t.brand}</span> · {t.bookLabel}</p>
+      </footer>
+    </main>
+
+    <script>
+      import './script.ts';
+    </script>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

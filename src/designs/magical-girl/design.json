@@ -1,0 +1,11 @@
+{
+  "displayName": "Magical Girl",
+  "description": "魔法少女角色档案与舞台登场：星轨章回、变身年表、道具与蜡封信笺组成一张会开演的档案。",
+  "enabled": true,
+  "renderMode": "styled",
+  "accent": "#A72D5A",
+  "source": {
+    "type": "self-produced"
+  },
+  "generatedBy": "impeccable · 2026-10-29（六套可爱风独立设计·魔法少女档案）"
+}

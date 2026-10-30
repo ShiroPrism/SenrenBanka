@@ -1,0 +1,30 @@
+/**
+ * fairy-kei 设计令牌（单一来源）：正式页与切换页预览共用。
+ *
+ * - 作用域是命名空间类，不是 `:root`；预览内联到切换页时不会泄漏全局令牌。
+ * - 只放调色板。字体角色留在 style.css 的 `@theme inline`，
+ *   避免祖先 `html` 取不到后代作用域变量。
+ */
+
+:is(.fk, .fk-pv) {
+  --fk-room: #f3dfba;
+  --fk-cream: #fff1cf;
+  --fk-paper: #fff9ec;
+  --fk-mint: #ccebdd;
+  --fk-mint-soft: #e7f7ef;
+  --fk-butter: #ffe39b;
+  --fk-peach: #ffc4ad;
+  --fk-rose: #f3adc4;
+  --fk-lilac: #ddcff0;
+  --fk-blue: #aedee8;
+  --fk-ink: #2c2138;
+  --fk-ink-soft: #5a4c68;
+  --fk-plum: #753956;
+  --fk-coral: #b74852;
+  --fk-gold: #c58a21;
+  --fk-window: #f7fff9;
+  --fk-outline: #3e2c4d;
+  --fk-white: #fffdf7;
+  --fk-shadow: rgba(68, 44, 66, 0.22);
+  --fk-deep-shadow: rgba(44, 33, 56, 0.34);
+}

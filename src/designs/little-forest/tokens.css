@@ -1,0 +1,28 @@
+/**
+ * little-forest palette is the single source for both the full page and the
+ * switcher preview. The namespace is a class, never :root.
+ *
+ * Font roles stay in style.css (`@theme inline`) because html is an ancestor
+ * of .lf and cannot consume descendant-scoped custom properties.
+ */
+
+:is(.lf, .lf-pv) {
+  --lf-paper: #f4efdf;
+  --lf-paper-light: #fbf7eb;
+  --lf-paper-deep: #e8dfca;
+  --lf-ink: #263229;
+  --lf-muted: #52604f;
+  --lf-moss: #4d6952;
+  --lf-moss-deep: #304738;
+  --lf-bark: #76553b;
+  --lf-bark-deep: #503a2b;
+  --lf-ochre: #b7832f;
+  --lf-ochre-ink: #77511f;
+  --lf-blush: #b9837d;
+  --lf-lilac: #81778f;
+  --lf-sky: #8ca9a4;
+  --lf-path: #8b7354;
+  --lf-path-soft: #c7b18e;
+  --lf-line: #c8bca5;
+  --lf-highlight: #f1dfad;
+}

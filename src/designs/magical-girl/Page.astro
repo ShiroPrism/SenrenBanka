@@ -1,0 +1,468 @@
+---
+/**
+ * magical-girl: a character dossier laid over a one-night stage debut.
+ *
+ * The document is complete before enhancement. script.ts can only replay the
+ * star trail, ribbons, portrait orbit and dossier arrival; it never owns links,
+ * sections or the ability to read the profile.
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages, type MessageLocale } from './messages';
+import './style.css';
+
+const view = await loadDesignView('magical-girl', Astro.url.pathname);
+const t = designMessages[view.locale.code as MessageLocale];
+const { profile, contextMenu } = view;
+
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const shortUrl = (url: string) =>
+  url.replace(/^(?:https?:\/\/|mailto:)/i, '').replace(/\/$/, '');
+const initial = Array.from(profile.name.trim())[0] ?? '';
+
+const hasProjects = Boolean(profile.projects && profile.projects.length > 0);
+const hasExperience = Boolean(profile.experience && profile.experience.length > 0);
+const hasSkills = Boolean(profile.skills && profile.skills.length > 0);
+const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
+
+const navItems = [
+  { id: 'mg-links', label: t.linksNav },
+  ...(hasProjects ? [{ id: 'mg-projects', label: t.projectsNav }] : []),
+  ...(hasExperience ? [{ id: 'mg-experience', label: t.experienceNav }] : []),
+  ...(hasSkills ? [{ id: 'mg-skills', label: t.skillsNav }] : []),
+  ...(hasContact ? [{ id: 'mg-contact', label: t.contactNav }] : []),
+];
+---
+
+<!doctype html>
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-lxgw" />
+    <Font cssVariable="--font-inter" />
+  </head>
+  <body class="mg" data-mg-root>
+    <a class="mg-skip-link" href="#mg-main">{t.skipToContent}</a>
+
+    <header class="mg-masthead" id="mg-top">
+      <div class="mg-masthead-inner">
+        <p class="mg-crest">
+          <svg class="mg-crest-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 1.5c.7 5.3 2.8 7.4 8.1 8.1-5.3.7-7.4 2.8-8.1 8.1-.7-5.3-2.8-7.4-8.1-8.1 5.3-.7 7.4-2.8 8.1-8.1Z"></path>
+          </svg>
+          <span>{t.crest}</span>
+        </p>
+
+        <nav class="mg-index" aria-label={t.navLabel}>
+          <ul>
+            {
+              navItems.map((item) => (
+                <li>
+                  <a href={`#${item.id}`}>{item.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mg-main" id="mg-main" aria-label={t.pageLabel}>
+      <section class="mg-hero" aria-labelledby="mg-name">
+        <div class="mg-hero-art" aria-hidden="true">
+          <svg
+            class="mg-ribbon-art"
+            viewBox="0 0 1200 760"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <path
+              class="mg-art-ribbon mg-art-ribbon--berry"
+              data-mg-ribbon
+              d="M-150 182C80 58 243 117 337 246c104 143 203 173 344 89 147-88 269-75 438 22l-77 121c-149-81-257-94-384-18-156 94-299 67-421-100C154 241 50 201-108 302Z"
+            ></path>
+            <path
+              class="mg-art-ribbon mg-art-ribbon--rose"
+              data-mg-ribbon
+              d="M-110 572c169-116 299-97 410 21 87 92 183 112 299 49 138-75 288-62 479 20l-59 101c-183-69-319-80-436-17-156 85-293 45-397-73-79-88-163-110-269-31Z"
+            ></path>
+            <path
+              class="mg-art-ribbon-line"
+              data-mg-ribbon
+              d="M-38 662c166-90 285-80 406 29 96 86 211 91 331 23 130-74 267-65 430-2"
+            ></path>
+          </svg>
+
+          <svg
+            class="mg-trail-art"
+            viewBox="0 0 1200 760"
+            preserveAspectRatio="xMidYMid slice"
+            focusable="false"
+          >
+            <path
+              class="mg-star-trail"
+              data-mg-trail
+              pathLength="1"
+              d="M-30 648C120 557 219 589 291 462c58-102 144-145 245-94 132 67 195-9 249-94 57-90 161-124 305-50 59 30 111 33 176 6"
+            ></path>
+            <path
+              class="mg-star-trail mg-star-trail--fine"
+              data-mg-trail
+              pathLength="1"
+              d="M72 108c120 36 196 11 257-65 23 85 78 124 168 143"
+            ></path>
+            <path
+              class="mg-trail-star"
+              d="M306 409c1.7 11.6 6.2 16.1 17.8 17.8-11.6 1.7-16.1 6.2-17.8 17.8-1.7-11.6-6.2-16.1-17.8-17.8 11.6-1.7 16.1-6.2 17.8-17.8Z"
+            ></path>
+            <path
+              class="mg-trail-star"
+              d="M812 239c1.4 9.9 5.3 13.8 15.2 15.2-9.9 1.4-13.8 5.3-15.2 15.2-1.4-9.9-5.3-13.8-15.2-15.2 9.9-1.4 13.8-5.3 15.2-15.2Z"
+            ></path>
+            <path
+              class="mg-trail-star"
+              d="M1102 390c1 7.5 4.1 10.5 11.6 11.6-7.5 1-10.5 4.1-11.6 11.6-1-7.5-4.1-10.5-11.6-11.6 7.5-1 10.5-4.1 11.6-11.6Z"
+            ></path>
+          </svg>
+
+          <svg
+            class="mg-halftone-art"
+            viewBox="0 0 260 180"
+            preserveAspectRatio="none"
+            focusable="false"
+          >
+            <defs>
+              <pattern id="mg-page-dots" width="12" height="12" patternUnits="userSpaceOnUse">
+                <circle cx="3" cy="3" r="1.8"></circle>
+              </pattern>
+            </defs>
+            <rect width="260" height="180" fill="url(#mg-page-dots)"></rect>
+          </svg>
+        </div>
+
+        <p class="mg-dossier-stamp" aria-hidden="true">{t.stageStamp}</p>
+
+        <div class="mg-hero-grid">
+          <div class="mg-identity" data-mg-dossier>
+            <h1 class="mg-name" id="mg-name">{profile.name}</h1>
+            <p class="mg-headline">{profile.headline}</p>
+          </div>
+
+          <div class="mg-portrait-column" data-mg-dossier>
+            <div class="mg-medallion">
+              <svg
+                class="mg-magic-circle"
+                viewBox="0 0 360 360"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <g class="mg-magic-orbit" data-mg-orbit>
+                  <circle cx="180" cy="180" r="169"></circle>
+                  <circle cx="180" cy="180" r="151" stroke-dasharray="3 10"></circle>
+                  <circle cx="180" cy="180" r="123"></circle>
+                  <path
+                    d="M180 18v24M180 318v24M18 180h24M318 180h24M65 65l17 17M278 278l17 17M295 65l-17 17M82 278l-17 17"
+                  ></path>
+                  <path
+                    class="mg-magic-stars"
+                    d="M180 54l8 20 20 8-20 8-8 20-8-20-20-8 20-8ZM180 230l8 20 20 8-20 8-8 20-8-20-20-8 20-8ZM54 152l6 16 16 6-16 6-6 16-6-16-16-6 16-6ZM294 164l5 12 12 5-12 5-5 12-5-12-12-5 12-5Z"
+                  ></path>
+                </g>
+                <circle class="mg-magic-center" cx="180" cy="180" r="102"></circle>
+              </svg>
+
+              <div class="mg-portrait-frame">
+                {
+                  profile.avatar ? (
+                    <img
+                      class="mg-avatar"
+                      src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                      alt=""
+                      width="640"
+                      height="640"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div class="mg-silhouette" aria-hidden="true">
+                      <svg viewBox="0 0 240 240" focusable="false">
+                        <path
+                          class="mg-silhouette-shoulders"
+                          d="M42 218c7-47 30-72 69-80v-6c-21-10-32-27-32-49 0-30 19-51 41-51s41 21 41 51c0 22-11 39-32 49v6c39 8 62 33 69 80Z"
+                        ></path>
+                        <path
+                          class="mg-silhouette-crown"
+                          d="m74 72 16-23 10 17 20-28 20 28 10-17 16 23-9 9-17-8H100l-17 8Z"
+                        ></path>
+                        <path
+                          class="mg-silhouette-star"
+                          d="M120 92c2 12 6.7 16.7 18.7 18.7-12 2-16.7 6.7-18.7 18.7-2-12-6.7-16.7-18.7-18.7 12-2 16.7-6.7 18.7-18.7Z"
+                        ></path>
+                      </svg>
+                      <span class="mg-initial">{initial}</span>
+                    </div>
+                  )
+                }
+              </div>
+
+              <span class="mg-medallion-jewel" aria-hidden="true">
+                <svg viewBox="0 0 32 32" focusable="false">
+                  <path d="M16 2c1 9 5 13 14 14-9 1-13 5-14 14-1-9-5-13-14-14 9-1 13-5 14-14Z"></path>
+                </svg>
+              </span>
+            </div>
+
+            <span class="mg-ribbon-tail mg-ribbon-tail--left" aria-hidden="true"></span>
+            <span class="mg-ribbon-tail mg-ribbon-tail--right" aria-hidden="true"></span>
+          </div>
+
+          <div class="mg-bio-column" data-mg-dossier>
+            <span class="mg-bio-star" aria-hidden="true">
+              <svg viewBox="0 0 40 40" focusable="false">
+                <path d="M20 1c1.3 12.2 6.5 17.4 18.7 18.7C26.5 21 21.3 26.3 20 38.5 18.7 26.3 13.5 21 1.3 19.7 13.5 18.4 18.7 13.2 20 1Z"></path>
+              </svg>
+            </span>
+            <p class="mg-bio">{profile.bio}</p>
+            {
+              profile.location && (
+                <p class="mg-location">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 2c3.9 0 7 3.1 7 7 0 5.3-7 13-7 13S5 14.3 5 9c0-3.9 3.1-7 7-7Zm0 4.2A2.8 2.8 0 1 0 12 12a2.8 2.8 0 0 0 0-5.6Z"></path>
+                  </svg>
+                  <span class="mg-location-label">{t.locationLabel}</span>
+                  <span class="mg-location-value">{profile.location}</span>
+                </p>
+              )
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="mg-relics-band" id="mg-links" aria-labelledby="mg-links-title">
+        <div class="mg-band-inner">
+          <div class="mg-section-heading mg-section-heading--light">
+            <h2 id="mg-links-title">{t.linksTitle}</h2>
+            <span class="mg-heading-ornament" aria-hidden="true">
+              <svg viewBox="0 0 72 28" focusable="false">
+                <path d="M1 14h20M51 14h20M36 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"></path>
+              </svg>
+            </span>
+          </div>
+
+          {
+            profile.links.length > 0 ? (
+              <ul class="mg-relics">
+                {profile.links.map((link) => (
+                  <li>
+                    <a
+                      class="mg-relic"
+                      href={link.url}
+                      aria-label={link.label}
+                      data-link-icon={link.icon ?? 'star'}
+                    >
+                      <span class="mg-relic-charm" aria-hidden="true">
+                        <svg viewBox="0 0 44 44" focusable="false">
+                          <circle cx="22" cy="22" r="20"></circle>
+                          {link.icon === 'tv' ? (
+                            <g class="mg-charm-line">
+                              <rect x="11" y="15" width="22" height="16" rx="2"></rect>
+                              <path d="m17 11 5 4 5-4M17 35h10"></path>
+                            </g>
+                          ) : link.icon === 'video' ? (
+                            <g class="mg-charm-line">
+                              <rect x="10" y="13" width="24" height="18" rx="2"></rect>
+                              <path class="mg-charm-solid" d="m19 18 8 5-8 5Z"></path>
+                            </g>
+                          ) : link.icon === 'coffee' ? (
+                            <g class="mg-charm-line">
+                              <path d="M11 17h19v7c0 5-3.7 8-9.5 8S11 29 11 24Z"></path>
+                              <path d="M30 19h3c3.8 0 6 2.5 6 5.5S36.8 30 33 30h-3M9 36h27"></path>
+                            </g>
+                          ) : (
+                            <path
+                              class="mg-charm-solid"
+                              d="M22 8c1.3 7.7 4.3 10.7 12 12-7.7 1.3-10.7 4.3-12 12-1.3-7.7-4.3-10.7-12-12 7.7-1.3 10.7-4.3 12-12Z"
+                            ></path>
+                          )}
+                        </svg>
+                      </span>
+                      <span class="mg-relic-copy">
+                        <span class="mg-relic-label">{link.label}</span>
+                        <span class="mg-relic-url">{shortUrl(link.url)}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="mg-empty">{t.emptyLinks}</p>
+            )
+          }
+        </div>
+      </section>
+
+      {
+        (hasProjects || hasExperience) && (
+          <div class="mg-runway">
+            {hasProjects && (
+              <section class="mg-projects mg-panel" id="mg-projects" aria-labelledby="mg-projects-title">
+                <div class="mg-section-heading">
+                  <h2 id="mg-projects-title">{t.projectsTitle}</h2>
+                  <span class="mg-heading-ornament" aria-hidden="true">
+                    <svg viewBox="0 0 72 28" focusable="false">
+                      <path d="M1 14h20M51 14h20M36 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"></path>
+                    </svg>
+                  </span>
+                </div>
+
+                <ol class="mg-episodes">
+                  {profile.projects?.map((project, index) => (
+                    <li class="mg-episode">
+                      <p class="mg-episode-marker">
+                        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                          <path d="M16 2c1 9 5 13 14 14-9 1-13 5-14 14-1-9-5-13-14-14 9-1 13-5 14-14Z"></path>
+                        </svg>
+                        <span>{t.episodeLabel} {pad(index)}</span>
+                      </p>
+                      <div class="mg-episode-body">
+                        <h3 class="mg-item-title">
+                          {project.url ? (
+                            <a class="mg-title-link" href={project.url}>
+                              {project.title}
+                              <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+                                <path d="M4 16 16 4M7 4h9v9"></path>
+                              </svg>
+                            </a>
+                          ) : (
+                            project.title
+                          )}
+                        </h3>
+                        {project.description && <p class="mg-item-copy">{project.description}</p>}
+                        {project.tags && project.tags.length > 0 && (
+                          <ul class="mg-tags" aria-label={t.tagsLabel}>
+                            {project.tags.map((tag) => (
+                              <li>{tag}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+
+            {hasExperience && (
+              <section
+                class="mg-experience mg-panel mg-panel--dark"
+                id="mg-experience"
+                aria-labelledby="mg-experience-title"
+              >
+                <div class="mg-section-heading mg-section-heading--light">
+                  <h2 id="mg-experience-title">{t.experienceTitle}</h2>
+                  <span class="mg-heading-ornament" aria-hidden="true">
+                    <svg viewBox="0 0 72 28" focusable="false">
+                      <path d="M1 14h20M51 14h20M36 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"></path>
+                    </svg>
+                  </span>
+                </div>
+
+                <ol class="mg-chronicle">
+                  {profile.experience?.map((item) => (
+                    <li class="mg-chronicle-item">
+                      {item.period && <p class="mg-period">{item.period}</p>}
+                      <h3 class="mg-chronicle-title">{item.org}</h3>
+                      {item.role && <p class="mg-role">{item.role}</p>}
+                      {item.description && <p class="mg-item-copy">{item.description}</p>}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+          </div>
+        )
+      }
+
+      {
+        (hasSkills || hasContact) && (
+          <div class="mg-keepsakes">
+            {hasSkills && (
+              <section class="mg-skills mg-panel" id="mg-skills" aria-labelledby="mg-skills-title">
+                <div class="mg-section-heading">
+                  <h2 id="mg-skills-title">{t.skillsTitle}</h2>
+                  <span class="mg-heading-ornament" aria-hidden="true">
+                    <svg viewBox="0 0 72 28" focusable="false">
+                      <path d="M1 14h20M51 14h20M36 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"></path>
+                    </svg>
+                  </span>
+                </div>
+
+                <ul class="mg-seals">
+                  {profile.skills?.map((skill) => (
+                    <li class="mg-seal">
+                      <svg class="mg-seal-star" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                        <path d="M16 1c1.1 9.5 5.4 13.8 14.9 14.9C21.4 17 17.1 21.3 16 30.8 14.9 21.3 10.6 17 1.1 15.9 10.6 14.8 14.9 10.5 16 1Z"></path>
+                      </svg>
+                      <span>{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {hasContact && (
+              <section class="mg-contact" id="mg-contact" aria-labelledby="mg-contact-title">
+                <div class="mg-section-heading">
+                  <h2 id="mg-contact-title">{t.contactTitle}</h2>
+                  <span class="mg-heading-ornament" aria-hidden="true">
+                    <svg viewBox="0 0 72 28" focusable="false">
+                      <path d="M1 14h20M51 14h20M36 2l4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"></path>
+                    </svg>
+                  </span>
+                </div>
+
+                <div class="mg-letter">
+                  <span class="mg-wax" aria-hidden="true">
+                    <svg viewBox="0 0 48 48" focusable="false">
+                      <circle cx="24" cy="24" r="21"></circle>
+                      <path d="M24 8c1.5 9.6 6.4 14.5 16 16-9.6 1.5-14.5 6.4-16 16-1.5-9.6-6.4-14.5-16-16 9.6-1.5 14.5-6.4 16-16Z"></path>
+                    </svg>
+                  </span>
+                  {profile.contact?.note && <p class="mg-letter-note">{profile.contact.note}</p>}
+                  {
+                    profile.contact?.email && (
+                      <a class="mg-email" href={`mailto:${profile.contact.email}`}>
+                        <span class="mg-email-label">{t.emailLabel}</span>
+                        <span>{profile.contact.email}</span>
+                      </a>
+                    )
+                  }
+                </div>
+              </section>
+            )}
+          </div>
+        )
+      }
+    </main>
+
+    <footer class="mg-footer" aria-label={t.footerLabel}>
+      <div class="mg-footer-inner">
+        <p>{t.footerMark}</p>
+        <a class="mg-back-top" href="#mg-top">
+          <span>{t.backToTop}</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m5 14 7-7 7 7M12 7v12"></path>
+          </svg>
+        </a>
+      </div>
+    </footer>
+
+    <script>
+      import './script';
+    </script>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

@@ -1,0 +1,389 @@
+---
+/**
+ * little-forest — a picture-book trail through one profile.
+ *
+ * Data enters only through loadDesignView. The DOM follows the walk:
+ * entrance -> clearing -> signposts -> places -> tree rings -> specimens ->
+ * cottage. The desktop CSS weaves those same nodes into an S-shaped trail;
+ * mobile keeps the same order in one column beside a simple path.
+ *
+ * No theme script, raster illustration or external asset is used. The scene is
+ * built from CSS, HTML and the existing profile avatar.
+ */
+import { Font } from 'astro:assets';
+import { ArrowUpRight, Coffee, Mail, Tv, Video } from '@lucide/astro';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('little-forest', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+const pad = (index: number) => String(index + 1).padStart(2, '0');
+const stop = (number: number) => String(number).padStart(2, '0');
+const hasProjects = Boolean(profile.projects?.length);
+const hasExperience = Boolean(profile.experience?.length);
+const hasSkills = Boolean(profile.skills?.length);
+const experienceStop = 2 + Number(hasProjects);
+const skillsStop = experienceStop + Number(hasExperience);
+const contactStop = skillsStop + Number(hasSkills);
+const linkIcons: Partial<Record<string, typeof Tv>> = {
+  tv: Tv,
+  video: Video,
+  coffee: Coffee,
+  mail: Mail,
+};
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-lxgw" />
+    <Reveal />
+  </head>
+  <body class="lf">
+    <div class="lf-wash" aria-hidden="true"></div>
+
+    <header class="lf-entrance" aria-labelledby="lf-name">
+      <svg class="lf-bough" viewBox="0 0 1400 720" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <circle class="lf-bough-sun" cx="1120" cy="126" r="68"></circle>
+        <path class="lf-bough-stem" d="M-35 118C158 142 220 70 377 108s258 44 386 5 254-54 386-8 177 90 286 48"></path>
+        <path class="lf-bough-stem lf-bough-stem--fine" d="M22 68c116 74 220 58 324 83s191 62 305 38 207-71 333-46 206 70 385 32"></path>
+        <g class="lf-bough-leaves">
+          <ellipse cx="92" cy="112" rx="38" ry="12" transform="rotate(18 92 112)"></ellipse>
+          <ellipse cx="174" cy="83" rx="32" ry="10" transform="rotate(-12 174 83)"></ellipse>
+          <ellipse cx="302" cy="119" rx="40" ry="12" transform="rotate(18 302 119)"></ellipse>
+          <ellipse cx="433" cy="123" rx="31" ry="10" transform="rotate(-9 433 123)"></ellipse>
+          <ellipse cx="571" cy="103" rx="38" ry="11" transform="rotate(15 571 103)"></ellipse>
+          <ellipse cx="717" cy="77" rx="30" ry="9" transform="rotate(-13 717 77)"></ellipse>
+          <ellipse cx="864" cy="61" rx="38" ry="11" transform="rotate(11 864 61)"></ellipse>
+          <ellipse cx="989" cy="55" rx="31" ry="9" transform="rotate(-16 989 55)"></ellipse>
+          <ellipse cx="1188" cy="92" rx="36" ry="11" transform="rotate(15 1188 92)"></ellipse>
+          <ellipse cx="1328" cy="132" rx="32" ry="10" transform="rotate(-9 1328 132)"></ellipse>
+        </g>
+      </svg>
+
+      <div class="lf-entrance-inner">
+        <div class="lf-entrance-copy">
+          <p class="lf-kicker">
+            <span class="lf-kicker-leaf" aria-hidden="true"></span>
+            {t.entranceKicker}
+          </p>
+
+          <div class="lf-sign-board">
+            <h1 id="lf-name" class="lf-name">{profile.name}</h1>
+          </div>
+
+          <p class="lf-headline">{profile.headline}</p>
+
+          {profile.location && (
+            <p class="lf-location">
+              <span class="lf-location-mark" aria-hidden="true"></span>
+              <span class="lf-location-label">{t.locationLabel}</span>
+              <span>{profile.location}</span>
+            </p>
+          )}
+
+          <p class="lf-entrance-note">{t.entranceNote}</p>
+        </div>
+
+        <figure class="lf-field-card">
+          <div class="lf-field-card-head">
+            <span>{t.observationLabel}</span>
+            <span class="lf-field-card-stem" aria-hidden="true"></span>
+          </div>
+
+          {profile.avatar ? (
+            <div class="lf-portrait">
+              <img
+                src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                alt={profile.name}
+                width="640"
+                height="800"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          ) : (
+            <div class="lf-avatar-fallback">
+              <svg viewBox="0 0 260 300" aria-hidden="true" focusable="false">
+                <path class="lf-fallback-stem" d="M127 271c5-77 8-143 3-215"></path>
+                <path class="lf-fallback-leaf" d="M129 198c-33-6-54-24-59-54 34 2 55 19 59 54Z"></path>
+                <path class="lf-fallback-leaf" d="M132 151c30-10 45-30 43-58-30 9-45 28-43 58Z"></path>
+                <path class="lf-fallback-leaf" d="M130 231c-25-1-43-13-52-34 26-1 44 10 52 34Z"></path>
+                <path
+                  class="lf-fallback-leaf"
+                  d="M132 104c24-12 34-31 28-57-24 12-34 31-28 57Z"
+                ></path>
+                <path class="lf-fallback-outline" d="M74 257h113"></path>
+              </svg>
+              <p>{t.noAvatar}</p>
+            </div>
+          )}
+
+          <figcaption>
+            <span>{t.observationCaption}</span>
+            {profile.location && <span>{profile.location}</span>}
+          </figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <main class="lf-book" aria-label={t.trailLabel}>
+      <section class="lf-clearing" aria-labelledby="lf-clearing-title" data-reveal>
+        <div class="lf-clearing-mark" aria-hidden="true">
+          <svg viewBox="0 0 72 92" focusable="false">
+            <path d="M36 86C34 56 37 29 47 7"></path>
+            <path d="M39 58c-18-5-28-17-29-35 18 4 29 16 29 35Z"></path>
+            <path d="M38 38c14-8 21-19 20-35-15 6-22 17-20 35Z"></path>
+          </svg>
+        </div>
+        <div class="lf-clearing-body">
+          <p class="lf-section-label">{t.clearingLabel}</p>
+          <h2 id="lf-clearing-title" class="lf-clearing-title">{t.clearingTitle}</h2>
+          <p class="lf-bio">{profile.bio}</p>
+        </div>
+      </section>
+
+      <div class="lf-trail">
+        <svg class="lf-path" viewBox="0 0 1200 3100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path
+            class="lf-path-underlay"
+            d="M610-30C620 135 445 175 355 275S235 518 360 611s340 89 420 189 70 180-90 280-310 140-360 270 80 230 290 300 380 130 340 290-240 170-350 280-250 210-210 360 300 170 360 310-100 140-160 210"
+          ></path>
+          <path
+            class="lf-path-line"
+            d="M610-30C620 135 445 175 355 275S235 518 360 611s340 89 420 189 70 180-90 280-310 140-360 270 80 230 290 300 380 130 340 290-240 170-350 280-250 210-210 360 300 170 360 310-100 140-160 210"
+          ></path>
+        </svg>
+
+        <section class="lf-station lf-station--links" aria-labelledby="lf-links-title" data-reveal>
+          <div class="lf-station-head">
+            <span class="lf-station-no" aria-hidden="true">{stop(1)}</span>
+            <div>
+              <h2 id="lf-links-title" class="lf-station-title">{t.linksTitle}</h2>
+              <p class="lf-station-label">{t.linksLabel}</p>
+            </div>
+          </div>
+
+          {profile.links.length > 0 ? (
+            <ul class="lf-signposts">
+              {profile.links.map((link) => {
+                const LinkIcon = link.icon ? linkIcons[link.icon] : undefined;
+                return (
+                  <li class="lf-signpost-item">
+                    <a class="lf-signpost" href={link.url}>
+                      {LinkIcon && (
+                        <span class="lf-signpost-icon" aria-hidden="true">
+                          <LinkIcon />
+                        </span>
+                      )}
+                      <span class="lf-signpost-label">{link.label}</span>
+                      <svg class="lf-signpost-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M5 12h12M13 7l5 5-5 5"></path>
+                      </svg>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p class="lf-empty">{t.noLinks}</p>
+          )}
+        </section>
+
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="lf-station lf-station--projects" aria-labelledby="lf-projects-title" data-reveal>
+            <div class="lf-station-head">
+              <span class="lf-station-no" aria-hidden="true">{stop(2)}</span>
+              <div>
+                <h2 id="lf-projects-title" class="lf-station-title">{t.projectsTitle}</h2>
+                <p class="lf-station-label">{t.projectsLabel}</p>
+              </div>
+            </div>
+
+            <ol class="lf-places">
+              {profile.projects.map((project, index) => (
+                <li class="lf-place">
+                  <span class="lf-place-marker" aria-hidden="true">
+                    <span>{pad(index)}</span>
+                  </span>
+                  <div class="lf-place-body">
+                    <p class="lf-place-kicker" aria-hidden="true">
+                      {t.placeLabel} {pad(index)}
+                    </p>
+                    <h3 class="lf-place-title">
+                      {project.url ? (
+                        <a href={project.url}>
+                          {project.title}
+                          <ArrowUpRight class="lf-external-mark" aria-hidden="true" />
+                        </a>
+                      ) : (
+                        project.title
+                      )}
+                    </h3>
+                    {project.description && <p class="lf-place-description">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <ul class="lf-tags" aria-label={t.projectsLabel}>
+                        {project.tags.map((tag) => (
+                          <li>{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="lf-station lf-station--experience" aria-labelledby="lf-experience-title" data-reveal>
+            <div class="lf-station-head">
+              <span class="lf-station-no" aria-hidden="true">{stop(experienceStop)}</span>
+              <div>
+                <h2 id="lf-experience-title" class="lf-station-title">{t.experienceTitle}</h2>
+                <p class="lf-station-label">{t.experienceLabel}</p>
+              </div>
+            </div>
+
+            <div class="lf-rings-layout">
+              <div class="lf-tree-ring" aria-hidden="true">
+                <svg viewBox="0 0 300 300" focusable="false">
+                  <path
+                    class="lf-ring-bark"
+                    d="M149 17c65-5 124 39 132 111 8 76-38 139-112 153-72 14-140-31-150-104C9 105 72 23 149 17Z"
+                  ></path>
+                  <ellipse class="lf-ring-year lf-ring-year--1" cx="149" cy="149" rx="116" ry="112"></ellipse>
+                  <ellipse class="lf-ring-year lf-ring-year--2" cx="149" cy="149" rx="96" ry="88"></ellipse>
+                  <ellipse class="lf-ring-year lf-ring-year--3" cx="149" cy="149" rx="77" ry="73"></ellipse>
+                  <ellipse class="lf-ring-year lf-ring-year--4" cx="149" cy="149" rx="57" ry="52"></ellipse>
+                  <ellipse class="lf-ring-year lf-ring-year--5" cx="149" cy="149" rx="37" ry="34"></ellipse>
+                  <path class="lf-ring-crack" d="M151 148c-18-31-8-63 7-88M151 148c23 9 49 4 70-15M151 148c-22 17-35 43-31 72"></path>
+                  <circle class="lf-ring-heart" cx="151" cy="148" r="13"></circle>
+                </svg>
+              </div>
+
+              <ol class="lf-ring-list">
+                {profile.experience.map((item, index) => (
+                  <li class="lf-ring-item">
+                    <span class="lf-ring-index" aria-hidden="true">{pad(index)}</span>
+                    <div class="lf-ring-body">
+                      <h3 class="lf-ring-org">{item.org}</h3>
+                      {(item.role || item.period) && (
+                        <p class="lf-ring-meta">
+                          {item.role && <span>{item.role}</span>}
+                          {item.period && <span>{item.period}</span>}
+                        </p>
+                      )}
+                      {item.description && <p class="lf-ring-description">{item.description}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
+
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="lf-station lf-station--skills" aria-labelledby="lf-skills-title" data-reveal>
+            <div class="lf-station-head">
+              <span class="lf-station-no" aria-hidden="true">{stop(skillsStop)}</span>
+              <div>
+                <h2 id="lf-skills-title" class="lf-station-title">{t.skillsTitle}</h2>
+                <p class="lf-station-label">{t.skillsLabel}</p>
+              </div>
+            </div>
+
+            <div class="lf-herbarium">
+              <p class="lf-herbarium-caption">{t.skillsLabel}</p>
+              <ul class="lf-specimens">
+                {profile.skills.map((skill, index) => (
+                  <li class={`lf-specimen lf-specimen--${(index % 3) + 1}`}>
+                    <span class="lf-specimen-no" aria-hidden="true">{t.specimenLabel} {pad(index)}</span>
+                    <svg class="lf-bloom" viewBox="0 0 100 126" aria-hidden="true" focusable="false">
+                      <path class="lf-bloom-stem" d="M50 120c-2-30-1-67 3-101"></path>
+                      <path class="lf-bloom-leaf" d="M51 94c-18-2-28-12-31-27 17 1 28 11 31 27Z"></path>
+                      <path class="lf-bloom-leaf" d="M52 76c14-4 21-13 21-27-14 4-21 13-21 27Z"></path>
+                      <g class="lf-bloom-petals">
+                        <ellipse cx="50" cy="24" rx="9" ry="16"></ellipse>
+                        <ellipse cx="50" cy="24" rx="9" ry="16" transform="rotate(72 50 40)"></ellipse>
+                        <ellipse cx="50" cy="24" rx="9" ry="16" transform="rotate(144 50 40)"></ellipse>
+                        <ellipse cx="50" cy="24" rx="9" ry="16" transform="rotate(216 50 40)"></ellipse>
+                        <ellipse cx="50" cy="24" rx="9" ry="16" transform="rotate(288 50 40)"></ellipse>
+                      </g>
+                      <circle class="lf-bloom-center" cx="50" cy="40" r="7"></circle>
+                    </svg>
+                    <h3 class="lf-specimen-name">{skill}</h3>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
+        <section class="lf-station lf-station--contact" aria-labelledby="lf-contact-title" data-reveal>
+          <div class="lf-station-head">
+            <span class="lf-station-no" aria-hidden="true">{stop(contactStop)}</span>
+            <div>
+              <h2 id="lf-contact-title" class="lf-station-title">{t.contactTitle}</h2>
+              <p class="lf-station-label">{t.contactLabel}</p>
+            </div>
+          </div>
+
+          <div class="lf-cottage-site">
+            <div class="lf-cottage-copy">
+              {profile.contact?.note && <p class="lf-contact-note">{profile.contact.note}</p>}
+              {profile.contact?.email ? (
+                <a class="lf-mailbox" href={`mailto:${profile.contact.email}`}>
+                  <span class="lf-mailbox-label">
+                    <Mail class="lf-mailbox-icon" aria-hidden="true" />
+                    {t.emailLabel}
+                  </span>
+                  <span class="lf-mailbox-address">{profile.contact.email}</span>
+                </a>
+              ) : (
+                !profile.contact?.note && <p class="lf-contact-empty">{t.noContact}</p>
+              )}
+            </div>
+
+            <svg class="lf-cottage-art" viewBox="0 0 540 370" aria-hidden="true" focusable="false">
+              <path class="lf-cottage-ground" d="M-30 301c99-26 176-13 270 1s177 14 328-13v112H-30Z"></path>
+              <path class="lf-cottage-path" d="M279 366c-2-24 7-44 23-60 17-17 29-35 30-57h-40c3 18-8 33-23 48-20 20-29 43-26 69Z"></path>
+              <path class="lf-cottage-tree-trunk" d="M70 288c5-75 12-139 8-209"></path>
+              <path class="lf-cottage-canopy" d="M77 116C28 122 5 87 16 52c9-30 42-40 64-25 15-39 67-37 80 6 31-19 66 2 65 35-1 30-28 50-58 48-18 22-58 20-73 5Z"></path>
+              <path class="lf-cottage-wall" d="M199 235c0-31-1-78 2-119 52-2 149-2 195 1l1 116Z"></path>
+              <path class="lf-cottage-roof" d="M173 138 295 72l151 62-17 19-133-51-104 55Z"></path>
+              <path class="lf-cottage-chimney" d="m372 89 24-13 4 43-24 12Z"></path>
+              <path class="lf-cottage-smoke" d="M392 65c-21-22 16-32-2-57"></path>
+              <rect class="lf-cottage-door" x="265" y="204" width="51" height="85" rx="24"></rect>
+              <circle class="lf-cottage-knob" cx="302" cy="247" r="3"></circle>
+              <rect class="lf-cottage-window" x="348" y="190" width="39" height="41" rx="3"></rect>
+              <path class="lf-cottage-window-line" d="M367 191v39M349 210h37"></path>
+              <rect class="lf-cottage-window" x="211" y="191" width="35" height="37" rx="3"></rect>
+              <path class="lf-cottage-window-line" d="M229 192v35M212 209h33"></path>
+              <path class="lf-cottage-step" d="M249 292h86l12 14h-110Z"></path>
+              <path class="lf-cottage-fence" d="M128 289v-49m-22 49v-35m44 35v-35m-34-17v70m24-70v70"></path>
+              <path class="lf-cottage-flower" d="M438 283c-1-22 0-39 4-54m-1 27c-14-2-20-9-22-20 13 1 20 8 22 20Zm3-15c11-4 16-10 15-20-11 3-16 9-15 20Z"></path>
+              <circle class="lf-cottage-flower-head" cx="442" cy="222" r="8"></circle>
+              <path class="lf-cottage-grass" d="M104 307c10-17 18-21 29-24m-9 27c10-19 21-27 36-30m-182 43c13-21 26-28 44-31m379 21c11-16 23-23 38-25"></path>
+            </svg>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="lf-footer">
+      <span class="lf-footer-sprig" aria-hidden="true"></span>
+      <p>{t.footerColophon}</p>
+      <span class="lf-footer-sprig lf-footer-sprig--flip" aria-hidden="true"></span>
+    </footer>
+
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

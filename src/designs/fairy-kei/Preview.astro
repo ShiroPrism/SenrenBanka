@@ -1,0 +1,303 @@
+---
+// 自包含收藏盒缩略：不 import 正式页 CSS、不声明 Font、不含可聚焦元素。
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-fredoka',
+  '--font-lxgw',
+  '--font-inter',
+];
+
+const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const charms = links.slice(0, 2);
+---
+
+<div class="fk-pv">
+  <div class="fk-pv-case">
+    <div class="fk-pv-lid">
+      <span class="fk-pv-lid-stripe"></span>
+      <span class="fk-pv-lid-badge">{t.collectionLabel}</span>
+      <span class="fk-pv-lid-star"></span>
+    </div>
+
+    <div class="fk-pv-body">
+      <div class="fk-pv-window">
+        <span class="fk-pv-emblem"></span>
+      </div>
+
+      <div class="fk-pv-copy">
+        <p class="fk-pv-kicker">{t.caseTitle}</p>
+        <p class="fk-pv-name">{name}</p>
+        <p class="fk-pv-headline">{headline}</p>
+      </div>
+
+      <div class="fk-pv-charms">
+        <span class="fk-pv-charm-row">
+          {charms.map((link, index) => (
+            <span class="fk-pv-charm">
+              <span class="fk-pv-charm-no">{String(index + 1).padStart(2, '0')}</span>
+              <span class="fk-pv-charm-label">{link.label}</span>
+            </span>
+          ))}
+        </span>
+      </div>
+
+      <span class="fk-pv-latch"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .fk-pv {
+    display: flex;
+    width: 100%;
+    min-height: 9rem;
+    height: 100%;
+    padding: 0.55rem 0.7rem 0.6rem;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 10px 10px, rgba(62, 44, 77, 0.09) 0 1px, transparent 1.5px) 0 0 / 20px 20px,
+      linear-gradient(135deg, var(--fk-cream), var(--fk-room) 72%, var(--fk-butter));
+    color: var(--fk-ink);
+    font-family:
+      var(--font-inter), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: 0.5rem;
+    line-height: 1.4;
+  }
+
+  .fk-pv-case {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    padding-top: 1.35rem;
+  }
+
+  .fk-pv-lid {
+    position: relative;
+    z-index: 0;
+    display: grid;
+    place-items: center;
+    min-height: 2rem;
+    margin: 0 0.55rem -0.25rem;
+    overflow: hidden;
+    border: 2px solid var(--fk-outline);
+    border-bottom: 0;
+    border-radius: 0.75rem 0.75rem 0.2rem 0.2rem;
+    background: repeating-linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--fk-rose) 88%, var(--fk-paper)) 0 0.48rem,
+      var(--fk-paper) 0.48rem 0.96rem
+    );
+    box-shadow: 0 0.25rem 0 var(--fk-plum);
+    transform: perspective(16rem) rotateX(8deg);
+  }
+
+  .fk-pv-lid-stripe {
+    position: absolute;
+    top: -0.4rem;
+    left: 16%;
+    width: 1.4rem;
+    height: 3rem;
+    background: var(--fk-lilac);
+    transform: rotate(7deg);
+  }
+
+  .fk-pv-lid-badge {
+    position: relative;
+    z-index: 1;
+    max-width: 70%;
+    padding: 0.12rem 0.55rem;
+    overflow: hidden;
+    border: 1px solid var(--fk-outline);
+    border-radius: 999px;
+    background: var(--fk-paper);
+    font-family:
+      var(--font-fredoka), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: 0.42rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fk-pv-lid-star {
+    position: absolute;
+    top: 0.32rem;
+    right: 0.5rem;
+    width: 0.45rem;
+    aspect-ratio: 1;
+    background: var(--fk-butter);
+    clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%);
+  }
+
+  .fk-pv-body {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    flex: 1;
+    grid-template-columns: 0.76fr 1.24fr;
+    grid-template-rows: 1fr auto;
+    gap: 0.45rem 0.65rem;
+    min-height: 0;
+    padding: 0.62rem 0.7rem 0.7rem;
+    border: 2px solid var(--fk-outline);
+    border-radius: 0.3rem 0.3rem 0.95rem 0.95rem;
+    background: linear-gradient(180deg, var(--fk-mint-soft), var(--fk-mint) 67%, var(--fk-butter));
+    box-shadow:
+      0 0.28rem 0 var(--fk-plum),
+      0 0.55rem 0.7rem var(--fk-shadow);
+  }
+
+  .fk-pv-window {
+    position: relative;
+    align-self: center;
+    width: 100%;
+    aspect-ratio: 1.08;
+    padding: 0.25rem;
+    border: 2px solid var(--fk-outline);
+    border-radius: 46% 46% 0.45rem 0.45rem / 22% 22% 0.45rem 0.45rem;
+    background: var(--fk-butter);
+    box-shadow: 0 0.2rem 0 var(--fk-rose), 0 0.36rem 0 var(--fk-outline);
+    transform: rotate(1.2deg);
+  }
+
+  .fk-pv-window::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid color-mix(in srgb, var(--fk-outline) 44%, transparent);
+    border-radius: 46% 46% 0.3rem 0.3rem / 22% 22% 0.3rem 0.3rem;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent 0 0.8rem,
+        rgba(62, 44, 77, 0.08) 0.8rem calc(0.8rem + 1px)
+      ),
+      linear-gradient(150deg, var(--fk-paper), var(--fk-blue));
+  }
+
+  .fk-pv-emblem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 37%;
+    aspect-ratio: 1;
+    background: var(--fk-rose);
+    clip-path: polygon(50% 0, 61% 35%, 98% 36%, 68% 57%, 79% 94%, 50% 72%, 21% 94%, 32% 57%, 2% 36%, 39% 35%);
+    filter: drop-shadow(0 0.12rem 0 var(--fk-outline));
+    transform: translate(-50%, -50%) rotate(8deg);
+  }
+
+  .fk-pv-copy {
+    align-self: center;
+    min-width: 0;
+    padding-left: 0.15rem;
+  }
+
+  .fk-pv-kicker {
+    margin: 0 0 0.15rem;
+    overflow: hidden;
+    color: var(--fk-plum);
+    font-family:
+      var(--font-fredoka), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: 0.34rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fk-pv-name {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    font-family:
+      var(--font-fredoka), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+      "Yu Gothic UI", sans-serif;
+    font-size: clamp(1.05rem, 4vw, 1.55rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .fk-pv-headline {
+    display: -webkit-box;
+    margin: 0.25rem 0 0;
+    overflow: hidden;
+    color: var(--fk-ink-soft);
+    font-size: 0.46rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .fk-pv-charms {
+    grid-column: 1 / -1;
+    min-width: 0;
+    padding-top: 0.2rem;
+  }
+
+  .fk-pv-charm-row {
+    display: flex;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .fk-pv-charm {
+    display: flex;
+    flex: 1 1 0;
+    align-items: baseline;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.16rem 0.3rem;
+    border: 1px solid var(--fk-outline);
+    border-radius: 0.25rem 0.45rem 0.25rem 0.4rem;
+    background: var(--fk-paper);
+    box-shadow: 0 0.12rem 0 var(--fk-gold);
+  }
+
+  .fk-pv-charm:nth-child(2) {
+    background: var(--fk-lilac);
+    transform: rotate(1deg);
+  }
+
+  .fk-pv-charm-no {
+    flex: none;
+    color: var(--fk-plum);
+    font-family: var(--font-fredoka), "Arial Narrow", sans-serif;
+    font-size: 0.29rem;
+  }
+
+  .fk-pv-charm-label {
+    min-width: 0;
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fk-pv-latch {
+    position: absolute;
+    bottom: 0.18rem;
+    left: 50%;
+    width: 1.45rem;
+    height: 0.28rem;
+    border: 1px solid var(--fk-outline);
+    border-radius: 0.1rem 0.1rem 0.25rem 0.25rem;
+    background: var(--fk-gold);
+    transform: translateX(-50%);
+  }
+</style>
