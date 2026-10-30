@@ -22,7 +22,7 @@ const { contextMenu } = view;
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    {/* 不预加载：主字体两个子集 + 像素 / 段码各一；swap + 系统回退已足够（热敏纸闪一下是主题的一部分） */}
+    {/* 不预加载：核心 CJK 分片较多，固定字重亦无需提前取件；swap + 系统回退已足够（热敏纸闪一下是主题的一部分） */}
     <Font cssVariable="--font-cutive-mono" />
     <Font cssVariable="--font-ark-pixel" />
     <Font cssVariable="--font-dseg7" />

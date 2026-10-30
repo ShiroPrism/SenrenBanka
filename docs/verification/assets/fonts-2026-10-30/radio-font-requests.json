@@ -1,88 +1,138 @@
 {
-  "page": "/zh-cn/radio/",
-  "fontCheck": true,
-  "generatedAt": "2026-10-30T10:15:57.162Z",
-  "requests": [
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/24b0d5e2ecc53447.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 22032,
-      "decodedBodyBytes": 22032,
-      "diskBytes": 22032,
-      "sha256": "b29431f62c81a4b7365352fa2739752c0791b80d96270abce9cc49d80d1d24ea"
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/6821d26bb4d60551.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 5808,
-      "decodedBodyBytes": 5808,
-      "diskBytes": 5808,
-      "sha256": "a63730b0dd6812924b9e370f20bd7851cf37cb2783e528a2c68a308dee288ba8"
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/880402400a7df44e.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 17248,
-      "decodedBodyBytes": 17248,
-      "diskBytes": 17248,
-      "sha256": "4bf92ff83f1dca21044ecebaf88896492732f70a13de4ff8a9e02dcf320d32bf"
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/a291ae3273c6ec07.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 1952,
-      "decodedBodyBytes": 1952,
-      "diskBytes": 1952,
-      "sha256": "fed218aa8ccded23e3d2a5d57f432885bdca46b6ad2b9de0d261c60d98bb68be"
-    },
+  "id": "radio",
+  "url": "http://127.0.0.1:4321/zh-cn/radio/",
+  "title": "Radio · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "layout": {
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "overflowX": false,
+    "previewCards": 0
+  },
+  "woff2Count": 16,
+  "woff2DiskBytes": 358984,
+  "loadedFamilies": {
+    "Share Tech Mono": 1,
+    "Format 1452": 1,
+    "DSEG14 Classic": 1,
+    "Ark Pixel 12px": 13
+  },
+  "loadedCore": {
+    "Ark Pixel 12px": 13
+  },
+  "computedCore": {
+    "Ark Pixel 12px": 203
+  },
+  "documentFontsCheck": {
+    "Zhuque Fangsong": true,
+    "LXGW WenKai GB": true,
+    "Ark Pixel 12px": true
+  },
+  "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/bf731fea68e86abb.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 13500,
-      "decodedBodyBytes": 13500,
-      "diskBytes": 13500,
-      "sha256": "41e6b9f297f7d9a2df2aaa274092f76d2f72711a15ca455f7f4f4f92caf16b72"
+      "status": 200,
+      "transferSize": 13800,
+      "encodedBodySize": 13500
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/ebcd9543f3131cc2.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 12912,
-      "decodedBodyBytes": 12912,
-      "diskBytes": 12912,
-      "sha256": "0063b65577b44f4933b40f19ffafe348a347dbd1d6c415246e70fc76c5a7e5db"
+      "status": 200,
+      "transferSize": 13212,
+      "encodedBodySize": 12912
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6821d26bb4d60551.woff2",
+      "status": 200,
+      "transferSize": 6108,
+      "encodedBodySize": 5808
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/880402400a7df44e.woff2",
+      "status": 200,
+      "transferSize": 17548,
+      "encodedBodySize": 17248
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/24b0d5e2ecc53447.woff2",
+      "status": 200,
+      "transferSize": 22332,
+      "encodedBodySize": 22032
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6095b51f52e17f60.woff2",
+      "status": 200,
+      "transferSize": 26364,
+      "encodedBodySize": 26064
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/360df5eb70a30168.woff2",
+      "status": 200,
+      "transferSize": 31904,
+      "encodedBodySize": 31604
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a291ae3273c6ec07.woff2",
+      "status": 200,
+      "transferSize": 2252,
+      "encodedBodySize": 1952
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d0398eb691673c6c.woff2",
+      "status": 200,
+      "transferSize": 20516,
+      "encodedBodySize": 20216
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/78378e57ba498622.woff2",
+      "status": 200,
+      "transferSize": 32636,
+      "encodedBodySize": 32336
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0c13b7deeea0a6f5.woff2",
+      "status": 200,
+      "transferSize": 29552,
+      "encodedBodySize": 29252
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/321feae2b0b69305.woff2",
+      "status": 200,
+      "transferSize": 34348,
+      "encodedBodySize": 34048
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/aab9264bfb27b0f4.woff2",
+      "status": 200,
+      "transferSize": 6584,
+      "encodedBodySize": 6284
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/086a441931e76b9e.woff2",
+      "status": 200,
+      "transferSize": 33704,
+      "encodedBodySize": 33404
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6b179e94c54bc1f4.woff2",
+      "status": 200,
+      "transferSize": 35528,
+      "encodedBodySize": 35228
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7f3d16b674646c9e.woff2",
+      "status": 200,
+      "transferSize": 37396,
+      "encodedBodySize": 37096
     }
   ],
-  "totals": {
-    "count": 6,
-    "transferBytes": 1800,
-    "encodedBodyBytes": 73452,
-    "decodedBodyBytes": 73452,
-    "diskBytes": 73452
-  },
-  "fontChecks": [
-    {
-      "cssVariable": "--font-share-tech-mono",
-      "family": "Share Tech Mono",
-      "check": true,
-      "loadedFaces": 1
-    },
-    {
-      "cssVariable": "--font-format-1452",
-      "family": "Format 1452",
-      "check": true,
-      "loadedFaces": 1
-    },
-    {
-      "cssVariable": "--font-dseg14",
-      "family": "DSEG14 Classic",
-      "check": true,
-      "loadedFaces": 1
-    },
-    {
-      "cssVariable": "--font-ark-pixel",
-      "family": "Ark Pixel 12px",
-      "check": true,
-      "loadedFaces": 3
-    }
-  ]
+  "network": {
+    "thirdParty": [],
+    "failed": [],
+    "consoleErrors": []
+  }
 }

@@ -51,12 +51,12 @@
 
 ### 步骤 5 · 生产接线与记录
 
-- **人工边界**：只把确定启用的 family 写入 `fonts.config.json`（id、注册名、CSS 变量、回退栈；确需保持历史注册行为时使用最小 `variantOverrides`）。字体仓新增 family 不会自动进入站点。
+- **人工边界**：只把确定启用的 family 写入 `fonts.config.json`（id、注册名、CSS 变量、目录回退元数据；确需保持历史注册行为时使用最小 `variantOverrides`）。这些回退字段只用于目录映射校验，不会写进浏览器 `--font-*`；字体仓新增 family 不会自动进入站点。
 - **外部目录接线**：`npm run fonts:update -- --catalog-url <固定 catalog URL> --catalog-sha256 <发布页 SHA>` 验证目录 schema、family package、许可与哈希，生成 `fonts.lock.json`、`fonts.catalog.json` 和 `src/fonts/generated.ts`。首次采用 / 升级必须从发布页带外取得 SHA，不允许自动追 latest。
 - **本地准备**：`npm run fonts:prepare` 只下载锁定的启用 family，验证外层包与包内逐文件哈希后安装到被忽略的 `.cache/fonts/`；已有完整缓存只复核不重下。`npm run fonts:check` 完全离线。
-- **Astro 接线**：`astro.config.mjs` 展开生成定义接入 `fontProviders.local()` → 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。不得在 `astro.config.mjs` 手工列 CJK 分片，也不得手改生成文件。
+- **Astro 接线**：`astro.config.mjs` 展开生成定义接入 `fontProviders.local()` → 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。所有 npm / local registration 必须 `fallbacks: []` + `optimizedFallbacks: false`，`--font-*` 只能暴露主 face。不得在 `astro.config.mjs` 手工列 CJK 分片，也不得手改生成文件。
 - **npm provider**：仍需 Fontsource 包的 6 个 family 保持 `remote: false`、关闭 `optimizedFallbacks`，并由 `localNpmProvider()` 把 provider 返回的包 URL 映射回已安装 `node_modules`。`remote: false` 本身仍会产出 jsdelivr URL，不能据此宣称离线。
-- **回退栈必须包含系统中文**，回退顺序与推荐链见 §4。
+- **设计 CSS 拥有完整回退栈**：每个使用 `var(--font-*)` 的 `font` / `font-family` 必须以显式 fallback 收尾；承诺 CJK 的字体栈必须把 Zhuque / LXGW / Ark Pixel 放在系统中文之前。顺序见 §4，`npm run fonts:typography` 是自动门禁。
 - **六项记录写入位置**：
   - 自产（`self-produced`）与复刻（`third-party-analysis`）→ 该设计 `DESIGN.md` 的字体章节；
   - 厂商来源（`official-vendor` / `official-docs-derived`）→ 该主题 `docs/designs/<id>/ADAPTATION.md`（`DESIGN.md` 只读，不得改写）。
@@ -122,7 +122,10 @@
 ## 4. 回退策略（强制）
 
 - 任何生产字体栈都必须以**系统回退链**收尾，且必须包含**系统中文**与通用族兜底（`sans-serif` / `serif` / `monospace`）。
-- 推荐排序：`<目标字体族>`,（中文）`'PingFang SC', 'Microsoft YaHei'`,（日文，如需）`'Hiragino Sans', 'Yu Gothic UI'`, 通用族兜底。
+- 推荐排序：`<拉丁 / 展示字体变量>`, `<Zhuque / LXGW / Ark Pixel 等 CJK 字体变量>`,（中文）`'PingFang SC', 'Microsoft YaHei'`,（日文，如需）`'Hiragino Sans', 'Yu Gothic UI'`, 通用族兜底。
+- 罗马字角色只有在整条栈不承诺 CJK 时才可省略 core-cjk 变量；任何 `font` / `font-family` 声明都不能只写一个 `var(--font-*)`。
+- **禁止把系统中文字体放进 Astro 字体 registration 的 fallback 数组**：它会封进变量并抢在后续 CJK 变量之前。系统链只写在设计 CSS。
+- `Preview.astro` 与正式页共享同一门禁：预览中的字体变量同样需要显式 fallback 与正确的 CJK 顺序。
 - 六项记录里的第 4、6 项必须写明：简体中文 / 日文 / 英文各自的实际覆盖（以清单数字为准），缺哪类、回退到哪类系统字体、顺序如何。
 - 无 JS、断网或字体加载失败时版式必须仍可读（延续站点既有验收：SPEC §13-10）。
 

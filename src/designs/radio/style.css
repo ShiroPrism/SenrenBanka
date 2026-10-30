@@ -86,7 +86,7 @@
 
 .rd-brand {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   line-height: 1.6;
@@ -155,7 +155,7 @@
 
 .rd-readout-label {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.34em;
   line-height: 1.6;
@@ -279,7 +279,7 @@
 }
 
 .rd-meta-key {
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -291,7 +291,7 @@
 .rd-chan-no,
 .rd-period,
 .rd-total-num {
-  font-family: var(--font-radio-digits), var(--font-radio), var(--font-radio-cjk), monospace;
+  font-family: var(--font-radio-digits), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", monospace;
 }
 
 /* ---------- 模块栅格 ---------- */
@@ -471,7 +471,7 @@
 }
 
 .rd-total-label {
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   line-height: 1.6;
@@ -624,7 +624,7 @@
 
 .rd-band {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   line-height: 1.6;

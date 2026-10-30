@@ -238,12 +238,13 @@ components:
    正好对应 LCD 的「元素网格」——`ELSH 8` 经真实样张对比后选定（0 = 元素消失，2 = 细笔画，8 = 实心点阵）；
    中文只有两条开放路径，像素网格这一侧只能是 Ark Pixel（Zpix 因官方无许可文件被排除）。
    DSEG7 / DSEG14 留给 receipt / radio（段码是收据与仪表的读数语言，寻呼机的数字是点阵而不是七段）。
-4. **实际覆盖与回退**: Silkscreen 仅拉丁（ASCII 与常用标点，约 200 字形）；Ark Pixel 子集 1992 字形，
-   站内用字已逐字核对（`细 / 履 / 络 / 条 / 寻 / 呼` 不在子集里，故本套文案改用 `链接 / 经历 / 联系 / 件 / 消息机`；
-   日文避开 `細 / 返 / 計 / 終`）；Handjet latin-full 覆盖 0-9 与拉丁。中文回退 Songti SC / SimSun，
-   拉丁回退 Courier New / Courier，通用兜底 monospace。
+4. **实际覆盖与回退**: Silkscreen 仅拉丁（ASCII 与常用标点，约 200 字形）；Ark Pixel 由外部
+   catalog v1.0.0 提供完整 `core-cjk` cmap（55 个 `unicode-range` 分片，家族包 1,371,013 B），
+   当前页面文案不再受旧站内 1,992 字子集限制；Handjet latin-full 覆盖 0-9 与拉丁。中文回退
+   Songti SC / SimSun，拉丁回退 Courier New / Courier，通用兜底 monospace。
 5. **字重 / 轴 / 体积 / 许可**: Silkscreen 400 + 700 静态（16KB）；Handjet 单文件可变 100–900 +
-   ELGR / ELSH 轴（18KB）；Ark Pixel 子集 39KB。三者均 OFL-1.1，无 RFN 义务（字体文件原样分发、未修改）。
+   ELGR / ELSH 轴（18KB）；Ark Pixel 家族包 1,371,013 B / 55 分片。三者均 OFL-1.1，
+   无 RFN 义务（字体文件原样分发、未修改）。
 6. **缺失回退顺序**: 数字 `--font-handjet → Silkscreen → Ark Pixel → Songti SC / SimSun → monospace`；
    标签 / 正文 `--font-silkscreen → Ark Pixel → Songti SC / SimSun → monospace`（汉字逐字落到第二档）。
 

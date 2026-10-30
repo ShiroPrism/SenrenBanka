@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-10-30T12:28:20.180Z",
+  "inventory": {
+    "htmlPages": 105,
+    "cssFiles": 24,
+    "fontFiles": 611,
+    "fontBytes": 22404240,
+    "nonWoff2FontFiles": []
+  },
+  "registeredFontVariables": [
+    "--font-cutive-mono",
+    "--font-courier-prime",
+    "--font-sorts-mill-goudy",
+    "--font-share-tech-mono",
+    "--font-league-mono",
+    "--font-silkscreen",
+    "--font-prociono",
+    "--font-handjet",
+    "--font-league-gothic",
+    "--font-blackout",
+    "--font-uglytypist",
+    "--font-format-1452",
+    "--font-fredoka",
+    "--font-dseg7",
+    "--font-dseg14",
+    "--font-tt2020",
+    "--font-tt2020-styled",
+    "--font-zhuque",
+    "--font-ark-pixel",
+    "--font-lxgw",
+    "--font-fraunces",
+    "--font-jetbrains-mono",
+    "--font-roboto-flex",
+    "--font-geist",
+    "--font-geist-mono",
+    "--font-inter"
+  ],
+  "fontVariableDeclarations": {
+    "count": 228,
+    "uniqueVariables": [
+      "--font-ark-pixel",
+      "--font-blackout",
+      "--font-courier-prime",
+      "--font-cutive-mono",
+      "--font-dseg14",
+      "--font-dseg7",
+      "--font-format-1452",
+      "--font-fraunces",
+      "--font-fredoka",
+      "--font-geist",
+      "--font-geist-mono",
+      "--font-handjet",
+      "--font-inter",
+      "--font-jetbrains-mono",
+      "--font-league-gothic",
+      "--font-league-mono",
+      "--font-lxgw",
+      "--font-prociono",
+      "--font-roboto-flex",
+      "--font-share-tech-mono",
+      "--font-silkscreen",
+      "--font-sorts-mill-goudy",
+      "--font-tt2020-styled",
+      "--font-uglytypist",
+      "--font-zhuque"
+    ],
+    "invalidPrimaryOnlyDeclarations": []
+  },
+  "findings": {
+    "machinePaths": [],
+    "legacyPaths": [],
+    "externalFontUrls": []
+  },
+  "assertions": {
+    "allFontFilesAreWoff2": true,
+    "allRegisteredVariablesPrimaryOnly": true,
+    "noMachinePaths": true,
+    "noLegacySourceFontPaths": true,
+    "noThirdPartyFontUrls": true
+  }
+}

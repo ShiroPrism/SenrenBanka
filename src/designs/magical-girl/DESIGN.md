@@ -319,8 +319,9 @@ components:
    `UglyTypist`（手写太强、长正文不稳），这组字更贴合“档案 + 登场”而非“印刷纸物”。
 4. **三语实际覆盖**：Fraunces 是拉丁展示字，不覆盖中文/日文，遇到 CJK 必须落到 LXGW 或系统字；Inter 同样
    只覆盖拉丁/西里尔等拉丁字形，CJK 必须落到 LXGW；LXGW WenKai GB 的来源覆盖为 GB2312 Hanzi `6763/6763`、
-   平假名/片假名 `176/176`、JIS X 0208 `6953/6953`、ASCII `95/95`。合并六套三语文案后重生成的
-   301,340 B 生产子集已复测当前页面可见文本，缺字为 0。
+   平假名/片假名 `176/176`、JIS X 0208 `6953/6953`、ASCII `95/95`。生产字体由外部
+   catalog v1.0.0 提供完整 `core-cjk` cmap（328 个 `unicode-range` 分片，家族包
+   13,841,062 B），不再按六套文案重裁站内子集。
 5. **字重、轴与许可**：Fraunces npm 字体包提供 `100–900` 可变字重与 normal/italic，以及 `SOFT` / `WONK` /
    `opsz` 轴，OFL-1.1；Inter 提供 `100–900` 可变字重、normal/italic 与 `opsz` 轴，OFL-1.1；LXGW WenKai GB
    当前使用 Medium 500、单静态字重，OFL-1.1。三者都是项目已注册的生产字体；本设计不新增字体资源或远程请求。

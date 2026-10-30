@@ -95,12 +95,13 @@ DOM 与移动端视觉顺序一致：
 4. **实际覆盖与回退**：Fredoka latin 文件覆盖 ASCII 95/95、Latin-1 字母 62/62，
    GB2312 0/6763、假名 0/176，因此英文标题直接命中，中日文必须落到 LXGW 或系统
    CJK。LXGW GB 完整源覆盖 GB2312 6763/6763、假名 176/176、JIS X 0208 6953/6953、
-   常用 CJK 标点 53/53；六套合成后重生成的生产子集为 301,340 B（2,133 个映射码位），
-   三语页面可见文本复核为 0 缺字。Inter 覆盖拉丁正文，CJK 只作回退。
+   常用 CJK 标点 53/53；外部 catalog v1.0.0 提供完整 `core-cjk` cmap（328 个
+   `unicode-range` 分片，家族包 13,841,062 B），不再依赖六套文案合并后的站内子集。
+   Inter 覆盖拉丁正文，CJK 只作回退。
 5. **字重、轴与许可**：Fredoka Variable 为 wght 300–700，latin 29,784 B +
-   latin-ext 4,576 B，OFL-1.1；LXGW WenKai GB Medium 为 500，最终站内子集
-   301,340 B，OFL-1.1；Inter 复用站点现有 variable 依赖。字体许可文件随共享字体
-   资源归档，本设计不复制或改写许可。
+   latin-ext 4,576 B，OFL-1.1；LXGW WenKai GB Medium 为 500，完整分片由外部
+   catalog v1.0.0 锁定，OFL-1.1；Inter 复用站点现有 variable 依赖。字体许可文件随
+   外部家族包归档，本设计不复制或改写许可。
 6. **缺失回退顺序**：展示 = Fredoka → LXGW → PingFang SC → Microsoft YaHei →
    Hiragino Sans → Yu Gothic UI → sans-serif；正文 = Inter → LXGW → PingFang SC →
    Microsoft YaHei → Hiragino Sans → Yu Gothic UI → sans-serif；手写标签 =

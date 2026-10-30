@@ -37,7 +37,7 @@ const track = () => `A${(trackIndex += 1)}`;
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    {/* 不预加载：手写 / 等宽 / 中文三族各自一个子集，swap + 系统回退已足够（贴标闪一下是主题的一部分） */}
+    {/* 不预加载：中文 core-cjk 由多枚分片按 unicode-range 取件，swap + 系统回退已足够（贴标闪一下是主题的一部分） */}
     <Font cssVariable="--font-uglytypist" />
     <Font cssVariable="--font-league-mono" />
     <Font cssVariable="--font-zhuque" />

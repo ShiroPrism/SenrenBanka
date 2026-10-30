@@ -74,13 +74,13 @@
 5. **设计动态路由**【已核实，本机实测 astro 7.3.8】：`src/pages/[design]/index.astro` + 注册表模块（`import.meta.glob('./*/Page.astro')` 置于独立模块）可正确产出各设计独立静态 HTML。
    **已知坑（实测）**：若 `import.meta.glob` 结果声明在页面 frontmatter 顶层、再在 `getStaticPaths` 中引用，构建拆包后会报 `pages is not defined`。必须把 glob 放进独立模块（`registry.ts`）再 import；`getStaticPaths` 可为 async。
 6. **内容层加载 YAML**【已核实】：`src/content.config.ts` + `defineCollection({ loader, schema })`；`astro/loaders` 提供 `glob()` / `file()`；YAML 受支持。**坑**：`file()` 不接受"裸单对象"，单文件数据推荐 `glob({ base: './src/data', pattern: 'xxx.yaml' })`（每文件=1 条目，id=文件名）。
-7. **字体**【已核实】：`astro/config` 导出 `fontProviders`（内置 provider：Adobe/Bunny/Fontshare/Fontsource/Google/Google Icons/NPM/local）；`fonts` 配置项声明 `{ provider, name, cssVariable, weights?, styles? }`；页面在 `<head>` 放 `import { Font } from 'astro:assets'` 的 `<Font cssVariable="--font-x" preload? />`；Tailwind 4 用 `@theme inline { --font-sans: var(--font-x); }` 注册。本项目 20 个 local family 的 `fonts` 项由 `src/fonts/generated.ts` 展开，人工启用关系只在 `fonts.config.json`。
+7. **字体**【已核实】：`astro/config` 导出 `fontProviders`（内置 provider：Adobe/Bunny/Fontshare/Fontsource/Google/Google Icons/NPM/local）；`fonts` 配置项声明 `{ provider, name, cssVariable, weights?, styles? }`；页面在 `<head>` 放 `import { Font } from 'astro:assets'` 的 `<Font cssVariable="--font-x" preload? />`；Tailwind 4 用 `@theme inline { --font-sans: var(--font-x); }` 注册。本项目 20 个 local family 的 `fonts` 项由 `src/fonts/generated.ts` 展开，人工启用关系只在 `fonts.config.json`。Astro registration 的 `fallbacks` 会封进 `--font-*` 变量，因此所有 npm / local family 固定 `fallbacks: []` + `optimizedFallbacks: false`，主 face 之外的回退只由设计 CSS 定义。
 8. **部署**【已核实】：Astro CLI 支持 `--site` / `--base` 公共参数；GH Pages project pages 必须 `base: '/repo'`（自定义域名则 base=`/` 并放 `public/CNAME`）；CF Pages（`npm run build` / 输出 `dist`；免费层 500 次构建/月、2 万文件上限）；Vercel 零配置识别 Astro。同一份 dist 不能同时适配 GH 子路径与根路径，用构建参数区分。
 9. **同域存储** 【已核实】：GitHub Pages 同账号下所有项目共享同一 origin，localStorage 完全共享（规范层面无法按路径隔离）→ 存储键必须按站点命名空间化。
 10. **先例**：未发现"根路径随机分配整套设计"的直接可复用项目；astro-distro（26 主题、localStorage、防闪烁内联脚本，MIT）可作实现参考；CSS Zen Garden / Style Stage 验证了"同内容多设计、固定 URL"的理念。
 11. **CSS 聚合陷阱**【已核实，本机实测】：多页共享模块中任何对设计 `Page.astro` / `style.css` 的**动态导入边**（如非 eager `import.meta.glob('./*/Page.astro')`）会把**所有**设计的 CSS 聚合进**每个**引用页面的 `<link>`（实测：根页曾携带全部设计 CSS）。对策：设计路由改用 `injectRoute`（每页只带自己的 CSS），注册表的存在性检查改用 `node:fs`。
 12. **内容层条目 id 会归一化**【已核实，本机实测】：glob loader 把 `site.config.yaml` 的条目 id 归一化为 `siteconfig`；按"单文件集合取唯一条目"处理（`getCollection()[0]`）。
-13. **字体准备 / 锁 / 生成注册**【已核实，本机实测 2026-10-30】：20 个项目自有 family 来自外部 `SenrenBanka-fonts` catalog v1.0.0；`fonts:update` 校验固定 catalog SHA、schema、family package 外层/内层哈希、许可与完整文件清单后生成 lock / snapshot / registration；`fonts:prepare` 只下载锁定的启用 family 到被忽略的 `.cache/fonts/`，已有完整缓存只复核；`fonts:check` 完全离线重算三份文本与缓存文件哈希。6 个 `fontProviders.npm({ remote:false })` family 保留 Fontsource 包，但必须显式 `optimizedFallbacks:false`，且经 `localNpmProvider()` 把 unifont 返回的 jsdelivr URL 映射回已安装 `node_modules`；只关 remote/optimized fallback 仍会在构建末段尝试网络。族名必须与包内 CSS 完全一致；传 `weights` 范围过滤会解析不到 variable 包完整字重轴。
+13. **字体准备 / 锁 / 生成注册**【已核实，本机实测 2026-10-30】：20 个项目自有 family 来自外部 `SenrenBanka-fonts` catalog v1.0.0；`fonts:update` 校验固定 catalog SHA、schema、family package 外层/内层哈希、许可与完整文件清单后生成 lock / snapshot / registration；`fonts:prepare` 只下载锁定的启用 family 到被忽略的 `.cache/fonts/`，已有完整缓存只复核；`fonts:check` 完全离线重算三份文本与缓存文件哈希。生成注册、`fonts.config.json` / catalog manifest 中的 fallback 字段只用于元数据映射校验，不进入 Astro 变量；`astro.config.mjs` 对所有 registration 固定 `fallbacks: []` + `optimizedFallbacks: false`。6 个 `fontProviders.npm({ remote:false })` family 保留 Fontsource 包，并经 `localNpmProvider()` 把 unifont 返回的 jsdelivr URL 映射回已安装 `node_modules`；只关 remote/optimized fallback 仍会在构建末段尝试网络。族名必须与包内 CSS 完全一致；传 `weights` 范围过滤会解析不到 variable 包完整字重轴。`npm run fonts:typography` 静态检查 registration、23 套 styled `style.css` 与预览的显式回退及 CJK 顺序。
 14. **共享 chrome 的 CSS/JS 隔离契约**【已核实，本机实测，v0.5.0】：`ContextMenu.astro` 的样式用 `<style is:inline>` 内联——设计页不新增 `<link>`，"每设计页只链接自己的 CSS" 仍成立，根页 / 切换页 / 404 不含菜单任何字节；运行时经内联 `matchMedia` 门控 + 动态 `import()` 加载，Vite 不为其生成 `modulepreload`。门控为「桌面鼠标 **或** 触控能力任一命中」（v0.10.0 修订：移动端也需要该运行时）。
 15. **`import.meta.env.BASE_URL` 尾斜杠**【已核实，本机实测】：Astro 7 在带 base 时返回**不带尾斜杠**（如 `'/demo'`），`src/lib/urls.ts` 已归一化（否则拼出 `/demoeditorial/`）；`BASE_PATH=/demo` 前缀自检通过（根脚本 / noscript / 切换页链接 / canonical / favicon）。
 16. **npm provider 字体无法子集过滤**【已核实，本机实测】：face 无 `subset` 元数据、family 级 `subsets` 为空操作；`preload` 会带入未使用子集——据此 editorial 移除 preload、terminal 不 preload；latin 子集仍按 `unicode-range` 按需加载。项目自有 CJK 改用外部目录的完整 core-cjk 分片，浏览器按 `unicode-range` 请求命中分片；`fonts:audit` 对最终 HTML 中的缺字只警告并写报告。
@@ -468,7 +468,7 @@ src/designs/<id>/
 2. **动态类名禁止**（实测不可靠）；确需安全列表时用 `@source inline("…")`。
 3. **原生 CSS 自由使用**（同文件或设计私有文件）；不为强行使用工具类牺牲设计还原度——复杂动画、伪元素、独特装饰、非标准布局优先原生 CSS。
 4. 共享组件（`HeadMeta` 等）原则上**保持零 Tailwind 类**，避免把共享目录拖进每个设计的扫描范围。
-5. **字体**：人工启用关系只在 `fonts.config.json`；`fonts:update` 从固定外部目录生成锁、快照与 `src/fonts/generated.ts`，`fonts:prepare` 准备忽略缓存，`fonts:check` 是 `npm run build` 第一步且完全离线。`astro.config.mjs` 展开生成定义接入 `local` provider，页面 `<Font cssVariable preload?>`，`@theme inline` 注册进 Tailwind；6 个 Fontsource npm family 必须 `remote:false` + `optimizedFallbacks:false`，并通过本地 URL 包装层只读已安装包。回退栈须含系统中文字体。新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，决策见 `docs/adr/0008-local-font-library-isolation.md`）。
+5. **字体**：人工启用关系只在 `fonts.config.json`；`fonts:update` 从固定外部目录生成锁、快照与 `src/fonts/generated.ts`，`fonts:prepare` 准备忽略缓存，`fonts:check` 是 `npm run build` 第一步且完全离线。`astro.config.mjs` 展开生成定义接入 `local` provider，页面 `<Font cssVariable preload?>`，`@theme inline` 注册进 Tailwind；6 个 Fontsource npm family 与全部 local family 必须 `fallbacks: []` + `optimizedFallbacks:false`，npm 还必须 `remote:false` 并通过本地 URL 包装层只读已安装包。每个设计 CSS 的 `font` / `font-family` 必须给出显式 fallback；承诺 CJK 时按拉丁变量 → Zhuque / LXGW / Ark Pixel → 系统中文字体 → 通用族排序，`npm run fonts:typography` 门禁。新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，本地隔离见 `docs/adr/0008-local-font-library-isolation.md`，生产分发见 `docs/adr/0012-external-font-catalog-and-cjk-shards.md`）。
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
 8. **预览碎片的样式隔离**（v0.10.0+，见 `docs/rules/design-contract.md`）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
@@ -594,7 +594,7 @@ SenrenBanka/
 │  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
 ├─ scripts/
-│  ├─ fonts/                        # update / prepare / check / audit 与安全归档、缓存、schema 模块
+│  ├─ fonts/                        # update / prepare / check / typography / audit 与安全归档、缓存、schema 模块
 │  ├─ fonts.test.mjs                # 字体准备、缓存、注册与 HTML 审计 Node 测试
 │  └─ verify-html-only.mjs          # html-only 最终 HTML 资源门禁（支持 --dist）
 ├─ SPEC.md                           # 本规格（唯一契约文档）
@@ -635,7 +635,7 @@ SenrenBanka/
 7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。`styled` 设计页的菜单语言入口仍不可达（这是已知取舍，不得把隐藏菜单 DOM 声称为回退）；`html-only` 的目录、语言与资料链接必须以普通锚点保持可达。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
 9. 根路径零第三方请求（Network 面板确认，无字体/CSS/JS 请求）；切换在首屏前完成（无明显闪烁）。
-10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；准备后断网构建通过，dist 内自托管且无第三方字体引用；回退栈含系统字体（含中文）。缓存/锁/快照/生成注册任一不一致时 build 失败；最终 HTML 的 CJK 缺字由 `fonts:audit` 报警并写报告。
+10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；准备后断网构建通过，dist 内自托管且无第三方字体引用；所有 Astro 字体变量只暴露主 face，设计 CSS 回退栈含显式系统中文字体。`fonts:typography` 对 23 套 styled 设计、预览、npm / local registration 全绿；缓存/锁/快照/生成注册任一不一致时 build 失败；最终 HTML 的 CJK 缺字由 `fonts:audit` 报警并写报告。代表性核心 CJK 设计必须用普通加载的字体请求或 CDP 平台字体信息证明 Zhuque / LXGW / Ark Pixel 实际命中，不得以强制 `document.fonts.load()` 代替。
 11. 每套设计含 `DESIGN.md` + `design.json` + `Page.astro` + `messages.ts`（provenance 完整）；`design.json.renderMode` 缺省按 `styled` 处理，`html-only` 不提供 `style.css` / `tokens.css`，但可提供自包含 `Preview.astro`；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本、切换页链接与 html-only 语言 / 设计链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。

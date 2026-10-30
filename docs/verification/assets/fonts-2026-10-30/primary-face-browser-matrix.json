@@ -1,0 +1,549 @@
+{
+  "generatedAt": "2026-10-30T12:18:50.574Z",
+  "environment": {
+    "browser": "Google Chrome headless",
+    "viewport": "1440x900",
+    "deviceScaleFactor": 1,
+    "baseUrl": "http://127.0.0.1:4321"
+  },
+  "cases": [
+    {
+      "id": "archive",
+      "url": "http://127.0.0.1:4321/zh-cn/archive/",
+      "title": "Archive · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 42,
+      "woff2DiskBytes": 1331092,
+      "loadedFamilies": {
+        "Sorts Mill Goudy": 1,
+        "Courier Prime": 1,
+        "Zhuque Fangsong": 40
+      },
+      "loadedCore": {
+        "Zhuque Fangsong": 40
+      },
+      "computedCore": {
+        "Zhuque Fangsong": 119
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "cute-alism",
+      "url": "http://127.0.0.1:4321/zh-cn/cute-alism/",
+      "title": "Cute-alism · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 32,
+      "woff2DiskBytes": 1163448,
+      "loadedFamilies": {
+        "Fredoka Variable": 1,
+        "LXGW WenKai GB": 29,
+        "Inter Variable": 1,
+        "League Mono": 1
+      },
+      "loadedCore": {
+        "LXGW WenKai GB": 29
+      },
+      "computedCore": {
+        "LXGW WenKai GB": 140
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "radio",
+      "url": "http://127.0.0.1:4321/zh-cn/radio/",
+      "title": "Radio · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 16,
+      "woff2DiskBytes": 358984,
+      "loadedFamilies": {
+        "Share Tech Mono": 1,
+        "Format 1452": 1,
+        "DSEG14 Classic": 1,
+        "Ark Pixel 12px": 13
+      },
+      "loadedCore": {
+        "Ark Pixel 12px": 13
+      },
+      "computedCore": {
+        "Ark Pixel 12px": 203
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "receipt",
+      "url": "http://127.0.0.1:4321/zh-cn/receipt/",
+      "title": "Receipt · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 16,
+      "woff2DiskBytes": 361036,
+      "loadedFamilies": {
+        "Cutive Mono": 1,
+        "Ark Pixel 12px": 14,
+        "DSEG7 Classic": 1
+      },
+      "loadedCore": {
+        "Ark Pixel 12px": 14
+      },
+      "computedCore": {
+        "Ark Pixel 12px": 92
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "pager",
+      "url": "http://127.0.0.1:4321/zh-cn/pager/",
+      "title": "Pager · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 15,
+      "woff2DiskBytes": 353720,
+      "loadedFamilies": {
+        "Silkscreen": 1,
+        "Handjet Variable": 1,
+        "Ark Pixel 12px": 13
+      },
+      "loadedCore": {
+        "Ark Pixel 12px": 13
+      },
+      "computedCore": {
+        "Ark Pixel 12px": 114
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "poster",
+      "url": "http://127.0.0.1:4321/zh-cn/poster/",
+      "title": "Poster · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 43,
+      "woff2DiskBytes": 1329096,
+      "loadedFamilies": {
+        "League Gothic Variable": 1,
+        "Blackout 2AM": 1,
+        "Prociono": 1,
+        "Zhuque Fangsong": 40
+      },
+      "loadedCore": {
+        "Zhuque Fangsong": 40
+      },
+      "computedCore": {
+        "Zhuque Fangsong": 99
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "tape",
+      "url": "http://127.0.0.1:4321/zh-cn/tape/",
+      "title": "Tape · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 41,
+      "woff2DiskBytes": 1301124,
+      "loadedFamilies": {
+        "UglyTypist": 1,
+        "League Mono": 2,
+        "Zhuque Fangsong": 38
+      },
+      "loadedCore": {
+        "Zhuque Fangsong": 38
+      },
+      "computedCore": {
+        "Zhuque Fangsong": 146
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "little-forest",
+      "url": "http://127.0.0.1:4321/zh-cn/little-forest/",
+      "title": "Little Forest · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 31,
+      "woff2DiskBytes": 1152656,
+      "loadedFamilies": {
+        "Fraunces Variable": 1,
+        "LXGW WenKai GB": 30
+      },
+      "loadedCore": {
+        "LXGW WenKai GB": 30
+      },
+      "computedCore": {
+        "LXGW WenKai GB": 306
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "magical-girl",
+      "url": "http://127.0.0.1:4321/zh-cn/magical-girl/",
+      "title": "Magical Girl · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 36,
+      "woff2DiskBytes": 1329584,
+      "loadedFamilies": {
+        "Fraunces Variable": 1,
+        "LXGW WenKai GB": 34,
+        "Inter Variable": 1
+      },
+      "loadedCore": {
+        "LXGW WenKai GB": 34
+      },
+      "computedCore": {
+        "LXGW WenKai GB": 235
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "fairy-kei",
+      "url": "http://127.0.0.1:4321/zh-cn/fairy-kei/",
+      "title": "Fairy Kei · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 34,
+      "woff2DiskBytes": 1299492,
+      "loadedFamilies": {
+        "Fredoka Variable": 1,
+        "LXGW WenKai GB": 32,
+        "Inter Variable": 1
+      },
+      "loadedCore": {
+        "LXGW WenKai GB": 32
+      },
+      "computedCore": {
+        "LXGW WenKai GB": 187
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "sticker-diary",
+      "url": "http://127.0.0.1:4321/zh-cn/sticker-diary/",
+      "title": "Sticker Diary · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 28,
+      "woff2DiskBytes": 930788,
+      "loadedFamilies": {
+        "UglyTypist": 1,
+        "LXGW WenKai GB": 26,
+        "Inter Variable": 1
+      },
+      "loadedCore": {
+        "LXGW WenKai GB": 26
+      },
+      "computedCore": {
+        "LXGW WenKai GB": 201
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "frost",
+      "url": "http://127.0.0.1:4321/zh-cn/frost/",
+      "title": "Frost · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 0
+      },
+      "woff2Count": 1,
+      "woff2DiskBytes": 48256,
+      "loadedFamilies": {
+        "Inter Variable": 1
+      },
+      "loadedCore": {},
+      "computedCore": {},
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "id": "designs",
+      "url": "http://127.0.0.1:4321/zh-cn/designs/",
+      "title": "切换设计 · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "viewport": {
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "layout": {
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "overflowX": false,
+        "previewCards": 24
+      },
+      "woff2Count": 82,
+      "woff2DiskBytes": 2535300,
+      "loadedFamilies": {
+        "Sorts Mill Goudy": 2,
+        "Courier Prime": 1,
+        "Zhuque Fangsong": 28,
+        "Fredoka Variable": 1,
+        "LXGW WenKai GB": 20,
+        "Inter Variable": 1,
+        "League Mono": 2,
+        "Fraunces Variable": 1,
+        "TT2020 Style D": 1,
+        "Geist Variable": 1,
+        "Geist Mono Variable": 2,
+        "Roboto Flex Variable": 1,
+        "Silkscreen": 1,
+        "Handjet Variable": 1,
+        "Ark Pixel 12px": 9,
+        "League Gothic Variable": 1,
+        "Blackout 2AM": 1,
+        "Prociono": 1,
+        "Share Tech Mono": 1,
+        "Format 1452": 1,
+        "DSEG14 Classic": 1,
+        "Cutive Mono": 1,
+        "DSEG7 Classic": 1,
+        "UglyTypist": 1,
+        "JetBrains Mono Variable": 1
+      },
+      "loadedCore": {
+        "Zhuque Fangsong": 28,
+        "LXGW WenKai GB": 20,
+        "Ark Pixel 12px": 9
+      },
+      "computedCore": {
+        "Zhuque Fangsong": 130,
+        "LXGW WenKai GB": 115,
+        "Ark Pixel 12px": 101
+      },
+      "documentFontsCheck": {
+        "Zhuque Fangsong": true,
+        "LXGW WenKai GB": true,
+        "Ark Pixel 12px": true
+      },
+      "network": {
+        "thirdParty": [],
+        "failed": [],
+        "consoleErrors": []
+      }
+    }
+  ],
+  "totals": {
+    "pages": 13,
+    "woff2Requests": 417,
+    "woff2DiskBytes": 13494576,
+    "thirdPartyResources": 0,
+    "failedResources": 0,
+    "consoleErrors": 0,
+    "horizontalOverflowPages": 0
+  }
+}

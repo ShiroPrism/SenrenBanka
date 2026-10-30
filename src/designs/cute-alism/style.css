@@ -427,7 +427,7 @@ html:has(.cal) {
   margin-left: auto;
   padding-bottom: 0.2rem;
   border-bottom: 4px solid var(--cal-ink);
-  font-family: var(--font-cal-display), var(--font-lxgw), sans-serif;
+  font-family: var(--font-cal-display), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
   line-height: 1;
@@ -825,7 +825,7 @@ html:has(.cal) {
   place-items: center;
   background: var(--cal-ink);
   color: var(--cal-paper);
-  font-family: var(--font-cal-display), var(--font-lxgw), sans-serif;
+  font-family: var(--font-cal-display), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: clamp(1.3rem, 2.5vw, 1.9rem);
   font-weight: 700;
   line-height: 1;

@@ -1,30 +1,41 @@
 {
-  "page": "/zh-cn/frost/",
-  "fontCheck": true,
-  "generatedAt": "2026-10-30T10:16:10.494Z",
-  "requests": [
+  "id": "frost",
+  "url": "http://127.0.0.1:4321/zh-cn/frost/",
+  "title": "Frost · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "layout": {
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "overflowX": false,
+    "previewCards": 0
+  },
+  "woff2Count": 1,
+  "woff2DiskBytes": 48256,
+  "loadedFamilies": {
+    "Inter Variable": 1
+  },
+  "loadedCore": {},
+  "computedCore": {},
+  "documentFontsCheck": {
+    "Zhuque Fangsong": true,
+    "LXGW WenKai GB": true,
+    "Ark Pixel 12px": true
+  },
+  "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
-      "transferBytes": 300,
-      "encodedBodyBytes": 48256,
-      "decodedBodyBytes": 48256,
-      "diskBytes": 48256,
-      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+      "status": 200,
+      "transferSize": 48556,
+      "encodedBodySize": 48256
     }
   ],
-  "totals": {
-    "count": 1,
-    "transferBytes": 300,
-    "encodedBodyBytes": 48256,
-    "decodedBodyBytes": 48256,
-    "diskBytes": 48256
-  },
-  "fontChecks": [
-    {
-      "cssVariable": "--font-inter",
-      "family": "Inter Variable",
-      "check": true,
-      "loadedFaces": 1
-    }
-  ]
+  "network": {
+    "thirdParty": [],
+    "failed": [],
+    "consoleErrors": []
+  }
 }

@@ -309,8 +309,9 @@ Preview 的 `0.54rem` / `0.42rem` 是切换页 16:10 缩略画幅的登记档位
    GB2312 6763/6763、假名 176/176。Inter 与 League Mono 是既有 Latin 生产声部，
    本主题不声称其 CJK 覆盖；所有 CJK 字符落到 LXGW / 系统中日文字体。
 5. **Weight, axis, size and license:** Fredoka 为 wght 300–700 可变字体，latin 29,784 B +
-   latin-ext 4,576 B，OFL-1.1；LXGW WenKai GB Medium 为 500，生产使用合并六套三语文案后
-   重生成的站内用字子集（301,340 B，0 可见缺字），OFL-1.1；Inter / League Mono 复用既有生产资源。
+   latin-ext 4,576 B，OFL-1.1；LXGW WenKai GB Medium 为 500，由外部 catalog v1.0.0 提供
+   完整 `core-cjk` cmap（328 个 `unicode-range` 分片，家族包 13,841,062 B），OFL-1.1；
+   Inter / League Mono 复用既有生产资源。
 6. **Missing-font order:** Display `Fredoka → LXGW → PingFang SC / Microsoft YaHei → Hiragino Sans /
    Yu Gothic UI → sans-serif`；Body `Inter → LXGW → PingFang SC / Microsoft YaHei → Hiragino Sans /
    Yu Gothic UI → sans-serif`；Micro `League Mono → Inter → LXGW → system CJK → sans-serif`。

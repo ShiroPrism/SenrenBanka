@@ -26,10 +26,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Ark Pixel 12px",
     "cssVariable": "--font-ark-pixel",
-    "fallbacks": [
-      "SimSun",
-      "monospace"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16081,11 +16078,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Blackout 2AM",
     "cssVariable": "--font-blackout",
-    "fallbacks": [
-      "Impact",
-      "Arial Black",
-      "sans-serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16100,10 +16093,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Courier Prime",
     "cssVariable": "--font-courier-prime",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16334,10 +16324,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Cutive Mono",
     "cssVariable": "--font-cutive-mono",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16400,10 +16387,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "DSEG14 Classic",
     "cssVariable": "--font-dseg14",
-    "fallbacks": [
-      "Consolas",
-      "monospace"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16426,10 +16410,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "DSEG7 Classic",
     "cssVariable": "--font-dseg7",
-    "fallbacks": [
-      "Consolas",
-      "monospace"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16452,11 +16433,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Format 1452",
     "cssVariable": "--font-format-1452",
-    "fallbacks": [
-      "Arial Narrow",
-      "Helvetica",
-      "sans-serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16471,14 +16448,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Fredoka Variable",
     "cssVariable": "--font-fredoka",
-    "fallbacks": [
-      "system-ui",
-      "PingFang SC",
-      "Microsoft YaHei",
-      "Hiragino Sans",
-      "Yu Gothic UI",
-      "sans-serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16541,10 +16511,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Handjet Variable",
     "cssVariable": "--font-handjet",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16559,10 +16526,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "League Gothic Variable",
     "cssVariable": "--font-league-gothic",
-    "fallbacks": [
-      "Arial Narrow",
-      "sans-serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16578,10 +16542,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "League Mono",
     "cssVariable": "--font-league-mono",
-    "fallbacks": [
-      "Consolas",
-      "Courier New"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -16604,13 +16565,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "LXGW WenKai GB",
     "cssVariable": "--font-lxgw",
-    "fallbacks": [
-      "PingFang SC",
-      "Microsoft YaHei",
-      "Hiragino Sans",
-      "Yu Gothic UI",
-      "serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39732,10 +39687,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Prociono",
     "cssVariable": "--font-prociono",
-    "fallbacks": [
-      "Georgia",
-      "serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39750,11 +39702,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Share Tech Mono",
     "cssVariable": "--font-share-tech-mono",
-    "fallbacks": [
-      "Consolas",
-      "Courier New",
-      "monospace"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39769,10 +39717,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Silkscreen",
     "cssVariable": "--font-silkscreen",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39795,10 +39740,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Sorts Mill Goudy",
     "cssVariable": "--font-sorts-mill-goudy",
-    "fallbacks": [
-      "Georgia",
-      "Times New Roman"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39917,10 +39859,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "TT2020 Base",
     "cssVariable": "--font-tt2020",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39943,10 +39882,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "TT2020 Style D",
     "cssVariable": "--font-tt2020-styled",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39961,10 +39897,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "UglyTypist",
     "cssVariable": "--font-uglytypist",
-    "fallbacks": [
-      "Segoe Print",
-      "Comic Sans MS"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [
@@ -39979,11 +39912,7 @@ export const localFontDefinitions: LocalFontDefinition[] = [
   {
     "name": "Zhuque Fangsong",
     "cssVariable": "--font-zhuque",
-    "fallbacks": [
-      "Songti SC",
-      "SimSun",
-      "serif"
-    ],
+    "fallbacks": [],
     "variants": [
       {
         "src": [

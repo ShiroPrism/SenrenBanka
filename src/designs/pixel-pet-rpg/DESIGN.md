@@ -282,19 +282,21 @@ preview item count, where its dot-matrix axes remain legible at a glance.
    belongs to `sticker-diary`, not here. The differentiation from `pager` is
    spatial, chromatic, and interaction-led rather than a font substitution.
 4. **Actual coverage:** Silkscreen covers Latin and common punctuation, not CJK.
-   Ark Pixel’s registered subset has 1,991 mapped characters. Every non-ASCII
-   character in this design’s localized UI strings is covered (107 unique
-   non-ASCII characters; zero missing). Profile prose still inherits the stored
-   sample data: the current zh-CN profile misses `概 / 辈`; ja misses
+   Ark Pixel is registered from external catalog v1.0.0 as a complete `core-cjk`
+   cmap split into 55 `unicode-range` shards (1,371,013 B family package), not
+   the former 1,991-character site subset. Every non-ASCII character in this
+   design’s localized UI strings is covered (107 unique non-ASCII characters;
+   zero missing). Profile prose still inherits the stored sample data: the
+   current zh-CN profile misses `概 / 辈`; ja misses
    `劇 / 概 / 術 / 護 / 輩`; en misses `輩` inside the shared Niconico URL. Those
    individual glyphs use the system fallback rather than silently claiming full
    coverage. Handjet covers
    Latin digits and Latin letters.
 5. **Weight, axes, size, license:** Silkscreen 400/700 static; Handjet one variable
    file with `wght 100–900`, `ELGR 1–2`, `ELSH 0–16`; Ark Pixel 400. Production
-   files are the registered local assets (Silkscreen ≈16KB for two files, Handjet
-   ≈18.6KB, Ark Pixel ≈40.4KB). All three are OFL-1.1 and are distributed
-   unmodified by this theme.
+   files come from the locked external family packages (Silkscreen and Handjet
+   remain fixed assets; Ark Pixel supplies 55 full-cmap shards). All three are
+   OFL-1.1 and are distributed unmodified by this theme.
 6. **Fallback order:** CJK/display text falls
    `Silkscreen → Ark Pixel 12px → Songti SC / SimSun → PingFang SC / Microsoft YaHei
    → Hiragino Sans / Yu Gothic UI → monospace`; numbers fall

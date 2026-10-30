@@ -50,7 +50,7 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    {/* 不预加载：四份文件都很小（13.5 / 12.9 / 5.8 / 40KB），swap + 系统回退已足够。上电瞬间的字体替换本来就是这台机器的开机手感。 */}
+    {/* 不预加载：核心 CJK 由多枚分片按 unicode-range 取件，swap + 系统回退已足够。上电瞬间的字体替换本来就是这台机器的开机手感。 */}
     <Font cssVariable="--font-share-tech-mono" />
     <Font cssVariable="--font-format-1452" />
     <Font cssVariable="--font-dseg14" />

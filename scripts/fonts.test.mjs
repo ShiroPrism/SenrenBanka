@@ -711,7 +711,7 @@ test('generated registration preserves all legacy local-family metadata', async 
     const actual = definitionsByName.get(expected.name);
     assert.ok(actual, `missing generated family ${expected.name}`);
     assert.equal(actual.cssVariable, expected.cssVariable);
-    assert.deepEqual(actual.fallbacks, expected.fallbacks);
+    assert.deepEqual(actual.fallbacks, []);
     const actualVariants = actual.variants.map((variant) => ({
       weight: variant.weight,
       style: variant.style,

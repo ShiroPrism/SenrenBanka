@@ -185,11 +185,12 @@ components:
    Special Elite 同为磨损单字重、同样偏传真；Cutive Mono 是三者中字面最"现代打印机"、体积最小的一组。
    DSEG7 而非 DSEG14：7 段是小票/计算器的日常读数，14 段的仪表气留给 radio。
    中文候选 Zpix 因官方仓库无许可文件被排除（不可进生产），改用许可核验通过的 Ark Pixel。
-4. **实际覆盖与回退**: Cutive 拉丁 95/95（ASCII）；Ark 子集含站内全部用字（2237 字符集的子集，
-   42KB 级），假名 189 枚；DSEG7 覆盖 0-9 与 `: . -` 等段码字符。
+4. **实际覆盖与回退**: Cutive 拉丁 95/95（ASCII）；Ark Pixel 由外部 catalog v1.0.0 提供
+   完整 `core-cjk` cmap（55 个 `unicode-range` 分片，家族包 1,371,013 B），不再使用旧站内
+   子集；DSEG7 覆盖 0-9 与 `: . -` 等段码字符。
    中文回退：Songti SC / SimSun；拉丁回退：Courier New / Courier。
 5. **字重 / 轴 / 体积 / 许可**: 全部单字重或双字重静态字体（无可变轴）；
-   Cutive 21KB + 17KB、Ark 子集 39KB、DSEG7 5KB × 2。许可：三者均 OFL-1.1
+   Cutive 21KB + 17KB、DSEG7 5KB × 2；Ark Pixel 家族包 1,371,013 B / 55 分片。许可：三者均 OFL-1.1
    （DSEG 带 RFN "DSEG"，本项目原样格式分发、未改名未修改）。
 6. **缺失回退顺序**: 数字 `--font-dseg7 → Cutive → Courier New → Ark Pixel → Songti SC / SimSun → monospace`；
    正文同链去掉 DSEG7 一节。

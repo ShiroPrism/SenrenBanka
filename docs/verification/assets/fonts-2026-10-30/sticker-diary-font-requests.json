@@ -1,0 +1,209 @@
+{
+  "id": "sticker-diary",
+  "url": "http://127.0.0.1:4321/zh-cn/sticker-diary/",
+  "title": "Sticker Diary · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "layout": {
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "overflowX": false,
+    "previewCards": 0
+  },
+  "woff2Count": 28,
+  "woff2DiskBytes": 930788,
+  "loadedFamilies": {
+    "UglyTypist": 1,
+    "LXGW WenKai GB": 26,
+    "Inter Variable": 1
+  },
+  "loadedCore": {
+    "LXGW WenKai GB": 26
+  },
+  "computedCore": {
+    "LXGW WenKai GB": 201
+  },
+  "documentFontsCheck": {
+    "Zhuque Fangsong": true,
+    "LXGW WenKai GB": true,
+    "Ark Pixel 12px": true
+  },
+  "resourceEvidence": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
+      "status": 200,
+      "transferSize": 48556,
+      "encodedBodySize": 48256
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c4cbf3b2101f77fb.woff2",
+      "status": 200,
+      "transferSize": 27604,
+      "encodedBodySize": 27304
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a541c13f11cde765.woff2",
+      "status": 200,
+      "transferSize": 18908,
+      "encodedBodySize": 18608
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/10a1acdb0e7cf630.woff2",
+      "status": 200,
+      "transferSize": 40916,
+      "encodedBodySize": 40616
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
+      "status": 200,
+      "transferSize": 26936,
+      "encodedBodySize": 26636
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
+      "status": 200,
+      "transferSize": 12788,
+      "encodedBodySize": 12488
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/566c0477b6dbe0a5.woff2",
+      "status": 200,
+      "transferSize": 32076,
+      "encodedBodySize": 31776
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7f0c85675aa2896b.woff2",
+      "status": 200,
+      "transferSize": 30780,
+      "encodedBodySize": 30480
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/906aaeb7e69b72c4.woff2",
+      "status": 200,
+      "transferSize": 17500,
+      "encodedBodySize": 17200
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
+      "status": 200,
+      "transferSize": 20596,
+      "encodedBodySize": 20296
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/196eb675d1e3a460.woff2",
+      "status": 200,
+      "transferSize": 28212,
+      "encodedBodySize": 27912
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/bb8f6e4379530209.woff2",
+      "status": 200,
+      "transferSize": 36288,
+      "encodedBodySize": 35988
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/2dc7e633aa85558d.woff2",
+      "status": 200,
+      "transferSize": 36448,
+      "encodedBodySize": 36148
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/163a3e2277e7b595.woff2",
+      "status": 200,
+      "transferSize": 24164,
+      "encodedBodySize": 23864
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d5734e8243c58b8d.woff2",
+      "status": 200,
+      "transferSize": 41220,
+      "encodedBodySize": 40920
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5026f04372f89997.woff2",
+      "status": 200,
+      "transferSize": 47928,
+      "encodedBodySize": 47628
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/41b3f511eb6085e6.woff2",
+      "status": 200,
+      "transferSize": 38452,
+      "encodedBodySize": 38152
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b051e49b226b01da.woff2",
+      "status": 200,
+      "transferSize": 52144,
+      "encodedBodySize": 51844
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b55fc5fa278dc0f0.woff2",
+      "status": 200,
+      "transferSize": 53924,
+      "encodedBodySize": 53624
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a224557de3bdd06c.woff2",
+      "status": 200,
+      "transferSize": 10788,
+      "encodedBodySize": 10488
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7ee7809c0f4614ec.woff2",
+      "status": 200,
+      "transferSize": 8708,
+      "encodedBodySize": 8408
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b5df8a76759ccaf3.woff2",
+      "status": 200,
+      "transferSize": 46480,
+      "encodedBodySize": 46180
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/93d615140cdd1fe7.woff2",
+      "status": 200,
+      "transferSize": 43360,
+      "encodedBodySize": 43060
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
+      "status": 200,
+      "transferSize": 49836,
+      "encodedBodySize": 49536
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/e73a0e8fe1bfc75d.woff2",
+      "status": 200,
+      "transferSize": 55456,
+      "encodedBodySize": 55156
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/920a1d03421c1427.woff2",
+      "status": 200,
+      "transferSize": 20304,
+      "encodedBodySize": 20004
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b0d7ac82eb031b4c.woff2",
+      "status": 200,
+      "transferSize": 60724,
+      "encodedBodySize": 60424
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6905efa691a357df.woff2",
+      "status": 200,
+      "transferSize": 8092,
+      "encodedBodySize": 7792
+    }
+  ],
+  "network": {
+    "thirdParty": [],
+    "failed": [],
+    "consoleErrors": []
+  }
+}

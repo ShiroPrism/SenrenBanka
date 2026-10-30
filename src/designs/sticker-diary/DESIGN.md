@@ -178,14 +178,14 @@ successful spread interaction uses `hidden`.
    non-goal. No third new family is added.
 4. **Coverage.** UglyTypist measured 95/95 printable ASCII, 0/62 Latin-1
    letters and no CJK. LXGW full source: 6763/6763 GB2312, 176/176 kana and
-   6953/6953 JIS X 0208. The final production subset is 301,340 bytes with
-   2,133 mapped code points; the post-copy check of the merged six-theme,
-   three-locale copy reports no missing glyphs. Inter's registered Latin/Latin-ext
-   subsets cover ASCII/Latin-1 and
+   6953/6953 JIS X 0208. External catalog v1.0.0 supplies the complete
+   `core-cjk` cmap as 328 `unicode-range` shards in a 13,841,062 B family
+   package, so no site-copy subset is generated. Inter's registered
+   Latin/Latin-ext subsets cover ASCII/Latin-1 and
    add regional Latin; they contain no CJK. Chinese and Japanese therefore flow
    to LXGW or the system CJK fallback.
 5. **Scale/licence.** UglyTypist 400, one 27,304-byte WOFF2, OFL-1.1.
-   LXGW WenKai GB Medium 500, final site subset 301,340 bytes, OFL-1.1.
+   LXGW WenKai GB Medium 500, complete external `core-cjk` package, OFL-1.1.
    Inter Variable uses the registered npm family with Latin/Latin-ext subsets,
    OFL-1.1, and a variable weight axis. All load with `swap`; no preload.
 6. **Fallback order.** Display: UglyTypist → LXGW WenKai → PingFang SC /

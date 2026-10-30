@@ -191,7 +191,7 @@ html:has(.ps) {
   flex-wrap: wrap;
   gap: 0.2rem 1.2rem;
   margin: 0;
-  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", sans-serif;
+  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", sans-serif;
   font-stretch: 90%;
   font-size: 0.75rem;
   line-height: 1.5;
@@ -399,7 +399,7 @@ html:has(.ps) {
 }
 
 .ps-log-period {
-  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", sans-serif;
+  font-family: var(--font-poster-display), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", sans-serif;
   font-stretch: 100%;
   font-size: 1rem;
   line-height: 1.4;

@@ -29,6 +29,11 @@ npm run preview
 `fonts:check` 会完全离线重算锁、快照、缓存文件与生成注册的哈希。缓存缺失或
 损坏时会给出修复命令并失败。
 
+`--font-*` 变量只暴露主 face；6 个 npm family 与 20 个外部 local family 都不
+携带 Astro fallback。每套设计的 `style.css` 自己维护“拉丁声部 → 核心 CJK
+（Zhuque / LXGW / Ark Pixel）→ 系统中文字体 → 通用族”的完整顺序，
+`npm run fonts:typography` 会静态检查这条契约。
+
 最小资料只需以下四个核心字段，可直接替换 `src/data/profiles/zh-cn.yaml`（`ja.yaml` / `en.yaml` 同理）：
 
 ```yaml

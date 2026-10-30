@@ -101,7 +101,7 @@
 .sd-tabno {
   color: currentColor;
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.64rem;
   letter-spacing: 0.06em;
 }
@@ -267,7 +267,7 @@
   bottom: 0.85rem;
   color: var(--sd-muted);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.7rem;
   line-height: 1;
   letter-spacing: 0.12em;
@@ -337,7 +337,7 @@
   margin: 0 0 0.8rem;
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.75rem;
   line-height: 1.35;
   letter-spacing: 0.11em;
@@ -505,7 +505,7 @@
   color: var(--sd-teal);
   background: color-mix(in srgb, var(--sd-teal-soft) 45%, var(--sd-paper));
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.82rem;
   line-height: 1.35;
   transform: rotate(-0.7deg);
@@ -644,7 +644,7 @@
 .sd-linkno {
   color: var(--sd-muted);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.7rem;
   line-height: 1.4;
 }
@@ -653,7 +653,7 @@
   min-width: 0;
   color: var(--sd-ink);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 1.18rem;
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -666,7 +666,7 @@
 .sd-link-arrow {
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 1rem;
   line-height: 1;
 }
@@ -688,7 +688,7 @@
   margin: 1.8rem 0 1rem;
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   line-height: 1;
   transform: rotate(2deg);
 }
@@ -710,7 +710,7 @@
   border: 1px dashed color-mix(in srgb, var(--sd-muted) 40%, transparent);
   color: var(--sd-muted);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   line-height: 1.6;
   transform: rotate(-0.5deg);
 }
@@ -764,7 +764,7 @@
   margin: 0;
   color: var(--sd-ink);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: clamp(1.25rem, 1.8vw, 1.55rem);
   font-weight: 400;
   line-height: 1.28;
@@ -811,7 +811,7 @@
   color: var(--sd-blue);
   background: color-mix(in srgb, var(--sd-blue-soft) 58%, var(--sd-paper));
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.7rem;
   line-height: 1.45;
 }
@@ -855,7 +855,7 @@
   margin: 0 0 0.22rem;
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.78rem;
   line-height: 1.4;
   letter-spacing: 0.02em;
@@ -873,7 +873,7 @@
   margin: 0.1rem 0 0;
   color: var(--sd-teal);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.88rem;
   line-height: 1.5;
 }
@@ -907,7 +907,7 @@
     0 2px 0 color-mix(in srgb, var(--sd-teal) 28%, var(--sd-paper-edge)),
     0 8px 12px -11px var(--sd-ink);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: clamp(0.92rem, 1.3vw, 1.08rem);
   line-height: 1.35;
   overflow-wrap: anywhere;
@@ -950,7 +950,7 @@
 .sd-contact-label {
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.72rem;
   line-height: 1.4;
   letter-spacing: 0.08em;
@@ -1017,7 +1017,7 @@
   margin: 0;
   color: var(--sd-ink);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: clamp(1.35rem, 2.5vw, 1.9rem);
   line-height: 1.45;
   transform: rotate(-0.6deg);
@@ -1027,7 +1027,7 @@
   margin: 1.65rem 0 0;
   color: var(--sd-rose);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.82rem;
   line-height: 1.4;
   letter-spacing: 0.16em;
@@ -1073,7 +1073,7 @@
   background: var(--sd-paper-warm);
   box-shadow: 0 2px 0 var(--sd-paper-shadow);
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   font-size: 0.86rem;
   line-height: 1.2;
   cursor: pointer;
@@ -1123,7 +1123,7 @@
 
 .sd-colophon span {
   font-family:
-    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", cursive;
+    var(--font-sd-hand), var(--font-sd-cjk), "Segoe Print", "Comic Sans MS", "PingFang SC", "Microsoft YaHei", cursive;
   letter-spacing: 0.1em;
 }
 

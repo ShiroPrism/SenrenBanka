@@ -223,11 +223,11 @@ components:
 4. **实际覆盖与回退**:
    - Sorts Mill Goudy：latin 95/95 ASCII + latin-ext；无 CJK。中文回退 Zhuque → Songti SC / SimSun。
    - Courier Prime：latin 95/95 + latin-ext，400 / 700 × 正 / 斜四态；无 CJK。中文回退 Zhuque → Songti SC / SimSun。
-   - Zhuque Fangsong：GB2312 6763/6763，假名 189 枚（子集，站内用字已核）；日文汉字由同一子集承接，缺字再回退系统宋体。
+   - Zhuque Fangsong：外部 catalog v1.0.0 的完整 `core-cjk` cmap，GB2312 6763/6763，假名 189 枚；日文汉字由同一来源承接，源字体缺字再回退系统宋体。
 5. **字重 / 轴 / 体积 / 许可**:
    - Sorts Mill Goudy：单字重 400，正 / 斜两态 × latin / latin-ext，共 4 文件 69KB；无可变轴；OFL-1.1，带 RFN（"Sorts Mill Goudy"），本项目**原样分发、未改名未修改**。
    - Courier Prime：400 / 700 × 正 / 斜，共 8 文件 137KB；无可变轴；OFL-1.1。
-   - Zhuque Fangsong：单字重 400，子集 246KB；无可变轴；OFL-1.1（无 RFN）。
+   - Zhuque Fangsong：单字重 400，家族包 5,998,018 B / 161 个 `unicode-range` 分片；无可变轴；OFL-1.1（无 RFN）。
 6. **缺失回退顺序**:
    - 显示 / 卡头：`--font-sorts-mill-goudy → Georgia → --font-zhuque → Songti SC → SimSun → serif`。
    - 正文 / 记录：`--font-courier-prime → Courier New → --font-zhuque → Songti SC → SimSun → monospace`。

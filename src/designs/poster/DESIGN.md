@@ -269,10 +269,13 @@ components:
    海报要的是纸上的阅读灰度。中文用 Zhuque Fangsong 而非 Ark Pixel：仿宋的书写笔形与丝网手绘感同源。
 4. **实际覆盖与回退**: League Gothic 覆盖拉丁（ASCII 大小写 + 数字 + 常用标点）；Blackout 2AM 覆盖拉丁大写与数字
    （本设计只用 MEMO / INDEX / ORDERS / RECORD / SKILLS / CHECKOUT 六个词）；Prociono 覆盖拉丁 95/95；
-   Zhuque 子集覆盖站内全部中文用字（含假名）。中文回退 Songti SC / SimSun；拉丁展示回退 Arial Narrow / Arial Black；正文回退 Georgia。
+   Zhuque 由外部 catalog v1.0.0 提供完整 `core-cjk` cmap（161 个 `unicode-range`
+   分片，家族包 5,998,018 B）。中文回退 Songti SC / SimSun；拉丁展示回退 Arial Narrow /
+   Arial Black；正文回退 Georgia。
 5. **字重 / 轴 / 体积 / 许可**: 四款均为单一 400 字重；仅 League Gothic 带 wdth 轴（75%–100%）。
-   体积：League Gothic 18.2KB、Blackout 2AM 8.7KB、Prociono 11.6KB、Zhuque 子集 246KB。
-   许可均为 **OFL-1.1**（本地 npm provider、`remote: false`）；Blackout 带 RFN「Blackout」——本项目原样分发、未改名未修改。
+   体积：League Gothic 18.2KB、Blackout 2AM 8.7KB、Prociono 11.6KB；Zhuque 家族包
+   5,998,018 B / 161 分片。许可均为 **OFL-1.1**（外部 catalog 的 local provider）；
+   Blackout 带 RFN「Blackout」——本项目原样分发、未改名未修改。
 6. **缺失回退顺序**:
    - 展示 / 数字：`League Gothic Variable → Zhuque Fangsong → Arial Narrow → Songti SC / SimSun → sans-serif`
    - 分区短标题：`Blackout 2AM → League Gothic Variable → Arial Black → sans-serif`

@@ -7,8 +7,8 @@
  *   - `endLine`：ASCII 屏显分隔符（`-- END OF MESSAGES --`），是机器的屏显收尾，不是句子。
  * - 语域：寻呼机屏幕只有几行字，标题一律取「屏显短词」而不是票据 / 网页的分区名
  *   （链接 / 经历 / 联系，而非明细 / 纪录 / 结账台），这是本套与 receipt 刻意分开的声部。
- * - 中文用字已核对站内 Ark Pixel 子集覆盖（`细 / 履 / 络 / 条 / 寻 / 呼` 不在子集里，
- *   故改用 `链接 / 经历 / 联系 / 件 / 消息机`），日文同样避开 `細 / 返 / 計 / 終`。
+ * - 中文短词按寻呼机屏幕语域控制长度；CJK 字形由完整 Ark Pixel core-cjk 分片承接，
+ *   源字体缺字再由系统字体回退并通过 `fonts:audit` 报告。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface PagerMessages {

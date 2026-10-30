@@ -38,7 +38,7 @@ each file hash.
 | `tt2020-style-d` | TT2020 Style D | [ctrlcctrlv/TT2020](https://github.com/ctrlcctrlv/TT2020) | OFL-1.1 | no reserved name |
 | `zhuque-fangsong` | Zhuque Fangsong | [TrionesType/zhuque](https://github.com/TrionesType/zhuque) | OFL-1.1 | no reserved name |
 | `ark-pixel-12px` | Ark Pixel 12px | [TakWolf/ark-pixel-font](https://github.com/TakWolf/ark-pixel-font) | OFL-1.1 | no reserved name |
-| `lxgw-wenkai` | LXGW WenKai GB | [lxgw/LxgwWenkaiGB](https://github.com/lxgw/LxgwWenkaiGB) | OFL-1.1 | web subsetting permission recorded in manifest |
+| `lxgw-wenkai` | LXGW WenKai GB | [lxgw/LxgwWenkaiGB](https://github.com/lxgw/LxgwWenkaiGB) | OFL-1.1 | web embedding and sharded redistribution permission recorded in manifest |
 
 The package manifests are the authoritative machine-readable license record.
 `fonts.catalog.json` preserves the selected family manifests and complete

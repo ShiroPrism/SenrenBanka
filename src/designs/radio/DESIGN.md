@@ -222,11 +222,13 @@ components:
    - Share Tech Mono：217 字形，ASCII **95/95**，假名 0/96，无 CJK；`·` 有。
    - Format 1452：656 字形，ASCII **95/95**，假名 0/96，无 CJK。
    - DSEG14 Classic：94 字形，ASCII 89/95（缺 `·` 等少量标点），数字 **10/10**。
-   - Ark Pixel 12px（monospaced / zh_hans 子集）：1992 字形，ASCII **95/95**，假名 **94/96**，含简中。
+   - Ark Pixel 12px：由外部 catalog v1.0.0 提供完整 `core-cjk` cmap（55 个
+     `unicode-range` 分片，家族包 1,371,013 B），不再使用旧站内 1,992 字子集。
    回退：中文 → Ark Pixel → PingFang SC / Microsoft YaHei（日文另有 Hiragino / Yu Gothic）；
    拉丁 → Consolas / Courier New（铭牌 → Arial Narrow / Helvetica）。
 5. **字重 / 轴 / 体积 / 许可**：四者均为单字重 400 静态字体（无可变轴）。体积（woff2）：
-   Share Tech Mono 13.5KB、Format 1452 12.9KB、DSEG14 Classic 5.8KB、Ark Pixel 子集 40KB。
+   Share Tech Mono 13.5KB、Format 1452 12.9KB、DSEG14 Classic 5.8KB；Ark Pixel
+   家族包 1,371,013 B / 55 分片。
    许可：四者均 **OFL-1.1**；Share Tech Mono 与 DSEG 带 Reserved Font Name（'Share' / 'DSEG'），
    本项目原样格式分发、未改名未修改。
 6. **缺失回退顺序**：

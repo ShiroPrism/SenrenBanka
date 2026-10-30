@@ -4,8 +4,8 @@
  * `gameTitle`, `playerLabel`, and `periodLabel` are game-HUD marks and stay
  * identical in every locale. Everything else is localized UI copy. `liveTemplate` is read by
  * script.ts only to update the visible/announced current-stop status from the
- * selected anchor. Chinese and Japanese UI strings are audited against the
- * registered Ark Pixel subset; profile prose may still fall back per glyph.
+ * selected anchor. Chinese and Japanese UI strings use the complete Ark Pixel
+ * core-cjk shards; source-missing glyphs may still fall back per glyph.
  * Station indexes (`01`, `02`, ...) are generated in Page.astro as aria-hidden
  * DOM-order marks, so they are not language copy.
  */

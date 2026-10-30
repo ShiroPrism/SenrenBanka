@@ -1,0 +1,356 @@
+{
+  "generatedAt": "2026-10-30T12:23:10.504Z",
+  "environment": {
+    "browser": "Google Chrome headless",
+    "baseUrl": "http://127.0.0.1:4321",
+    "mobile": "375x812 isMobile + hasTouch",
+    "reducedMotion": "prefers-reduced-motion: reduce",
+    "noJavaScript": "375x812 JavaScript disabled"
+  },
+  "results": {
+    "mobile": [
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/archive/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": true,
+          "total": 8,
+          "hidden": 0,
+          "runningAnimations": 3
+        },
+        "textLength": 870,
+        "visibleLinks": 6,
+        "woff2Count": 40,
+        "woff2DiskBytes": 1262884,
+        "loadedFamilies": {
+          "Sorts Mill Goudy": 1,
+          "Courier Prime": 1,
+          "Zhuque Fangsong": 38
+        },
+        "touchPanel": {
+          "panel": {
+            "launcherExpanded": "true",
+            "sheetHidden": false,
+            "sheetRect": {
+              "width": 375,
+              "height": 616.8125
+            },
+            "languages": 3,
+            "close": {
+              "width": 44,
+              "height": 44
+            },
+            "cancel": {
+              "width": 351,
+              "height": 48
+            },
+            "htmlOverflow": "hidden",
+            "bodyOverflow": "visible"
+          },
+          "closed": {
+            "sheetHidden": true,
+            "launcherExpanded": "false",
+            "htmlOverflow": "visible",
+            "bodyOverflow": "visible"
+          }
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/cute-alism/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": true,
+          "total": 7,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 804,
+        "visibleLinks": 6,
+        "woff2Count": 32,
+        "woff2DiskBytes": 1163448,
+        "loadedFamilies": {
+          "Fredoka Variable": 1,
+          "LXGW WenKai GB": 29,
+          "Inter Variable": 1,
+          "League Mono": 1
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/radio/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": true,
+          "total": 6,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 805,
+        "visibleLinks": 6,
+        "woff2Count": 15,
+        "woff2DiskBytes": 325580,
+        "loadedFamilies": {
+          "Share Tech Mono": 1,
+          "Format 1452": 1,
+          "DSEG14 Classic": 1,
+          "Ark Pixel 12px": 12
+        },
+        "errors": []
+      }
+    ],
+    "reducedMotion": [
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/archive/",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": false,
+          "reducedMotion": true
+        },
+        "layout": {
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 8,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 978,
+        "visibleLinks": 6,
+        "woff2Count": 42,
+        "woff2DiskBytes": 1331092,
+        "loadedFamilies": {
+          "Sorts Mill Goudy": 1,
+          "Courier Prime": 1,
+          "Zhuque Fangsong": 40
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/cute-alism/",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": false,
+          "reducedMotion": true
+        },
+        "layout": {
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 7,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 872,
+        "visibleLinks": 6,
+        "woff2Count": 32,
+        "woff2DiskBytes": 1163448,
+        "loadedFamilies": {
+          "Fredoka Variable": 1,
+          "LXGW WenKai GB": 29,
+          "Inter Variable": 1,
+          "League Mono": 1
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/radio/",
+        "viewport": {
+          "width": 1440,
+          "height": 900,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": false,
+          "reducedMotion": true
+        },
+        "layout": {
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 6,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 873,
+        "visibleLinks": 6,
+        "woff2Count": 16,
+        "woff2DiskBytes": 358984,
+        "loadedFamilies": {
+          "Share Tech Mono": 1,
+          "Format 1452": 1,
+          "DSEG14 Classic": 1,
+          "Ark Pixel 12px": 13
+        },
+        "errors": []
+      }
+    ],
+    "noJavaScript": [
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/archive/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 8,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 870,
+        "visibleLinks": 6,
+        "woff2Count": 40,
+        "woff2DiskBytes": 1262884,
+        "loadedFamilies": {
+          "Sorts Mill Goudy": 1,
+          "Courier Prime": 1,
+          "Zhuque Fangsong": 38
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/cute-alism/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 7,
+          "hidden": 0,
+          "runningAnimations": 0
+        },
+        "textLength": 804,
+        "visibleLinks": 6,
+        "woff2Count": 32,
+        "woff2DiskBytes": 1163448,
+        "loadedFamilies": {
+          "Fredoka Variable": 1,
+          "LXGW WenKai GB": 29,
+          "Inter Variable": 1,
+          "League Mono": 1
+        },
+        "errors": []
+      },
+      {
+        "url": "http://127.0.0.1:4321/zh-cn/radio/",
+        "viewport": {
+          "width": 375,
+          "height": 812,
+          "dpr": 1
+        },
+        "query": {
+          "coarsePointer": true,
+          "reducedMotion": false
+        },
+        "layout": {
+          "scrollWidth": 375,
+          "clientWidth": 375,
+          "overflowX": false
+        },
+        "reveal": {
+          "gate": false,
+          "total": 6,
+          "hidden": 0,
+          "runningAnimations": 1
+        },
+        "textLength": 805,
+        "visibleLinks": 6,
+        "woff2Count": 15,
+        "woff2DiskBytes": 325580,
+        "loadedFamilies": {
+          "Share Tech Mono": 1,
+          "Format 1452": 1,
+          "DSEG14 Classic": 1,
+          "Ark Pixel 12px": 12
+        },
+        "errors": []
+      }
+    ]
+  },
+  "assertions": {
+    "mobilePages": 3,
+    "reducedMotionPages": 3,
+    "noJavaScriptPages": 3,
+    "allResponsivePagesWithoutHorizontalOverflow": true,
+    "allReducedMotionContentVisible": true,
+    "allNoJavaScriptContentVisible": true
+  }
+}

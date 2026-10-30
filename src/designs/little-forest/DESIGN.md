@@ -176,13 +176,14 @@ sans-serif voice in this design.
    (95/95) and Latin-1 letters (62/62), with no CJK or kana. Georgia covers
    Latin through the operating system, with no CJK. LXGW WenKai GB's source
    covers GB2312 6763/6763, kana 176/176, JIS X 0208 6953/6953 and CJK
-   punctuation 53/53. The final production subset is 301,340 B (2,133 mapped
-   code points); the merged six-theme, three-locale copy was rechecked after
-   subsetting with no visible missing glyphs.
+   punctuation 53/53. External catalog v1.0.0 supplies the complete `core-cjk`
+   cmap as 328 `unicode-range` shards in a 13,841,062 B family package, so no
+   site-copy subset is generated.
 5. **Weights, axes, size and licence**: Fraunces Variable is used at 470–560
    with optical sizing; the existing normal and italic Latin files are about
-   36.6 KB and 45.7 KB. LXGW WenKai GB Medium is weight 500; the final subset
-   is 301,340 bytes (about 294 KiB) and the full source is not shipped.
+   36.6 KB and 45.7 KB. LXGW WenKai GB Medium is weight 500; the external family
+   package contains the production shards, while the full source archive stays
+   outside the site build.
    Both are OFL-1.1 and already registered by the shared font pipeline; this
    design does not add a font licence file or a third family.
 6. **Missing-font fallback order**:

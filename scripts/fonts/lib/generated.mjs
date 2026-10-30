@@ -39,7 +39,9 @@ export function buildLocalFontDefinitions(snapshot, config) {
     return {
       name: family.manifest.familyName,
       cssVariable: family.manifest.cssVariable,
-      fallbacks: family.manifest.fallbacks,
+      // Astro's variable must expose only the primary face. Design CSS owns
+      // the complete, ordered fallback chain where it controls CJK ordering.
+      fallbacks: [],
       variants: family.manifest.variants.map((variant) => {
         const fileName = variant.file.slice('fonts/'.length);
         const override = overrides.get(`${id}:${fileName}`);
