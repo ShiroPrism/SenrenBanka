@@ -1,0 +1,96 @@
+{
+  "page": "/zh-cn/cute-alism/",
+  "fontCheck": true,
+  "generatedAt": "2026-10-30T10:15:45.623Z",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/333fc2de8d558206.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 29784,
+      "sha256": "a70fad8dc10f23eb6f3842c67d970622627a63b9250235b532f69799f3ea0236"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/41b3f511eb6085e6.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 38152,
+      "sha256": "fb6b84b620565365be3f9744588f4b677e0d991fe593634acfdd18399dd70820"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 49536,
+      "sha256": "0e082a295f360031219ad3701806de52c790c84a9d188c6c04d4810921dbdabc"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/93bffe7b84228c50.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 26172,
+      "sha256": "5838c36fe3804dcea33e4d3e1e0b2a2e393bca05c8abd1c544dbbdd7ed8ca7fa"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a541c13f11cde765.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 18608,
+      "sha256": "9bff568e62a3b0374c9bef240e1f3d365e1807e83a9bbde8b96b173c0d273675"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 20296,
+      "sha256": "3e77f720ae279a99d7617d2fe6bbef46abea9bea264f7e46ab0c196eebc78acb"
+    }
+  ],
+  "totals": {
+    "count": 7,
+    "transferBytes": 2100,
+    "encodedBodyBytes": 0,
+    "decodedBodyBytes": 0,
+    "diskBytes": 230804
+  },
+  "fontChecks": [
+    {
+      "cssVariable": "--font-fredoka",
+      "family": "Fredoka Variable",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-lxgw",
+      "family": "LXGW WenKai GB",
+      "check": true,
+      "loadedFaces": 4
+    },
+    {
+      "cssVariable": "--font-inter",
+      "family": "Inter Variable",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-league-mono",
+      "family": "League Mono",
+      "check": true,
+      "loadedFaces": 1
+    }
+  ]
+}

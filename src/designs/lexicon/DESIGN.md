@@ -231,7 +231,8 @@ OPERA / CHRONICA / ARTES / RATIO）、文法缩写（`n.` / `n. pl.` / `n. prop.
 5. **字重 / 轴 / 体积 / 许可**: 两者均为单字重、无可变轴。Goudy 四个 WOFF2：
    latin 22.8KB（正）/ 24.7KB（斜）、latin-ext 10.2KB（正）/ 10.7KB（斜）；
    Zhuque 子集 246KB。许可均为 **OFL-1.1**；Zhuque 无 Reserved Font Name，
-   Goudy 版权行随许可文件保留（`src/assets/fonts/*/LICENSE.txt`）。
+    Goudy 版权行随外部字体 package 的 `licenses/` 文件保留，并记录于
+    `fonts.catalog.json` 对应 manifest。
 6. **缺失回退顺序**: 拉丁 / 数字 `Sorts Mill Goudy → Georgia → Times New Roman → Zhuque Fangsong →
    Songti SC / SimSun → serif`；中文 `Zhuque Fangsong → Songti SC → SimSun → serif`。
    断网或无 JS 时版式与阅读顺序不变。

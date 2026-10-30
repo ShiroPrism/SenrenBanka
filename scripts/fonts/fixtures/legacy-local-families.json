@@ -1,0 +1,682 @@
+[
+  {
+    "name": "Cutive Mono",
+    "cssVariable": "--font-cutive-mono",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Courier Prime",
+    "cssVariable": "--font-courier-prime",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "700",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "700",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      },
+      {
+        "weight": "700",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      },
+      {
+        "weight": "700",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Sorts Mill Goudy",
+    "cssVariable": "--font-sorts-mill-goudy",
+    "fallbacks": [
+      "Georgia",
+      "Times New Roman"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      },
+      {
+        "weight": "400",
+        "style": "italic",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Share Tech Mono",
+    "cssVariable": "--font-share-tech-mono",
+    "fallbacks": [
+      "Consolas",
+      "Courier New",
+      "monospace"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "League Mono",
+    "cssVariable": "--font-league-mono",
+    "fallbacks": [
+      "Consolas",
+      "Courier New"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      },
+      {
+        "weight": "700",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Silkscreen",
+    "cssVariable": "--font-silkscreen",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      },
+      {
+        "weight": "700",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Prociono",
+    "cssVariable": "--font-prociono",
+    "fallbacks": [
+      "Georgia",
+      "serif"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Handjet Variable",
+    "cssVariable": "--font-handjet",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "100 900",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "League Gothic Variable",
+    "cssVariable": "--font-league-gothic",
+    "fallbacks": [
+      "Arial Narrow",
+      "sans-serif"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal",
+        "stretch": "75% 100%"
+      }
+    ]
+  },
+  {
+    "name": "Blackout 2AM",
+    "cssVariable": "--font-blackout",
+    "fallbacks": [
+      "Impact",
+      "Arial Black",
+      "sans-serif"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "UglyTypist",
+    "cssVariable": "--font-uglytypist",
+    "fallbacks": [
+      "Segoe Print",
+      "Comic Sans MS"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Format 1452",
+    "cssVariable": "--font-format-1452",
+    "fallbacks": [
+      "Arial Narrow",
+      "Helvetica",
+      "sans-serif"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Fredoka Variable",
+    "cssVariable": "--font-fredoka",
+    "fallbacks": [
+      "system-ui",
+      "PingFang SC",
+      "Microsoft YaHei",
+      "Hiragino Sans",
+      "Yu Gothic UI",
+      "sans-serif"
+    ],
+    "variants": [
+      {
+        "weight": "300 700",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0000-00FF",
+          "U+0131",
+          "U+0152-0153",
+          "U+02BB-02BC",
+          "U+02C6",
+          "U+02DA",
+          "U+02DC",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2000-206F",
+          "U+20AC",
+          "U+2122",
+          "U+2191",
+          "U+2193",
+          "U+2212",
+          "U+2215",
+          "U+FEFF",
+          "U+FFFD"
+        ]
+      },
+      {
+        "weight": "300 700",
+        "style": "normal",
+        "unicodeRange": [
+          "U+0100-02BA",
+          "U+02BD-02C5",
+          "U+02C7-02CC",
+          "U+02CE-02D7",
+          "U+02DD-02FF",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+1D00-1DBF",
+          "U+1E00-1E9F",
+          "U+1EF2-1EFF",
+          "U+2020",
+          "U+20A0-20AB",
+          "U+20AD-20C0",
+          "U+2113",
+          "U+2C60-2C7F",
+          "U+A720-A7FF"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DSEG7 Classic",
+    "cssVariable": "--font-dseg7",
+    "fallbacks": [
+      "Consolas",
+      "monospace"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      },
+      {
+        "weight": "700",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "DSEG14 Classic",
+    "cssVariable": "--font-dseg14",
+    "fallbacks": [
+      "Consolas",
+      "monospace"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      },
+      {
+        "weight": "700",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "TT2020 Base",
+    "cssVariable": "--font-tt2020",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      },
+      {
+        "weight": "400",
+        "style": "italic"
+      }
+    ]
+  },
+  {
+    "name": "TT2020 Style D",
+    "cssVariable": "--font-tt2020-styled",
+    "fallbacks": [
+      "Courier New",
+      "Courier"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Zhuque Fangsong",
+    "cssVariable": "--font-zhuque",
+    "fallbacks": [
+      "Songti SC",
+      "SimSun",
+      "serif"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "Ark Pixel 12px",
+    "cssVariable": "--font-ark-pixel",
+    "fallbacks": [
+      "SimSun",
+      "monospace"
+    ],
+    "variants": [
+      {
+        "weight": "400",
+        "style": "normal"
+      }
+    ]
+  },
+  {
+    "name": "LXGW WenKai GB",
+    "cssVariable": "--font-lxgw",
+    "fallbacks": [
+      "PingFang SC",
+      "Microsoft YaHei",
+      "Hiragino Sans",
+      "Yu Gothic UI",
+      "serif"
+    ],
+    "variants": [
+      {
+        "weight": "500",
+        "style": "normal"
+      }
+    ]
+  }
+]

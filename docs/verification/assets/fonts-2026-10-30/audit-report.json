@@ -1,0 +1,1259 @@
+{
+  "artifactSafety": {
+    "externalFontReferences": 0,
+    "machinePathReferences": 0
+  },
+  "auditTextFiles": 131,
+  "candidatePages": 45,
+  "catalogVersion": "1.0.0",
+  "checkedCodePoints": 9410,
+  "htmlFiles": 105,
+  "pages": [
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/archive/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/cute-alism/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px",
+        "lxgw-wenkai",
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 15,
+      "page": "/en/designs/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/fairy-kei/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/fax/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 7,
+      "page": "/en/lexicon/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 7,
+      "page": "/en/little-forest/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/magical-girl/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 12,
+      "page": "/en/pager/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/en/pager/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/pixel-pet-rpg/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/en/pixel-pet-rpg/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/poster/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/radio/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/en/radio/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 12,
+      "page": "/en/receipt/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/en/receipt/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 11,
+      "page": "/en/sticker-diary/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 7,
+      "page": "/en/tape/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 317,
+      "page": "/ja/archive/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 306,
+      "page": "/ja/cute-alism/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px",
+        "lxgw-wenkai",
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 371,
+      "page": "/ja/designs/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 319,
+      "page": "/ja/fairy-kei/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 316,
+      "page": "/ja/fax/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 307,
+      "page": "/ja/lexicon/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 329,
+      "page": "/ja/little-forest/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 307,
+      "page": "/ja/magical-girl/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 300,
+      "page": "/ja/pager/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/ja/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/ja/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "護",
+          "codePoint": "U+8B77",
+          "page": "/ja/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "術",
+          "codePoint": "U+8853",
+          "page": "/ja/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "劇",
+          "codePoint": "U+5287",
+          "page": "/ja/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "変",
+          "codePoint": "U+5909",
+          "page": "/ja/pager/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 302,
+      "page": "/ja/pixel-pet-rpg/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/ja/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/ja/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "護",
+          "codePoint": "U+8B77",
+          "page": "/ja/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "術",
+          "codePoint": "U+8853",
+          "page": "/ja/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "劇",
+          "codePoint": "U+5287",
+          "page": "/ja/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "変",
+          "codePoint": "U+5909",
+          "page": "/ja/pixel-pet-rpg/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 303,
+      "page": "/ja/poster/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 302,
+      "page": "/ja/radio/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/ja/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/ja/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "護",
+          "codePoint": "U+8B77",
+          "page": "/ja/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "術",
+          "codePoint": "U+8853",
+          "page": "/ja/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "劇",
+          "codePoint": "U+5287",
+          "page": "/ja/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "変",
+          "codePoint": "U+5909",
+          "page": "/ja/radio/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 307,
+      "page": "/ja/receipt/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/ja/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/ja/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "護",
+          "codePoint": "U+8B77",
+          "page": "/ja/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "術",
+          "codePoint": "U+8853",
+          "page": "/ja/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "劇",
+          "codePoint": "U+5287",
+          "page": "/ja/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "変",
+          "codePoint": "U+5909",
+          "page": "/ja/receipt/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 307,
+      "page": "/ja/sticker-diary/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 312,
+      "page": "/ja/tape/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 298,
+      "page": "/zh-cn/archive/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 292,
+      "page": "/zh-cn/cute-alism/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px",
+        "lxgw-wenkai",
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 449,
+      "page": "/zh-cn/designs/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 318,
+      "page": "/zh-cn/fairy-kei/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 289,
+      "page": "/zh-cn/fax/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 283,
+      "page": "/zh-cn/lexicon/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 316,
+      "page": "/zh-cn/little-forest/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 290,
+      "page": "/zh-cn/magical-girl/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 279,
+      "page": "/zh-cn/pager/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/zh-cn/pager/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/zh-cn/pager/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 284,
+      "page": "/zh-cn/pixel-pet-rpg/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/zh-cn/pixel-pet-rpg/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/zh-cn/pixel-pet-rpg/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 290,
+      "page": "/zh-cn/poster/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 279,
+      "page": "/zh-cn/radio/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/zh-cn/radio/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/zh-cn/radio/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "ark-pixel-12px"
+      ],
+      "checkedCodePoints": 293,
+      "page": "/zh-cn/receipt/",
+      "uncovered": [
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "概",
+          "codePoint": "U+6982",
+          "page": "/zh-cn/receipt/"
+        },
+        {
+          "activeCoreFonts": [
+            {
+              "cssVariable": "--font-ark-pixel",
+              "id": "ark-pixel-12px",
+              "name": "Ark Pixel 12px"
+            }
+          ],
+          "character": "輩",
+          "codePoint": "U+8F29",
+          "page": "/zh-cn/receipt/"
+        }
+      ]
+    },
+    {
+      "activeCoreFonts": [
+        "lxgw-wenkai"
+      ],
+      "checkedCodePoints": 300,
+      "page": "/zh-cn/sticker-diary/",
+      "uncovered": []
+    },
+    {
+      "activeCoreFonts": [
+        "zhuque-fangsong"
+      ],
+      "checkedCodePoints": 286,
+      "page": "/zh-cn/tape/",
+      "uncovered": []
+    }
+  ],
+  "schemaVersion": 1,
+  "skippedHtmlOnlyPages": 60,
+  "uncovered": [
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/en/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/en/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/en/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/en/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "護",
+      "codePoint": "U+8B77",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "術",
+      "codePoint": "U+8853",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "劇",
+      "codePoint": "U+5287",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "変",
+      "codePoint": "U+5909",
+      "page": "/ja/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "護",
+      "codePoint": "U+8B77",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "術",
+      "codePoint": "U+8853",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "劇",
+      "codePoint": "U+5287",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "変",
+      "codePoint": "U+5909",
+      "page": "/ja/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "護",
+      "codePoint": "U+8B77",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "術",
+      "codePoint": "U+8853",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "劇",
+      "codePoint": "U+5287",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "変",
+      "codePoint": "U+5909",
+      "page": "/ja/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "護",
+      "codePoint": "U+8B77",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "術",
+      "codePoint": "U+8853",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "劇",
+      "codePoint": "U+5287",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "変",
+      "codePoint": "U+5909",
+      "page": "/ja/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/zh-cn/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/zh-cn/pager/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/zh-cn/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/zh-cn/pixel-pet-rpg/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/zh-cn/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/zh-cn/radio/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "概",
+      "codePoint": "U+6982",
+      "page": "/zh-cn/receipt/"
+    },
+    {
+      "activeCoreFonts": [
+        {
+          "cssVariable": "--font-ark-pixel",
+          "id": "ark-pixel-12px",
+          "name": "Ark Pixel 12px"
+        }
+      ],
+      "character": "輩",
+      "codePoint": "U+8F29",
+      "page": "/zh-cn/receipt/"
+    }
+  ]
+}

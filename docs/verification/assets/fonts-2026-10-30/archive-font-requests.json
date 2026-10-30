@@ -1,0 +1,289 @@
+{
+  "page": "/zh-cn/archive/",
+  "generatedAt": "2026-10-30T10:15:32.237Z",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0fb68107c2f8848f.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 8572,
+      "decodedBodyBytes": 8572,
+      "diskBytes": 8572,
+      "sha256": "4260fbc5a849d44712ac52f4e2c3136f00fced6560c733ef0f29dcd128a6ce6f"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/1f2b07cbc9d5a352.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 3696,
+      "sha256": "07a7c462b8ce80437962d2d4a6dcb770fbc21088f47a231b66ea9fe141b7805a"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/2532ceecf87ae942.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 30784,
+      "sha256": "70378c05602a16ee803c73f506155b533419657ef4a66bb105db372102a1ee70"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/37a7cea135c432e4.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 46120,
+      "decodedBodyBytes": 46120,
+      "diskBytes": 46120,
+      "sha256": "cf4c512b64b795a325968208bdd5f4e27850751adcad71f752f6d8af1cdc4aae"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/3d06fd3a0b45e6e4.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 48092,
+      "decodedBodyBytes": 48092,
+      "diskBytes": 48092,
+      "sha256": "f6d3111fab31b04162bb904a342c36d6b94f321f06d87b15fef4426281119cc0"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/44beff671e1ab726.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 6864,
+      "decodedBodyBytes": 6864,
+      "diskBytes": 6864,
+      "sha256": "86af43381643ccea00daee0affd7300315069fb4e1e745b0021ac65879b659fb"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5f05be5f3149f8cc.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 34416,
+      "sha256": "da79d06cbb60da016cb314af7aaa56bd742ae72014e75efce62e73013f4592a4"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5f5a44e42f157ba6.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 18732,
+      "sha256": "d78f816b6173bcce33726f8efc42f00b0c08469199a9695683f7333e62351a29"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5fa9246c8822fff7.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 28448,
+      "sha256": "7e71a2ef48579def45a16c406baf825231970370f25deb7d0d6dd15484ec5af2"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6119ac0ca85598d3.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 8516,
+      "decodedBodyBytes": 8516,
+      "diskBytes": 8516,
+      "sha256": "39dbfb70b192935fa19841e59acdcb9d9f3e8652e2cb04a5b85e30b2ab83c7e0"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/651e8749056ce444.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 34808,
+      "sha256": "c5ff62384497a2d02b9a4b60c4ffb706c785cb9834629908b7a162aaeab8621b"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/794ee33a823b870b.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 10016,
+      "sha256": "6d6f504d23376b0bb95118dda8a2e0b721781c0814c48ae71eb4f7565b046d38"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7e3cc264c26e2c43.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 17552,
+      "sha256": "077ebf1035c203db27857e381ce5df4f4289d1eb3d9ca9c5d6b5c9cbbcedd66b"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7fd039ed51f1841d.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 38664,
+      "decodedBodyBytes": 38664,
+      "diskBytes": 38664,
+      "sha256": "155a943b445748b58361528c49f0181d70a648b929d5fb1220e23e6a177c0e7d"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/88ce047ec2ea2fef.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 36088,
+      "sha256": "4e35d4003ff366e303d4157eb53903a60d0802183addeef25c4a76e2cd0f16c8"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/8fbf41bda6d06f2a.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 18640,
+      "sha256": "f09844e1f4fe9e67df2cc77474519e68756d559b4648278b9dd4f03c8ac9c31f"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/91bd93ecfac6124d.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 28088,
+      "sha256": "b72f3f54b529a0b240ee5280908f9b143b8713c56ffefec5c7eedb1b94f7174f"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/9fabe09605f3929c.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 47540,
+      "decodedBodyBytes": 47540,
+      "diskBytes": 47540,
+      "sha256": "efea40dfd0af28b60492cfd4caa461fa970ca4e8e8c02769d27d4c9fb7fc9b27"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a4b1fa9d98d8113b.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 45524,
+      "decodedBodyBytes": 45524,
+      "diskBytes": 45524,
+      "sha256": "6c4650b020192e4063beb3443bf0b98f61fc4b7932746f2c1e8b389d7246812d"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a911b51f294c2d31.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 22952,
+      "sha256": "4f701fa464c04abe01d3917e21347055d729ddc175c1676e6777fedd0e4ab338"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b265ebcd65620aef.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 33392,
+      "sha256": "0084ad5fed69a815b01ae3a92243d962b19f34153562d7c5ecee3e53b1ef409f"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b6639c2596c045ba.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 13700,
+      "sha256": "17316b411010b9c5d69a7f70b922b8860e2e405b074ba07a444f461ff6657274"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b78e299e28e0b110.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 26028,
+      "sha256": "bb5fa00d1064981a41a2c6a92d7ed6ff7b41fb7e896880daab11ee4aa2624157"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c39e75198498cf80.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 25108,
+      "sha256": "5d88481282b4712883b414a0f7427589b7100028b027672cb29c5e07b3c47b2d"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c7fafe79714da1ad.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 22804,
+      "sha256": "7a1ef9b6f47c9f8d0afbce1dbe6e4afe2b632e8db12d262b51d46a4b37dca079"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cc74c49b25d9281b.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 18680,
+      "sha256": "3e3de3eb69eebff813e0e28bdcbb2f65a11eab0d0614ef82682593d5b9ad91c1"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d08af7d30f250b31.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 60384,
+      "decodedBodyBytes": 60384,
+      "diskBytes": 60384,
+      "sha256": "5c73a2a7012728debcdc1d4148788e86e87b13d657e7d11f0063ff9c4e495acc"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dc8cd6327de041fd.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 39288,
+      "sha256": "18cf6973c5bc9c9c3b722017f42f4aeba554d39a8e34289da893cc80aad6d1a1"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/def1801295e268f1.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 40472,
+      "sha256": "ce3840c2de426238f6840f1bd3f7875d014f9e4cdaf4c96c66af82f17b9f8fd1"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f13f8cbca9ebef50.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 24424,
+      "sha256": "5d7cc97ca601e276019ad02b93f797dd2b2d1c8392a7d2ecd6a21f5eb90e9ee9"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f968c82ab785ea52.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 0,
+      "decodedBodyBytes": 0,
+      "diskBytes": 20772,
+      "sha256": "b83d3671d6123a60a3ad834a16f431e19772a7ace512f32ed3cae6396ce9b420"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f9f371fbcf47da87.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 43080,
+      "decodedBodyBytes": 43080,
+      "diskBytes": 43080,
+      "sha256": "0be45e99a31e7c43c27d6b2ffe106588f1020cb314bc31111149568efde8c0a3"
+    }
+  ],
+  "totals": {
+    "count": 32,
+    "transferBytes": 9600,
+    "encodedBodyBytes": 353356,
+    "decodedBodyBytes": 353356,
+    "diskBytes": 902244
+  },
+  "fontChecks": [
+    {
+      "cssVariable": "--font-sorts-mill-goudy",
+      "family": "Sorts Mill Goudy",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-courier-prime",
+      "family": "Courier Prime",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-zhuque",
+      "family": "Zhuque Fangsong",
+      "check": true,
+      "loadedFaces": 30
+    }
+  ]
+}

@@ -11,7 +11,11 @@
 ## 构建
 
 - `npm run check`：`astro check`（TS / .astro 类型）
-- `npm run build`：check + 构建；设计注册表校验失败时会以 `[senrenbanka]` 前缀明确报错
+- `npm run fonts:update`：显式从固定字体目录更新 lock / catalog snapshot / 生成注册；不得自动追最新版本
+- `npm run fonts:prepare`：按锁文件下载缺失 family 并校验到 `.cache/fonts/`，已有完整缓存只复核不重下；`-- --offline` 禁止网络
+- `npm run fonts:check`：完全离线复核配置、锁、快照、生成注册与缓存；普通 `npm run build` 的第一步
+- `npm run build`：`fonts:check` + check + Astro 构建 + HTML-only 门禁 + CJK 字体审计；设计注册表校验失败时以 `[senrenbanka]` 前缀明确报错，字体基础设施失败以 `[senrenbanka:fonts]` 前缀报错
+- 干净 clone / CI / 三平台部署必须先执行 `npm run fonts:prepare`；`.cache/fonts/` 不入库，CI 按 `fonts.lock.json` 哈希复用
 - 新设计页完成、或任一设计页 / 样式 / 构建配置 / 共享机制改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程（步骤与通过标准以 skill 为准，本文件不重复维护清单）；验证状态更新至 `../verification/`（见「文档维护」节）
 - 临时调整 `site.config.yaml`（如切 `mode: fixed`）验证行为后，请恢复示例配置再提交
 

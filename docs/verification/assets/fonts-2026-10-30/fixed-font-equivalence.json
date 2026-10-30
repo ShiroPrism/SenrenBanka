@@ -1,0 +1,280 @@
+{
+  "catalogVersion": "1.0.0",
+  "fixedVariants": 34,
+  "matched": 34,
+  "allMatch": true,
+  "variants": [
+    {
+      "family": "blackout",
+      "file": "Blackout2AM.woff2",
+      "oldPath": "src/assets/fonts/blackout/Blackout2AM.woff2",
+      "oldSha256": "ae856ad39395b609c042641953b2801813bfb6f85349f1dfdc437b72a49f193f",
+      "cachedSha256": "ae856ad39395b609c042641953b2801813bfb6f85349f1dfdc437b72a49f193f",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-400-normal.woff2",
+      "oldSha256": "f09844e1f4fe9e67df2cc77474519e68756d559b4648278b9dd4f03c8ac9c31f",
+      "cachedSha256": "f09844e1f4fe9e67df2cc77474519e68756d559b4648278b9dd4f03c8ac9c31f",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-400-italic.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-400-italic.woff2",
+      "oldSha256": "84f91615090e8b84f5adfb7e5826a8ad137c7a13e3687e4bfa85c275149df60f",
+      "cachedSha256": "84f91615090e8b84f5adfb7e5826a8ad137c7a13e3687e4bfa85c275149df60f",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-700-normal.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-700-normal.woff2",
+      "oldSha256": "5c7ae1cc9aae183453565c836b74a1b988f5f2e52b65098decb909b3930957ec",
+      "cachedSha256": "5c7ae1cc9aae183453565c836b74a1b988f5f2e52b65098decb909b3930957ec",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-700-italic.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-700-italic.woff2",
+      "oldSha256": "8531294532e78dd2f7f5dd14b594633cafd1e5b2efadb83e024a5d56dd5343d1",
+      "cachedSha256": "8531294532e78dd2f7f5dd14b594633cafd1e5b2efadb83e024a5d56dd5343d1",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-ext-400-normal.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-ext-400-normal.woff2",
+      "oldSha256": "efbea074e3d87eecd5bcc05fc363853b68e703a45ecb896cd804c80c9918acd0",
+      "cachedSha256": "efbea074e3d87eecd5bcc05fc363853b68e703a45ecb896cd804c80c9918acd0",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-ext-400-italic.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-ext-400-italic.woff2",
+      "oldSha256": "a47dece624bf5d3567287a52b77ba0ae3d3b1a44dfad77c8b84aff34ffc1d9f1",
+      "cachedSha256": "a47dece624bf5d3567287a52b77ba0ae3d3b1a44dfad77c8b84aff34ffc1d9f1",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-ext-700-normal.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-ext-700-normal.woff2",
+      "oldSha256": "b7ce6854b9082533919ab47566fc92e9dac95d9a9cc209f5ee1922faa6a19ea9",
+      "cachedSha256": "b7ce6854b9082533919ab47566fc92e9dac95d9a9cc209f5ee1922faa6a19ea9",
+      "match": true
+    },
+    {
+      "family": "courier-prime",
+      "file": "courier-prime-latin-ext-700-italic.woff2",
+      "oldPath": "src/assets/fonts/courier-prime/courier-prime-latin-ext-700-italic.woff2",
+      "oldSha256": "d232930910d65787171011e9c5c649ea3ff49597f31288e8fa9e7919a9f7e396",
+      "cachedSha256": "d232930910d65787171011e9c5c649ea3ff49597f31288e8fa9e7919a9f7e396",
+      "match": true
+    },
+    {
+      "family": "cutive-mono",
+      "file": "cutive-mono-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/cutive-mono/cutive-mono-latin-400-normal.woff2",
+      "oldSha256": "86bac2b356efacde8dbb66e5e931b660a78585c6142cf4a61567f313a9f16271",
+      "cachedSha256": "86bac2b356efacde8dbb66e5e931b660a78585c6142cf4a61567f313a9f16271",
+      "match": true
+    },
+    {
+      "family": "cutive-mono",
+      "file": "cutive-mono-latin-ext-400-normal.woff2",
+      "oldPath": "src/assets/fonts/cutive-mono/cutive-mono-latin-ext-400-normal.woff2",
+      "oldSha256": "1d92e1b73cfae9b9803e375b86cee123956e4fcb168349a321a56362adb00cbf",
+      "cachedSha256": "1d92e1b73cfae9b9803e375b86cee123956e4fcb168349a321a56362adb00cbf",
+      "match": true
+    },
+    {
+      "family": "dseg14-classic",
+      "file": "DSEG14Classic-Regular.woff2",
+      "oldPath": "src/assets/fonts/dseg/DSEG14Classic-Regular.woff2",
+      "oldSha256": "a63730b0dd6812924b9e370f20bd7851cf37cb2783e528a2c68a308dee288ba8",
+      "cachedSha256": "a63730b0dd6812924b9e370f20bd7851cf37cb2783e528a2c68a308dee288ba8",
+      "match": true
+    },
+    {
+      "family": "dseg14-classic",
+      "file": "DSEG14Classic-Bold.woff2",
+      "oldPath": "src/assets/fonts/dseg/DSEG14Classic-Bold.woff2",
+      "oldSha256": "a73df6e66512d797a78377bb5e8367fe61537107fb63cd50452d6c5aad4eae7b",
+      "cachedSha256": "a73df6e66512d797a78377bb5e8367fe61537107fb63cd50452d6c5aad4eae7b",
+      "match": true
+    },
+    {
+      "family": "dseg7-classic",
+      "file": "DSEG7Classic-Regular.woff2",
+      "oldPath": "src/assets/fonts/dseg/DSEG7Classic-Regular.woff2",
+      "oldSha256": "2baf0d39ad9975ad4b34865048624e020af41081af087fb887aa81178dba966e",
+      "cachedSha256": "2baf0d39ad9975ad4b34865048624e020af41081af087fb887aa81178dba966e",
+      "match": true
+    },
+    {
+      "family": "dseg7-classic",
+      "file": "DSEG7Classic-Bold.woff2",
+      "oldPath": "src/assets/fonts/dseg/DSEG7Classic-Bold.woff2",
+      "oldSha256": "ec2e7499bc8ac8f8225e1fb6a5d45ff6083c6e2b0efbaf99d37fa7b42a5767ff",
+      "cachedSha256": "ec2e7499bc8ac8f8225e1fb6a5d45ff6083c6e2b0efbaf99d37fa7b42a5767ff",
+      "match": true
+    },
+    {
+      "family": "format-1452",
+      "file": "Format_1452.woff2",
+      "oldPath": "src/assets/fonts/format-1452/Format_1452.woff2",
+      "oldSha256": "0063b65577b44f4933b40f19ffafe348a347dbd1d6c415246e70fc76c5a7e5db",
+      "cachedSha256": "0063b65577b44f4933b40f19ffafe348a347dbd1d6c415246e70fc76c5a7e5db",
+      "match": true
+    },
+    {
+      "family": "fredoka",
+      "file": "fredoka-latin-wght-normal.woff2",
+      "oldPath": "src/assets/fonts/fredoka/fredoka-latin-wght-normal.woff2",
+      "oldSha256": "a70fad8dc10f23eb6f3842c67d970622627a63b9250235b532f69799f3ea0236",
+      "cachedSha256": "a70fad8dc10f23eb6f3842c67d970622627a63b9250235b532f69799f3ea0236",
+      "match": true
+    },
+    {
+      "family": "fredoka",
+      "file": "fredoka-latin-ext-wght-normal.woff2",
+      "oldPath": "src/assets/fonts/fredoka/fredoka-latin-ext-wght-normal.woff2",
+      "oldSha256": "18a1723c878c0d8acc2e45a108fd62fbb976e408337804afa2908982fac13e2a",
+      "cachedSha256": "18a1723c878c0d8acc2e45a108fd62fbb976e408337804afa2908982fac13e2a",
+      "match": true
+    },
+    {
+      "family": "handjet",
+      "file": "handjet-latin-full-normal.woff2",
+      "oldPath": "src/assets/fonts/handjet/handjet-latin-full-normal.woff2",
+      "oldSha256": "6cbfc356f203f313f03b7f24f763e093c06ef38a770cfba69a4e5ca9a190103d",
+      "cachedSha256": "6cbfc356f203f313f03b7f24f763e093c06ef38a770cfba69a4e5ca9a190103d",
+      "match": true
+    },
+    {
+      "family": "league-gothic",
+      "file": "league-gothic-latin-wdth-normal.woff2",
+      "oldPath": "src/assets/fonts/league-gothic/league-gothic-latin-wdth-normal.woff2",
+      "oldSha256": "2190db40de7988ba883bfbd59c31f7d9a1fc5c5923e634d31b4aa3eba0bbf3e0",
+      "cachedSha256": "2190db40de7988ba883bfbd59c31f7d9a1fc5c5923e634d31b4aa3eba0bbf3e0",
+      "match": true
+    },
+    {
+      "family": "league-mono",
+      "file": "league-mono-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/league-mono/league-mono-latin-400-normal.woff2",
+      "oldSha256": "b2bcfff669207547fd73c71fe7842312fe615155d3da567efa689df029f92a6a",
+      "cachedSha256": "b2bcfff669207547fd73c71fe7842312fe615155d3da567efa689df029f92a6a",
+      "match": true
+    },
+    {
+      "family": "league-mono",
+      "file": "league-mono-latin-700-normal.woff2",
+      "oldPath": "src/assets/fonts/league-mono/league-mono-latin-700-normal.woff2",
+      "oldSha256": "5838c36fe3804dcea33e4d3e1e0b2a2e393bca05c8abd1c544dbbdd7ed8ca7fa",
+      "cachedSha256": "5838c36fe3804dcea33e4d3e1e0b2a2e393bca05c8abd1c544dbbdd7ed8ca7fa",
+      "match": true
+    },
+    {
+      "family": "prociono",
+      "file": "prociono-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/prociono/prociono-latin-400-normal.woff2",
+      "oldSha256": "35b81bef9840c98bfda7a7bdf6197cc33baebd4436b4c9ffc03a9c3d877126c7",
+      "cachedSha256": "35b81bef9840c98bfda7a7bdf6197cc33baebd4436b4c9ffc03a9c3d877126c7",
+      "match": true
+    },
+    {
+      "family": "share-tech-mono",
+      "file": "share-tech-mono-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/share-tech-mono/share-tech-mono-latin-400-normal.woff2",
+      "oldSha256": "41e6b9f297f7d9a2df2aaa274092f76d2f72711a15ca455f7f4f4f92caf16b72",
+      "cachedSha256": "41e6b9f297f7d9a2df2aaa274092f76d2f72711a15ca455f7f4f4f92caf16b72",
+      "match": true
+    },
+    {
+      "family": "silkscreen",
+      "file": "silkscreen-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/silkscreen/silkscreen-latin-400-normal.woff2",
+      "oldSha256": "e6c72ea4702249202bcdd79d3343057e4e25ef1f04e3fcffd8602ab53b40b4cc",
+      "cachedSha256": "e6c72ea4702249202bcdd79d3343057e4e25ef1f04e3fcffd8602ab53b40b4cc",
+      "match": true
+    },
+    {
+      "family": "silkscreen",
+      "file": "silkscreen-latin-700-normal.woff2",
+      "oldPath": "src/assets/fonts/silkscreen/silkscreen-latin-700-normal.woff2",
+      "oldSha256": "5741b7f01a127f40ed70281fa2f686e8fc2cfe241930a120e4d1a1cebe78f995",
+      "cachedSha256": "5741b7f01a127f40ed70281fa2f686e8fc2cfe241930a120e4d1a1cebe78f995",
+      "match": true
+    },
+    {
+      "family": "sorts-mill-goudy",
+      "file": "sorts-mill-goudy-latin-400-normal.woff2",
+      "oldPath": "src/assets/fonts/sorts-mill-goudy/sorts-mill-goudy-latin-400-normal.woff2",
+      "oldSha256": "7a1ef9b6f47c9f8d0afbce1dbe6e4afe2b632e8db12d262b51d46a4b37dca079",
+      "cachedSha256": "7a1ef9b6f47c9f8d0afbce1dbe6e4afe2b632e8db12d262b51d46a4b37dca079",
+      "match": true
+    },
+    {
+      "family": "sorts-mill-goudy",
+      "file": "sorts-mill-goudy-latin-400-italic.woff2",
+      "oldPath": "src/assets/fonts/sorts-mill-goudy/sorts-mill-goudy-latin-400-italic.woff2",
+      "oldSha256": "83cf9e4071aebf2e8b05679c1a6574ba806de4efdc80626f18b9dd95176e4f44",
+      "cachedSha256": "83cf9e4071aebf2e8b05679c1a6574ba806de4efdc80626f18b9dd95176e4f44",
+      "match": true
+    },
+    {
+      "family": "sorts-mill-goudy",
+      "file": "sorts-mill-goudy-latin-ext-400-normal.woff2",
+      "oldPath": "src/assets/fonts/sorts-mill-goudy/sorts-mill-goudy-latin-ext-400-normal.woff2",
+      "oldSha256": "dcfb218498e45225b6ea66a03bf8a5ca564a3f756b2ce8f62d6be5746a5fdb9d",
+      "cachedSha256": "dcfb218498e45225b6ea66a03bf8a5ca564a3f756b2ce8f62d6be5746a5fdb9d",
+      "match": true
+    },
+    {
+      "family": "sorts-mill-goudy",
+      "file": "sorts-mill-goudy-latin-ext-400-italic.woff2",
+      "oldPath": "src/assets/fonts/sorts-mill-goudy/sorts-mill-goudy-latin-ext-400-italic.woff2",
+      "oldSha256": "1f821465b4b3f67a7c11affe8c780f03445ab7c69c58b7d5933f78ca8ab41af9",
+      "cachedSha256": "1f821465b4b3f67a7c11affe8c780f03445ab7c69c58b7d5933f78ca8ab41af9",
+      "match": true
+    },
+    {
+      "family": "tt2020-base",
+      "file": "TT2020Base-Regular.woff2",
+      "oldPath": "src/assets/fonts/tt2020/TT2020Base-Regular.woff2",
+      "oldSha256": "9c97a370f46677efac62be523aec76f459d5717359d0caceb1e197bcf37f77a1",
+      "cachedSha256": "9c97a370f46677efac62be523aec76f459d5717359d0caceb1e197bcf37f77a1",
+      "match": true
+    },
+    {
+      "family": "tt2020-base",
+      "file": "TT2020Base-Italic.woff2",
+      "oldPath": "src/assets/fonts/tt2020/TT2020Base-Italic.woff2",
+      "oldSha256": "120b733366d608c0998fc4f088d0d6b4d1acbff3e38d963dff50f2048bd34595",
+      "cachedSha256": "120b733366d608c0998fc4f088d0d6b4d1acbff3e38d963dff50f2048bd34595",
+      "match": true
+    },
+    {
+      "family": "tt2020-style-d",
+      "file": "TT2020StyleD-Regular-subset.woff2",
+      "oldPath": "src/assets/fonts/tt2020/TT2020StyleD-Regular-subset.woff2",
+      "oldSha256": "330b6f704c36afee54518ed257556047671f54f96ce91636b3f5a94b3d8c11f5",
+      "cachedSha256": "330b6f704c36afee54518ed257556047671f54f96ce91636b3f5a94b3d8c11f5",
+      "match": true
+    },
+    {
+      "family": "uglytypist",
+      "file": "UglyTypist.woff2",
+      "oldPath": "src/assets/fonts/uglytypist/UglyTypist.woff2",
+      "oldSha256": "646e4dc0b49c9a0c3f37eb55e5240e5bae1c10138a8e4a8102fac5c3f599e87a",
+      "cachedSha256": "646e4dc0b49c9a0c3f37eb55e5240e5bae1c10138a8e4a8102fac5c3f599e87a",
+      "match": true
+    }
+  ]
+}

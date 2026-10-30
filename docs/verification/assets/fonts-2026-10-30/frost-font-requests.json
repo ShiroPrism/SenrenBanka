@@ -1,0 +1,30 @@
+{
+  "page": "/zh-cn/frost/",
+  "fontCheck": true,
+  "generatedAt": "2026-10-30T10:16:10.494Z",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 48256,
+      "decodedBodyBytes": 48256,
+      "diskBytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    }
+  ],
+  "totals": {
+    "count": 1,
+    "transferBytes": 300,
+    "encodedBodyBytes": 48256,
+    "decodedBodyBytes": 48256,
+    "diskBytes": 48256
+  },
+  "fontChecks": [
+    {
+      "cssVariable": "--font-inter",
+      "family": "Inter Variable",
+      "check": true,
+      "loadedFaces": 1
+    }
+  ]
+}

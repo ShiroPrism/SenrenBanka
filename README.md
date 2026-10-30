@@ -17,11 +17,17 @@ One profile, many AI-designed homepages, in three languages. Astro + TypeScript 
 ## 快速开始
 
 ```bash
-npm install
-npm run dev        # http://localhost:4321
-npm run build      # astro check + 构建到 dist/
+npm ci
+npm run fonts:prepare  # 按 fonts.lock.json 下载并校验到 .cache/fonts/
+npm run dev            # http://localhost:4321
+npm run build          # fonts:check + astro check + build + HTML 审计
 npm run preview
 ```
+
+字体缓存不进入版本控制，也不在 `postinstall` 中隐式联网。干净 clone 必须先
+显式执行 `npm run fonts:prepare`；准备完成后，`npm run build` 的
+`fonts:check` 会完全离线重算锁、快照、缓存文件与生成注册的哈希。缓存缺失或
+损坏时会给出修复命令并失败。
 
 最小资料只需以下四个核心字段，可直接替换 `src/data/profiles/zh-cn.yaml`（`ja.yaml` / `en.yaml` 同理）：
 
@@ -43,6 +49,17 @@ links:
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
 - 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `docs/rules/`。新增目录后需重启 `npm run dev`。
+- 字体：人工选择只维护 `fonts.config.json`；`fonts.lock.json` / `fonts.catalog.json` / `src/fonts/generated.ts` 由 `npm run fonts:update` 从固定外部目录发行物生成。6 个 Fontsource family 也通过配置内包装层读取已安装的 `node_modules` 文件，不依赖构建期 CDN。不要手改生成文件，也不要提交 `.cache/fonts/`。`npm run fonts:audit` 会把核心 CJK 缺字报告写到 `.cache/fonts/audit-report.json`。
+
+升级字体目录时必须显式提供发布页中的固定 URL 与 SHA，不接受“自动追最新”：
+
+```bash
+npm run fonts:update -- \
+  --catalog-url https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.0.0/catalog.json \
+  --catalog-sha256 <release-sha256>
+npm run fonts:prepare
+npm run fonts:check
+```
 
 ### URL 规则
 
@@ -79,17 +96,19 @@ links:
 ### GitHub Pages（fork 零配置）
 
 1. 仓库 Settings → Pages → Source 选择 **GitHub Actions**
-2. push 到 `main` 即自动构建部署；`SITE_URL` / `BASE_PATH` 由 `.github/workflows/deploy.yml` 从仓库上下文自动注入
+2. push 到 `main` 即自动构建部署；工作流按 `fonts.lock.json` 哈希复用 `.cache/fonts/`，随后执行 `npm run fonts:prepare`；`SITE_URL` / `BASE_PATH` 从仓库上下文自动注入
 3. 自定义域名：把工作流中 `BASE_PATH` 改为 `/`，并在 `public/` 放置 `CNAME` 文件
 
 ### Cloudflare Pages
 
-- 连接仓库；Build command `npm run build`；Build output directory `dist`
+- 连接仓库；Build command `npm ci && npm run fonts:prepare && npm run build`；Build output directory `dist`
 - 可选环境变量：`SITE_URL=https://<你的域名>`（用于 canonical 绝对地址）
+- 构建环境需 Node.js `>=22.12`；只有 `fonts:prepare` 在有缓存缺失时联网，之后的 build 不访问字体源。
 
 ### Vercel
 
-- 导入仓库，框架预设自动识别 Astro；可选环境变量 `SITE_URL`
+- 导入仓库，框架预设自动识别 Astro；Install Command `npm ci`；Build Command `npm run fonts:prepare && npm run build`；可选环境变量 `SITE_URL`
+- Node.js 版本需 `>=22.12`。20 个 local-provider family 的二进制不进入 Git，部署时由固定的字体目录 Release 准备。
 
 ## 设计来源与许可
 

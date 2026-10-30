@@ -4,7 +4,7 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
-> 最近全流程验证：**2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）**；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
+> 最近共享机制专项验证：**2026-10-30（20 个 local family 迁移到外部字体目录 + 离线构建 + CJK 审计）**；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > 2026-10-28（HTML-only 子任务）：新增 `renderMode` 契约与构建末尾 `verify:html-only` 门禁。同日 `homepage99` styled 设计接入后，**当时**静态构建为 **81 页**（v0.17.0 当前为 **105 页**）；HTML-only 的桌面 / 320–375px / 无 CSS / 无 JS / 键盘检查证据见 `docs/verification/html-only.md`，Homepage '99 的浏览器实测见 `docs/verification/homepage99.md`。
 
 ## v0.17.0 集成验证（2026-10-29）
@@ -19,6 +19,48 @@
 - 设计脚本三套（sticker-diary / pixel-pet-rpg / magical-girl）通过正常、强制失败与无 JS；压缩体积 1,058 B / 706 B / 646 B gzip，均低于 12KB。
 - `BASE_PATH=/demo` 构建 105 页；六套样式、canonical、菜单与切换页链接全部带 `/demo` 前缀。
 - 六套 `impeccable detect` 均为 `[]`；截图归档在 `.local-fonts/dev/preview/cute-2026-10-29/`。
+
+## 字体准备与注册迁移（2026-10-30）
+
+**目录与锁**
+
+- 外部目录固定为 `SenrenBanka-fonts` catalog v1.0.0，catalog SHA-256 `3ec45b912b0cae17fad5438d4dbf7443fc108c65284bc8597923329bf3d55b4c`；20 个 family、578 个注册 variant、638 个 package 文件，package 总字节 **22,160,569**。
+- `fonts.config.json` 是唯一人工启用表；`fonts:update` 通过固定 catalog URL/SHA 校验 schema、许可、外层包与内层逐文件哈希，生成 `fonts.lock.json`（14,841 B）、`fonts.catalog.json`（1,741,807 B）和 `src/fonts/generated.ts`（1,123,174 B）。
+- 3 个 core-cjk family：Zhuque 161 variants / 5,998,018 B、LXGW 328 / 13,841,062 B、Ark Pixel 55 / 1,371,013 B。生成注册保留 20 个 family 的注册名、CSS 变量、回退、weight/style/stretch/unicode-range；Format 1452 的目录实际 weight 元数据为 500，人工 `variantOverrides` 保持站点历史注册 weight 400。构建实测 19 个 family 被页面实际引用并输出 CSS 变量；`TT2020 Base`（2 variants）仍注册且与旧配置一致，但迁移前后均无设计引用，因此不产生页面 CSS。
+- 17 个 fixed family 的 **34/34** 个注册变体与迁移前 HEAD 中对应 WOFF2 逐字节 SHA-256 相等（证据见 `fixed-font-equivalence.json`）；3 个 core family 则从站内用字子集升级为外部目录完整 cmap 分片，属于经过批准的覆盖范围变化。
+- 旧 `src/assets/fonts/` 中 56 个生产字体 / 许可文件已删除；只保留 `README.md` 与 `SOURCES.md`。Git 当前跟踪的 `.woff2/.woff/.ttf/.otf` 为 **0**；9 个不再使用的 Fontsource 直接依赖已移除，保留 6 个 npm provider family。
+
+**准备与离线**
+
+- `npm ci && npm run fonts:prepare -- --offline`：20/20 family 仅复核缓存，0 下载；`fonts:check` 重算 638 个缓存文件哈希并离线通过。
+- 删除 `node_modules/.astro/fonts/` 后，以 `HTTP_PROXY=http://127.0.0.1:9`、`HTTPS_PROXY=http://127.0.0.1:9`、`NODE_USE_ENV_PROXY=1` 执行完整 `npm run build`：**105 页绿**。6 个 Fontsource npm family 由 `localNpmProvider()` 将 unifont 返回的 jsdelivr URL 映射到安装包文件；`optimizedFallbacks:false` 单独并不足以阻止构建末段取件。
+- 当前 `dist/_astro/fonts/`：**611** 个 WOFF2、总计 **22,404,240 B**；`dist` 全量 747 文件 / **35,171,037 B**。CSS / HTML / JS 中 `cdn.jsdelivr`、Google Fonts、第三方字体 URL 均为 **0**。`src/`、`astro.config.mjs`、锁 / 快照 / 生成模块与 `dist/` 中无 `.local-fonts`、`F:\SenrenBanka-fonts` 或旧 `src/assets/fonts/` 生产路径。
+- `fonts:check` 与准备的 20 个缓存目录均使用相对缓存路径；`node_modules/.astro/fonts/` 可由本地已被校验的 WOFF2 重新生成，不构成额外网络依赖。
+
+**HTML CJK 审计**
+
+- `npm run fonts:audit`：扫描 **105** 个 HTML、**45** 个含核心字体变量的候选页、跳过 60 个 HTML-only 页；检查 **9,410** 个去重 CJK 码位。
+- 同一审计另检查 **131** 个 HTML / CSS / JS / JSON 产物：第三方字体 URL **0**、machine path / `.local-fonts` / 旧 `src/assets/fonts/` 引用 **0**。
+- 发现 **36** 条缺字（6 个唯一字符：`輩 U+8F29`、`概 U+6982`、`護 U+8B77`、`術 U+8853`、`劇 U+5287`、`変 U+5909`），集中在 Ark Pixel 的 pager / pixel-pet-rpg / radio / receipt 三语页面；按契约只警告，build 仍成功。完整报告与页面、字符、码位、活动核心字体见 `docs/verification/assets/fonts-2026-10-30/audit-report.json`。
+
+**浏览器字体实测（Chromium，1440×900）**
+
+| 页面 | `document.fonts.check()` | WOFF2 请求 | 磁盘字节 | 外部字体请求 |
+|---|---:|---:|---:|---:|
+| `/zh-cn/archive/` | Sorts Mill Goudy / Courier Prime / Zhuque 均 `true`；Zhuque 30 loaded faces | 32 | 902,244 | 0 |
+| `/zh-cn/cute-alism/` | Fredoka / LXGW / Inter / League Mono 均 `true`；LXGW 显式 `fonts.load()` 后 4 loaded faces | 7 | 230,804 | 0 |
+| `/zh-cn/radio/` | Share Tech / Format 1452 / DSEG14 / Ark Pixel 均 `true`；Ark 3 loaded faces | 6 | 73,452 | 0 |
+| `/zh-cn/frost/` | Inter `true`；1 loaded face | 1 | 48,256 | 0 |
+| `/zh-cn/designs/` | Zhuque / Ark Pixel / LXGW 均 `true`；loaded faces 23 / 8 / 18；25 个字体变量、622 个 `@font-face` | 74 | 2,252,816 | 0 |
+
+- 分片按页面实际 `unicode-range` 命中，没有下载 core family 的全部 578 个文件：归档 30/161、LXGW 4/328、Ark 3/55（切换页按三套预览实际文本合计 49 个核心分片）。
+- 截图、`registration-summary.json` 与完整请求 URL / transfer / disk / SHA-256 证据在 `docs/verification/assets/fonts-2026-10-30/`。375×812 + `hasTouch/isMobile` 下 `pointer: coarse=true`，归档页无横向溢出；悬浮球 52×52，面板底边 812、关闭 44px、取消 48px、语言 3 项且每项 48px，两关闭路径均隐藏面板并解锁滚动；全页无 `touch-action:none`。
+- `impeccable detect`：archive / cute-alism / radio 为 `[]`；frost 仅 2 条已登记的 `bounce-easing` 适配例外，无新增字体相关发现。
+
+**未测 / 边界**
+
+- 本轮按共享字体迁移做代表页浏览器实测，不重复执行 23 套 `styled` 的完整键盘 / 动效 / 对比度矩阵；这些设计的 CSS 与规范未改，历史验证继续有效，父级质量门可再跑全量 `design-page-verify`。
+- 浏览器网络字节同时记录 transfer 与磁盘字节；磁盘字节由当前 `dist` 文件回填，避免本地 HTTP 缓存把重复请求报告为 0 / 300 B。
 
 ## 规则文档入口（2026-10-29）
 
@@ -69,9 +111,9 @@
 
 ## 字体与 base
 
-- 字体构建期自托管：本版 `dist/_astro/fonts/` 共 **70** 个 woff2 文件、**2,117,824 B**；切换页 HTML 内联 **87** 个 `@font-face` 声明，全站零第三方字体引用，设计页与切换页 `rel="preload"` 均为 0。2026-10-19 记录的“运行时 25 个唯一请求”是历史口径，v0.17.0 未重新计数。
-- 结论：npm provider 不填 face 的 subset 元数据、family 级 `subsets` 为空操作——**无法子集过滤**（preload 会带入未使用子集；latin 子集仍按 `unicode-range` 按需加载）。
-- 回退栈含系统中文字体（示例资料中英混排验证通过）。
+- 现行 local family 链路为 `fonts.config.json` → `fonts.lock.json` / `fonts.catalog.json` → `src/fonts/generated.ts` → `.cache/fonts/` → `fontProviders.local()`；普通 build 先离线执行 `fonts:check`，缺缓存必须显式 prepare。
+- 当前构建自托管 **611** 个 WOFF2 / **22,404,240 B**；20 个 local family 578 个注册 variant，6 个 Fontsource family 通过本地 URL 包装接入。全站无第三方字体 URL、无字体 preload。
+- 回退栈含系统中文字体（示例资料中英混排验证通过）；`fonts:audit` 的当前缺字与候选范围见上节。
 - `import.meta.env.BASE_URL` 在带 base 时不带尾斜杠（如 `'/demo'`）→ `src/lib/urls.ts` 归一化；`BASE_PATH=/demo` 前缀自检通过。
 
 ## 切换页设计预览（`Preview.astro`，2026-10-19 全铺；2026-10-28 模式边界）
@@ -103,7 +145,7 @@
 | 栅格 | 1536 / 1280 / 1024 = 3 列；960 / 900 = 2 列；768 / 375 = 1 列；所有档位 0 横向溢出 |
 | 卡片几何 | 2026-10-19 的 1536px 历史实测中 16/16 卡片均约 `379×333px`、预览均约 `353×221px`、描述区均 `46.2px`；2026-10-28 复测 homepage99 沿用固定三段结构。v0.17.0 产物确认 24 张卡均使用同一 `16 / 10` 三段合同，未重新记录几何尺寸 |
 | 降级 | 2026-10-28 的 18-card 历史实测中 reduced-motion、无 JS、无 IO 均无隐藏预览；v0.17.0 的 24 张预览保持 SSR、无预览脚本、0 可聚焦元素。六套新增设计的 no-JS / reduced-motion 矩阵另见各主题验证记录 |
-| 字体 | **87** 个 `@font-face` 声明，构建产物 **70** 个 woff2；0 preload、0 第三方字体请求。运行时按 `unicode-range` 惰性加载；2026-10-19 的 25 文件运行时口径不适用于当前 24 套页面 |
+| 字体 | 2026-10-30 当前切换页 **622** 个 `@font-face` 声明，构建产物 **611** 个 woff2；zh-cn 运行时 **74** 个请求 / **2,252,816 B**，0 preload、0 第三方；分片按 `unicode-range` 惰性加载 |
 | 检测器 | 21 套零发现；既有已记录例外：frost 2 条 `bounce-easing`、govuk 2 条 `overused-font`、oxide 1 条 `codex-grid-background`。v0.17.0 六套新增设计均为 `[]` |
 
 **成本实测与规模评估**
@@ -112,14 +154,14 @@
 |---|---|---|---|---|
 | 切换页 CSS | 10 149 B | 58 050 B | **90 763 B** | ≈ 431 KB |
 | 切换页 HTML（zh-cn） | 46.8 KB | 92 775 B | **109 462 B** | ≈ 520 KB |
-| `@font-face` | 21（4 族） | 82 | **87** | 由字体族种类决定，**不随设计数线性增长** |
-| 构建字体文件 | — | 67 | **70**（**2,117,824 B**） | 由预览实际渲染的文本与 `unicode-range` 决定 |
+| `@font-face` | 21（4 族） | 82 | **622**（20 local + 6 npm family 的完整分片注册） | 由字体族种类与完整 CJK 分片决定，**不随设计数线性增长** |
+| 构建字体文件 | — | 67 | **611**（**22,404,240 B**） | 由预览实际渲染的文本与 `unicode-range` 决定 |
 
 - 预览 CSS 在切换页聚合为**单个**样式表，三语言共享同一 entrypoint；24 套时 CSS 为 **90 763 B**、HTML 为 **109 462 B**。运行时字体总量必须继续按语言与 `unicode-range` 实测监控，不能只看 CSS；2026-10-19 的 1.14 MiB 数值只保留为历史基线。
-- 24 套 CSS 为 **90 763 B**；到 114 套时约 **431 KB**，仍属可接受但需要监控。**本轮不引入**分页、搜索、筛选、按需加载或 iframe——这些会在 24 套时增加复杂度而没有实际收益。扩展至约 100 套时优先评估 `content-visibility: auto` 与分类；仍不引入必须依赖服务器的方案。
-- CJK 字体成本：预览文字**允许**触发 CJK 子集下载（用户 2026-10-18 批准）。CJK 文件按 `unicode-range` 惰性加载，不 preload；v0.17.0 的构建产物为 70 个 woff2 文件，实际运行时唯一请求数需在浏览器网络面板重新计量。
+- 24 套 CSS 仍为 **90,763 B**；到 114 套时约 **431 KB**，仍属可接受但需要监控。**本轮不引入**分页、搜索、筛选、按需加载或 iframe——这些会在 24 套时增加复杂度而没有实际收益。扩展至约 100 套时优先评估 `content-visibility: auto` 与分类；仍不引入必须依赖服务器的方案。
+- CJK 字体成本：预览文字**允许**触发核心分片下载。2026-10-30 的 zh-cn 切换页实际请求 **74** 个 WOFF2 / **2,252,816 B**，其中 Zhuque / Ark Pixel / LXGW 分别加载 23 / 8 / 18 个分片；不 preload，0 第三方域名。历史 70 文件 / 2,117,824 B 是迁移前站内子集口径，不可用于当前容量估算。
 
-**2026-10-19 旧设计字体审计后的历史成本口径**：九套旧设计的字体族并集未新增包；Oxide 从“声明了但未加载的两族”改为复用已有 Geist / Geist Mono，切换页当时为 **82** 个 `@font-face` 与 **38** 个生成族名，运行时由 0.14.0 的 22 个唯一 woff2 增至 **25** 个（**净增 3 个文件、58,340 B**）。这些数字是 2026-10-19 / 10-28 历史口径；v0.17.0 当前构建为 **87** 个声明与 **70** 个字体文件，不能用历史的 82 / 38 / 25 代表当前状态。九套的接线、覆盖、回退与许可记录分别见各自 `docs/verification/<id>.md` 及 `DESIGN.md` / `ADAPTATION.md`。
+**2026-10-19 旧设计字体审计后的历史成本口径**：九套旧设计的字体族并集未新增包；Oxide 从“声明了但未加载的两族”改为复用已有 Geist / Geist Mono，切换页当时为 **82** 个 `@font-face` 与 **38** 个生成族名，运行时由 0.14.0 的 22 个唯一 woff2 增至 **25** 个。这些数字只保留为迁移前历史；2026-10-30 当前状态是 **622** 个声明 / **611** 个构建字体文件 / zh-cn 切换页 **74** 个请求，不能用旧的 82 / 38 / 25 代表当前状态。九套的接线、覆盖、回退与许可记录分别见各自 `docs/verification/<id>.md` 及 `DESIGN.md` / `ADAPTATION.md`。
 
 ## 多语言路由测试矩阵（v0.9.0，2026-10-12）
 

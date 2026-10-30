@@ -228,7 +228,8 @@ components:
    与 receipt 同一处境（它的「明细 / 订单 / 纪录 / 结账」也一样）。
 5. **字重 / 轴 / 体积 / 许可**: 三者均为单字重静态字体（无可变轴）。体积：TT2020 Style D 子集 310KB、
    Courier Prime latin-400-normal 18.6KB（astro.config 注册了 8 个变体，本页只用到 400 normal）、
-   Zhuque 子集 252KB。许可：三者均 SIL OFL-1.1（见 `src/assets/fonts/*/LICENSE.txt`），无需追加 SOURCE-LICENSE.txt。
+    Zhuque 由中国字体目录按完整 cmap 提供核心分片。许可：三者均 SIL OFL-1.1
+    （见 `fonts.catalog.json` 对应 package manifest 的 `licenses/` 记录），无需追加 SOURCE-LICENSE.txt。
 6. **缺失回退顺序**:
    - 标签 / 字段：`Courier Prime → Zhuque Fangsong → Courier New → Songti SC → SimSun → monospace`
    - 正文：`TT2020 Style D → Zhuque Fangsong → Courier New → Songti SC → SimSun → monospace`

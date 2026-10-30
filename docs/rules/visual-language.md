@@ -91,5 +91,7 @@
 - **本地 ≠ 生产（硬隔离）**：`.local-fonts/` 与 `F:\Fonts` 等本机路径**不得**被 `astro.config.mjs` / `src/` / `public/` 引用；字体库文件**不得**进入 `dist/`；扫描 / 预览工具**不得**引入新依赖（深解析复用 Astro 自带的 `fontkitten` / `fontace`）。
 - **许可闸门**：只有**确认允许网站嵌入与再分发**的字体才能进入正式字体资源管线（字体内嵌许可字段与 `fsType` 嵌入位只作线索，必须人工核实；未核实 = 不可用，只能停留在本地候选）。需要保留声明的字体随该设计附 `SOURCE-LICENSE.txt`。
 - **记录（强制）**：每次选型的六项记录（隐喻 → 角色分配 → 取舍理由 → 简中 / 日 / 英实际覆盖与回退 → 字重 / 可变轴 / 体积 / 许可 → 缺失回退顺序）写入：自产与复刻 → 该设计 `DESIGN.md`；厂商来源 → 该主题 `ADAPTATION.md`（`DESIGN.md` 只读）。
-- **生产接线（`styled`，现状不变）**：`astro.config.mjs` 的 `fonts` 注册（项目内 `local` provider；既有 npm provider 必须 `remote: false`）→ 页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。`html-only` 不进入字体管线，使用浏览器用户默认字体。
+- **生产接线（`styled`）**：人工选择只写 `fonts.config.json`；`fonts:update` 从版本化外部目录生成 `fonts.lock.json` / `fonts.catalog.json` / `src/fonts/generated.ts`，`fonts:prepare` 验签并安装 `.cache/fonts/`，`astro.config.mjs` 经生成定义接入 `local` provider。页面 `<Font cssVariable ...>`（`astro:assets`）→ `style.css` 用 `@theme inline` 注册进 Tailwind；**回退栈必须包含系统中文**（推荐链见指南 §4）。既有 npm provider 必须 `remote: false` + `optimizedFallbacks: false`，并由项目包装层把包 URL 映射到已安装 `node_modules`；生成文件、锁与缓存禁止手改。`html-only` 不进入字体管线，使用浏览器用户默认字体。
+- **离线构建契约**：`fonts:check` 始终离线，重算锁/快照/生成注册/缓存文件哈希；普通 `npm run build` 先执行它，缓存缺失或损坏必须失败并提示 `npm run fonts:prepare`，不得把 prepare 挂到 `postinstall` 或让 Astro 静默回退。准备完成后构建不得访问字体目录、npm registry 或第三方字体域。
+- **CJK 覆盖与审计**：生产 CJK 使用外部目录的完整 `core-cjk` 分片，不再维护站内用字子集；`npm run fonts:audit` 扫描最终 HTML，以页面实际声明的核心字体变量检查 `unicode-range` 并集。缺字只警告并写完整报告（页面、字符、码位、活动核心字体），缓存/清单/报告基础设施错误必须失败；浏览器 `document.fonts.check()` 仍负责最终字体命中实测。
 - 字体不能替代对布局、信息架构与交互的独立设计；不得为显得专业机械增加字体数量。

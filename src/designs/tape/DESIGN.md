@@ -235,7 +235,7 @@ J 卡是**全部信息**的所在：手写姓名（一盘磁带只有一支笔�
    等宽声部选 League Mono 而非 Share Tech Mono（工业丝印感留给 radio）、TT2020 / Special Elite / Cutive Mono
    （磨损打字机与"打印感"分别属于 fax 与 receipt）：League Mono 是池内唯一多字重技术等宽（400/700），
    数字等高、无 RFN，正好承担"编号 + 计数"的对齐职责。
-4. **实际覆盖与回退**（实测，来自 `.local-fonts/online-font-candidates.json`）：
+4. **实际覆盖与回退**（实测，来自外部字体目录 package manifest 与完整 cmap）：
    UglyTypist —— ASCII 95/95、Latin-1 **0/62**、GB2312 0/6763、假名 0/176（因此只用于中文/ASCII 短标签，
    带变音符的拉丁会落回下一个声部）；League Mono —— ASCII 95/95、Latin-1 62/62、GB2312 0、假名 0；
    Zhuque Fangsong —— GB2312 6763/6763、假名 174/176（子集含站内全部用字）。

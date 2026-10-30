@@ -1,0 +1,352 @@
+{
+  "baseUrl": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download",
+  "catalog": {
+    "sha256": "3ec45b912b0cae17fad5438d4dbf7443fc108c65284bc8597923329bf3d55b4c",
+    "snapshotSha256": "07b15331bac8faaf200f3e8369e01667d37760edbd5664ecfbf9a3dbffaa6b4b",
+    "url": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.0.0/catalog.json",
+    "version": "1.0.0"
+  },
+  "families": {
+    "ark-pixel-12px": {
+      "manifestSha256": "6ba8199124ee9adcd34c6dd730fb3e5d694198690c4de6a2373f224f1ebd5672",
+      "package": {
+        "fileName": "ark-pixel-12px-v1.0.0.tar.gz",
+        "releaseTag": "font-ark-pixel-12px-v1.0.0",
+        "sha256": "ef06c33e066589bca95311d01c89d37e4d8d72a19ee28b43536e2f0a5cf4139d",
+        "size": 1371013
+      },
+      "packageFilesSha256": "fb769651133a14b8cd74673be3de3aa9ca2c615940557935b900dea9b76cb6b6",
+      "source": {
+        "fileName": "ark-pixel-12px-v1.0.0-source.tar.gz",
+        "releaseTag": "font-ark-pixel-12px-v1.0.0",
+        "sha256": "3f1d4be2ce6e423b070615631c259f238b3d22572465ca4b6c2c0ac3d8912c5b",
+        "size": 870477
+      },
+      "version": "1.0.0"
+    },
+    "blackout": {
+      "manifestSha256": "8fe32971a2e4eee6c24903e5f7eda1e489f1b75e7ab58b791fa4a9928d407839",
+      "package": {
+        "fileName": "blackout-v1.0.0.tar.gz",
+        "releaseTag": "font-blackout-v1.0.0",
+        "sha256": "b94e898116ae078afdc8efa659566991936abae6353ade17d9c42fa8ccbe04c2",
+        "size": 12562
+      },
+      "packageFilesSha256": "ed1fa2e37ca5ec2f5769445765dafbfd870d59f9076b31b8e156c2f4728f9415",
+      "source": {
+        "fileName": "blackout-v1.0.0-source.tar.gz",
+        "releaseTag": "font-blackout-v1.0.0",
+        "sha256": "83f6488d11070e86d8d5dd02e06f6b7e7e9e7ed5cb0e4e75f6143d3ed75b9731",
+        "size": 11953
+      },
+      "version": "1.0.0"
+    },
+    "courier-prime": {
+      "manifestSha256": "0202d96ebaf89654826904c52166b49343399ccb0c4d2b424cbda21920f165e0",
+      "package": {
+        "fileName": "courier-prime-v1.0.0.tar.gz",
+        "releaseTag": "font-courier-prime-v1.0.0",
+        "sha256": "5d865bfb758b864e7d036766d7eeb56e29a66d8fe892db64f35cb715f6f4f813",
+        "size": 140239
+      },
+      "packageFilesSha256": "1bba2be30cd364d18cc2710e0969f82a52350dcb085a39279f05555fcb2eb31c",
+      "source": {
+        "fileName": "courier-prime-v1.0.0-source.tar.gz",
+        "releaseTag": "font-courier-prime-v1.0.0",
+        "sha256": "bd160242fe69c3b9f762a46fa61bbc5930b696c83c80b05251ec5ba3a56de832",
+        "size": 139052
+      },
+      "version": "1.0.0"
+    },
+    "cutive-mono": {
+      "manifestSha256": "ea585f95bdca88ae902df7e9727b8c42e3a030be1ab2a4a5f6f38878f62b8e11",
+      "package": {
+        "fileName": "cutive-mono-v1.0.0.tar.gz",
+        "releaseTag": "font-cutive-mono-v1.0.0",
+        "sha256": "47e5c443c7ccbc1ddac318a540c44e19a51ab4315b5849cb93f5e29bb83cfaf1",
+        "size": 43176
+      },
+      "packageFilesSha256": "4661be2c2b13cbeab47a593aa8fce04ddcaa3744765ce3169611a7a93bb733ef",
+      "source": {
+        "fileName": "cutive-mono-v1.0.0-source.tar.gz",
+        "releaseTag": "font-cutive-mono-v1.0.0",
+        "sha256": "48b09c9c917be56c5148f1471817c0abc6650c38344f0c1c872a9f8f95311bda",
+        "size": 42186
+      },
+      "version": "1.0.0"
+    },
+    "dseg14-classic": {
+      "manifestSha256": "153b3018160090c07b69f37ff27deada5251583d6a67fd0f6f850d9089310502",
+      "package": {
+        "fileName": "dseg14-classic-v1.0.0.tar.gz",
+        "releaseTag": "font-dseg14-classic-v1.0.0",
+        "sha256": "7c6cb8e79455dd945a4c22f18ca3d35fdf380116bc059373e7fe21dc0d1e80dc",
+        "size": 15558
+      },
+      "packageFilesSha256": "7e08e1b4a28b04f63050317fd1892de181a72867907b46bad15fc915b4fbe75e",
+      "source": {
+        "fileName": "dseg14-classic-v1.0.0-source.tar.gz",
+        "releaseTag": "font-dseg14-classic-v1.0.0",
+        "sha256": "9332f509805cb7d8786ef30ecd8e273f68d31e2c28a96c05fde82bfc83c74071",
+        "size": 14911
+      },
+      "version": "1.0.0"
+    },
+    "dseg7-classic": {
+      "manifestSha256": "ad366b54d30b9d7f439cdd4f5e86c10f415fd22dcdcf4891dc5b166a04228d09",
+      "package": {
+        "fileName": "dseg7-classic-v1.0.0.tar.gz",
+        "releaseTag": "font-dseg7-classic-v1.0.0",
+        "sha256": "6979e9012aace593942e531e321497979eeed6ae702f36289d0a351a3f6568d4",
+        "size": 14125
+      },
+      "packageFilesSha256": "013d302e4b466b5b81f32fdc19a35f371d65cf2397a2e0a1771fc849b794eca7",
+      "source": {
+        "fileName": "dseg7-classic-v1.0.0-source.tar.gz",
+        "releaseTag": "font-dseg7-classic-v1.0.0",
+        "sha256": "33b8ef2de341721f2eb17c244fcb2c5c5b1ec1a0dbd321e58259ce3498bd6127",
+        "size": 13483
+      },
+      "version": "1.0.0"
+    },
+    "format-1452": {
+      "manifestSha256": "6e912c55b3425a3c2643fa79218efb17291a5a7cdd6d02513c557f3b5014f5eb",
+      "package": {
+        "fileName": "format-1452-v1.0.0.tar.gz",
+        "releaseTag": "font-format-1452-v1.0.0",
+        "sha256": "511c090599dae2ca97f19a8748bffceb24b0a454d110098d24d7c36ae4bd067a",
+        "size": 16546
+      },
+      "packageFilesSha256": "b9a07a0690f81c5daa67cb2bfd999a52ae7b94f81ee4560ebee92b5f9a7c04e6",
+      "source": {
+        "fileName": "format-1452-v1.0.0-source.tar.gz",
+        "releaseTag": "font-format-1452-v1.0.0",
+        "sha256": "5cd4a1de846a59bf79f8b78b18540d89c1724eb55bb7d1211abb2adf8bd8e902",
+        "size": 15940
+      },
+      "version": "1.0.0"
+    },
+    "fredoka": {
+      "manifestSha256": "3198d9bc3d9cd235c2aff7b33c2b42280bb9d926e110f6c96e353ad8d5d55a80",
+      "package": {
+        "fileName": "fredoka-v1.0.0.tar.gz",
+        "releaseTag": "font-fredoka-v1.0.0",
+        "sha256": "4ace2998b9826217e65e70fa50d1a44f6ab804807748e7061b281b9998d44310",
+        "size": 38363
+      },
+      "packageFilesSha256": "2b418ac22b6ef434841d5ba16a9f2b535761441106047309c57088ffe8690142",
+      "source": {
+        "fileName": "fredoka-v1.0.0-source.tar.gz",
+        "releaseTag": "font-fredoka-v1.0.0",
+        "sha256": "c157f37e20524abe5f3c775db031e0ae7da5a480b539891c114107b7efc6ad6b",
+        "size": 37301
+      },
+      "version": "1.0.0"
+    },
+    "handjet": {
+      "manifestSha256": "2b00e010fbbd723a7e0e8791a3137a992366d3044a49fa9c94d4cff5a132478d",
+      "package": {
+        "fileName": "handjet-v1.0.0.tar.gz",
+        "releaseTag": "font-handjet-v1.0.0",
+        "sha256": "415e95b7c46c7f5d0436ffef9afe49ce6b7c1319455ae522293e94156f1dac19",
+        "size": 21959
+      },
+      "packageFilesSha256": "e33b8bd005e0e23af72e62a5bfa9f5fc0b5114dddd6e84e270c0e6f55afcd2ea",
+      "source": {
+        "fileName": "handjet-v1.0.0-source.tar.gz",
+        "releaseTag": "font-handjet-v1.0.0",
+        "sha256": "8d08eab5501d53cc1ea90b919abdede91bd890d31107db7fbb4b7ec9bee16c1e",
+        "size": 21429
+      },
+      "version": "1.0.0"
+    },
+    "league-gothic": {
+      "manifestSha256": "8d9acc5defcdc31ef1130c77da92532ea9ea2d3b3328b8cad4f878ccbde9f538",
+      "package": {
+        "fileName": "league-gothic-v1.0.0.tar.gz",
+        "releaseTag": "font-league-gothic-v1.0.0",
+        "sha256": "795e52000477db55911ab1008637c33d1a2a5b6f34490525018afff523f8c919",
+        "size": 22180
+      },
+      "packageFilesSha256": "1add639ffc47d1c58f316b2af60595307467c7562d7bbcbdcb5a26bb228b1e78",
+      "source": {
+        "fileName": "league-gothic-v1.0.0-source.tar.gz",
+        "releaseTag": "font-league-gothic-v1.0.0",
+        "sha256": "a68c759bd9e4af4ce7e77ccf3d8bf77e2e4f0aeb41befcd5e96df3e43c10a6b6",
+        "size": 21654
+      },
+      "version": "1.0.0"
+    },
+    "league-mono": {
+      "manifestSha256": "6cc59f4c846987aeb29b2186f2a136008cbc15e8b713c3dcc96927b08475f65f",
+      "package": {
+        "fileName": "league-mono-v1.0.0.tar.gz",
+        "releaseTag": "font-league-mono-v1.0.0",
+        "sha256": "a025ed762729cd019d786ccc915258ebe602bc0069a762e274e713a5afc2b93f",
+        "size": 56065
+      },
+      "packageFilesSha256": "0b6e74af107e995228b0226d0ceb8af6f86dc7f2e3c0de73bf48971eb19bdbe6",
+      "source": {
+        "fileName": "league-mono-v1.0.0-source.tar.gz",
+        "releaseTag": "font-league-mono-v1.0.0",
+        "sha256": "73258bfbedc05ced74d90147af07deb19e7aa55e9cb1d845889ebd0ffec4c60a",
+        "size": 55547
+      },
+      "version": "1.0.0"
+    },
+    "lxgw-wenkai": {
+      "manifestSha256": "6e8457d0cd0e2cd942b79dc131ef8270da958d581b85d2119d3cfc1fdc2a20da",
+      "package": {
+        "fileName": "lxgw-wenkai-v1.0.0.tar.gz",
+        "releaseTag": "font-lxgw-wenkai-v1.0.0",
+        "sha256": "0fab3b100f0694b9c5b0a708b960956f60f12ed2233fecc1b5254200318005e5",
+        "size": 13841062
+      },
+      "packageFilesSha256": "49ee71bbce6938513108159d722b40a3f6ea736ebbdc8eb6738b7420bf7167be",
+      "source": {
+        "fileName": "lxgw-wenkai-v1.0.0-source.tar.gz",
+        "releaseTag": "font-lxgw-wenkai-v1.0.0",
+        "sha256": "257ec63fc70d163175a3ceaeddf14b2eb6f3f9c9ce089283cc7a4897df987055",
+        "size": 13233017
+      },
+      "version": "1.0.0"
+    },
+    "prociono": {
+      "manifestSha256": "05720947f8783b021b1443e39ffc789d69fa783d9e322a7a94bccfcadcfd1095",
+      "package": {
+        "fileName": "prociono-v1.0.0.tar.gz",
+        "releaseTag": "font-prociono-v1.0.0",
+        "sha256": "8a75e6fc3e67a136d655268658715b6608594becd6217f3471c39a1ba488eb35",
+        "size": 15621
+      },
+      "packageFilesSha256": "cf2d469ad78f36f17c1dff254028f6592f61b93b9865e43c1e27bd44224d526b",
+      "source": {
+        "fileName": "prociono-v1.0.0-source.tar.gz",
+        "releaseTag": "font-prociono-v1.0.0",
+        "sha256": "ae71f59594de86ff47eca200dd3a4c98e35421983540a34062b82a39041678d2",
+        "size": 15046
+      },
+      "version": "1.0.0"
+    },
+    "share-tech-mono": {
+      "manifestSha256": "7e352607c6b19ff265f7412479efa385173c13d113978804b23da784374c4fa2",
+      "package": {
+        "fileName": "share-tech-mono-v1.0.0.tar.gz",
+        "releaseTag": "font-share-tech-mono-v1.0.0",
+        "sha256": "1a660699e091e849777b28aaa06b1bca6d7f6fefffb96990dc1ba35bd11da496",
+        "size": 17316
+      },
+      "packageFilesSha256": "28f793154cda909878cef107ad76b243a0e1a6e880235952a773ecb4966292ef",
+      "source": {
+        "fileName": "share-tech-mono-v1.0.0-source.tar.gz",
+        "releaseTag": "font-share-tech-mono-v1.0.0",
+        "sha256": "4105ecf61e4fd65bf644974f06549f92431092d77b745924b58540a96b29c34a",
+        "size": 16688
+      },
+      "version": "1.0.0"
+    },
+    "silkscreen": {
+      "manifestSha256": "4776911facd4569e345dfd57bbc0b9d4b1923721c0afc30d0786016212641a2a",
+      "package": {
+        "fileName": "silkscreen-v1.0.0.tar.gz",
+        "releaseTag": "font-silkscreen-v1.0.0",
+        "sha256": "5dea721551472038bb6f430c52e1dd3efc36d4b71a65872064d4b9b5a3a22615",
+        "size": 19147
+      },
+      "packageFilesSha256": "acb6d9bc6e649525fbb2d21dabbbb297bf8e272bddf0096547dafd8fd59da360",
+      "source": {
+        "fileName": "silkscreen-v1.0.0-source.tar.gz",
+        "releaseTag": "font-silkscreen-v1.0.0",
+        "sha256": "537d16a4e538f66741032d6ae7c7b48d97658711b202129ab184f95c036824ae",
+        "size": 18565
+      },
+      "version": "1.0.0"
+    },
+    "sorts-mill-goudy": {
+      "manifestSha256": "cbe317610192e5a072686a02717d5ec7f0d5718584681d1861a9d23626c49180",
+      "package": {
+        "fileName": "sorts-mill-goudy-v1.0.0.tar.gz",
+        "releaseTag": "font-sorts-mill-goudy-v1.0.0",
+        "sha256": "044d4acffa85d1e4e5df2747a8ece3ccc9bced679b01362f3a9878a5ff6fceed",
+        "size": 73006
+      },
+      "packageFilesSha256": "5881cbe83625797328008b1c357a8988c997fb6e32209881397e3cc4114e82d6",
+      "source": {
+        "fileName": "sorts-mill-goudy-v1.0.0-source.tar.gz",
+        "releaseTag": "font-sorts-mill-goudy-v1.0.0",
+        "sha256": "377291d94829cee924190f47a3e69124255932521f01b7da4a9802a17764b8bf",
+        "size": 71942
+      },
+      "version": "1.0.0"
+    },
+    "tt2020-base": {
+      "manifestSha256": "8124fa83a0ad30643e53e90b510b1c68fa17d14d4d368ac182bee6e246b1b6cd",
+      "package": {
+        "fileName": "tt2020-base-v1.0.0.tar.gz",
+        "releaseTag": "font-tt2020-base-v1.0.0",
+        "sha256": "afcdb7b35869034a05dd46e8827ccd8958cbb472f5df69fab237c10114bb6114",
+        "size": 99530
+      },
+      "packageFilesSha256": "5b4ff4e4ea6aa5110c48690c3e48b5bc41ba05c607760008dfd65345c2a7b099",
+      "source": {
+        "fileName": "tt2020-base-v1.0.0-source.tar.gz",
+        "releaseTag": "font-tt2020-base-v1.0.0",
+        "sha256": "c77476e8693b9bb0153fe064ac61e22d320e2c4506906fb8498640c285840c01",
+        "size": 98912
+      },
+      "version": "1.0.0"
+    },
+    "tt2020-style-d": {
+      "manifestSha256": "3ae32d6452559fd753dcf7170ba511c85c97555762459844f48e1dfff2196728",
+      "package": {
+        "fileName": "tt2020-style-d-v1.0.0.tar.gz",
+        "releaseTag": "font-tt2020-style-d-v1.0.0",
+        "sha256": "7196f6bcba99d5cd453dfc37437be80b924a2f5884d1f5265510d4bd566e0344",
+        "size": 313964
+      },
+      "packageFilesSha256": "c0284b872d3290746954c869ca778812bec8042d6da98ada7a24fbcb965dc456",
+      "source": {
+        "fileName": "tt2020-style-d-v1.0.0-source.tar.gz",
+        "releaseTag": "font-tt2020-style-d-v1.0.0",
+        "sha256": "9f527499020a124c8072a0664905953dd4fa6901edd89a8f5f25d50d142a5307",
+        "size": 313382
+      },
+      "version": "1.0.0"
+    },
+    "uglytypist": {
+      "manifestSha256": "20aa0b4197be9c66ee42c287e85f8f1a8e717479b2843b943cca79fc3d6f6a23",
+      "package": {
+        "fileName": "uglytypist-v1.0.0.tar.gz",
+        "releaseTag": "font-uglytypist-v1.0.0",
+        "sha256": "902f6bad252cd800246ddf4241f8004de1a0ea58368589b36a11b0f73bd0f63c",
+        "size": 31119
+      },
+      "packageFilesSha256": "96aecb29243dd7c3db2d8abcab708c28a2d8758177dbcf80ce77fc4690ebb4ae",
+      "source": {
+        "fileName": "uglytypist-v1.0.0-source.tar.gz",
+        "releaseTag": "font-uglytypist-v1.0.0",
+        "sha256": "1fbab73b84d718cb949c1d7df693e88ac1974d5b8c50fccded49a242fe5cc0f8",
+        "size": 30533
+      },
+      "version": "1.0.0"
+    },
+    "zhuque-fangsong": {
+      "manifestSha256": "a7487f1a83a7272c67ef4b595e099a9aa695f2e9e9295fc4adb4ae786ecc166e",
+      "package": {
+        "fileName": "zhuque-fangsong-v1.0.0.tar.gz",
+        "releaseTag": "font-zhuque-fangsong-v1.0.0",
+        "sha256": "b77f6a6aedbf5cddeb814f8d911c3b54170bd8542e2e21ae92ee921f883b44bb",
+        "size": 5998018
+      },
+      "packageFilesSha256": "52e1f758e32d7ec4c095956a0c442ca4f060811f5b3cdffe29ade9ddd1340717",
+      "source": {
+        "fileName": "zhuque-fangsong-v1.0.0-source.tar.gz",
+        "releaseTag": "font-zhuque-fangsong-v1.0.0",
+        "sha256": "cc8e060d86a93649e8ea38af0d5eb3f3abc636bfab53e77dc3141819f9ef05a2",
+        "size": 5874251
+      },
+      "version": "1.0.0"
+    }
+  },
+  "schemaVersion": 1
+}

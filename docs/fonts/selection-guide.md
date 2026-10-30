@@ -51,7 +51,11 @@
 
 ### 步骤 5 · 生产接线与记录
 
-- **接线机制（现状不变）**：`astro.config.mjs` 的 `fonts` 注册（npm provider、`remote: false`、离线优先）→ 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。
+- **人工边界**：只把确定启用的 family 写入 `fonts.config.json`（id、注册名、CSS 变量、回退栈；确需保持历史注册行为时使用最小 `variantOverrides`）。字体仓新增 family 不会自动进入站点。
+- **外部目录接线**：`npm run fonts:update -- --catalog-url <固定 catalog URL> --catalog-sha256 <发布页 SHA>` 验证目录 schema、family package、许可与哈希，生成 `fonts.lock.json`、`fonts.catalog.json` 和 `src/fonts/generated.ts`。首次采用 / 升级必须从发布页带外取得 SHA，不允许自动追 latest。
+- **本地准备**：`npm run fonts:prepare` 只下载锁定的启用 family，验证外层包与包内逐文件哈希后安装到被忽略的 `.cache/fonts/`；已有完整缓存只复核不重下。`npm run fonts:check` 完全离线。
+- **Astro 接线**：`astro.config.mjs` 展开生成定义接入 `fontProviders.local()` → 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。不得在 `astro.config.mjs` 手工列 CJK 分片，也不得手改生成文件。
+- **npm provider**：仍需 Fontsource 包的 6 个 family 保持 `remote: false`、关闭 `optimizedFallbacks`，并由 `localNpmProvider()` 把 provider 返回的包 URL 映射回已安装 `node_modules`。`remote: false` 本身仍会产出 jsdelivr URL，不能据此宣称离线。
 - **回退栈必须包含系统中文**，回退顺序与推荐链见 §4。
 - **六项记录写入位置**：
   - 自产（`self-produced`）与复刻（`third-party-analysis`）→ 该设计 `DESIGN.md` 的字体章节；
@@ -89,7 +93,7 @@
 - **先核验、后下载**：下载前确认官方许可——OFL 逐项检查完整文本、版权声明与 **Reserved Font Name（RFN）** 行；Apache-2.0 / CC0 等分别核实义务。未核验许可的文件**不得下载、不得预览、不得进入任何候选复制**。
 - **存放与伴生**：下载件存 `.local-fonts/online-candidates/<source>/<family>/`，**许可文件与字体同目录保留**；候选清单 `.local-fonts/online-font-candidates.json`（来源页 / 真实下载地址 / 许可 / 实测覆盖 / 分发方案 / 状态），与本地扫描清单分离维护。
 - **同一套验证**：下载件用**同一扫描器**实测覆盖与可变轴，并用**同一 UI 的第二个实例**做浏览器样张（`--port 8795 --catalog .local-fonts/online-font-catalog.json`）。
-- **CJK 体积纪律**：优先官方子集 / 分片分发（Fontsource 的 unicode-range 分片、LXGW 系 npm 分片等）；不得为少数字符引入超大字体文件；成套 CJK 字体（8MB+）进入生产前必须评估子集化。
+- **CJK 体积纪律**：优先官方子集 / 分片分发。需要进入生产目录的完整 CJK 源字体必须先由外部字体仓生成带 `unicode-range` 的核心分片包，并记录源文件、分片哈希、覆盖范围与许可；不得把 8MB+ 单体 CJK 字体直接塞进页面，也不得在运行时或资料变更时重新子集化。
 - **状态口径**：`downloaded-verified` / `documented-not-downloaded` / `research-only`（许可未核验）/ `excluded`——只有前两者可进入后续选型对比，后两者不得进入生产管线。
 
 ## 3. 本地工作台（工具契约）

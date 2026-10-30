@@ -1,0 +1,208 @@
+{
+  "catalogVersion": "1.0.0",
+  "catalogSha256": "3ec45b912b0cae17fad5438d4dbf7443fc108c65284bc8597923329bf3d55b4c",
+  "summary": {
+    "familyCount": 20,
+    "variantCount": 578,
+    "coreCjkFamilies": [
+      "ark-pixel-12px",
+      "lxgw-wenkai",
+      "zhuque-fangsong"
+    ],
+    "snapshotSha256": "07b15331bac8faaf200f3e8369e01667d37760edbd5664ecfbf9a3dbffaa6b4b"
+  },
+  "localFamilies": [
+    {
+      "name": "Ark Pixel 12px",
+      "cssVariable": "--font-ark-pixel",
+      "variants": 55,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Ark Pixel 12px-20e02ff8e6eb1b5b\",\"Ark Pixel 12px-20e02ff8e6eb1b5b fallback: Courier New\",SimSun,monospace"
+    },
+    {
+      "name": "Blackout 2AM",
+      "cssVariable": "--font-blackout",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Blackout 2AM-a8843544792d51ce\",\"Blackout 2AM-a8843544792d51ce fallback: Arial\",Impact,\"Arial Black\",sans-serif"
+    },
+    {
+      "name": "Courier Prime",
+      "cssVariable": "--font-courier-prime",
+      "variants": 8,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Courier Prime-7a57d9c369e729d9\",\"Courier New\",Courier"
+    },
+    {
+      "name": "Cutive Mono",
+      "cssVariable": "--font-cutive-mono",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Cutive Mono-ad3035f801bcfc0d\",\"Courier New\",Courier"
+    },
+    {
+      "name": "DSEG14 Classic",
+      "cssVariable": "--font-dseg14",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"DSEG14 Classic-f9f18b76ca27afe1\",\"DSEG14 Classic-f9f18b76ca27afe1 fallback: Courier New\",Consolas,monospace"
+    },
+    {
+      "name": "DSEG7 Classic",
+      "cssVariable": "--font-dseg7",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"DSEG7 Classic-6bbbd9786f1963a1\",\"DSEG7 Classic-6bbbd9786f1963a1 fallback: Courier New\",Consolas,monospace"
+    },
+    {
+      "name": "Format 1452",
+      "cssVariable": "--font-format-1452",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Format 1452-3fac314bd0177e04\",\"Format 1452-3fac314bd0177e04 fallback: Arial\",\"Arial Narrow\",Helvetica,sans-serif"
+    },
+    {
+      "name": "Fredoka Variable",
+      "cssVariable": "--font-fredoka",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Fredoka Variable-0e475ba53000dfa8\",\"Fredoka Variable-0e475ba53000dfa8 fallback: Arial\",system-ui,\"PingFang SC\",\"Microsoft YaHei\",\"Hiragino Sans\",\"Yu Gothic UI\",sans-serif"
+    },
+    {
+      "name": "Handjet Variable",
+      "cssVariable": "--font-handjet",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Handjet Variable-f6bcf2e14e09c2f0\",\"Courier New\",Courier"
+    },
+    {
+      "name": "League Gothic Variable",
+      "cssVariable": "--font-league-gothic",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"League Gothic Variable-a558081b52e32994\",\"League Gothic Variable-a558081b52e32994 fallback: Arial\",\"Arial Narrow\",sans-serif"
+    },
+    {
+      "name": "League Mono",
+      "cssVariable": "--font-league-mono",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"League Mono-8857e958c58a899b\",Consolas,\"Courier New\""
+    },
+    {
+      "name": "LXGW WenKai GB",
+      "cssVariable": "--font-lxgw",
+      "variants": 328,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"LXGW WenKai GB-9c9bd918797e5f78\",\"LXGW WenKai GB-9c9bd918797e5f78 fallback: Times New Roman\",\"PingFang SC\",\"Microsoft YaHei\",\"Hiragino Sans\",\"Yu Gothic UI\",serif"
+    },
+    {
+      "name": "Prociono",
+      "cssVariable": "--font-prociono",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "Prociono-e641c2a9bbbe196e,\"Prociono-e641c2a9bbbe196e fallback: Times New Roman\",Georgia,serif"
+    },
+    {
+      "name": "Share Tech Mono",
+      "cssVariable": "--font-share-tech-mono",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Share Tech Mono-4df44e0352f102da\",\"Share Tech Mono-4df44e0352f102da fallback: Courier New\",Consolas,\"Courier New\",monospace"
+    },
+    {
+      "name": "Silkscreen",
+      "cssVariable": "--font-silkscreen",
+      "variants": 2,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "Silkscreen-38745fcf0292f6ef,\"Courier New\",Courier"
+    },
+    {
+      "name": "Sorts Mill Goudy",
+      "cssVariable": "--font-sorts-mill-goudy",
+      "variants": 4,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Sorts Mill Goudy-ceee3d4e0e4cb1b4\",Georgia,\"Times New Roman\""
+    },
+    {
+      "name": "TT2020 Base",
+      "cssVariable": "--font-tt2020",
+      "variants": 2,
+      "configMatch": true,
+      "declared": false,
+      "allFallbacksPresent": false,
+      "sampleDeclaration": ""
+    },
+    {
+      "name": "TT2020 Style D",
+      "cssVariable": "--font-tt2020-styled",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"TT2020 Style D-00e67d2190786614\",\"Courier New\",Courier"
+    },
+    {
+      "name": "UglyTypist",
+      "cssVariable": "--font-uglytypist",
+      "variants": 1,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "UglyTypist-b8c70133c0c4eb8d,\"Segoe Print\",\"Comic Sans MS\""
+    },
+    {
+      "name": "Zhuque Fangsong",
+      "cssVariable": "--font-zhuque",
+      "variants": 161,
+      "configMatch": true,
+      "declared": true,
+      "allFallbacksPresent": true,
+      "sampleDeclaration": "\"Zhuque Fangsong-6d0feb6ba83d1bf7\",\"Zhuque Fangsong-6d0feb6ba83d1bf7 fallback: Times New Roman\",\"Songti SC\",SimSun,serif"
+    }
+  ],
+  "allConfigMatches": true,
+  "allCssVariablesDeclared": false,
+  "allFallbacksPresent": false,
+  "registrationFamilies": 20,
+  "emittedFamilies": 19,
+  "unusedRegisteredFamilies": [
+    {
+      "name": "TT2020 Base",
+      "cssVariable": "--font-tt2020",
+      "variants": 2
+    }
+  ]
+}

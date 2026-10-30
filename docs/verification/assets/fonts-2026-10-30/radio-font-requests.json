@@ -1,0 +1,88 @@
+{
+  "page": "/zh-cn/radio/",
+  "fontCheck": true,
+  "generatedAt": "2026-10-30T10:15:57.162Z",
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/24b0d5e2ecc53447.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 22032,
+      "decodedBodyBytes": 22032,
+      "diskBytes": 22032,
+      "sha256": "b29431f62c81a4b7365352fa2739752c0791b80d96270abce9cc49d80d1d24ea"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6821d26bb4d60551.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 5808,
+      "decodedBodyBytes": 5808,
+      "diskBytes": 5808,
+      "sha256": "a63730b0dd6812924b9e370f20bd7851cf37cb2783e528a2c68a308dee288ba8"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/880402400a7df44e.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 17248,
+      "decodedBodyBytes": 17248,
+      "diskBytes": 17248,
+      "sha256": "4bf92ff83f1dca21044ecebaf88896492732f70a13de4ff8a9e02dcf320d32bf"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a291ae3273c6ec07.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 1952,
+      "decodedBodyBytes": 1952,
+      "diskBytes": 1952,
+      "sha256": "fed218aa8ccded23e3d2a5d57f432885bdca46b6ad2b9de0d261c60d98bb68be"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/bf731fea68e86abb.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 13500,
+      "decodedBodyBytes": 13500,
+      "diskBytes": 13500,
+      "sha256": "41e6b9f297f7d9a2df2aaa274092f76d2f72711a15ca455f7f4f4f92caf16b72"
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/ebcd9543f3131cc2.woff2",
+      "transferBytes": 300,
+      "encodedBodyBytes": 12912,
+      "decodedBodyBytes": 12912,
+      "diskBytes": 12912,
+      "sha256": "0063b65577b44f4933b40f19ffafe348a347dbd1d6c415246e70fc76c5a7e5db"
+    }
+  ],
+  "totals": {
+    "count": 6,
+    "transferBytes": 1800,
+    "encodedBodyBytes": 73452,
+    "decodedBodyBytes": 73452,
+    "diskBytes": 73452
+  },
+  "fontChecks": [
+    {
+      "cssVariable": "--font-share-tech-mono",
+      "family": "Share Tech Mono",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-format-1452",
+      "family": "Format 1452",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-dseg14",
+      "family": "DSEG14 Classic",
+      "check": true,
+      "loadedFaces": 1
+    },
+    {
+      "cssVariable": "--font-ark-pixel",
+      "family": "Ark Pixel 12px",
+      "check": true,
+      "loadedFaces": 3
+    }
+  ]
+}
