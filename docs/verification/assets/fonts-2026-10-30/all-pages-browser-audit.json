@@ -15,7 +15,7 @@
   "failedResponses": 0,
   "consoleErrors": 0,
   "horizontalOverflowRoutes": [],
-  "fontResponses": 1926,
+  "fontResponses": 1939,
   "implicitFaviconProbes": 0,
   "cases": [
     {
@@ -63,7 +63,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 39,
-      "fontResponses": 32,
+      "fontResponses": 34,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -128,7 +128,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 9,
-      "fontResponses": 3,
+      "fontResponses": 7,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -271,7 +271,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 8,
-      "fontResponses": 3,
+      "fontResponses": 4,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -557,7 +557,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 57,
-      "fontResponses": 51,
+      "fontResponses": 52,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -700,7 +700,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 65,
-      "fontResponses": 60,
+      "fontResponses": 61,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -882,7 +882,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 46,
-      "fontResponses": 40,
+      "fontResponses": 41,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -1077,7 +1077,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 38,
-      "fontResponses": 32,
+      "fontResponses": 34,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -1220,7 +1220,7 @@
       "status": "loaded",
       "navigationError": null,
       "responseCount": 45,
-      "fontResponses": 40,
+      "fontResponses": 41,
       "thirdParty": [],
       "failures": [],
       "failedResponses": [],
@@ -1383,5 +1383,17 @@
       "consoleErrors": [],
       "overflowX": false
     }
-  ]
+  ],
+  "postFixRefresh": {
+    "refreshedAt": "2026-10-30T13:24:04.710Z",
+    "reason": "Fresh per-language probes after the cute-alism and lexicon fallback corrections; route counts match the final dist.",
+    "affectedUrls": [
+      "http://127.0.0.1:4321/en/cute-alism/",
+      "http://127.0.0.1:4321/en/lexicon/",
+      "http://127.0.0.1:4321/ja/cute-alism/",
+      "http://127.0.0.1:4321/ja/lexicon/",
+      "http://127.0.0.1:4321/zh-cn/cute-alism/",
+      "http://127.0.0.1:4321/zh-cn/lexicon/"
+    ]
+  }
 }

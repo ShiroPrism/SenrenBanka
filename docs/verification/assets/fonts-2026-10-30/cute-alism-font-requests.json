@@ -1,37 +1,654 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:18:50.410Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "cute-alism",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/cute-alism/",
   "title": "Cute-alism · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
-  "woff2Count": 32,
-  "woff2DiskBytes": 1163448,
-  "loadedFamilies": {
-    "Fredoka Variable": 1,
-    "LXGW WenKai GB": 29,
-    "Inter Variable": 1,
-    "League Mono": 1
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
   },
-  "loadedCore": {
-    "LXGW WenKai GB": 29
+  "reveal": {
+    "gate": true,
+    "total": 7,
+    "hidden": 0,
+    "runningAnimations": 0
   },
-  "computedCore": {
-    "LXGW WenKai GB": 140
+  "textLength": 872,
+  "visibleLinks": 6,
+  "woff2Count": 34,
+  "woff2DiskBytes": 1263752,
+  "platformFamilies": {
+    "LXGW WenKai GB Medium": 487,
+    "Inter": 29,
+    "League Mono": 42,
+    "Fredoka Light": 71
   },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
+  "coreFamilies": {
+    "LXGW WenKai GB Medium": 487
   },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "个人资料拼贴",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "头像",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "坐标東京都世田谷区下北沢",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "坐标",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "剪 / 贴 / 再拼",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "简介",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "链接",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "条",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 21,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "件",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 17,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 18,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "段",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主将 / 先辈 (Ace)",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "枚",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "秘制调饮",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "日光浴",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB 素材化",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "迫真咆哮",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "发信",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "SENRENBANKA · 硬糖几何拼贴",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 14,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "示例资料 · 仅作演示",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
@@ -58,12 +675,6 @@
       "encodedBodySize": 18608
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
-      "status": 200,
-      "transferSize": 49836,
-      "encodedBodySize": 49536
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/41b3f511eb6085e6.woff2",
       "status": 200,
       "transferSize": 38452,
@@ -76,22 +687,28 @@
       "encodedBodySize": 20296
     },
     {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
+      "status": 200,
+      "transferSize": 49836,
+      "encodedBodySize": 49536
+    },
+    {
       "url": "http://127.0.0.1:4321/_astro/fonts/10a1acdb0e7cf630.woff2",
       "status": 200,
       "transferSize": 40916,
       "encodedBodySize": 40616
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
-      "status": 200,
-      "transferSize": 26936,
-      "encodedBodySize": 26636
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
       "status": 200,
       "transferSize": 12788,
       "encodedBodySize": 12488
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
+      "status": 200,
+      "transferSize": 26936,
+      "encodedBodySize": 26636
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/566c0477b6dbe0a5.woff2",
@@ -224,6 +841,18 @@
       "status": 200,
       "transferSize": 63292,
       "encodedBodySize": 62992
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/ab2583acdfe04c8c.woff2",
+      "status": 200,
+      "transferSize": 32352,
+      "encodedBodySize": 32052
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/8935c8e8db8df4f1.woff2",
+      "status": 200,
+      "transferSize": 68552,
+      "encodedBodySize": 68252
     }
   ],
   "network": {

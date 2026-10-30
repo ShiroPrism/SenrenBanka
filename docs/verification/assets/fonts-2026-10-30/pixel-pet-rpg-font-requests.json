@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:04.071Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
+  "id": "pixel-pet-rpg",
+  "isCoreDesign": true,
+  "url": "http://127.0.0.1:4321/zh-cn/pixel-pet-rpg/",
+  "title": "Pixel Pet RPG · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "layout": {
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
+  },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": false,
+    "total": 0,
+    "hidden": 0,
+    "runningAnimations": 0
+  },
+  "textLength": 277,
+  "visibleLinks": 7,
+  "woff2Count": 13,
+  "woff2DiskBytes": 255516,
+  "platformFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 194,
+    "Silkscreen": 11
+  },
+  "coreFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 194
+  },
+  "systemCjkFamilies": {
+    "SimSun": 1
+  },
+  "expectedSourceGapCharacters": [
+    "概",
+    "輩"
+  ],
+  "systemCjkElements": [
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "sourceGapExpected": true,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "跳到路标",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点路标",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "选择地名，查看地点。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "个人资料",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "随身物品",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "远方路标",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "经历日志",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "工具",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "当前地点",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "现在来到个人资料。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "个人资料",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 88,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "地点",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
+  "resourceEvidence": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/1a05c6b67e9a01c6.woff2",
+      "status": 200,
+      "transferSize": 8704,
+      "encodedBodySize": 8404
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5ce3a70f8ac2679d.woff2",
+      "status": 200,
+      "transferSize": 18852,
+      "encodedBodySize": 18552
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/9924c6c3abb5c30f.woff2",
+      "status": 200,
+      "transferSize": 7824,
+      "encodedBodySize": 7524
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/880402400a7df44e.woff2",
+      "status": 200,
+      "transferSize": 17548,
+      "encodedBodySize": 17248
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/24b0d5e2ecc53447.woff2",
+      "status": 200,
+      "transferSize": 22332,
+      "encodedBodySize": 22032
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d0398eb691673c6c.woff2",
+      "status": 200,
+      "transferSize": 20516,
+      "encodedBodySize": 20216
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/78378e57ba498622.woff2",
+      "status": 200,
+      "transferSize": 32636,
+      "encodedBodySize": 32336
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0c13b7deeea0a6f5.woff2",
+      "status": 200,
+      "transferSize": 29552,
+      "encodedBodySize": 29252
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6095b51f52e17f60.woff2",
+      "status": 200,
+      "transferSize": 26364,
+      "encodedBodySize": 26064
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/360df5eb70a30168.woff2",
+      "status": 200,
+      "transferSize": 31904,
+      "encodedBodySize": 31604
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a291ae3273c6ec07.woff2",
+      "status": 200,
+      "transferSize": 2252,
+      "encodedBodySize": 1952
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/321feae2b0b69305.woff2",
+      "status": 200,
+      "transferSize": 34348,
+      "encodedBodySize": 34048
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/aab9264bfb27b0f4.woff2",
+      "status": 200,
+      "transferSize": 6584,
+      "encodedBodySize": 6284
+    }
+  ],
+  "network": {
+    "thirdParty": [],
+    "failed": [],
+    "consoleErrors": []
+  }
+}

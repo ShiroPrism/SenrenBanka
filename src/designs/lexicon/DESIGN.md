@@ -44,20 +44,20 @@ typography:
     fontWeight: 400
     lineHeight: 1.85
   latin-caps:
-    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontFamily: "'Sorts Mill Goudy', 'Zhuque Fangsong', Georgia, 'Times New Roman', 'Songti SC', 'SimSun', serif"
     fontSize: "0.6875rem"
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "0.18em"
   pos:
-    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontFamily: "'Sorts Mill Goudy', 'Zhuque Fangsong', Georgia, 'Times New Roman', 'Songti SC', 'SimSun', serif"
     fontSize: "0.6875rem"
     fontWeight: 400
     fontStyle: italic
     lineHeight: 1.4
     letterSpacing: "0.04em"
   running:
-    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontFamily: "'Sorts Mill Goudy', 'Zhuque Fangsong', Georgia, 'Times New Roman', 'Songti SC', 'SimSun', serif"
     fontSize: "0.6875rem"
     fontWeight: 400
     lineHeight: 1.85
@@ -74,7 +74,7 @@ typography:
     fontWeight: 400
     lineHeight: 1.85
   tally:
-    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontFamily: "'Sorts Mill Goudy', 'Zhuque Fangsong', Georgia, 'Times New Roman', 'Songti SC', 'SimSun', serif"
     fontSize: "1.5rem"
     fontWeight: 400
     lineHeight: 1
@@ -104,7 +104,7 @@ typography:
     lineHeight: 1.15
     letterSpacing: "0.04em"
   preview-meta:
-    fontFamily: "'Sorts Mill Goudy', Georgia, 'Times New Roman', serif"
+    fontFamily: "'Sorts Mill Goudy', 'Zhuque Fangsong', Georgia, 'Times New Roman', 'Songti SC', 'SimSun', serif"
     fontSize: "0.42rem"
     fontWeight: 400
     lineHeight: 1.5
@@ -231,7 +231,8 @@ OPERA / CHRONICA / ARTES / RATIO）、文法缩写（`n.` / `n. pl.` / `n. prop.
    拉丁回退 `Georgia` → `Times New Roman` → `serif`。
 5. **字重 / 轴 / 体积 / 许可**: 两者均为单字重、无可变轴。Goudy 四个 WOFF2：
    latin 22.8KB（正）/ 24.7KB（斜）、latin-ext 10.2KB（正）/ 10.7KB（斜）；
-   Zhuque 核心包 161 个 WOFF2 分片 / 5,927,616 B，运行时按 `unicode-range` 取件。
+   Zhuque 为 161 个 WOFF2 分片、字体文件合计 5,927,616 B（家族包 5,998,018 B），
+   运行时按 `unicode-range` 取件。
    许可均为 **OFL-1.1**；Zhuque 无 Reserved Font Name，
     Goudy 版权行随外部字体 package 的 `licenses/` 文件保留，并记录于
     `fonts.catalog.json` 对应 manifest。

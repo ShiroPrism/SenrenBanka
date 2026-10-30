@@ -28,7 +28,7 @@
 - Zhuque Fangsong 为 **161** 个完整 cmap 分片 / 5,998,018 B；LXGW WenKai GB 为 **328** 个 / 13,841,062 B；Ark Pixel 12px 为 **55** 个 / 1,371,013 B。现行设计文档已不再把旧站内子集大小当作当前事实。
 - `npm run fonts:update` 连续执行两次，`fonts.lock.json`、`fonts.catalog.json`、`src/fonts/generated.ts` 的 SHA-256 均不变：`DBA8C1EE...FEDC6` / `07B15331...6B4B` / `3C81084F...3726`。
 - 6 个 Fontsource npm family 与 20 个 external local family 均在 registration 中设置 `fallbacks: []` + `optimizedFallbacks: false`；npm wrapper 继续把 provider 包 URL 映射回 `node_modules`。`src/fonts/generated.ts` 的每个 local definition 也只暴露主 face。
-- `npm run fonts:typography` 对 23 套 `styled` 设计、其 `Preview.astro` 与全部 registration 执行静态门禁：字体变量后的显式 fallback、核心 CJK 顺序与 primary-only 变量全部通过。修复了 cute-alism、fax、pager、poster、radio、receipt、sticker-diary、tape 等字体栈缺少系统中文字体尾链的问题。
+- `npm run fonts:typography` 对 23 套 `styled` 设计、其 `Preview.astro`、跨文件 CSS 变量与全部 registration 执行静态门禁：字体变量后的显式 fallback、核心 CJK 顺序、14 套 core-CJK 设计的每个字体栈与 primary-only 变量全部通过。本次复核补齐 cute-alism micro、lexicon running/period 等仍可绕过核心字体的局部栈，并补齐 fax、pager、poster、radio、receipt、sticker-diary、tape 等设计的系统 CJK 尾链。
 
 **准备、测试与构建**
 
@@ -46,31 +46,35 @@
 
 **跨页面浏览器矩阵**
 
-- `all-pages-browser-audit.json` 在新 Chrome context 中逐页加载全部 **105** 个 HTML 路由：loaded **105/105**，font responses **1,926**，third-party responses **0**，failed responses **0**，console errors **0**，桌面横向溢出 **0**。
-- `primary-face-browser-matrix.json` 对 11 套核心 CJK 设计、npm provider 代表 frost 与切换页逐页新建 1440×900 context，普通页面排版等待 `document.fonts.ready` 后读取资源与 computed font-family，不使用强制 `document.fonts.load()`：
+- `all-pages-browser-audit.json` 在新 Chrome context 中逐页加载全部 **105** 个 HTML 路由：loaded **105/105**，font responses **1,939**，third-party responses **0**，failed responses **0**，console errors **0**，桌面横向溢出 **0**；cute-alism / lexicon 的 8 条受影响路由已按最终 dist 刷新。逐字体请求的当前基准以下方 fresh-context 矩阵和 `*-font-requests.json` 为准。
+- `primary-face-browser-matrix.json` 对 **14 套核心 CJK 设计**、npm provider 代表 frost 与切换页共 **16 页**逐页新建 fresh Chrome profile / 1440×900 context，普通页面排版等待 `document.fonts.ready` 后读取 WOFF2 资源，并用 CDP `CSS.getPlatformFontsForNode` 记录实际平台字体；不使用强制 `document.fonts.load()`：
 
 | 页面 | WOFF2 请求 | 磁盘字节 | 实际加载的核心字体 |
 |---|---:|---:|---:|
-| `/zh-cn/archive/` | 42 | 1,331,092 | Zhuque 40 |
-| `/zh-cn/cute-alism/` | 32 | 1,163,448 | LXGW 29 |
-| `/zh-cn/radio/` | 16 | 358,984 | Ark Pixel 13 |
-| `/zh-cn/receipt/` | 16 | 361,036 | Ark Pixel 14 |
-| `/zh-cn/pager/` | 15 | 353,720 | Ark Pixel 13 |
-| `/zh-cn/poster/` | 43 | 1,329,096 | Zhuque 40 |
-| `/zh-cn/tape/` | 41 | 1,301,124 | Zhuque 38 |
-| `/zh-cn/little-forest/` | 31 | 1,152,656 | LXGW 30 |
-| `/zh-cn/magical-girl/` | 36 | 1,329,584 | LXGW 34 |
-| `/zh-cn/fairy-kei/` | 34 | 1,299,492 | LXGW 32 |
-| `/zh-cn/sticker-diary/` | 28 | 930,788 | LXGW 26 |
+| `/zh-cn/archive/` | 42 | 1,331,092 | Zhuque 507 |
+| `/zh-cn/cute-alism/` | 34 | 1,263,752 | LXGW 487 |
+| `/zh-cn/fairy-kei/` | 34 | 1,299,492 | LXGW 563 |
+| `/zh-cn/fax/` | 42 | 1,619,188 | Zhuque 480 |
+| `/zh-cn/lexicon/` | 41 | 1,272,040 | Zhuque 474 |
+| `/zh-cn/radio/` | 16 | 358,984 | Ark Pixel 470 |
+| `/zh-cn/receipt/` | 16 | 361,036 | Ark Pixel 485 |
+| `/zh-cn/pager/` | 15 | 353,720 | Ark Pixel 471 |
+| `/zh-cn/pixel-pet-rpg/` | 13 | 255,516 | Ark Pixel 194 |
+| `/zh-cn/poster/` | 43 | 1,329,096 | Zhuque 475 |
+| `/zh-cn/tape/` | 41 | 1,301,124 | Zhuque 488 |
+| `/zh-cn/little-forest/` | 31 | 1,152,656 | LXGW 574 |
+| `/zh-cn/magical-girl/` | 36 | 1,329,584 | LXGW 524 |
+| `/zh-cn/sticker-diary/` | 28 | 930,788 | LXGW 171 |
 | `/zh-cn/frost/` | 1 | 48,256 | 0（npm Inter）；无核心 CJK 变量 |
-| `/zh-cn/designs/` | 82 | 2,535,300 | Zhuque 28 / LXGW 20 / Ark Pixel 9 |
+| `/zh-cn/designs/` | 82 | 2,535,300 | Zhuque 314 / LXGW 237 / Ark Pixel 192 |
 
-- 13 页合计 417 个 WOFF2 请求 / 13,494,576 B（页面合计，不是去重全站成本）；每页 third-party、failed、console error 均为 0，桌面横向溢出为 0。
-- 请求日志、computed family 与 screenshot 均位于 `docs/verification/assets/fonts-2026-10-30/`；截图：`archive-desktop.png`、`cute-alism-desktop.png`、`radio-desktop.png`、`receipt-desktop.png`、`pager-desktop.png`、`poster-desktop.png`、`tape-desktop.png`、`little-forest-desktop.png`、`magical-girl-desktop.png`、`fairy-kei-desktop.png`、`sticker-diary-desktop.png`、`frost-desktop.png`、`designs-desktop.png`。
+- 16 页合计 515 个 WOFF2 请求 / 16,741,624 B（页面合计，不是去重全站成本）；每页 third-party、failed、console error 均为 0，桌面横向溢出为 0。
+- `platform-font-audit.json` 另以 CDP 平台字体证据复核 14/14 核心 CJK 设计：全部命中预期 Zhuque / LXGW / Ark Pixel；系统 CJK 只出现在审计报告已列出的 5 个源 cmap 缺字位置。cute-alism 和 lexicon 修复后不再出现非预期系统 CJK 回退。
+- 每个页面的 WOFF2 URL、状态、传输字节与平台字体证据均写入对应 `*-font-requests.json`；截图：`archive-desktop.png`、`cute-alism-desktop.png`、`radio-desktop.png`、`receipt-desktop.png`、`pager-desktop.png`、`poster-desktop.png`、`tape-desktop.png`、`little-forest-desktop.png`、`magical-girl-desktop.png`、`fairy-kei-desktop.png`、`sticker-diary-desktop.png`、`frost-desktop.png`、`designs-desktop.png`。
 
 **响应式、减动态与无 JS**
 
-- `responsive-accessibility-matrix.json` 对 archive / cute-alism / radio 在 375×812 + `isMobile` + `hasTouch` 下复测：`any-pointer: coarse=true`，三页无横向溢出，Zhuque / LXGW / Ark Pixel 均按普通排版加载；截图 `archive-375.png`、`cute-alism-375.png`、`radio-375.png`。
+- `responsive-accessibility-matrix.json` 在 fresh Chrome context 中对 archive / cute-alism / radio 复测 375×812 + `isMobile` + touch：`pointer: coarse=true`，三页无横向溢出，Zhuque / LXGW / Ark Pixel 均按普通排版加载；WOFF2 分别为 40 / 32 / 15 个。截图 `archive-375.png`、`cute-alism-375.png`、`radio-375.png`。
 - archive 触控菜单：面板可见且底边贴合视口，语言项 3 个，关闭 44×44、取消 351×48；打开时 `<html>` overflow hidden，取消后面板隐藏、`aria-expanded=false` 且滚动解锁。面板截图 `archive-touch-panel.png`。
 - 三页 `prefers-reduced-motion: reduce`：`data-reveal-ready` 未写入，`[data-reveal]` 隐藏数 0，运行中动画 0；代表截图 `archive-reduced-motion.png`。
 - 三页 375px 无 JS：门控未写入、隐藏数 0，正文 804–870 字符、可见链接 6 个，无横向溢出；代表截图 `archive-no-js.png`。
@@ -79,7 +83,7 @@
 
 - 受影响的 12 套设计运行 `impeccable detect` 均为 `[]`：archive / cute-alism / fax / fairy-kei / little-forest / magical-girl / pager / poster / radio / receipt / sticker-diary / tape。
 - frost 仍只有既有 2 条 `bounce-easing` 适配例外；本任务没有改变其视觉规范。
-- 覆盖口径：静态 typography 门禁覆盖全部 23 套 `styled`；浏览器深测覆盖 13 个代表页；375px / reduced-motion / no-JS 覆盖三套核心 CJK 代表页。未对全部 23 套重复手工矩阵，既有交互、对比度与脚本专项记录继续有效。
+- 覆盖口径：静态 typography 门禁覆盖全部 23 套 `styled`；CDP 平台字体证据覆盖全部 **14 套 core-CJK 设计** + frost + 切换页（16 页）；375px / reduced-motion / no-JS 覆盖三套核心 CJK 代表页。未对全部 23 套重复手工矩阵，既有交互、对比度与脚本专项记录继续有效。
 - 未测：Safari / Firefox、iOS / Android 真机与 200% 缩放；本地 Chrome headless 只证明 Chromium 行为。
 
 ## 规则文档入口（2026-10-29）

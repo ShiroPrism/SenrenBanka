@@ -252,7 +252,11 @@ function normalizedFamily(token) {
     .toLowerCase();
 }
 
-export function inspectTypographyCss(source, filename = '<css>') {
+export function inspectTypographyCss(
+  source,
+  filename = '<css>',
+  { requiredCoreVariables = [] } = {},
+) {
   const declarations = declarationValues(source);
   const customProperties = new Map(
     declarations
@@ -278,6 +282,17 @@ export function inspectTypographyCss(source, filename = '<css>') {
         `${filename}: ${declaration.property} must put an explicit fallback after every font variable`,
       );
       continue;
+    }
+
+    if (
+      requiredCoreVariables.length > 0 &&
+      !requiredCoreVariables.some((variable) =>
+        new RegExp(`var\\(\\s*${variable}\\s*\\)`, 'i').test(expanded),
+      )
+    ) {
+      findings.push(
+        `${filename}: ${declaration.property} must include a core CJK font variable before system/generic fallbacks`,
+      );
     }
 
     const coreIndexes = families.flatMap((family, index) =>
@@ -345,6 +360,7 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
   const designsDirectory = path.join(projectRoot, 'src/designs');
   const entries = await fs.readdir(designsDirectory, { withFileTypes: true });
   let styledCount = 0;
+  let coreDesignCount = 0;
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const directory = path.join(designsDirectory, entry.name);
@@ -361,17 +377,43 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
       findings.push(`${stylePath}: styled design is missing style.css`);
       continue;
     }
-    findings.push(...inspectTypographyCss(style, stylePath));
+    const cssFiles = (await fs.readdir(directory))
+      .filter((file) => file.endsWith('.css'))
+      .sort();
+    const cssSources = await Promise.all(
+      cssFiles.map((file) => fs.readFile(path.join(directory, file), 'utf8')),
+    );
 
     const astroFiles = (await fs.readdir(directory)).filter((file) => file.endsWith('.astro'));
+    const astroSources = [];
     for (const file of astroFiles) {
       const filePath = path.join(directory, file);
       const source = await fs.readFile(filePath, 'utf8');
       for (const [index, styleBlock] of astroStyleBlocks(source).entries()) {
-        findings.push(
-          ...inspectTypographyCss(styleBlock, `${filePath}:style[${index + 1}]`),
-        );
+        astroSources.push({
+          filename: `${filePath}:style[${index + 1}]`,
+          source: styleBlock,
+        });
       }
+    }
+
+    const allSources = [...cssSources, ...astroSources.map((entry) => entry.source)].join('\n');
+    const requiredCoreVariables = [...CORE_FONT_VARIABLES].filter((variable) =>
+      allSources.includes(variable),
+    );
+    if (requiredCoreVariables.length > 0) coreDesignCount += 1;
+
+    findings.push(
+      ...inspectTypographyCss(cssSources.join('\n'), `${directory}/*.css`, {
+        requiredCoreVariables,
+      }),
+    );
+    for (const astroSource of astroSources) {
+      findings.push(
+        ...inspectTypographyCss(astroSource.source, astroSource.filename, {
+          requiredCoreVariables,
+        }),
+      );
     }
   }
 
@@ -380,11 +422,17 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
       `${designsDirectory}: expected 23 styled designs, found ${styledCount}`,
     );
   }
-  return { findings, styledCount, generatedFamilies: generated.count };
+  return {
+    findings,
+    styledCount,
+    coreDesignCount,
+    generatedFamilies: generated.count,
+  };
 }
 
 async function main() {
-  const { findings, styledCount, generatedFamilies } = await checkTypography();
+  const { findings, styledCount, coreDesignCount, generatedFamilies } =
+    await checkTypography();
   if (findings.length > 0) {
     console.error('[senrenbanka:fonts] typography contract failed:');
     for (const finding of findings) console.error(`- ${finding}`);
@@ -392,7 +440,7 @@ async function main() {
     return;
   }
   console.log(
-    `[senrenbanka:fonts] typography check passed: ${styledCount} styled designs, ${generatedFamilies} primary-only local families`,
+    `[senrenbanka:fonts] typography check passed: ${styledCount} styled designs (${coreDesignCount} with core CJK), ${generatedFamilies} primary-only local families`,
   );
 }
 

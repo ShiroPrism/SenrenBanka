@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:07:08.640Z",
+  "environment": {
+    "browser": "Chrome/143.0.7499.4",
+    "viewport": "1440x900",
+    "deviceScaleFactor": 1,
+    "baseUrl": "http://127.0.0.1:4321",
+    "method": "CDP CSS.getPlatformFontsForNode after normal layout and document.fonts.ready; no forced document.fonts.load()"
+  },
+  "coreDesignCount": 14,
+  "pagesWithCoreFamily": 14,
+  "pagesWithUnexpectedSystemCjk": [],
+  "systemCjkOnlyForAuditedSourceGaps": true,
+  "thirdPartyResponses": 0,
+  "horizontalOverflowPages": [],
+  "cases": [
+    {
+      "id": "archive",
+      "route": "/zh-cn/archive/",
+      "title": "Archive · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 43,
+      "woff2Requests": 42,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Zhuque Fangsong (technical preview)"
+      ],
+      "customFamilies": {
+        "Zhuque Fangsong (technical preview)": 507,
+        "Courier Prime": 150,
+        "Sorts Mill Goudy": 6
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "cute-alism",
+      "route": "/zh-cn/cute-alism/",
+      "title": "Cute-alism · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 47,
+      "woff2Requests": 34,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "LXGW WenKai GB Medium"
+      ],
+      "customFamilies": {
+        "LXGW WenKai GB Medium": 487,
+        "Inter": 29,
+        "League Mono": 42,
+        "Fredoka Light": 71
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "fairy-kei",
+      "route": "/zh-cn/fairy-kei/",
+      "title": "Fairy Kei · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 52,
+      "woff2Requests": 34,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "LXGW WenKai GB Medium"
+      ],
+      "customFamilies": {
+        "LXGW WenKai GB Medium": 563,
+        "Inter": 69,
+        "Fredoka Light": 54
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "fax",
+      "route": "/zh-cn/fax/",
+      "title": "Fax · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 37,
+      "woff2Requests": 42,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Zhuque Fangsong (technical preview)"
+      ],
+      "customFamilies": {
+        "Zhuque Fangsong (technical preview)": 478,
+        "TT2020 Style D": 105,
+        "Courier Prime": 47
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "lexicon",
+      "route": "/zh-cn/lexicon/",
+      "title": "Lexicon · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 41,
+      "woff2Requests": 41,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Zhuque Fangsong (technical preview)"
+      ],
+      "customFamilies": {
+        "Zhuque Fangsong (technical preview)": 474,
+        "Sorts Mill Goudy": 130
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "little-forest",
+      "route": "/zh-cn/little-forest/",
+      "title": "Little Forest · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 59,
+      "woff2Requests": 31,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "LXGW WenKai GB Medium"
+      ],
+      "customFamilies": {
+        "LXGW WenKai GB Medium": 574,
+        "Fraunces": 63
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "magical-girl",
+      "route": "/zh-cn/magical-girl/",
+      "title": "Magical Girl · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 50,
+      "woff2Requests": 36,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "LXGW WenKai GB Medium"
+      ],
+      "customFamilies": {
+        "LXGW WenKai GB Medium": 524,
+        "Fraunces": 63,
+        "Inter": 52
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "pager",
+      "route": "/zh-cn/pager/",
+      "title": "Pager · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 30,
+      "woff2Requests": 15,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Ark Pixel 12px Mono zh-Hans"
+      ],
+      "customFamilies": {
+        "Ark Pixel 12px Mono zh-Hans": 311,
+        "Silkscreen": 134,
+        "Handjet": 12
+      },
+      "expectedSourceGapCharacters": [
+        "概",
+        "輩"
+      ],
+      "systemCjkFamilies": {
+        "SimSun": 2
+      },
+      "systemCjkElements": [
+        {
+          "text": "www.nicovideo.jp/tag/野獣先輩",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "SimSun",
+              "glyphs": 1
+            }
+          ]
+        },
+        {
+          "text": "— 概念级主演 / 万能音 MAD 核心",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "SimSun",
+              "glyphs": 1
+            }
+          ]
+        }
+      ],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "pixel-pet-rpg",
+      "route": "/zh-cn/pixel-pet-rpg/",
+      "title": "Pixel Pet RPG · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 19,
+      "woff2Requests": 13,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Ark Pixel 12px Mono zh-Hans"
+      ],
+      "customFamilies": {
+        "Ark Pixel 12px Mono zh-Hans": 194,
+        "Silkscreen": 11
+      },
+      "expectedSourceGapCharacters": [
+        "概",
+        "輩"
+      ],
+      "systemCjkFamilies": {
+        "SimSun": 1
+      },
+      "systemCjkElements": [
+        {
+          "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "SimSun",
+              "glyphs": 1
+            }
+          ]
+        }
+      ],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "poster",
+      "route": "/zh-cn/poster/",
+      "title": "Poster · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 40,
+      "woff2Requests": 43,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Zhuque Fangsong (technical preview)"
+      ],
+      "customFamilies": {
+        "Zhuque Fangsong (technical preview)": 475,
+        "Prociono": 147,
+        "League Gothic": 13
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "radio",
+      "route": "/zh-cn/radio/",
+      "title": "Radio · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 43,
+      "woff2Requests": 16,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Ark Pixel 12px Mono zh-Hans"
+      ],
+      "customFamilies": {
+        "Format_1452": 3,
+        "Ark Pixel 12px Mono zh-Hans": 470,
+        "Share Tech Mono": 130,
+        "DSEG14 Classic": 22
+      },
+      "expectedSourceGapCharacters": [
+        "概",
+        "輩"
+      ],
+      "systemCjkFamilies": {
+        "Microsoft YaHei": 3
+      },
+      "systemCjkElements": [
+        {
+          "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "Microsoft YaHei",
+              "glyphs": 1
+            }
+          ]
+        },
+        {
+          "text": "www.nicovideo.jp/tag/野獣先輩",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "Microsoft YaHei",
+              "glyphs": 1
+            }
+          ]
+        },
+        {
+          "text": "概念级主演 / 万能音 MAD 核心",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "Microsoft YaHei",
+              "glyphs": 1
+            }
+          ]
+        }
+      ],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "receipt",
+      "route": "/zh-cn/receipt/",
+      "title": "Receipt · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 25,
+      "woff2Requests": 16,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Ark Pixel 12px Mono zh-Hans"
+      ],
+      "customFamilies": {
+        "Ark Pixel 12px Mono zh-Hans": 198,
+        "Cutive Mono": 126
+      },
+      "expectedSourceGapCharacters": [
+        "概",
+        "輩"
+      ],
+      "systemCjkFamilies": {
+        "SimSun": 2
+      },
+      "systemCjkElements": [
+        {
+          "text": "www.nicovideo.jp/tag/野獣先輩",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "SimSun",
+              "glyphs": 1
+            }
+          ]
+        },
+        {
+          "text": "— 概念级主演 / 万能音 MAD 核心",
+          "sourceGapExpected": true,
+          "fonts": [
+            {
+              "familyName": "SimSun",
+              "glyphs": 1
+            }
+          ]
+        }
+      ],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "sticker-diary",
+      "route": "/zh-cn/sticker-diary/",
+      "title": "Sticker Diary · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 17,
+      "woff2Requests": 28,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "LXGW WenKai GB Medium"
+      ],
+      "customFamilies": {
+        "LXGW WenKai GB Medium": 171,
+        "Inter": 21,
+        "UglyTypist": 11
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    },
+    {
+      "id": "tape",
+      "route": "/zh-cn/tape/",
+      "title": "Tape · 田所浩二 / Tadokoro Koji (野獣先輩)",
+      "textElements": 39,
+      "woff2Requests": 41,
+      "thirdPartyResponses": 0,
+      "horizontalOverflow": false,
+      "coreFamilies": [
+        "Zhuque Fangsong (technical preview)"
+      ],
+      "customFamilies": {
+        "League Mono": 159,
+        "Zhuque Fangsong (technical preview)": 488
+      },
+      "expectedSourceGapCharacters": [],
+      "systemCjkFamilies": {},
+      "systemCjkElements": [],
+      "unexpectedSystemCjkElements": 0
+    }
+  ]
+}

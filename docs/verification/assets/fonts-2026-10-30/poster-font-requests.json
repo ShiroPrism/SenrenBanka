@@ -1,37 +1,591 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:05.668Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "poster",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/poster/",
   "title": "Poster · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 7,
+    "hidden": 0,
+    "runningAnimations": 6
+  },
+  "textLength": 877,
+  "visibleLinks": 6,
   "woff2Count": 43,
   "woff2DiskBytes": 1329096,
-  "loadedFamilies": {
-    "League Gothic Variable": 1,
-    "Blackout 2AM": 1,
-    "Prociono": 1,
-    "Zhuque Fangsong": 40
+  "platformFamilies": {
+    "Zhuque Fangsong (technical preview)": 475,
+    "Prociono": 147,
+    "League Gothic": 13
   },
-  "loadedCore": {
-    "Zhuque Fangsong": 40
+  "coreFamilies": {
+    "Zhuque Fangsong (technical preview)": 475
   },
-  "computedCore": {
-    "Zhuque Fangsong": 99
-  },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "双色丝网印刷",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 東京都世田谷区下北沢",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "League Gothic",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "订单",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 17,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "114514 / 王道 / 空手道",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 19,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "纪录",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "League Gothic",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主将 / 先辈 (Ace)",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "League Gothic",
+          "glyphCount": 7,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "秘制调饮",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "日光浴",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB 素材化",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "迫真咆哮",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "结账",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "合计",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "项",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联络",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "示例资料・仅作演示",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/d5d2acb2086d6d3a.woff2",
@@ -52,22 +606,34 @@
       "encodedBodySize": 8868
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/f968c82ab785ea52.woff2",
-      "status": 200,
-      "transferSize": 21072,
-      "encodedBodySize": 20772
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/5f5a44e42f157ba6.woff2",
       "status": 200,
       "transferSize": 19032,
       "encodedBodySize": 18732
     },
     {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0e61b06767ea4259.woff2",
+      "status": 200,
+      "transferSize": 45460,
+      "encodedBodySize": 45160
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/88ce047ec2ea2fef.woff2",
+      "status": 200,
+      "transferSize": 36388,
+      "encodedBodySize": 36088
+    },
+    {
       "url": "http://127.0.0.1:4321/_astro/fonts/cc74c49b25d9281b.woff2",
       "status": 200,
       "transferSize": 18980,
       "encodedBodySize": 18680
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f968c82ab785ea52.woff2",
+      "status": 200,
+      "transferSize": 21072,
+      "encodedBodySize": 20772
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/91bd93ecfac6124d.woff2",
@@ -100,16 +666,16 @@
       "encodedBodySize": 30784
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/b6639c2596c045ba.woff2",
-      "status": 200,
-      "transferSize": 14000,
-      "encodedBodySize": 13700
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/dc8cd6327de041fd.woff2",
       "status": 200,
       "transferSize": 39588,
       "encodedBodySize": 39288
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b6639c2596c045ba.woff2",
+      "status": 200,
+      "transferSize": 14000,
+      "encodedBodySize": 13700
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/1f2b07cbc9d5a352.woff2",
@@ -136,16 +702,46 @@
       "encodedBodySize": 22952
     },
     {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6fa06a54fa193794.woff2",
+      "status": 200,
+      "transferSize": 41432,
+      "encodedBodySize": 41132
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7fd039ed51f1841d.woff2",
+      "status": 200,
+      "transferSize": 38964,
+      "encodedBodySize": 38664
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5fa9246c8822fff7.woff2",
+      "status": 200,
+      "transferSize": 28748,
+      "encodedBodySize": 28448
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0b96ad299355b53e.woff2",
+      "status": 200,
+      "transferSize": 35620,
+      "encodedBodySize": 35320
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/def1801295e268f1.woff2",
+      "status": 200,
+      "transferSize": 40772,
+      "encodedBodySize": 40472
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7e3cc264c26e2c43.woff2",
+      "status": 200,
+      "transferSize": 17852,
+      "encodedBodySize": 17552
+    },
+    {
       "url": "http://127.0.0.1:4321/_astro/fonts/6a1d1fab852b44de.woff2",
       "status": 200,
       "transferSize": 49440,
       "encodedBodySize": 49140
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/88ce047ec2ea2fef.woff2",
-      "status": 200,
-      "transferSize": 36388,
-      "encodedBodySize": 36088
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/71a66a070f926cd4.woff2",
@@ -160,12 +756,6 @@
       "encodedBodySize": 43012
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7fd039ed51f1841d.woff2",
-      "status": 200,
-      "transferSize": 38964,
-      "encodedBodySize": 38664
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/37a7cea135c432e4.woff2",
       "status": 200,
       "transferSize": 46420,
@@ -178,22 +768,16 @@
       "encodedBodySize": 48092
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/6119ac0ca85598d3.woff2",
-      "status": 200,
-      "transferSize": 8816,
-      "encodedBodySize": 8516
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/44beff671e1ab726.woff2",
       "status": 200,
       "transferSize": 7164,
       "encodedBodySize": 6864
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/6fa06a54fa193794.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/6119ac0ca85598d3.woff2",
       "status": 200,
-      "transferSize": 41432,
-      "encodedBodySize": 41132
+      "transferSize": 8816,
+      "encodedBodySize": 8516
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/0fb68107c2f8848f.woff2",
@@ -220,22 +804,10 @@
       "encodedBodySize": 38148
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/0b96ad299355b53e.woff2",
-      "status": 200,
-      "transferSize": 35620,
-      "encodedBodySize": 35320
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/34faa9b188565cf8.woff2",
       "status": 200,
       "transferSize": 50492,
       "encodedBodySize": 50192
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/5fa9246c8822fff7.woff2",
-      "status": 200,
-      "transferSize": 28748,
-      "encodedBodySize": 28448
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/f9f371fbcf47da87.woff2",
@@ -248,12 +820,6 @@
       "status": 200,
       "transferSize": 47840,
       "encodedBodySize": 47540
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/def1801295e268f1.woff2",
-      "status": 200,
-      "transferSize": 40772,
-      "encodedBodySize": 40472
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/5f05be5f3149f8cc.woff2",
@@ -278,18 +844,6 @@
       "status": 200,
       "transferSize": 60684,
       "encodedBodySize": 60384
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/0e61b06767ea4259.woff2",
-      "status": 200,
-      "transferSize": 45460,
-      "encodedBodySize": 45160
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7e3cc264c26e2c43.woff2",
-      "status": 200,
-      "transferSize": 17852,
-      "encodedBodySize": 17552
     }
   ],
   "network": {

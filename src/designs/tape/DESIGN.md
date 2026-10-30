@@ -243,10 +243,10 @@ J 卡是**全部信息**的所在：手写姓名（一盘磁带只有一支笔�
    回退：拉丁 → `Consolas / Courier New`；中文 → `Songti SC / SimSun`；字体加载失败 → 系统日文栈。
 5. **字重 / 轴 / 体积 / 许可**：UglyTypist 单字重 400、无可变轴、27KB woff2、OFL（Font Library 页面声明）；
    League Mono 静态 400 + 700、无轴、两个文件合计 51KB、OFL-1.1（无 RFN）；Zhuque 单字重 400、
-   核心包 161 个 WOFF2 分片 / 5,927,616 B、OFL。三者均允许网站嵌入与再分发；
+   161 个 WOFF2 分片、字体文件合计 5,927,616 B（家族包 5,998,018 B）、OFL。三者均允许网站嵌入与再分发；
    许可全文随外部 package 的 `licenses/` 提供，主仓不再复制。
 6. **缺失回退顺序**：
-   - 手写位：`--font-uglytypist → --font-zhuque → 'Songti SC' → serif`（中文姓名落仿宋，拉丁落系统手写感的 `Segoe Print / Comic Sans MS`，由 astro.config 的 fallbacks 兜底）。
+   - 手写位：`--font-uglytypist → --font-zhuque → 'Songti SC' → serif`（中文姓名落仿宋，拉丁落系统手写感的 `Segoe Print / Comic Sans MS`，由本设计 CSS 的完整回退链兜底）。
    - 正文位：`--font-league-mono → --font-zhuque → Consolas → 'Courier New' → 'Songti SC' → 'SimSun' → monospace`。
 
 ### Hierarchy

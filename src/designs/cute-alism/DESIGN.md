@@ -42,7 +42,7 @@ typography:
     lineHeight: 1.45
     letterSpacing: "-0.01em"
   micro:
-    fontFamily: "'League Mono', 'Inter Variable', sans-serif"
+    fontFamily: "'League Mono', 'Inter Variable', 'LXGW WenKai GB', 'PingFang SC', 'Microsoft YaHei', sans-serif"
     fontSize: "0.75rem"
     fontWeight: 700
     lineHeight: 1.35
@@ -53,7 +53,7 @@ typography:
     fontWeight: 700
     lineHeight: 1.45
   section-index:
-    fontFamily: "'League Mono', 'Inter Variable', sans-serif"
+    fontFamily: "'League Mono', 'Inter Variable', 'LXGW WenKai GB', 'PingFang SC', 'Microsoft YaHei', sans-serif"
     fontSize: "0.8rem"
     fontWeight: 700
     lineHeight: 1

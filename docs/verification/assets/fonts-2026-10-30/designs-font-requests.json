@@ -1,62 +1,3899 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:17.756Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "designs",
+  "isCoreDesign": false,
   "url": "http://127.0.0.1:4321/zh-cn/designs/",
   "title": "切换设计 · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 24
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": false,
+    "total": 0,
+    "hidden": 0,
+    "runningAnimations": 2
+  },
+  "textLength": 3707,
+  "visibleLinks": 24,
   "woff2Count": 82,
   "woff2DiskBytes": 2535300,
-  "loadedFamilies": {
-    "Sorts Mill Goudy": 2,
-    "Courier Prime": 1,
-    "Zhuque Fangsong": 28,
-    "Fredoka Variable": 1,
-    "LXGW WenKai GB": 20,
-    "Inter Variable": 1,
-    "League Mono": 2,
-    "Fraunces Variable": 1,
-    "TT2020 Style D": 1,
-    "Geist Variable": 1,
-    "Geist Mono Variable": 2,
-    "Roboto Flex Variable": 1,
-    "Silkscreen": 1,
-    "Handjet Variable": 1,
-    "Ark Pixel 12px": 9,
-    "League Gothic Variable": 1,
-    "Blackout 2AM": 1,
-    "Prociono": 1,
-    "Share Tech Mono": 1,
-    "Format 1452": 1,
-    "DSEG14 Classic": 1,
-    "Cutive Mono": 1,
-    "DSEG7 Classic": 1,
-    "UglyTypist": 1,
-    "JetBrains Mono Variable": 1
+  "platformFamilies": {
+    "Courier Prime": 39,
+    "Zhuque Fangsong (technical preview)": 314,
+    "Sorts Mill Goudy": 51,
+    "LXGW WenKai GB Medium": 237,
+    "Inter": 33,
+    "League Mono": 18,
+    "TT2020 Style D": 12,
+    "Geist": 12,
+    "Geist Mono": 37,
+    "Fraunces": 6,
+    "Roboto Flex": 6,
+    "Ark Pixel 12px Mono zh-Hans": 192,
+    "Silkscreen": 17,
+    "League Gothic": 1,
+    "Prociono": 16,
+    "Format_1452": 18,
+    "Share Tech Mono": 6,
+    "Cutive Mono": 54,
+    "JetBrains Mono": 3
   },
-  "loadedCore": {
-    "Zhuque Fangsong": 28,
-    "LXGW WenKai GB": 20,
-    "Ark Pixel 12px": 9
+  "coreFamilies": {
+    "Zhuque Fangsong (technical preview)": 314,
+    "LXGW WenKai GB Medium": 237,
+    "Ark Pixel 12px Mono zh-Hans": 192
   },
-  "computedCore": {
-    "Zhuque Fangsong": 130,
-    "LXGW WenKai GB": 115,
-    "Ark Pixel 12px": 101
+  "systemCjkFamilies": {
+    "Microsoft YaHei UI": 940,
+    "Microsoft YaHei": 198,
+    "SimSun": 101,
+    "NSimSun": 19
   },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [
+    {
+      "text": "切换设计",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "同一份个人资料的 24 套设计。随机分配的选择会被记住一段时间，点击任意一套即可手动切换。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 43,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "图书馆卡片目录：一屉拉开的索引卡，打字机条目与归档印章。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 28,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "硬核糖果拼贴：粗黑描边、硬阴影、夸张标题与错位色块贯穿全页，资料成为一套几何视觉系统。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 43,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "第 01 期 · 个人特刊",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 9,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "精选作品 / 外部链接",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 9,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "精选作品",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02BB素材库",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "杂志编排：一期一人，克制而讲究的留白与发丝线。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 48,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "极简单色：紧凑栅格、无装饰，优先保证信息密度与加载速度。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 28,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "传真机传输纸：传输表头、走纸孔与磨损的打字机字面。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 25,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "毛玻璃与极光：柔和渐层、悬浮卡片，苹果风光的克制复刻。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 27,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "↗ 项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "→ 联系",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "GOV.UK 设计系统：强对比、方正栅格与标志性的黄色焦点样式。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 31,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "本页目录",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "01 链接",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02 项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "03 经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "一个个人主页",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ BB素材库",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ 下北沢通信",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "本页仍在施工",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "手工维护 / NO FRAMES",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "离线 / 未接线",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 38,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "目录",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "1. 链接",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "2. 项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "链接",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ BB素材库",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ 下北沢通信",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 49,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "01 / 项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02 / 经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "03 / 技能",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "瑞士排版：网格骨架、十字准星与紧凑的标签式信息组织。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 26,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "三语辞典跨页：词条头、释义与参照项。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 18,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "童话森林绘本：从入口木牌沿小径走向小屋，用路标、树轮与植物标本组织安静的资料叙事。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 41,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "魔法少女档案：角色档案与舞台登场，用原创星轨、丝带、魔法阵和章回卡片组织华丽资料。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 41,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "Material 3 设计系统：圆角、动态配色与大触控目标的宽屏双窗格。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 34,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "IDENTITY / 身份",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "CHANNELS / 链接",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "终端风格：等宽排版、频道标签与顶部滚动进度线。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "寻呼机：单色 LCD、状态栏与逐条消息。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 19,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "像素宠物小镇：HUD、地图节点与地点面板组成可探索档案，项目是目的地，链接是物品栏。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 42,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "丝网印刷海报：巨幅窄体标题、镂空字与套准标记。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "短波收音机面板：刻度盘、琥珀指示灯与仪表模块。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "热敏小票机：一卷从票机吐出的长票，撕边、点引导线与七段数字。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 30,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "手帐贴纸日记：跨页笔记本、胶带、手写批注和页边书签，把所有资料逐页贴进一本自己的剪贴簿。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 44,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "磁带与 J 卡：手写标签、曲目单与卷轴窗。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 19,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "# 常驻 東京都世田谷区下北沢",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 12,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "真实终端会话：命令、逐字输入级联与输出式分区。",
+      "sourceGapExpected": false,
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
+  "unexpectedSystemCjkElements": null,
+  "platformEvidence": [
+    {
+      "text": "切换设计",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "同一份个人资料的 24 套设计。随机分配的选择会被记住一段时间，点击任意一套即可手动切换。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 43,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "01卡片头",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "· 索引卡",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", Georgia, \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", Georgia, \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 21,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "已归档",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "图书馆卡片目录：一屉拉开的索引卡，打字机条目与归档印章。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 28,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "个人资料拼贴",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "02BB素材库",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "League Mono",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "硬核糖果拼贴：粗黑描边、硬阴影、夸张标题与错位色块贯穿全页，资料成为一套几何视觉系统。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 43,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "第 01 期 · 个人特刊",
+      "fontFamily": "system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 9,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "精选作品 / 外部链接",
+      "fontFamily": "system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 9,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "精选作品",
+      "fontFamily": "system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Georgia",
+          "glyphCount": 6,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02BB素材库",
+      "fontFamily": "Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "杂志编排：一期一人，克制而讲究的留白与发丝线。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "糖果玩具收藏",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "打开的宝贝盒",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 48,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Segoe UI Semibold",
+          "glyphCount": 6,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Segoe UI Variable Text\", \"Segoe UI\", -apple-system, BlinkMacSystemFont, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "极简单色：紧凑栅格、无装饰，优先保证信息密度与加载速度。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 28,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "TO各位读者",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "FROM田所浩二",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "页",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "已收",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"TT2020 Style D-2cce9714c47434e3\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "TT2020 Style D",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "发信地 東京都世田谷区下北沢",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 13,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "发信地",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"TT2020 Style D-2cce9714c47434e3\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "TT2020 Style D",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "01订单",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "02结账",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "传真机传输纸：传输表头、走纸孔与磨损的打字机字面。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 25,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "毛玻璃与极光：柔和渐层、悬浮卡片，苹果风光的克制复刻。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 27,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Arial",
+          "glyphCount": 6,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "↗ 项目",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Arial",
+          "glyphCount": 1,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "→ 联系",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Arial",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "Arial, Helvetica, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "GOV.UK 设计系统：强对比、方正栅格与标志性的黄色焦点样式。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 31,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "本页目录",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "01 链接",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02 项目",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "03 经历",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "一个个人主页",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "Georgia, \"Times New Roman\", Times, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Georgia, \"Times New Roman\", Times, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Georgia",
+          "glyphCount": 6,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ BB素材库",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 3,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ 下北沢通信",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 5,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "本页仍在施工",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "手工维护 / NO FRAMES",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 12,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "离线 / 未接线",
+      "fontFamily": "\"Courier New\", Courier, ui-monospace, \"PingFang SC\", \"Microsoft YaHei\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 5,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Courier New",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 38,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Times New Roman",
+          "glyphCount": 6,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "目录",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "1. 链接",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Times New Roman",
+          "glyphCount": 3,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "2. 项目",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Times New Roman",
+          "glyphCount": 3,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "链接",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ BB素材库",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Times New Roman",
+          "glyphCount": 4,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "+ 下北沢通信",
+      "fontFamily": "\"Times New Roman\", Times, Georgia, \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Times New Roman",
+          "glyphCount": 2,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 49,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", ui-monospace, monospace",
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", ui-monospace, monospace",
+      "fonts": [
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Geist",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", system-ui, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "01 / 项目",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", monospace",
+      "fonts": [
+        {
+          "familyName": "Geist Mono",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "02 / 经历",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", monospace",
+      "fonts": [
+        {
+          "familyName": "Geist Mono",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "03 / 技能",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", monospace",
+      "fonts": [
+        {
+          "familyName": "Geist Mono",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "NSimSun",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "瑞士排版：网格骨架、十字准星与紧凑的标签式信息组织。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 26,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "LEXICON · 第 1–3 条",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 15,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在東京都世田谷区下北沢",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "I备注NOTA",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "II明细NEXVS",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "→ 订单",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "→ 结账",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 终 —",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "三语辞典跨页：词条头、释义与参照项。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 18,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "一本林间观察簿",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "观察卡 · 01",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "沿着小径慢慢走，木牌会替你指路。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 16,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "树轮",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "林中小屋",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "一间纸上的森林 · 慢慢走，仔细看",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 14,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "童话森林绘本：从入口木牌沿小径走向小屋，用路标、树轮与植物标本组织安静的资料叙事。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 41,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "星辉档案",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "舞台登场",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", system-ui, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "道具 03",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", system-ui, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", system-ui, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "魔法少女档案：角色档案与舞台登场，用原创星轨、丝带、魔法阵和章回卡片组织华丽资料。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 41,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作品集",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Roboto Flex",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Roboto Flex Variable-807d9f634140d900\", Roboto, system-ui, \"PingFang SC\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "Material 3 设计系统：圆角、动态配色与大触控目标的宽屏双窗格。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 34,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", ui-monospace, SFMono-Regular, Menlo, Consolas, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 10,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "IDENTITY / 身份",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", ui-monospace, SFMono-Regular, Menlo, Consolas, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Geist Mono",
+          "glyphCount": 11,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", -apple-system, BlinkMacSystemFont, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", Helvetica, Arial, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Geist Variable-e3a5da50d18ce77f\", -apple-system, BlinkMacSystemFont, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", Helvetica, Arial, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Geist",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "CHANNELS / 链接",
+      "fontFamily": "\"Geist Mono Variable-c204b5df763cdea2\", ui-monospace, SFMono-Regular, Menlo, Consolas, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Geist Mono",
+          "glyphCount": 11,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "终端风格：等宽排版、频道标签与顶部滚动进度线。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 東京都世田谷区下北沢",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "01备注",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "02链接",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "寻呼机：单色 LCD、状态栏与逐条消息。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 19,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "个人资料",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "随身物品",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "远方路标",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "像素宠物小镇：HUD、地图节点与地点面板组成可探索档案，项目是目的地，链接是物品栏。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 42,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "双色丝网印刷",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 東京都世田谷区下北沢",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "League Gothic",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"League Gothic Variable-31c6af729e581fc3\", \"Zhuque Fangsong-e64867d184db3179\", \"Arial Narrow\", \"Songti SC\", SimSun, sans-serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "01订单",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "02结账",
+      "fontFamily": "Prociono-9bb80dc5c045d44b, \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Prociono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "丝网印刷海报：巨幅窄体标题、镂空字与套准标记。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "SENRENBANKA · SW 收信机",
+      "fontFamily": "\"Format 1452-425edb0e467df432\", \"Ark Pixel 12px-9499fb97b94198ea\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Format_1452",
+          "glyphCount": 17,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "呼号",
+      "fontFamily": "\"Format 1452-425edb0e467df432\", \"Ark Pixel 12px-9499fb97b94198ea\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Share Tech Mono-ebded0cece3fa310\", \"Ark Pixel 12px-9499fb97b94198ea\", \"PingFang SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Share Tech Mono-ebded0cece3fa310\", \"Ark Pixel 12px-9499fb97b94198ea\", \"PingFang SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Share Tech Mono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "台址 東京都世田谷区下北沢",
+      "fontFamily": "\"Format 1452-425edb0e467df432\", \"Ark Pixel 12px-9499fb97b94198ea\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Format_1452",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "短波收音机面板：刻度盘、琥珀指示灯与仪表模块。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "· 小票",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "# 地址 東京都世田谷区下北沢",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "受领",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 41,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "结账台",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "合计",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "项",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "谢谢惠顾・请多指教",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "热敏小票机：一卷从票机吐出的长票，撕边、点引导线与七段数字。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 30,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "关于我",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 32,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "写在扉页",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "手帐贴纸日记：跨页笔记本、胶带、手写批注和页边书签，把所有资料逐页贴进一本自己的剪贴簿。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 44,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "A 面",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "League Mono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"Zhuque Fangsong-e64867d184db3179\", \"Segoe Print\", \"Songti SC\", SimSun, cursive",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "手写贴标",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "League Mono",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "A1备注",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "League Mono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "A3BB素材库",
+      "fontFamily": "\"League Mono-6f6bbd196abf4dc9\", \"Zhuque Fangsong-e64867d184db3179\", \"Courier New\", \"Songti SC\", monospace",
+      "fonts": [
+        {
+          "familyName": "League Mono",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "磁带与 J 卡：手写标签、曲目单与卷轴窗。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 19,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Segoe UI",
+          "glyphCount": 2,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"JetBrains Mono Variable-04e37ef8317a9b9f\", ui-monospace, SFMono-Regular, Menlo, Consolas, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 4,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "# 常驻 東京都世田谷区下北沢",
+      "fontFamily": "\"JetBrains Mono Variable-04e37ef8317a9b9f\", ui-monospace, SFMono-Regular, Menlo, Consolas, \"Segoe UI Symbol\", \"Apple Symbols\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", monospace",
+      "fonts": [
+        {
+          "familyName": "JetBrains Mono",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Microsoft YaHei",
+          "glyphCount": 12,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "真实终端会话：命令、逐字输入级联与输出式分区。",
+      "fontFamily": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "Microsoft YaHei UI",
+          "glyphCount": 23,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/8fbf41bda6d06f2a.woff2",
@@ -209,22 +4046,28 @@
       "encodedBodySize": 24424
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/2532ceecf87ae942.woff2",
-      "status": 200,
-      "transferSize": 31084,
-      "encodedBodySize": 30784
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/5f05be5f3149f8cc.woff2",
       "status": 200,
       "transferSize": 34716,
       "encodedBodySize": 34416
     },
     {
+      "url": "http://127.0.0.1:4321/_astro/fonts/2532ceecf87ae942.woff2",
+      "status": 200,
+      "transferSize": 31084,
+      "encodedBodySize": 30784
+    },
+    {
       "url": "http://127.0.0.1:4321/_astro/fonts/5f5a44e42f157ba6.woff2",
       "status": 200,
       "transferSize": 19032,
       "encodedBodySize": 18732
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cc74c49b25d9281b.woff2",
+      "status": 200,
+      "transferSize": 18980,
+      "encodedBodySize": 18680
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/0e61b06767ea4259.woff2",
@@ -237,12 +4080,6 @@
       "status": 200,
       "transferSize": 36388,
       "encodedBodySize": 36088
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/cc74c49b25d9281b.woff2",
-      "status": 200,
-      "transferSize": 18980,
-      "encodedBodySize": 18680
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/f968c82ab785ea52.woff2",
@@ -263,12 +4100,6 @@
       "encodedBodySize": 33392
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/c39e75198498cf80.woff2",
-      "status": 200,
-      "transferSize": 25408,
-      "encodedBodySize": 25108
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/dc8cd6327de041fd.woff2",
       "status": 200,
       "transferSize": 39588,
@@ -279,6 +4110,12 @@
       "status": 200,
       "transferSize": 14000,
       "encodedBodySize": 13700
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c39e75198498cf80.woff2",
+      "status": 200,
+      "transferSize": 25408,
+      "encodedBodySize": 25108
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/1f2b07cbc9d5a352.woff2",
@@ -347,16 +4184,16 @@
       "encodedBodySize": 40616
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
-      "status": 200,
-      "transferSize": 26936,
-      "encodedBodySize": 26636
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
       "status": 200,
       "transferSize": 12788,
       "encodedBodySize": 12488
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
+      "status": 200,
+      "transferSize": 26936,
+      "encodedBodySize": 26636
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/566c0477b6dbe0a5.woff2",
@@ -365,16 +4202,16 @@
       "encodedBodySize": 31776
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7f0c85675aa2896b.woff2",
-      "status": 200,
-      "transferSize": 30780,
-      "encodedBodySize": 30480
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/906aaeb7e69b72c4.woff2",
       "status": 200,
       "transferSize": 17500,
       "encodedBodySize": 17200
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7f0c85675aa2896b.woff2",
+      "status": 200,
+      "transferSize": 30780,
+      "encodedBodySize": 30480
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/196eb675d1e3a460.woff2",
@@ -389,28 +4226,28 @@
       "encodedBodySize": 35988
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/2dc7e633aa85558d.woff2",
-      "status": 200,
-      "transferSize": 36448,
-      "encodedBodySize": 36148
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/163a3e2277e7b595.woff2",
       "status": 200,
       "transferSize": 24164,
       "encodedBodySize": 23864
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/b5df8a76759ccaf3.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/2dc7e633aa85558d.woff2",
       "status": 200,
-      "transferSize": 46480,
-      "encodedBodySize": 46180
+      "transferSize": 36448,
+      "encodedBodySize": 36148
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/b051e49b226b01da.woff2",
       "status": 200,
       "transferSize": 52144,
       "encodedBodySize": 51844
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b5df8a76759ccaf3.woff2",
+      "status": 200,
+      "transferSize": 46480,
+      "encodedBodySize": 46180
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/b78e299e28e0b110.woff2",
@@ -497,12 +4334,6 @@
       "encodedBodySize": 1952
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/78378e57ba498622.woff2",
-      "status": 200,
-      "transferSize": 32636,
-      "encodedBodySize": 32336
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/d0398eb691673c6c.woff2",
       "status": 200,
       "transferSize": 20516,
@@ -513,6 +4344,12 @@
       "status": 200,
       "transferSize": 29552,
       "encodedBodySize": 29252
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/78378e57ba498622.woff2",
+      "status": 200,
+      "transferSize": 32636,
+      "encodedBodySize": 32336
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/086a441931e76b9e.woff2",

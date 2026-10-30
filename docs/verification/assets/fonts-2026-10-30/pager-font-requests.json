@@ -1,36 +1,500 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:02.519Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "pager",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/pager/",
   "title": "Pager · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 6,
+    "hidden": 0,
+    "runningAnimations": 4
+  },
+  "textLength": 897,
+  "visibleLinks": 6,
   "woff2Count": 15,
   "woff2DiskBytes": 353720,
-  "loadedFamilies": {
-    "Silkscreen": 1,
-    "Handjet Variable": 1,
-    "Ark Pixel 12px": 13
+  "platformFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 323,
+    "Silkscreen": 135,
+    "Handjet": 12
   },
-  "loadedCore": {
-    "Ark Pixel 12px": 13
+  "coreFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 323
   },
-  "computedCore": {
-    "Ark Pixel 12px": 114
+  "systemCjkFamilies": {
+    "SimSun": 2
   },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "expectedSourceGapCharacters": [
+    "概",
+    "輩"
+  ],
+  "systemCjkElements": [
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "sourceGapExpected": true,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "— 概念级主演 / 万能音 MAD 核心",
+      "sourceGapExpected": true,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "田所浩二",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 東京都世田谷区下北沢",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "链接",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 39,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "项目",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 17,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "114514 · 王道 · 空手道",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 19,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "经历",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"Handjet Variable-7ec21045d88ebed5\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Handjet",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 主将 / 先辈 (Ace)",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 11,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"Handjet Variable-7ec21045d88ebed5\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Handjet",
+          "glyphCount": 7,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Silkscreen",
+          "glyphCount": 11,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 9,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联系",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "回信",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "合计",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "件",
+      "fontFamily": "Silkscreen-f86c4ddab115b0da, \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/1a05c6b67e9a01c6.woff2",

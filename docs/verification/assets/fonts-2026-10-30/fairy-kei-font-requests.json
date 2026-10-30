@@ -1,36 +1,703 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:18:52.648Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "fairy-kei",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/fairy-kei/",
   "title": "Fairy Kei · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 6,
+    "hidden": 0,
+    "runningAnimations": 0
+  },
+  "textLength": 938,
+  "visibleLinks": 7,
   "woff2Count": 34,
   "woff2DiskBytes": 1299492,
-  "loadedFamilies": {
-    "Fredoka Variable": 1,
-    "LXGW WenKai GB": 32,
-    "Inter Variable": 1
+  "platformFamilies": {
+    "LXGW WenKai GB Medium": 563,
+    "Inter": 69,
+    "Fredoka Light": 54
   },
-  "loadedCore": {
-    "LXGW WenKai GB": 32
+  "coreFamilies": {
+    "LXGW WenKai GB Medium": 563
   },
-  "computedCore": {
-    "LXGW WenKai GB": 187
-  },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "跳到打开的收藏盒",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "打开的宝贝盒",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "糖果玩具收藏",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "收藏地",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "收藏窗",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "挂着的小玩意",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "03件",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 21,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "盒底说明卡",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "从这里打开",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "玩具抽屉",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 16,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "拉开抽屉",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "看看这件收藏",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 18,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "拉开抽屉",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "看看这件收藏",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "拉开抽屉",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "丝带卷轴",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主将 / 先辈 (Ace)",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "贴纸册",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "秘制调饮",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "日光浴",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB 素材化",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "迫真咆哮",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "留给你的便签",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "投递地址",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"LXGW WenKai GB-b73767513fa21142\", \"Fredoka Variable-cf8f7273a9926fc4\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "收藏卡背面",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "从一只旧玩具盒里，把喜欢的东西一件件摆出来。",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 22,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "示例收藏卡 · 仅作演示",
+      "fontFamily": "\"Fredoka Variable-cf8f7273a9926fc4\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 9,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Fredoka Light",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/333fc2de8d558206.woff2",
@@ -51,88 +718,10 @@
       "encodedBodySize": 8408
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/ab2583acdfe04c8c.woff2",
-      "status": 200,
-      "transferSize": 32352,
-      "encodedBodySize": 32052
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/10a1acdb0e7cf630.woff2",
       "status": 200,
       "transferSize": 40916,
       "encodedBodySize": 40616
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/8935c8e8db8df4f1.woff2",
-      "status": 200,
-      "transferSize": 68552,
-      "encodedBodySize": 68252
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/163a3e2277e7b595.woff2",
-      "status": 200,
-      "transferSize": 24164,
-      "encodedBodySize": 23864
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
-      "status": 200,
-      "transferSize": 26936,
-      "encodedBodySize": 26636
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7f0c85675aa2896b.woff2",
-      "status": 200,
-      "transferSize": 30780,
-      "encodedBodySize": 30480
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/bb8f6e4379530209.woff2",
-      "status": 200,
-      "transferSize": 36288,
-      "encodedBodySize": 35988
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/e73a0e8fe1bfc75d.woff2",
-      "status": 200,
-      "transferSize": 55456,
-      "encodedBodySize": 55156
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/a541c13f11cde765.woff2",
-      "status": 200,
-      "transferSize": 18908,
-      "encodedBodySize": 18608
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
-      "status": 200,
-      "transferSize": 20596,
-      "encodedBodySize": 20296
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/196eb675d1e3a460.woff2",
-      "status": 200,
-      "transferSize": 28212,
-      "encodedBodySize": 27912
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
-      "status": 200,
-      "transferSize": 12788,
-      "encodedBodySize": 12488
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/b5df8a76759ccaf3.woff2",
-      "status": 200,
-      "transferSize": 46480,
-      "encodedBodySize": 46180
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/566c0477b6dbe0a5.woff2",
-      "status": 200,
-      "transferSize": 32076,
-      "encodedBodySize": 31776
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/2dc7e633aa85558d.woff2",
@@ -141,22 +730,58 @@
       "encodedBodySize": 36148
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/b051e49b226b01da.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/41b3f511eb6085e6.woff2",
       "status": 200,
-      "transferSize": 52144,
-      "encodedBodySize": 51844
+      "transferSize": 38452,
+      "encodedBodySize": 38152
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/d5734e8243c58b8d.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/163a3e2277e7b595.woff2",
       "status": 200,
-      "transferSize": 41220,
-      "encodedBodySize": 40920
+      "transferSize": 24164,
+      "encodedBodySize": 23864
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/5026f04372f89997.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
       "status": 200,
-      "transferSize": 47928,
-      "encodedBodySize": 47628
+      "transferSize": 20596,
+      "encodedBodySize": 20296
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a541c13f11cde765.woff2",
+      "status": 200,
+      "transferSize": 18908,
+      "encodedBodySize": 18608
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
+      "status": 200,
+      "transferSize": 49836,
+      "encodedBodySize": 49536
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
+      "status": 200,
+      "transferSize": 26936,
+      "encodedBodySize": 26636
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
+      "status": 200,
+      "transferSize": 12788,
+      "encodedBodySize": 12488
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/566c0477b6dbe0a5.woff2",
+      "status": 200,
+      "transferSize": 32076,
+      "encodedBodySize": 31776
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7f0c85675aa2896b.woff2",
+      "status": 200,
+      "transferSize": 30780,
+      "encodedBodySize": 30480
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/906aaeb7e69b72c4.woff2",
@@ -165,10 +790,70 @@
       "encodedBodySize": 17200
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/41b3f511eb6085e6.woff2",
+      "url": "http://127.0.0.1:4321/_astro/fonts/196eb675d1e3a460.woff2",
       "status": 200,
-      "transferSize": 38452,
-      "encodedBodySize": 38152
+      "transferSize": 28212,
+      "encodedBodySize": 27912
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/bb8f6e4379530209.woff2",
+      "status": 200,
+      "transferSize": 36288,
+      "encodedBodySize": 35988
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d5734e8243c58b8d.woff2",
+      "status": 200,
+      "transferSize": 41220,
+      "encodedBodySize": 40920
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/e73a0e8fe1bfc75d.woff2",
+      "status": 200,
+      "transferSize": 55456,
+      "encodedBodySize": 55156
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/920a1d03421c1427.woff2",
+      "status": 200,
+      "transferSize": 20304,
+      "encodedBodySize": 20004
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/93d615140cdd1fe7.woff2",
+      "status": 200,
+      "transferSize": 43360,
+      "encodedBodySize": 43060
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/ab2583acdfe04c8c.woff2",
+      "status": 200,
+      "transferSize": 32352,
+      "encodedBodySize": 32052
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/8935c8e8db8df4f1.woff2",
+      "status": 200,
+      "transferSize": 68552,
+      "encodedBodySize": 68252
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b5df8a76759ccaf3.woff2",
+      "status": 200,
+      "transferSize": 46480,
+      "encodedBodySize": 46180
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b051e49b226b01da.woff2",
+      "status": 200,
+      "transferSize": 52144,
+      "encodedBodySize": 51844
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5026f04372f89997.woff2",
+      "status": 200,
+      "transferSize": 47928,
+      "encodedBodySize": 47628
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/b55fc5fa278dc0f0.woff2",
@@ -181,12 +866,6 @@
       "status": 200,
       "transferSize": 10788,
       "encodedBodySize": 10488
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/93d615140cdd1fe7.woff2",
-      "status": 200,
-      "transferSize": 43360,
-      "encodedBodySize": 43060
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/c561dfc77971040d.woff2",
@@ -223,18 +902,6 @@
       "status": 200,
       "transferSize": 63292,
       "encodedBodySize": 62992
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/7817d8060068e2d6.woff2",
-      "status": 200,
-      "transferSize": 49836,
-      "encodedBodySize": 49536
-    },
-    {
-      "url": "http://127.0.0.1:4321/_astro/fonts/920a1d03421c1427.woff2",
-      "status": 200,
-      "transferSize": 20304,
-      "encodedBodySize": 20004
     }
   ],
   "network": {

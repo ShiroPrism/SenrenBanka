@@ -75,11 +75,28 @@ test('design CSS requires explicit fallback and CJK ordering', () => {
     ).join('\n'),
     /followed by an explicit system CJK fallback/,
   );
+  assert.match(
+    inspectTypographyCss(
+      '.x { font-family: var(--font-latin), sans-serif; }',
+      '<css>',
+      { requiredCoreVariables: ['--font-lxgw'] },
+    ).join('\n'),
+    /must include a core CJK font variable/,
+  );
+  assert.deepEqual(
+    inspectTypographyCss(
+      ':root { --body: var(--font-lxgw), "Songti SC", serif; } .x { font-family: var(--body); }',
+      '<css>',
+      { requiredCoreVariables: ['--font-lxgw'] },
+    ),
+    [],
+  );
 });
 
 test('repository typography contract passes', async () => {
   const result = await checkTypography();
   assert.deepEqual(result.findings, []);
   assert.equal(result.styledCount, 23);
+  assert.equal(result.coreDesignCount, 14);
   assert.equal(result.generatedFamilies, 20);
 });

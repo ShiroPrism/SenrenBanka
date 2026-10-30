@@ -1,36 +1,455 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:09.233Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "receipt",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/receipt/",
   "title": "Receipt · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 6,
+    "hidden": 0,
+    "runningAnimations": 12
+  },
+  "textLength": 890,
+  "visibleLinks": 6,
   "woff2Count": 16,
   "woff2DiskBytes": 361036,
-  "loadedFamilies": {
-    "Cutive Mono": 1,
-    "Ark Pixel 12px": 14,
-    "DSEG7 Classic": 1
+  "platformFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 226,
+    "Cutive Mono": 142
   },
-  "loadedCore": {
-    "Ark Pixel 12px": 14
+  "coreFamilies": {
+    "Ark Pixel 12px Mono zh-Hans": 226
   },
-  "computedCore": {
-    "Ark Pixel 12px": 92
+  "systemCjkFamilies": {
+    "SimSun": 2
   },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "expectedSourceGapCharacters": [
+    "概",
+    "輩"
+  ],
+  "systemCjkElements": [
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "sourceGapExpected": true,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "— 概念级主演 / 万能音 MAD 核心",
+      "sourceGapExpected": true,
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "· 小票",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 21,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "订单",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 17,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "114514 · 王道 · 空手道",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 16,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 19,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "纪录",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 主将 / 先辈 (Ace)",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "SimSun",
+          "glyphCount": 1,
+          "isCustomFont": false
+        },
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 9,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 11,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手 ・ 王道征途 ・ 秘制调饮 ・ 日光浴 ・ BB 素材化 ・ 迫真咆哮",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 28,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Cutive Mono",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "结账台",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "合计",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "项",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "收款方式",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"Cutive Mono-9fb08fb1af95da50\", \"Ark Pixel 12px-9499fb97b94198ea\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Ark Pixel 12px Mono zh-Hans",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/ba4be8de40931903.woff2",

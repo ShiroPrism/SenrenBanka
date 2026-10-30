@@ -227,7 +227,8 @@ components:
    2026-10-30 `fonts:audit` 对本页无缺字警告。回退仍保留 Songti SC / SimSun 以应对字体加载失败。
 5. **字重 / 轴 / 体积 / 许可**: 三者均为单字重静态字体（无可变轴）。体积：TT2020 Style D 子集 310KB、
    Courier Prime latin-400-normal 18.6KB（astro.config 注册了 8 个变体，本页只用到 400 normal）、
-    Zhuque 核心包 161 个 WOFF2 分片 / 5,927,616 B，浏览器只请求 `unicode-range` 命中的分片。
+    Zhuque 为 161 个 WOFF2 分片、字体文件合计 5,927,616 B（家族包 5,998,018 B），
+    浏览器只请求 `unicode-range` 命中的分片。
     许可：三者均 SIL OFL-1.1
     （见 `fonts.catalog.json` 对应 package manifest 的 `licenses/` 记录）；许可全文随外部
     package 提供，主仓不再复制。

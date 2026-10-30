@@ -30,7 +30,7 @@ Astro 生成的每个 `--font-*` 变量只暴露主 face：所有 npm 与 local 
 - `astro.config.mjs` 中六个 npm family 与 `src/fonts/generated.ts` 展开的全部 local family 都设置 `fallbacks: []`。
 - 所有 registration 设置 `optimizedFallbacks: false`，避免 Astro 为 fallback metrics 建立额外构建期路径。
 - `fonts.config.json` 与 catalog manifest 中的 fallback 字段只作为目录元数据和人工映射校验，不得写进浏览器 `--font-*` 变量。
-- `npm run fonts:typography` 对配置、生成注册与所有 `styled` 设计（含预览样式）执行静态门禁：使用字体变量的 `font` / `font-family` 必须以显式 fallback 收尾；系统 CJK 不得排在 core-cjk 变量之前。
+- `npm run fonts:typography` 对配置、生成注册与所有 `styled` 设计（含预览样式）执行静态门禁：使用字体变量的 `font` / `font-family` 必须以显式 fallback 收尾；系统 CJK 不得排在 core-cjk 变量之前；已选用 core-cjk 的设计，每个字体变量栈都必须保留核心变量，避免局部标签绕过设计字体。
 
 ### 4. 设计 CSS 拥有排版顺序
 

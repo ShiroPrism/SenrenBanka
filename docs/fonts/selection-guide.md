@@ -56,7 +56,7 @@
 - **本地准备**：`npm run fonts:prepare` 只下载锁定的启用 family，验证外层包与包内逐文件哈希后安装到被忽略的 `.cache/fonts/`；已有完整缓存只复核不重下。`npm run fonts:check` 完全离线。
 - **Astro 接线**：`astro.config.mjs` 展开生成定义接入 `fontProviders.local()` → 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。所有 npm / local registration 必须 `fallbacks: []` + `optimizedFallbacks: false`，`--font-*` 只能暴露主 face。不得在 `astro.config.mjs` 手工列 CJK 分片，也不得手改生成文件。
 - **npm provider**：仍需 Fontsource 包的 6 个 family 保持 `remote: false`、关闭 `optimizedFallbacks`，并由 `localNpmProvider()` 把 provider 返回的包 URL 映射回已安装 `node_modules`。`remote: false` 本身仍会产出 jsdelivr URL，不能据此宣称离线。
-- **设计 CSS 拥有完整回退栈**：每个使用 `var(--font-*)` 的 `font` / `font-family` 必须以显式 fallback 收尾；承诺 CJK 的字体栈必须把 Zhuque / LXGW / Ark Pixel 放在系统中文之前。顺序见 §4，`npm run fonts:typography` 是自动门禁。
+- **设计 CSS 拥有完整回退栈**：每个使用 `var(--font-*)` 的 `font` / `font-family` 必须以显式 fallback 收尾；承诺 CJK 的字体栈必须把 Zhuque / LXGW / Ark Pixel 放在系统中文之前。设计一旦选用 core-cjk，其正式页与预览的每个字体变量栈都要带该核心变量，避免局部微标签在新增 CJK 文案时落回系统字体。顺序见 §4，`npm run fonts:typography` 是自动门禁。
 - **六项记录写入位置**：
   - 自产（`self-produced`）与复刻（`third-party-analysis`）→ 该设计 `DESIGN.md` 的字体章节；
   - 厂商来源（`official-vendor` / `official-docs-derived`）→ 该主题 `docs/designs/<id>/ADAPTATION.md`（`DESIGN.md` 只读，不得改写）。

@@ -1,36 +1,615 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:18:48.463Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "archive",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/archive/",
   "title": "Archive · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 8,
+    "hidden": 0,
+    "runningAnimations": 0
+  },
+  "textLength": 978,
+  "visibleLinks": 6,
   "woff2Count": 42,
   "woff2DiskBytes": 1331092,
-  "loadedFamilies": {
-    "Sorts Mill Goudy": 1,
-    "Courier Prime": 1,
-    "Zhuque Fangsong": 40
+  "platformFamilies": {
+    "Zhuque Fangsong (technical preview)": 510,
+    "Courier Prime": 150,
+    "Sorts Mill Goudy": 6
   },
-  "loadedCore": {
-    "Zhuque Fangsong": 40
+  "coreFamilies": {
+    "Zhuque Fangsong (technical preview)": 510
   },
-  "computedCore": {
-    "Zhuque Fangsong": 119
-  },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "卡片头",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "· 索引卡",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", Georgia, \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", Georgia, \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在地東京都世田谷区下北沢",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 13,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在地",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "已归档",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 89,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "索引",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "www.nicovideo.jp/tag/野獣先輩",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 21,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "编目",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 17,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主题词 114514 · 王道 · 空手道",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 13,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主题词",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 19,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主题词",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主题词",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "履历",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "· 主将 / 先辈 (Ace)",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 7,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "· 概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主题词",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手 · 王道征途 · 秘制调饮 · 日光浴 · BB 素材化 · 迫真咆哮",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Courier Prime",
+          "glyphCount": 18,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "借阅",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "合计",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "张",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "联系方式",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "著录",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "借阅期限",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "感谢查阅・欢迎再来",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", Georgia, \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "示例档案・仅作演示",
+      "fontFamily": "\"Courier Prime-e7646d0f9be6ca5a\", \"Courier New\", \"Zhuque Fangsong-e64867d184db3179\", \"Songti SC\", SimSun, monospace",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/8fbf41bda6d06f2a.woff2",
@@ -243,16 +822,16 @@
       "encodedBodySize": 38148
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/b78e299e28e0b110.woff2",
-      "status": 200,
-      "transferSize": 26328,
-      "encodedBodySize": 26028
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/34faa9b188565cf8.woff2",
       "status": 200,
       "transferSize": 50492,
       "encodedBodySize": 50192
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b78e299e28e0b110.woff2",
+      "status": 200,
+      "transferSize": 26328,
+      "encodedBodySize": 26028
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/f9f371fbcf47da87.woff2",

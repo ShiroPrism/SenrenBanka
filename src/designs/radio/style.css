@@ -208,7 +208,7 @@
   top: calc(100% + 0.3rem);
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--font-radio-digits), var(--font-radio), monospace;
+  font-family: var(--font-radio-digits), var(--font-radio), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", monospace;
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   line-height: 1.6;

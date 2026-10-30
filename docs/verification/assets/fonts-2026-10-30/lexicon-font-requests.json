@@ -1,0 +1,837 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:18:56.271Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
+  "id": "lexicon",
+  "isCoreDesign": true,
+  "url": "http://127.0.0.1:4321/zh-cn/lexicon/",
+  "title": "Lexicon · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "dpr": 1
+  },
+  "layout": {
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
+  },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 6,
+    "hidden": 0,
+    "runningAnimations": 6
+  },
+  "textLength": 874,
+  "visibleLinks": 6,
+  "woff2Count": 41,
+  "woff2DiskBytes": 1272040,
+  "platformFamilies": {
+    "Zhuque Fangsong (technical preview)": 474,
+    "Sorts Mill Goudy": 130
+  },
+  "coreFamilies": {
+    "Zhuque Fangsong (technical preview)": 474
+  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "LEXICON · 第 1–6 条",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Times New Roman\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 15,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在 東京都世田谷区下北沢",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "所在",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "备注",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "明细",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "订单",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 17,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "114514 · 王道 · 空手道",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 6,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 19,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "纪录",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Times New Roman\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 8,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主将 / 先辈 (Ace)",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Times New Roman\", \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道组手",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道征途",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "秘制调饮",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "日光浴",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB 素材化",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "迫真咆哮",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "结账",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "信函",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "参照数",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "条",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "— 终 —",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Sorts Mill Goudy",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "示例词条・仅作演示",
+      "fontFamily": "\"Sorts Mill Goudy-c44b1a83fc056dbc\", \"Zhuque Fangsong-e64867d184db3179\", Georgia, \"Songti SC\", SimSun, serif",
+      "fonts": [
+        {
+          "familyName": "Zhuque Fangsong (technical preview)",
+          "glyphCount": 9,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
+  "resourceEvidence": [
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c7fafe79714da1ad.woff2",
+      "status": 200,
+      "transferSize": 23104,
+      "encodedBodySize": 22804
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/e2868943cd358cea.woff2",
+      "status": 200,
+      "transferSize": 25044,
+      "encodedBodySize": 24744
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f968c82ab785ea52.woff2",
+      "status": 200,
+      "transferSize": 21072,
+      "encodedBodySize": 20772
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5f5a44e42f157ba6.woff2",
+      "status": 200,
+      "transferSize": 19032,
+      "encodedBodySize": 18732
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0e61b06767ea4259.woff2",
+      "status": 200,
+      "transferSize": 45460,
+      "encodedBodySize": 45160
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/cc74c49b25d9281b.woff2",
+      "status": 200,
+      "transferSize": 18980,
+      "encodedBodySize": 18680
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/88ce047ec2ea2fef.woff2",
+      "status": 200,
+      "transferSize": 36388,
+      "encodedBodySize": 36088
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/91bd93ecfac6124d.woff2",
+      "status": 200,
+      "transferSize": 28388,
+      "encodedBodySize": 28088
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f13f8cbca9ebef50.woff2",
+      "status": 200,
+      "transferSize": 24724,
+      "encodedBodySize": 24424
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b265ebcd65620aef.woff2",
+      "status": 200,
+      "transferSize": 33692,
+      "encodedBodySize": 33392
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/c39e75198498cf80.woff2",
+      "status": 200,
+      "transferSize": 25408,
+      "encodedBodySize": 25108
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/2532ceecf87ae942.woff2",
+      "status": 200,
+      "transferSize": 31084,
+      "encodedBodySize": 30784
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dc8cd6327de041fd.woff2",
+      "status": 200,
+      "transferSize": 39588,
+      "encodedBodySize": 39288
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b6639c2596c045ba.woff2",
+      "status": 200,
+      "transferSize": 14000,
+      "encodedBodySize": 13700
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/1f2b07cbc9d5a352.woff2",
+      "status": 200,
+      "transferSize": 3996,
+      "encodedBodySize": 3696
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/794ee33a823b870b.woff2",
+      "status": 200,
+      "transferSize": 10316,
+      "encodedBodySize": 10016
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/651e8749056ce444.woff2",
+      "status": 200,
+      "transferSize": 35108,
+      "encodedBodySize": 34808
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a911b51f294c2d31.woff2",
+      "status": 200,
+      "transferSize": 23252,
+      "encodedBodySize": 22952
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5fa9246c8822fff7.woff2",
+      "status": 200,
+      "transferSize": 28748,
+      "encodedBodySize": 28448
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0b96ad299355b53e.woff2",
+      "status": 200,
+      "transferSize": 35620,
+      "encodedBodySize": 35320
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/def1801295e268f1.woff2",
+      "status": 200,
+      "transferSize": 40772,
+      "encodedBodySize": 40472
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7e3cc264c26e2c43.woff2",
+      "status": 200,
+      "transferSize": 17852,
+      "encodedBodySize": 17552
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6a1d1fab852b44de.woff2",
+      "status": 200,
+      "transferSize": 49440,
+      "encodedBodySize": 49140
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/71a66a070f926cd4.woff2",
+      "status": 200,
+      "transferSize": 39808,
+      "encodedBodySize": 39508
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7dc935721a4400ae.woff2",
+      "status": 200,
+      "transferSize": 43312,
+      "encodedBodySize": 43012
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/7fd039ed51f1841d.woff2",
+      "status": 200,
+      "transferSize": 38964,
+      "encodedBodySize": 38664
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/37a7cea135c432e4.woff2",
+      "status": 200,
+      "transferSize": 46420,
+      "encodedBodySize": 46120
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/3d06fd3a0b45e6e4.woff2",
+      "status": 200,
+      "transferSize": 48392,
+      "encodedBodySize": 48092
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6119ac0ca85598d3.woff2",
+      "status": 200,
+      "transferSize": 8816,
+      "encodedBodySize": 8516
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/44beff671e1ab726.woff2",
+      "status": 200,
+      "transferSize": 7164,
+      "encodedBodySize": 6864
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/6fa06a54fa193794.woff2",
+      "status": 200,
+      "transferSize": 41432,
+      "encodedBodySize": 41132
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/0fb68107c2f8848f.woff2",
+      "status": 200,
+      "transferSize": 8872,
+      "encodedBodySize": 8572
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/b78e299e28e0b110.woff2",
+      "status": 200,
+      "transferSize": 26328,
+      "encodedBodySize": 26028
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f2ed191e807b0082.woff2",
+      "status": 200,
+      "transferSize": 3352,
+      "encodedBodySize": 3052
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/34faa9b188565cf8.woff2",
+      "status": 200,
+      "transferSize": 50492,
+      "encodedBodySize": 50192
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f9f371fbcf47da87.woff2",
+      "status": 200,
+      "transferSize": 43380,
+      "encodedBodySize": 43080
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/9fabe09605f3929c.woff2",
+      "status": 200,
+      "transferSize": 47840,
+      "encodedBodySize": 47540
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/5f05be5f3149f8cc.woff2",
+      "status": 200,
+      "transferSize": 34716,
+      "encodedBodySize": 34416
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/a4b1fa9d98d8113b.woff2",
+      "status": 200,
+      "transferSize": 45824,
+      "encodedBodySize": 45524
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/f9f199691da9f511.woff2",
+      "status": 200,
+      "transferSize": 57476,
+      "encodedBodySize": 57176
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/d08af7d30f250b31.woff2",
+      "status": 200,
+      "transferSize": 60684,
+      "encodedBodySize": 60384
+    }
+  ],
+  "network": {
+    "thirdParty": [],
+    "failed": [],
+    "consoleErrors": []
+  }
+}

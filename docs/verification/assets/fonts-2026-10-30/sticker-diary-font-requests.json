@@ -1,7 +1,12 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:19:10.863Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "sticker-diary",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/sticker-diary/",
   "title": "Sticker Diary · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
@@ -10,27 +15,249 @@
   "layout": {
     "scrollWidth": 1440,
     "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": false,
+    "total": 0,
+    "hidden": 0,
+    "runningAnimations": 1
+  },
+  "textLength": 259,
+  "visibleLinks": 6,
   "woff2Count": 28,
   "woff2DiskBytes": 930788,
-  "loadedFamilies": {
-    "UglyTypist": 1,
-    "LXGW WenKai GB": 26,
-    "Inter Variable": 1
+  "platformFamilies": {
+    "LXGW WenKai GB Medium": 171,
+    "Inter": 21,
+    "UglyTypist": 11
   },
-  "loadedCore": {
-    "LXGW WenKai GB": 26
+  "coreFamilies": {
+    "LXGW WenKai GB Medium": 171
   },
-  "computedCore": {
-    "LXGW WenKai GB": 201
-  },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "关于我",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "收藏",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "企划",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "足迹",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "技能贴纸",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "留言",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "关于我",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "贴纸手帐",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "写在扉页",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "上一页",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "第 1 页，共 6 页：关于我",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 9,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下一页",
+      "fontFamily": "UglyTypist-5289fc2bfb9d93d6, \"LXGW WenKai GB-b73767513fa21142\", \"Segoe Print\", \"Comic Sans MS\", \"PingFang SC\", \"Microsoft YaHei\", cursive",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "SENRENBANKA · 贴纸手帐",
+      "fontFamily": "\"Inter Variable-28c979f20c64df57\", \"LXGW WenKai GB-b73767513fa21142\", \"PingFang SC\", \"Microsoft YaHei\", \"Hiragino Sans\", \"Yu Gothic UI\", sans-serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "UglyTypist",
+          "glyphCount": 11,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Inter",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/cb13050e68e771d7.woff2",
@@ -51,16 +278,16 @@
       "encodedBodySize": 18608
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/10a1acdb0e7cf630.woff2",
-      "status": 200,
-      "transferSize": 40916,
-      "encodedBodySize": 40616
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/998214d5ae4e03c2.woff2",
       "status": 200,
       "transferSize": 26936,
       "encodedBodySize": 26636
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/10a1acdb0e7cf630.woff2",
+      "status": 200,
+      "transferSize": 40916,
+      "encodedBodySize": 40616
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/dc558b7f3dcec2f7.woff2",
@@ -87,16 +314,16 @@
       "encodedBodySize": 17200
     },
     {
-      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
-      "status": 200,
-      "transferSize": 20596,
-      "encodedBodySize": 20296
-    },
-    {
       "url": "http://127.0.0.1:4321/_astro/fonts/196eb675d1e3a460.woff2",
       "status": 200,
       "transferSize": 28212,
       "encodedBodySize": 27912
+    },
+    {
+      "url": "http://127.0.0.1:4321/_astro/fonts/dfc909999bb3243a.woff2",
+      "status": 200,
+      "transferSize": 20596,
+      "encodedBodySize": 20296
     },
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/bb8f6e4379530209.woff2",

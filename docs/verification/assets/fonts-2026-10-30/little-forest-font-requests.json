@@ -1,35 +1,819 @@
 {
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T13:18:58.771Z",
+  "evidenceMethod": "fresh Chrome profile and fresh page context; document.fonts.ready; CDP CSS.getPlatformFontsForNode; no forced document.fonts.load()",
   "id": "little-forest",
+  "isCoreDesign": true,
   "url": "http://127.0.0.1:4321/zh-cn/little-forest/",
   "title": "Little Forest · 田所浩二 / Tadokoro Koji (野獣先輩)",
+  "browser": "Chrome/143.0.7499.4",
   "viewport": {
     "width": 1440,
     "height": 900,
     "dpr": 1
   },
   "layout": {
-    "scrollWidth": 1440,
-    "clientWidth": 1440,
-    "overflowX": false,
-    "previewCards": 0
+    "scrollWidth": 1425,
+    "clientWidth": 1425,
+    "overflowX": false
   },
+  "query": {
+    "coarsePointer": false,
+    "anyCoarsePointer": false,
+    "reducedMotion": false
+  },
+  "reveal": {
+    "gate": true,
+    "total": 6,
+    "hidden": 0,
+    "runningAnimations": 1
+  },
+  "textLength": 910,
+  "visibleLinks": 6,
   "woff2Count": 31,
   "woff2DiskBytes": 1152656,
-  "loadedFamilies": {
-    "Fraunces Variable": 1,
-    "LXGW WenKai GB": 30
+  "platformFamilies": {
+    "LXGW WenKai GB Medium": 574,
+    "Fraunces": 63
   },
-  "loadedCore": {
-    "LXGW WenKai GB": 30
+  "coreFamilies": {
+    "LXGW WenKai GB Medium": 574
   },
-  "computedCore": {
-    "LXGW WenKai GB": 306
-  },
-  "documentFontsCheck": {
-    "Zhuque Fangsong": true,
-    "LXGW WenKai GB": true,
-    "Ark Pixel 12px": true
-  },
+  "systemCjkFamilies": {},
+  "expectedSourceGapCharacters": [],
+  "systemCjkElements": [],
+  "unexpectedSystemCjkElements": 0,
+  "platformEvidence": [
+    {
+      "text": "一本林间观察簿",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "田所浩二",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 5,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "发现于",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "沿着小径慢慢走，木牌会替你指路。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 16,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "观察卡 · 01",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 5,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "一页留给遇见的人",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "東京都世田谷区下北沢",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "沿路手记",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "林间留白",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 89,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "路口木牌",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "可去的地方",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "BB素材库",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢通信",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "沿途地点",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地图上的停靠处",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 7,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 01",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "王道征途 (The Royal Road)",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 17,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 39,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "王道",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "空手道",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 02",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "特制红茶配方 (Iced Tea Formula)",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 19,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 6,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "地点 03",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "多元宇宙 BB 剧场巡演",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 31,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "树轮",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "一圈，一季",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "下北沢大学 空手部",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 1,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 8,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "主将 / 先辈 (Ace)",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 9,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "24岁 – 永恒",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 6,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 40,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "niconico 动画 / 互联网亚文化演艺企划",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 12,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 12,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "概念级主演 / 万能音 MAD 核心",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 10,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 8,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "2001 – 至今",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 8,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 43,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "野花标本",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "在路边采下",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "在路边采下",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 01",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "空手道组手",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 02",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "王道征途",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 03",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "秘制调饮",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 04",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "日光浴",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 05",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "BB 素材化",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "Fraunces",
+          "glyphCount": 3,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 3,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "标本 06",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    },
+    {
+      "text": "迫真咆哮",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "林中小屋",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 4,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "窗里亮着灯",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 5,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。",
+      "fontFamily": "\"Fraunces Variable-e7fb8735879a90b7\", \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 23,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "写信",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 2,
+          "isCustomFont": true
+        }
+      ]
+    },
+    {
+      "text": "一间纸上的森林 · 慢慢走，仔细看",
+      "fontFamily": "Georgia, \"LXGW WenKai GB-b73767513fa21142\", \"Songti SC\", SimSun, \"Hiragino Mincho ProN\", \"Yu Mincho\", serif",
+      "fonts": [
+        {
+          "familyName": "LXGW WenKai GB Medium",
+          "glyphCount": 14,
+          "isCustomFont": true
+        },
+        {
+          "familyName": "Georgia",
+          "glyphCount": 3,
+          "isCustomFont": false
+        }
+      ]
+    }
+  ],
   "resourceEvidence": [
     {
       "url": "http://127.0.0.1:4321/_astro/fonts/bae4185faa35c71d.woff2",

@@ -273,7 +273,7 @@ html:has(.ps) {
 }
 
 .ps-sec-mark {
-  font-family: var(--font-poster-mark), var(--font-poster-display), "Arial Black", sans-serif;
+  font-family: var(--font-poster-mark), var(--font-poster-display), "Arial Black", var(--font-zhuque), "Songti SC", "SimSun", sans-serif;
   font-size: 1.75rem;
   font-weight: 400;
   line-height: 1;
@@ -296,7 +296,7 @@ html:has(.ps) {
 /* 编号：窄体数字（League Gothic），与标题同一油墨声部 */
 .ps-num {
   flex: none;
-  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-family: var(--font-poster-display), "Arial Narrow", var(--font-zhuque), "Songti SC", "SimSun", sans-serif;
   font-stretch: 86%;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -462,7 +462,7 @@ html:has(.ps) {
 }
 
 .ps-total-num {
-  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-family: var(--font-poster-display), "Arial Narrow", var(--font-zhuque), "Songti SC", "SimSun", sans-serif;
   font-stretch: 78%;
   font-size: clamp(2.4rem, 5vw, 3.25rem);
   line-height: 0.85;
@@ -521,7 +521,7 @@ html:has(.ps) {
 
 .ps-imprint-line {
   margin: 0;
-  font-family: var(--font-poster-display), "Arial Narrow", sans-serif;
+  font-family: var(--font-poster-display), "Arial Narrow", var(--font-zhuque), "Songti SC", "SimSun", sans-serif;
   font-stretch: 85%;
   font-size: clamp(1.1rem, 2.2vw, 1.5rem);
   line-height: 1.05;
