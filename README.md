@@ -6,7 +6,7 @@ One profile, many AI-designed homepages, in three languages. Astro + TypeScript 
 
 ## 特性
 
-- 18 套视觉与结构不同的设计（17 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
+- 24 套视觉与结构不同的设计（23 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
 - **三语言**（`zh-CN` / `ja` / `en`）：每套设计在每种语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离
 - **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换

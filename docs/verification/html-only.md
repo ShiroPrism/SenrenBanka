@@ -1,7 +1,7 @@
 # verification — HTML Only
 
 > 当前完整验证状态（更新式；历史由 Git 保留）。规则见 `docs/rules/README.md`，验证流程见 `design-page-verify` skill，长期决策见 `docs/adr/0009-html-only-design-rendering.md`。
-> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；本轮复核了产物、截图与验证器负向用例，未把未重跑的检查记为通过。
+> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；2026-10-29（v0.17.0）只更新全站当前页数与切换页产物计数，未重跑本设计的浏览器矩阵。
 
 ## 设计状态
 
@@ -15,10 +15,10 @@
 
 ## 构建
 
-- `npm run build`：**77 页**通过。
+- `npm run build`：**105 页**通过（v0.17.0 当前全站构建；本设计实现时的 77 页基线保留为历史）。
 - `astro check`：0 errors / 0 warnings / 1 条既有 `lexicon/Page.astro` hint。
 - `npm run verify:html-only`：20 项回归测试全绿，产物门禁通过，`1 design × 3 locales = 3 pages`。
-- 页面构成：16 套 `styled` × 3 locale + 3 个 `html-only` 页面 + 3 个语言入口 + 3 个切换页 + 根入口 + 404 + 17 个设计旧路径 + 旧 `/designs/`。
+- 页面构成：23 套 `styled` × 3 locale（69 页）+ 3 个 `html-only` 页面 + 3 个语言入口 + 3 个切换页 + 根入口 + 404 + 24 个设计旧路径 + 旧 `/designs/`，共 **105 页**。
 
 ## 三语产物静态检查
 
@@ -37,22 +37,22 @@
 
 - 三语切换页均出现 `html-only` 卡片，目标为对应 locale 的 `/html-only/`。
 - 卡片渲染自包含的普通 HTML 文档缩略图：真实姓名、headline、目录、普通蓝色链接；无 `style.css` / `tokens.css` 依赖。
-- 浏览器实测（1536px，zh-cn）：18 张卡 / 18 个预览；`html-only` 预览容器为 `aria-hidden="true"`、无可聚焦元素、预览文字不进入卡片可访问名；预览画幅约 `353 × 221px`。
+- 切换页当前产物：24 张卡 / 24 个预览；`html-only` 预览容器为 `aria-hidden="true"`、无可聚焦元素、预览文字不进入卡片可访问名。2026-10-28 的 1536px 浏览器实测记录为 18 张卡、预览画幅约 `353 × 221px`，v0.17.0 未重测新增六张卡片的浏览器几何。
 - 截图：`.local-fonts/dev/preview/html-only/html-only-switcher-preview.png`。
 - `html-only` 进入 enabled 随机池；页面自身不提供随机按钮或持久化脚本。
 
 ## base path
 
-- `BASE_PATH=/demo` 构建到临时 outDir：**77 页**通过。
+- `BASE_PATH=/demo` 构建到临时 outDir：**105 页**通过（v0.17.0 当前构建；历史实现基线为 77 页）。
 - `node scripts/verify-html-only.mjs --dist <temp>` 通过。
 - 抽查 `/demo/zh-cn/html-only/`：canonical、favicon、三语链接、全部设计链接与锚点均正确；内部绝对路径无缺失 `/demo` 前缀。
 - 切换页的 `html-only` 卡片目标为 `/demo/zh-cn/html-only/`。
 
 ## 配置边界
 
-临时把 `site.config.yaml` 的 `manualSwitch` 改为 `false` 后构建：
+2026-10-28 临时把 `site.config.yaml` 的 `manualSwitch` 改为 `false` 后构建（v0.17.0 未重跑该分支）：
 
-- 构建 **73 页**；三语切换页与旧 `/designs/` 不构建。
+- 当时构建 **73 页**；三语切换页与旧 `/designs/` 不构建。
 - `html-only` 页面不渲染“设计”导航组或“全部设计”链接。
 - 三语语言链接仍完整可用。
 - 测试后配置已按原始字节恢复。
@@ -76,7 +76,7 @@
 | `<link rel="stylesheet" href="/x.css">` | `<link rel="stylesheet"> is forbidden` |
 
 验证器无候选时 fail-closed；支持默认 `dist` 与 `--dist <dir>`。
-一次最终构建在字体复制阶段出现 Rust `memory allocation ... failed`；原命令重跑后 **77 页**
+2026-10-28 一次最终构建在字体复制阶段出现 Rust `memory allocation ... failed`；原命令重跑后 **77 页**
 与全部门禁通过，未复现，属本机瞬时资源失败而非代码断言失败。
 
 补充 parser 边界负向用例（均 exit 1 且报 `forbidden <script> tag`）：

@@ -3,8 +3,8 @@
 > 本文件维护**共享操作菜单**（`ContextMenu.astro` + `context-menu.ts`）的当前完整验证状态。它的验证维度**跨设计、跨输入环境、跨配置**，与 `shared.md` 的"路由 / 字体 / Reveal / 资产 provenance"不同职责，因此独立成文（见 `docs/README.md`）。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill。
-> 最近全流程验证：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断。
-> 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。本文件原有浏览器实测仍对应当时的 8 套 `styled` 设计；当前 17 套 `styled` 中，本日新增的 homepage99 已在桌面与 375px 触控环境实测菜单，其余 16 套的完整浏览器矩阵仍以 2026-10-13 / 10-19 记录为准。
+> 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归。
+> 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。2026-10-29（v0.17.0）：六套新增 `styled` 设计均在桌面与 375px 触控环境实测共享菜单；当前 23 套 `styled` 设计。
 
 ## 形态与接入面
 
@@ -12,7 +12,7 @@
 
 | 页面上下文 | 接入 | 身份条 | 随机主题 | 「切换设计…」 | 语言项目标 |
 |---|---|---|---|---|---|
-| `design`（`styled`；当前 17 套 × 3 语言 = 51 页） | ✅ | ✅ | 排除当前 | ✅ | `/{locale}/{同一主题}/` |
+| `design`（`styled`；当前 23 套 × 3 语言 = 69 页） | ✅ | ✅ | 排除当前 | ✅ | `/{locale}/{同一主题}/` |
 | `design`（`html-only`；3 页） | ❌（ADR 0009 显式例外） | — | — | — | 原生同主题语言链接 |
 | `switcher`（3 页） | ✅ | ❌ | 全池（不排除不存在的当前） | ❌ 构建期不渲染 | `/{locale}/designs/` |
 | `not-found`（`404.html`） | ✅ | ❌ | 全池 | ✅（受 `manualSwitch` 门控） | `/{locale}/` |
@@ -70,7 +70,7 @@
 
 ## 配置边界
 
-- `manualSwitch: false` 实测：构建 **37 页**（切换页 3 页消失）；设计页 `data-cm-action="random"` / `"switch"` 计数均为 **0**，而 `data-cm-sheet` 与 `cm-lang` × 6 **仍在**——菜单本体与语言分组照常渲染，页面操作与语言切换不受影响。
+- 2026-10-13 的历史基线中，`manualSwitch: false` 构建 **37 页**（切换页 3 页消失）；设计页 `data-cm-action="random"` / `"switch"` 计数均为 **0**，而 `data-cm-sheet` 与 `cm-lang` × 6 **仍在**——菜单本体与语言分组照常渲染，页面操作与语言切换不受影响。v0.17.0 未重跑该全量配置分支。
 - `navigator.share` 不可用：两份容器内的分享项均被移除（桌面 + 面板同时处理）。
 - 剪贴板双失败：模拟 `navigator.clipboard.writeText` reject 且 `execCommand` 返回 false → Toast 显示「复制失败，请手动复制地址栏链接」、`data-cm-tone="error"`、`hidden: false`。
 - 无 JS 回退：切换页与 404 的 `<noscript>` 各含 **3** 个 `.lang-switch-link`，目标分别为 `/{locale}/designs/` 与 `/{locale}/`；`styled` 设计页**不含**该回退（维持 v0.9.0 已裁定的取舍）。`html-only` 由 ADR 0009 的原生 `<nav>` 提供可见语言链接，不依赖菜单。
@@ -78,7 +78,7 @@
 
 ## 构建与产物隔离
 
-- 2026-10-13 的菜单浏览器矩阵记录为 **41 页**（当时 8 套 `styled`）；2026-10-28 当前静态构建为 **81 页**，并新增 HTML-only 产物门禁。homepage99 的桌面菜单、触控面板、语言导航与背景滚动锁已在本轮实测，见 `docs/verification/homepage99.md`。
+- 历史矩阵：2026-10-13 为 **41 页**（当时 8 套 `styled`），2026-10-28 为 **81 页**（当时 17 套 `styled`）；v0.17.0 当前全站构建为 **105 页 / 23 套 `styled` + 1 套 `html-only`**。六套新增设计的菜单、触控面板、语言导航与滚动锁已在 2026-10-29 回归。
 - 每个 `styled` 设计页 CSS `<link>` 计数 = **1**；`html-only` 页面 = **0**，切换页与 404 = **0**（不误带设计样式）。菜单样式全部 `<style is:inline>`，不新增 `<link>`。
 - 运行时 chunk `context-menu.*.js` 独立，页面内 `modulepreload` 计数 = **0**。启动门控为 `matchMedia('(hover: hover) and (any-pointer: fine)')` **或** `matchMedia('(any-pointer: coarse)')` 任一命中即动态 `import()`。
 - 三语言 `launcherLabel` 与语言目标 URL 均正确本地化。
@@ -115,5 +115,5 @@
 - **面板在 `dvh` / 软键盘弹出时的定位**：`max-height: min(82vh, 82dvh)` 已用 `dvh` 优先，理由记在样式注释；未在真机验证地址栏收缩与键盘弹出的组合情形。
 - **大屏一体机 / 触屏笔记本实机**：混合输入切换逻辑用 `PointerEvent` 合成事件验证，未在真实混合设备上跑过。
 - **`navigator.share` 真实分享流程**：仅验证了 API 缺失时的移除逻辑与 Toast 三态中的失败分支，未在真机验证系统分享面板。
-- **8 套设计各自的移动端视觉复核**：本轮逐页核对了标记数量与正交性（脚本化断言），但面板在 8 套设计视觉语境下的观感只实测了 editorial（截图），其余 7 套待逐套目视复核。
+- **2026-10-13 的 8 套设计移动端视觉复核**：当时只逐套目视 editorial（截图），其余 7 套待补；v0.17.0 六套新增设计已分别完成 375px 触控回归，但不能替代旧 16 套的完整视觉复核。
 - **打印 / PDF 实际输出**：仅验证按钮触发 `window.print()`，未核对打印样式。
