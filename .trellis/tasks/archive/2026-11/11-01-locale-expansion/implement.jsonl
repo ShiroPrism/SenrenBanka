@@ -1,0 +1,14 @@
+{"file": "docs/rules/data-and-i18n.md", "reason": "locale/profile/路由/文案的权威规则"}
+{"file": "docs/rules/action-menu.md", "reason": "共享操作菜单与语言分组契约"}
+{"file": "docs/rules/design-contract.md", "reason": "styled/html-only 交付契约"}
+{"file": "docs/rules/operations.md", "reason": "构建、验证与发布门禁"}
+{"file": "docs/rules/pitfalls.md", "reason": "已知坑与 CSS 隔离约束"}
+{"file": "docs/adr/0006-multilingual-static-routing.md", "reason": "静态多语言路由决策，禁止运行时切换"}
+{"file": "docs/adr/0009-html-only-design-rendering.md", "reason": "html-only 零资源与原生语言导航"}
+{"file": "docs/adr/0012-external-font-catalog-and-cjk-shards.md", "reason": "外部字体目录与 CJK 分片"}
+{"file": "docs/adr/0013-build-time-font-shard-pruning.md", "reason": "构建期分片裁剪"}
+{"file": "docs/adr/0014-content-subset-fonts.md", "reason": "核心字体内容子集"}
+{"file": "docs/verification/shared.md", "reason": "当前 dist/页面/字体验证基线"}
+{"file": "docs/fonts/selection-guide.md", "reason": "新增字体的选择与许可流程"}
+{"file": ".trellis/spec/frontend/font-release-operations.md", "reason": "外部字体发布事务与回滚"}
+{"file": "CONTEXT.md", "reason": "Locale / 覆盖 / 菜单等领域术语"}

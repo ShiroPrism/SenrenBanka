@@ -1,0 +1,4 @@
+{"file": "docs/rules/action-menu.md", "reason": "检查菜单行为与唯一入口未变"}
+{"file": "docs/rules/design-contract.md", "reason": "检查 CSS 隔离与 html-only 零资源"}
+{"file": "docs/verification/action-menu.md", "reason": "对比菜单验证基线"}
+{"file": "docs/verification/shared.md", "reason": "对比 dist 体积与页面资源"}

@@ -1,0 +1,32 @@
+{
+  "id": "locale-expansion",
+  "name": "locale-expansion",
+  "title": "Locale 配置与语言扩展机制",
+  "description": "建立配置驱动的 locale 机制（design.json 覆盖、单语言 fork、任意语言可加），先外置共享菜单 CSS 控制体积，首批接入韩语（默认设计+5-8套）；保留 ADR 0006 静态多语言路由。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-01",
+  "completedAt": "2026-11-01",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-01-menu-css-external",
+    "11-01-design-locale-coverage",
+    "11-01-single-locale-menu",
+    "11-01-korean-locale",
+    "11-01-locale-docs-verify"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

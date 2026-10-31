@@ -1,0 +1,7 @@
+{"file": "docs/rules/action-menu.md", "reason": "菜单唯一实现、两种容器形态与无 JS 语义"}
+{"file": "docs/rules/design-contract.md", "reason": "styled/html-only 资源契约与 CSS 隔离"}
+{"file": "docs/rules/operations.md", "reason": "构建、验证与体积门禁"}
+{"file": "docs/adr/0007-action-menu-site-wide-with-touch-launcher.md", "reason": "菜单两份 DOM 与运行时门控"}
+{"file": "docs/adr/0009-html-only-design-rendering.md", "reason": "html-only 零资源约束"}
+{"file": "docs/verification/action-menu.md", "reason": "菜单验证基线"}
+{"file": "docs/verification/shared.md", "reason": "dist/页面体积基线"}

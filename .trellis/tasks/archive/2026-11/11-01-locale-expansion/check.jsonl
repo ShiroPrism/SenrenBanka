@@ -1,0 +1,6 @@
+{"file": "docs/rules/data-and-i18n.md", "reason": "检查 locale 覆盖、资料、路由与文案是否遵守规则"}
+{"file": "docs/rules/action-menu.md", "reason": "检查菜单语言项与单语言隐藏行为"}
+{"file": "docs/rules/operations.md", "reason": "检查构建/验证/体积门禁"}
+{"file": "docs/adr/0006-multilingual-static-routing.md", "reason": "确认未引入运行时切换"}
+{"file": "docs/verification/shared.md", "reason": "对比体积、页面数、字体验证基线"}
+{"file": ".trellis/spec/frontend/font-release-operations.md", "reason": "检查 Noto KR 发布与锁文件更新"}
