@@ -1,0 +1,5 @@
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "Mandatory verification flow for any design page or shared-mechanism change."}
+{"file": "docs/verification/shared.md", "reason": "Current shared verification baseline and dist size record."}
+{"file": "docs/rules/operations.md", "reason": "Build commands and 10 MiB dist guard used in the verification record."}
+{"file": "docs/rules/design-contract.md", "reason": "Acceptance contract for required files, fonts, preview and menu wiring."}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "Contrast, keyboard, touch-target and 375px checks in the verification matrix."}

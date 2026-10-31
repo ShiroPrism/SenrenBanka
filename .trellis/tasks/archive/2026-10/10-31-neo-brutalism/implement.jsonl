@@ -1,0 +1,9 @@
+{"file": "docs/rules/design-contract.md", "reason": "Required files, renderMode contract, Preview rules and font wiring for a new styled design."}
+{"file": "docs/rules/visual-language.md", "reason": "Motion language, Reveal visibility contract, font fallback rules and typography gate."}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "Accessible names, contrast, touch targets, 375px and keyboard requirements."}
+{"file": "docs/rules/pitfalls.md", "reason": "Known traps: CSS aggregation, Preview @source exclusion, :root leakage, hidden attribute, font cache."}
+{"file": "docs/rules/data-and-i18n.md", "reason": "loadDesignView contract, profile fields, messages.ts, internal link helpers and locale rules."}
+{"file": "docs/rules/operations.md", "reason": "Build order, font subset/prune pipeline and 10 MiB size guard."}
+{"file": "docs/fonts/selection-guide.md", "reason": "Font role selection, specimen check, license gate and six-item recording."}
+{"file": "docs/adr/0011-design-specific-js-progressive-enhancement.md", "reason": "No design-specific JS unless a core interaction gap exists; this batch uses none."}
+{"file": ".trellis/spec/frontend/index.md", "reason": "Frontend authoritative contract pointers before editing src/designs."}
