@@ -1,0 +1,8 @@
+{"file": ".trellis/spec/frontend/index.md", "reason": "Frontend guideline index and authoritative pointers for shared rendering, fonts, and design-page contracts."}
+{"file": ".trellis/tasks/10-31-font-shard-pruning/research.md", "reason": "Measured dist composition, shard counts, pruning simulation, and the reason font CSS must be externalized to meet 15 MiB."}
+{"file": "docs/rules/operations.md", "reason": "Build pipeline, font commands, verification and documentation-governance requirements."}
+{"file": "docs/rules/visual-language.md", "reason": "Font ownership, fallback-chain and CJK coverage contracts that pruning must not weaken."}
+{"file": "docs/fonts/selection-guide.md", "reason": "Production font pipeline, catalog/lock rules, and the boundary between discovery, source fonts and deployed assets."}
+{"file": "CONTEXT.md", "reason": "Domain terms: Site subset, Core script font, Font coverage contract, Deployment shard set."}
+{"file": "SPEC.md", "reason": "Authoritative font/build facts and acceptance criteria that must be updated consistently."}
+{"file": "docs/rules/pitfalls.md", "reason": "Known font/CSS aggregation and fallback pitfalls relevant to externalizing @font-face CSS."}

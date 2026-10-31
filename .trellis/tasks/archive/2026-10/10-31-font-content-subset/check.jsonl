@@ -1,0 +1,7 @@
+{"file": ".trellis/tasks/10-31-font-content-subset/research.md", "reason": "Expected subset sizes, source archives and license basis for judging the final diff."}
+{"file": ".trellis/spec/frontend/index.md", "reason": "Shared rendering and verification contract pointers."}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "Required shared-mechanism verification flow, browser font evidence and limitation reporting."}
+{"file": "docs/verification/shared.md", "reason": "Current verification state that must be updated with subset measurements and limitations."}
+{"file": "docs/rules/operations.md", "reason": "Build command order, 10 MiB guard and documentation/version requirements."}
+{"file": "docs/rules/visual-language.md", "reason": "Typography gates and font-stack invariants that must remain green."}
+{"file": "AGENTS.md", "reason": "Mandatory gates, especially verify-after-change and CSS isolation."}

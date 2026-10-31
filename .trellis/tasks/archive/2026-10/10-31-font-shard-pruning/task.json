@@ -1,0 +1,28 @@
+{
+  "id": "font-shard-pruning",
+  "name": "font-shard-pruning",
+  "title": "Prune unused font shards to shrink dist below 15MB",
+  "description": "Add a build-time fonts:prune step that scans final dist text, keeps only unicode-range shards actually used, removes unused @font-face rules, and updates fonts:audit to verify the pruned set. Target dist <= 15MB without modifying font files or changing rendered typography.",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-31",
+  "completedAt": "2026-10-31",
+  "branch": "feat/font-shard-pruning",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-31-font-content-subset"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

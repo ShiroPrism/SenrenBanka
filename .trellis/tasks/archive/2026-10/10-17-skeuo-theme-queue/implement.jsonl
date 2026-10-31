@@ -1,0 +1,8 @@
+{"file": "docs/fonts/selection-guide.md", "reason": "字体选型五步流程与六项记录模板（每套设计强制遵循）"}
+{"file": "docs/adr/0008-local-font-library-isolation.md", "reason": "本地库/生产层隔离决策（字体使用红线）"}
+{"file": "docs/rules/visual-language.md", "reason": "设计页字体、动效与 Reveal 契约"}
+{"file": "docs/rules/design-contract.md", "reason": "每套设计必交文件与预览契约"}
+{"file": "docs/rules/action-menu.md", "reason": "共享操作菜单接入要求"}
+{"file": "docs/rules/data-and-i18n.md", "reason": "数据接口与多语言接入"}
+{"file": ".local-fonts/online-font-candidates-review.md", "reason": "八方向字体候选榜单与许可核验结论（字体池依据）"}
+{"file": "docs/verification/receipt.md", "reason": "样板验证口径与记录结构（实现时对齐）"}

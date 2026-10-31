@@ -1,0 +1,5 @@
+{"file": ".trellis/tasks/10-29-agents-doc-index/prd.md", "reason": "本任务需求、约束与验收标准"}
+{"file": ".trellis/tasks/10-29-agents-doc-index/design.md", "reason": "权威模型、章节归口、根文件预算与门禁设计"}
+{"file": ".trellis/tasks/10-29-agents-doc-index/implement.md", "reason": "分阶段迁移顺序、回滚点与收口清单"}
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "文档门禁与最终产物检查的项目质量约定"}
+{"file": ".trellis/spec/guides/code-reuse-thinking-guide.md", "reason": "避免重复规则正文与重复维护"}

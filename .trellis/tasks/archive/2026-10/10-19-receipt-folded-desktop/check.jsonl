@@ -1,0 +1,6 @@
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "Quality verification requirements"}
+{"file": ".trellis/tasks/10-19-receipt-folded-desktop/research/receipt-current-layout.md", "reason": "Acceptance evidence and prior validation assumptions"}
+{"file": "docs/rules/design-contract.md", "reason": "Project-wide design contract and preview rules"}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "Project-wide accessibility and responsive gates"}
+{"file": "docs/rules/pitfalls.md", "reason": "Project-wide known implementation pitfalls"}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "Mandatory design-page verification workflow"}

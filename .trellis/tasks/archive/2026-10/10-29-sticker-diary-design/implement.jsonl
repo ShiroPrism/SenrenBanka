@@ -1,0 +1,15 @@
+{"file":".trellis/spec/frontend/index.md","reason":"Project frontend guideline entrypoint and relevant layer index."}
+{"file":"docs/rules/design-contract.md","reason":"Required styled-design files, CSS isolation, preview and ContextMenu contract."}
+{"file":"docs/rules/data-and-i18n.md","reason":"Profile fields, locale messages, URL helpers and language routing contract."}
+{"file":"docs/rules/visual-language.md","reason":"Motion, asset, icon, font and design-specific JavaScript rules."}
+{"file":"docs/rules/accessibility-responsive.md","reason":"Accessible names, contrast, focus, touch and 375px requirements."}
+{"file":"docs/rules/pitfalls.md","reason":"Known Tailwind, preview, route, reveal and menu traps."}
+{"file":"docs/rules/operations.md","reason":"Build, document, version and repository-scope rules."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Mandatory full verification workflow for every changed design."}
+{"file":"docs/fonts/selection-guide.md","reason":"Mandatory font selection, specimen, license, coverage and recording process."}
+{"file":"docs/adr/0011-design-specific-js-progressive-enhancement.md","reason":"Accepted JavaScript boundary, fallback and size requirements."}
+{"file":"CONTEXT.md","reason":"Canonical project vocabulary including Design batch and Design-specific interaction."}
+{"file":".trellis/tasks/10-29-cute-design-batch/design.md","reason":"Cross-child ownership, font, JavaScript and integration contract."}
+{"file":".trellis/tasks/10-29-cute-design-batch/research/repository-baseline.md","reason":"Current repository facts and constraints verified before implementation."}
+{"file":".trellis/tasks/10-29-cute-design-batch/research/six-design-briefs.md","reason":"Approved structural and visual briefs for all six designs."}
+{"file":".trellis/tasks/10-29-cute-design-batch/research/font-palette.md","reason":"Approved two-family font palette, roles, coverage and fallback plan."}

@@ -1,0 +1,5 @@
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "设计页验证流程规范（截图/探针/检测器/记录）"}
+{"file": "docs/verification/receipt.md", "reason": "当前验证状态样板（对照口径：四口径/字形指纹/对比度）"}
+{"file": "docs/rules/design-contract.md", "reason": "每套设计必交文件与构建产物契约"}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "无障碍、触控与响应式验收"}
+{"file": "docs/rules/pitfalls.md", "reason": "CSS 聚合、预览与字体实测陷阱"}

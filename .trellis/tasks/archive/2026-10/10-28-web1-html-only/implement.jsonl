@@ -1,0 +1,5 @@
+{"file":"CONTEXT.md","reason":"Canonical vocabulary for styled and HTML-only render modes."}
+{"file":"docs/adr/0009-html-only-design-rendering.md","reason":"Accepted rationale and boundaries for HTML-only rendering."}
+{"file":".trellis/tasks/10-28-web1-html-only/research/repository-audit.md","reason":"Current repository evidence, constraints and known gaps."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Required design verification workflow and evidence format."}
+{"file":"docs/fonts/selection-guide.md","reason":"Typography decision process; Homepage 99 intentionally uses system fonts."}

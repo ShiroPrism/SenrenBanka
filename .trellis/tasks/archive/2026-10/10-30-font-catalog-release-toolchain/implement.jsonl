@@ -1,0 +1,6 @@
+{"file":"docs/fonts/selection-guide.md","reason":"Carry forward the project's font coverage, license gate, source provenance, and CJK distribution constraints."}
+{"file":"docs/adr/0008-local-font-library-isolation.md","reason":"Keep local discovery/specimen state separate from production font distribution."}
+{"file":"CONTEXT.md","reason":"Use the agreed terms for source fonts, production assets, catalog releases, family packages, shards, and source archives."}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"Keep descriptor, source archives, generated packages, catalog pointers, and downstream lock data consistent."}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"Prevent per-font download, split, package, and validation scripts when one schema-driven pipeline is required."}
+{"file":".trellis/tasks/10-30-font-catalog-release-toolchain/research.md","reason":"Use the researched tool behavior, package formats, deterministic archive constraints, and release references."}

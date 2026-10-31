@@ -1,0 +1,33 @@
+{
+  "id": "cute-design-batch",
+  "name": "cute-design-batch",
+  "title": "六套可爱风独立设计批次",
+  "description": "协调新增 Fairy Kei、Sticker Diary、Pixel Pet RPG、Little Forest、Cute-alism、Magical Girl 六套独立 styled design，并完成共享字体、注册、文档与验证集成。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-29",
+  "completedAt": "2026-10-30",
+  "branch": "codex/cute-design-batch",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-29-fairy-kei-design",
+    "10-29-sticker-diary-design",
+    "10-29-pixel-pet-rpg-design",
+    "10-29-little-forest-design",
+    "10-29-cute-alism-design",
+    "10-29-magical-girl-design"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

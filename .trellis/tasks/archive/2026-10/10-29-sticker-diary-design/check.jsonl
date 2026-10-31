@@ -1,0 +1,13 @@
+{"file":"docs/rules/design-contract.md","reason":"Validate required files, preview contract and ContextMenu integration."}
+{"file":"docs/rules/data-and-i18n.md","reason":"Validate profile coverage, localized messages, links and routing behavior."}
+{"file":"docs/rules/visual-language.md","reason":"Validate motion, assets, fonts and design-specific JavaScript boundaries."}
+{"file":"docs/rules/accessibility-responsive.md","reason":"Validate accessible names, contrast, focus, touch and narrow viewport behavior."}
+{"file":"docs/rules/pitfalls.md","reason":"Check known build, CSS aggregation and preview traps."}
+{"file":"docs/rules/operations.md","reason":"Validate build, documentation, version and rollback boundaries."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Use the full current verification checklist and recording standard."}
+{"file":"docs/verification/shared.md","reason":"Compare switcher preview, font and shared build measurements against current baseline."}
+{"file":"docs/verification/action-menu.md","reason":"Regression-check shared action menu across the expanded design set."}
+{"file":"docs/adr/0011-design-specific-js-progressive-enhancement.md","reason":"Check JavaScript success, failure, no-JS and reduced-motion paths."}
+{"file":".trellis/tasks/10-29-cute-design-batch/design.md","reason":"Review against cross-child technical and integration contract."}
+{"file":".trellis/tasks/10-29-cute-design-batch/research/six-design-briefs.md","reason":"Verify each design matches its approved non-goals and structural signature."}
+{"file":".trellis/tasks/10-29-cute-design-batch/research/font-palette.md","reason":"Verify final font use, subset coverage, size and fallback chains."}

@@ -1,0 +1,4 @@
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Execute mandatory full design verification and record current evidence."}
+{"file":"docs/fonts/selection-guide.md","reason":"Verify the six-part system-font record and language fallback rationale."}
+{"file":"docs/adr/0009-html-only-design-rendering.md","reason":"Confirm Homepage 99 uses the styled branch and does not inherit HTML-only exceptions."}
+{"file":".trellis/tasks/10-28-web1-html-only/research/repository-audit.md","reason":"Confirm visual differentiation and all known out-of-scope defects are recorded honestly."}

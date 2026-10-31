@@ -1,0 +1,3 @@
+{"file":"docs/adr/0009-html-only-design-rendering.md","reason":"Verify final output and navigation remain faithful to the accepted decision."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Run the correct mode-specific verification checklist and record evidence."}
+{"file":".trellis/tasks/10-28-web1-html-only/research/repository-audit.md","reason":"Confirm known defects are recorded rather than incorrectly claimed fixed."}

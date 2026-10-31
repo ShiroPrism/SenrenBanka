@@ -1,0 +1,5 @@
+{"file": ".trellis/tasks/10-29-agents-doc-index/prd.md", "reason": "验收标准 AC1–AC11"}
+{"file": ".trellis/tasks/10-29-agents-doc-index/design.md", "reason": "检查权威边界、章节归口、预算与门禁设计是否落实"}
+{"file": ".trellis/tasks/10-29-agents-doc-index/implement.md", "reason": "检查实施顺序、引用迁移与收口是否完成"}
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "质量检查与 fail-closed 门禁约定"}
+{"file": ".trellis/spec/guides/code-reuse-thinking-guide.md", "reason": "检查规则是否单一来源、是否存在重复维护"}

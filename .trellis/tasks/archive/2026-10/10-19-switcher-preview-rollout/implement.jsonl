@@ -1,0 +1,6 @@
+{"file": "AGENTS.md", "reason": "设计页与切换页的强制实现约定：CSS 聚合陷阱、字体接线、无障碍、响应式与记录归属"}
+{"file": "SPEC.md", "reason": "§3.2 已核实产物隔离事实、§7.5 切换页契约、§8 Tailwind/CSS 约定、§13 验收标准"}
+{"file": "docs/verification/shared.md", "reason": "既有切换页预览验证结论与产物断言口径"}
+{"file": ".trellis/tasks/archive/2026-10/10-18-switcher-design-preview/design.md", "reason": "本任务继承的三条硬约束与实测证据"}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "实现后的构建、产物隔离、字体、桌面/移动、降级与 a11y 验证流程"}
+{"file": ".agents/skills/impeccable/reference/craft-floor.md", "reason": "逐套预览编辑前的 UI 质量底线与绝对禁令"}

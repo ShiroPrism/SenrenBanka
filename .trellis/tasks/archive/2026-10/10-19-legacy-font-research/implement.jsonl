@@ -1,0 +1,11 @@
+{"file":"AGENTS.md","reason":"设计页、字体、预览隔离、无障碍与响应式的强制实现规则"}
+{"file":"SPEC.md","reason":"已核实的 CSS 隔离事实、切换页契约、字体接线与验收标准"}
+{"file":"docs/fonts/selection-guide.md","reason":"字体选型五步流程、六项记录模板与生产回退要求"}
+{"file":"docs/adr/0008-local-font-library-isolation.md","reason":"本地候选与生产字体资产隔离的长期决策"}
+{"file":"docs/verification/shared.md","reason":"切换页预览、字体成本与产物隔离的当前基线"}
+{"file":"docs/README.md","reason":"文档职责与记录归属：DESIGN.md、ADAPTATION.md、verification、change-log"}
+{"file":".trellis/tasks/10-19-legacy-font-research/prd.md","reason":"本任务的范围、需求 R1-R6 与验收 A1-A9"}
+{"file":".trellis/tasks/10-19-legacy-font-research/design.md","reason":"逐套字体角色、Oxide 修复、成本模型、规模与回滚设计"}
+{"file":".trellis/tasks/10-19-legacy-font-research/implement.md","reason":"分批执行顺序、闸门与验证命令"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"字体/预览改动后的完整验证流程与记录收口"}
+{"file":".agents/skills/impeccable/reference/craft-floor.md","reason":"编辑预览或字体相关 UI 前的质量底线"}

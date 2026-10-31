@@ -1,0 +1,30 @@
+{
+  "id": "font-prepare-registration-migration",
+  "name": "font-prepare-registration-migration",
+  "title": "SenrenBanka 字体准备与注册迁移",
+  "description": "将主项目非 npm 自定义字体迁出仓库，加入固定目录锁、离线 fonts:prepare/update、生成式 Astro 注册、构建后 HTML 缺字审计，并完成文档与验证迁移。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-30",
+  "completedAt": "2026-10-30",
+  "branch": "codex/font-prepare-registration",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": "10-30-font-catalog-distribution",
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {
+    "implementationCommit": "b50ea2c",
+    "checkCommit": "e43ab3c7fae236189f59a41c7e18b8d1e38b10e3",
+    "deferredToParent": "core-cjk-fallback-order"
+  }
+}

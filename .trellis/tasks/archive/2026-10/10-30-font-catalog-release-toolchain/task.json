@@ -1,0 +1,33 @@
+{
+  "id": "font-catalog-release-toolchain",
+  "name": "font-catalog-release-toolchain",
+  "title": "字体目录、分片与发布工具链",
+  "description": "在独立字体仓实现 schema 化的字体家族目录、固定源校验、cn-font-split 分片、许可闸门、可复现家族包与目录 Release，并提供新增任意冷门 CJK 字体的扩展流程。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-30",
+  "completedAt": "2026-10-30",
+  "branch": "codex/font-catalog-toolchain",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": "10-30-font-catalog-distribution",
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {
+    "externalRepository": "https://github.com/whitehair-failure/SenrenBanka-fonts",
+    "externalCommit": "f666c5ee03d04ab7c5f7482e8edcde1d80aafea4",
+    "bootstrapRelease": "bootstrap-v1.0.0",
+    "catalogRelease": "catalog-v1.0.0",
+    "releaseRun": "41031872296",
+    "dryRun": "41035708428"
+  }
+}

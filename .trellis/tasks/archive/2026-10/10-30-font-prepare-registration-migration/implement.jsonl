@@ -1,0 +1,6 @@
+{"file":"docs/rules/design-contract.md","reason":"Preserve the required Astro Fonts, Font component, Tailwind theme, CSS isolation, and html-only boundaries."}
+{"file":"docs/rules/visual-language.md","reason":"Follow self-hosting, fallback, license, CJK size, and production wiring rules."}
+{"file":"docs/rules/operations.md","reason":"Follow build, documentation ownership, deployment, version, and git-scope requirements."}
+{"file":"docs/rules/pitfalls.md","reason":"Avoid known Astro font, CSS aggregation, path, and first-build network pitfalls."}
+{"file":"CONTEXT.md","reason":"Use the agreed catalog lock, production asset, coverage contract, and source-archive terms."}
+{"file":".trellis/tasks/10-30-font-prepare-registration-migration/research.md","reason":"Use the verified Astro provider behavior, current font inventory, source versions, and offline constraints."}

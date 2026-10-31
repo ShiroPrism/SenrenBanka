@@ -1,0 +1,5 @@
+{"file":"CONTEXT.md","reason":"Use the confirmed font distribution, coverage, catalog-lock, and source-archive vocabulary."}
+{"file":"docs/fonts/selection-guide.md","reason":"Preserve the existing font selection, license gate, specimen, and production wiring rules during migration."}
+{"file":"docs/adr/0008-local-font-library-isolation.md","reason":"Respect the boundary between the local font workstation and production font assets while revising its production layer."}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"Coordinate the external catalog, cache, generated registration, Astro asset pipeline, and final HTML audit across layers."}
+{"file":"docs/rules/operations.md","reason":"Follow project documentation, version, release, and git-scope governance."}

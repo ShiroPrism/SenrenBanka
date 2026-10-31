@@ -10,6 +10,12 @@ node_modules/
 # 点目录默认全部不入库（本地工具状态：impeccable 会话/快照、.trae、.codex 等）
 .*/
 !.github
+# Trellis：放行项目状态；本地身份 / 运行时 / 备份由 .trellis/.gitignore 排除
+!.trellis/
+# 活跃任务保持本地；已归档任务进入版本历史
+.trellis/tasks/*
+!.trellis/tasks/archive/
+!.trellis/tasks/archive/**
 # 白名单：仓库定制的 design-page-verify skill（唯一入库的 skill；git 要求逐级放行父目录）
 !.agents/
 .agents/*

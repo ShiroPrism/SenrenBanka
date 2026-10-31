@@ -1,0 +1,29 @@
+{
+  "id": "web1-html-only",
+  "name": "web1-html-only",
+  "title": "Web 1.0 与 HTML Only 双主题",
+  "description": "父任务：协调 HTML Only 原生渲染契约与主题、Homepage '99 视觉主题；负责跨子任务验收、共享描述整合与最终全站复查。顺序：HTML Only 先完成，Homepage '99 随后；子任务完成前不归档父任务。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-28",
+  "completedAt": "2026-10-29",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-28-html-only",
+    "10-28-homepage99"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

@@ -1,0 +1,5 @@
+{"file":"docs/adr/0009-html-only-design-rendering.md","reason":"Accepted decision for renderMode, file contract and final-output policy."}
+{"file":".trellis/tasks/10-28-web1-html-only/research/repository-audit.md","reason":"Repository facts, asset injection matrix and actual known gaps."}
+{"file":".trellis/tasks/10-28-web1-html-only/design.md","reason":"Parent ownership, ordering and cross-task integration boundaries."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Verification workflow to branch for styled and HTML-only designs."}
+{"file":"docs/README.md","reason":"Document ownership index and maintenance rules."}

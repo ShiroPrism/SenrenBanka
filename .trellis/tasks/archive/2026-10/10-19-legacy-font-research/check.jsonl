@@ -1,0 +1,9 @@
+{"file":"AGENTS.md","reason":"验收红线：字体归属、预览隔离、无障碍、响应式与已知坑"}
+{"file":"SPEC.md","reason":"CSS/预览隔离与字体接线的可验证事实依据"}
+{"file":"docs/fonts/selection-guide.md","reason":"六项记录、覆盖、许可与回退顺序的检查标准"}
+{"file":"docs/adr/0008-local-font-library-isolation.md","reason":"检查生产配置与公开文档没有本地字体路径泄漏"}
+{"file":"docs/verification/shared.md","reason":"切换页字体成本与产物断言基线"}
+{"file":".trellis/tasks/10-19-legacy-font-research/prd.md","reason":"逐条验收标准 A1-A9"}
+{"file":".trellis/tasks/10-19-legacy-font-research/design.md","reason":"每套处置结论、Oxide 字符闸门、风险与回滚判据"}
+{"file":".trellis/tasks/10-19-legacy-font-research/implement.md","reason":"批次闸门、验证命令与完成定义"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"独立复验步骤与通过标准"}

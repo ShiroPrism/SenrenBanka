@@ -1,0 +1,3 @@
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "设计页验证流程规范：产物静态抽查（CSS 隔离 / 字体 / base）、多语言专项、检测器、桌面与移动实测"}
+{"file": "AGENTS.md", "reason": "验收红线：CSS 隔离、无障碍与响应式、构建产物检查、已知坑"}
+{"file": "SPEC.md", "reason": "§13 验收标准与 §3.2 隔离事实（断言依据）"}

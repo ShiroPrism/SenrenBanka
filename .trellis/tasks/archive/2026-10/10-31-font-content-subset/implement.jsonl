@@ -1,0 +1,8 @@
+{"file": ".trellis/tasks/10-31-font-content-subset/research.md", "reason": "Measured shard/font baseline, source archive facts, subset-font prototype sizes and license constraints."}
+{"file": ".trellis/spec/frontend/index.md", "reason": "Frontend/shared rendering guideline index and authoritative docs pointers."}
+{"file": "docs/rules/operations.md", "reason": "Build order, font commands, prepare/check offline contract and verification/documentation requirements."}
+{"file": "docs/rules/visual-language.md", "reason": "Font ownership, fallback-chain, CJK coverage and production font pipeline rules."}
+{"file": "docs/fonts/selection-guide.md", "reason": "Source archive, license gate, derived production assets and build pipeline boundaries."}
+{"file": "CONTEXT.md", "reason": "Domain terms for Deployment shard set, Font coverage contract and core script fonts."}
+{"file": "SPEC.md", "reason": "Authoritative font/build facts and acceptance criteria to update consistently."}
+{"file": "AGENTS.md", "reason": "Mandatory gates, especially verify-after-change and CSS isolation."}

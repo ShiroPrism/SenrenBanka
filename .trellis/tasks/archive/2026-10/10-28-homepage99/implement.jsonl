@@ -1,0 +1,6 @@
+{"file":"docs/adr/0009-html-only-design-rendering.md","reason":"Shared render-mode vocabulary and boundary; Homepage 99 remains styled."}
+{"file":"docs/adr/0001-motion-reveal-mechanism.md","reason":"Motion gating and visibility contract; this design deliberately omits Reveal."}
+{"file":"docs/adr/0003-differentiated-motion-enhancement.md","reason":"Design-specific motion language and static-design rationale."}
+{"file":"docs/fonts/selection-guide.md","reason":"Required system-font role, coverage and fallback documentation."}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Mandatory desktop, mobile, motion, accessibility and artifact verification."}
+{"file":".trellis/tasks/10-28-web1-html-only/research/repository-audit.md","reason":"Repository constraints and existing design identities to avoid overlap."}

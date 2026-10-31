@@ -1,0 +1,28 @@
+{
+  "id": "receipt-folded-desktop",
+  "name": "receipt-folded-desktop",
+  "title": "receipt 桌面折叠双栏重构",
+  "description": "桌面端由三份并排小票改为单张宽票折叠双栏，移动端保留单栏；同步设计规范、验证记录并完成构建与浏览器自测。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-19",
+  "completedAt": "2026-10-31",
+  "branch": "codex/receipt-folded-desktop",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {
+    "verification": "npm run build green; 73 pages; receipt 1440/1024/1000 + 375 touch + i18n + degradation + detector verified"
+  }
+}

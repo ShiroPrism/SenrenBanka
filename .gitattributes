@@ -7,3 +7,13 @@
 # picking either side (task state lives in task.json, not index.md). See
 # .trellis/spec/cli/backend/directory-structure.md for details.
 .trellis/workspace/*/journal-*.md merge=union
+
+# Trellis: workflow scripts are vendored tooling; specs/tasks/journals are documentation.
+# Keep them out of GitHub's language breakdown without removing them from Git.
+.trellis/scripts/** linguist-vendored
+.trellis/tasks/** linguist-documentation
+.trellis/workspace/** linguist-documentation
+.trellis/spec/** linguist-documentation
+.trellis/agents/** linguist-documentation
+.trellis/workflow.md linguist-documentation
+.trellis/config.yaml linguist-documentation

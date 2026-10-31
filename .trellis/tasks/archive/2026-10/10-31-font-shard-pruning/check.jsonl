@@ -1,0 +1,7 @@
+{"file": ".trellis/spec/frontend/index.md", "reason": "Frontend guideline index and authoritative pointers for shared rendering, fonts, and design-page contracts."}
+{"file": ".trellis/tasks/10-31-font-shard-pruning/research.md", "reason": "Before/after baseline and expected pruning ratios used to judge the implementation report."}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "Required verification flow for shared mechanism changes, including font-request and no-404 evidence."}
+{"file": "docs/verification/shared.md", "reason": "Current shared-mechanism verification record that must be updated after pruning."}
+{"file": "docs/rules/operations.md", "reason": "Build command order and documentation/version requirements for the final diff."}
+{"file": "docs/rules/visual-language.md", "reason": "Static typography gates and font-stack invariants that must remain green."}
+{"file": "AGENTS.md", "reason": "Mandatory gates, especially verify-after-change and CSS isolation."}

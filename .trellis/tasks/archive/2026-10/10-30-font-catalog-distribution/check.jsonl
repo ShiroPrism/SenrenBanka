@@ -1,0 +1,4 @@
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Use the required shared-mechanism verification flow and recording destinations."}
+{"file":"docs/rules/visual-language.md","reason":"Check that font licensing, fallback, self-hosting, and production wiring constraints remain satisfied."}
+{"file":"docs/rules/operations.md","reason":"Check documentation ownership, versioning, changelog, and release scope requirements."}
+{"file":"docs/rules/pitfalls.md","reason":"Recheck known font/build pitfalls and ensure superseded facts are updated."}

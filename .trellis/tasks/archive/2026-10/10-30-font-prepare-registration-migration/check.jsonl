@@ -1,0 +1,5 @@
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"Run the required shared mechanism browser, artifact, network, responsive, and recording checks."}
+{"file":"docs/rules/operations.md","reason":"Verify build commands, deployment docs, versioning, and repository boundaries."}
+{"file":"docs/rules/pitfalls.md","reason":"Verify no reintroduction of Astro font first-build network access, duplicate font faces, or CSS aggregation."}
+{"file":"docs/rules/visual-language.md","reason":"Verify fallback stacks, license handling, local-only production assets, and zero third-party runtime font requests."}
+{"file":".trellis/tasks/10-30-font-prepare-registration-migration/research.md","reason":"Check implementation facts against the inspected Astro local provider and current asset inventory."}

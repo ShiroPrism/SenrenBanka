@@ -1,0 +1,5 @@
+{"file": "AGENTS.md", "reason": "验收红线与记录归属"}
+{"file": "SPEC.md", "reason": "验收标准与 CSS 隔离断言依据"}
+{"file": "docs/verification/shared.md", "reason": "共享机制检查基线"}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "独立复验步骤"}
+{"file": ".trellis/tasks/10-19-switcher-preview-rollout/prd.md", "reason": "逐条验收标准 A1–A11"}

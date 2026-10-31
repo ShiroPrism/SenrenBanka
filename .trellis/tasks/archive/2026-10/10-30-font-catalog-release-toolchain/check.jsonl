@@ -1,0 +1,4 @@
+{"file":"docs/rules/operations.md","reason":"Verify documentation ownership, versioning, release scope, and repository hygiene."}
+{"file":"docs/rules/visual-language.md","reason":"Verify license, RFN, CJK size discipline, and self-hosting rules."}
+{"file":".trellis/spec/frontend/quality-guidelines.md","reason":"Apply the project's fail-closed artifact verification and cost-reporting standards."}
+{"file":".trellis/tasks/10-30-font-catalog-release-toolchain/research.md","reason":"Cross-check implementation against pinned tool behavior and archive/release facts."}

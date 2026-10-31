@@ -1,0 +1,4 @@
+{"file": "AGENTS.md", "reason": "设计页实现强制规则：已知坑（CSS 聚合陷阱）、每套设计必须满足、字体、无障碍与响应式"}
+{"file": "SPEC.md", "reason": "§3.2 已核实技术事实（CSS 隔离 / 每页只加载自己 CSS / 聚合陷阱）、§7.5 切换页契约、§8 Tailwind 约定（禁止合并样式 / 禁止跨设计共享 Token）"}
+{"file": "docs/verification/shared.md", "reason": "共享机制与基础设施的当前验证状态与产物隔离口径（实现时对齐断言写法）"}
+{"file": ".trellis/tasks/10-18-switcher-design-preview/design.md", "reason": "本任务技术设计与决定性实测证据（三条硬约束的来源）"}

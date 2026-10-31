@@ -1,0 +1,34 @@
+{
+  "id": "font-catalog-distribution",
+  "name": "font-catalog-distribution",
+  "title": "字体目录分发与核心 CJK 分片",
+  "description": "建立独立字体目录与按家族发布的扩展管线，并将核心 CJK 字体迁移到固定版本的完整 unicode-range 分片；父任务负责接口、验收、集成验证与文档收口。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-30",
+  "completedAt": "2026-10-30",
+  "branch": "codex/font-prepare-registration",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-30-font-prepare-registration-migration",
+    "10-30-font-catalog-release-toolchain"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {
+    "implementationCommit": "7a08221",
+    "checkCommit": "e43ab3c7fae236189f59a41c7e18b8d1e38b10e3",
+    "docsCommit": "2f61d8c",
+    "branch": "codex/font-prepare-registration"
+  }
+}

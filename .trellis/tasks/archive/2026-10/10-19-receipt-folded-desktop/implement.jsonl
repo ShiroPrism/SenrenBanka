@@ -1,0 +1,7 @@
+{"file": ".trellis/spec/frontend/quality-guidelines.md", "reason": "Frontend quality gate and font/reporting requirements"}
+{"file": ".trellis/tasks/10-19-receipt-folded-desktop/research/receipt-current-layout.md", "reason": "Receipt current layout evidence and folded-column implementation constraints"}
+{"file": "docs/rules/design-contract.md", "reason": "Project-wide design contract and preview rules"}
+{"file": "docs/rules/data-and-i18n.md", "reason": "Project-wide data and locale rules"}
+{"file": "docs/rules/visual-language.md", "reason": "Project-wide motion, font and visual rules"}
+{"file": "docs/rules/operations.md", "reason": "Project-wide verification and documentation workflow"}
+{"file": ".agents/skills/design-page-verify/SKILL.md", "reason": "Mandatory design-page verification workflow"}
