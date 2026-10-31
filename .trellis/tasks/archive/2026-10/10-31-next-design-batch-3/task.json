@@ -1,0 +1,30 @@
+{
+  "id": "next-design-batch-3",
+  "name": "next-design-batch-3",
+  "title": "下一批三套设计：宋式/侘寂、新粗野、Art Deco",
+  "description": "规划并实现三套新设计：宋式/侘寂、新粗野、Art Deco/暗黑奢华。容量问题独立处理，不因 10 MiB 门禁牺牲设计；本批先规划，代码在子任务中实施。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-10-31",
+  "completedAt": "2026-10-31",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "10-31-song-wabi",
+    "10-31-neo-brutalism",
+    "10-31-art-deco"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}
