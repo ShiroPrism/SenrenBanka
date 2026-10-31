@@ -27,8 +27,8 @@
     linear-gradient(135deg, var(--fk-cream) 0 36%, var(--fk-room) 68%, var(--fk-butter) 100%);
   color: var(--fk-ink);
   font-family:
-    var(--font-fairy-body), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-    "Yu Gothic UI", sans-serif;
+    var(--font-fairy-body), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+    "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -160,8 +160,8 @@
   background: var(--fk-paper);
   box-shadow: 0 0.25rem 0 var(--fk-gold);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(1rem, 2.4vw, 1.45rem);
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -328,8 +328,8 @@
   margin: 0 0 clamp(0.6rem, 1.4vw, 1rem);
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.17em;
@@ -350,8 +350,8 @@
   max-width: 11ch;
   margin: 0;
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(3.15rem, 7.8vw, 6.7rem);
   font-weight: 600;
   letter-spacing: -0.04em;
@@ -444,8 +444,8 @@
   background: var(--fk-paper);
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -605,8 +605,8 @@
   max-width: 11ch;
   margin: 0;
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(1.5rem, 3vw, 2.35rem);
   font-weight: 600;
   line-height: 1.04;
@@ -766,8 +766,8 @@
   padding-top: 0.12rem;
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -820,8 +820,8 @@
 .fk-section-heading h2 {
   margin: 0;
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(1.35rem, 2.5vw, 1.85rem);
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -839,8 +839,8 @@
   background: var(--fk-paper);
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -851,8 +851,8 @@
   justify-self: end;
   color: var(--fk-ink-soft);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -926,8 +926,8 @@
   border-radius: 50%;
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -1024,8 +1024,8 @@
   background: var(--fk-paper);
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.7rem;
   font-weight: 700;
   transform: rotate(-4deg);
@@ -1039,8 +1039,8 @@
 
 .fk-toy-title {
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(1rem, 1.7vw, 1.18rem);
   font-weight: 600;
   line-height: 1.28;
@@ -1204,8 +1204,8 @@
     0 0 0 0.36rem var(--fk-outline);
   color: var(--fk-plum);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.67rem;
   font-weight: 700;
   transform: rotate(-6deg);
@@ -1245,8 +1245,8 @@
 .fk-org {
   margin: 0;
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1.08rem;
   font-weight: 600;
   line-height: 1.35;
@@ -1437,8 +1437,8 @@
 .fk-contact-copy {
   margin: 1rem 0 0;
   font-family:
-    var(--font-fairy-hand), var(--font-fairy-display), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-dongle), var(--font-fairy-hand), var(--font-fairy-display), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1.03rem;
   font-weight: 500;
   line-height: 1.8;
@@ -1467,8 +1467,8 @@
 .fk-foot h2 {
   margin: 0 0 0.22rem;
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -1511,8 +1511,8 @@
   margin: 0;
   color: var(--fk-ink-soft);
   font-family:
-    var(--font-fairy-display), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-fairy-display), var(--font-dongle), var(--font-fairy-hand), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.61rem;
   letter-spacing: 0.09em;
   line-height: 1.45;

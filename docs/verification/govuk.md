@@ -3,7 +3,7 @@
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
 > 汇编 `DESIGN.md` 为整合完成即冻结（只读，2026-10-11 按 2025 品牌刷新后的上游现状整合）；适配与例外记录在 `docs/designs/govuk/ADAPTATION.md`。
-> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）；**2026-10-31 韩语增量**：新增 `/ko/govuk/` 与韩语文案，菜单 4 个语言项；未重跑完整浏览器矩阵。
+> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）；**2026-11-01 全设计字体层（ADR 0017）**：Arial / Helvetica → Gothic A1 → 系统韩文；`/ko/govuk/` 实测 `lang=ko`、Gothic A1 加载、0 console；1440 截图 `assets/korean-govuk-desktop.png`；未重跑完整浏览器矩阵。
 
 ## 构建与产物
 

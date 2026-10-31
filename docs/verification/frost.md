@@ -3,7 +3,7 @@
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
 > 复刻为自撰规范（可修订），适配与例外记录在 `docs/designs/frost/ADAPTATION.md`；来源定性见 `design.json.source`。
-> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）；**2026-10-31 韩语增量**：新增 `/ko/frost/`，Inter → 系统韩文字体回退；ko 页实测 `lang=ko`、韩文渲染、无横向溢出、0 console（截图 `docs/verification/assets/frost-ko.png`）；未重跑完整三语视觉矩阵。
+> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）；**2026-11-01 全设计字体层（ADR 0017）**：Inter → Gothic A1 → 系统韩文；`/ko/frost/` 实测 `lang=ko`、Gothic A1 加载、0 console；1440 截图 `assets/korean-frost-desktop.png`；未重跑完整三语视觉矩阵。
 
 ## 构建与产物
 

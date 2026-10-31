@@ -16,9 +16,9 @@
 
 .bt {
   /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前。 */
-  --bt-type-display: var(--font-league-gothic), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
-  --bt-type-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
-  --bt-type-mono: var(--font-jetbrains-mono), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", monospace;
+  --bt-type-display: var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --bt-type-body: var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --bt-type-mono: var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
 
   margin: 0;
   min-height: 100vh;

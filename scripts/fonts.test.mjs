@@ -66,6 +66,7 @@ function createTarGz(entries) {
 function makeFamilyFixture({
   id = FIXTURE_ID,
   role = 'fixed',
+  scripts,
   unicodeRange,
   badVariantHash = false,
   badVariantSize = false,
@@ -95,6 +96,7 @@ function makeFamilyFixture({
     familyName: name,
     sourceFamilyName: name,
     role,
+    ...(scripts ? { scripts } : {}),
     version,
     cssVariable,
     fallbacks,
@@ -235,6 +237,7 @@ async function setupPublishedFixture({
     families[fixture.manifest.id] = {
       version: FIXTURE_VERSION,
       role: fixture.manifest.role,
+      ...(fixture.manifest.scripts ? { scripts: fixture.manifest.scripts } : {}),
       package: {
         releaseTag: fixture.releaseTag,
         fileName: fixture.packageFileName,
@@ -692,8 +695,8 @@ test('concurrent prepare calls serialize installation and leave one valid cache'
 test('generated registration preserves all legacy local-family metadata', async () => {
   const state = await loadFontState();
   const summary = validateFontState(state);
-  assert.equal(summary.familyCount, 20);
-  assert.equal(summary.variantCount, 578);
+  assert.equal(summary.familyCount, 26);
+  assert.equal(summary.variantCount, 939);
   assert.equal(state.generated, renderGeneratedSource(state.snapshot, state.config));
 
   const legacy = JSON.parse(
@@ -703,9 +706,9 @@ test('generated registration preserves all legacy local-family metadata', async 
     ),
   );
   const definitions = buildLocalFontDefinitions(state.snapshot, state.config);
-  assert.equal(definitions.length, legacy.length);
-  assert.equal(new Set(definitions.map((family) => family.name)).size, legacy.length);
-  assert.equal(new Set(definitions.map((family) => family.cssVariable)).size, legacy.length);
+  assert.equal(definitions.length, legacy.length + 6);
+  assert.equal(new Set(definitions.map((family) => family.name)).size, legacy.length + 6);
+  assert.equal(new Set(definitions.map((family) => family.cssVariable)).size, legacy.length + 6);
   const definitionsByName = new Map(definitions.map((family) => [family.name, family]));
   for (const expected of legacy) {
     const actual = definitionsByName.get(expected.name);
@@ -862,5 +865,24 @@ test('font audit parses a content subset cmap and fails when a source-covered gl
     );
   } finally {
     await fixture.close();
+  }
+});
+
+test('catalog and family manifests accept script routing metadata', async () => {
+  const fixture = makeFamilyFixture({
+    role: 'core-cjk',
+    unicodeRange: ['U+AC00-D7A3'],
+    scripts: ['hangul'],
+  });
+  const published = await setupPublishedFixture({ selected: [fixture] });
+  try {
+    const summary = await runUpdate(published);
+    assert.equal(summary.families, 1);
+    const snapshot = JSON.parse(
+      await fs.readFile(path.join(published.projectRoot, 'fonts.catalog.json'), 'utf8'),
+    );
+    assert.deepEqual(snapshot.families[FIXTURE_ID].manifest.scripts, ['hangul']);
+  } finally {
+    await published.close();
   }
 });

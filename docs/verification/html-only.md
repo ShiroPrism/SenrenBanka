@@ -1,7 +1,7 @@
 # verification — HTML Only
 
 > 当前完整验证状态（更新式；历史由 Git 保留）。规则见 `docs/rules/README.md`，验证流程见 `design-page-verify` skill，长期决策见 `docs/adr/0009-html-only-design-rendering.md`。
-> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；2026-10-29（v0.17.0）只更新全站当前页数与切换页产物计数，未重跑本设计的浏览器矩阵。**2026-10-31 韩语增量**：新增 `/ko/html-only/`，当前 4 个 locale 页面、每页 4 个语言链接；`verify:html-only` 通过；未重跑 2026-10-28 浏览器矩阵。
+> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；2026-10-29（v0.17.0）只更新全站当前页数与切换页产物计数，未重跑本设计的浏览器矩阵。**2026-10-31 韩语增量**：新增 `/ko/html-only/`，当前 4 个 locale 页面、每页 4 个语言链接；`verify:html-only` 通过；未重跑 2026-10-28 浏览器矩阵。**2026-11-01 全设计字体层（ADR 0017）**：`/ko/html-only/` 仍为零 CSS/JS/字体（浏览器 `fontCount=0`、`styleSheets=0`）；截图 `assets/korean-html-only-desktop.png`。
 
 ## 设计状态
 

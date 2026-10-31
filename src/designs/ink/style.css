@@ -25,14 +25,14 @@ html:has(.ink) {
 .ink {
   /* 完整回退链由设计 CSS 拥有；系统中文一律排在 LXGW / Zhuque 之后。 */
   --ink-type-display:
-    var(--font-sorts-mill-goudy), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "Hiragino Mincho ProN", "PingFang SC", "Microsoft YaHei", serif;
+    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
+    "Hiragino Mincho ProN", "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
   --ink-type-text:
-    var(--font-prociono), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", serif;
+    var(--font-prociono), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
+    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
   --ink-type-label:
-    var(--font-sorts-mill-goudy), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", serif;
+    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
+    "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
 
   margin: 0;
   min-height: 100vh;

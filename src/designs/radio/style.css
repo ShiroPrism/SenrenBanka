@@ -25,7 +25,7 @@
   padding: clamp(0.9rem, 3vw, 2.25rem) clamp(0.5rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3rem);
   background: radial-gradient(120% 78% at 50% -6%, var(--rd-panel), var(--rd-back) 58%) var(--rd-back);
   color: var(--rd-cream);
-  font-family: var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.9375rem;
   line-height: 1.75;
 }
@@ -86,7 +86,7 @@
 
 .rd-brand {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   line-height: 1.6;
@@ -155,7 +155,7 @@
 
 .rd-readout-label {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.34em;
   line-height: 1.6;
@@ -208,7 +208,7 @@
   top: calc(100% + 0.3rem);
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--font-radio-digits), var(--font-radio), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", monospace;
+  font-family: var(--font-radio-digits), var(--font-radio), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   line-height: 1.6;
@@ -279,7 +279,7 @@
 }
 
 .rd-meta-key {
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -291,7 +291,7 @@
 .rd-chan-no,
 .rd-period,
 .rd-total-num {
-  font-family: var(--font-radio-digits), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: var(--font-radio-digits), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
 }
 
 /* ---------- 模块栅格 ---------- */
@@ -471,7 +471,7 @@
 }
 
 .rd-total-label {
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.24em;
   line-height: 1.6;
@@ -624,7 +624,7 @@
 
 .rd-band {
   margin: 0;
-  font-family: var(--font-radio-plate), var(--font-radio), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: var(--font-radio-plate), var(--font-radio), var(--font-galmuri11), var(--font-radio-cjk), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   line-height: 1.6;

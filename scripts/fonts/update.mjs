@@ -167,6 +167,11 @@ export async function updateFonts({
         `${id} catalog package no longer matches the manual app-only mapping in fonts.config.json`,
       );
     }
+    const catalogScripts = catalogFamily.scripts ?? ['cjk'];
+    const manifestScripts = inspected.manifest.scripts ?? ['cjk'];
+    if (stableStringify(catalogScripts) !== stableStringify(manifestScripts)) {
+      throw new Error(`${id} catalog scripts do not match the package manifest`);
+    }
     const packageVariantFiles = new Set(
       inspected.manifest.variants.map((variant) => variant.file.slice('fonts/'.length)),
     );

@@ -13,8 +13,8 @@
   background-size: 16px 16px;
   color: var(--h99-ink);
   font-family:
-    Arial, Helvetica, "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-    "Yu Gothic UI", sans-serif;
+    Arial, Helvetica, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
+    "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1rem;
   line-height: 1.65;
 }
@@ -35,7 +35,7 @@
   border: 2px solid var(--h99-rule);
   background: var(--h99-lime);
   color: var(--h99-ink);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   transform: translateY(-160%);
 }
@@ -61,7 +61,7 @@
   padding: 0.55rem 1rem;
   background: var(--h99-navy);
   color: var(--h99-white);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.4;
 }
@@ -99,7 +99,7 @@
 .h99-kicker {
   margin: 0 0 0.25rem;
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.45;
   letter-spacing: 0.12em;
@@ -108,8 +108,8 @@
 .h99-name {
   margin: 0;
   font-family:
-    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    Georgia, "Times New Roman", Times, var(--font-gothic-a1), "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(2rem, 5.5vw, 3.35rem);
   font-weight: 700;
   line-height: 1.08;
@@ -121,8 +121,8 @@
   margin: 0.4rem 0 0;
   color: var(--h99-navy);
   font-family:
-    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    Georgia, "Times New Roman", Times, var(--font-gothic-a1), "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.05rem, 2.2vw, 1.35rem);
   line-height: 1.45;
 }
@@ -141,7 +141,7 @@
 }
 
 .h99-field-label {
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -164,7 +164,7 @@
   border-top: 1px solid var(--h99-rule);
   background: var(--h99-panel);
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.45;
 }
@@ -219,7 +219,7 @@
 .h99-rail-head h2 {
   margin: 0;
   padding: 0.45rem 0.6rem;
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.35;
   letter-spacing: 0.06em;
@@ -246,7 +246,7 @@
 
 .h99-toc-no {
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   list-style: none;
 }
@@ -261,7 +261,7 @@
   border-top: 1px solid var(--h99-rule);
   border-bottom: 1px solid var(--h99-rule);
   background: var(--h99-white);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.06em;
@@ -314,15 +314,15 @@
 .h99-section h2 {
   margin: 0;
   font-family:
-    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    Georgia, "Times New Roman", Times, var(--font-gothic-a1), "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.4rem, 3vw, 1.85rem);
   line-height: 1.2;
 }
 
 .h99-section-mark {
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   letter-spacing: 0.04em;
 }
@@ -347,7 +347,7 @@
 .h99-link-no,
 .h99-project-no {
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
 }
 
@@ -370,7 +370,7 @@
   display: block;
   min-width: 0;
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
@@ -398,8 +398,8 @@
 .h99-project-title {
   margin: 0;
   font-family:
-    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    Georgia, "Times New Roman", Times, var(--font-gothic-a1), "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 1.15rem;
   line-height: 1.3;
 }
@@ -411,7 +411,7 @@
 .h99-project-tags {
   margin: 0.35rem 0 0;
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.55;
   overflow-wrap: anywhere;
@@ -436,7 +436,7 @@
   border-bottom: 0;
   background: var(--h99-panel);
   color: var(--h99-muted);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   text-align: left;
   letter-spacing: 0.05em;
@@ -454,7 +454,7 @@
 .h99-exp thead th {
   background: var(--h99-navy);
   color: var(--h99-white);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.4;
@@ -503,7 +503,7 @@
 .h99-check {
   margin-right: 0.35rem;
   color: var(--h99-navy);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
 }
 
@@ -556,7 +556,7 @@
   border: 1px solid var(--h99-rule);
   background: var(--h99-lime);
   color: var(--h99-ink);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.35;
   text-align: center;
@@ -586,7 +586,7 @@
   border: 1px solid var(--h99-rule);
   background: var(--h99-white);
   color: var(--h99-ink);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 9px;
   font-weight: 700;
   line-height: 1.1;
@@ -613,7 +613,7 @@
 .h99-counter h3 {
   margin: 0;
   color: var(--h99-navy);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.04em;
@@ -625,7 +625,7 @@
   border: 2px inset var(--h99-silver);
   background: var(--h99-ink);
   color: var(--h99-lime);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.875rem;
   line-height: 1.4;
   text-align: center;
@@ -635,7 +635,7 @@
 .h99-counter-offline {
   margin: 0;
   color: var(--h99-red);
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1.4;
@@ -670,15 +670,15 @@
 .h99-footer-name {
   color: var(--h99-ink);
   font-family:
-    Georgia, "Times New Roman", Times, "Songti SC", SimSun, "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    Georgia, "Times New Roman", Times, var(--font-gothic-a1), "Songti SC", SimSun, "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .h99-top-link {
   margin-left: auto !important;
-  font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.75rem;
 }
 
@@ -878,7 +878,7 @@
   .h99-mobile-label {
     display: block;
     color: var(--h99-muted);
-    font-family: "Courier New", Courier, ui-monospace, "PingFang SC", "Microsoft YaHei", monospace;
+    font-family: "Courier New", Courier, ui-monospace, var(--font-gothic-a1), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
     font-size: 0.75rem;
     line-height: 1.45;
   }

@@ -22,10 +22,10 @@ html:has(.deco) {
 
 .deco {
   /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前（fonts:typography 门禁）。 */
-  --dc-type-display: var(--font-fraunces), var(--font-zhuque), "Songti SC", "SimSun",
-    "Hiragino Mincho ProN", "Yu Mincho", serif;
-  --dc-type-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+  --dc-type-display: var(--font-fraunces), var(--font-gowun-batang), var(--font-zhuque), "Songti SC", "SimSun",
+    "Hiragino Mincho ProN", "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  --dc-type-body: var(--font-inter), var(--font-gowun-batang), var(--font-zhuque), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", sans-serif;
 
   margin: 0;
   min-height: 100vh;

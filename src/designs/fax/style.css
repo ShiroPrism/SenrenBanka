@@ -15,8 +15,8 @@
 
 .fx {
   /* 字面：标签走 Courier Prime，正文走磨损的 TT2020 Style D，中文落朱雀仿宋 */
-  --fx-type-label: var(--font-courier-prime), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;
-  --fx-type-body: var(--font-tt2020-styled), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", monospace;
+  --fx-type-label: var(--font-courier-prime), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  --fx-type-body: var(--font-tt2020-styled), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
 
   margin: 0;
   min-height: 100vh;

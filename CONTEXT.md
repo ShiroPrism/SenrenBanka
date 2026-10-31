@@ -87,8 +87,12 @@ _Avoid_: 主题翻译、设计字典
 _Avoid_: 语言菜单、多语言选择器、右键菜单（会指向入口本身）
 
 **Design locale coverage（设计语言覆盖）**:
-某套设计承诺提供完整界面文案的一组 Locale；未覆盖的 Locale 不提供该设计的页面，覆盖缺口必须显式可见，不得用其他语言的文案静默填充。
+某套设计承诺提供完整界面文案的一组 Locale；只描述文案与页面可达性，不描述字体呈现（后者见 Locale typography coverage）。未覆盖的 Locale 不提供该设计的页面，覆盖缺口必须显式可见，不得用其他语言的文案静默填充。
 _Avoid_: 设计翻译进度、语言支持表
+
+**Locale typography coverage（语言排版覆盖）**:
+某套设计在某个 Locale 下用已部署的 webfont 接管该语言文字系统的承诺；与 Design locale coverage 是两个独立维度，字体缺口不得用系统回退静默顶替。`html-only` 因零字体契约豁免。
+_Avoid_: 字体支持、字体覆盖（口语）、字体回退
 
 **Untranslatable string（不翻译文案）**:
 承担设计意图而非信息传达的文本（命令、ASCII 装饰、刻意的双语标识、专有名词、法律署名），按各设计 `messages.ts` 的说明保持原样。
@@ -225,8 +229,8 @@ _Avoid_: 站内子集、字体发行版、固定子集
 _Avoid_: 中文字体、韩文字体、默认字体
 
 **Core CJK font（核心 CJK 字体）**:
-`Core script font` 在 CJK 文字系统下的角色集合；源码字体缺字时仍回退系统字体。
-_Avoid_: 中文字体、默认中文字体
+`Core script font` 在 CJK 文字系统下的角色集合；单个族只承诺其源字体实际覆盖的文字系统（Zhuque 只有汉字、LXGW 另含谚文），不得把 CJK 标签当作全文字系统覆盖承诺；源码字体缺字时仍回退系统字体。
+_Avoid_: 中文字体、默认中文字体、CJK 全字库
 
 **Font coverage contract（字体覆盖契约）**:
 核心 CJK 字体对源字体实际拥有的字符保持设计字体；源字体本身缺字时回退系统字体，其余展示字体只承诺其已发布子集。部署时核心字体使用当前构建生成的字形子集（Deployment subset set），非核心字体使用命中的整分片（Deployment shard set），源字体与目录锁保持完整。

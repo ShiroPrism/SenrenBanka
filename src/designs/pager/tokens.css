@@ -20,6 +20,6 @@
   --pg-shadow-key: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 0 rgba(0, 0, 0, 0.48);
   --pg-shadow-wheel: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
   --pg-glow-led: 0 0 6px rgba(127, 174, 78, 0.7);
-  --pg-stack: var(--font-pager), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
-  --pg-stack-dot: var(--font-pager-dot), var(--font-ark-pixel), "Songti SC", "SimSun", monospace;
+  --pg-stack: var(--font-pager), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  --pg-stack-dot: var(--font-pager-dot), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
 }

@@ -15,11 +15,11 @@
 
 .pxt {
   --pxt-ui-stack:
-    var(--font-pxt-ui), var(--font-pxt-cjk), "Songti SC", "SimSun", "PingFang SC",
-    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", monospace;
+    var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk), "Songti SC", "SimSun", "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   --pxt-number-stack:
-    var(--font-pxt-number), var(--font-pxt-ui), var(--font-pxt-cjk), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", monospace;
+    var(--font-pxt-number), var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk), "Songti SC", "SimSun",
+    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   min-height: 100vh;
   margin: 0;
   color: var(--pxt-night);

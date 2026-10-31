@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
@@ -15,6 +16,7 @@ const { profile, contextMenu } = view;
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Font cssVariable="--font-gothic-a1" />
     <Reveal />
   </head>
   <body class="fs">

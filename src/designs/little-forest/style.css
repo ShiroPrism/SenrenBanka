@@ -19,11 +19,11 @@ html:has(.lf) {
 
 .lf {
   --lf-display:
-    var(--font-fraunces), var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN",
-    "Yu Mincho", serif;
+    var(--font-fraunces), var(--font-gowun-batang), var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN",
+    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
   --lf-body:
-    Georgia, var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN", "Yu Mincho",
-    serif;
+    Georgia, var(--font-gowun-batang), var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN", "Yu Mincho",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
 
   position: relative;
   isolation: isolate;

@@ -26,6 +26,10 @@ import {
   unquoteCssValue,
 } from './lib/font-css.mjs';
 import { extractVisibleText } from './audit.mjs';
+import {
+  HANGUL_UNICODE_RANGE,
+  isHangulCodePoint,
+} from './lib/script-ranges.mjs';
 
 const require = createRequire(import.meta.url);
 
@@ -116,6 +120,18 @@ function pageLabel(distRoot, htmlFile) {
   return `/${toPosixPath(path.relative(distRoot, htmlFile)).replace(/index\.html$/, '')}`;
 }
 
+function isHangulOnly(scripts) {
+  return scripts.includes('hangul') && !scripts.includes('cjk');
+}
+
+function filterCorpusText(text, predicate) {
+  const characters = [];
+  for (const character of text) {
+    if (predicate(character.codePointAt(0))) characters.push(character);
+  }
+  return characters.join('');
+}
+
 /**
  * Select the `role: core-cjk` families that get a content subset, plus the
  * single face (weight/style/display) each one deploys.
@@ -147,6 +163,7 @@ function coreFaces(snapshot) {
       family,
       version: family.version,
       cssVariable: manifest.cssVariable,
+      scripts: Array.isArray(manifest.scripts) ? manifest.scripts : ['cjk'],
       face,
     });
   }
@@ -299,10 +316,11 @@ async function pageCss({ distRoot, label, html, styles }) {
   return parts.join('\n');
 }
 
-function syntheticRule({ familyName, url, face }) {
+function syntheticRule({ familyName, url, face, unicodeRange }) {
   return (
     `@font-face{font-family:"${familyName}";src:url("${url}") format("woff2");` +
-    `font-weight:${face.weight};font-style:${face.style};font-display:${face.display};}`
+    `font-weight:${face.weight};font-style:${face.style};font-display:${face.display};` +
+    `${unicodeRange ? `unicode-range:${unicodeRange};` : ''}}`
   );
 }
 
@@ -389,12 +407,16 @@ export async function subsetCoreFonts({
   logger(
     `corpus: ${corpus.codePoints} code points from ${corpus.textFiles} text assets (${corpus.textBytes} bytes)`,
   );
+  const hangulText = filterCorpusText(corpus.text, isHangulCodePoint);
 
   // Pass 1: one subset file per core family.
   const subsets = [];
   for (const core of cores) {
     const source = await loadCoreSource({ projectRoot, snapshot: state.snapshot, core });
-    const output = await subsetFont(source.buffer, corpus.text, { targetFormat: 'woff2' });
+    const hangulOnly = isHangulOnly(core.scripts);
+    const subsetText =
+      hangulOnly && hangulText.length > 0 ? hangulText : corpus.text;
+    const output = await subsetFont(source.buffer, subsetText, { targetFormat: 'woff2' });
     if (!Buffer.isBuffer(output) || output.subarray(0, 4).toString('ascii') !== 'wOF2') {
       throw new Error(`subset-font did not return a WOFF2 buffer for ${core.id}`);
     }
@@ -410,9 +432,12 @@ export async function subsetCoreFonts({
       sha256: subsetSha256,
       characters,
       source,
+      scripts: core.scripts,
+      unicodeRange: hangulOnly ? HANGUL_UNICODE_RANGE : undefined,
+      corpus: hangulOnly ? (hangulText.length > 0 ? 'hangul' : 'full-fallback') : 'full',
     });
     logger(
-      `subset ${core.id}: ${source.sourceBytes} -> ${output.length} bytes, ${characters} characters (${fileName})`,
+      `subset ${core.id} [${core.scripts.join(',')}]: ${source.sourceBytes} -> ${output.length} bytes, ${characters} characters (${fileName})`,
     );
   }
   const subsetById = new Map(subsets.map((subset) => [subset.id, subset]));
@@ -466,6 +491,7 @@ export async function subsetCoreFonts({
               familyName: rule.family,
               url: `${prefix}fonts/${subset.fileName}`,
               face: core.face,
+              unicodeRange: subset.unicodeRange,
             }),
           );
         }
@@ -570,6 +596,9 @@ export async function subsetCoreFonts({
       subsetSha256: subset.sha256,
       subsetBytes: subset.bytes,
       characters: subset.characters,
+      scripts: subset.scripts,
+      unicodeRange: subset.unicodeRange ?? null,
+      corpus: subset.corpus,
       weight: subset.core.face.weight,
       style: subset.core.face.style,
       display: subset.core.face.display,

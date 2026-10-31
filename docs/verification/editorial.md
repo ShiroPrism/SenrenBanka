@@ -2,7 +2,7 @@
 
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
-> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动；2026-10-11 v0.5.3 链接标记按配置化 + Elsewhere 全量渲染的聚焦回归已复核本页；**2026-10-31 韩语增量**：新增 `/ko/editorial/`，字体栈 Fraunces → LXGW → 系统 CJK；ko 页实测 `lang=ko`、韩文姓名渲染、LXGW 字体命中、0 console；未重跑完整三语视觉矩阵。
+> 最近全流程验证：2026-10-10（v0.4.0 动效全流程）；v0.5.0–0.5.1 菜单改动的全站回归已复核本页；2026-10-11 文档治理迁移，无页面代码改动；2026-10-11 v0.5.3 链接标记按配置化 + Elsewhere 全量渲染的聚焦回归已复核本页；**2026-11-01 全设计字体层（ADR 0017）**：新增 Gowun Batang 韩语伴生，字体栈 Fraunces → Gowun Batang → LXGW → 系统 CJK；`/ko/editorial/` 实测 `lang=ko`、Gowun Batang 加载、0 console；1440 / 375×812 截图 `assets/korean-editorial-{desktop,375}.png`；375 标题按音节换行沿用现有排版，无横向溢出；未重跑完整三语视觉矩阵。
 
 ## 构建与产物
 

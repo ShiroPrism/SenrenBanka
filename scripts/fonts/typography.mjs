@@ -9,20 +9,32 @@ const CORE_FONT_VARIABLES = new Set([
   '--font-ark-pixel',
   '--font-lxgw',
   '--font-zhuque',
+  '--font-gothic-a1',
+  '--font-gowun-batang',
+  '--font-galmuri11',
+  '--font-noto-sans-mono-cjk-kr',
+  '--font-dongle',
+  '--font-poor-story',
 ]);
 const SYSTEM_CJK_FONTS = new Set([
   'apple ligothic',
+  'apple sd gothic neo',
   'fang song',
   'fangsong',
   'heiti sc',
   'hiragino mincho pron',
   'hiragino sans',
+  'malgun gothic',
   'microsoft jhenghei',
   'microsoft yahei',
+  'nanum gothic',
+  'nanum myeongjo',
   'noto sans cjk',
   'noto sans cjk sc',
+  'noto sans kr',
   'noto serif cjk',
   'noto serif cjk sc',
+  'noto serif kr',
   'pingfang sc',
   'simsun',
   'songti sc',
@@ -185,11 +197,11 @@ export function inspectGeneratedFontSource(source, filename = 'src/fonts/generat
   return { findings, count: definitions.elements.length };
 }
 
-function stripCssComments(source) {
+export function stripCssComments(source) {
   return source.replace(/\/\*[\s\S]*?\*\//g, '');
 }
 
-function splitTopLevel(value, delimiter) {
+export function splitTopLevel(value, delimiter) {
   const tokens = [];
   let current = '';
   let quote = '';
@@ -219,7 +231,7 @@ function splitTopLevel(value, delimiter) {
   return tokens;
 }
 
-function declarationValues(source) {
+export function declarationValues(source) {
   const text = stripCssComments(source);
   const declarations = [];
   const pattern = /(?:^|[;{])\s*(--[a-z0-9-]+|font-family|font)\s*:\s*([^;{}]+)/gi;
@@ -229,7 +241,7 @@ function declarationValues(source) {
   return declarations;
 }
 
-function expandCustomProperties(value, customProperties, seen = new Set()) {
+export function expandCustomProperties(value, customProperties, seen = new Set()) {
   let expanded = value;
   for (let pass = 0; pass < 20; pass += 1) {
     let changed = false;
@@ -244,7 +256,7 @@ function expandCustomProperties(value, customProperties, seen = new Set()) {
   return expanded;
 }
 
-function normalizedFamily(token) {
+export function normalizedFamily(token) {
   return token
     .trim()
     .replace(/^["']|["']$/g, '')
@@ -337,7 +349,7 @@ async function readIfPresent(filePath) {
   }
 }
 
-function astroStyleBlocks(source) {
+export function astroStyleBlocks(source) {
   return [...source.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)].map(
     (match) => match[1],
   );
@@ -353,8 +365,8 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
     generatedPath,
   );
   findings.push(...astro.findings, ...generated.findings);
-  if (generated.count !== 20) {
-    findings.push(`${generatedPath}: expected 20 generated families, found ${generated.count}`);
+  if (generated.count !== 26) {
+    findings.push(`${generatedPath}: expected 26 generated families, found ${generated.count}`);
   }
 
   const designsDirectory = path.join(projectRoot, 'src/designs');
@@ -440,7 +452,7 @@ async function main() {
     return;
   }
   console.log(
-    `[senrenbanka:fonts] typography check passed: ${styledCount} styled designs (${coreDesignCount} with core CJK), ${generatedFamilies} primary-only local families`,
+    `[senrenbanka:fonts] typography check passed: ${styledCount} styled designs (${coreDesignCount} with core script), ${generatedFamilies} primary-only local families`,
   );
 }
 

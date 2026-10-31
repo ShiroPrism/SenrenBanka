@@ -15,6 +15,7 @@ import {
   resolveDistAsset,
   unquoteCssValue,
 } from './lib/font-css.mjs';
+import { HANGUL_RANGES, isHangulCodePoint } from './lib/script-ranges.mjs';
 
 const FONT_DIRECTORY = '_astro/fonts';
 
@@ -31,6 +32,7 @@ const CJK_RANGES = [
   [0xf900, 0xfaff],
   [0x20000, 0x2fa1f],
   [0x30000, 0x3ffff],
+  ...HANGUL_RANGES,
 ];
 
 const VOID_TAGS = new Set([
@@ -53,6 +55,10 @@ const HIDDEN_RAW_TEXT_TAGS = new Set(['script', 'style', 'template', 'noscript']
 
 export function isCjkCodePoint(codePoint) {
   return CJK_RANGES.some(([start, end]) => codePoint >= start && codePoint <= end);
+}
+
+function codePointScript(codePoint) {
+  return isHangulCodePoint(codePoint) ? 'hangul' : 'cjk';
 }
 
 function findTagEnd(html, start) {
@@ -358,6 +364,7 @@ export async function auditFonts({
       id,
       name: family.manifest.familyName,
       cssVariable: family.manifest.cssVariable,
+      scripts: Array.isArray(family.manifest.scripts) ? family.manifest.scripts : ['cjk'],
       coverage: coverageForFamily(family),
     }));
   const distRoot = path.isAbsolute(distDir)
@@ -483,10 +490,18 @@ export async function auditFonts({
       const codePoint = character.codePointAt(0);
       if (!isCjkCodePoint(codePoint) || seen.has(codePoint)) continue;
       seen.add(codePoint);
-      const sourceCovered = active.some(
+      const script = codePointScript(codePoint);
+      const activeForScript = active.filter(({ family }) =>
+        family.scripts.includes(script),
+      );
+      if (activeForScript.length === 0) continue;
+      const sourceCovered = activeForScript.some(
         ({ family }) => family.coverage.coversAll || covers(family.coverage.intervals, codePoint),
       );
-      const deployedCovered = deployedFor.some(
+      const deployedForScript = deployedFor.filter(({ family }) =>
+        family.scripts.includes(script),
+      );
+      const deployedCovered = deployedForScript.some(
         ({ deployed }) =>
           deployed !== null &&
           (deployed.coversAll ||
@@ -497,7 +512,7 @@ export async function auditFonts({
         page,
         character,
         codePoint: `U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`,
-        activeCoreFonts: active.map(({ family }) => ({
+        activeCoreFonts: activeForScript.map(({ family }) => ({
           id: family.id,
           name: family.name,
           cssVariable: family.cssVariable,
@@ -509,7 +524,7 @@ export async function auditFonts({
       } else if (!deployedCovered) {
         const gap = {
           ...baseIssue,
-          deployedFamilies: deployedFor
+          deployedFamilies: deployedForScript
             .filter(({ deployed }) => deployed !== null)
             .map(({ value }) => value),
         };
@@ -577,7 +592,7 @@ export async function auditFonts({
   }
   if (deployedGaps.length > 0) {
     throw new Error(
-      `font audit found ${deployedGaps.length} CJK code point(s) covered by the source font but not by the deployed @font-face rules ` +
+      `font audit found ${deployedGaps.length} CJK/Hangul code point(s) covered by the source font but not by the deployed @font-face rules ` +
         `(pruning/subsetting dropped a needed glyph): ` +
         deployedGaps
           .slice(0, 5)

@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { ArrowUpRight, Mail } from '@lucide/astro';
@@ -15,6 +16,7 @@ const { profile, contextMenu } = view;
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Font cssVariable="--font-gothic-a1" />
   </head>
   <body class="gv">
     <a class="gv-skip-link" href="#gv-main">{t.skipLink}</a>

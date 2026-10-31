@@ -41,7 +41,7 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 1. **CSS 隔离**：在 `dist/_astro/*.css` 中定位含 `<特征选择器>` 的文件；断言其他设计的选择器/工具类**不出现**在其中；断言 `dist/index.html`（根路由页）、`dist/404.html`、各语言入口页、切换页**不链接**任何设计 CSS。
 2. **base 前缀**：`MSYS2_ARG_CONV_EXCL='*' npx astro build --outDir dist-demo --base /demo` 后抽查 `dist-demo/<locale>/<id>/index.html` 的内部链接均带 `/demo` 前缀。
    **坑（Git Bash）**：单独写 `BASE_PATH=/demo` 会被 MSYS 路径转换成 `/D:/Git/demo`（产出错误 base）；单独写 `--base /demo` 同样会被转换。**两者必须同时使用**（`MSYS2_ARG_CONV_EXCL='*'` + `--base` 显式传参），实测有效。
-3. **字体与资源**：该页面只引用自身用到的字体文件；`rel="preload"` 数量与预期一致（无多余子集预载）。
+3. **字体与资源**：该页面只引用自身用到的字体文件；`rel="preload"` 数量与预期一致（无多余子集预载）。设计声明 `ko` 时，浏览器需实际命中 Hangul 核心字体（editorial → Gowun Batang；frost/fast/govuk → Gothic A1），且非 `ko` 页面不下载韩语子集；`npm run fonts:coverage` 必须通过。
 4. **核心字段**：目标页面 HTML 中核心字段（name/headline/bio/links）全部渲染。
 
 **`html-only`**：跳过 CSS 隔离与字体断言，改为：
@@ -53,7 +53,7 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 
 ## 步骤 2b · 多语言专项（v0.9.0 起必做）
 
-以 `<locale>` ∈ {`zh-cn`, `ja`, `en`}、`site.config.yaml` 的 `i18n.locales` 为准：
+以 `<locale>` ∈ {`zh-cn`, `ja`, `en`, `ko`}、`site.config.yaml` 的 `i18n.locales` 为准：
 
 1. **页面齐备**：断言 `dist/<locale>/<id>/index.html` 存在；`styled` 另断言 `dist` 中 CSS 文件总数仍等于 `styled` 设计数（多语言**不得**让每套设计产生独立 CSS），`html-only` 的 stylesheet 数必须为 0。
 2. **CSS 不随语言分裂（仅 `styled`）**：同一设计的 `<locale>` 与其他语言页面引用**完全相同**的单个 CSS 文件（`diff` 两个 `<link rel=stylesheet>` 集合）。
@@ -174,6 +174,7 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 - [ ] `npm run build` 通过（含 astro check 与 html-only 产物门禁），注册表校验无 `[senrenbanka]` 报错
 - [ ] 产物抽查按模式完成：`styled` 的 CSS 隔离 / 字体 / 核心字段通过；`html-only` 的资源禁令 / metadata rel / 核心字段通过，且 `npm run test:html-only` 全绿
 - [ ] 多语言（步骤 2b）：各 locale 页面齐备、`lang`/`robots`/`canonical`/`hreflang` 正确；`styled` 菜单语言项与键盘路径通过；`html-only` 普通语言链接通过；语言/主题正交、旧路径跳转与配置开关均符合
+- [ ] 韩语字体（若设计声明 `ko`）：`fonts:coverage` 通过；浏览器实际命中声明的 Hangul 核心字体；非 `ko` 页面未下载韩语子集
 - [ ] 检测器 0 发现（或均已记录为例外）
 - [ ] 桌面：console 0、仅自身资源；`styled` token 实测符合 DESIGN.md，`html-only` 只有 Document / favicon metadata 请求
 - [ ] a11y：标题层级无跳级、每个分区有可访问名称、链接可访问名不含装饰符、装饰元素 `aria-hidden`

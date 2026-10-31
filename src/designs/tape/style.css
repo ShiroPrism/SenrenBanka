@@ -16,8 +16,8 @@
   background: radial-gradient(115% 85% at 50% -12%, var(--tp-back-rise), var(--tp-back) 58%, var(--tp-back-deep))
     var(--tp-back-deep);
   color: var(--tp-ink);
-  font-family: var(--font-tape-mono), var(--font-zhuque), "Consolas", "Courier New", "Songti SC", "SimSun",
-    monospace;
+  font-family: var(--font-tape-mono), var(--font-poor-story), var(--font-zhuque), "Consolas", "Courier New", "Songti SC", "SimSun",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
   font-size: 0.875rem;
   line-height: 1.75;
   padding: clamp(1.25rem, 4vw, 3rem) clamp(0.9rem, 3.5vw, 2rem) clamp(2rem, 6vw, 4rem);
@@ -96,7 +96,8 @@
 }
 
 .tp-label-name {
-  font-family: var(--font-tape-hand), var(--font-zhuque), "Songti SC", serif;
+  font-family: var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), "Songti SC",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.05rem, 2.4vw + 0.6rem, 1.5rem);
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -260,7 +261,8 @@
 
 .tp-name {
   margin: 0 0 0.35rem;
-  font-family: var(--font-tape-hand), var(--font-zhuque), "Songti SC", serif;
+  font-family: var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), "Songti SC",
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.9rem, 5.5vw, 2.6rem);
   font-weight: 400;
   line-height: 1.15;

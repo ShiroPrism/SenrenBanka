@@ -18,7 +18,7 @@
   background: var(--fr-canvas);
   color: var(--fr-label);
   font-family:
-    var(--font-fr), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
+    var(--font-fr), var(--font-gothic-a1), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
     'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-size: 1.0625rem; /* body 17 */
   line-height: 1.47;

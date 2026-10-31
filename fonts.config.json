@@ -197,6 +197,69 @@
         "Yu Gothic UI",
         "serif"
       ]
+    },
+    {
+      "id": "gothic-a1",
+      "name": "Gothic A1",
+      "cssVariable": "--font-gothic-a1",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "Noto Sans KR",
+        "sans-serif"
+      ]
+    },
+    {
+      "id": "gowun-batang",
+      "name": "Gowun Batang",
+      "cssVariable": "--font-gowun-batang",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "Noto Serif KR",
+        "serif"
+      ]
+    },
+    {
+      "id": "galmuri11",
+      "name": "Galmuri11",
+      "cssVariable": "--font-galmuri11",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "monospace"
+      ]
+    },
+    {
+      "id": "noto-sans-mono-cjk-kr",
+      "name": "Noto Sans Mono CJK KR",
+      "cssVariable": "--font-noto-sans-mono-cjk-kr",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "monospace"
+      ]
+    },
+    {
+      "id": "dongle",
+      "name": "Dongle",
+      "cssVariable": "--font-dongle",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "sans-serif"
+      ]
+    },
+    {
+      "id": "poor-story",
+      "name": "Poor Story",
+      "cssVariable": "--font-poor-story",
+      "fallbacks": [
+        "Apple SD Gothic Neo",
+        "Malgun Gothic",
+        "cursive",
+        "sans-serif"
+      ]
     }
   ],
   "schemaVersion": 1

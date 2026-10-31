@@ -82,6 +82,7 @@ const allowedUrlSchema = z
   .string()
   .refine(isAllowedUrl, 'must use HTTPS or a loopback HTTP fixture');
 const unicodeRangeSchema = z.string().regex(UNICODE_RANGE_PATTERN, 'must be a valid unicode range');
+const scriptsSchema = z.array(z.enum(['cjk', 'hangul'])).min(1).optional();
 
 const releaseAssetSchema = z
   .object({
@@ -96,6 +97,7 @@ const catalogFamilySchema = z
   .object({
     version: versionSchema,
     role: z.enum(['fixed', 'core-cjk']),
+    scripts: scriptsSchema,
     package: releaseAssetSchema,
     source: releaseAssetSchema,
   })
@@ -231,6 +233,7 @@ export const familyManifestSchema = z
     familyName: z.string().min(1),
     sourceFamilyName: z.string().min(1),
     role: z.enum(['fixed', 'core-cjk']),
+    scripts: scriptsSchema,
     version: versionSchema,
     cssVariable: z.string().regex(CSS_VARIABLE_PATTERN),
     fallbacks: z.array(z.string().min(1)).min(1),

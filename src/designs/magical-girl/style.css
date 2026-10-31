@@ -39,8 +39,8 @@ html:has(.mg) {
     radial-gradient(circle at 50% 100%, rgb(244 213 141 / 0.24) 0 12rem, transparent 12.1rem);
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-text), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
-    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-mg-text), var(--font-dongle), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -141,7 +141,7 @@ html:has(.mg) {
   gap: 0.65rem;
   color: var(--mg-gold-light);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(0.92rem, 1.8vw, 1.15rem);
   font-style: italic;
   font-weight: 650;
@@ -355,7 +355,7 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(3.2rem, 7.1vw, 5.8rem);
   font-style: italic;
   font-variation-settings:
@@ -374,7 +374,7 @@ html:has(.mg) {
   margin: clamp(1.1rem, 2.4vw, 1.7rem) 0 0;
   color: var(--mg-berry);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.16rem, 2.1vw, 1.55rem);
   font-style: italic;
   font-weight: 540;
@@ -523,7 +523,7 @@ html:has(.mg) {
   inset-inline-start: 50%;
   color: var(--mg-gold-light);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 1.8rem;
   font-style: italic;
   font-weight: 700;
@@ -612,8 +612,8 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-text), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
-    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-mg-text), var(--font-dongle), var(--font-mg-writing), system-ui, -apple-system, "PingFang SC",
+    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(0.98rem, 1.25vw, 1.08rem);
   line-height: 1.82;
   text-wrap: pretty;
@@ -715,7 +715,7 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(2rem, 3.8vw, 3.1rem);
   font-style: italic;
   font-variation-settings:
@@ -824,7 +824,7 @@ html:has(.mg) {
 
 .mg-relic-label {
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.05rem, 1.8vw, 1.32rem);
   font-style: italic;
   font-weight: 630;
@@ -846,7 +846,7 @@ html:has(.mg) {
   border-block: 1px solid var(--mg-line-dark);
   color: var(--mg-muted-on-dark);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 1.1rem;
   font-style: italic;
 }
@@ -995,7 +995,7 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: clamp(1.25rem, 2.3vw, 1.6rem);
   font-style: italic;
   font-weight: 610;
@@ -1112,7 +1112,7 @@ html:has(.mg) {
   margin: 0 0 0.35rem;
   color: var(--mg-gold-light);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 0.96rem;
   font-style: italic;
   font-weight: 600;
@@ -1126,8 +1126,8 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ivory-strong);
   font-family:
-    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-dongle), var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(1.05rem, 1.7vw, 1.22rem);
   font-weight: 650;
   line-height: 1.42;
@@ -1186,8 +1186,8 @@ html:has(.mg) {
   justify-content: center;
   gap: 0.35rem;
   font-family:
-    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-dongle), var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: clamp(0.72rem, 1.1vw, 0.84rem);
   font-weight: 620;
   letter-spacing: 0.012em;
@@ -1328,8 +1328,8 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-ink);
   font-family:
-    var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+    var(--font-dongle), var(--font-mg-writing), var(--font-mg-text), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   font-size: 1.02rem;
   font-weight: 500;
   line-height: 1.75;
@@ -1400,7 +1400,7 @@ html:has(.mg) {
   margin: 0;
   color: var(--mg-gold-light);
   font-family:
-    var(--font-mg-display), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", serif;
+    var(--font-mg-display), var(--font-dongle), var(--font-mg-writing), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
   font-size: 0.9rem;
   font-style: italic;
   font-weight: 580;

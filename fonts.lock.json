@@ -1,10 +1,10 @@
 {
   "baseUrl": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download",
   "catalog": {
-    "sha256": "3ec45b912b0cae17fad5438d4dbf7443fc108c65284bc8597923329bf3d55b4c",
-    "snapshotSha256": "07b15331bac8faaf200f3e8369e01667d37760edbd5664ecfbf9a3dbffaa6b4b",
-    "url": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.0.0/catalog.json",
-    "version": "1.0.0"
+    "sha256": "a61b225c5edca6a3b023fdfa1d3ef2ffdb0c1b3b98f81cd4c5c0dbe26b399029",
+    "snapshotSha256": "e88428992c183e7df3fe30248a5063f5317f5036bc1d6886268f9d9974f14b38",
+    "url": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.1.0/catalog.json",
+    "version": "1.1.0"
   },
   "families": {
     "ark-pixel-12px": {
@@ -72,6 +72,23 @@
         "releaseTag": "font-cutive-mono-v1.0.0",
         "sha256": "48b09c9c917be56c5148f1471817c0abc6650c38344f0c1c872a9f8f95311bda",
         "size": 42186
+      },
+      "version": "1.0.0"
+    },
+    "dongle": {
+      "manifestSha256": "7e00a9890cda7ff54bdfc0097bc1586c40b9ac7969ec6d198a8eb43075b61f1f",
+      "package": {
+        "fileName": "dongle-v1.0.0.tar.gz",
+        "releaseTag": "font-dongle-v1.0.0",
+        "sha256": "6747a64710c2702bf05094a1c51c5421392bfd9ba02fb16c6c2ddefcf8da88ac",
+        "size": 560993
+      },
+      "packageFilesSha256": "8badf2ac0984353b0b17c222441b6d8e65956d0fb30da92028fb2d93d7516fc5",
+      "source": {
+        "fileName": "dongle-v1.0.0-source.tar.gz",
+        "releaseTag": "font-dongle-v1.0.0",
+        "sha256": "eccd5d507dd0881e9dde1705068fe984937d1a5cd6f85202d8975afd3357b4a4",
+        "size": 588955
       },
       "version": "1.0.0"
     },
@@ -143,6 +160,57 @@
       },
       "version": "1.0.0"
     },
+    "galmuri11": {
+      "manifestSha256": "c8684ae61fbafb0f76133d8a4dc4a316e6c33ee91393f48ed14227bb22e09fdb",
+      "package": {
+        "fileName": "galmuri11-v1.0.0.tar.gz",
+        "releaseTag": "font-galmuri11-v1.0.0",
+        "sha256": "ff0bddadc948b17da57d837c2bccea528ae09cd1ee9e0a396c33138f079329d4",
+        "size": 958025
+      },
+      "packageFilesSha256": "5c3590aad63c4ec150303135ccd66beec290dd5581f0539bb08379d451a234be",
+      "source": {
+        "fileName": "galmuri11-v1.0.0-source.tar.gz",
+        "releaseTag": "font-galmuri11-v1.0.0",
+        "sha256": "855d09544486c05df7b8da3812ab33579438b1cf0e57f0b649f60ce5e4caf4b1",
+        "size": 822561
+      },
+      "version": "1.0.0"
+    },
+    "gothic-a1": {
+      "manifestSha256": "ece037ce08556cd8118b55eb71ef1fc2f08d268f465c2b3bdbb8b4f8b481aa29",
+      "package": {
+        "fileName": "gothic-a1-v1.0.0.tar.gz",
+        "releaseTag": "font-gothic-a1-v1.0.0",
+        "sha256": "0676a713da31934e213044ce8407314e74adb95751edb82ce794100f47d7c0b2",
+        "size": 1076181
+      },
+      "packageFilesSha256": "169c970155a49a8468c1f2cf3f72fdb13ded39c838b73a17212dc4e296103417",
+      "source": {
+        "fileName": "gothic-a1-v1.0.0-source.tar.gz",
+        "releaseTag": "font-gothic-a1-v1.0.0",
+        "sha256": "ba342698cde5e06653cae6628c98d430f8ffa0cd54aa529b134fa5f2c0a66846",
+        "size": 705408
+      },
+      "version": "1.0.0"
+    },
+    "gowun-batang": {
+      "manifestSha256": "7ed10124f8a3995a113aee0cef8bd5c2133694a760071210675b02b83c5f4ce4",
+      "package": {
+        "fileName": "gowun-batang-v1.0.0.tar.gz",
+        "releaseTag": "font-gowun-batang-v1.0.0",
+        "sha256": "cf0169c3649b2cd5be4e3c437d729715f8fd07e448701d59b07ce0c93798c62d",
+        "size": 1550101
+      },
+      "packageFilesSha256": "eb6de4d8841c1c06a6a862cd8e265fcf53551350aff8ebf21bc06d7bde8dcc2d",
+      "source": {
+        "fileName": "gowun-batang-v1.0.0-source.tar.gz",
+        "releaseTag": "font-gowun-batang-v1.0.0",
+        "sha256": "923e1c71a1be746a7ebadd37702d857d426902126b385fc48a6a526c44af764d",
+        "size": 1791459
+      },
+      "version": "1.0.0"
+    },
     "handjet": {
       "manifestSha256": "2b00e010fbbd723a7e0e8791a3137a992366d3044a49fa9c94d4cff5a132478d",
       "package": {
@@ -208,6 +276,40 @@
         "releaseTag": "font-lxgw-wenkai-v1.0.0",
         "sha256": "257ec63fc70d163175a3ceaeddf14b2eb6f3f9c9ce089283cc7a4897df987055",
         "size": 13233017
+      },
+      "version": "1.0.0"
+    },
+    "noto-sans-mono-cjk-kr": {
+      "manifestSha256": "1f91ff691c0c23c5197582c6ce43486ede298e666e2efb79ec23389d05513ef0",
+      "package": {
+        "fileName": "noto-sans-mono-cjk-kr-v1.0.0.tar.gz",
+        "releaseTag": "font-noto-sans-mono-cjk-kr-v1.0.0",
+        "sha256": "9648b3d72d54a55d63c9664107419fe170b2211ce2f6e45beddc25725d49aec5",
+        "size": 13359018
+      },
+      "packageFilesSha256": "968af46e4a7c1f56ebfd021d3f7a3161211c566db353e5665a5a7cb0ff41f192",
+      "source": {
+        "fileName": "noto-sans-mono-cjk-kr-v1.0.0-source.tar.gz",
+        "releaseTag": "font-noto-sans-mono-cjk-kr-v1.0.0",
+        "sha256": "dfc462e8a1f7121e3e6d88317939a2f83d8660a538cff33a81ea2c08335943bc",
+        "size": 13658884
+      },
+      "version": "1.0.0"
+    },
+    "poor-story": {
+      "manifestSha256": "6442413777932cf734afd1382154525f642838390f2ec1117a97bd6f081108a8",
+      "package": {
+        "fileName": "poor-story-v1.0.0.tar.gz",
+        "releaseTag": "font-poor-story-v1.0.0",
+        "sha256": "7b46ae909810f1f5cd518edc22cdf00c27784e962b3f17832d6e96536542e9d7",
+        "size": 1104724
+      },
+      "packageFilesSha256": "9a3b2355891df58606d38f3a013ac4a8401757b11bce8f5bcad85fca8bc40a93",
+      "source": {
+        "fileName": "poor-story-v1.0.0-source.tar.gz",
+        "releaseTag": "font-poor-story-v1.0.0",
+        "sha256": "3c9bf189c842cb51e3f7beacc3b338fafa5f8b02b2028b2bf4fd713bb67398d5",
+        "size": 1003394
       },
       "version": "1.0.0"
     },
