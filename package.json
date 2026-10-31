@@ -1,6 +1,6 @@
 {
   "name": "senrenbanka",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -14,14 +14,15 @@
     "fonts:update": "node scripts/fonts/cli.mjs update",
     "fonts:prepare": "node scripts/fonts/cli.mjs prepare",
     "fonts:check": "node scripts/fonts/cli.mjs check",
+    "fonts:subset": "node scripts/fonts/cli.mjs subset",
     "fonts:typography": "node scripts/fonts/typography.mjs",
     "fonts:prune": "node scripts/fonts/cli.mjs prune",
     "fonts:audit": "node scripts/fonts/cli.mjs audit",
-    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs",
+    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs",
     "test:html-only": "node --test scripts/verify-html-only.test.mjs",
-    "test:fonts": "node --test scripts/fonts.test.mjs scripts/fonts/prune.test.mjs",
+    "test:fonts": "node --test scripts/fonts.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs",
     "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
-    "build": "npm run fonts:check && npm run check && astro build && npm run fonts:prune && npm run verify:html-only && npm run fonts:audit",
+    "build": "npm run fonts:check && npm run check && astro build && npm run fonts:subset && npm run fonts:prune && npm run verify:html-only && npm run fonts:audit",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -41,6 +42,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^26.6.5",
+    "fontkitten": "1.0.3",
+    "subset-font": "2.9.0",
     "typescript": "^5.0.0 || ^6.0.0"
   }
 }

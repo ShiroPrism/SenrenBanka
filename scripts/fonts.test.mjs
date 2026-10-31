@@ -839,3 +839,28 @@ test('font audit fails on a shard dropped by pruning, a dangling URL and an orph
     await fixture.close();
   }
 });
+
+test('font audit parses a content subset cmap and fails when a source-covered glyph is missing', async () => {
+  const core = makeFamilyFixture({ role: 'core-cjk', unicodeRange: ['U+4E00'] });
+  const fixture = await setupPublishedFixture({ selected: [core] });
+  try {
+    await runUpdate(fixture);
+    const dist = path.join(fixture.projectRoot, 'dist');
+    const fontDir = path.join(dist, '_astro', 'fonts');
+    await fs.mkdir(fontDir, { recursive: true });
+    const realFont = path.resolve(
+      'node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2',
+    );
+    await fs.copyFile(realFont, path.join(fontDir, 'subset.woff2'));
+    await fs.writeFile(
+      path.join(dist, 'index.html'),
+      '<html><head><style>@font-face{font-family:"Fixture-h";src:url("/_astro/fonts/subset.woff2") format("woff2");font-weight:400;font-style:normal;}:root{--font-fixture:"Fixture-h"}</style></head><body>一</body></html>',
+    );
+    await assert.rejects(
+      () => auditFonts({ projectRoot: fixture.projectRoot, distDir: 'dist' }),
+      /not by the deployed @font-face rules/i,
+    );
+  } finally {
+    await fixture.close();
+  }
+});

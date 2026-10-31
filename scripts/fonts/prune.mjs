@@ -18,7 +18,7 @@ import {
 import { extractVisibleText } from './audit.mjs';
 
 /** Hard deployment budget for the whole `dist` tree (1 MiB = 1,048,576 bytes). */
-export const SIZE_LIMIT_BYTES = 15 * 1024 * 1024;
+export const SIZE_LIMIT_BYTES = 10 * 1024 * 1024;
 export const FONT_DIRECTORY = '_astro/fonts';
 export const REPORT_PATH = '.cache/fonts/prune-report.json';
 
@@ -532,8 +532,9 @@ export async function pruneFonts({
 
   if (stats.totalBytes > SIZE_LIMIT_BYTES) {
     const top = stats.largest.map((file) => `  ${file.bytes}  ${file.file}`).join('\n');
+    const limitMiB = SIZE_LIMIT_BYTES / (1024 * 1024);
     throw new Error(
-      `dist exceeds the ${SIZE_LIMIT_BYTES}-byte (15 MiB) budget: ${stats.totalBytes} bytes.\n` +
+      `dist exceeds the ${SIZE_LIMIT_BYTES}-byte (${limitMiB} MiB) budget: ${stats.totalBytes} bytes.\n` +
         `fonts: ${stats.fonts.count} files / ${stats.fonts.bytes} bytes\n` +
         `html: ${stats.buckets.html} / css: ${stats.buckets.css} / js: ${stats.buckets.js} / ` +
         `images: ${stats.buckets.images} / other: ${stats.buckets.other}\n` +

@@ -9,6 +9,7 @@ export const FONT_PATHS = Object.freeze({
   snapshot: 'fonts.catalog.json',
   generated: 'src/fonts/generated.ts',
   cacheRoot: '.cache/fonts',
+  sourceCacheRoot: '.cache/font-sources',
 });
 
 export function resolveProjectPath(projectRoot, relativePath) {
@@ -47,6 +48,10 @@ export async function ensureDirectoryWithoutSymlinks(projectRoot, directory) {
 
 export function familyCacheRelativePath(catalogVersion, id, version) {
   return `${FONT_PATHS.cacheRoot}/${catalogVersion}/${id}@${version}`;
+}
+
+export function sourceCacheRelativePath(catalogVersion, id, version) {
+  return `${FONT_PATHS.sourceCacheRoot}/${catalogVersion}/${id}@${version}`;
 }
 
 export function toPosixPath(value) {

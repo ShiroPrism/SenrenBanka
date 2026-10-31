@@ -4,8 +4,37 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
-> 最近共享机制专项验证：**2026-10-31（v0.19.0 构建期字体分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 体积门禁）**；此前 2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
+> 最近共享机制专项验证：**2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）**；此前 2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > 2026-10-28（HTML-only 子任务）：新增 `renderMode` 契约与构建末尾 `verify:html-only` 门禁。同日 `homepage99` styled 设计接入后，**当时**静态构建为 **81 页**（v0.17.0 当前为 **105 页**）；HTML-only 的桌面 / 320–375px / 无 CSS / 无 JS / 键盘检查证据见 `docs/verification/html-only.md`，Homepage '99 的浏览器实测见 `docs/verification/homepage99.md`。
+
+## 核心字体内容子集验证（2026-10-31，v0.20.0）
+
+**范围**：新增核心字体 source cache（`.cache/font-sources/`）、`fonts:subset`、子集 cmap 审计；`fonts:prune` 保留非核心分片裁剪；体积门禁由 15 MiB 收紧为 **10 MiB**。本任务不修改设计页面、文案、设计 CSS、catalog/lock/generated 或源字体。
+
+**构建与体积**
+
+- `npm run build`：105 页；`fonts:subset` 语料 **1,261** 码位 / 135 个文本资产；生成 **3** 个核心子集：LXGW **272,948 B**、Zhuque **382,420 B**、Ark Pixel **35,964 B**，合计 **691,332 B**；改写 **45/105** 页面（60 页不含核心字体）；`fonts:prune` 保留 **300** / 删除 **336** 条规则，19 个字体 CSS 包 / **23,921 B**；核心分片 **0**，字体文件 **34 / 1,602,916 B**。
+- `dist` **6,035,329 B（5.76 MiB）**，≤10 MiB；HTML 3,541,803 B、字体 1,602,916 B、CSS 574,445 B、图片 302,730 B、JS 11,747 B。
+- `npm run fonts:check` 离线通过：20 families / 578 variants / 638 cached files / **3 source caches (9 files)**；`npm run check` 0 错误 / 0 警告 / 1 条既有 `lexicon` hint；`npm test` **67/67**；HTML-only 20/20 + 1 design × 3 locale。
+- `fonts:audit`：303 条部署 `@font-face`、34 个引用字体文件、0 孤儿 / 0 悬空；32 条源 cmap 缺字警告（5 个唯一字符）与裁剪前一致。无 `unicode-range` 的核心规则按 `fontkitten` 真实 cmap 校验。
+
+**浏览器（Chromium，preview，普通排版，未使用强制 `document.fonts.load()`）**
+
+- `/zh-cn/little-forest/`：2 个字体请求 / **303 KB**（Fraunces + LXGW 子集）；HTML 48 KB。
+- `/zh-cn/archive/`：3 个 / **415 KB**（两个拉丁 + Zhuque 子集）；HTML 35 KB。
+- `/zh-cn/pixel-pet-rpg/`：4 个 / **70 KB**（三个拉丁/像素 + Ark 子集）；HTML 45 KB。
+- `/zh-cn/designs/`：28 个 / **716 KB**（含三个核心子集）；HTML 73 KB。
+- `/en/editorial/`：1 个 / 0 KB（缓存）；HTML 34 KB。
+- 已访问页面 0 条 console error / warning；请求的字体文件均为部署子集/非核心字体，无 404；审计 0 悬空 / 0 孤儿。未单独用 CDP `CSS.getPlatformFontsForNode` 复测；普通字体请求与 `@font-face` 族名映射作为命中证据。
+
+**base 前缀**
+
+- `MSYS2_ARG_CONV_EXCL='*' npx astro build --outDir dist-demo --base /demo` + `fonts:subset --dist dist-demo` + `fonts:prune --dist dist-demo` + `fonts:audit --dist dist-demo`：105 页，`dist-demo` **6,052,419 B**；字体 CSS 链接为 `/demo/_astro/fonts-...css`，子集 URL 为 `/demo/_astro/fonts/...-subset-...woff2`；审计通过。临时目录已清理。
+
+**未测项**
+
+- 375px 触控、减动态、无 JS 本轮未独立复测；核心子集不改变布局、DOM 或客户端脚本，发布前如需完整设计验收可按 `design-page-verify` 复跑。
+- 未单独用 CDP 平台字体信息复测；普通字体请求 + 族名映射已证明核心子集参与普通排版。
 
 ## 构建期字体分片裁剪验证（2026-10-31，v0.19.0）
 

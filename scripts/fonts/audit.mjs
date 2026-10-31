@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { create as createFont } from 'fontkitten';
 import { loadAndValidateFontState } from './lib/repository.mjs';
 import { PROJECT_ROOT, resolveProjectPath, toPosixPath } from './lib/paths.mjs';
 import { stableStringify, writeFileAtomic } from './lib/json.mjs';
@@ -378,6 +379,7 @@ export async function auditFonts({
   const deployedGaps = [];
   const danglingFontUrls = [];
   const referencedFontFiles = new Set();
+  const characterSetCache = new Map();
   let deployedRules = 0;
   let pagesWithoutActiveCoreFont = 0;
   let notedCodePoints = 0;
@@ -418,12 +420,51 @@ export async function auditFonts({
 
     // Deployed coverage: the @font-face rules actually present in this page's
     // CSS after pruning, grouped by the hashed family name of the variable.
+    // Rules without unicode-range (content subsets) must be checked against the
+    // real font cmap; treating them as coversAll would hide a missing glyph.
+    const activeValues = new Set(active.map((entry) => entry.value));
     const deployedByName = new Map();
     for (const rule of rules) {
       if (!rule.family) continue;
-      const entry = deployedByName.get(rule.family) ?? { coversAll: false, intervals: [] };
-      if (!rule.ranges || rule.ranges.length === 0) entry.coversAll = true;
-      else entry.intervals.push(...rule.ranges);
+      const entry =
+        deployedByName.get(rule.family) ?? {
+          coversAll: false,
+          intervals: [],
+          characters: null,
+        };
+      if (rule.ranges && rule.ranges.length > 0) {
+        entry.intervals.push(...rule.ranges);
+      } else if (rule.urls.length === 0 || !activeValues.has(rule.family)) {
+        // Non-core no-range rules are not consulted by the core coverage check;
+        // do not parse them (and do not make an unrelated parse failure fatal).
+        entry.coversAll = true;
+      } else {
+        for (const url of rule.urls) {
+          let resolved;
+          try {
+            resolved = resolveDistAsset(distRoot, page, url);
+          } catch (error) {
+            throw new Error(`${page}: ${error.message}`);
+          }
+          if (!resolved.exists) continue; // recorded as dangling above
+          const absolutePath = path.resolve(resolved.absolutePath);
+          let characters = characterSetCache.get(absolutePath);
+          if (!characters) {
+            let font;
+            try {
+              font = createFont(await fs.readFile(absolutePath));
+            } catch (error) {
+              throw new Error(
+                `${page}: deployed font ${url} cannot be parsed for coverage: ${error.message}`,
+              );
+            }
+            characters = new Set(font.characterSet);
+            characterSetCache.set(absolutePath, characters);
+          }
+          entry.characters ??= new Set();
+          for (const codePoint of characters) entry.characters.add(codePoint);
+        }
+      }
       deployedByName.set(rule.family, entry);
     }
     for (const entry of deployedByName.values()) {
@@ -448,7 +489,9 @@ export async function auditFonts({
       const deployedCovered = deployedFor.some(
         ({ deployed }) =>
           deployed !== null &&
-          (deployed.coversAll || covers(deployed.intervals, codePoint)),
+          (deployed.coversAll ||
+            (deployed.characters !== null && deployed.characters.has(codePoint)) ||
+            covers(deployed.intervals, codePoint)),
       );
       const baseIssue = {
         page,
@@ -535,7 +578,7 @@ export async function auditFonts({
   if (deployedGaps.length > 0) {
     throw new Error(
       `font audit found ${deployedGaps.length} CJK code point(s) covered by the source font but not by the deployed @font-face rules ` +
-        `(pruning dropped a needed shard): ` +
+        `(pruning/subsetting dropped a needed glyph): ` +
         deployedGaps
           .slice(0, 5)
           .map((issue) => `${issue.page} ${issue.character} (${issue.codePoint})`)

@@ -356,7 +356,7 @@ test('--dry-run reports every decision without touching the tree', async () => {
   assert.equal(report.size.totalBytes < before.reduce((sum, file) => sum + file.size, 0), true);
 });
 
-test('size guard fails above 15 MiB and passes below it', async () => {
+test('size guard fails above 10 MiB and passes below it', async () => {
   const overRoot = await makeProject();
   await write(
     overRoot,
@@ -367,7 +367,7 @@ test('size guard fails above 15 MiB and passes below it', async () => {
   await write(overRoot, 'dist/_astro/oversize.bin', Buffer.alloc(SIZE_LIMIT_BYTES + 1024, 0));
   await assert.rejects(
     () => pruneFonts({ projectRoot: overRoot, logger: () => {} }),
-    /exceeds the 15728640-byte \(15 MiB\) budget/,
+    /exceeds the 10485760-byte \(10 MiB\) budget/,
   );
 
   const underRoot = await makeProject();

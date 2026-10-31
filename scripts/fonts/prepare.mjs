@@ -1,7 +1,16 @@
-import { familyCacheRelativePath, PROJECT_ROOT } from './lib/paths.mjs';
+import {
+  familyCacheRelativePath,
+  PROJECT_ROOT,
+  sourceCacheRelativePath,
+} from './lib/paths.mjs';
 import { fetchBuffer } from './lib/fetch.mjs';
-import { inspectFamilyPackageBuffer } from './lib/archive.mjs';
+import { inspectFamilyPackageBuffer, inspectSourceArchiveBuffer } from './lib/archive.mjs';
 import { installFamilyCache, verifyAllCaches, verifyFamilyCache } from './lib/cache.mjs';
+import {
+  installSourceCache,
+  verifyAllSourceCaches,
+  verifyFamilySourceCache,
+} from './lib/source-cache.mjs';
 import { loadAndValidateFontState } from './lib/repository.mjs';
 import { stableStringify } from './lib/json.mjs';
 
@@ -57,12 +66,61 @@ export async function prepareFonts({
   }
 
   await verifyAllCaches({ projectRoot, snapshot: state.snapshot, lock: state.lock });
+
+  const sourcesDownloaded = [];
+  const sourcesReused = [];
+  const sourceCacheDirectories = [];
+  for (const id of Object.keys(state.snapshot.families).sort()) {
+    const family = state.snapshot.families[id];
+    if (family.manifest.role !== 'core-cjk') continue;
+    sourceCacheDirectories.push(
+      sourceCacheRelativePath(state.snapshot.catalogVersion, id, family.version),
+    );
+    try {
+      await verifyFamilySourceCache({ projectRoot, snapshot: state.snapshot, id });
+      sourcesReused.push(id);
+      logger(`reuse source ${id}@${family.version}`);
+      continue;
+    } catch (cacheError) {
+      if (offline) {
+        throw new Error(
+          `cached source archive is not usable for ${id}: ${cacheError.message}. Run npm run fonts:prepare while network access is available to download the locked source archive.`,
+        );
+      }
+    }
+    const sourceUrl = `${state.snapshot.baseUrl}/${family.source.releaseTag}/${family.source.fileName}`;
+    logger(`prepare source ${id}@${family.version}`);
+    const buffer = await fetchBuffer(sourceUrl, {
+      fetchImpl,
+      maxBytes: family.source.size + 1,
+      label: `${id} source archive`,
+    });
+    const inspected = inspectSourceArchiveBuffer(buffer, {
+      id,
+      version: family.version,
+      source: family.source,
+      manifest: family.manifest,
+    });
+    await installSourceCache({
+      projectRoot,
+      snapshot: state.snapshot,
+      id,
+      inspected,
+    });
+    sourcesDownloaded.push(id);
+  }
+
+  await verifyAllSourceCaches({ projectRoot, snapshot: state.snapshot });
+
   return {
     downloaded,
     reused,
+    sourcesDownloaded,
+    sourcesReused,
     cacheDirectories: Object.keys(state.snapshot.families).map((id) => {
       const family = state.snapshot.families[id];
       return familyCacheRelativePath(state.snapshot.catalogVersion, id, family.version);
     }),
+    sourceCacheDirectories,
   };
 }

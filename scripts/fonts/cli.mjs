@@ -3,6 +3,7 @@ import { auditFonts } from './audit.mjs';
 import { checkFonts } from './check.mjs';
 import { prepareFonts } from './prepare.mjs';
 import { pruneFonts } from './prune.mjs';
+import { subsetCoreFonts } from './subset.mjs';
 import { updateFonts } from './update.mjs';
 
 const PREFIX = '[senrenbanka:fonts]';
@@ -37,6 +38,7 @@ async function main() {
   npm run fonts:update -- --catalog-url <url> [--catalog-sha256 <sha256>]
   npm run fonts:prepare [-- --offline]
   npm run fonts:check
+  npm run fonts:subset [-- --dist dist --dry-run]
   npm run fonts:prune [-- --dist dist --dry-run]
   npm run fonts:audit [-- --dist dist --json .cache/fonts/audit-report.json]`);
     return;
@@ -61,7 +63,7 @@ async function main() {
       logger: log,
     });
     log(
-      `cache ready: ${summary.downloaded.length} prepared, ${summary.reused.length} reused`,
+      `cache ready: ${summary.downloaded.length} prepared, ${summary.reused.length} reused, ${summary.sourcesDownloaded.length} sources prepared, ${summary.sourcesReused.length} sources reused`,
     );
     return;
   }
@@ -69,8 +71,18 @@ async function main() {
     assertKnownOptions(args, new Set(), new Set());
     const summary = await checkFonts();
     log(
-      `check passed offline: ${summary.familyCount} families, ${summary.variantCount} variants, ${summary.cachedFiles} cached files`,
+      `check passed offline: ${summary.familyCount} families, ${summary.variantCount} variants, ${summary.cachedFiles} cached files, ${summary.sourceCacheEntries} source caches (${summary.sourceCachedFiles} files)`,
     );
+    return;
+  }
+  if (command === 'subset') {
+    assertKnownOptions(args, new Set(['--dry-run']), new Set(['--dist']));
+    const summary = await subsetCoreFonts({
+      distDir: readOption(args, '--dist') ?? 'dist',
+      dryRun: args.includes('--dry-run'),
+      logger: log,
+    });
+    if (summary.families.length === 0) log(`no-op: no core-cjk family selected`);
     return;
   }
   if (command === 'prune') {

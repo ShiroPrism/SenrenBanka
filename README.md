@@ -18,9 +18,9 @@ One profile, many AI-designed homepages, in three languages. Astro + TypeScript 
 
 ```bash
 npm ci
-npm run fonts:prepare  # 按 fonts.lock.json 下载并校验到 .cache/fonts/
+npm run fonts:prepare  # 按 fonts.lock.json 下载并校验到 .cache/fonts/ 与 .cache/font-sources/
 npm run dev            # http://localhost:4321
-npm run build          # fonts:check + astro check + build + fonts:prune + HTML 审计
+npm run build          # fonts:check + astro check + build + fonts:subset + fonts:prune + HTML 审计
 npm run preview
 ```
 
@@ -34,10 +34,11 @@ npm run preview
 （Zhuque / LXGW / Ark Pixel）→ 系统中文字体 → 通用族”的完整顺序，
 `npm run fonts:typography` 会静态检查这条契约。
 
-构建末尾的 `fonts:prune` 会按最终 `dist` 文本逐页裁剪 `@font-face`，把保留
-规则外置为共享字体 CSS，并删除全站未引用的分片；`dist` 全部文件字节上限为
-**15 MiB**。源字体、锁、快照与生成注册不变，fork 用户只需执行
-`npm run fonts:prepare && npm run build`，不需要本地字体或额外子集化工具。
+`fonts:prepare` 还会为核心 CJK 字体下载并校验 source archive；构建末尾的
+`fonts:subset` 按最终 `dist` 语料生成每族一个 WOFF2 字形子集，`fonts:prune`
+再把剩余 `@font-face` 外置为共享字体 CSS 并删除未引用分片。`dist` 全部文件
+字节上限为 **10 MiB**。源字体、锁、快照与生成注册不变；fork 用户只需执行
+`npm run fonts:prepare && npm run build`，不需要本地字体、Python 或额外子集化工具。
 
 最小资料只需以下四个核心字段，可直接替换 `src/data/profiles/zh-cn.yaml`（`ja.yaml` / `en.yaml` 同理）：
 
@@ -59,7 +60,7 @@ links:
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
 - 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `docs/rules/`。新增目录后需重启 `npm run dev`。
-- 字体：人工选择只维护 `fonts.config.json`；`fonts.lock.json` / `fonts.catalog.json` / `src/fonts/generated.ts` 由 `npm run fonts:update` 从固定外部目录发行物生成。6 个 Fontsource family 也通过配置内包装层读取已安装的 `node_modules` 文件，不依赖构建期 CDN。不要手改生成文件，也不要提交 `.cache/fonts/`。`npm run fonts:prune` 的部署分片集与体积报告写到 `.cache/fonts/prune-report.json`；`npm run fonts:audit` 会把核心 CJK 缺字与部署集合报告写到 `.cache/fonts/audit-report.json`。
+- 字体：人工选择只维护 `fonts.config.json`；`fonts.lock.json` / `fonts.catalog.json` / `src/fonts/generated.ts` 由 `npm run fonts:update` 从固定外部目录发行物生成。6 个 Fontsource family 也通过配置内包装层读取已安装的 `node_modules` 文件，不依赖构建期 CDN。不要手改生成文件，也不要提交 `.cache/fonts/` 或 `.cache/font-sources/`。`npm run fonts:subset` 的子集报告写到 `.cache/fonts/subset-report.json`，`npm run fonts:prune` 的部署分片集与体积报告写到 `.cache/fonts/prune-report.json`；`npm run fonts:audit` 会把核心 CJK 缺字与部署集合报告写到 `.cache/fonts/audit-report.json`。
 
 升级字体目录时必须显式提供发布页中的固定 URL 与 SHA，不接受“自动追最新”：
 
