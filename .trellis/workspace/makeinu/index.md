@@ -8,7 +8,7 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 5
+- **Total Sessions**: 6
 - **Last Active**: 2026-10-31
 <!-- @@@/auto:current-status -->
 
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~159 | Active |
+| `journal-1.md` | ~181 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 6 | 2026-10-31 | Design batch: brutal, ink, deco | `cf829ef` | `feat/font-content-subset` |
 | 5 | 2026-10-31 | Font shipping: shard pruning and core content subsets | `eefdbc1`, `5f66e03` | `feat/font-content-subset` |
 | 4 | 2026-10-30 | 六套可爱风独立设计与 0.17.0 发布 | `e2e005b`, `ba86e0c`, `455e644` | `codex/cute-design-batch` |
 | 3 | 2026-10-29 | AGENTS.md 索引化与 docs/rules 拆分 | `6da9ca2`, `4aaa331`, `e1ed45a` | `codex/agents-doc-index` |

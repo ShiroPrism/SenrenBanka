@@ -157,3 +157,25 @@ Implemented and verified build-time font shard pruning (dist 33.5 -> 13.85 MiB) 
 ### Status
 
 [OK] **Completed**
+
+
+## Session 6: Design batch: brutal, ink, deco
+<!-- trellis-session: v=2 fp=2987e224075aa896 -->
+
+**Date**: 2026-10-31
+**Task**: Design batch: brutal, ink, deco
+**Branch**: `feat/font-content-subset`
+
+### Summary
+
+Implemented and verified three styled designs (brutal, ink, deco) with self-contained previews. Build 117 pages, tests 67/67, typography gate 26 styled / 17 core CJK, dist 6,544,535 B (6.24 MiB), both detectors clean, and the 1440/768/375 browser matrix, Reveal degradation paths and shared action menu passed.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `cf829ef` | feat(designs): add brutal, ink and deco themed designs |
+
+### Status
+
+[OK] **Completed**
