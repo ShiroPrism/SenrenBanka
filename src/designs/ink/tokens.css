@@ -1,0 +1,56 @@
+/**
+ * ink 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.ink, .ink-pv)`），不是 `:root`：预览会把本文件内联进切换页 HTML，
+ *   `:root` 在那里会泄漏成切换页的全局令牌（docs/rules/pitfalls.md）。
+ * - 只放调色板与尺寸 / 时长量值；**字体角色不放这里**——祖先 `html` 取不到后代作用域
+ *   的变量，放进令牌会让正式页字体静默回退。字体角色在 `style.css` 的 `@theme inline`
+ *   与 `.ink` 规则里（预览在组件 `<style>` 内自带同样的栈）。
+ * - 纯 CSS，不含任何 Tailwind 指令。
+ * - 量值与对比度实测值登记在 `DESIGN.md` §2 / §4，改色值必须同步那张表。
+ */
+
+:is(.ink, .ink-pv) {
+  /* 纸 —— 全站唯一底色与两级压深 */
+  --ink-paper: #f4eee2;
+  --ink-paper-2: #ebe3d4;
+  --ink-paper-3: #e8e0d0;
+
+  /* 墨 —— 主 / 次级 / 弱化 */
+  --ink-ink: #1b1917;
+  --ink-ink-soft: #3a3632;
+  --ink-ink-muted: #665e52;
+
+  /* 朱砂 —— 全页唯一的饱和色（印章、短划、焦点环、下划线） */
+  --ink-cinnabar: #a13c2c;
+  --ink-cinnabar-deep: #7c2c20;
+
+  /* 青瓷 —— 只做 1px 线与底纹，从不承载文字 */
+  --ink-celadon: #6d8b7d;
+  --ink-celadon-deep: #4e6659;
+
+  /* 界线 */
+  --ink-rule: rgba(27, 25, 23, 0.16);
+  --ink-rule-strong: rgba(27, 25, 23, 0.32);
+  --ink-rule-celadon: rgba(109, 139, 125, 0.55);
+  --ink-grain: rgba(27, 25, 23, 0.03);
+  --ink-hairline: 1px;
+
+  /* 尺度 */
+  --ink-sheet: 66rem;
+  --ink-measure: 33rem;
+  --ink-pad-block: clamp(1.6rem, 5vw, 4.2rem);
+  --ink-pad-inline: clamp(1.15rem, 6vw, 4.75rem);
+  --ink-gap: clamp(1.5rem, 4vw, 3.25rem);
+  --ink-gutter: clamp(2.1rem, 4vw, 3.6rem);
+  --ink-tiers-height: clamp(19rem, 46vh, 26rem);
+
+  /* 动效 */
+  --ink-dur: 520ms;
+  --ink-dur-rule: 620ms;
+  --ink-dur-reveal: 620ms;
+  --ink-dur-seal: 420ms;
+  --ink-dur-hover: 180ms;
+  --ink-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
+  --ink-ease-seal: cubic-bezier(0.16, 1, 0.3, 1);
+}

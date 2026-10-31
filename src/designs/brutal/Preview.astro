@@ -1,0 +1,205 @@
+---
+/**
+ * brutal 预览碎片（切换页用）：保留最有辨识度的形态——
+ * 粗黑外框、硬偏移阴影、纸面网格、巨型姓名、两枚硬边按钮与两张项目卡。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；调用方加 `aria-hidden`；内部无可聚焦元素。
+ * - 纯装饰，不是完整页面，不带动效机制。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-league-gothic',
+  '--font-inter',
+  '--font-jetbrains-mono',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, location, links } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
+---
+
+<div class="bt-pv">
+  <div class="bt-pv-top">
+    <span class="bt-pv-mark">BT</span>
+    <span class="bt-pv-meta">{location ?? t.index} / {t.portfolio}</span>
+  </div>
+
+  <p class="bt-pv-name">{name}</p>
+  <p class="bt-pv-headline">{headline ?? t.portfolio}</p>
+
+  <div class="bt-pv-actions">
+    <span class="bt-pv-btn bt-pv-btn-orange">{linkLabels[0] ?? t.projects}</span>
+    <span class="bt-pv-btn bt-pv-btn-blue">{linkLabels[1] ?? t.contact}</span>
+  </div>
+
+  <div class="bt-pv-cards">
+    <span class="bt-pv-card">
+      <span class="bt-pv-card-num">01</span>
+      {t.projects}
+    </span>
+    <span class="bt-pv-card">
+      <span class="bt-pv-card-num">02</span>
+      {t.experience}
+    </span>
+  </div>
+</div>
+
+<style>
+  .bt-pv {
+    --bt-pv-display: var(--font-league-gothic), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bt-pv-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bt-pv-mono: var(--font-jetbrains-mono), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", monospace;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-height: 9rem;
+    padding: 0.7rem 0.8rem 0.8rem;
+    border: var(--bt-line) solid var(--bt-ink);
+    background-color: var(--bt-paper);
+    background-image:
+      linear-gradient(rgba(11, 11, 11, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 11, 11, 0.06) 1px, transparent 1px);
+    background-size: 1.1rem 1.1rem, 1.1rem 1.1rem, auto;
+    box-shadow: 6px 6px 0 var(--bt-ink);
+    color: var(--bt-ink);
+    font-family: var(--bt-pv-body);
+    font-size: 0.625rem;
+    line-height: 1.4;
+    overflow: hidden;
+  }
+
+  .bt-pv-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: var(--bt-line-thin) solid var(--bt-ink);
+    font-family: var(--bt-pv-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .bt-pv-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.15rem;
+    height: 1.15rem;
+    background: var(--bt-ink);
+    color: var(--bt-paper);
+    font-family: var(--bt-pv-display);
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .bt-pv-meta {
+    color: var(--bt-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .bt-pv-name {
+    margin: 0.25rem 0 0;
+    font-family: var(--bt-pv-display);
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .bt-pv-headline {
+    margin: 0;
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .bt-pv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+  }
+
+  .bt-pv-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.45rem;
+    border: var(--bt-line-thin) solid var(--bt-ink);
+    box-shadow: 2px 2px 0 var(--bt-ink);
+    font-size: 0.52rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .bt-pv-btn-orange {
+    background: var(--bt-orange);
+    color: var(--bt-ink);
+  }
+
+  .bt-pv-btn-blue {
+    background: var(--bt-blue);
+    color: var(--bt-white);
+  }
+
+  .bt-pv-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin-top: auto;
+  }
+
+  .bt-pv-card {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 0;
+    padding: 0.3rem 0.35rem;
+    border: var(--bt-line-thin) solid var(--bt-ink);
+    background: var(--bt-white);
+    box-shadow: 3px 3px 0 var(--bt-ink);
+    font-size: 0.5rem;
+    font-weight: 700;
+    line-height: 1.35;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .bt-pv-card-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1rem;
+    padding: 0.05rem 0.2rem;
+    background: var(--bt-acid);
+    border: 1px solid var(--bt-ink);
+    font-family: var(--bt-pv-mono);
+    font-size: 0.45rem;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 520px) {
+    .bt-pv-name {
+      font-size: 1.5rem;
+    }
+
+    .bt-pv-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

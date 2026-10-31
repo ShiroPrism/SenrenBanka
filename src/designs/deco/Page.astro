@@ -1,0 +1,255 @@
+---
+/**
+ * deco — Art Deco 剧院节目单（暗黑奢华）。
+ *
+ * 数据：`loadDesignView('deco', Astro.url.pathname)` 只取当前语言；页面不接触文件路径、
+ * 不自行判断语言。所有可见设计文案来自 `messages.ts`，资料字段按契约渲染。
+ *
+ * 结构：中轴构图的节目单——页眉（地名）→ 首屏（扇形 + monogram + 姓名 + 副题 + 序言）
+ * → 剧目表（links）→ 幕次（projects）→ 演出单（experience）→ 演职员表（skills）
+ * → 售票处（contact）→ 页脚。装饰件一律 aria-hidden，焦点与命中区见 DESIGN.md。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('deco', Astro.url.pathname);
+const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const { profile, contextMenu } = view;
+
+/** 幕次装饰编号：罗马数字，跨语言恒用（见 messages.ts 不翻译项说明）。 */
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+const romanOf = (index: number): string => ROMAN[index] ?? String(index + 1);
+
+/**
+ * monogram 标记：拉丁取前两个词的首字母（Koji Tadokoro → KT），
+ * 单词姓名取前两个字（田所浩二 → 田所）。标记是装饰，完整姓名始终渲染在 h1 内。
+ */
+const monogram = (() => {
+  const words = profile.name
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0 && /\p{L}/u.test(Array.from(word)[0] ?? ''));
+  const first = words[0];
+  if (!first) return Array.from(profile.name)[0] ?? '';
+  const firstChar = Array.from(first)[0] ?? '';
+  if (words.length > 1) {
+    const secondChar = Array.from(words[1])[0] ?? '';
+    return `${firstChar}${secondChar}`.toUpperCase();
+  }
+  const chars = Array.from(first);
+  return (chars.length > 1 ? chars.slice(0, 2).join('') : firstChar).toUpperCase();
+})();
+
+const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
+---
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-inter" />
+    <Font cssVariable="--font-zhuque" />
+    <Reveal />
+  </head>
+  <body class="deco">
+    <div class="deco-page">
+      <header class="deco-masthead">
+        <span class="deco-masthead-rule" aria-hidden="true"></span>
+        <div class="deco-masthead-row">
+          <span class="deco-masthead-gem" aria-hidden="true"></span>
+          <p class="deco-masthead-meta">{profile.location ?? t.portfolio}</p>
+          <span class="deco-masthead-gem" aria-hidden="true"></span>
+        </div>
+      </header>
+
+      <main class="deco-main">
+        <section class="deco-hero" aria-labelledby="deco-name">
+          <div class="deco-curtain" aria-hidden="true">
+            <span class="deco-curtain-half deco-curtain-l"></span>
+            <span class="deco-curtain-half deco-curtain-r"></span>
+          </div>
+          <span class="deco-step deco-step-tl" aria-hidden="true"></span>
+          <span class="deco-step deco-step-br" aria-hidden="true"></span>
+          <span class="deco-fan" aria-hidden="true"></span>
+          <p class="deco-kicker">{t.portfolio}</p>
+
+          <h1 id="deco-name" class="deco-name">
+            <span class="deco-monogram" aria-hidden="true">
+              <span class="deco-monogram-gem"></span>
+              <span class="deco-monogram-text">{monogram}</span>
+            </span>
+            <span class="deco-name-text">{profile.name}</span>
+          </h1>
+
+          <p class="deco-subtitle">{profile.headline}</p>
+
+          <div class="deco-ornament" aria-hidden="true">
+            <span class="deco-ornament-line"></span>
+            <span class="deco-ornament-gem"></span>
+            <span class="deco-ornament-line"></span>
+          </div>
+
+          <div class="deco-overture">
+            <p class="deco-overture-label">{t.overtureLabel}</p>
+            <p class="deco-bio">{profile.bio}</p>
+          </div>
+        </section>
+
+        {
+          profile.links.length > 0 && (
+            <section class="deco-section" aria-labelledby="deco-links-title" data-reveal>
+              <div class="deco-section-head">
+                <h2 id="deco-links-title" class="deco-section-title">
+                  {t.linksTitle}
+                </h2>
+                <div class="deco-ornament" aria-hidden="true">
+                  <span class="deco-ornament-line"></span>
+                  <span class="deco-ornament-gem"></span>
+                  <span class="deco-ornament-line"></span>
+                </div>
+              </div>
+              <ul class="deco-tickets">
+                {profile.links.map((link) => (
+                  <li class="deco-ticket">
+                    <a class="deco-ticket-link" href={link.url}>
+                      <span class="deco-ticket-gem" aria-hidden="true"></span>
+                      <span class="deco-ticket-label">{link.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          profile.projects && profile.projects.length > 0 && (
+            <section class="deco-section" aria-labelledby="deco-acts-title" data-reveal>
+              <div class="deco-section-head">
+                <h2 id="deco-acts-title" class="deco-section-title">
+                  {t.projectsTitle}
+                </h2>
+                <div class="deco-ornament" aria-hidden="true">
+                  <span class="deco-ornament-line"></span>
+                  <span class="deco-ornament-gem"></span>
+                  <span class="deco-ornament-line"></span>
+                </div>
+              </div>
+              <ol class="deco-acts">
+                {profile.projects.map((project, index) => (
+                  <li class="deco-act" data-reveal>
+                    <span class="deco-act-num" aria-hidden="true">
+                      {t.actWord} {romanOf(index)}
+                    </span>
+                    <h3 class="deco-act-title">
+                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                    </h3>
+                    {project.description && <p class="deco-act-desc">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <ul class="deco-act-tags">
+                        {project.tags.map((tag) => (
+                          <li>{tag}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          profile.experience && profile.experience.length > 0 && (
+            <section class="deco-section" aria-labelledby="deco-bill-title" data-reveal>
+              <div class="deco-section-head">
+                <h2 id="deco-bill-title" class="deco-section-title">
+                  {t.experienceTitle}
+                </h2>
+                <div class="deco-ornament" aria-hidden="true">
+                  <span class="deco-ornament-line"></span>
+                  <span class="deco-ornament-gem"></span>
+                  <span class="deco-ornament-line"></span>
+                </div>
+              </div>
+              <ol class="deco-bill">
+                {profile.experience.map((item) => (
+                  <li class="deco-bill-row">
+                    <div class="deco-bill-main">
+                      <span class="deco-bill-org">{item.org}</span>
+                      {item.role && <span class="deco-bill-role">{item.role}</span>}
+                    </div>
+                    {item.period && <span class="deco-bill-period">{item.period}</span>}
+                    {item.description && <p class="deco-bill-desc">{item.description}</p>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )
+        }
+
+        {
+          profile.skills && profile.skills.length > 0 && (
+            <section class="deco-section" aria-labelledby="deco-credits-title" data-reveal>
+              <div class="deco-section-head">
+                <h2 id="deco-credits-title" class="deco-section-title">
+                  {t.skillsTitle}
+                </h2>
+                <div class="deco-ornament" aria-hidden="true">
+                  <span class="deco-ornament-line"></span>
+                  <span class="deco-ornament-gem"></span>
+                  <span class="deco-ornament-line"></span>
+                </div>
+              </div>
+              <ul class="deco-credits">
+                {profile.skills.map((skill) => (
+                  <li class="deco-credit">{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          hasContact && (
+            <section class="deco-boxoffice" aria-labelledby="deco-boxoffice-title" data-reveal>
+              <span class="deco-step deco-step-tl" aria-hidden="true"></span>
+              <span class="deco-step deco-step-br" aria-hidden="true"></span>
+              <div class="deco-section-head">
+                <h2 id="deco-boxoffice-title" class="deco-section-title">
+                  {t.contactTitle}
+                </h2>
+                <div class="deco-ornament" aria-hidden="true">
+                  <span class="deco-ornament-line"></span>
+                  <span class="deco-ornament-gem"></span>
+                  <span class="deco-ornament-line"></span>
+                </div>
+              </div>
+              {profile.contact?.email && (
+                <a class="deco-email" href={`mailto:${profile.contact.email}`}>
+                  {profile.contact.email}
+                </a>
+              )}
+              {profile.contact?.note && <p class="deco-note">{profile.contact.note}</p>}
+            </section>
+          )
+        }
+      </main>
+
+      <footer class="deco-footer">
+        <div class="deco-ornament" aria-hidden="true">
+          <span class="deco-ornament-line"></span>
+          <span class="deco-ornament-gem"></span>
+          <span class="deco-ornament-line"></span>
+        </div>
+        <p class="deco-footer-name">{profile.name}</p>
+        <p class="deco-footer-note">{t.sampleNote}</p>
+      </footer>
+    </div>
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

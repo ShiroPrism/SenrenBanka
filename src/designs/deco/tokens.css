@@ -1,0 +1,48 @@
+/**
+ * deco 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.deco, .deco-pv)`），不是 `:root`：预览会把本文件内联进切换页 HTML，
+ *   `:root` 在那里会成为全局令牌泄漏（docs/rules/pitfalls.md「已知坑」的隔离约束）。
+ * - 只放调色板与量值；字体角色由 `style.css` 的 `@theme inline` 与各宿主的完整栈承担
+ *   （祖先 `html` 取不到后代作用域变量，字体角色放进令牌会让正式页字体静默回退）。
+ * - 纯 CSS，不含 Tailwind 指令。对比度实测数值登记在同目录 `DESIGN.md` 第 2 节。
+ */
+
+:is(.deco, .deco-pv) {
+  /* 场（底色与面层） */
+  --dc-black: #07060a;
+  --dc-panel: #100e15;
+  --dc-panel-2: #171420;
+
+  /* 字（正文与元信息；全部 ≥7.5:1） */
+  --dc-ivory: #f6f0e2;
+  --dc-ivory-soft: #ded4c0;
+  --dc-muted: #b3a68c;
+
+  /* 金（accent #d4af37；小号标签用香槟值，线条用黄铜/暗黄铜） */
+  --dc-gold: #d4af37;
+  --dc-gold-bright: #f2e0aa;
+  --dc-brass: #9c8340;
+  --dc-hairline: #7f6a35;
+
+  /* 线框 */
+  --dc-line: 1px;
+  --dc-line-thick: 2px;
+  --dc-frame-inset: 6px;
+
+  /* 尺度 */
+  --dc-max: 66rem;
+  --dc-pad: clamp(1.15rem, 4.5vw, 3.5rem);
+  --dc-gap: clamp(1rem, 2.6vw, 1.9rem);
+  --dc-tap: 48px;
+
+  /* 动效 */
+  --dc-dur: 240ms;
+  --dc-dur-fast: 220ms;
+  --dc-dur-line: 620ms;
+  --dc-dur-fan: 700ms;
+  --dc-dur-curtain: 900ms;
+  --dc-dur-rise: 520ms;
+  --dc-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dc-ease-line: cubic-bezier(0.33, 0, 0.2, 1);
+}

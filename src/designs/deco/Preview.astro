@@ -1,0 +1,258 @@
+---
+/**
+ * deco 预览碎片（切换页用）：保留最有辨识度的形态——
+ * 墨黑台面、双线框、金色扇形与阶梯角、菱形 monogram、Fraunces 姓名与两枚票根。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；调用方加 `aria-hidden`；内部无可聚焦元素。
+ * - 纯装饰，不是完整页面，不带动效机制。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-fraunces',
+  '--font-inter',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, links } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const ticketLabels = (links ?? []).slice(0, 2).map((link) => link.label);
+
+/** 与正式页同源规则：拉丁取前两个词首字母，单词姓名取前两字。 */
+const monogram = (() => {
+  const words = name
+    .trim()
+    .split(/\s+/)
+    .filter((word) => word.length > 0 && /\p{L}/u.test(Array.from(word)[0] ?? ''));
+  const first = words[0];
+  if (!first) return Array.from(name)[0] ?? '';
+  const firstChar = Array.from(first)[0] ?? '';
+  if (words.length > 1) return `${firstChar}${Array.from(words[1])[0] ?? ''}`.toUpperCase();
+  const chars = Array.from(first);
+  return (chars.length > 1 ? chars.slice(0, 2).join('') : firstChar).toUpperCase();
+})();
+---
+
+<div class="deco-pv">
+  <span class="deco-pv-step" aria-hidden="true"></span>
+  <span class="deco-pv-fan" aria-hidden="true"></span>
+
+  <div class="deco-pv-top">
+    <span class="deco-pv-mark">
+      <span class="deco-pv-mark-gem" aria-hidden="true"></span>
+      <span class="deco-pv-mark-text">{monogram}</span>
+    </span>
+    <span class="deco-pv-kicker">{t.portfolio}</span>
+  </div>
+
+  <p class="deco-pv-name">{name}</p>
+  <p class="deco-pv-headline">{headline ?? t.projectsTitle}</p>
+
+  <div class="deco-pv-ornament" aria-hidden="true">
+    <span class="deco-pv-line"></span>
+    <span class="deco-pv-gem"></span>
+    <span class="deco-pv-line"></span>
+  </div>
+
+  <div class="deco-pv-tickets">
+    <span class="deco-pv-ticket">{ticketLabels[0] ?? t.linksTitle}</span>
+    <span class="deco-pv-ticket">{ticketLabels[1] ?? t.contactTitle}</span>
+  </div>
+</div>
+
+<style>
+  .deco-pv {
+    --deco-pv-display: var(--font-fraunces), var(--font-zhuque), "Songti SC", "SimSun",
+      "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --deco-pv-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei",
+      "Hiragino Sans", "Yu Gothic UI", sans-serif;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.22rem;
+    min-height: 9rem;
+    overflow: hidden;
+    padding: 0.65rem 0.75rem 0.7rem;
+    border: var(--dc-line) solid var(--dc-hairline);
+    background-color: var(--dc-black);
+    background-image:
+      radial-gradient(9rem 5rem at 50% -1.5rem, rgb(212 175 55 / 0.14), transparent 72%),
+      repeating-linear-gradient(90deg, rgb(246 240 226 / 0.018) 0 1px, transparent 1px 5px);
+    background-repeat: no-repeat, repeat;
+    color: var(--dc-ivory);
+    font-family: var(--deco-pv-body);
+    font-size: 0.55rem;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .deco-pv::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: var(--dc-line) solid var(--dc-brass);
+    pointer-events: none;
+  }
+
+  .deco-pv-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    background: var(--dc-gold);
+    opacity: 0.55;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 12%,
+      24% 12%,
+      24% 26%,
+      12% 26%,
+      12% 100%,
+      0 100%
+    );
+  }
+
+  .deco-pv-fan {
+    display: block;
+    inline-size: 4.6rem;
+    aspect-ratio: 2 / 1;
+    margin-bottom: 0.1rem;
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    overflow: hidden;
+    background: repeating-conic-gradient(
+      from 270deg at 50% 100%,
+      rgb(212 175 55 / 0.72) 0deg 0.8deg,
+      transparent 0.8deg 9deg
+    );
+  }
+
+  .deco-pv-top {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    margin-top: 0.1rem;
+  }
+
+  .deco-pv-mark {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    flex: 0 0 auto;
+    margin-inline: 0.2rem;
+  }
+
+  .deco-pv-mark-gem {
+    position: absolute;
+    inset: 0;
+    border: var(--dc-line) solid var(--dc-gold);
+    transform: rotate(45deg);
+  }
+
+  .deco-pv-mark-text {
+    position: relative;
+    color: var(--dc-gold);
+    font-family: var(--deco-pv-display);
+    font-size: 0.4rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .deco-pv-kicker {
+    min-width: 0;
+    color: var(--dc-gold-bright);
+    font-family: var(--deco-pv-display);
+    font-size: 0.44rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.26em;
+    text-indent: 0.26em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .deco-pv-name {
+    max-width: 100%;
+    margin: 0.12rem 0 0;
+    color: var(--dc-ivory);
+    font-family: var(--deco-pv-display);
+    font-size: 1.45rem;
+    line-height: 1.1;
+    letter-spacing: 0.05em;
+    text-indent: 0.05em;
+    overflow-wrap: anywhere;
+  }
+
+  .deco-pv-headline {
+    display: -webkit-box;
+    max-width: 11rem;
+    margin: 0;
+    overflow: hidden;
+    color: var(--dc-ivory-soft);
+    font-size: 0.5rem;
+    line-height: 1.45;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .deco-pv-ornament {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    inline-size: 6rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .deco-pv-line {
+    flex: 1 1 auto;
+    height: 0;
+    border-top: var(--dc-line) solid var(--dc-hairline);
+  }
+
+  .deco-pv-gem {
+    flex: 0 0 auto;
+    inline-size: 4px;
+    block-size: 4px;
+    border: var(--dc-line) solid var(--dc-gold);
+    transform: rotate(45deg);
+  }
+
+  .deco-pv-tickets {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-top: auto;
+    min-width: 0;
+  }
+
+  .deco-pv-ticket {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0.16rem 0.4rem;
+    border: var(--dc-line) solid var(--dc-hairline);
+    background: var(--dc-panel);
+    color: var(--dc-ivory);
+    font-size: 0.44rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    overflow-wrap: anywhere;
+  }
+</style>

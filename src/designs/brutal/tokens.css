@@ -1,0 +1,40 @@
+/**
+ * brutal 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.bt, .bt-pv)`），不是 `:root`：预览内联时 `:root` 会泄漏成切换页全局令牌。
+ * - 只放调色板与量值；字体角色由 `style.css` 的 `@theme inline` 承担（祖先 `html` 取不到
+ *   后代作用域变量，放进令牌会让正式页字体静默回退）。
+ * - 纯 CSS，不含 Tailwind 指令。
+ */
+
+:is(.bt, .bt-pv) {
+  /* 纸张 */
+  --bt-paper: #f2efe6;
+  --bt-paper-2: #e6e0d2;
+  --bt-white: #fffdf7;
+
+  /* 墨 */
+  --bt-ink: #0b0b0b;
+  --bt-ink-soft: #2a2a2a;
+  --bt-muted: #5a564c;
+
+  /* 强调 */
+  --bt-orange: #ff4d00;
+  --bt-blue: #1f4bff;
+  --bt-acid: #d8ff00;
+
+  /* 线条 / 阴影 */
+  --bt-line: 4px;
+  --bt-line-thin: 2px;
+  --bt-shadow: 8px 8px 0 var(--bt-ink);
+  --bt-shadow-sm: 4px 4px 0 var(--bt-ink);
+
+  /* 尺度 */
+  --bt-max: 72rem;
+  --bt-pad: clamp(1.25rem, 4vw, 3.5rem);
+  --bt-gap: clamp(1.25rem, 4vw, 3rem);
+
+  /* 动效 */
+  --bt-dur: 160ms;
+  --bt-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

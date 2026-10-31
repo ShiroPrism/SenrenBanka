@@ -1,0 +1,710 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
+
+/* brutal — 新粗野告示板
+   纸张 + 胶带 + 印章 + 编号。粗黑边框与硬偏移阴影承担「贴上去」的物理感；
+   颜色只做块面强调，信息层级由字号、字重、边框与留白表达。 */
+
+@theme inline {
+  --font-bt-display: var(--font-league-gothic);
+  --font-bt-body: var(--font-inter);
+  --font-bt-mono: var(--font-jetbrains-mono);
+  --font-bt-cjk: var(--font-zhuque);
+}
+
+.bt {
+  /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前。 */
+  --bt-type-display: var(--font-league-gothic), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --bt-type-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", sans-serif;
+  --bt-type-mono: var(--font-jetbrains-mono), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", monospace;
+
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: clip;
+  background-color: var(--bt-paper);
+  background-image:
+    linear-gradient(rgba(11, 11, 11, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 11, 11, 0.055) 1px, transparent 1px);
+  background-size: 2rem 2rem, 2rem 2rem, auto;
+  color: var(--bt-ink);
+  font-family: var(--bt-type-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bt-page ::selection {
+  background: var(--bt-acid);
+  color: var(--bt-ink);
+}
+
+.bt-page {
+  width: 100%;
+  max-width: var(--bt-max);
+  margin: 0 auto;
+  padding: 0 var(--bt-pad) 2.5rem;
+}
+
+/* ---------- 顶部条 ---------- */
+
+.bt-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 1.25rem 0 0.9rem;
+  border-bottom: var(--bt-line) solid var(--bt-ink);
+  font-family: var(--bt-type-mono);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bt-header-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+  font-family: var(--bt-type-body);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.bt-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  flex: 0 0 auto;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-ink);
+  box-shadow: 3px 3px 0 var(--bt-orange);
+  color: var(--bt-paper);
+  font-family: var(--bt-type-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.bt-header-meta {
+  color: var(--bt-muted);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Hero ---------- */
+
+.bt-main {
+  display: block;
+}
+
+.bt-hero {
+  position: relative;
+  padding: clamp(2.5rem, 7vw, 5rem) 0 clamp(2rem, 5vw, 3.5rem);
+  border-bottom: var(--bt-line) solid var(--bt-ink);
+}
+
+.bt-kicker {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.22rem 0.5rem;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-acid);
+  box-shadow: 3px 3px 0 var(--bt-ink);
+  font-family: var(--bt-type-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+}
+
+.bt-name {
+  margin: 0;
+  max-width: 100%;
+  font-family: var(--bt-type-display);
+  font-size: clamp(3.9rem, 14vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.bt-headline {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  font-family: var(--bt-type-body);
+  font-size: clamp(1.2rem, 2.3vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.bt-notice {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 70rem;
+  margin: 1.5rem 0 0;
+  padding: 1rem 1.15rem 1.1rem;
+  border: 3px solid var(--bt-ink);
+  border-left: 10px solid var(--bt-orange);
+  background: var(--bt-paper-2);
+  box-shadow: var(--bt-shadow-sm);
+}
+
+.bt-notice-label {
+  justify-self: start;
+  padding: 0.1rem 0.4rem;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-acid);
+  font-family: var(--bt-type-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bt-bio {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--bt-ink-soft);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.bt-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.bt-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border: 3px solid var(--bt-ink);
+  background: var(--bt-white);
+  box-shadow: var(--bt-shadow-sm);
+  color: var(--bt-ink);
+  font-family: var(--bt-type-body);
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  transition:
+    transform var(--bt-dur) var(--bt-ease),
+    box-shadow var(--bt-dur) var(--bt-ease),
+    background-color var(--bt-dur) var(--bt-ease);
+}
+
+.bt-link:nth-child(3n + 1) {
+  background: var(--bt-orange);
+  color: var(--bt-ink);
+}
+
+.bt-link:nth-child(3n + 2) {
+  background: var(--bt-blue);
+  color: var(--bt-white);
+}
+
+.bt-link:nth-child(3n) {
+  background: var(--bt-acid);
+  color: var(--bt-ink);
+}
+
+.bt-ext {
+  font-family: var(--bt-type-mono);
+  font-size: 0.85em;
+  line-height: 1;
+}
+
+.bt-sticker {
+  position: absolute;
+  top: 1.25rem;
+  right: 0;
+  display: inline-block;
+  padding: 0.3rem 0.55rem;
+  border: 3px solid var(--bt-ink);
+  background: var(--bt-blue);
+  box-shadow: var(--bt-shadow-sm);
+  color: var(--bt-white);
+  font-family: var(--bt-type-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(3.5deg);
+}
+
+/* ---------- 分区 ---------- */
+
+.bt-section {
+  padding: clamp(2rem, 5vw, 3.5rem) 0;
+  border-bottom: var(--bt-line) solid var(--bt-ink);
+}
+
+.bt-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.bt-section-num {
+  display: inline-block;
+  padding: 0.16rem 0.45rem;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-ink);
+  color: var(--bt-paper);
+  font-family: var(--bt-type-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+}
+
+.bt-section-title {
+  margin: 0;
+  font-family: var(--bt-type-display);
+  font-size: clamp(2.1rem, 5vw, 4.25rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+/* ---------- 项目卡 ---------- */
+
+.bt-projects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
+  padding: 1.15rem;
+  border: var(--bt-line) solid var(--bt-ink);
+  background: var(--bt-white);
+  box-shadow: var(--bt-shadow);
+  transition:
+    transform var(--bt-dur) var(--bt-ease),
+    box-shadow var(--bt-dur) var(--bt-ease);
+}
+
+.bt-card:nth-child(2n) {
+  background: var(--bt-paper-2);
+}
+
+.bt-card-index {
+  align-self: flex-start;
+  padding: 0.08rem 0.38rem;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-acid);
+  font-family: var(--bt-type-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.bt-card-title {
+  margin: 0;
+  font-family: var(--bt-type-body);
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.bt-card-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+}
+
+.bt-card-title a:hover {
+  text-decoration-thickness: 5px;
+}
+
+.bt-card-desc {
+  margin: 0;
+  color: var(--bt-ink-soft);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.bt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bt-tags li {
+  padding: 0.08rem 0.34rem;
+  border: var(--bt-line-thin) solid var(--bt-ink);
+  background: var(--bt-paper);
+  font-family: var(--bt-type-mono);
+  font-size: 0.66rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 经历台账 ---------- */
+
+.bt-ledger {
+  margin: 0;
+  padding: 0;
+  border-top: var(--bt-line-thin) solid var(--bt-ink);
+  list-style: none;
+}
+
+.bt-ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.2rem 1.5rem;
+  padding: 1rem 0;
+  border-bottom: var(--bt-line-thin) solid var(--bt-ink);
+}
+
+.bt-ledger-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.bt-ledger-org {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.bt-ledger-role {
+  color: var(--bt-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.bt-ledger-period {
+  align-self: start;
+  color: var(--bt-muted);
+  font-family: var(--bt-type-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.bt-ledger-desc {
+  grid-column: 1 / -1;
+  max-width: 68ch;
+  margin: 0.3rem 0 0;
+  color: var(--bt-muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+/* ---------- 技能贴纸 ---------- */
+
+.bt-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bt-skill {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.42rem 0.68rem;
+  border: 3px solid var(--bt-ink);
+  background: var(--bt-paper);
+  box-shadow: var(--bt-shadow-sm);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.bt-skill:nth-child(3n + 1) {
+  transform: rotate(-2deg);
+}
+
+.bt-skill:nth-child(3n + 2) {
+  transform: rotate(1.5deg);
+}
+
+/* ---------- 联系 ---------- */
+
+.bt-contact {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border: var(--bt-line) solid var(--bt-ink);
+  background: var(--bt-ink);
+  box-shadow: 8px 8px 0 var(--bt-orange);
+  color: var(--bt-paper);
+}
+
+.bt-contact .bt-section-head {
+  margin-bottom: 1rem;
+}
+
+.bt-contact .bt-section-num {
+  background: var(--bt-acid);
+  color: var(--bt-ink);
+}
+
+.bt-contact .bt-section-title {
+  color: var(--bt-paper);
+}
+
+.bt-contact-body {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.bt-contact-link {
+  display: inline-block;
+  min-height: 44px;
+  justify-self: start;
+  color: var(--bt-acid);
+  font-family: var(--bt-type-mono);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
+
+.bt-contact-note {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--bt-paper-2);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ---------- 页脚 ---------- */
+
+.bt-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 1.25rem 0 0;
+  border-top: var(--bt-line) solid var(--bt-ink);
+  color: var(--bt-muted);
+  font-family: var(--bt-type-mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- 焦点 ---------- */
+
+.bt-page a:focus-visible {
+  outline: 3px solid var(--bt-blue);
+  outline-offset: 3px;
+}
+
+.bt-link:focus-visible {
+  outline-color: var(--bt-ink);
+  background: var(--bt-acid);
+  color: var(--bt-ink);
+}
+
+.bt-link:nth-child(3n + 2):focus-visible {
+  outline-color: var(--bt-acid);
+}
+
+.bt-card-title a:focus-visible {
+  outline-offset: 4px;
+}
+
+.bt-contact-link:focus-visible {
+  outline-color: var(--bt-acid);
+}
+
+/* ---------- 入场 / 显现 ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .bt-snap {
+    animation: bt-snap 180ms steps(2, end);
+    animation-delay: var(--bt-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity var(--bt-dur) var(--bt-ease) var(--bt-reveal-delay, 0ms),
+      transform var(--bt-dur) var(--bt-ease) var(--bt-reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-reveal-ready] .bt-projects > :nth-child(2) {
+    --bt-reveal-delay: 60ms;
+  }
+
+  html[data-reveal-ready] .bt-projects > :nth-child(3) {
+    --bt-reveal-delay: 120ms;
+  }
+}
+
+@keyframes bt-snap {
+  from {
+    transform: translate(-6px, 6px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bt-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--bt-ink);
+  }
+
+  .bt-card:hover,
+  .bt-card:focus-within {
+    transform: translate(-3px, -3px);
+    box-shadow: 11px 11px 0 var(--bt-ink);
+  }
+}
+
+.bt-link:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--bt-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-snap,
+  .bt-link,
+  .bt-card,
+  .bt-skill {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .bt-link:hover,
+  .bt-link:active,
+  .bt-card:hover,
+  .bt-card:focus-within {
+    transform: none;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 1024px) {
+  .bt-projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .bt-projects {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bt-sticker {
+    display: none;
+  }
+
+  .bt-ledger-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .bt-ledger-period {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .bt-page {
+    padding-bottom: 2rem;
+  }
+
+  .bt-name {
+    font-size: clamp(3.4rem, 17vw, 5.5rem);
+  }
+
+  .bt-headline {
+    font-size: 1.15rem;
+  }
+
+  .bt-skill:nth-child(3n + 1),
+  .bt-skill:nth-child(3n + 2) {
+    transform: none;
+  }
+
+  .bt-section-title {
+    font-size: clamp(1.9rem, 8vw, 2.8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .bt-header {
+    align-items: flex-start;
+  }
+
+  .bt-header-meta {
+    text-align: left;
+  }
+
+  .bt-link {
+    width: 100%;
+  }
+
+  .bt-notice {
+    padding: 0.9rem 0.9rem 1rem;
+  }
+
+  .bt-contact {
+    padding: 1.1rem;
+    box-shadow: 5px 5px 0 var(--bt-orange);
+  }
+}

@@ -1,0 +1,179 @@
+---
+/**
+ * ink 预览碎片（切换页用）：保留最有辨识度的形态——
+ * 宣纸、青瓷外框、右缘一列竖排题署、一枚朱砂印，以及两枚印谱题签。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；无可聚焦元素；调用方加 `aria-hidden`。
+ * - 纯装饰：不是完整页面，不带动效机制，不引交互依赖。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-sorts-mill-goudy',
+  '--font-prociono',
+  '--font-lxgw',
+  '--font-zhuque',
+];
+
+const { locale, name, headline, links } = Astro.props as PreviewProps;
+const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const sealGlyph = Array.from(name ?? '')[0] ?? '';
+const slipLabels = (links ?? []).slice(0, 2).map((link) => link.label);
+---
+
+<div class="ink-pv">
+  <div class="ink-pv-main">
+    <p class="ink-pv-kicker">{t.portfolio}</p>
+    <p class="ink-pv-headline">{headline ?? t.preface}</p>
+    <div class="ink-pv-slips">
+      <span class="ink-pv-slip">{slipLabels[0] ?? t.projects}</span>
+      <span class="ink-pv-slip">{slipLabels[1] ?? t.imprint}</span>
+    </div>
+  </div>
+
+  <p class="ink-pv-name">{name}</p>
+  <span class="ink-pv-seal" aria-hidden="true">{sealGlyph}</span>
+</div>
+
+<style>
+  .ink-pv {
+    --ink-pv-display:
+      var(--font-sorts-mill-goudy), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
+      "PingFang SC", "Microsoft YaHei", serif;
+    --ink-pv-text:
+      var(--font-prociono), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
+      "PingFang SC", "Microsoft YaHei", serif;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    min-height: 9rem;
+    padding: 0.7rem 0.8rem 0.75rem;
+    background-color: var(--ink-paper);
+    background-image:
+      radial-gradient(
+        9rem 7rem at 88% -12%,
+        color-mix(in srgb, var(--ink-celadon) 9%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(var(--ink-grain) 0.4px, transparent 0.5px);
+    background-size:
+      auto,
+      3px 3px;
+    color: var(--ink-ink);
+    font-family: var(--ink-pv-text);
+    font-size: 0.5625rem;
+    line-height: 1.6;
+    overflow: hidden;
+  }
+
+  .ink-pv::before {
+    content: "";
+    position: absolute;
+    inset: 0.28rem;
+    border: 1px solid var(--ink-rule-celadon);
+    pointer-events: none;
+  }
+
+  .ink-pv-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .ink-pv-kicker {
+    margin: 0;
+    color: var(--ink-ink-muted);
+    font-family: var(--ink-pv-display);
+    font-size: 0.5rem;
+    line-height: 1.6;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .ink-pv-headline {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--ink-ink-soft);
+    font-size: 0.6rem;
+    line-height: 1.7;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .ink-pv-slips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: auto;
+    padding-top: 0.3rem;
+  }
+
+  .ink-pv-slip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.22rem;
+    max-width: 100%;
+    padding: 0.12rem 0.32rem;
+    border: 1px solid var(--ink-rule-strong);
+    font-family: var(--ink-pv-display);
+    font-size: 0.5rem;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    overflow-wrap: anywhere;
+  }
+
+  .ink-pv-slip::before {
+    content: "";
+    width: 0.22rem;
+    height: 0.22rem;
+    flex: 0 0 auto;
+    background-color: var(--ink-cinnabar);
+  }
+
+  .ink-pv-name {
+    height: 5.6rem;
+    margin: 0;
+    writing-mode: vertical-rl;
+    color: var(--ink-ink);
+    font-family: var(--ink-pv-display);
+    font-size: 1.02rem;
+    line-height: 1.12;
+    letter-spacing: 0.14em;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  .ink-pv-seal {
+    position: absolute;
+    right: 0.62rem;
+    bottom: 0.62rem;
+    display: grid;
+    place-items: center;
+    width: 0.9rem;
+    height: 0.9rem;
+    background-color: var(--ink-cinnabar);
+    color: var(--ink-paper);
+    font-family: var(--ink-pv-display);
+    font-size: 0.52rem;
+    line-height: 1;
+    transform: rotate(-2deg);
+  }
+
+  @media (max-width: 520px) {
+    .ink-pv-name {
+      height: 4.6rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>

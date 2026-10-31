@@ -1,0 +1,1004 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source not "./Preview.astro";
+@import "./tokens.css";
+
+/* deco — Art Deco 剧院节目单（暗黑奢华）
+   墨黑台面 + 黄铜双线框 + 金色扇形与阶梯角；对称构图，信息层级由发丝线与双框表达，
+   金色只承担标题、编号、装饰与焦点环，正文永远是米白。规范见同目录 DESIGN.md。 */
+
+@theme inline {
+  --font-deco-display: var(--font-fraunces);
+  --font-deco-body: var(--font-inter);
+  --font-deco-cjk: var(--font-zhuque);
+}
+
+/* 祖先选择器消费令牌时必须写字面量：html 取不到 .deco 作用域内的变量。 */
+html:has(.deco) {
+  background: #07060a;
+  overflow-x: clip;
+  scrollbar-color: #7f6a35 #07060a;
+}
+
+.deco {
+  /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前（fonts:typography 门禁）。 */
+  --dc-type-display: var(--font-fraunces), var(--font-zhuque), "Songti SC", "SimSun",
+    "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --dc-type-body: var(--font-inter), var(--font-zhuque), "PingFang SC", "Microsoft YaHei",
+    "Hiragino Sans", "Yu Gothic UI", sans-serif;
+
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: clip;
+  background-color: var(--dc-black);
+  background-image:
+    radial-gradient(38rem 22rem at 50% -6rem, rgb(212 175 55 / 0.1), transparent 72%),
+    repeating-linear-gradient(90deg, rgb(246 240 226 / 0.018) 0 1px, transparent 1px 5px);
+  background-repeat: no-repeat, repeat;
+  color: var(--dc-ivory);
+  font-family: var(--dc-type-body);
+  font-size: 1rem;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.deco ::selection {
+  background: var(--dc-gold);
+  color: var(--dc-black);
+}
+
+.deco-page {
+  width: 100%;
+  max-width: var(--dc-max);
+  margin: 0 auto;
+  padding: 0 var(--dc-pad) clamp(2.5rem, 6vw, 4rem);
+}
+
+/* ---------- 页眉 ---------- */
+
+.deco-masthead {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(1.4rem, 3.2vw, 2.4rem);
+  text-align: center;
+}
+
+.deco-masthead-rule {
+  display: block;
+  height: 6px;
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  border-bottom: var(--dc-line) solid var(--dc-hairline);
+  transform-origin: center;
+}
+
+.deco-masthead-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1.1rem;
+}
+
+.deco-masthead-gem {
+  inline-size: 5px;
+  block-size: 5px;
+  flex: 0 0 auto;
+  background: var(--dc-gold);
+  transform: rotate(45deg);
+}
+
+.deco-masthead-meta {
+  margin: 0;
+  max-width: 100%;
+  color: var(--dc-gold-bright);
+  font-family: var(--dc-type-display);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 首屏 ---------- */
+
+.deco-main {
+  display: block;
+}
+
+.deco-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  margin-top: clamp(1.4rem, 3.6vw, 2.6rem);
+  padding: clamp(2.4rem, 6.6vw, 4.8rem) clamp(1rem, 3vw, 2.6rem) clamp(2.2rem, 5.6vw, 3.8rem);
+  border: var(--dc-line) solid var(--dc-hairline);
+  text-align: center;
+}
+
+/* 内缩双框（装饰，不承载内容） */
+.deco-hero::before {
+  content: "";
+  position: absolute;
+  inset: var(--dc-frame-inset);
+  border: var(--dc-line) solid var(--dc-brass);
+  pointer-events: none;
+}
+
+.deco-step {
+  position: absolute;
+  inline-size: 2.4rem;
+  block-size: 2.4rem;
+  background: var(--dc-gold);
+  opacity: 0.6;
+}
+
+.deco-step-tl {
+  top: 0;
+  left: 0;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 7%,
+    24% 7%,
+    24% 14%,
+    14% 14%,
+    14% 24%,
+    7% 24%,
+    7% 100%,
+    0 100%
+  );
+}
+
+.deco-step-br {
+  right: 0;
+  bottom: 0;
+  clip-path: polygon(
+    93% 0,
+    100% 0,
+    100% 100%,
+    0 100%,
+    0 93%,
+    76% 93%,
+    76% 86%,
+    86% 86%,
+    86% 76%,
+    93% 76%
+  );
+}
+
+/* 幕布（装饰；静态基态为 scaleX(0)，即「已拉开」） */
+.deco-curtain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  pointer-events: none;
+}
+
+.deco-curtain-half {
+  inline-size: 50%;
+  block-size: 100%;
+  background-image:
+    repeating-linear-gradient(90deg, #0b0910 0 6px, #16111c 6px 13px),
+    linear-gradient(180deg, transparent 72%, rgb(156 131 64 / 0.25) 100%);
+  transform: scaleX(0);
+}
+
+.deco-curtain-l {
+  transform-origin: left center;
+}
+
+.deco-curtain-r {
+  transform-origin: right center;
+}
+
+/* 扇形放射：半椭圆裁剪 + 以底边中点为圆心的 7° 一束放射线 */
+.deco-fan {
+  position: relative;
+  display: block;
+  inline-size: clamp(9rem, 24vw, 15rem);
+  aspect-ratio: 2 / 1;
+  margin: 0 auto clamp(1.1rem, 3vw, 1.7rem);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  overflow: hidden;
+  background: repeating-conic-gradient(
+    from 270deg at 50% 100%,
+    rgb(212 175 55 / 0.72) 0deg 0.6deg,
+    transparent 0.6deg 7deg
+  );
+}
+
+.deco-fan::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--dc-line) solid var(--dc-brass);
+  border-bottom: 0;
+  border-radius: inherit;
+}
+
+.deco-kicker {
+  margin: 0;
+  color: var(--dc-gold-bright);
+  font-family: var(--dc-type-body);
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+}
+
+.deco-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.75rem 0 0;
+  font-family: var(--dc-type-display);
+  font-weight: 400;
+}
+
+/* monogram：菱形双框 + 姓名首字（整体 aria-hidden，完整姓名见 .deco-name-text） */
+.deco-monogram {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: clamp(3.4rem, 9vw, 4.8rem);
+  aspect-ratio: 1;
+  margin-bottom: clamp(1rem, 2.6vw, 1.5rem);
+  color: var(--dc-gold);
+  font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-indent: 0.06em;
+}
+
+.deco-monogram-gem {
+  position: absolute;
+  inset: 0;
+  border: var(--dc-line) solid var(--dc-gold);
+  transform: rotate(45deg);
+}
+
+.deco-monogram-gem::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: var(--dc-line) solid var(--dc-brass);
+}
+
+.deco-monogram-text {
+  position: relative;
+}
+
+.deco-name-text {
+  display: block;
+  max-width: 100%;
+  color: var(--dc-ivory);
+  font-size: clamp(2.35rem, 8.4vw, 5.2rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-indent: 0.04em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.deco-subtitle {
+  max-width: 46ch;
+  margin: clamp(0.85rem, 2.2vw, 1.3rem) auto 0;
+  color: var(--dc-ivory-soft);
+  font-family: var(--dc-type-body);
+  font-size: clamp(0.98rem, 1.6vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.02em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* 线 — 菱形 — 线 */
+.deco-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 20rem;
+  margin: clamp(1.2rem, 3.2vw, 1.9rem) auto;
+}
+
+.deco-ornament-line {
+  flex: 1 1 auto;
+  min-width: 1.5rem;
+  height: 0;
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  transform-origin: center;
+}
+
+.deco-ornament-gem {
+  flex: 0 0 auto;
+  inline-size: 7px;
+  block-size: 7px;
+  border: var(--dc-line) solid var(--dc-gold);
+  transform: rotate(45deg);
+}
+
+/* 序言块 */
+.deco-overture {
+  max-width: 46rem;
+  margin: clamp(1.4rem, 3.6vw, 2.2rem) auto 0;
+  padding: clamp(1rem, 2.4vw, 1.5rem) clamp(0.85rem, 2.4vw, 1.6rem);
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  border-bottom: var(--dc-line) solid var(--dc-hairline);
+  text-align: left;
+}
+
+.deco-overture-label {
+  margin: 0 0 0.6rem;
+  color: var(--dc-gold-bright);
+  font-family: var(--dc-type-display);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.deco-bio {
+  max-width: 62ch;
+  margin: 0 auto;
+  color: var(--dc-ivory-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 分区 ---------- */
+
+.deco-section {
+  margin-top: clamp(2.1rem, 5.6vw, 3.8rem);
+  padding-top: clamp(1.5rem, 3.8vw, 2.4rem);
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  text-align: center;
+}
+
+.deco-section-head {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+  margin-bottom: clamp(1.4rem, 3.6vw, 2.2rem);
+}
+
+.deco-section-head .deco-ornament {
+  margin: 0.2rem auto 0;
+}
+
+.deco-section-title {
+  margin: 0;
+  max-width: 100%;
+  color: var(--dc-gold);
+  font-family: var(--dc-type-display);
+  font-size: clamp(1.45rem, 3.4vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  text-indent: 0.16em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 剧目表（links） ---------- */
+
+.deco-tickets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deco-ticket {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.deco-ticket-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: var(--dc-tap);
+  max-width: 100%;
+  padding: 0.72rem 1.25rem;
+  border: var(--dc-line) solid var(--dc-hairline);
+  background: var(--dc-panel);
+  color: var(--dc-ivory);
+  font-family: var(--dc-type-body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  transition:
+    border-color var(--dc-dur-fast) var(--dc-ease),
+    color var(--dc-dur-fast) var(--dc-ease);
+}
+
+.deco-ticket-link::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: var(--dc-line) solid var(--dc-brass);
+  pointer-events: none;
+}
+
+.deco-ticket-gem {
+  position: relative;
+  flex: 0 0 auto;
+  inline-size: 6px;
+  block-size: 6px;
+  border: var(--dc-line) solid var(--dc-gold);
+  transform: rotate(45deg);
+  transition: transform var(--dc-dur-fast) var(--dc-ease);
+}
+
+.deco-ticket-label {
+  position: relative;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 幕次（projects） ---------- */
+
+.deco-acts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--dc-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.deco-act {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: clamp(1.1rem, 2.4vw, 1.5rem);
+  border: var(--dc-line) solid var(--dc-hairline);
+  background: linear-gradient(180deg, var(--dc-panel), var(--dc-panel-2));
+  transition: border-color var(--dc-dur-fast) var(--dc-ease);
+}
+
+/* 卡内阶梯角（装饰） */
+.deco-act::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  inline-size: 1.6rem;
+  block-size: 1.6rem;
+  background: var(--dc-brass);
+  opacity: 0.55;
+  pointer-events: none;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 12%,
+    22% 12%,
+    22% 24%,
+    12% 24%,
+    12% 100%,
+    0 100%
+  );
+}
+
+.deco-act-num {
+  color: var(--dc-gold);
+  font-family: var(--dc-type-display);
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+}
+
+.deco-act-title {
+  margin: 0;
+  color: var(--dc-ivory);
+  font-family: var(--dc-type-display);
+  font-size: clamp(1.05rem, 1.9vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  overflow-wrap: anywhere;
+}
+
+.deco-act-title a {
+  display: inline-block;
+  max-width: 100%;
+  padding-bottom: 0.08em;
+  border-bottom: var(--dc-line) solid var(--dc-brass);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color var(--dc-dur-fast) var(--dc-ease),
+    border-color var(--dc-dur-fast) var(--dc-ease);
+}
+
+.deco-act-desc {
+  margin: 0;
+  color: var(--dc-ivory-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.deco-act-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem 0.75rem;
+  margin: auto 0 0;
+  padding: 0.7rem 0 0;
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  list-style: none;
+}
+
+.deco-act-tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  color: var(--dc-muted);
+  font-size: 0.66rem;
+  line-height: 1.6;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.deco-act-tags li::before {
+  content: "";
+  flex: 0 0 auto;
+  inline-size: 4px;
+  block-size: 4px;
+  background: var(--dc-brass);
+  transform: rotate(45deg);
+}
+
+/* ---------- 演出单（experience） ---------- */
+
+.deco-bill {
+  margin: 0;
+  padding: 0;
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  list-style: none;
+  text-align: left;
+}
+
+.deco-bill-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.25rem 1.5rem;
+  padding: clamp(1rem, 2.4vw, 1.35rem) 0;
+  border-bottom: var(--dc-line) solid var(--dc-hairline);
+}
+
+.deco-bill-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.deco-bill-org {
+  color: var(--dc-ivory);
+  font-family: var(--dc-type-display);
+  font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+  line-height: 1.4;
+  letter-spacing: 0.03em;
+  overflow-wrap: anywhere;
+}
+
+.deco-bill-role {
+  color: var(--dc-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  overflow-wrap: anywhere;
+}
+
+.deco-bill-period {
+  align-self: start;
+  color: var(--dc-gold-bright);
+  font-size: 0.7rem;
+  line-height: 1.7;
+  letter-spacing: 0.2em;
+  text-align: right;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.deco-bill-desc {
+  grid-column: 1 / -1;
+  max-width: 64ch;
+  margin: 0.35rem 0 0;
+  color: var(--dc-ivory-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 演职员表（skills） ---------- */
+
+.deco-credits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.deco-credit {
+  position: relative;
+  min-width: 0;
+  padding-left: 1.15rem;
+  color: var(--dc-ivory-soft);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.deco-credit::before {
+  content: "";
+  position: absolute;
+  top: 0.68em;
+  left: 0;
+  inline-size: 5px;
+  block-size: 5px;
+  border: var(--dc-line) solid var(--dc-brass);
+  transform: rotate(45deg);
+}
+
+/* ---------- 售票处（contact） ---------- */
+
+.deco-boxoffice {
+  position: relative;
+  margin-top: clamp(2.1rem, 5.6vw, 3.8rem);
+  padding: clamp(1.5rem, 4vw, 2.6rem) clamp(1.1rem, 3.4vw, 2.2rem);
+  border: var(--dc-line) solid var(--dc-hairline);
+  background: linear-gradient(180deg, var(--dc-panel), transparent 88%);
+  text-align: center;
+}
+
+.deco-boxoffice::before {
+  content: "";
+  position: absolute;
+  inset: var(--dc-frame-inset);
+  border: var(--dc-line) solid var(--dc-brass);
+  pointer-events: none;
+}
+
+.deco-boxoffice .deco-section-head {
+  margin-bottom: 0.9rem;
+}
+
+.deco-email {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--dc-tap);
+  max-width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.35rem 1.1rem;
+  border-bottom: var(--dc-line) solid var(--dc-brass);
+  color: var(--dc-gold);
+  font-family: var(--dc-type-display);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    color var(--dc-dur-fast) var(--dc-ease),
+    border-color var(--dc-dur-fast) var(--dc-ease);
+}
+
+.deco-note {
+  max-width: 56ch;
+  margin: 0.9rem auto 0;
+  color: var(--dc-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 页脚 ---------- */
+
+.deco-footer {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  margin-top: clamp(2.4rem, 6.4vw, 4.2rem);
+  padding-top: clamp(1.3rem, 3vw, 2rem);
+  border-top: var(--dc-line) solid var(--dc-hairline);
+  text-align: center;
+}
+
+.deco-footer .deco-ornament {
+  margin: 0 auto 0.35rem;
+}
+
+.deco-footer-name {
+  margin: 0;
+  color: var(--dc-ivory-soft);
+  font-family: var(--dc-type-display);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-indent: 0.14em;
+  overflow-wrap: anywhere;
+}
+
+.deco-footer-note {
+  margin: 0;
+  color: var(--dc-muted);
+  font-size: 0.66rem;
+  line-height: 1.7;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 焦点 ---------- */
+
+.deco a:focus-visible {
+  outline: var(--dc-line-thick) solid var(--dc-gold-bright);
+  outline-offset: 3px;
+}
+
+.deco-ticket-link:focus-visible {
+  border-color: var(--dc-gold);
+}
+
+.deco-act-title a:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ---------- 动效 ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .deco-masthead-rule,
+  .deco-ornament-line {
+    animation: deco-draw var(--dc-dur-line) var(--dc-ease-line);
+  }
+
+  .deco-fan {
+    animation: deco-fan-open var(--dc-dur-fan) var(--dc-ease-line);
+  }
+
+  .deco-curtain-half {
+    animation: deco-curtain-part var(--dc-dur-curtain) var(--dc-ease-line);
+  }
+
+  .deco-kicker,
+  .deco-monogram,
+  .deco-name-text,
+  .deco-subtitle {
+    animation: deco-rise var(--dc-dur-rise) var(--dc-ease);
+  }
+
+  /* 共享滚动显现：隐藏态只由 html[data-reveal-ready] 门控 */
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity var(--dc-dur) var(--dc-ease) var(--dc-reveal-delay, 0ms),
+      transform var(--dc-dur) var(--dc-ease) var(--dc-reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-reveal-ready] .deco-acts > :nth-child(2) {
+    --dc-reveal-delay: 70ms;
+  }
+
+  html[data-reveal-ready] .deco-acts > :nth-child(3) {
+    --dc-reveal-delay: 140ms;
+  }
+}
+
+@keyframes deco-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes deco-fan-open {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes deco-curtain-part {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes deco-rise {
+  from {
+    transform: translateY(10px);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+/* 减动态：所有入场与形变归位，内容自然可见 */
+@media (prefers-reduced-motion: reduce) {
+  .deco-masthead-rule,
+  .deco-ornament-line,
+  .deco-fan,
+  .deco-curtain-half,
+  .deco-kicker,
+  .deco-monogram,
+  .deco-name-text,
+  .deco-subtitle,
+  .deco-ticket-link,
+  .deco-ticket-gem,
+  .deco-act,
+  .deco-act-title a,
+  .deco-email {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------- 交互（仅精确指针 + 可 hover 的环境） ---------- */
+
+@media (hover: hover) and (pointer: fine) {
+  .deco-ticket-link:hover {
+    border-color: var(--dc-gold);
+    color: var(--dc-gold-bright);
+  }
+
+  .deco-ticket-link:hover .deco-ticket-gem {
+    transform: rotate(45deg) scale(1.25);
+  }
+
+  .deco-act:hover {
+    border-color: var(--dc-brass);
+  }
+
+  .deco-act-title a:hover {
+    border-color: var(--dc-gold);
+    color: var(--dc-gold-bright);
+  }
+
+  .deco-email:hover {
+    border-color: var(--dc-gold);
+    color: var(--dc-gold-bright);
+  }
+}
+
+/* ---------- 触控命中区 ---------- */
+
+@media (pointer: coarse) {
+  .deco-ticket-link {
+    min-height: 48px;
+    padding-block: 0.85rem;
+  }
+
+  .deco-act-title a {
+    min-height: 44px;
+    padding-block: 0.3rem;
+  }
+
+  .deco-email {
+    min-height: 48px;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 1024px) {
+  .deco-acts,
+  .deco-credits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .deco-acts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .deco-bill-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .deco-bill-period {
+    text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .deco-credits {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .deco-step {
+    inline-size: 1.6rem;
+    block-size: 1.6rem;
+  }
+
+  .deco-hero {
+    padding-inline: 1rem;
+  }
+
+  .deco-overture {
+    padding-inline: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .deco-name-text {
+    font-size: clamp(1.9rem, 9.5vw, 2.6rem);
+  }
+
+  .deco-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+  }
+
+  .deco-ticket {
+    flex: 1 1 100%;
+  }
+
+  .deco-ticket-link {
+    inline-size: 100%;
+  }
+
+  .deco-masthead-meta {
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+  }
+}

@@ -6,6 +6,9 @@
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
 > 最近共享机制专项验证：**2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）**；此前 2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > 2026-10-28（HTML-only 子任务）：新增 `renderMode` 契约与构建末尾 `verify:html-only` 门禁。同日 `homepage99` styled 设计接入后，**当时**静态构建为 **81 页**（v0.17.0 当前为 **105 页**）；HTML-only 的桌面 / 320–375px / 无 CSS / 无 JS / 键盘检查证据见 `docs/verification/html-only.md`，Homepage '99 的浏览器实测见 `docs/verification/homepage99.md`。
+> 2026-10-31（`brutal` / `ink` / `deco` 增量）：新增 3 套 `styled` 与 3 个 `Preview.astro`；切换页预览 **24 → 27**，设计页 CSS **23 → 26**（三语共享），`fonts:typography` 门禁为 **26** 套 `styled` / **17** 套核心 CJK。`brutal` 证据见 `docs/verification/brutal.md`；`ink` / `deco` 的构建、体积与浏览器矩阵见 `docs/verification/ink.md` / `docs/verification/deco.md`。
+>
+> 2026-10-31 批次汇总（`ink` + `deco` 收口）：`npm run build` **117 页**、`astro check` 0 error / 0 warning、`npm test` **67/67**；核心子集 3 个 / **710,012 B**，`fonts:prune` 保留 336 条规则 / 22 个字体 CSS 包，`dist` **6,544,535 B（6.24 MiB）** ≤10 MiB。两套 `impeccable detect` 均为 `[]`（oxide `codex-grid-background` 反证命中）。切换页 **27** 张预览、**0** 个预览内部可聚焦元素；两套在 1440 / 768 / 375×812、三语言、Reveal 滚动与直达、四种降级、悬浮球 52×52 / 面板底边 = `innerHeight` / close+cancel+Esc、对比度与仅本地网络请求上全部通过。**触控验证须用 `tap()`**：Playwright 的鼠标点击会按设计把输入模式切到 mouse 并隐藏悬浮球，不是站点缺陷（2026-10-31 实测）。未复测项：`--base /demo`、Safari/Firefox/iOS/Android 真机、200% 缩放、CDP 平台字体信息。
 
 ## 核心字体内容子集验证（2026-10-31，v0.20.0）
 

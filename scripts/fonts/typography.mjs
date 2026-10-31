@@ -417,9 +417,9 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
     }
   }
 
-  if (styledCount !== 23) {
+  if (styledCount !== 26) {
     findings.push(
-      `${designsDirectory}: expected 23 styled designs, found ${styledCount}`,
+      `${designsDirectory}: expected 26 styled designs, found ${styledCount}`,
     );
   }
   return {
