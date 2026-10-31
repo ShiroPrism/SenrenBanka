@@ -740,10 +740,11 @@ test('font audit reports covered and uncovered CJK while failing on missing cand
   try {
     await runUpdate(fixture);
     const dist = path.join(fixture.projectRoot, 'dist');
-    await fs.mkdir(dist, { recursive: true });
+    await fs.mkdir(path.join(dist, '_astro', 'fonts'), { recursive: true });
+    await fs.writeFile(path.join(dist, '_astro', 'fonts', 'fixture-shard.woff2'), 'wOF2fixture');
     await fs.writeFile(
       path.join(dist, 'index.html'),
-      '<html><head><style>:root{--font-fixture:"Fixture"}</style></head><body>一龘𰀀<div hidden>変</div></body></html>',
+      '<html><head><style>@font-face{font-family:"Fixture-h";src:url("/_astro/fonts/fixture-shard.woff2") format("woff2");unicode-range:U+4E00;}:root{--font-fixture:"Fixture-h"}</style></head><body>一龘𰀀<div hidden>変</div></body></html>',
     );
     const warnings = [];
     const report = await auditFonts({
@@ -757,6 +758,12 @@ test('font audit reports covered and uncovered CJK while failing on missing cand
     assert.equal(report.uncovered[0].codePoint, 'U+9F98');
     assert.equal(report.uncovered[1].codePoint, 'U+30000');
     assert.equal(report.uncovered.some((issue) => issue.character === '変'), false);
+    assert.deepEqual(report.deployedGaps, []);
+    assert.deepEqual(report.danglingFontUrls, []);
+    assert.deepEqual(report.orphanFontFiles, []);
+    assert.equal(report.deployed.rules, 1);
+    assert.equal(report.deployed.fontFilesReferenced, 1);
+    assert.equal(report.pages[0].deployedRules, 1);
     assert.match(warnings.join('\n'), /U\+9F98/);
     const written = JSON.parse(
       await fs.readFile(path.join(fixture.projectRoot, '.cache/fonts/audit.json'), 'utf8'),
@@ -787,6 +794,47 @@ test('font audit reports covered and uncovered CJK while failing on missing cand
       () => auditFonts({ projectRoot: fixture.projectRoot, distDir: 'dist' }),
       /schemaVersion/i,
     );
+  } finally {
+    await fixture.close();
+  }
+});
+
+test('font audit fails on a shard dropped by pruning, a dangling URL and an orphan shard', async () => {
+  const core = makeFamilyFixture({ role: 'core-cjk', unicodeRange: ['U+4E00'] });
+  const fixture = await setupPublishedFixture({ selected: [core] });
+  try {
+    await runUpdate(fixture);
+    const dist = path.join(fixture.projectRoot, 'dist');
+    const fontDir = path.join(dist, '_astro', 'fonts');
+    await fs.mkdir(fontDir, { recursive: true });
+    await fs.writeFile(path.join(fontDir, 'shard.woff2'), 'wOF2shard');
+    const rule = (url) =>
+      `@font-face{font-family:"Fixture-h";src:url("${url}") format("woff2");unicode-range:U+4E00;}`;
+    const page = (css) =>
+      `<html><head><style>${css}:root{--font-fixture:"Fixture-h"}</style></head><body>一</body></html>`;
+    const audit = () => auditFonts({ projectRoot: fixture.projectRoot, distDir: 'dist' });
+
+    // Pruning dropped every deployed rule although the source font covers U+4E00.
+    await fs.writeFile(path.join(dist, 'index.html'), page(''));
+    await assert.rejects(audit, /not by the deployed @font-face rules/i);
+
+    // Dangling URL: the rule points at a shard that is not in dist.
+    await fs.writeFile(path.join(dist, 'index.html'), page(rule('/_astro/fonts/missing.woff2')));
+    await assert.rejects(audit, /@font-face URL\(s\) with no file/i);
+
+    // Orphan: a shard exists but no deployed rule references it.
+    await fs.writeFile(path.join(dist, 'index.html'), page(rule('/_astro/fonts/shard.woff2')));
+    await fs.writeFile(path.join(fontDir, 'orphan.woff2'), 'wOF2orphan');
+    await assert.rejects(audit, /unreferenced font file/i);
+
+    // Removing the orphan makes the deployed set consistent again.
+    await fs.rm(path.join(fontDir, 'orphan.woff2'));
+    const report = await audit();
+    assert.deepEqual(report.deployedGaps, []);
+    assert.deepEqual(report.danglingFontUrls, []);
+    assert.deepEqual(report.orphanFontFiles, []);
+    assert.equal(report.deployed.fontFilesReferenced, 1);
+    assert.deepEqual(report.uncovered, []);
   } finally {
     await fixture.close();
   }

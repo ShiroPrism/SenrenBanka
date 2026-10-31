@@ -3,6 +3,19 @@ import path from 'node:path';
 import { loadAndValidateFontState } from './lib/repository.mjs';
 import { PROJECT_ROOT, resolveProjectPath, toPosixPath } from './lib/paths.mjs';
 import { stableStringify, writeFileAtomic } from './lib/json.mjs';
+import {
+  FONT_EXTENSIONS,
+  decodeHtmlEntities,
+  extractInlineStyles,
+  extractLinkedLocalAssets,
+  extractStyleAttributes,
+  parseFontFaceRules,
+  parseUnicodeRangeToken,
+  resolveDistAsset,
+  unquoteCssValue,
+} from './lib/font-css.mjs';
+
+const FONT_DIRECTORY = '_astro/fonts';
 
 const CJK_RANGES = [
   [0x2e80, 0x2fff],
@@ -36,18 +49,6 @@ const VOID_TAGS = new Set([
   'wbr',
 ]);
 const HIDDEN_RAW_TEXT_TAGS = new Set(['script', 'style', 'template', 'noscript']);
-
-const ENTITIES = new Map([
-  ['amp', '&'],
-  ['lt', '<'],
-  ['gt', '>'],
-  ['quot', '"'],
-  ['apos', "'"],
-  ['nbsp', '\u00a0'],
-  ['hellip', '\u2026'],
-  ['mdash', '\u2014'],
-  ['ndash', '\u2013'],
-]);
 
 export function isCjkCodePoint(codePoint) {
   return CJK_RANGES.some(([start, end]) => codePoint >= start && codePoint <= end);
@@ -107,21 +108,7 @@ function findRawTextEnd(html, tagName, start) {
 }
 
 function decodeEntities(text) {
-  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, value) => {
-    if (value.startsWith('#x') || value.startsWith('#X')) {
-      const codePoint = Number.parseInt(value.slice(2), 16);
-      return Number.isInteger(codePoint) && codePoint <= 0x10ffff
-        ? String.fromCodePoint(codePoint)
-        : match;
-    }
-    if (value.startsWith('#')) {
-      const codePoint = Number.parseInt(value.slice(1), 10);
-      return Number.isInteger(codePoint) && codePoint <= 0x10ffff
-        ? String.fromCodePoint(codePoint)
-        : match;
-    }
-    return ENTITIES.get(value.toLowerCase()) ?? match;
-  });
+  return decodeHtmlEntities(text);
 }
 
 export function extractVisibleText(html) {
@@ -202,33 +189,38 @@ export function extractVisibleText(html) {
   return decodeEntities(text);
 }
 
-function styleSources(html) {
-  const withoutComments = html.replace(/<!--[\s\S]*?-->/g, ' ');
-  const sources = [];
-  for (const match of withoutComments.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style\s*>/gi)) {
-    sources.push(match[1]);
+/**
+ * CSS actually applied by the page: inline `<style>` blocks, `style=""`
+ * attributes and linked local stylesheets (the pruned font CSS lives there).
+ */
+async function pageCss(distRoot, pagePath, html) {
+  const parts = extractInlineStyles(html).map((style) => style.css);
+  parts.push(...extractStyleAttributes(html));
+  for (const url of extractLinkedLocalAssets(html)) {
+    if (!url.split('#')[0].split('?')[0].endsWith('.css')) continue;
+    const resolved = resolveDistAsset(distRoot, pagePath, url);
+    if (!resolved.exists) continue;
+    parts.push(await fs.readFile(resolved.absolutePath, 'utf8'));
   }
-  for (const match of withoutComments.matchAll(/\bstyle\s*=\s*(["'])([\s\S]*?)\1/gi)) {
-    sources.push(match[2]);
-  }
-  return sources.join('\n');
+  return parts.join('\n');
+}
+
+function cssVariableValue(css, cssVariable) {
+  const pattern = new RegExp(
+    `${cssVariable.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*(?:"([^"]*)"|'([^']*)'|([^;}]*))`,
+  );
+  const match = pattern.exec(css);
+  if (!match) return null;
+  const value = unquoteCssValue(match[1] ?? match[2] ?? match[3] ?? '');
+  return value === '' ? null : value;
 }
 
 function parseUnicodeRange(token) {
-  const match = /^U\+([0-9A-F?]{1,6})(?:-([0-9A-F]{1,6}))?$/i.exec(token);
-  if (!match) throw new Error(`invalid unicode range in catalog snapshot: ${token}`);
-  const pattern = match[1];
-  const wildcardIndex = pattern.indexOf('?');
-  const startText =
-    wildcardIndex === -1 ? pattern : `${pattern.slice(0, wildcardIndex)}${'0'.repeat(pattern.length - wildcardIndex)}`;
-  const patternEndText =
-    wildcardIndex === -1 ? pattern : `${pattern.slice(0, wildcardIndex)}${'F'.repeat(pattern.length - wildcardIndex)}`;
-  const start = Number.parseInt(startText, 16);
-  const end = Number.parseInt(match[2] ?? patternEndText, 16);
-  if (start > end || end > 0x10ffff) {
+  try {
+    return parseUnicodeRangeToken(token);
+  } catch {
     throw new Error(`invalid unicode range in catalog snapshot: ${token}`);
   }
-  return [start, end];
 }
 
 function mergeIntervals(intervals) {
@@ -324,6 +316,34 @@ async function verifyArtifactSafety(distRoot) {
   return files.length;
 }
 
+async function findFontFiles(root) {
+  const directory = path.join(root, ...FONT_DIRECTORY.split('/'));
+  const files = [];
+  const visit = async (dir) => {
+    let entries;
+    try {
+      entries = await fs.readdir(dir, { withFileTypes: true });
+    } catch (error) {
+      if (error.code === 'ENOENT') return;
+      throw error;
+    }
+    entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isSymbolicLink()) throw new Error(`dist contains a symlink: ${fullPath}`);
+      if (entry.isDirectory()) {
+        await visit(fullPath);
+        continue;
+      }
+      if (entry.isFile() && FONT_EXTENSIONS.includes(path.extname(entry.name).toLowerCase())) {
+        files.push(fullPath);
+      }
+    }
+  };
+  await visit(directory);
+  return files;
+}
+
 export async function auditFonts({
   projectRoot = PROJECT_ROOT,
   distDir = 'dist',
@@ -355,58 +375,119 @@ export async function auditFonts({
 
   const pages = [];
   const uncovered = [];
+  const deployedGaps = [];
+  const danglingFontUrls = [];
+  const referencedFontFiles = new Set();
+  let deployedRules = 0;
   let pagesWithoutActiveCoreFont = 0;
   let notedCodePoints = 0;
   for (const htmlFile of htmlFiles) {
     const html = await fs.readFile(htmlFile, 'utf8');
-    const styles = styleSources(html);
-    const active = coreFamilies.filter((family) =>
-      new RegExp(`${family.cssVariable.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:`).test(
-        styles,
-      ),
-    );
+    const page = `/${toPosixPath(path.relative(distRoot, htmlFile)).replace(/index\.html$/, '')}`;
+    const css = await pageCss(distRoot, page, html);
+    const rules = parseFontFaceRules(css);
+    deployedRules += rules.length;
+    for (const rule of rules) {
+      for (const url of rule.urls) {
+        let resolved;
+        try {
+          resolved = resolveDistAsset(distRoot, page, url);
+        } catch (error) {
+          throw new Error(`${page}: ${error.message}`);
+        }
+        if (!resolved.exists) {
+          danglingFontUrls.push({
+            page,
+            url,
+            family: rule.family,
+            resolvedPath: resolved.relativePath,
+          });
+          continue;
+        }
+        referencedFontFiles.add(path.resolve(resolved.absolutePath));
+      }
+    }
+
+    const active = coreFamilies
+      .map((family) => ({ family, value: cssVariableValue(css, family.cssVariable) }))
+      .filter((entry) => entry.value !== null);
     if (active.length === 0) {
       pagesWithoutActiveCoreFont += 1;
       continue;
     }
-    const page = `/${toPosixPath(path.relative(distRoot, htmlFile)).replace(/index\.html$/, '')}`;
+
+    // Deployed coverage: the @font-face rules actually present in this page's
+    // CSS after pruning, grouped by the hashed family name of the variable.
+    const deployedByName = new Map();
+    for (const rule of rules) {
+      if (!rule.family) continue;
+      const entry = deployedByName.get(rule.family) ?? { coversAll: false, intervals: [] };
+      if (!rule.ranges || rule.ranges.length === 0) entry.coversAll = true;
+      else entry.intervals.push(...rule.ranges);
+      deployedByName.set(rule.family, entry);
+    }
+    for (const entry of deployedByName.values()) {
+      entry.intervals = mergeIntervals(entry.intervals);
+    }
+    const deployedFor = active.map((entry) => ({
+      ...entry,
+      deployed: deployedByName.get(entry.value) ?? null,
+    }));
+
     const text = extractVisibleText(html);
     const seen = new Set();
     const missing = [];
+    const gaps = [];
     for (const character of text) {
       const codePoint = character.codePointAt(0);
       if (!isCjkCodePoint(codePoint) || seen.has(codePoint)) continue;
       seen.add(codePoint);
-      const covered = active.some(
-        (family) => family.coverage.coversAll || covers(family.coverage.intervals, codePoint),
+      const sourceCovered = active.some(
+        ({ family }) => family.coverage.coversAll || covers(family.coverage.intervals, codePoint),
       );
-      if (!covered) {
-        const issue = {
-          page,
-          character,
-          codePoint: `U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`,
-          activeCoreFonts: active.map((family) => ({
-            id: family.id,
-            name: family.name,
-            cssVariable: family.cssVariable,
-          })),
+      const deployedCovered = deployedFor.some(
+        ({ deployed }) =>
+          deployed !== null &&
+          (deployed.coversAll || covers(deployed.intervals, codePoint)),
+      );
+      const baseIssue = {
+        page,
+        character,
+        codePoint: `U+${codePoint.toString(16).toUpperCase().padStart(4, '0')}`,
+        activeCoreFonts: active.map(({ family }) => ({
+          id: family.id,
+          name: family.name,
+          cssVariable: family.cssVariable,
+        })),
+      };
+      if (!sourceCovered) {
+        missing.push(baseIssue);
+        uncovered.push(baseIssue);
+      } else if (!deployedCovered) {
+        const gap = {
+          ...baseIssue,
+          deployedFamilies: deployedFor
+            .filter(({ deployed }) => deployed !== null)
+            .map(({ value }) => value),
         };
-        missing.push(issue);
-        uncovered.push(issue);
+        gaps.push(gap);
+        deployedGaps.push(gap);
       }
     }
     notedCodePoints += seen.size;
     pages.push({
       page,
-      activeCoreFonts: active.map((family) => family.id),
+      activeCoreFonts: active.map(({ family }) => family.id),
       checkedCodePoints: seen.size,
+      deployedRules: rules.length,
       uncovered: missing,
+      deployedGaps: gaps,
     });
   }
 
-  if (pages.length === 0) {
-    throw new Error('font audit found no candidate HTML page with a core CJK font variable');
-  }
+  const orphanFontFiles = (await findFontFiles(distRoot))
+    .filter((filePath) => !referencedFontFiles.has(path.resolve(filePath)))
+    .map((filePath) => toPosixPath(path.relative(distRoot, filePath)));
 
   const reportPath = jsonPath
     ? path.isAbsolute(jsonPath)
@@ -422,6 +503,14 @@ export async function auditFonts({
     pagesWithoutActiveCoreFont,
     checkedCodePoints: notedCodePoints,
     uncovered,
+    deployedGaps,
+    danglingFontUrls,
+    orphanFontFiles,
+    deployed: {
+      rules: deployedRules,
+      fontFilesReferenced: referencedFontFiles.size,
+      fontFilesPresent: referencedFontFiles.size + orphanFontFiles.length,
+    },
     pages,
     artifactSafety: {
       externalFontReferences: 0,
@@ -431,12 +520,45 @@ export async function auditFonts({
   await writeFileAtomic(reportPath, stableStringify(report));
   const reportDisplay = toPosixPath(path.relative(projectRoot, reportPath)) || reportPath;
 
+  if (pages.length === 0) {
+    throw new Error('font audit found no candidate HTML page with a core CJK font variable');
+  }
+  if (danglingFontUrls.length > 0) {
+    throw new Error(
+      `font audit found ${danglingFontUrls.length} @font-face URL(s) with no file in ${distDir}: ` +
+        danglingFontUrls
+          .slice(0, 5)
+          .map((issue) => `${issue.page} -> ${issue.url}`)
+          .join('; '),
+    );
+  }
+  if (deployedGaps.length > 0) {
+    throw new Error(
+      `font audit found ${deployedGaps.length} CJK code point(s) covered by the source font but not by the deployed @font-face rules ` +
+        `(pruning dropped a needed shard): ` +
+        deployedGaps
+          .slice(0, 5)
+          .map((issue) => `${issue.page} ${issue.character} (${issue.codePoint})`)
+          .join('; '),
+    );
+  }
+  if (orphanFontFiles.length > 0) {
+    throw new Error(
+      `font audit found ${orphanFontFiles.length} unreferenced font file(s) under ${FONT_DIRECTORY}: ` +
+        orphanFontFiles.slice(0, 5).join('; '),
+    );
+  }
+
   for (const issue of uncovered.slice(0, 25)) {
     logger(
       `warning: ${issue.page} ${issue.character} (${issue.codePoint}) is not covered by active core font(s) ${issue.activeCoreFonts.map((family) => family.id).join(', ')}`,
     );
   }
   if (uncovered.length > 25) logger(`warning: ${uncovered.length - 25} more uncovered code points omitted`);
+  logger(
+    `deployed font set: ${deployedRules} @font-face rules, ` +
+      `${report.deployed.fontFilesReferenced} referenced font files, 0 orphan`,
+  );
   if (uncovered.length > 0) {
     logger(
       `font audit found ${uncovered.length} uncovered CJK code points; report: ${reportDisplay}`,

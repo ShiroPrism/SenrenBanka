@@ -55,6 +55,7 @@
 - **外部目录接线**：`npm run fonts:update -- --catalog-url <固定 catalog URL> --catalog-sha256 <发布页 SHA>` 验证目录 schema、family package、许可与哈希，生成 `fonts.lock.json`、`fonts.catalog.json` 和 `src/fonts/generated.ts`。首次采用 / 升级必须从发布页带外取得 SHA，不允许自动追 latest。
 - **本地准备**：`npm run fonts:prepare` 只下载锁定的启用 family，验证外层包与包内逐文件哈希后安装到被忽略的 `.cache/fonts/`；已有完整缓存只复核不重下。`npm run fonts:check` 完全离线。
 - **Astro 接线**：`astro.config.mjs` 展开生成定义接入 `fontProviders.local()` → 页面内 `<Font cssVariable ...>`（`astro:assets`）→ 该设计 `style.css` 用 `@theme inline` 注册进 Tailwind。所有 npm / local registration 必须 `fallbacks: []` + `optimizedFallbacks: false`，`--font-*` 只能暴露主 face。不得在 `astro.config.mjs` 手工列 CJK 分片，也不得手改生成文件。
+- **构建期裁剪与外置**：`astro build` 之后由 `fonts:prune` 按最终产物文本逐页裁剪 `@font-face` 并把保留规则外置为 `dist/_astro/fonts-<hash>.css`（字体族相同的页面共用一个包）。这一步只做**整分片取舍**，不打开、不改写、不重新子集化任何字体字节，因此不触发 OFL Reserved Font Name 的"修改字体"问题。体积上限 15 MiB 是硬门禁，超限应减少重复 HTML / 字体 CSS，不得放宽阈值。规则见 `../rules/operations.md`「字体裁剪与体积门禁」（决策见 `../adr/0013-build-time-font-shard-pruning.md`）。
 - **npm provider**：仍需 Fontsource 包的 6 个 family 保持 `remote: false`、关闭 `optimizedFallbacks`，并由 `localNpmProvider()` 把 provider 返回的包 URL 映射回已安装 `node_modules`。`remote: false` 本身仍会产出 jsdelivr URL，不能据此宣称离线。
 - **设计 CSS 拥有完整回退栈**：每个使用 `var(--font-*)` 的 `font` / `font-family` 必须以显式 fallback 收尾；承诺 CJK 的字体栈必须把 Zhuque / LXGW / Ark Pixel 放在系统中文之前。设计一旦选用 core-cjk，其正式页与预览的每个字体变量栈都要带该核心变量，避免局部微标签在新增 CJK 文案时落回系统字体。顺序见 §4，`npm run fonts:typography` 是自动门禁。
 - **六项记录写入位置**：

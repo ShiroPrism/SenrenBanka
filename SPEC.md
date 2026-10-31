@@ -492,16 +492,18 @@ src/designs/<id>/
 {
   "dev": "astro dev",
   "check": "astro check",
+  "fonts:prune": "node scripts/fonts/cli.mjs prune",
   "test:html-only": "node --test scripts/verify-html-only.test.mjs",
   "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
-  "build": "npm run check && astro build && npm run verify:html-only",
+  "build": "npm run fonts:check && npm run check && astro build && npm run fonts:prune && npm run verify:html-only && npm run fonts:audit",
   "preview": "astro preview"
 }
 ```
 
 - `engines.node >= 22.12`；提交 `package-lock.json`。
 - `scripts/verify-html-only.mjs` 使用 Node 标准库与现有 `yaml`，读取 `site.config.yaml` / `design.json`，逐 `html-only` 设计 × locale 检查最终 HTML；无候选、缺页面或违规资源均非零退出，支持 `--dist <dir>`。注册表校验在 Astro 构建期 fail-fast。
-- 校验机制：注册表构建期强校验（§6.3）+ `astro check` + HTML-only 产物门禁。一期不做自动化 e2e/视觉回归（二期）。
+- `scripts/fonts/prune.mjs` 是 `astro build` 之后的产物步骤：按最终 `dist` 文本逐页裁剪 `@font-face`、把保留规则外置为共享哈希 CSS、删除无人引用的分片，并执行 15 MiB 体积门禁；`--dist <dir>` / `--dry-run` 受支持，规则见 `docs/rules/operations.md`「字体裁剪与体积门禁」。
+- 校验机制：注册表构建期强校验（§6.3）+ `astro check` + 字体裁剪与体积门禁 + HTML-only 产物门禁 + 部署集合字体审计。一期不做自动化 e2e/视觉回归（二期）。
 
 ### 10.2 GitHub Pages【已定】【待实施验证】
 
@@ -594,8 +596,8 @@ SenrenBanka/
 │  └─ verification/                  #   各主题与共享机制的当前验证状态（更新式）
 ├─ README.md                         # fork → 改资料 → 三平台部署 → 新增设计
 ├─ scripts/
-│  ├─ fonts/                        # update / prepare / check / typography / audit 与安全归档、缓存、schema 模块
-│  ├─ fonts.test.mjs                # 字体准备、缓存、注册与 HTML 审计 Node 测试
+│  ├─ fonts/                        # update / prepare / check / typography / prune / audit 与归档、缓存、schema、字体 CSS 解析模块
+│  ├─ fonts.test.mjs                # 字体准备、缓存、注册与部署集合审计 Node 测试
 │  └─ verify-html-only.mjs          # html-only 最终 HTML 资源门禁（支持 --dist）
 ├─ SPEC.md                           # 本规格（唯一契约文档）
 ├─ fonts.config.json                 # 人工维护的 app-only family 启用关系
@@ -635,7 +637,7 @@ SenrenBanka/
 7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。`styled` 设计页的菜单语言入口仍不可达（这是已知取舍，不得把隐藏菜单 DOM 声称为回退）；`html-only` 的目录、语言与资料链接必须以普通锚点保持可达。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
 9. 根路径零第三方请求（Network 面板确认，无字体/CSS/JS 请求）；切换在首屏前完成（无明显闪烁）。
-10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；准备后断网构建通过，dist 内自托管且无第三方字体引用；所有 Astro 字体变量只暴露主 face，设计 CSS 回退栈含显式系统中文字体。`fonts:typography` 对 23 套 styled 设计、预览、npm / local registration 全绿；缓存/锁/快照/生成注册任一不一致时 build 失败；最终 HTML 的 CJK 缺字由 `fonts:audit` 报警并写报告。全部使用 core-cjk 的设计必须用普通加载的字体请求或 CDP 平台字体信息证明 Zhuque / LXGW / Ark Pixel 实际命中，不得以强制 `document.fonts.load()` 代替。
+10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；准备后断网构建通过，dist 内自托管且无第三方字体引用；所有 Astro 字体变量只暴露主 face，设计 CSS 回退栈含显式系统中文字体。`fonts:typography` 对 23 套 styled 设计、预览、npm / local registration 全绿；缓存/锁/快照/生成注册任一不一致时 build 失败。`fonts:prune` 之后 `dist`（全部文件字节之和，1 MiB = 1,048,576 B）不超过 **15 MiB**，页面可见文本与裁剪前逐字一致，`@font-face` 只存在于共享字体 CSS；`fonts:audit` 按部署集合校验：`@font-face` 的 URL 必须存在、`dist/_astro/fonts/` 不得有孤儿分片、源字体覆盖的 CJK 字符必须被该页部署规则覆盖（否则失败），源字体本身缺字只警告并写报告。全部使用 core-cjk 的设计必须用普通加载的字体请求或 CDP 平台字体信息证明 Zhuque / LXGW / Ark Pixel 实际命中，不得以强制 `document.fonts.load()` 代替。
 11. 每套设计含 `DESIGN.md` + `design.json` + `Page.astro` + `messages.ts`（provenance 完整）；`design.json.renderMode` 缺省按 `styled` 处理，`html-only` 不提供 `style.css` / `tokens.css`，但可提供自包含 `Preview.astro`；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本、切换页链接与 html-only 语言 / 设计链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。

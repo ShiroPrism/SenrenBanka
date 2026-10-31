@@ -2,6 +2,7 @@
 import { auditFonts } from './audit.mjs';
 import { checkFonts } from './check.mjs';
 import { prepareFonts } from './prepare.mjs';
+import { pruneFonts } from './prune.mjs';
 import { updateFonts } from './update.mjs';
 
 const PREFIX = '[senrenbanka:fonts]';
@@ -36,6 +37,7 @@ async function main() {
   npm run fonts:update -- --catalog-url <url> [--catalog-sha256 <sha256>]
   npm run fonts:prepare [-- --offline]
   npm run fonts:check
+  npm run fonts:prune [-- --dist dist --dry-run]
   npm run fonts:audit [-- --dist dist --json .cache/fonts/audit-report.json]`);
     return;
   }
@@ -69,6 +71,18 @@ async function main() {
     log(
       `check passed offline: ${summary.familyCount} families, ${summary.variantCount} variants, ${summary.cachedFiles} cached files`,
     );
+    return;
+  }
+  if (command === 'prune') {
+    assertKnownOptions(args, new Set(['--dry-run']), new Set(['--dist']));
+    const summary = await pruneFonts({
+      distDir: readOption(args, '--dist') ?? 'dist',
+      dryRun: args.includes('--dry-run'),
+      logger: log,
+    });
+    if (summary.alreadyPruned) {
+      log(`no-op: ${summary.dist} is already pruned`);
+    }
     return;
   }
   if (command === 'audit') {
