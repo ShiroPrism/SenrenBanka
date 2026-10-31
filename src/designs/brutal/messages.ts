@@ -18,7 +18,7 @@ export interface BrutalMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', BrutalMessages> = {
+export const messages: Record<string, BrutalMessages> = {
   'zh-CN': {
     portfolio: '作品集',
     projects: '项目',

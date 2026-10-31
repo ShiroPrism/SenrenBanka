@@ -2,6 +2,7 @@
   "displayName": "HTML Only",
   "description": "Semantic HTML with no custom CSS or JavaScript.",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "renderMode": "html-only",
   "accent": "#111111",
   "source": { "type": "self-produced" }

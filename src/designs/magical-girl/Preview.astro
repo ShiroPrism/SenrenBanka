@@ -1,13 +1,13 @@
 ---
 /** Self-contained miniature of the starlight dossier; fonts are deduped by the switcher. */
 import type { PreviewProps } from '../preview';
-import { messages, type MessageLocale } from './messages';
+import { messages } from './messages';
 import './tokens.css';
 
 export const fonts: import('astro:assets').CssVariable[] = ['--font-fraunces', '--font-lxgw', '--font-inter'];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
-const t = messages[locale as MessageLocale];
+const t = messages[locale];
 const initial = Array.from(name.trim())[0] ?? '';
 const rows = links.slice(0, 2);
 ---

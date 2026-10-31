@@ -14,7 +14,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 ];
 
 const { locale, name, headline, location, links = [] } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 const itemCount = String(links.length).padStart(2, '0');
 ---
 

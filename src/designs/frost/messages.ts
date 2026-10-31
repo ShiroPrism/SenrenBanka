@@ -10,7 +10,7 @@ export interface FrostMessages {
   contact: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', FrostMessages> = {
+export const messages: Record<string, FrostMessages> = {
   'zh-CN': {
     projects: '项目',
     experience: '经历',
@@ -28,6 +28,12 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', FrostMessages> = {
     experience: 'Experience',
     skills: 'Skills',
     contact: 'Contact',
+  },
+  ko: {
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
   },
 };
 

@@ -18,7 +18,7 @@ import { messages as designMessages, type PagerMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('pager', Astro.url.pathname);
-const t: PagerMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: PagerMessages = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 const pad = (n: number) => String(n).padStart(2, '0');

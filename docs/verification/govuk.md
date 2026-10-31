@@ -3,7 +3,7 @@
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
 > 汇编 `DESIGN.md` 为整合完成即冻结（只读，2026-10-11 按 2025 品牌刷新后的上游现状整合）；适配与例外记录在 `docs/designs/govuk/ADAPTATION.md`。
-> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）。
+> 最近全流程验证：2026-10-11（v0.8.0 首建 + 全流程）；**2026-10-31 韩语增量**：新增 `/ko/govuk/` 与韩语文案，菜单 4 个语言项；未重跑完整浏览器矩阵。
 
 ## 构建与产物
 
@@ -74,7 +74,7 @@
 ## 多语言（v0.9.0，2026-10-12）
 
 - **语言切换入口 = 共享操作菜单内的语言分组**（`.cm-lang`，桌面二级子菜单 / 移动端平铺）：本设计**不渲染**可见语言切换器，`style.css` 中也**没有**语言切换样式。中性外观属项目 chrome，不模仿本设计。跨设计、跨输入环境的完整实测矩阵见 `docs/verification/action-menu.md`。
-- 三语言页面：`<html lang>` 正确、robots 与 hreflang 策略正确（仅默认设计标注 hreflang）、二级菜单内 3 个语言项且目标**保持本设计 id**、**恰好 1 个** `aria-current="page"`、0 console 错误。
+- 四语言页面：`<html lang>` 正确、robots 与 hreflang 策略正确（仅默认设计标注 hreflang）、二级菜单内 4 个语言项且目标**保持本设计 id**、**恰好 1 个** `aria-current="page"`、0 console 错误。
 - 键盘可达：↑↓ 可遍历至语言项，焦点环可见（实测 `outline: 1.6px solid`）。
 - 本设计 `style.css` 与改动前**逐字节一致**（仅末尾换行差异）——文案本地化与语言入口重构**未造成任何视觉漂移**。
 - 跨语言路由与共享机制的完整测试矩阵见 `docs/verification/shared.md`。

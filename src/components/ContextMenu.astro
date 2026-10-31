@@ -3,7 +3,8 @@
  * 全站共享操作菜单（Action menu，ADR 0007）。
  *
  * - 中性基础设施 UI：外观与 /designs/ 切换页同属项目 chrome，不模仿任何一套设计；
- *   样式以 `<style is:inline>` 内联（不新增 <link>，每设计页仍只链接自己的 CSS）。
+ *   样式走全局共享 CSS，构建期抽取为单一 hash 文件；每设计页仍只链接自己的设计 CSS
+ *   与这一份 chrome CSS，不产生跨设计聚合。
  * - **一份数据，两种容器形态**（SSR 同时输出，运行时按输入能力摘掉不需要的那份）：
  *   · 桌面 `.cm`——贴近光标的浮层菜单，语言项收在二级子菜单；
  *   · 移动 `.cm-sheet`——底部动作面板，语言项平铺（触屏没有 hover 二级菜单的心智模型）。
@@ -117,7 +118,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
 };
 ---
 
-<style is:inline>
+<style is:global>
   /* 共享操作菜单（项目 chrome，中性样式，随系统明暗；不参与各设计 Tailwind 扫描）。
      桌面浮层与移动端底部面板是同一份数据的两套容器，不是两套设计语言。 */
 
@@ -722,44 +723,50 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
       </>
     )
   }
-  <div class="cm-sep" role="separator" />
-  <button
-    class="cm-item cm-sub-trigger"
-    type="button"
-    role="menuitem"
-    aria-haspopup="true"
-    aria-expanded="false"
-    aria-controls="cm-lang-submenu"
-    data-cm-submenu-trigger
-  >
-    <Globe class="cm-icon" aria-hidden="true" />
-    <span class="cm-label">{t.languageGroup}</span>
-    <ChevronRight class="cm-icon cm-arrow" aria-hidden="true" />
-  </button>
-  <div
-    class="cm cm-submenu"
-    id="cm-lang-submenu"
-    role="menu"
-    aria-label={t.languageGroup}
-    data-cm-submenu
-    hidden
-  >
-    {
-      config.languages.map((item) => (
-        <a
-          class="cm-item cm-lang"
+  {
+    config.languages.length > 0 && (
+      <>
+        <div class="cm-sep" role="separator" />
+        <button
+          class="cm-item cm-sub-trigger"
+          type="button"
           role="menuitem"
-          href={item.href}
-          hreflang={item.code}
-          lang={item.code}
-          aria-current={item.isCurrent ? 'page' : undefined}
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="cm-lang-submenu"
+          data-cm-submenu-trigger
         >
-          <span class="cm-label">{item.label}</span>
-          {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
-        </a>
-      ))
-    }
-  </div>
+          <Globe class="cm-icon" aria-hidden="true" />
+          <span class="cm-label">{t.languageGroup}</span>
+          <ChevronRight class="cm-icon cm-arrow" aria-hidden="true" />
+        </button>
+        <div
+          class="cm cm-submenu"
+          id="cm-lang-submenu"
+          role="menu"
+          aria-label={t.languageGroup}
+          data-cm-submenu
+          hidden
+        >
+          {
+            config.languages.map((item) => (
+              <a
+                class="cm-item cm-lang"
+                role="menuitem"
+                href={item.href}
+                hreflang={item.code}
+                lang={item.code}
+                aria-current={item.isCurrent ? 'page' : undefined}
+              >
+                <span class="cm-label">{item.label}</span>
+                {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+              </a>
+            ))
+          }
+        </div>
+      </>
+    )
+  }
 </div>
 
 <!-- 移动形态：底部动作面板。语言项平铺（触屏无 hover 二级菜单的心智模型），
@@ -829,22 +836,28 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
         </>
       )
     }
-    <div class="cm-sheet-group" aria-hidden="true">{t.languageGroup}</div>
     {
-      config.languages.map((item) => (
-        <a
-          class="cm-item cm-lang"
-          role="menuitem"
-          href={item.href}
-          hreflang={item.code}
-          lang={item.code}
-          aria-current={item.isCurrent ? 'page' : undefined}
-        >
-          <Globe class="cm-icon" aria-hidden="true" />
-          <span class="cm-label">{item.label}</span>
-          {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
-        </a>
-      ))
+      config.languages.length > 0 && (
+        <>
+          <div class="cm-sheet-group" aria-hidden="true">{t.languageGroup}</div>
+          {
+            config.languages.map((item) => (
+              <a
+                class="cm-item cm-lang"
+                role="menuitem"
+                href={item.href}
+                hreflang={item.code}
+                lang={item.code}
+                aria-current={item.isCurrent ? 'page' : undefined}
+              >
+                <Globe class="cm-icon" aria-hidden="true" />
+                <span class="cm-label">{item.label}</span>
+                {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+              </a>
+            ))
+          }
+        </>
+      )
     }
   </div>
   <div class="cm-sheet-foot">

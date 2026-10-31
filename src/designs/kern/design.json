@@ -2,6 +2,7 @@
   "displayName": "Kern",
   "description": "对 Vercel Geist 视觉语言的非官方致敬复刻：纯黑白高对比、发丝线网格骨架、Geist 无衬线与等宽双声部。",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "accent": "#111111",
   "source": {
     "type": "third-party-analysis",

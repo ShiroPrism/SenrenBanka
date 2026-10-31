@@ -10,7 +10,7 @@ import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('oxide', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 // 波形只用 Geist Mono symbols2 已覆盖的块字符（U+2581-2588）；

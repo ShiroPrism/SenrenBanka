@@ -34,7 +34,7 @@ export interface DecoMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', DecoMessages> = {
+export const messages: Record<string, DecoMessages> = {
   'zh-CN': {
     portfolio: '节目单',
     overtureLabel: '序言',

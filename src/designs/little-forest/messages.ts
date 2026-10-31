@@ -36,7 +36,7 @@ export interface LittleForestMessages {
   footerColophon: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', LittleForestMessages> = {
+export const messages: Record<string, LittleForestMessages> = {
   'zh-CN': {
     trailLabel: '森林小径',
     entranceKicker: '一本林间观察簿',

@@ -14,7 +14,7 @@ export interface GovukMessages {
   licenceNotice: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', GovukMessages> = {
+export const messages: Record<string, GovukMessages> = {
   'zh-CN': {
     skipLink: '跳到主要内容',
     projects: '项目',
@@ -39,6 +39,15 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', GovukMessages> = {
     experience: 'Experience',
     skills: 'Skills',
     contact: 'Contact',
+    licenceNotice:
+      'Contains public sector information licensed under the Open Government Licence v3.0.',
+  },
+  ko: {
+    skipLink: '주요 콘텐츠로 건너뛰기',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
     licenceNotice:
       'Contains public sector information licensed under the Open Government Licence v3.0.',
   },

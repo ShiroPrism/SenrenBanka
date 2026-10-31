@@ -40,7 +40,7 @@ export interface PosterMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', PosterMessages> = {
+export const messages: Record<string, PosterMessages> = {
   'zh-CN': {
     sheetLabel: '丝网印刷海报',
     medium: '双色丝网印刷',

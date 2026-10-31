@@ -8,7 +8,7 @@ import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('govuk', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 ---
 

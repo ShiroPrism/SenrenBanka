@@ -14,7 +14,7 @@ export interface OxideMessages {
   periodFallback: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', OxideMessages> = {
+export const messages: Record<string, OxideMessages> = {
   'zh-CN': {
     locationFallback: '远程',
     noChannel: '尚未配置联系方式',

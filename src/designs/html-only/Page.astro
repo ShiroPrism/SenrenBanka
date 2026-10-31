@@ -5,7 +5,7 @@ import { messages as designMessages } from './messages';
 
 const view = await loadDesignView('html-only', Astro.url.pathname);
 const { profile } = view;
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 
 const hasProjects = Boolean(profile.projects?.length);
 const hasExperience = Boolean(profile.experience?.length);
@@ -39,23 +39,31 @@ const contents = [
         {contents.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}
       </ul>
 
-      <h2>{t.languages}</h2>
-      <ul>
-        {
-          view.locales.map((entry) => (
-            <li>
-              <a
-                href={localeDesignHref(entry.path, 'html-only')}
-                hreflang={entry.code}
-                lang={entry.code}
-                aria-current={entry.code === view.locale.code ? 'page' : undefined}
-              >
-                {entry.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        view.locales.length > 1 && (
+          <>
+            <h2>{t.languages}</h2>
+            <ul>
+              {view.locales.map((entry) => (
+                <li>
+                  <a
+                    href={
+                      view.design.locales.includes(entry.code)
+                        ? localeDesignHref(entry.path, view.design.id)
+                        : localeDesignHref(entry.path, view.design.defaultDesignId)
+                    }
+                    hreflang={entry.code}
+                    lang={entry.code}
+                    aria-current={entry.code === view.locale.code ? 'page' : undefined}
+                  >
+                    {entry.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
 
       {
         view.site.manualSwitch && (

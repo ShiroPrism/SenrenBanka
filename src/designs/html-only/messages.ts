@@ -20,7 +20,7 @@ export interface HtmlOnlyMessages {
   tags: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', HtmlOnlyMessages> = {
+export const messages: Record<string, HtmlOnlyMessages> = {
   'zh-CN': {
     navigation: '页面导航',
     contents: '目录',
@@ -65,6 +65,21 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', HtmlOnlyMessages> = {
     skills: 'Skills',
     contact: 'Contact',
     tags: 'Tags',
+  },
+  ko: {
+    navigation: '페이지 내비게이션',
+    contents: '목차',
+    languages: '언어',
+    designs: '디자인',
+    allDesigns: '모든 디자인',
+    backToTop: '맨 위로',
+    location: '위치',
+    links: '링크',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
+    tags: '태그',
   },
 };
 

@@ -35,7 +35,7 @@ export interface MagicalGirlMessages {
   backToTop: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', MagicalGirlMessages> = {
+export const messages: Record<string, MagicalGirlMessages> = {
   'zh-CN': {
     skipToContent: '跳到档案正文',
     pageLabel: '魔法少女角色档案',

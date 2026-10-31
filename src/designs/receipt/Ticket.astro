@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { locale, profile } = Astro.props;
-const t: ReceiptMessages = designMessages[locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: ReceiptMessages = designMessages[locale.code];
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');

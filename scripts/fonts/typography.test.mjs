@@ -97,6 +97,6 @@ test('repository typography contract passes', async () => {
   const result = await checkTypography();
   assert.deepEqual(result.findings, []);
   assert.equal(result.styledCount, 26);
-  assert.equal(result.coreDesignCount, 17);
+  assert.equal(result.coreDesignCount, 18);
   assert.equal(result.generatedFamilies, 20);
 });

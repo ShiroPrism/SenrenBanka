@@ -168,7 +168,7 @@ const ja: LocaleMessages = {
   },
   notFound: {
     titleSuffix: 'ページが見つかりません',
-    body: 'このアドレスに対応するページや 디자인はありません。',
+    body: 'このアドレスに対応するページやデザインはありません。',
     backToEntry: 'エントリに戻る',
     allDesigns: 'すべてのデザインを見る',
   },
@@ -178,6 +178,59 @@ const ja: LocaleMessages = {
   },
   legacyRedirect: {
     body: 'デフォルト言語のページへ移動しています…',
+  },
+};
+
+const ko: LocaleMessages = {
+  contextMenu: {
+    currentDesignTag: '현재 디자인',
+    menuLabel: '빠른 작업',
+    launcherLabel: '빠른 작업 메뉴 열기',
+    closeLabel: '메뉴 닫기',
+    cancel: '취소',
+    pageGroup: '페이지',
+    designGroup: '디자인',
+    reload: '새로 고침',
+    toTop: '페이지 맨 위로',
+    copyLink: '현재 페이지 링크 복사',
+    print: '인쇄 / PDF로 저장',
+    share: '페이지 공유',
+    random: '무작위 디자인',
+    switchDesign: '디자인 변경…',
+    languageGroup: '언어',
+  },
+  toast: {
+    copied: '페이지 링크를 복사했습니다',
+    copyFailed: '복사하지 못했습니다. 주소창 링크를 직접 복사해 주세요',
+    shared: '공유했습니다',
+    shareCancelled: '공유를 취소했습니다',
+    shareFailed: '공유하지 못했습니다',
+    noOtherDesign: '선택할 다른 디자인이 없습니다',
+  },
+  switcher: {
+    titleSuffix: '디자인 변경',
+    description: '하나의 프로필, 여러 디자인. 원하는 디자인을 선택하세요.',
+    heading: '디자인 변경',
+    body: '하나의 프로필로 만든 {count}개의 디자인입니다. 무작위 선택은 잠시 기억되며, 원하는 디자인을 클릭해 직접 전환할 수 있습니다.',
+    currentBadge: '현재',
+  },
+  entry: {
+    redirecting: '디자인으로 이동하는 중…',
+    noscriptHeading: '디자인 선택',
+    noscriptBody: 'JavaScript가 비활성화되어 자동으로 이동하지 못했습니다. 직접 선택해 주세요:',
+  },
+  notFound: {
+    titleSuffix: '페이지를 찾을 수 없음',
+    body: '이 주소에 해당하는 페이지나 디자인이 없습니다.',
+    backToEntry: '입구로 돌아가기',
+    allDesigns: '모든 디자인 보기',
+  },
+  language: {
+    navLabel: '언어 선택',
+    label: '언어',
+  },
+  legacyRedirect: {
+    body: '기본 언어 페이지로 이동하는 중…',
   },
 };
 
@@ -239,6 +292,7 @@ export const messages = {
   'zh-CN': zhCN,
   ja,
   en,
+  ko,
 } satisfies Record<string, LocaleMessages>;
 
 export type MessageLocaleCode = keyof typeof messages;

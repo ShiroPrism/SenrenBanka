@@ -8,7 +8,7 @@ import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('terminal', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const rule = '─'.repeat(52);

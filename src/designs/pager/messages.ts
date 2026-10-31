@@ -38,7 +38,7 @@ export interface PagerMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', PagerMessages> = {
+export const messages: Record<string, PagerMessages> = {
   'zh-CN': {
     brand: 'SENRENBANKA',
     pageLabel: '消息机主页',

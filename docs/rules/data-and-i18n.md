@@ -37,7 +37,9 @@
 - 语言清单**只在一处维护**：`src/data/site.config.yaml` 的 `i18n.locales`（`code` / `path` / `label` / `title` / `description`）。不得在其他文件重复列出语言
 - 每种语言必须有 `src/data/profiles/<locale.path>.yaml`，字段契约与 `zh-CN` **完全一致**（同一套 `profileSchema`）
 - 站点 SEO 元数据按语言提供（`i18n.locales[].title/description`）；**不再**保留全局 `site.title` / `site.description` / `site.lang`
-- **每套设计必须提供 `src/designs/<id>/messages.ts`**，导出 `messages`，为 `i18n.locales` 声明的**每种语言 code** 各给一份文案（缺文件或缺键在构建期报错）。文案必须遵循该设计的视觉语言，**不得**把所有设计统一翻译成相同表述
+- **每套设计必须提供 `src/designs/<id>/messages.ts`**，导出 `messages`，为 `design.json` 的 `locales` 中**每种 code** 各给一份文案（默认设计必须覆盖 `i18n.locales` 的全部 code）。缺文件或缺键在构建期报错；文案必须遵循该设计的视觉语言，**不得**把所有设计统一翻译成相同表述。
+- **设计语言覆盖**：`design.json` 必须声明 `locales: string[]`（非空、去重）。默认设计（`design.default`）必须覆盖全部配置 locale；非默认设计可覆盖子集。未覆盖的 locale **不生成该设计页面**（直接 404）；`/<locale>/designs/` 与随机池只包含覆盖当前 locale 的设计。声明覆盖但 `messages.ts` 缺该语言文案、或 `descriptions.ts` 缺切换页描述 → **构建失败**；`design.json` 中列出但未在 `site.config.yaml` 配置的 code → **告警并忽略**（单语言 fork 不必逐套清理 design.json）。
+- **单语言 fork**：只保留一种语言时，改 `site.config.yaml` 的 `i18n.locales` 为 1 条并删除多余 `src/data/profiles/*.yaml`；`design.json` 中未配置的 code 被忽略。`locales.length < 2` 时语言分组、`LanguageSwitcher`、注入 JSON 与 `html-only` 原生语言区整组不渲染；保留 `/<locale>/` URL 前缀。
 - 不翻译的文本（命令、ASCII 装饰、刻意的双语标识、品牌专有名词、法律署名）**必须在该设计 `messages.ts` 的文件注释中写明理由**，否则视为漏译
 - 用户可见静态文案**不得**留在 `Page.astro` 的模板字面量里；也包括运行时生成的提示（菜单 Toast 等）——后者由 `view.messages` 注入
 - **翻译纪律（重要）**：翻译**只处理已有文案**，不得为"显得完整"而新增解释性、说明性或自我描述的句子。原页面没有的句子，译文里也不该有。
@@ -51,6 +53,6 @@
   - **移动**：在底部动作面板内**平铺**（触屏没有 hover 二级菜单的心智模型，用户会滑到列表底部而不是"点开子菜单去看语言"）。限高与滚动由面板容器承担，语言再多也不会顶出视口。
   - **两种形态都不得依赖 hover**：桌面子菜单必须支持点击 / `→` / Enter 打开；移动端平铺项本身即入口。
 - **`manualSwitch` 只控制主题切换入口**：`styled` 菜单中的随机 / 切换设计项由 `designActionsEnabled` 门控；`html-only` 的「全部设计」普通链接同样受它门控。语言入口在两种模式下都照常渲染——语言切换不受 `manualSwitch` 影响
-- 切换语言时**保持页面上下文**（`context.kind` 派生，ADR 0007）：主题页 → 目标语言的同一主题；切换页 → 目标语言的切换页；404 → 目标语言的入口页
+- 切换语言时**保持页面上下文**（`context.kind` 派生，ADR 0007）：主题页 → 目标语言**覆盖该设计时进同一主题，否则落到目标语言的默认设计**；切换页 → 目标语言的切换页；404 → 目标语言的入口页。`html-only` 的原生语言链接遵循同一目标规则。
 - 切换语言只改 locale，**不改当前主题、不重置随机窗口**；`storageKey` 不含 locale（主题偏好跨语言共享）
 - 语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码

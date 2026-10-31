@@ -17,6 +17,7 @@ import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { renderSwitcherScript } from '../lib/router-script';
 import {
   buildActionMenuConfig,
+  designsForLocale,
   languageSwitcherData,
   loadSite,
   localeDesignHref,
@@ -24,9 +25,10 @@ import {
   resolveLocale,
 } from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
-import { designDescriptions, type DescriptionLocale } from '../designs/descriptions';
+import { designDescriptions } from '../designs/descriptions';
 const model = await loadSite();
 const locale = resolveLocale(model, Astro.url.pathname);
+const localeDesigns = designsForLocale(model, locale);
 const profile = model.profiles.get(locale.path)!;
 const m = sharedMessagesFor(locale.code);
 
@@ -62,7 +64,7 @@ for (const [key, mod] of Object.entries(previewModules)) {
 // 字体**按族去重**后声明一次：Astro 的 <Font> 不去重（同族声明 N 次 → N 份 @font-face），
 // 若由每个预览各自声明，@font-face 数量会随预览数量线性膨胀（A5 断言的对象）。
 const previewFonts = [
-  ...new Set(model.enabled.flatMap((design) => previews[design.id]?.fonts ?? [])),
+  ...new Set(localeDesigns.flatMap((design) => previews[design.id]?.fonts ?? [])),
 ];
 
 const heading = `${m.switcher.heading} · ${locale.title}`;
@@ -90,7 +92,7 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
     <InfraStyles />
     <main class="infra">
       <h1>{m.switcher.heading}</h1>
-      <p>{m.switcher.body.replace('{count}', String(model.enabled.length))}</p>
+      <p>{m.switcher.body.replace('{count}', String(localeDesigns.length))}</p>
       <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。
            JS 开启时本段完全不渲染，运行时不会出现两个可见的语言入口。 -->
       <noscript>
@@ -98,7 +100,7 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
       </noscript>
       <ul class="infra-list">
         {
-          model.enabled.map((design) => {
+          localeDesigns.map((design) => {
             const preview = previews[design.id];
             const Preview = preview?.Component;
             return (
@@ -131,7 +133,7 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
                       {m.switcher.currentBadge}
                     </span>
                   </span>
-                  <span class="desc">{designDescriptions[design.id]?.[locale.code as DescriptionLocale] ?? design.meta.description}</span>
+                  <span class="desc">{designDescriptions[design.id]?.[locale.code] ?? design.meta.description}</span>
                 </a>
               </li>
             );

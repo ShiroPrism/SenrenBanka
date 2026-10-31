@@ -6,7 +6,7 @@ import './tokens.css';
 export const fonts: import('astro:assets').CssVariable[] = ['--font-fraunces', '--font-lxgw'];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 const firstLink = links[0]?.label ?? t.linksTitle;
 ---
 

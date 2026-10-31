@@ -15,7 +15,7 @@ export interface TerminalMessages {
   sessionEnd: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', TerminalMessages> = {
+export const messages: Record<string, TerminalMessages> = {
   'zh-CN': {
     basedIn: '常驻',
     sayHello: 'Say hello',

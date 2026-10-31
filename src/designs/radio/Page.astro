@@ -20,7 +20,7 @@ import { messages as designMessages, type RadioMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('radio', Astro.url.pathname);
-const t: RadioMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: RadioMessages = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');

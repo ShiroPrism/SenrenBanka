@@ -11,7 +11,7 @@ export interface FastMessages {
   contact: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', FastMessages> = {
+export const messages: Record<string, FastMessages> = {
   'zh-CN': {
     portfolio: '作品集',
     projects: '项目',
@@ -32,6 +32,13 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', FastMessages> = {
     experience: 'Experience',
     skills: 'Skills',
     contact: 'Contact',
+  },
+  ko: {
+    portfolio: '포트폴리오',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
   },
 };
 

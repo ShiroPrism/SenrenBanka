@@ -10,11 +10,11 @@ import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
-import { messages as designMessages, type MessageLocale } from './messages';
+import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('magical-girl', Astro.url.pathname);
-const t = designMessages[view.locale.code as MessageLocale];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');

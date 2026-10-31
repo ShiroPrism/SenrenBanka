@@ -13,7 +13,7 @@ export interface Material3Messages {
   footerSource: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', Material3Messages> = {
+export const messages: Record<string, Material3Messages> = {
   'zh-CN': {
     portfolio: '作品集',
     projects: '项目',

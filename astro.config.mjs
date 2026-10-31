@@ -89,19 +89,25 @@ function localNpmProvider() {
  */
 function readSiteConfig() {
   const configPath = path.join(projectRoot, 'src', 'data', 'site.config.yaml');
-  /** @type {{ locales: Array<{ path: string }>, manualSwitch: boolean }} */
-  const fallback = { locales: [{ path: 'zh-cn' }], manualSwitch: true };
+  /** @type {{ locales: Array<{ code: string, path: string }>, manualSwitch: boolean }} */
+  const fallback = { locales: [{ code: 'zh-CN', path: 'zh-cn' }], manualSwitch: true };
   if (!fs.existsSync(configPath)) return fallback;
   const raw = parseYaml(fs.readFileSync(configPath, 'utf8'));
   /** @type {unknown} */
   const declared = raw?.i18n?.locales;
-  const paths = Array.isArray(declared)
+  const locales = Array.isArray(declared)
     ? declared
-        .map((/** @type {any} */ locale) => locale?.path)
-        .filter((/** @type {any} */ value) => typeof value === 'string' && value.length > 0)
+        .map((/** @type {any} */ locale) => ({ code: locale?.code, path: locale?.path }))
+        .filter(
+          (/** @type {any} */ locale) =>
+            typeof locale.code === 'string' &&
+            locale.code.length > 0 &&
+            typeof locale.path === 'string' &&
+            locale.path.length > 0,
+        )
     : [];
   return {
-    locales: paths.length > 0 ? paths.map((/** @type {any} */ value) => ({ path: value })) : fallback.locales,
+    locales: locales.length > 0 ? locales : fallback.locales,
     manualSwitch: raw?.design?.manualSwitch !== false,
   };
 }
@@ -136,11 +142,20 @@ const designRoutes = {
 
       const { locales, manualSwitch } = readSiteConfig();
 
+      // design.json 的 locales 是页面生成白名单；缺失时按全量处理，由注册表在构建期给出明确错误。
+      const designs = ids.map((id) => {
+        const meta = JSON.parse(
+          fs.readFileSync(path.join(designsDir, id, 'design.json'), 'utf8'),
+        );
+        return { id, locales: Array.isArray(meta.locales) ? meta.locales : null };
+      });
+
       for (const locale of locales) {
-        for (const id of ids) {
+        for (const design of designs) {
+          if (design.locales && !design.locales.includes(locale.code)) continue;
           injectRoute({
-            pattern: `/${locale.path}/${id}`,
-            entrypoint: `./src/designs/${id}/Page.astro`,
+            pattern: `/${locale.path}/${design.id}`,
+            entrypoint: `./src/designs/${design.id}/Page.astro`,
           });
         }
         injectRoute({

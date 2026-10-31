@@ -253,16 +253,19 @@ i18n:                # 语言清单只在此处维护一处，路由/资料/SEO 
       label: 简体中文     # 语言自称，用于语言选择器
       title: "Your Name — Portfolio"      # 该语言 SEO 标题
       description: "SEO 描述"             # 该语言 SEO 描述
+      fontProfile: cjk                    # 显式文字系统档位：latin / vietnamese / cjk / korean
     - code: ja
       path: ja
       label: 日本語
       title: "…"
       description: "…"
+      fontProfile: cjk
     - code: en
       path: en
       label: English
       title: "…"
       description: "…"
+      fontProfile: latin
 
 design:
   mode: random       # random | fixed
@@ -285,6 +288,7 @@ design:
 | `path` | URL 语言前缀，同时是对应资料文件的标识（要求唯一、合法） |
 | `label` | 语言选择器展示的**语言自称** |
 | `title` / `description` | 该语言的站点 SEO 元数据 |
+| `fontProfile` | 显式文字系统档位（`latin` / `vietnamese` / `cjk` / `korean`），不从 BCP 47 推断；供字体角色与覆盖校验使用 |
 
 **文案分两层**：
 
@@ -294,6 +298,8 @@ design:
 翻译原则：个人简介、headline、项目描述、工作职责、链接标签、联系说明等**需要本地化的内容要翻译**；项目名称、公司名称、URL、邮箱、技术标记等**专有名词不机械翻译**。承担设计意图而非信息传达的文本（终端命令、ASCII 装饰、刻意的双语标识、法律署名）保持原样，且**必须在该设计 `messages.ts` 的注释中写明理由**。
 
 **配置强校验**（Zod `superRefine`，构建期失败而非静默回退）：语言 `code` 与 `path` 均不得重复；`defaultLocale` 必须存在于 `locales`；每种语言必须有完整元数据与对应资料文件；`src/data/profiles/` 中存在未声明的资料文件同样报错。
+
+**设计语言覆盖（v0.21.0）**：每套 `design.json` 必须声明 `locales: string[]`；默认设计（`design.default`）必须覆盖全部配置 locale，非默认设计可覆盖子集。未覆盖的 locale **不生成该设计页面**（直接 404）；切换页与随机池只包含覆盖当前 locale 的设计；声明覆盖但 `messages.ts` 缺该语言文案、或 `descriptions.ts` 缺切换页描述 → 构建失败；覆盖数组中列出但未在 `site.config.yaml` 配置的 code → 告警并忽略（单语言 fork 无需逐套清理）。`locales.length < 2` 时语言分组、`LanguageSwitcher`、注入 JSON 与 `html-only` 原生语言区整组不渲染；保留 `/<locale>/` 前缀。
 
 ---
 
@@ -343,13 +349,13 @@ src/designs/<id>/
   - 共同必交：`DESIGN.md`、`design.json`、`Page.astro`、`messages.ts`；
   - `renderMode: "styled"`（默认）：`style.css` 必须存在；
   - `renderMode: "html-only"`：`style.css` / `tokens.css` 必须不存在；`Preview.astro` 可选但必须自包含，且不得 import 正式页 CSS。显式声明后最终页面只允许语义 HTML 与 `canonical` / `alternate` / `icon` metadata 链接；
-  - `design.json` 通过 Zod 校验；非自产来源的 provenance 字段齐全；
+  - `design.json` 通过 Zod 校验；必填 `locales` 非空、去重；默认设计覆盖全部配置 locale；覆盖数组中未配置的 code 告警并忽略；非自产来源的 provenance 字段齐全；
   - 至少 1 个启用设计；`site.config.default` 存在且已启用。
 - 派生数据：全部设计列表、启用设计列表（随机池）、default 设计。
 
 ### 6.4 页面接口【已定】
 
-- 设计 `Page.astro` 是**完整文档**（含 `<html>`），由 `astro.config.mjs` 为每种 locale 注入固定路由。
+- 设计 `Page.astro` 是**完整文档**（含 `<html>`），由 `astro.config.mjs` 为**设计声明覆盖的**每种 locale 注入固定路由。
 - 统一数据接口 `src/lib/site.ts`（async `loadSite()`）：合并 site 配置 + 注册表 + profile，完成交叉校验，向设计提供：
   - `profile`（类型化个人资料，头像已解析为可直接渲染的图片引用）；
   - `site`（title/description/lang/manualSwitch）；
@@ -424,7 +430,7 @@ src/designs/<id>/
 
 ### 7.5 切换页与入口【已定；v0.5.0 入口形态修订；v0.9.0 多语言修订】
 
-- `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出全部启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
+- `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出**覆盖当前 locale** 的启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
 - **页面级操作入口 = 全站共享操作菜单（Action menu）**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
   - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。
@@ -439,7 +445,7 @@ src/designs/<id>/
   - **触发**：`语言` 行（`[data-cm-submenu-trigger]`，带 `ChevronRight` 箭头与 `aria-haspopup` / `aria-expanded` / `aria-controls`）。鼠标**悬浮**（120ms 延迟开启、180–220ms 延迟关闭，避免横扫误触与斜向移动误关）、**点击**（切换开合）或键盘 **→** 均可打开。
   - **定位**：默认贴触发项右侧；右侧放不下则**翻转到左侧**；纵向对齐触发项并收敛进视口。
   - 语言项是**普通 `<a>`**（非 button），逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记；语言名用各语言**自称**；子菜单带翻译后的 `aria-label`。
-  - 目标保持**同一主题 id**（`languageItems(model, locale, design.id)`），不重置随机有效期。
+  - 目标：目标 locale 覆盖当前设计时**保持同一主题 id**；未覆盖时落到目标 locale 的默认设计（`design.default`）。不重置随机有效期。
   - **键盘**：`↑↓` 在当前层级内移动；移到触发项时展开子菜单、移开时收起；`→` 进入子菜单并聚焦首项，`←` 返回触发项；`Esc` 关闭整个菜单。导航层级由 `activeMenu` 跟踪——**子菜单的项不会混进主菜单的 `↑↓` 序列**（这是二级菜单最易出错的地方）。
   - **`manualSwitch` 只控制主题切换入口**（`styled` 的随机 / 切换设计…由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这些入口不渲染，`html-only` 的「全部设计」链接也不渲染，**但语言入口在两种模式下照常可用**。
   - **移动菜单的静态 DOM 不是无 JavaScript 回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与菜单交互依赖运行时，因此无 JS 时这些语言链接不可见、不可达。该表述曾是已知文档错误，ADR 0009 已更正。
@@ -567,7 +573,7 @@ SenrenBanka/
 │  │  ├─ editorial/                  # ── 单套设计示例（自产：编辑杂志风）──
 │  │  │  ├─ DESIGN.md                #    设计规范快照
 │  │  │  ├─ design.json              #    元数据：显示名/描述/enabled/来源与许可
-│  │  │  ├─ messages.ts              #    该设计的三语言界面文案（缺文件或缺键构建期报错）
+│  │  │  ├─ messages.ts              #    该设计覆盖的各语言界面文案（缺文件或缺键构建期报错）
 │  │  │  ├─ Page.astro               #    完整页面（含 <html> 文档）
 │  │  │  ├─ style.css                #    styled 的 CSS 入口（source(none) + @source + 原生 CSS）
 │  │  │  ├─ components/              #    该设计私有组件（可选）

@@ -2,6 +2,7 @@
   "displayName": "Lexicon",
   "description": "中日英混排辞书：一整张书页——书眉、双栏词条、参照项与页边索引签，牛血红只落在词条头与箭头上。",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "accent": "#7c2f2a",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-17（八方向新主题·辞书）"

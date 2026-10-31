@@ -20,7 +20,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 ];
 
 const { locale, name, headline, links } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 const ticketLabels = (links ?? []).slice(0, 2).map((link) => link.label);
 
 /** 与正式页同源规则：拉丁取前两个词首字母，单词姓名取前两字。 */

@@ -17,23 +17,27 @@ interface Props {
 const { language } = Astro.props;
 ---
 
-<nav class="lang-switch" aria-label={language.navLabel}>
-  <span class="lang-switch-label" aria-hidden="true">{language.label}</span>
-  <ul class="lang-switch-list">
-    {
-      language.items.map((item) => (
-        <li>
-          <a
-            class="lang-switch-link"
-            href={item.href}
-            hreflang={item.code}
-            lang={item.code}
-            aria-current={item.isCurrent ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</nav>
+{
+  language.items.length > 1 && (
+    <nav class="lang-switch" aria-label={language.navLabel}>
+      <span class="lang-switch-label" aria-hidden="true">{language.label}</span>
+      <ul class="lang-switch-list">
+        {
+          language.items.map((item) => (
+            <li>
+              <a
+                class="lang-switch-link"
+                href={item.href}
+                hreflang={item.code}
+                lang={item.code}
+                aria-current={item.isCurrent ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  )
+}

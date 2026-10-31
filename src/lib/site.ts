@@ -1,11 +1,18 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { allDesigns, enabledDesigns, type DesignEntry } from '../designs/registry';
+import { designDescriptions } from '../designs/descriptions';
 import { storageKeyFor } from './router-script';
 import { BASE, pathSegments, withBase } from './urls';
 import type { ContextMenuRuntimeConfig, PageContext } from './context-menu';
 import { messages as sharedMessages, type LocaleMessages, type MessageLocaleCode } from '../i18n/messages';
 import { sharedMessagesFor } from '../i18n/resolve';
+
+// 设计文案是纯数据，不含 CSS/Page 边；构建期在这里做「覆盖 locale 必须有文案」的全量校验。
+const designMessageModules = import.meta.glob('../designs/*/messages.ts', { eager: true }) as Record<
+  string,
+  { messages?: Record<string, unknown> }
+>;
 
 export type ProfileData = CollectionEntry<'profile'>['data'];
 export type SiteConfigData = CollectionEntry<'site'>['data'];
@@ -27,6 +34,8 @@ export interface LocaleEntry {
   /** 该语言的站点 SEO 元数据。 */
   title: string;
   description: string;
+  /** 显式文字系统档位（latin / vietnamese / cjk / korean）；不从语言代码推断。 */
+  fontProfile?: 'latin' | 'vietnamese' | 'cjk' | 'korean';
 }
 
 /**
@@ -77,6 +86,10 @@ export interface DesignView {
     displayName: string;
     description: string;
     isDefault: boolean;
+    /** 该设计声明的 locale code；未覆盖的 locale 不生成页面。 */
+    locales: string[];
+    /** 目标 locale 未覆盖当前设计时的回退设计。 */
+    defaultDesignId: string;
   };
   /** 由框架统一计算的 head 元信息（设计必须原样传给 HeadMeta）。 */
   head: {
@@ -157,7 +170,7 @@ export async function loadSite(): Promise<SiteModel> {
     const entry = profileIdByPath.get(locale.path);
     if (!entry) {
       throw new Error(
-        `[senrenbanka] 语言 "${locale.code}"（path: ${locale.path}）缺少资料文件：期望 src/data/profiles/${locale.path}.yaml。现有：${[...profileIdByPath.keys()].join(', ') || '（无）'}`,
+        `[senrenbanka] 语言 "${locale.code}"（path: ${locale.path}）已在 site.config.yaml 的 i18n.locales 中声明，但缺少资料文件：期望 src/data/profiles/${locale.path}.yaml。现有：${[...profileIdByPath.keys()].join(', ') || '（无）'}。\n修法：① 补齐该 profile 文件；② 如果只想保留一种语言，请同时从 site.config.yaml 的 i18n.locales 删除 "${locale.code}" 条目（design.json 中残留的 code 会被忽略并告警）。`,
       );
     }
     profiles.set(locale.path, {
@@ -168,7 +181,7 @@ export async function loadSite(): Promise<SiteModel> {
   const extraProfiles = [...profileIdByPath.keys()].filter((id) => !localeByPath.has(id));
   if (extraProfiles.length > 0) {
     throw new Error(
-      `[senrenbanka] src/data/profiles/ 存在未在 i18n.locales 中声明的资料：${extraProfiles.join(', ')}。请在 site.config.yaml 的 i18n.locales 补充，或删除多余文件。`,
+      `[senrenbanka] src/data/profiles/ 存在未在 i18n.locales 中声明的资料：${extraProfiles.join(', ')}。\n修法：① 如果保留这些语言，请在 site.config.yaml 的 i18n.locales 补充对应条目；② 如果刚删除语言，请删除这些 profile 文件。`,
     );
   }
 
@@ -176,7 +189,7 @@ export async function loadSite(): Promise<SiteModel> {
   for (const locale of locales) {
     if (!(locale.code in sharedMessages)) {
       throw new Error(
-        `[senrenbanka] 语言 "${locale.code}" 缺少共享文案字典（src/i18n/messages.ts）。现有：${Object.keys(sharedMessages).join(', ')}`,
+        `[senrenbanka] 语言 "${locale.code}" 缺少共享文案字典（src/i18n/messages.ts）。现有：${Object.keys(sharedMessages).join(', ')}。\n修法：① 在 src/i18n/messages.ts 补齐该语言；② 从 site.config.yaml 的 i18n.locales 删除该语言。`,
       );
     }
   }
@@ -193,6 +206,56 @@ export async function loadSite(): Promise<SiteModel> {
         .map((design) => design.id)
         .join(', ')}`,
     );
+  }
+
+  const configuredCodes = new Set(locales.map((locale) => locale.code));
+  const designMessagesById = new Map<string, Record<string, unknown>>();
+  for (const [key, mod] of Object.entries(designMessageModules)) {
+    const id = key.split('/').at(-2);
+    if (id && mod.messages) designMessagesById.set(id, mod.messages);
+  }
+
+  // 覆盖契约：默认设计全量；声明覆盖的 locale 必须有设计文案与切换页描述。
+  // 未在 site.config.yaml 配置的 code 忽略并告警，便于单语言 fork 不必逐套清理 design.json。
+  for (const design of enabledDesigns) {
+    const declared = design.meta.locales;
+    const unknown = declared.filter((code) => !configuredCodes.has(code));
+    if (unknown.length > 0) {
+      console.warn(
+        `[senrenbanka] 设计 "${design.id}" 声明了未配置的 locale：${unknown.join(', ')}，已忽略。`,
+      );
+    }
+    const covered = declared.filter((code) => configuredCodes.has(code));
+    if (covered.length === 0) {
+      throw new Error(
+        `[senrenbanka] 设计 "${design.id}" 没有任何可用 locale：design.json 的 locales 与 site.config.yaml 的 i18n.locales 无交集。\n修法：在 design.json 的 locales 中加入至少一个已配置的 code，或检查 site.config.yaml 的语言 code 是否拼写一致。`,
+      );
+    }
+    if (design.id === defaultDesign.id) {
+      const missing = [...configuredCodes].filter((code) => !covered.includes(code));
+      if (missing.length > 0) {
+        throw new Error(
+          `[senrenbanka] 默认设计 "${design.id}" 必须覆盖全部 locale；缺少：${missing.join(', ')}。\n修法：① 在 src/designs/${design.id}/design.json 的 locales 中补齐；② 从 site.config.yaml 删除这些 locale。`,
+        );
+      }
+    }
+    const messages = designMessagesById.get(design.id);
+    if (!messages) {
+      throw new Error(`[senrenbanka] 设计 "${design.id}" 缺少 messages.ts 导出的 messages。`);
+    }
+    const descriptions = designDescriptions[design.id];
+    for (const code of covered) {
+      if (!(code in messages)) {
+        throw new Error(
+          `[senrenbanka] 设计 "${design.id}" 声明覆盖 locale "${code}"，但 src/designs/${design.id}/messages.ts 缺少该语言的文案。\n修法：① 补齐该语言文案；② 从该设计 design.json 的 locales 移除 "${code}"。`,
+        );
+      }
+      if (!descriptions || !(code in descriptions)) {
+        throw new Error(
+          `[senrenbanka] 设计 "${design.id}" 声明覆盖 locale "${code}"，但 src/designs/descriptions.ts 缺少该语言的切换页描述。\n修法：① 在 descriptions.ts 补齐描述；② 从该设计 design.json 的 locales 移除 "${code}"。`,
+        );
+      }
+    }
   }
 
   const siteUrl = import.meta.env.SITE ?? cfg.site.url ?? null;
@@ -241,6 +304,28 @@ export function localeHref(localePath: string, sub = ''): string {
   return withBase(suffix ? `${localePath}/${suffix}` : `${localePath}/`);
 }
 
+/** 该设计是否声明覆盖某 locale。 */
+export function designCovers(design: DesignEntry, locale: LocaleEntry): boolean {
+  return design.meta.locales.includes(locale.code);
+}
+
+/** 当前 locale 下实际生成页面的设计集合。 */
+export function designsForLocale(model: SiteModel, locale: LocaleEntry): readonly DesignEntry[] {
+  return model.enabled.filter((design) => designCovers(design, locale));
+}
+
+/** 语言切换目标：覆盖则保持当前设计，否则落到目标 locale 的默认设计。 */
+export function designHrefForLocale(
+  model: SiteModel,
+  design: DesignEntry,
+  targetLocale: LocaleEntry,
+): string {
+  return localeDesignHref(
+    targetLocale.path,
+    designCovers(design, targetLocale) ? design.id : model.default.id,
+  );
+}
+
 /**
  * 页面上下文 → 语言切换目标（ADR 0007）。
  * 切换语言时**保持页面上下文**：design 页进同一主题，切换页进同一切换页，404 进语言入口。
@@ -250,12 +335,16 @@ export function actionMenuLanguageItems(
   locale: LocaleEntry,
   context: PageContext,
 ): LanguageSwitcherData['items'] {
+  const design =
+    context.kind === 'design'
+      ? model.designs.find((entry) => entry.id === context.designId)
+      : undefined;
   return model.locales.map((entry) => ({
     code: entry.code,
     label: entry.label,
     href:
-      context.kind === 'design'
-        ? localeDesignHref(entry.path, context.designId)
+      context.kind === 'design' && design
+        ? designHrefForLocale(model, design, entry)
         : context.kind === 'switcher'
           ? localeHref(entry.path, 'designs/')
           : localeHref(entry.path),
@@ -280,8 +369,8 @@ export function buildActionMenuConfig(
     // 主题切换目标保留当前语言前缀（SPEC §7.5）
     switcherHref: localeHref(locale.path, 'designs/'),
     shareTitle,
-    // 随机池 = 全部启用设计（含 design 页的自身；"排除当前"由运行时按 context 执行）
-    targets: model.enabled.map((entry) => ({
+    // 随机池 = 当前 locale 下实际生成页面的设计（"排除当前"由运行时按 context 执行）
+    targets: designsForLocale(model, locale).map((entry) => ({
       id: entry.id,
       href: localeDesignHref(locale.path, entry.id),
     })),
@@ -295,13 +384,19 @@ export function buildActionMenuConfig(
     closeLabel: messages.contextMenu.closeLabel,
     cancel: messages.contextMenu.cancel,
     messages,
-    languages: actionMenuLanguageItems(model, locale, context),
+    languages:
+      model.locales.length < 2 ? [] : actionMenuLanguageItems(model, locale, context),
     designActionsEnabled: model.switcherEnabled,
   };
 }
 
 /** 由 SiteModel 与某套设计派生页面数据（含 head 元信息与索引策略，SPEC §7.4）。 */
 export function buildDesignView(model: SiteModel, design: DesignEntry, locale: LocaleEntry): DesignView {
+  if (!designCovers(design, locale)) {
+    throw new Error(
+      `[senrenbanka] 设计 "${design.id}" 未声明支持 locale "${locale.code}"（design.json locales），不应生成该页面。`,
+    );
+  }
   const isDefault = design.id === model.default.id;
   const headTitle = isDefault ? locale.title : `${design.meta.displayName} · ${locale.title}`;
   const messages = sharedMessages[locale.code as LocaleCode];
@@ -336,6 +431,8 @@ export function buildDesignView(model: SiteModel, design: DesignEntry, locale: L
       displayName: design.meta.displayName,
       description: design.meta.description,
       isDefault,
+      locales: design.meta.locales,
+      defaultDesignId: model.default.id,
     },
     head: {
       title: headTitle,

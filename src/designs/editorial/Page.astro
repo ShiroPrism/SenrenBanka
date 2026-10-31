@@ -10,7 +10,7 @@ import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('editorial', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 // 页脚邀请地址：优先 contact.email，其次取链接中的 mailto（仅作邀请段地址来源；Elsewhere 全量渲染 links，不过滤）
@@ -22,6 +22,7 @@ const inviteEmail =
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-fraunces" />
+    <Font cssVariable="--font-lxgw" />
     <Reveal />
   </head>
   <body class="ed">

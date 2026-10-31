@@ -64,6 +64,8 @@ const localeSchema = z
     label: z.string().min(1),
     title: z.string().min(1),
     description: z.string().min(1),
+    /** 显式声明文字系统档位；不从 BCP 47 推断。 */
+    fontProfile: z.enum(['latin', 'vietnamese', 'cjk', 'korean']).optional(),
   })
   .strict();
 

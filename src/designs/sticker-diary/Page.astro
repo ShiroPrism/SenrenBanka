@@ -20,7 +20,7 @@ import './style.css';
 
 const view = await loadDesignView('sticker-diary', Astro.url.pathname);
 const t: StickerDiaryMessages =
-  designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+  designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 const hasProjects = Boolean(profile.projects && profile.projects.length > 0);

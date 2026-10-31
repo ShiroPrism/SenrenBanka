@@ -40,7 +40,7 @@ export interface StickerDiaryMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', StickerDiaryMessages> = {
+export const messages: Record<string, StickerDiaryMessages> = {
   'zh-CN': {
     brand: 'SENRENBANKA',
     bookLabel: '贴纸手帐',

@@ -46,7 +46,7 @@ export interface FaxMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', FaxMessages> = {
+export const messages: Record<string, FaxMessages> = {
   'zh-CN': {
     masthead: 'FAX TRANSMISSION',
     brand: 'SENRENBANKA',

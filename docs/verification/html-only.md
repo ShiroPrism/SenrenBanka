@@ -1,7 +1,7 @@
 # verification — HTML Only
 
 > 当前完整验证状态（更新式；历史由 Git 保留）。规则见 `docs/rules/README.md`，验证流程见 `design-page-verify` skill，长期决策见 `docs/adr/0009-html-only-design-rendering.md`。
-> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；2026-10-29（v0.17.0）只更新全站当前页数与切换页产物计数，未重跑本设计的浏览器矩阵。
+> 实施、静态验证与浏览器检查：**2026-10-28**。浏览器结果来自主会话提供的本机 Chromium 实测；2026-10-29（v0.17.0）只更新全站当前页数与切换页产物计数，未重跑本设计的浏览器矩阵。**2026-10-31 韩语增量**：新增 `/ko/html-only/`，当前 4 个 locale 页面、每页 4 个语言链接；`verify:html-only` 通过；未重跑 2026-10-28 浏览器矩阵。
 
 ## 设计状态
 
@@ -30,7 +30,7 @@
 
 - 非默认设计，`alternate` / `x-default` 均为 0，符合统一 SEO 规则。
 - 每页唯一 `h1`；5 个 `<section>`（links / projects / experience / skills / contact）均有可访问名称。
-- 每页 3 个语言链接，均带 `hreflang` / `lang`，恰好 1 个 `aria-current="page"`，目标保持 `html-only`。
+- 每页 4 个语言链接，均带 `hreflang` / `lang`，恰好 1 个 `aria-current="page"`，目标保持 `html-only`。
 - 链接、项目、经历、技能、联系邮箱与说明均来自当前语言 profile；未出现模板内的用户可见硬编码文案。
 
 ## 选择与切换页

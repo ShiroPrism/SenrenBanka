@@ -31,7 +31,7 @@ export interface CuteAlismMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', CuteAlismMessages> = {
+export const messages: Record<string, CuteAlismMessages> = {
   'zh-CN': {
     pageLabel: '硬糖几何拼贴主页',
     heroStamp: '个人资料拼贴',

@@ -2,6 +2,7 @@
   "displayName": "GOV.UK Design System",
   "description": "GOV.UK Design System 官方文档汇编：brand 蓝幅、黄 focus、黑字黑白描边、直角与朴素排版的公共服务语言。",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "accent": "#1d70b8",
   "source": {
     "type": "official-docs-derived",

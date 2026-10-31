@@ -30,7 +30,7 @@ export interface InkMessages {
   numerals: string[];
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', InkMessages> = {
+export const messages: Record<string, InkMessages> = {
   'zh-CN': {
     portfolio: '册页',
     preface: '小引',

@@ -1,7 +1,7 @@
 ---
 import InfraStyles from '../components/InfraStyles.astro';
 import { renderRouterScript } from '../lib/router-script';
-import { loadSite, localeHref, resolveLocale } from '../lib/site';
+import { designsForLocale, loadSite, localeHref, resolveLocale } from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 
 /**
@@ -12,12 +12,13 @@ import { sharedMessagesFor } from '../i18n/resolve';
  */
 const model = await loadSite();
 const locale = resolveLocale(model, Astro.url.pathname);
+const localeDesigns = designsForLocale(model, locale);
 const m = sharedMessagesFor(locale.code);
 const script = renderRouterScript({
   mode: model.mode,
   manualSwitch: model.switcherEnabled,
   defaultId: model.default.id,
-  enabled: model.enabled.map((design) => design.id),
+  enabled: localeDesigns.map((design) => design.id),
   cacheHours: model.random.cacheHours,
   avoidRepeat: model.random.avoidRepeat,
   base: model.base,
@@ -46,7 +47,7 @@ const fallbackUrl = localeHref(locale.path, `${model.default.id}/`);
         <p>{m.entry.noscriptBody}</p>
         <ul class="infra-list">
           {
-            model.enabled.map((design) => (
+            localeDesigns.map((design) => (
               <li>
                 <a class="infra-card" href={localeHref(locale.path, `${design.id}/`)}>
                   <span class="name">{design.meta.displayName}</span>

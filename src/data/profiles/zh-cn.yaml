@@ -1,13 +1,8 @@
-# 示例占位资料 · 简体中文（默认语言）。
-# 这是一个虚拟人物，不是真实信息。请替换为你自己的内容。
-# 契约：name / headline / bio / links 为核心字段，所有设计必须呈现；
-#       projects / experience / skills / contact 为扩展区块，由各设计自行取舍。
-# 三份资料（zh-cn / ja / en）共用同一套 schema，字段契约与顺序保持一致；
-# 项目名称、组织名、URL、邮箱、技术标记等专有名词不翻译（SPEC §5.5）。
+# 简体中文标准恶臭版 profile.yaml
 
-name: "田所浩二"
-headline: "24岁，是学生。空手部主将，王道践行者，兼 BB 剧院巨星"
-bio: "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常喜欢在屋顶进行日光浴以及调制秘制冰红茶だよ。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤もん！"
+name: "田所浩二 / 野兽先辈"
+headline: "24岁，是学生 / 贯彻王道征途，迫真空手部主将兼 BB 剧场巨星"
+bio: "24岁，是学生。目前在下北泽空手部带领后辈挥洒汗水，日常热衷于在天台进行日光浴以及调制秘制昏睡红茶。作为互联网集体无意识的概念级存在，长期在各大平台以多元宇宙 BB 素材的形态全勤出勤！"
 avatar: "TadokoroKoji.png"
 location: "東京都世田谷区下北沢"
 
@@ -27,26 +22,26 @@ projects:
     description: "空手部日常组手训练与指导后辈（远野）学术切磋企划，真实记录武道健儿的挥汗日常。"
     url: "https://example.com/oudou"
     tags: ["114514", "王道", "空手道"]
-  - title: "特制红茶配方 (Iced Tea Formula)"
+  - title: "昏睡红茶秘方 (Iced Tea Formula)"
     description: "训练后补充体能研发的冷泡饮品方案，具备让人迅速进入深度放松与昏睡状态的奇妙风味。"
     url: "https://example.com/tea-lab"
-    tags: ["Tea", "Recipe"]
+    tags: ["昏睡红茶", "114514", "配方"]
   - title: "多元宇宙 BB 剧场巡演"
     description: "横跨金阁银阁、咆哮怪兽化与各路声画调教的次文化现象级演艺工程。"
-    tags: ["MAD", "AviUtl", "Synthesizer"]
+    tags: ["音MAD", "AviUtl", "鬼畜"]
 
 experience:
   - org: "下北沢大学 空手部"
     role: "主将 / 先辈 (Ace)"
     period: "24岁 – 永恒"
     description: "主导部活组手训练，传授防身术与体能技巧，顺带负责道场休息室的冰饮供应与后辈关怀。"
-  - org: "niconico 动画 / 互联网亚文化演艺企划"
+  - org: "niconico 动画 / 亚文化二次创作联盟"
     role: "概念级主演 / 万能音 MAD 核心"
     period: "2001 – 至今"
     description: "作为高频出场的经典素材，参与数以万计的二次创作衍生剧场，成为网民解构与二创的灵感源泉。"
 
-skills: ["空手道组手", "王道征途", "秘制调饮", "日光浴", "BB 素材化", "迫真咆哮"]
+skills: ["空手道组手", "王道征途", "昏睡红茶制作", "日光浴", "BB 素材化", "迫真咆哮", "114514共鸣"]
 
 contact:
   email: "114514@shimokitazawa.jp"
-  note: "いいよ！こいよ！训练完随时来道场喝茶切磋のさ。"
+  note: "いいよ！こいよ！训练完随时来道场喝茶切磋。"

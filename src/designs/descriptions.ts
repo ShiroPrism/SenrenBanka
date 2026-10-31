@@ -8,9 +8,22 @@
  * - 缺键时回退 `design.json.description`（英文/原始描述），由调用方处理。
  */
 
-export type DescriptionLocale = 'zh-CN' | 'ja' | 'en';
-
-export const designDescriptions: Record<string, Record<DescriptionLocale, string>> = {
+export const designDescriptions: Record<string, Record<string, string>> = {
+  brutal: {
+    'zh-CN': '新粗野告示板：粗黑描边、硬偏移阴影、酸性高亮与超大字号，把资料做成一块块不容忽视的标牌。',
+    ja: 'ネオ・ブルータルの掲示板——太い黒枠、硬いオフセット影、アシッドな差し色と巨大な文字で、プロフィールを無視できない看板に。',
+    en: 'A neo-brutalist noticeboard: thick black outlines, hard offset shadows, acid highlights and oversized type turn the profile into signs you cannot ignore.',
+  },
+  deco: {
+    'zh-CN': 'Art Deco 剧院节目单：墨黑台面、黄铜双线框、金色扇形与对称版式，把资料排成一册夜场演出手册。',
+    ja: 'アール・デコの劇場プログラム——黒い舞台、真鍮の二重罫線、金色の扇、対称的な組版で夜の公演冊子に。',
+    en: 'An Art Deco theatre programme: an ink-black stage, brass double rules, golden fans and symmetry turn the profile into an evening playbill.',
+  },
+  ink: {
+    'zh-CN': '宋式册页：宣纸底色、一列竖排题署、朱砂小印与青瓷细线，把资料排成一页摊开的册页。',
+    ja: '宋版の冊子——宣紙の地、縦組みの題署、朱砂の小印、青磁の細線で、プロフィールを開いた一頁に。',
+    en: 'A Song-style album leaf: rice-paper ground, a vertical title column, cinnabar seal and celadon rules lay the profile out as an opened page.',
+  },
   'fairy-kei': {
     'zh-CN': '复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。',
     ja: 'レトロな少女の玩具コレクション——開いたショーケース、吊り下げチャームのリンク、パッケージカードのプロフィール。',
@@ -50,26 +63,31 @@ export const designDescriptions: Record<string, Record<DescriptionLocale, string
     'zh-CN': '原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。',
     ja: '素の HTML——意味構造とブラウザ既定の表示だけでプロフィールを提示し、独自の CSS や JavaScript を読み込まない。',
     en: 'Native HTML: the complete profile through semantic structure and browser defaults, with no custom CSS or JavaScript.',
+    ko: '네이티브 HTML — 의미 구조와 브라우저 기본 스타일만으로 전체 프로필을 표시하며, 사용자 CSS나 JavaScript를 불러오지 않습니다.',
   },
   editorial: {
     'zh-CN': '杂志编排：一期一人，克制而讲究的留白与发丝线。',
     ja: '雑誌の組版——一期に一人。抑制的で、余白と罫線を重んじる。',
     en: 'Magazine layout: one person per issue, restrained whitespace and hairline rules.',
+    ko: '잡지 편집 — 한 호에 한 사람. 절제된 여백과 실 같은 구분선.',
   },
   fast: {
     'zh-CN': '极简单色：紧凑栅格、无装饰，优先保证信息密度与加载速度。',
     ja: '極簡のモノクロ——密なグリッドと装飾なし。情報密度と速度を優先。',
     en: 'Minimal monochrome: a tight grid, no decoration, prioritising density and speed.',
+    ko: '미니멀 모노크롬 — 촘촘한 그리드, 장식 없음. 정보 밀도와 속도 우선.',
   },
   frost: {
     'zh-CN': '毛玻璃与极光：柔和渐层、悬浮卡片，苹果风光的克制复刻。',
     ja: 'グラスとオーロラ——柔らかなレイヤーと浮遊するカード。Apple HIG の再現。',
     en: 'Frosted glass and aurora: soft layers, floating cards, a restrained Apple HIG echo.',
+    ko: '프로스트 글라스와 오로라 — 부드러운 레이어, 떠 있는 카드. Apple HIG의 절제된 재현.',
   },
   govuk: {
     'zh-CN': 'GOV.UK 设计系统：强对比、方正栅格与标志性的黄色焦点样式。',
     ja: 'GOV.UK Design System——高いコントラストと正味のあるグリッド。',
     en: 'The GOV.UK Design System: high contrast, a strict grid and unmistakable focus styles.',
+    ko: 'GOV.UK 디자인 시스템 — 강한 대비, 반듯한 그리드, 상징적인 포커스 스타일.',
   },
   kern: {
     'zh-CN': '瑞士排版：网格骨架、十字准星与紧凑的标签式信息组织。',

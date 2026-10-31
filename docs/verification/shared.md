@@ -4,11 +4,21 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
-> 最近共享机制专项验证：**2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）**；此前 2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
+> 最近共享机制专项验证：**2026-10-31（韩语首批 + 设计语言覆盖 + 菜单 CSS 外置，ADR 0015 / 0016）**；此前 2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）、2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > 2026-10-28（HTML-only 子任务）：新增 `renderMode` 契约与构建末尾 `verify:html-only` 门禁。同日 `homepage99` styled 设计接入后，**当时**静态构建为 **81 页**（v0.17.0 当前为 **105 页**）；HTML-only 的桌面 / 320–375px / 无 CSS / 无 JS / 键盘检查证据见 `docs/verification/html-only.md`，Homepage '99 的浏览器实测见 `docs/verification/homepage99.md`。
 > 2026-10-31（`brutal` / `ink` / `deco` 增量）：新增 3 套 `styled` 与 3 个 `Preview.astro`；切换页预览 **24 → 27**，设计页 CSS **23 → 26**（三语共享），`fonts:typography` 门禁为 **26** 套 `styled` / **17** 套核心 CJK。`brutal` 证据见 `docs/verification/brutal.md`；`ink` / `deco` 的构建、体积与浏览器矩阵见 `docs/verification/ink.md` / `docs/verification/deco.md`。
 >
 > 2026-10-31 批次汇总（`ink` + `deco` 收口）：`npm run build` **117 页**、`astro check` 0 error / 0 warning、`npm test` **67/67**；核心子集 3 个 / **710,012 B**，`fonts:prune` 保留 336 条规则 / 22 个字体 CSS 包，`dist` **6,544,535 B（6.24 MiB）** ≤10 MiB。两套 `impeccable detect` 均为 `[]`（oxide `codex-grid-background` 反证命中）。切换页 **27** 张预览、**0** 个预览内部可聚焦元素；两套在 1440 / 768 / 375×812、三语言、Reveal 滚动与直达、四种降级、悬浮球 52×52 / 面板底边 = `innerHeight` / close+cancel+Esc、对比度与仅本地网络请求上全部通过。**触控验证须用 `tap()`**：Playwright 的鼠标点击会按设计把输入模式切到 mouse 并隐藏悬浮球，不是站点缺陷（2026-10-31 实测）。未复测项：`--base /demo`、Safari/Firefox/iOS/Android 真机、200% 缩放、CDP 平台字体信息。
+>
+> 2026-10-31 菜单 CSS 外置批次（ADR 0015）：`ContextMenu.astro` 的 18,823 B/页内联样式改为单一共享 `_astro/ContextMenu.<hash>.css`（**7,515 B**）。`npm run build` **117 页**、`npm test` **67/67**、`astro check` 0 error / 0 warning；核心子集 3 个 / **630,332 B**（语料 **1,154** 码位 / 151 个文本资产），`fonts:prune` 字体 **34 文件 / 1,541,916 B**，`dist` **4,932,820 B（4.70 MiB）** ≤10 MiB。桌面 / 375×812 触控 / 无 JS / `html-only` 复测见 `docs/verification/action-menu.md`；截图 `docs/verification/assets/action-menu-css-{desktop,mobile,nojs}.png`。未复测项：`--base /demo`、真机 Safari/Android、200% 缩放。
+>
+> 2026-10-31 设计语言覆盖批次（C2）：27 套 `design.json` 增加必填 `locales: ["zh-CN","ja","en"]`；`messages.ts` 移除三语 union；`design.json` 覆盖决定页面生成，未覆盖 locale 无产物；默认设计必须全量；切换目标在目标 locale 未覆盖当前设计时落到默认设计；切换页、随机池、locale 入口、旧路径入口均按覆盖过滤。负向实测：非默认设计排除 `en` → `/en/fast/` 无产物且 `/en/designs/` 不列出、`/zh-cn/fast/` 的语言项 en 目标为 `/en/editorial/`；默认设计漏 `en` → 构建失败；声明覆盖但缺 `messages.ts` en 键 → 构建失败；`design.json` 含未配置 `ko` → 告警并忽略、无 `ko` 页面。`npm run check` 0 error / 0 warning、`npm test` 67/67、`npm run build` **117 页**、`dist` **4,939,230 B**（新增 9 条切换页描述，+6,410 B）。
+>
+> 2026-10-31 韩语首批批次（C4）：新增 `ko` locale、`profiles/ko.yaml`、共享与 5 套设计韩语文案/描述；覆盖 `editorial`（默认）、`frost`、`fast`、`govuk`、`html-only`。字体按 ADR 0016：editorial 用核心 LXGW（子集 249,972 → **275,920 B**），frost/fast/govuk/html-only 用系统韩文回退；不部署 Noto KR。`npm run build` **124 页**、`npm test` 67/67、`verify:html-only` **4 页**、`dist` **5,147,850 B（4.91 MiB）**、字体 **34 文件 / 1,571,636 B**、核心子集 **660,052 B**、`fonts:audit` 348 规则 / 0 孤儿 / 0 悬空。`/ko/` 页面 7 个；`/ko/designs/` 仅列 5 套；`/ja/archive/` 的 ko 语言项回退 `/ko/editorial/`；`/ko/html-only/` 零 CSS/JS/字体、4 个原生语言链接。韩语文案待人工审校；Noto KR 待外部字体仓库发布后替换（ADR 0016）。
+>
+> 2026-10-31 跨设计冒烟矩阵（C1–C4 收口）：**90 个 URL**（zh/ja/en 各 28 页 + ko 6 页）在 **1280×800** 与 **375×812 + 触控** 下逐页导航：HTTP 200、0 console、0 4xx、`html lang` 正确、styled 页 8 个 `.cm-lang`（4×2）、`html-only` 4 个 `hreflang`、`h1` 存在、无横向溢出、悬浮球 ≥44×44；**0 失败**。`impeccable detect`：editorial `[]`；frost 2 条 `bounce-easing` 为 `docs/designs/frost/ADAPTATION.md` 已记录例外。未逐页重跑像素 / 对比度 / reduced-motion 视觉矩阵。
+>
+> 2026-10-31 单语言 fork 体积实测（C3）：临时只保留 `zh-CN`，完整字体管线后 `dist` **3,135,835 B（2.99 MiB）**、**59 页**、149 文件、字体 **34 文件 / 1,380,744 B**；HTML 约 786 KB。语言分组、菜单 JSON `languages`、`LanguageSwitcher` 与 `html-only` 原生语言区整组消失；源码已恢复。
 
 ## 核心字体内容子集验证（2026-10-31，v0.20.0）
 
@@ -143,7 +153,7 @@
 **响应式、减动态与无 JS**
 
 - `responsive-accessibility-matrix.json` 在 fresh Chrome context 中对 archive / cute-alism / radio 复测 375×812 + `isMobile` + touch：`pointer: coarse=true`，三页无横向溢出，Zhuque / LXGW / Ark Pixel 均按普通排版加载；WOFF2 分别为 40 / 32 / 15 个。截图 `archive-375.png`、`cute-alism-375.png`、`radio-375.png`。
-- archive 触控菜单：面板可见且底边贴合视口，语言项 3 个，关闭 44×44、取消 351×48；打开时 `<html>` overflow hidden，取消后面板隐藏、`aria-expanded=false` 且滚动解锁。面板截图 `archive-touch-panel.png`。
+- archive 触控菜单：面板可见且底边贴合视口，语言项 4 个，关闭 44×44、取消 351×48；打开时 `<html>` overflow hidden，取消后面板隐藏、`aria-expanded=false` 且滚动解锁。面板截图 `archive-touch-panel.png`。
 - 三页 `prefers-reduced-motion: reduce`：`data-reveal-ready` 未写入，`[data-reveal]` 隐藏数 0，运行中动画 0；代表截图 `archive-reduced-motion.png`。
 - 三页 375px 无 JS：门控未写入、隐藏数 0，正文 804–870 字符、可见链接 6 个，无横向溢出；代表截图 `archive-no-js.png`。
 

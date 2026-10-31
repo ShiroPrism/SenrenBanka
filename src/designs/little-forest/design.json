@@ -2,6 +2,7 @@
   "displayName": "Little Forest",
   "description": "A quiet picture-book trail: an entrance sign, signposts, trail places, tree rings, wildflower specimens and a cottage ending.",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "renderMode": "styled",
   "accent": "#4d6952",
   "source": {

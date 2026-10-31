@@ -34,7 +34,7 @@ export interface TapeMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', TapeMessages> = {
+export const messages: Record<string, TapeMessages> = {
   'zh-CN': {
     cardTag: '磁带内页',
     sideLabel: 'A 面',

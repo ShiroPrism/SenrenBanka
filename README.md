@@ -1,13 +1,13 @@
 # SenrenBanka
 
-一份个人资料，多套由 AI 依据 `DESIGN.md` 生成的完整设计，支持简中 / 日 / 英三语言——构建期产出纯静态页面，可部署到任何静态托管。
+一份个人资料，多套由 AI 依据 `DESIGN.md` 生成的完整设计，支持简中 / 日 / 英 / 韩四语言——构建期产出纯静态页面，可部署到任何静态托管。
 
 One profile, many AI-designed homepages, in three languages. Astro + TypeScript + Tailwind CSS 4, shipped as static files.
 
 ## 特性
 
 - 24 套视觉与结构不同的设计（23 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
-- **三语言**（`zh-CN` / `ja` / `en`）：每套设计在每种语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离
+- **多语言（当前 `zh-CN` / `ja` / `en` / `ko`）**：每套设计在每种**它声明覆盖**的语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离；未覆盖的 locale 不生成该设计页面
 - **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
@@ -51,12 +51,12 @@ links:
     url: "https://github.com/you"
 ```
 
-- 改资料：`src/data/profiles/{zh-cn,ja,en}.yaml`（三份，**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
+- 改资料：`src/data/profiles/*.yaml`（每种配置语言一份，当前 `zh-cn` / `ja` / `en` / `ko`；**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
 - 普通可选字段：`avatar`（部分风格不放照片）/ `location`
 - 高级可选扩展区块：`projects` / `experience` / `skills` / `contact`。它们仅为兼容现有设计而保留，可整体省略；不是自定义内容机制，也不会继续扩充同类字段或区块
 - 站外内容：通过 `links` 指向作品集、文章或社交资料等更多信息；内容离开本站后，其可用性、可访问性、归属与持久性由外部平台控制
-- 仓库中的三份完整 Profile 是用于验证多套设计内容呈现的设计样张，不是必填模板
-- 改语言：`src/data/site.config.yaml` 的 `i18n.locales`（**语言清单只在这里维护一处**：增删语言 = 加一份 `locales` 条目 + 一份同名 `profiles/<path>.yaml`）
+- 仓库中的完整 Profile（当前四份）是用于验证多套设计内容呈现的设计样张，不是必填模板
+- 改语言：`src/data/site.config.yaml` 的 `i18n.locales`（**语言清单只在这里维护一处**：增删语言 = 加一份 `locales` 条目 + 一份同名 `profiles/<path>.yaml`）。新增语言还要在要覆盖它的设计 `design.json` 的 `locales` 中追加该 code；默认设计必须覆盖全部 locale。**只保留一种语言**：把 `i18n.locales` 改为 1 条并删除多余 profiles；`design.json` 中未配置的 code 会被忽略，语言分组与原生语言区整组不渲染（保留 `/<locale>/` 前缀）
 - 改行为：`src/data/site.config.yaml` 的 `design`（`mode` / `default` / `manualSwitch` / `cacheHours`）
 - 改界面文案：共享文案在 `src/i18n/messages.ts`，每套设计自己的文案在 `src/designs/<id>/messages.ts`（缺文件或缺键**构建期报错**）
 - 增删设计：在 `src/designs/<id>/` 新建或删除目录即可（目录存在即注册）。共同必交 `DESIGN.md` / `design.json` / `Page.astro` / `messages.ts`；`renderMode: "styled"`（缺省）另需 `style.css`，`renderMode: "html-only"` 则禁止 `style.css` / `tokens.css`，但可提供自包含的 `Preview.astro`。流程与合规要求见 `SPEC.md` §4–§6 与 `docs/rules/`。新增目录后需重启 `npm run dev`。
@@ -76,7 +76,7 @@ npm run fonts:check
 
 ```
 /                         根入口 → 进入默认语言（zh-CN），随机 / 固定模式同既有行为
-/zh-cn/<设计>/  /ja/<设计>/  /en/<设计>/    各语言下的设计页（唯一权威地址）
+/zh-cn/<设计>/  /ja/<设计>/  /en/<设计>/  /ko/<设计>/    各语言下已声明覆盖的设计页（唯一权威地址）
 /zh-cn/designs/ 等          各语言的主题切换页（manualSwitch 关闭时不构建）
 /<设计>/  /designs/         旧无前缀路径 → 默认语言版本的静态跳转（meta refresh + canonical + noindex）
 ```

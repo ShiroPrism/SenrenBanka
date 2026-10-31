@@ -3,8 +3,8 @@
 > 本文件维护**共享操作菜单**（`ContextMenu.astro` + `context-menu.ts`）的当前完整验证状态。它的验证维度**跨设计、跨输入环境、跨配置**，与 `shared.md` 的"路由 / 字体 / Reveal / 资产 provenance"不同职责，因此独立成文（见 `docs/README.md`）。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill。
-> 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归。
-> 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。2026-10-29（v0.17.0）：六套新增 `styled` 设计均在桌面与 375px 触控环境实测共享菜单；当前 23 套 `styled` 设计。
+> 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归；**2026-10-31 追加菜单 CSS 外置复测（桌面 / 375px 触控 / 无 JS / 体积）**。
+> 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。2026-10-29（v0.17.0）：六套新增 `styled` 设计均在桌面与 375px 触控环境实测共享菜单；当前 **26 套 `styled`** 设计。
 
 ## 形态与接入面
 
@@ -12,13 +12,13 @@
 
 | 页面上下文 | 接入 | 身份条 | 随机主题 | 「切换设计…」 | 语言项目标 |
 |---|---|---|---|---|---|
-| `design`（`styled`；当前 23 套 × 3 语言 = 69 页） | ✅ | ✅ | 排除当前 | ✅ | `/{locale}/{同一主题}/` |
+| `design`（`styled`；当前 26 套；三语 78 页 + 韩语覆盖 4 套 = 82 页） | ✅ | ✅ | 排除当前 | ✅ | 目标 locale 覆盖当前设计时同一主题，否则默认设计 |
 | `design`（`html-only`；3 页） | ❌（ADR 0009 显式例外） | — | — | — | 原生同主题语言链接 |
 | `switcher`（3 页） | ✅ | ❌ | 全池（不排除不存在的当前） | ❌ 构建期不渲染 | `/{locale}/designs/` |
 | `not-found`（`404.html`） | ✅ | ❌ | 全池 | ✅（受 `manualSwitch` 门控） | `/{locale}/` |
 | `entry`（`/`、`/{locale}/`、旧路径跳转页） | ❌ | — | — | — | 现有 `<noscript>` 列表 |
 
-产物实测：设计页 `cm-lang` **6** 个（桌面子菜单 3 + 面板平铺 3）、`aria-current="page"` **2** 个（两份各一）、`data-cm-sheet` / `data-cm-launcher` / `data-cm-scrim` 各 1。切换页 `data-cm-action="switch"` 计数 **0**、`<header class="cm-head">` 计数 **0**；404 同样无身份条。
+产物实测：设计页（4 语言页面）`cm-lang` **8** 个（桌面子菜单 4 + 面板平铺 4）、`aria-current="page"` **2** 个（两份各一）、`data-cm-sheet` / `data-cm-launcher` / `data-cm-scrim` 各 1。切换页 `data-cm-action="switch"` 计数 **0**、`<header class="cm-head">` 计数 **0**；404 同样无身份条。
 
 ## 桌面鼠标环境
 
@@ -50,7 +50,7 @@
   > **下拉关闭手势已于本轮移除**（项目所有者裁定：它抢占的触屏手势会让页面顶部的下拉刷新一并失效）。抓手 `.cm-sheet-grip` 现为纯装饰（4px 短横），**不暗示可拖动**；`.cm-sheet-bar` 的 `touch-action` 实测为 `auto`。
 - 面板呈现（action sheet 三段结构，非桌面菜单的等比放大）：
   - **分组**：`.cm-sheet-group` 依次为「页面 / デザイン / 言語」（切换页与 404 无「设计」组的重复项）。`manualSwitch: false` 时「设计」整组消失。
-  - **语言项平铺**：无二级子菜单，3 个语言项带 `Globe` 图标；当前语言项额外带**底色 + 勾选**（不只靠颜色，`aria-current="page"`）。
+  - **语言项平铺**：无二级子菜单，4 个语言项带 `Globe` 图标；当前语言项额外带**底色 + 勾选**（不只靠颜色，`aria-current="page"`）。
   - **身份条**仅 `design` 上下文有，实测渲染为一枚 chip（强调色圆点 + 设计名 + 「現在のデザイン」标签），与操作项形态区分——否则用户会以为点它有反应。
   - **首项不预高亮**：面板打开时给首项的焦点是程序性聚焦，`data-cm-key` 不预置、`background: transparent`，触屏上没有"当前项"。
   - **面板内滚动条隐藏**（`scrollbar-width: none` + `::-webkit-scrollbar { width: 0 }`）：留着会被读成"页面还能继续滚"，也会让文字列在有/无滚动条时对不齐。
@@ -78,10 +78,10 @@
 
 ## 构建与产物隔离
 
-- 历史矩阵：2026-10-13 为 **41 页**（当时 8 套 `styled`），2026-10-28 为 **81 页**（当时 17 套 `styled`）；v0.17.0 当前全站构建为 **105 页 / 23 套 `styled` + 1 套 `html-only`**。六套新增设计的菜单、触控面板、语言导航与滚动锁已在 2026-10-29 回归。
-- 每个 `styled` 设计页 CSS `<link>` 计数 = **1**；`html-only` 页面 = **0**，切换页与 404 = **0**（不误带设计样式）。菜单样式全部 `<style is:inline>`，不新增 `<link>`。
+- 历史矩阵：2026-10-13 为 **41 页**（当时 8 套 `styled`），2026-10-28 为 **81 页**（当时 17 套 `styled`）；v0.20.0 为 **117 页 / 26 套 `styled` + 1 套 `html-only`**；2026-10-31 韩语批次为 **124 页 / 26 套 `styled` + 1 套 `html-only`（ko 覆盖 5 套）**。六套新增设计的菜单、触控面板、语言导航与滚动锁已在 2026-10-29 回归。
+- 每个 `styled` 设计页 `<link rel="stylesheet">` 计数 = **3**（字体包 + 共享菜单 + 自身设计 CSS）；切换页 = **3**（字体包 + SwitcherPage + 共享菜单）；404 = **1**（共享菜单）；`html-only` = **0**。菜单样式为单一共享 `_astro/ContextMenu.<hash>.css`（本轮 **7,515 B**），不再逐页内联（ADR 0015）。
 - 运行时 chunk `context-menu.*.js` 独立，页面内 `modulepreload` 计数 = **0**。启动门控为 `matchMedia('(hover: hover) and (any-pointer: fine)')` **或** `matchMedia('(any-pointer: coarse)')` 任一命中即动态 `import()`。
-- 三语言 `launcherLabel` 与语言目标 URL 均正确本地化。
+- 各配置语言 `launcherLabel` 与语言目标 URL 均正确本地化。
 
 ## 本版修正的缺陷（实测暴露）
 
@@ -104,6 +104,21 @@
 14. **「重新加载」与下拉刷新自相矛盾（项目所有者指出）**：上一轮刚论证「下拉刷新比下拉手势重要」、把 `.cm-sheet-bar` 的 `touch-action: none` 移除以把这条通道还给浏览器，下一轮却在同一块面板里留着「重新加载」——两处互相打脸。移动浏览器的页首下拉就是刷新，用户没有任何理由打开面板去找它。已从 `sheetActions` 移除，桌面保留（桌面肌肉记忆是 F5 / Ctrl+R，且右键菜单是"不离开当前位置拿操作"的入口）。
     - 由此确立裁剪的**判断标准**：不是"桌面菜单里有什么"，而是"**整个平台已经原生提供了什么**"。据此复查了保留的两项——`copy` 原生路径是长按地址栏（2~3 步且带离页面）、`share` 唤起的就是系统原生分享表单，二者都是缩短路径而非重复，保留成立。
 15. **动作裁剪后版面重排**：面板三轮裁剪后从 600px（且 `body` 需滚动）收成 **518px**（375×812 下**无需滚动**）。项高 52→48px、组间距同步收紧，避免动作减少后底部留出一大段空白。组标题选择器从 `:first-child` 改为 `:first-of-type`——`cm-head` 身份条存在时它是 `body` 的第一个元素子节点，`:first-child` 会误命中导致首个分组丢失上边距。
+
+## 2026-10-31 菜单 CSS 外置复测（ADR 0015）
+
+**范围**：`ContextMenu.astro` 的 `<style is:inline>` → Astro 全局样式，构建为单一共享 hash CSS；不改菜单 DOM、动作、状态语义、语言项与运行时。
+
+- 构建：`npm run build` 通过；`npm test` 67/67；`npm run check` 0 error / 0 warning；`verify:html-only` 通过；117 页。
+- 体积：`dist` 6,544,535 → **4,932,820 B**；HTML 3,960,801 → 2,421,251 B；CSS 645,973 → 653,488 B（+7,515 B 共享菜单文件）；字体 1,621,596 → 1,541,916 B（子集语料变化）；10 MiB 门禁通过；`fonts:audit` 339 条规则 / 34 文件 / 0 孤儿 / 0 悬空。
+- 资源：菜单 CSS 仅 `_astro/ContextMenu.CfXucDQq.css`；设计页 3 条 / 切换页 3 条 / 404 1 条 / `html-only` 0 条；`Page.*.css` 与 `SwitcherPage.*.css` 不含 `.cm-*` 选择器。
+- 桌面（1536×682）：右键 (420,320) 打开，`.cm` 216×374 @ (422,8)；语言子菜单 4 项、`aria-expanded="true"`、子菜单完全在视口内；两份 DOM 合计 8 个 `.cm-lang` / 2 个 `aria-current="page"`；`Shift+F10` 打开并聚焦首项；Escape 关闭；0 console。
+- 移动（375×812 + `hasTouch`/`isMobile`，`touchscreen.tap`）：`(pointer: coarse)=true`；悬浮球 52×52；面板 375×616.8，底边 = 812；项高 48px；头 ✕ 44×44；取消条 48px；语言项 4 个平铺；`scrollWidth=375` 无横向溢出；全页 `touch-action: none` 计数 0；取消关闭后 `sheet hidden`、`html overflow=visible`、`aria-expanded=false`；0 console。
+- 无 JS：`styled` 页 `.cm` / `.cm-sheet` 均 `hidden`，正文可读；`html-only` stylesheet / style / script / `.cm-*` 均为 0，原生语言链接 3 个且当前项 `aria-current="page"`。
+- 截图：`docs/verification/assets/action-menu-css-desktop.png`、`action-menu-css-mobile.png`、`action-menu-css-nojs.png`。
+- 韩语 4 语言（`/ko/editorial/`）：桌面两份 DOM 合计 8 个 `.cm-lang`（4 × 2），当前项为 `ko`；4 个目标保持 `/ko|zh-cn|ja|en/editorial/`；移动 375×812 触控面板 4 个语言项平铺、项高 48px、面板底边 812、无横向溢出、0 console（截图 `docs/verification/assets/action-menu-ko-mobile.png`）。
+- 覆盖回退：`/ja/archive/`（archive 仅覆盖 zh/ja/en）的语言项 `ko` 目标为 `/ko/editorial/`（默认设计），不是 `/ko/archive/`。
+- 未复测：真机 Safari / Android、`--base /demo` 全链路、200% 缩放；颜色与对比度值未改动，沿用既有结论。
 
 ## 未覆盖 / 需后续补测
 

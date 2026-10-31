@@ -2,6 +2,7 @@
   "displayName": "Tape",
   "description": "卡式磁带与 J 卡内页：手写贴标、双卷轴窗、螺钉壳身，配一张 A 面曲目单摊在深色桌面上。",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "accent": "#c2642d",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-17（八方向新主题·磁带）"

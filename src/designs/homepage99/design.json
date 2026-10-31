@@ -2,6 +2,7 @@
   "displayName": "Homepage '99",
   "description": "A hand-built personal homepage from the late 1990s.",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "renderMode": "styled",
   "accent": "#000080",
   "source": { "type": "self-produced" }

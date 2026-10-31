@@ -69,7 +69,7 @@
 
 - `pointer: coarse = true`；`scrollWidth = innerWidth = 375`，无横向溢出；`.rc-paper` 338px 宽，左右各 11px 台面。
 - `.rc-fold-body` 为 `display: block`；URL 隐藏；纸张单栏顺序与桌面 DOM 一致。
-- 共享操作菜单（ADR 0007）：悬浮球 **52×52**、有「打开快捷操作菜单」标签；点击图标本身可打开面板，面板贴底（bottom gap = 0），动作项 `copy / share / random / switch`、语言项 3 个、✕ 与取消条都在；打开时 `html overflow: hidden`，点击 ✕ 后关闭。
+- 共享操作菜单（ADR 0007）：悬浮球 **52×52**、有「打开快捷操作菜单」标签；点击图标本身可打开面板，面板贴底（bottom gap = 0），动作项 `copy / share / random / switch`、语言项 4 个、✕ 与取消条都在；打开时 `html overflow: hidden`，点击 ✕ 后关闭。
 - 触控链接命中：探针测得首个 `.rc-link` 高度 **45px**（≥44）；全页 `touch-action: none` 元素计数 **0**。
 
 ## 多语言与语言切换

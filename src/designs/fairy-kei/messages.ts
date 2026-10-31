@@ -37,7 +37,7 @@ export interface FairyKeiMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', FairyKeiMessages> = {
+export const messages: Record<string, FairyKeiMessages> = {
   'zh-CN': {
     brand: 'SENRENBANKA',
     skipToContent: '跳到打开的收藏盒',

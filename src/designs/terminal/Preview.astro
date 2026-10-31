@@ -23,7 +23,7 @@ import './tokens.css';
 export const fonts: import('astro:assets').CssVariable[] = ['--font-jetbrains-mono'];
 
 const { locale, name, location } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 ---
 
 <div class="tm-pv">

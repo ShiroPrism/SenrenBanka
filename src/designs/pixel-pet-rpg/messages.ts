@@ -36,7 +36,7 @@ export interface PixelPetMessages {
   liveTemplate: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', PixelPetMessages> = {
+export const messages: Record<string, PixelPetMessages> = {
   'zh-CN': {
     gameTitle: 'PIXEL PET TOWN',
     pageLabel: '资料页面',

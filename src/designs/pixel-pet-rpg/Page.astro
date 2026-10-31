@@ -14,7 +14,7 @@ import { messages as designMessages, type PixelPetMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('pixel-pet-rpg', Astro.url.pathname);
-const t: PixelPetMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: PixelPetMessages = designMessages[view.locale.code];
 const { profile } = view;
 
 const hasProjects = Boolean(profile.projects?.length);

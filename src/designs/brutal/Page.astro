@@ -14,7 +14,7 @@ import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('brutal', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 ---

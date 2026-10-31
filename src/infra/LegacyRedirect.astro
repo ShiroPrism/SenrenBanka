@@ -1,6 +1,6 @@
 ---
 import InfraStyles from '../components/InfraStyles.astro';
-import { loadSite } from '../lib/site';
+import { designsForLocale, loadSite } from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 
 /**
@@ -23,7 +23,7 @@ const segment = Astro.url.pathname.split('/').filter(Boolean).pop() ?? '';
 const target =
   segment === 'designs' && model.switcherEnabled
     ? `designs/`
-    : (model.enabled.some((design) => design.id === segment) ? `${segment}/` : '');
+    : (designsForLocale(model, locale).some((design) => design.id === segment) ? `${segment}/` : '');
 const targetUrl = `${model.base}${locale.path}/${target}`;
 ---
 

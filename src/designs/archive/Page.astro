@@ -22,7 +22,7 @@ import './style.css';
 
 const view = await loadDesignView('archive', Astro.url.pathname);
 const { profile, locale, contextMenu } = view;
-const t = designMessages[locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[locale.code];
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');

@@ -11,7 +11,7 @@ export interface KernMessages {
   contact: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', KernMessages> = {
+export const messages: Record<string, KernMessages> = {
   'zh-CN': {
     portfolio: '作品集',
     projects: '项目',

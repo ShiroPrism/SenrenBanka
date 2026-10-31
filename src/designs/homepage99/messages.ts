@@ -56,7 +56,7 @@ export interface Homepage99Messages {
   footerNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', Homepage99Messages> = {
+export const messages: Record<string, Homepage99Messages> = {
   'zh-CN': {
     skipLink: '跳到主要内容',
     navigation: '页面目录',

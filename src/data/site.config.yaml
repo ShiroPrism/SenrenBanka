@@ -17,16 +17,25 @@ i18n:
       label: 简体中文        # 语言自称
       title: "田所浩二 / Tadokoro Koji (野獣先輩)"
       description: "独立开发者与界面工程师的个人主页。"
+      fontProfile: cjk
     - code: ja
       path: ja
       label: 日本語
       title: "田所浩二 / 野獣先輩"
       description: "個人ポートフォリオサイト。"
+      fontProfile: cjk
     - code: en
       path: en
       label: English
       title: "Tadokoro Koji (野獣先輩)"
       description: "Personal portfolio of an independent developer."
+      fontProfile: latin
+    - code: ko
+      path: ko
+      label: 한국어
+      title: "타도코로 코지 (야수 선배)"
+      description: "독립 개발자이자 인터페이스 엔지니어의 개인 홈페이지."
+      fontProfile: korean
 
 design:
   mode: random        # random | fixed

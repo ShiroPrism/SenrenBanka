@@ -37,7 +37,7 @@ export interface RadioMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', RadioMessages> = {
+export const messages: Record<string, RadioMessages> = {
   'zh-CN': {
     panelLabel: '短波收信机',
     brandTag: 'SW 收信机',

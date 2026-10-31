@@ -12,7 +12,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 ];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 const previewLinks = links.slice(0, 2);
 ---
 

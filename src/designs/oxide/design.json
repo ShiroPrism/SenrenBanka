@@ -2,6 +2,7 @@
   "displayName": "Oxide",
   "description": "深色工业风：OKLCH 中性色 + 绿色强调、等宽大写标签、ASCII 纹理与发丝分隔线。",
   "enabled": true,
+  "locales": ["zh-CN", "ja", "en"],
   "accent": "#3fdaa0",
   "source": {
     "type": "official-vendor",

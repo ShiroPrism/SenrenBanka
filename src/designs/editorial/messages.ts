@@ -18,7 +18,7 @@ export interface EditorialMessages {
   colophon: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', EditorialMessages> = {
+export const messages: Record<string, EditorialMessages> = {
   'zh-CN': {
     issueMark: '第 01 期',
     personalEdition: '个人特刊',
@@ -53,6 +53,18 @@ export const messages: Record<'zh-CN' | 'ja' | 'en', EditorialMessages> = {
     worksLabel: 'Selected Works',
     elsewhereHeading: 'Elsewhere',
     elsewhereLabel: 'External links',
+    colophon: 'Designed in the shape of a magazine',
+  },
+  ko: {
+    issueMark: '제 01호',
+    personalEdition: '개인 특집',
+    navLabel: '이번 호 내비게이션',
+    tocWorks: '주요 작품',
+    tocLinks: '외부 링크',
+    worksHeading: 'Selected Works',
+    worksLabel: '주요 작품',
+    elsewhereHeading: 'Elsewhere',
+    elsewhereLabel: '외부 링크',
     colophon: 'Designed in the shape of a magazine',
   },
 };

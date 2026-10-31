@@ -10,7 +10,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 ];
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 ---
 
 <div class="kern-pv">

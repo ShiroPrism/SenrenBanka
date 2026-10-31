@@ -20,7 +20,7 @@ import './style.css';
 
 const view = await loadDesignView('cute-alism', Astro.url.pathname);
 const { profile } = view;
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const linkIcons = { tv: Tv, video: Video, coffee: Coffee } as const;
 
 const pad = (value: number) => String(value).padStart(2, '0');

@@ -65,7 +65,7 @@ const LATIN = {
   plural: 'n. pl.',
 } as const;
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', LexiconMessages> = {
+export const messages: Record<string, LexiconMessages> = {
   'zh-CN': {
     lexiconWord: 'LEXICON',
     rangeBefore: '第',

@@ -52,6 +52,8 @@ export const designMetaSchema = z
     displayName: z.string().min(1),
     description: z.string().min(1),
     enabled: z.boolean(),
+    /** 该设计承诺提供完整界面文案的 locale code 列表；默认设计必须覆盖全部配置 locale。 */
+    locales: z.array(z.string().min(1)).min(1),
     renderMode: z.enum(['styled', 'html-only']).default('styled'),
     accent: z.string().min(1).optional(),
     source: sourceSchema,
@@ -109,7 +111,7 @@ for (const [key, rawMeta] of Object.entries(metaModules)) {
   if (!hasFile(id, 'messages.ts')) {
     fail(
       id,
-      '缺少 messages.ts（该设计的三语言文案）。契约：export const messages 需同时提供 site.config.yaml 中 i18n.locales 声明的每种语言 code，缺键在构建期报错。',
+      '缺少 messages.ts（该设计的界面文案）。契约：export const messages 需覆盖 design.json locales 中声明的每种语言 code，缺键在构建期报错。',
     );
   }
   const hasStyleEntry = hasFile(id, 'style.css');

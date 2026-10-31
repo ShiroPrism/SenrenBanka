@@ -21,7 +21,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 ];
 
 const { locale, name, headline, links } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 const sealGlyph = Array.from(name ?? '')[0] ?? '';
 const slipLabels = (links ?? []).slice(0, 2).map((link) => link.label);
 ---

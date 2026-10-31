@@ -32,7 +32,7 @@ export interface ArchiveMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', ArchiveMessages> = {
+export const messages: Record<string, ArchiveMessages> = {
   'zh-CN': {
     archiveTag: '索引卡',
     headTab: '卡片头',

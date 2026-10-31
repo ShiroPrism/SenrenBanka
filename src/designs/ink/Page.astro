@@ -18,7 +18,7 @@ import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('ink', Astro.url.pathname);
-const t = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 /* 印章只钤姓名首字；按字素切分，避免拆开代理对。 */

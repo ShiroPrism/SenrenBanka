@@ -7,7 +7,7 @@ import './tokens.css';
 export const fonts: import('astro:assets').CssVariable[] = ['--font-roboto-flex'];
 
 const { locale, name, headline } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 ---
 
 <div class="m3-pv">

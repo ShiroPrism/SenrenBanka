@@ -21,7 +21,7 @@ import { messages as designMessages, type FaxMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('fax', Astro.url.pathname);
-const t: FaxMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: FaxMessages = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 const pad = (value: number) => String(value).padStart(2, '0');

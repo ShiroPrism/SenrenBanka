@@ -28,7 +28,7 @@ export interface ReceiptMessages {
   sampleNote: string;
 }
 
-export const messages: Record<'zh-CN' | 'ja' | 'en', ReceiptMessages> = {
+export const messages: Record<string, ReceiptMessages> = {
   'zh-CN': {
     receiptTag: '小票',
     addrLabel: '地址',

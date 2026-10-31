@@ -7,7 +7,7 @@ import './tokens.css';
 export const fonts: import('astro:assets').CssVariable[] = ['--font-inter'];
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
-const t = messages[locale as 'zh-CN' | 'ja' | 'en'];
+const t = messages[locale];
 ---
 
 <div class="fr-pv">

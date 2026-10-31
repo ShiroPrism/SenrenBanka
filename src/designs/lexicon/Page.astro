@@ -18,7 +18,7 @@ import { messages as designMessages, type LexiconMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('lexicon', Astro.url.pathname);
-const t: LexiconMessages = designMessages[view.locale.code as 'zh-CN' | 'ja' | 'en'];
+const t: LexiconMessages = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 
 // 词条编号用拉丁大写字（I II III …），与书眉的范围数一致；可选区块缺席时序号顺延。

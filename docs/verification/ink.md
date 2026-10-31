@@ -66,7 +66,7 @@
 - 悬浮球 **52×52**，`aria-label` / `aria-haspopup` / `aria-controls` / `aria-expanded` 齐全；点击图标本身可打开面板。
 - 底部面板 `getBoundingClientRect().bottom = 812 = innerHeight`；面板项最小高度 **48px**；关闭 ✕ **44px**、取消条 **48px**。
 - 动作清单为 `copy / share / random / switch`，无 `reload / top / print`。
-- 语言项 3 个、`aria-current="page"` 恰好 1 个；href 保持 `/zh-cn/ink/`、`/ja/ink/`、`/en/ink/`。
+- 语言项 4 个、`aria-current="page"` 恰好 1 个；href 保持 `/zh-cn/ink/`、`/ja/ink/`、`/en/ink/`。
 - 打开时 `html` overflow 为 `clip hidden` 且 `cm-scroll-locked`；关闭 ✕ / 取消 / Esc 三条路径均隐藏面板、恢复滚动锁、`aria-expanded="false"`。
 - 滚动到底：9/9 显现，隐藏元素 **0**；console 0 error / 0 warning。
 
