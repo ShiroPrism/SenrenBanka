@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 6
-- **Last Active**: 2026-10-31
+- **Total Sessions**: 7
+- **Last Active**: 2026-11-01
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~181 | Active |
+| `journal-1.md` | ~203 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 7 | 2026-11-01 | Locale coverage, Korean first batch, and menu CSS externalization | `fe4bf37` | `feat/font-content-subset` |
 | 6 | 2026-10-31 | Design batch: brutal, ink, deco | `cf829ef` | `feat/font-content-subset` |
 | 5 | 2026-10-31 | Font shipping: shard pruning and core content subsets | `eefdbc1`, `5f66e03` | `feat/font-content-subset` |
 | 4 | 2026-10-30 | 六套可爱风独立设计与 0.17.0 发布 | `e2e005b`, `ba86e0c`, `455e644` | `codex/cute-design-batch` |

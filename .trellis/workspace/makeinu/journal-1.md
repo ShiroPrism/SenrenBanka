@@ -179,3 +179,25 @@ Implemented and verified three styled designs (brutal, ink, deco) with self-cont
 ### Status
 
 [OK] **Completed**
+
+
+## Session 7: Locale coverage, Korean first batch, and menu CSS externalization
+<!-- trellis-session: v=2 fp=fad2ca80a5dedd95 -->
+
+**Date**: 2026-11-01
+**Task**: Locale coverage, Korean first batch, and menu CSS externalization
+**Branch**: `feat/font-content-subset`
+
+### Summary
+
+Implemented design.json locale coverage and single-locale fork; added Korean locale/profile/copy for editorial, frost, fast, govuk, html-only with LXGW + system Korean fonts (Noto KR deferred, ADR 0016); externalized action-menu CSS to one shared file (ADR 0015); four-locale dist 5.15 MB / 124 pages, single-locale fork 3.14 MB / 59 pages; 67/67 tests, build/check/html-only/fonts audit pass, 90-URL desktop+mobile sweep clean; docs/ADR/verification updated. Korean copy pending human review.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `fe4bf37` | feat(i18n): add locale coverage, Korean, and menu CSS externalization |
+
+### Status
+
+[OK] **Completed**
