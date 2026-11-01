@@ -59,8 +59,8 @@ async function writeFonts(projectRoot, urls, bytes = 'wOF2fixture') {
 async function snapshotTree(root) {
   const entries = [];
   const visit = async (directory) => {
-    for (const entry of (await fs.readdir(directory, { withFileTypes: true })).sort((left, right) =>
-      left.name < right.name ? -1 : 1,
+    for (const entry of (await fs.readdir(directory, { withFileTypes: true })).sort(
+      (left, right) => (left.name < right.name ? -1 : 1),
     )) {
       const fullPath = path.join(directory, entry.name);
       if (entry.isDirectory()) {
@@ -245,10 +245,7 @@ test('shard keep set is site-wide: files used by any page survive, others are de
 
   const report = await pruneFonts({ projectRoot, logger: () => {} });
   assert.deepEqual(report.fonts.kept, ['_astro/fonts/a.woff2', '_astro/fonts/b.woff2']);
-  assert.deepEqual(report.fonts.deleted, [
-    '_astro/fonts/unused.woff',
-    '_astro/fonts/unused.woff2',
-  ]);
+  assert.deepEqual(report.fonts.deleted, ['_astro/fonts/unused.woff', '_astro/fonts/unused.woff2']);
   assert.equal(await exists(projectRoot, 'dist/_astro/Page.keep.css'), true);
   assert.equal(await exists(projectRoot, 'dist/_astro/fonts/unused.woff2'), false);
 });
@@ -264,7 +261,9 @@ test('pages with the same font families share one font CSS bundle, different fam
     fontFace({ url: '/_astro/fonts/cjk-shared.woff2', ranges: 'U+4E00' }),
     fontFace({ url: '/_astro/fonts/cjk-ja.woff2', ranges: 'U+3042' }),
   ];
-  const otherRules = [fontFace({ family: 'Other-h', url: '/_astro/fonts/other.woff2', ranges: 'U+0041' })];
+  const otherRules = [
+    fontFace({ family: 'Other-h', url: '/_astro/fonts/other.woff2', ranges: 'U+0041' }),
+  ];
   await write(
     projectRoot,
     'dist/zh-cn/a/index.html',

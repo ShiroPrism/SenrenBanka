@@ -54,9 +54,7 @@ test('generated TypeScript declarations expose no fallback chain', () => {
 
 test('design CSS requires explicit fallback and CJK ordering', () => {
   assert.deepEqual(
-    inspectTypographyCss(
-      '.x { font-family: var(--font-fraunces), "PingFang SC", sans-serif; }',
-    ),
+    inspectTypographyCss('.x { font-family: var(--font-fraunces), "PingFang SC", sans-serif; }'),
     [],
   );
   assert.match(
@@ -70,17 +68,13 @@ test('design CSS requires explicit fallback and CJK ordering', () => {
     /system CJK fallback precedes/,
   );
   assert.match(
-    inspectTypographyCss(
-      '.x { font-family: var(--font-lxgw), sans-serif; }',
-    ).join('\n'),
+    inspectTypographyCss('.x { font-family: var(--font-lxgw), sans-serif; }').join('\n'),
     /followed by an explicit system CJK fallback/,
   );
   assert.match(
-    inspectTypographyCss(
-      '.x { font-family: var(--font-latin), sans-serif; }',
-      '<css>',
-      { requiredCoreVariables: ['--font-lxgw'] },
-    ).join('\n'),
+    inspectTypographyCss('.x { font-family: var(--font-latin), sans-serif; }', '<css>', {
+      requiredCoreVariables: ['--font-lxgw'],
+    }).join('\n'),
     /must include a core CJK font variable/,
   );
   assert.deepEqual(

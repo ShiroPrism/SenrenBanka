@@ -221,8 +221,7 @@ export function initContextMenu(): void {
 
   /* ---------- 打开 / 关闭 / 定位 ---------- */
 
-  const prefersReducedMotion = () =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const focusFirst = (menu: HTMLElement) => {
     const list = items(menu).filter((item) => !item.hidden);
@@ -351,10 +350,10 @@ export function initContextMenu(): void {
   };
 
   /**
- * 关闭。触屏形态下先播 200ms 退场动画再隐藏，让"关掉了"这件事有反馈——
- * 直接 `hidden = true` 会让面板凭空消失，用户不确定自己点到了没有。
- * 动画不可用（减动态 / rAF 被节流）时由 `finallyHide` 兜底，绝不留在半开状态。
- */
+   * 关闭。触屏形态下先播 200ms 退场动画再隐藏，让"关掉了"这件事有反馈——
+   * 直接 `hidden = true` 会让面板凭空消失，用户不确定自己点到了没有。
+   * 动画不可用（减动态 / rAF 被节流）时由 `finallyHide` 兜底，绝不留在半开状态。
+   */
   const finallyHide = () => {
     window.clearTimeout(closeTimer);
     if (sheet) {
@@ -474,7 +473,9 @@ export function initContextMenu(): void {
   const goRandom = () => {
     // 1) design 页必须排除当前设计（保证确实发生切换）；切换页 / 404 没有当前主题，全池可选
     // 2) avoidRepeat 时再尽量排除上次选择
-    let pool = currentId ? config.targets.filter((target) => target.id !== currentId) : [...config.targets];
+    let pool = currentId
+      ? config.targets.filter((target) => target.id !== currentId)
+      : [...config.targets];
     if (config.mode === 'random' && config.avoidRepeat && pool.length > 1) {
       const previous = readStoredDesignId();
       if (previous) {
@@ -671,13 +672,17 @@ export function initContextMenu(): void {
       return;
     }
     if (event.key === 'ArrowLeft') {
-      if (!subOpen || !submenu?.contains(document.activeElement))
-        return; // 主菜单层级：← 不做水平移动（避免与浏览器返回混淆）
+      if (!subOpen || !submenu?.contains(document.activeElement)) return; // 主菜单层级：← 不做水平移动（避免与浏览器返回混淆）
       event.preventDefault();
       closeSubmenu(true);
       return;
     }
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Home' || event.key === 'End') {
+    if (
+      event.key === 'ArrowDown' ||
+      event.key === 'ArrowUp' ||
+      event.key === 'Home' ||
+      event.key === 'End'
+    ) {
       event.preventDefault();
       const inSubmenu = !inTouchMode() && !!submenu?.contains(document.activeElement);
       const menu = inSubmenu ? submenu! : inTouchMode() && sheet ? sheet : root;
@@ -689,7 +694,8 @@ export function initContextMenu(): void {
       const current = list.indexOf(document.activeElement as HTMLElement);
       let next = 0;
       if (event.key === 'ArrowDown') next = current < 0 ? 0 : (current + 1) % list.length;
-      if (event.key === 'ArrowUp') next = current < 0 ? list.length - 1 : (current - 1 + list.length) % list.length;
+      if (event.key === 'ArrowUp')
+        next = current < 0 ? list.length - 1 : (current - 1 + list.length) % list.length;
       if (event.key === 'Home') next = 0;
       if (event.key === 'End') next = list.length - 1;
       list[next]!.focus({ preventScroll: true });
@@ -785,7 +791,9 @@ export function initContextMenu(): void {
   // Web Share 不支持 → 移除「分享页面」，菜单里不存在点了没反应的项
   if (typeof navigator.share !== 'function') {
     for (const host of [root, sheet]) {
-      host?.querySelectorAll<HTMLElement>('[data-cm-action="share"]').forEach((node) => node.remove());
+      host
+        ?.querySelectorAll<HTMLElement>('[data-cm-action="share"]')
+        .forEach((node) => node.remove());
     }
   }
 

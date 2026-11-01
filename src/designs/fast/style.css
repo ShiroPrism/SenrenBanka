@@ -1,11 +1,11 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 /* 预览碎片**不得**被本页的 Tailwind 扫描：它含 `display: flex` / `border:` / `transform:`
    等属性文本，会被扫描器当作候选工具类，把 .flex / .border / .transform 等规则注进**正式页** CSS
    （2026-10-18 实测：正式页 CSS 多出 ~1.3KB 与配套 @property，且与预览文件产生耦合）。
    `@source not` 是 Tailwind 4 的否定来源语法（实测 4.3.3 支持）。 */
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* FAST: 语义化 token + light-dark() 双主题、分区卡片、克制的品牌蓝。
    token 命名遵循规范：category-subcategory-slot-variant-state（SPEC 来源 DESIGN.md）。 */
@@ -14,9 +14,18 @@
   margin: 0;
   background: var(--fast-background-web-page-primary);
   color: var(--fast-foreground-ctrl-neutral-primary-rest);
-  font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont,
-    var(--font-gothic-a1), 'PingFang SC', 'Microsoft YaHei',
-    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  font-family:
+    'Segoe UI Variable Text',
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    var(--font-gothic-a1),
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Noto Sans KR',
+    sans-serif;
   font-size: 1rem;
   line-height: 1.375;
   -webkit-font-smoothing: antialiased;
@@ -177,7 +186,10 @@
 @media (hover: hover) and (pointer: fine) {
   .fs-card:hover {
     /* 亮色：面层进一格；暗色没有更近一层的 token，维持面层，靠描边与浮起表达 */
-    background: light-dark(var(--fast-background-layer-secondary), var(--fast-background-layer-primary));
+    background: light-dark(
+      var(--fast-background-layer-secondary),
+      var(--fast-background-layer-primary)
+    );
     border-color: var(--fast-stroke-ctrl-on-outline-rest);
     translate: 0 -2px;
   }

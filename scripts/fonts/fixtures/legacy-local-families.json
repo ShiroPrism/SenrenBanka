@@ -2,10 +2,7 @@
   {
     "name": "Cutive Mono",
     "cssVariable": "--font-cutive-mono",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "400",
@@ -60,10 +57,7 @@
   {
     "name": "Courier Prime",
     "cssVariable": "--font-courier-prime",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "400",
@@ -262,10 +256,7 @@
   {
     "name": "Sorts Mill Goudy",
     "cssVariable": "--font-sorts-mill-goudy",
-    "fallbacks": [
-      "Georgia",
-      "Times New Roman"
-    ],
+    "fallbacks": ["Georgia", "Times New Roman"],
     "variants": [
       {
         "weight": "400",
@@ -368,11 +359,7 @@
   {
     "name": "Share Tech Mono",
     "cssVariable": "--font-share-tech-mono",
-    "fallbacks": [
-      "Consolas",
-      "Courier New",
-      "monospace"
-    ],
+    "fallbacks": ["Consolas", "Courier New", "monospace"],
     "variants": [
       {
         "weight": "400",
@@ -383,10 +370,7 @@
   {
     "name": "League Mono",
     "cssVariable": "--font-league-mono",
-    "fallbacks": [
-      "Consolas",
-      "Courier New"
-    ],
+    "fallbacks": ["Consolas", "Courier New"],
     "variants": [
       {
         "weight": "400",
@@ -401,10 +385,7 @@
   {
     "name": "Silkscreen",
     "cssVariable": "--font-silkscreen",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "400",
@@ -419,10 +400,7 @@
   {
     "name": "Prociono",
     "cssVariable": "--font-prociono",
-    "fallbacks": [
-      "Georgia",
-      "serif"
-    ],
+    "fallbacks": ["Georgia", "serif"],
     "variants": [
       {
         "weight": "400",
@@ -433,10 +411,7 @@
   {
     "name": "Handjet Variable",
     "cssVariable": "--font-handjet",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "100 900",
@@ -447,10 +422,7 @@
   {
     "name": "League Gothic Variable",
     "cssVariable": "--font-league-gothic",
-    "fallbacks": [
-      "Arial Narrow",
-      "sans-serif"
-    ],
+    "fallbacks": ["Arial Narrow", "sans-serif"],
     "variants": [
       {
         "weight": "400",
@@ -462,11 +434,7 @@
   {
     "name": "Blackout 2AM",
     "cssVariable": "--font-blackout",
-    "fallbacks": [
-      "Impact",
-      "Arial Black",
-      "sans-serif"
-    ],
+    "fallbacks": ["Impact", "Arial Black", "sans-serif"],
     "variants": [
       {
         "weight": "400",
@@ -477,10 +445,7 @@
   {
     "name": "UglyTypist",
     "cssVariable": "--font-uglytypist",
-    "fallbacks": [
-      "Segoe Print",
-      "Comic Sans MS"
-    ],
+    "fallbacks": ["Segoe Print", "Comic Sans MS"],
     "variants": [
       {
         "weight": "400",
@@ -491,11 +456,7 @@
   {
     "name": "Format 1452",
     "cssVariable": "--font-format-1452",
-    "fallbacks": [
-      "Arial Narrow",
-      "Helvetica",
-      "sans-serif"
-    ],
+    "fallbacks": ["Arial Narrow", "Helvetica", "sans-serif"],
     "variants": [
       {
         "weight": "400",
@@ -568,10 +529,7 @@
   {
     "name": "DSEG7 Classic",
     "cssVariable": "--font-dseg7",
-    "fallbacks": [
-      "Consolas",
-      "monospace"
-    ],
+    "fallbacks": ["Consolas", "monospace"],
     "variants": [
       {
         "weight": "400",
@@ -586,10 +544,7 @@
   {
     "name": "DSEG14 Classic",
     "cssVariable": "--font-dseg14",
-    "fallbacks": [
-      "Consolas",
-      "monospace"
-    ],
+    "fallbacks": ["Consolas", "monospace"],
     "variants": [
       {
         "weight": "400",
@@ -604,10 +559,7 @@
   {
     "name": "TT2020 Base",
     "cssVariable": "--font-tt2020",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "400",
@@ -622,10 +574,7 @@
   {
     "name": "TT2020 Style D",
     "cssVariable": "--font-tt2020-styled",
-    "fallbacks": [
-      "Courier New",
-      "Courier"
-    ],
+    "fallbacks": ["Courier New", "Courier"],
     "variants": [
       {
         "weight": "400",
@@ -636,11 +585,7 @@
   {
     "name": "Zhuque Fangsong",
     "cssVariable": "--font-zhuque",
-    "fallbacks": [
-      "Songti SC",
-      "SimSun",
-      "serif"
-    ],
+    "fallbacks": ["Songti SC", "SimSun", "serif"],
     "variants": [
       {
         "weight": "400",
@@ -651,10 +596,7 @@
   {
     "name": "Ark Pixel 12px",
     "cssVariable": "--font-ark-pixel",
-    "fallbacks": [
-      "SimSun",
-      "monospace"
-    ],
+    "fallbacks": ["SimSun", "monospace"],
     "variants": [
       {
         "weight": "400",
@@ -665,13 +607,7 @@
   {
     "name": "LXGW WenKai GB",
     "cssVariable": "--font-lxgw",
-    "fallbacks": [
-      "PingFang SC",
-      "Microsoft YaHei",
-      "Hiragino Sans",
-      "Yu Gothic UI",
-      "serif"
-    ],
+    "fallbacks": ["PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "serif"],
     "variants": [
       {
         "weight": "500",

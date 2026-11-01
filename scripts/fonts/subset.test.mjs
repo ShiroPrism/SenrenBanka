@@ -27,9 +27,36 @@ const REAL_LATIN_FONT = path.join(
   'inter-latin-wght-normal.woff2',
 );
 const REAL_CORE_SOURCES = [
-  path.join(PROJECT_ROOT_PATH, '.cache', 'font-sources', '1.0.0', 'lxgw-wenkai@1.0.0', 'source', 'fonts', 'LXGWWenKaiGB-Medium.ttf'),
-  path.join(PROJECT_ROOT_PATH, '.cache', 'font-sources', '1.0.0', 'zhuque-fangsong@1.0.0', 'source', 'fonts', 'ZhuqueFangsong-Regular.ttf'),
-  path.join(PROJECT_ROOT_PATH, '.cache', 'font-sources', '1.0.0', 'ark-pixel-12px@1.0.0', 'source', 'fonts', 'ark-pixel-12px-monospaced-zh_hans.otf'),
+  path.join(
+    PROJECT_ROOT_PATH,
+    '.cache',
+    'font-sources',
+    '1.0.0',
+    'lxgw-wenkai@1.0.0',
+    'source',
+    'fonts',
+    'LXGWWenKaiGB-Medium.ttf',
+  ),
+  path.join(
+    PROJECT_ROOT_PATH,
+    '.cache',
+    'font-sources',
+    '1.0.0',
+    'zhuque-fangsong@1.0.0',
+    'source',
+    'fonts',
+    'ZhuqueFangsong-Regular.ttf',
+  ),
+  path.join(
+    PROJECT_ROOT_PATH,
+    '.cache',
+    'font-sources',
+    '1.0.0',
+    'ark-pixel-12px@1.0.0',
+    'source',
+    'fonts',
+    'ark-pixel-12px-monospaced-zh_hans.otf',
+  ),
 ];
 
 function writeOctal(buffer, offset, width, value) {
@@ -87,7 +114,9 @@ function fakeShard(label) {
 
 function makeSourceArchive({ id, sourceFont }) {
   const sourceFiles = [{ name: `${id}-source.woff2`, data: sourceFont }];
-  const licenseFiles = [{ name: 'LICENSE.txt', data: Buffer.from(`Fixture source license for ${id}\n`) }];
+  const licenseFiles = [
+    { name: 'LICENSE.txt', data: Buffer.from(`Fixture source license for ${id}\n`) },
+  ];
   const sourceManifest = {
     schemaVersion: 1,
     kind: 'source',
@@ -371,8 +400,18 @@ function coreFamilyNames(html, family) {
 async function writeDist(projectRoot, { coreName, base = '', shardUrls = [] } = {}) {
   const [first, second] = shardUrls;
   const coreCss = [
-    fontFace({ family: coreName, url: `${base}/_astro/fonts/${first}`, ranges: 'U+4E00-4E05', weight: '500' }),
-    fontFace({ family: coreName, url: `${base}/_astro/fonts/${second}`, ranges: 'U+4E10', weight: '500' }),
+    fontFace({
+      family: coreName,
+      url: `${base}/_astro/fonts/${first}`,
+      ranges: 'U+4E00-4E05',
+      weight: '500',
+    }),
+    fontFace({
+      family: coreName,
+      url: `${base}/_astro/fonts/${second}`,
+      ranges: 'U+4E10',
+      weight: '500',
+    }),
     `:root{--font-fixture-core:"${coreName}";}`,
   ].join('');
   const otherCss = `@font-face{font-family:"Other-h";src:url("${base}/_astro/fonts/other.woff2") format("woff2");font-display:swap;font-weight:400;font-style:normal;}.hero{color:red}`;
@@ -499,11 +538,7 @@ test('subset rewrites core shard rules into one range-free rule per page', async
     assert.equal(report.subsetter.name, 'subset-font');
     assert.equal(report.subsetter.version, '2.9.0');
 
-    const subsetPath = path.join(
-      project.projectRoot,
-      'dist',
-      ...entry.subsetFile.split('/'),
-    );
+    const subsetPath = path.join(project.projectRoot, 'dist', ...entry.subsetFile.split('/'));
     const subsetBytes = await fs.readFile(subsetPath);
     assert.equal(subsetBytes.subarray(0, 4).toString('ascii'), 'wOF2');
     assert.equal(sha256(subsetBytes), entry.subsetSha256);
@@ -540,8 +575,16 @@ test('subset rewrites core shard rules into one range-free rule per page', async
     );
     assert.equal(output.includes('.hero{color:red}'), true, 'other CSS is preserved');
     assert.equal(output.includes('Other-h'), true, 'non-core font rules are preserved');
-    assert.equal(extractVisibleText(output), extractVisibleText(original), 'visible text unchanged');
-    assert.equal(await read(project.projectRoot, dist.plainPath), plainOriginal, 'unused page untouched');
+    assert.equal(
+      extractVisibleText(output),
+      extractVisibleText(original),
+      'visible text unchanged',
+    );
+    assert.equal(
+      await read(project.projectRoot, dist.plainPath),
+      plainOriginal,
+      'unused page untouched',
+    );
 
     const pages = new Map(report.pages.map((page) => [page.path, page]));
     assert.deepEqual(pages.get('/zh-cn/a/').coreFamilies, ['fixture-core']);
@@ -559,7 +602,11 @@ test('subset rewrites core shard rules into one range-free rule per page', async
     // Idempotence: a second run must not duplicate the synthetic rule.
     const second = await subsetCoreFonts({ projectRoot: project.projectRoot, logger: () => {} });
     assert.equal(second.families[0].subsetSha256, entry.subsetSha256, 'same input, same hash');
-    assert.equal(await read(project.projectRoot, dist.pagePath), output, 'already subset is a no-op');
+    assert.equal(
+      await read(project.projectRoot, dist.pagePath),
+      output,
+      'already subset is a no-op',
+    );
     assert.equal(
       second.pages.find((page) => page.path === '/zh-cn/a/').changed,
       false,
@@ -760,8 +807,18 @@ test(
         'zh-cn/a/index.html',
         pageHtml({
           styles: [
-            fontFace({ family: coreName, url: '/_astro/fonts/real-a.woff2', ranges: 'U+4E00', weight: '500' }),
-            fontFace({ family: coreName, url: '/_astro/fonts/real-b.woff2', ranges: 'U+4E8C', weight: '500' }),
+            fontFace({
+              family: coreName,
+              url: '/_astro/fonts/real-a.woff2',
+              ranges: 'U+4E00',
+              weight: '500',
+            }),
+            fontFace({
+              family: coreName,
+              url: '/_astro/fonts/real-b.woff2',
+              ranges: 'U+4E8C',
+              weight: '500',
+            }),
             `:root{--font-lxgw:"${coreName}";}`,
           ],
           body: '<h1>世界 一二三</h1><p>日本語のテキスト</p>',
@@ -815,7 +872,11 @@ test('subset scopes each core family to the pages that reference it', async () =
     const page = (suffix, body) =>
       pageHtml({
         styles: [
-          fontFace({ family: names[suffix], url: `/_astro/fonts/${suffix}.woff2`, ranges: 'U+4E00' }),
+          fontFace({
+            family: names[suffix],
+            url: `/_astro/fonts/${suffix}.woff2`,
+            ranges: 'U+4E00',
+          }),
           `:root{--font-fixture-core-${suffix}:"${names[suffix]}";}`,
         ],
         body,
@@ -839,9 +900,17 @@ test('subset scopes each core family to the pages that reference it', async () =
     const fontA = fontkitten.create(await fs.readFile(subsetPath('fixture-core-a')));
     const fontB = fontkitten.create(await fs.readFile(subsetPath('fixture-core-b')));
     assert.equal(fontA.hasGlyphForCodePoint('Q'.codePointAt(0)), true);
-    assert.equal(fontA.hasGlyphForCodePoint('Z'.codePointAt(0)), false, 'page B text stays out of A');
+    assert.equal(
+      fontA.hasGlyphForCodePoint('Z'.codePointAt(0)),
+      false,
+      'page B text stays out of A',
+    );
     assert.equal(fontB.hasGlyphForCodePoint('Z'.codePointAt(0)), true);
-    assert.equal(fontB.hasGlyphForCodePoint('Q'.codePointAt(0)), false, 'page A text stays out of B');
+    assert.equal(
+      fontB.hasGlyphForCodePoint('Q'.codePointAt(0)),
+      false,
+      'page A text stays out of B',
+    );
 
     const fontDirectory = path.join(project.projectRoot, 'dist', '_astro', 'fonts');
     const files = await fs.readdir(fontDirectory);

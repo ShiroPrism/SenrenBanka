@@ -1,10 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {
-  HANGUL_RANGES,
-  HANGUL_UNICODE_RANGE,
-  isHangulCodePoint,
-} from './lib/script-ranges.mjs';
+import { HANGUL_RANGES, HANGUL_UNICODE_RANGE, isHangulCodePoint } from './lib/script-ranges.mjs';
 
 test('Hangul ranges cover syllables, jamo, and compatibility jamo', () => {
   assert.equal(HANGUL_RANGES.length, 6);

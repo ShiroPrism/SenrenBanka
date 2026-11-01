@@ -317,8 +317,7 @@ async function setupPublishedFixture({ families, serveSources = true }) {
     };
     routes[`/${family.releaseTag}/${family.packageFileName}`] = family.packageBytes;
     if (serveSources) {
-      routes[`/${family.source.releaseTag}/${family.source.fileName}`] =
-        family.sourceArchive.bytes;
+      routes[`/${family.source.releaseTag}/${family.source.fileName}`] = family.sourceArchive.bytes;
     }
   }
   const catalog = {
@@ -515,7 +514,11 @@ test('source archive inspection verifies the manifest, font and license and reje
 
 test('prepare installs a core source cache, reuses it offline and verifies it offline', async () => {
   const coreArchive = makeSourceArchive({ id: 'fixture-core' });
-  const core = makeFamilyFixture({ id: 'fixture-core', role: 'core-cjk', sourceArchive: coreArchive });
+  const core = makeFamilyFixture({
+    id: 'fixture-core',
+    role: 'core-cjk',
+    sourceArchive: coreArchive,
+  });
   const fixedArchive = makeSourceArchive({ id: 'fixture-fixed' });
   const fixed = makeFamilyFixture({ id: 'fixture-fixed', sourceArchive: fixedArchive });
   const fixture = await setupPublishedFixture({ families: [core, fixed] });
@@ -546,12 +549,8 @@ test('prepare installs a core source cache, reuses it offline and verifies it of
       sourceArchiveSha256: sha256(coreArchive.bytes),
       sourceArchiveSize: coreArchive.bytes.length,
       sourceManifestSha256: sha256(Buffer.from(stableStringify(coreArchive.sourceManifest))),
-      sourceFilesSha256: sha256(
-        Buffer.from(stableStringify(coreArchive.sourceManifest.files)),
-      ),
-      licenseFilesSha256: sha256(
-        Buffer.from(stableStringify(coreArchive.sourceManifest.licenses)),
-      ),
+      sourceFilesSha256: sha256(Buffer.from(stableStringify(coreArchive.sourceManifest.files))),
+      licenseFilesSha256: sha256(Buffer.from(stableStringify(coreArchive.sourceManifest.licenses))),
     });
     for (const relative of [
       'source-manifest.json',
@@ -596,12 +595,7 @@ test('prepare installs a core source cache, reuses it offline and verifies it of
     assert.equal(checked.sourceFonts, 1);
     assert.equal(checked.sourceLicenses, 1);
 
-    const cachedFont = path.join(
-      sourceRoot,
-      'source',
-      'fonts',
-      coreArchive.sourceFiles[0].name,
-    );
+    const cachedFont = path.join(sourceRoot, 'source', 'fonts', coreArchive.sourceFiles[0].name);
     const originalFont = await fs.readFile(cachedFont);
     await fs.writeFile(cachedFont, Buffer.concat([originalFont, Buffer.from('x')]));
     await assert.rejects(
@@ -648,7 +642,11 @@ test('prepare installs a core source cache, reuses it offline and verifies it of
 
 test('offline prepare and check fail clearly when a core source cache is missing', async () => {
   const coreArchive = makeSourceArchive({ id: 'fixture-core' });
-  const core = makeFamilyFixture({ id: 'fixture-core', role: 'core-cjk', sourceArchive: coreArchive });
+  const core = makeFamilyFixture({
+    id: 'fixture-core',
+    role: 'core-cjk',
+    sourceArchive: coreArchive,
+  });
   const fixture = await setupPublishedFixture({ families: [core] });
   try {
     await runUpdate(fixture);

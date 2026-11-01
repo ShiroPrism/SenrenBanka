@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* deco — Art Deco 剧院节目单（暗黑奢华）
    墨黑台面 + 黄铜双线框 + 金色扇形与阶梯角；对称构图，信息层级由发丝线与双框表达，
@@ -22,10 +22,14 @@ html:has(.deco) {
 
 .deco {
   /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前（fonts:typography 门禁）。 */
-  --dc-type-display: var(--font-fraunces), var(--font-gowun-batang), var(--font-zhuque), "Songti SC", "SimSun",
-    "Hiragino Mincho ProN", "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
-  --dc-type-body: var(--font-inter), var(--font-gowun-batang), var(--font-zhuque), "PingFang SC", "Microsoft YaHei",
-    "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", sans-serif;
+  --dc-type-display:
+    var(--font-fraunces), var(--font-gowun-batang), var(--font-zhuque), 'Songti SC', 'SimSun',
+    'Hiragino Mincho ProN', 'Yu Mincho', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR',
+    serif;
+  --dc-type-body:
+    var(--font-inter), var(--font-gowun-batang), var(--font-zhuque), 'PingFang SC',
+    'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic',
+    'Noto Serif KR', sans-serif;
 
   margin: 0;
   min-height: 100vh;
@@ -121,7 +125,7 @@ html:has(.deco) {
 
 /* 内缩双框（装饰，不承载内容） */
 .deco-hero::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: var(--dc-frame-inset);
   border: var(--dc-line) solid var(--dc-brass);
@@ -213,7 +217,7 @@ html:has(.deco) {
 }
 
 .deco-fan::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border: var(--dc-line) solid var(--dc-brass);
@@ -267,7 +271,7 @@ html:has(.deco) {
 }
 
 .deco-monogram-gem::after {
-  content: "";
+  content: '';
   position: absolute;
   inset: 5px;
   border: var(--dc-line) solid var(--dc-brass);
@@ -439,7 +443,7 @@ html:has(.deco) {
 }
 
 .deco-ticket-link::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 4px;
   border: var(--dc-line) solid var(--dc-brass);
@@ -488,7 +492,7 @@ html:has(.deco) {
 
 /* 卡内阶梯角（装饰） */
 .deco-act::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -497,16 +501,7 @@ html:has(.deco) {
   background: var(--dc-brass);
   opacity: 0.55;
   pointer-events: none;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% 12%,
-    22% 12%,
-    22% 24%,
-    12% 24%,
-    12% 100%,
-    0 100%
-  );
+  clip-path: polygon(0 0, 100% 0, 100% 12%, 22% 12%, 22% 24%, 12% 24%, 12% 100%, 0 100%);
 }
 
 .deco-act-num {
@@ -574,7 +569,7 @@ html:has(.deco) {
 }
 
 .deco-act-tags li::before {
-  content: "";
+  content: '';
   flex: 0 0 auto;
   inline-size: 4px;
   block-size: 4px;
@@ -668,7 +663,7 @@ html:has(.deco) {
 }
 
 .deco-credit::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.68em;
   left: 0;
@@ -690,7 +685,7 @@ html:has(.deco) {
 }
 
 .deco-boxoffice::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: var(--dc-frame-inset);
   border: var(--dc-line) solid var(--dc-brass);

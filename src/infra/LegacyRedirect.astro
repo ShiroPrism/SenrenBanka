@@ -23,7 +23,9 @@ const segment = Astro.url.pathname.split('/').filter(Boolean).pop() ?? '';
 const target =
   segment === 'designs' && model.switcherEnabled
     ? `designs/`
-    : (designsForLocale(model, locale).some((design) => design.id === segment) ? `${segment}/` : '');
+    : designsForLocale(model, locale).some((design) => design.id === segment)
+      ? `${segment}/`
+      : '';
 const targetUrl = `${model.base}${locale.path}/${target}`;
 ---
 
@@ -41,7 +43,11 @@ const targetUrl = `${model.base}${locale.path}/${target}`;
     <LegacyRedirectStyles />
     <main class="infra">
       <p class="infra-redirect">{m.legacyRedirect.body}</p>
-      {targetUrl ? <a class="infra-card" href={targetUrl}>{targetUrl}</a> : null}
+      {targetUrl ? (
+        <a class="infra-card" href={targetUrl}>
+          {targetUrl}
+        </a>
+      ) : null}
     </main>
   </body>
 </html>

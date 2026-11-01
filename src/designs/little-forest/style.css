@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-little-forest-display: var(--font-fraunces);
@@ -19,11 +19,13 @@ html:has(.lf) {
 
 .lf {
   --lf-display:
-    var(--font-fraunces), var(--font-gowun-batang), var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN",
-    "Yu Mincho", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    var(--font-fraunces), var(--font-gowun-batang), var(--font-lxgw), 'Songti SC', 'SimSun',
+    'Hiragino Mincho ProN', 'Yu Mincho', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR',
+    serif;
   --lf-body:
-    Georgia, var(--font-gowun-batang), var(--font-lxgw), "Songti SC", "SimSun", "Hiragino Mincho ProN", "Yu Mincho",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    Georgia, var(--font-gowun-batang), var(--font-lxgw), 'Songti SC', 'SimSun',
+    'Hiragino Mincho ProN', 'Yu Mincho', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR',
+    serif;
 
   position: relative;
   isolation: isolate;
@@ -32,7 +34,11 @@ html:has(.lf) {
   margin: 0;
   overflow-x: clip;
   background:
-    radial-gradient(52rem 31rem at 4% 4%, color-mix(in srgb, var(--lf-sky) 20%, transparent), transparent 72%),
+    radial-gradient(
+      52rem 31rem at 4% 4%,
+      color-mix(in srgb, var(--lf-sky) 20%, transparent),
+      transparent 72%
+    ),
     radial-gradient(44rem 34rem at 96% 18%, rgb(185 131 125 / 0.14), transparent 74%),
     radial-gradient(50rem 38rem at 12% 58%, rgb(183 131 47 / 0.09), transparent 76%),
     radial-gradient(48rem 34rem at 94% 82%, rgb(129 119 143 / 0.1), transparent 74%),
@@ -55,7 +61,7 @@ html:has(.lf) {
 
 .lf-wash::before,
 .lf-wash::after {
-  content: "";
+  content: '';
   position: absolute;
   pointer-events: none;
 }
@@ -93,9 +99,7 @@ html:has(.lf) {
   width: min(82rem, 100%);
   min-height: 42rem;
   margin: 0 auto;
-  padding:
-    clamp(3.5rem, 8vh, 6.5rem) clamp(1.15rem, 5vw, 4.5rem)
-    clamp(4.5rem, 10vh, 7rem);
+  padding: clamp(3.5rem, 8vh, 6.5rem) clamp(1.15rem, 5vw, 4.5rem) clamp(4.5rem, 10vh, 7rem);
   overflow: hidden;
 }
 
@@ -177,7 +181,7 @@ html:has(.lf) {
 }
 
 .lf-kicker-leaf::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 15%;
@@ -195,13 +199,19 @@ html:has(.lf) {
   border: 1px solid rgb(80 58 43 / 0.42);
   border-radius: 2px;
   background:
-    radial-gradient(circle at 5% 18%, #e5c78f 0 0.2rem, rgb(80 58 43 / 0.65) 0.22rem 0.3rem, transparent 0.32rem),
-    radial-gradient(circle at 95% 18%, #e5c78f 0 0.2rem, rgb(80 58 43 / 0.65) 0.22rem 0.3rem, transparent 0.32rem),
-    repeating-linear-gradient(
-      7deg,
-      transparent 0 1.05rem,
-      rgb(255 244 216 / 0.08) 1.05rem 1.12rem
+    radial-gradient(
+      circle at 5% 18%,
+      #e5c78f 0 0.2rem,
+      rgb(80 58 43 / 0.65) 0.22rem 0.3rem,
+      transparent 0.32rem
     ),
+    radial-gradient(
+      circle at 95% 18%,
+      #e5c78f 0 0.2rem,
+      rgb(80 58 43 / 0.65) 0.22rem 0.3rem,
+      transparent 0.32rem
+    ),
+    repeating-linear-gradient(7deg, transparent 0 1.05rem, rgb(255 244 216 / 0.08) 1.05rem 1.12rem),
     linear-gradient(125deg, #866447 0%, var(--lf-bark) 46%, #684a34 100%);
   box-shadow:
     inset 0 1px 0 rgb(255 244 216 / 0.22),
@@ -211,7 +221,7 @@ html:has(.lf) {
 }
 
 .lf-sign-board::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0.45rem;
   bottom: -1.55rem;
@@ -229,7 +239,7 @@ html:has(.lf) {
   color: #fff6dc;
   font-family: var(--lf-display);
   font-size: clamp(2.6rem, 7.2vw, 5.8rem);
-  font-variation-settings: "opsz" 96;
+  font-variation-settings: 'opsz' 96;
   font-weight: 560;
   line-height: 0.98;
   letter-spacing: -0.025em;
@@ -303,7 +313,7 @@ html:has(.lf) {
 }
 
 .lf-field-card::before {
-  content: "";
+  content: '';
   position: absolute;
   top: -0.48rem;
   left: 50%;
@@ -420,7 +430,7 @@ html:has(.lf) {
 }
 
 .lf-clearing::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: calc(var(--lf-clearing-gap) * -1);
   left: 50%;
@@ -557,8 +567,7 @@ html:has(.lf) {
   border: 1px solid rgb(80 58 43 / 0.52);
   border-radius: 50%;
   background:
-    radial-gradient(circle at 34% 28%, rgb(255 246 220 / 0.2), transparent 36%),
-    var(--lf-bark);
+    radial-gradient(circle at 34% 28%, rgb(255 246 220 / 0.2), transparent 36%), var(--lf-bark);
   color: #fff3d6;
   font-family: var(--lf-display);
   font-size: 0.75rem;
@@ -609,7 +618,7 @@ html:has(.lf) {
 }
 
 .lf-signpost-item::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0.15rem;
   left: 1.9rem;
@@ -634,11 +643,7 @@ html:has(.lf) {
   border-radius: 2px;
   background:
     radial-gradient(circle at 4% 24%, #dfbd82 0 0.12rem, transparent 0.14rem),
-    repeating-linear-gradient(
-      6deg,
-      transparent 0 0.92rem,
-      rgb(255 246 220 / 0.07) 0.92rem 0.98rem
-    ),
+    repeating-linear-gradient(6deg, transparent 0 0.92rem, rgb(255 246 220 / 0.07) 0.92rem 0.98rem),
     linear-gradient(105deg, #846247 0%, var(--lf-bark) 52%, #684b35 100%);
   color: #fff2d2;
   text-decoration: none;
@@ -753,7 +758,7 @@ html:has(.lf) {
 }
 
 .lf-place-marker::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 100%;
   left: 50%;
@@ -833,7 +838,7 @@ html:has(.lf) {
 }
 
 .lf-tags li::before {
-  content: "";
+  content: '';
   width: 0.38rem;
   height: 0.38rem;
   border-radius: 100% 0 100% 0;
@@ -855,7 +860,7 @@ html:has(.lf) {
 }
 
 .lf-tree-ring::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 11%;
   border-radius: 50%;
@@ -969,7 +974,7 @@ html:has(.lf) {
 }
 
 .lf-ring-meta span + span::before {
-  content: "·";
+  content: '·';
   margin-right: 0.8rem;
   color: var(--lf-ochre);
 }
@@ -980,7 +985,12 @@ html:has(.lf) {
   padding: clamp(1.25rem, 3vw, 2rem);
   border: 1px solid rgb(118 85 59 / 0.34);
   background:
-    linear-gradient(90deg, transparent 0 3rem, rgb(185 131 125 / 0.13) 3rem 3.08rem, transparent 3.08rem),
+    linear-gradient(
+      90deg,
+      transparent 0 3rem,
+      rgb(185 131 125 / 0.13) 3rem 3.08rem,
+      transparent 3.08rem
+    ),
     repeating-linear-gradient(
       180deg,
       transparent 0 2.15rem,
@@ -995,7 +1005,7 @@ html:has(.lf) {
 
 .lf-herbarium::before,
 .lf-herbarium::after {
-  content: "";
+  content: '';
   position: absolute;
   pointer-events: none;
 }
@@ -1127,7 +1137,7 @@ html:has(.lf) {
 }
 
 .lf-specimen-name::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -1146,7 +1156,7 @@ html:has(.lf) {
 }
 
 .lf-cottage-site::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 7% 0 0 30%;
   z-index: -1;
@@ -1183,8 +1193,7 @@ html:has(.lf) {
   border-radius: 2px;
   background:
     linear-gradient(180deg, rgb(241 223 173 / 0.58), transparent 0.24rem),
-    linear-gradient(90deg, rgb(241 223 173 / 0.4), rgb(241 223 173 / 0.12)),
-    var(--lf-paper-light);
+    linear-gradient(90deg, rgb(241 223 173 / 0.4), rgb(241 223 173 / 0.12)), var(--lf-paper-light);
   color: var(--lf-bark-deep);
   text-decoration: none;
   box-shadow: 0 1px 0 rgb(118 85 59 / 0.12) inset;
@@ -1349,7 +1358,7 @@ html:has(.lf) {
 
 .lf-footer-sprig::before,
 .lf-footer-sprig::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -0.15rem;
   width: 0.62rem;
@@ -1588,7 +1597,7 @@ html:has(.lf) {
   }
 
   .lf-trail::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     bottom: 2.5rem;
@@ -1597,7 +1606,7 @@ html:has(.lf) {
   }
 
   .lf-trail::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 1.1rem;
     left: clamp(0.01rem, 2.7vw, 0.51rem);

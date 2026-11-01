@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* ink — 宋式册页 / 侘寂
    宣纸 + 墨 + 一枚朱砂印。竖排只属于右缘的题署，正文始终横排可读；
@@ -25,14 +25,17 @@ html:has(.ink) {
 .ink {
   /* 完整回退链由设计 CSS 拥有；系统中文一律排在 LXGW / Zhuque 之后。 */
   --ink-type-display:
-    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "Hiragino Mincho ProN", "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'Hiragino Mincho ProN', 'PingFang SC', 'Microsoft YaHei',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   --ink-type-text:
-    var(--font-prociono), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    var(--font-prociono), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Apple SD Gothic Neo',
+    'Malgun Gothic', 'Noto Serif KR', serif;
   --ink-type-label:
-    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic',
+    'Noto Serif KR', serif;
 
   margin: 0;
   min-height: 100vh;
@@ -77,7 +80,7 @@ html:has(.ink) {
 }
 
 .ink-leaf::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0.75rem calc(var(--ink-pad-inline) * 0.35);
   border: var(--ink-hairline) solid var(--ink-rule-celadon);
@@ -180,7 +183,7 @@ html:has(.ink) {
 }
 
 .ink-seal::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0.2rem;
   border: var(--ink-hairline) solid rgba(244, 238, 226, 0.55);
@@ -213,7 +216,7 @@ html:has(.ink) {
 }
 
 .ink-label::before {
-  content: "";
+  content: '';
   width: 1.5rem;
   height: var(--ink-hairline);
   flex: 0 0 auto;
@@ -478,7 +481,7 @@ html:has(.ink) {
 }
 
 .ink-stroke::before {
-  content: "";
+  content: '';
   position: absolute;
   inset-inline-start: 0;
   top: 0.95em;
@@ -711,7 +714,7 @@ html:has(.ink) {
   .ink-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-areas: "prose tiers";
+    grid-template-areas: 'prose tiers';
     align-items: start;
     column-gap: clamp(2rem, 5vw, 5rem);
   }

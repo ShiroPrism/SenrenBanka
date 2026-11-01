@@ -40,7 +40,9 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'not-found' }, 
       <p>{m.notFound.body}</p>
       <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。 -->
       <noscript>
-        <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path))} />
+        <LanguageSwitcher
+          language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path))}
+        />
       </noscript>
       <ul class="infra-list">
         <li>
@@ -48,15 +50,13 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'not-found' }, 
             <span class="name">{m.notFound.backToEntry}</span>
           </a>
         </li>
-        {
-          model.switcherEnabled ? (
-            <li>
-              <a class="infra-card" href={localeHref(locale.path, 'designs/')}>
-                <span class="name">{m.notFound.allDesigns}</span>
-              </a>
-            </li>
-          ) : null
-        }
+        {model.switcherEnabled ? (
+          <li>
+            <a class="infra-card" href={localeHref(locale.path, 'designs/')}>
+              <span class="name">{m.notFound.allDesigns}</span>
+            </a>
+          </li>
+        ) : null}
         <li>
           <a class="infra-card" href={localeDesignHref(locale.path, model.default.id)}>
             <span class="name">{model.default.meta.displayName}</span>

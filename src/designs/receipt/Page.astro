@@ -19,6 +19,7 @@ import './style.css';
 const view = await loadDesignView('receipt', Astro.url.pathname);
 const { contextMenu } = view;
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />

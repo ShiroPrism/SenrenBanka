@@ -29,6 +29,7 @@ const barcodeBars = Array.from({ length: 13 });
 let sectionIndex = 0;
 const nextSection = () => pad((sectionIndex += 1));
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -77,41 +78,43 @@ const nextSection = () => pad((sectionIndex += 1));
         </div>
 
         <div class="cal-hero-side">
-          {
-            profile.avatar && (
-              <figure class="cal-portrait">
-                <div class="cal-portrait-window">
-                  <img
-                    src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
-                    alt={`${t.portraitLabel}: ${profile.name}`}
-                    width="420"
-                    height="520"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                <figcaption>{t.portraitLabel}</figcaption>
-              </figure>
-            )
-          }
+          {profile.avatar && (
+            <figure class="cal-portrait">
+              <div class="cal-portrait-window">
+                <img
+                  src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                  alt={`${t.portraitLabel}: ${profile.name}`}
+                  width="420"
+                  height="520"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+              <figcaption>{t.portraitLabel}</figcaption>
+            </figure>
+          )}
 
-          {
-            profile.location && (
-              <p class="cal-location">
-                <span>{t.locationLabel}</span>
-                {profile.location}
-              </p>
-            )
-          }
+          {profile.location && (
+            <p class="cal-location">
+              <span>{t.locationLabel}</span>
+              {profile.location}
+            </p>
+          )}
 
-          <p class="cal-cue" aria-hidden="true">{t.collageCue}</p>
+          <p class="cal-cue" aria-hidden="true">
+            {t.collageCue}
+          </p>
         </div>
       </header>
 
       <section class="cal-section cal-bio" data-reveal aria-labelledby="cal-bio-title">
         <div class="cal-section-heading">
-          <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-          <h2 class="cal-section-title" id="cal-bio-title">{t.bioTitle}</h2>
+          <span class="cal-section-no" aria-hidden="true">
+            {nextSection()}
+          </span>
+          <h2 class="cal-section-title" id="cal-bio-title">
+            {t.bioTitle}
+          </h2>
         </div>
         <p class="cal-bio-copy">{profile.bio}</p>
         <span class="cal-bio-dot" aria-hidden="true"></span>
@@ -119,8 +122,12 @@ const nextSection = () => pad((sectionIndex += 1));
 
       <section class="cal-section cal-links" data-reveal aria-labelledby="cal-links-title">
         <div class="cal-section-heading">
-          <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-          <h2 class="cal-section-title" id="cal-links-title">{t.linksTitle}</h2>
+          <span class="cal-section-no" aria-hidden="true">
+            {nextSection()}
+          </span>
+          <h2 class="cal-section-title" id="cal-links-title">
+            {t.linksTitle}
+          </h2>
           <span class="cal-section-count" aria-hidden="true">
             {pad(profile.links.length)}
             <small>{t.linksUnit}</small>
@@ -128,110 +135,112 @@ const nextSection = () => pad((sectionIndex += 1));
         </div>
 
         <ul class="cal-link-rail">
-          {
-            profile.links.map((link, index) => {
-              const Mark = link.icon
-                ? linkIcons[link.icon as keyof typeof linkIcons]
-                : undefined;
-              return (
-                <li class="cal-link-tile">
-                  <a class="cal-link" href={link.url}>
-                    <span class="cal-link-index" aria-hidden="true">
-                      {pad(index + 1)}
+          {profile.links.map((link, index) => {
+            const Mark = link.icon ? linkIcons[link.icon as keyof typeof linkIcons] : undefined;
+            return (
+              <li class="cal-link-tile">
+                <a class="cal-link" href={link.url}>
+                  <span class="cal-link-index" aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <span class="cal-link-copy">
+                    <span class="cal-link-label">
+                      {Mark && <Mark class="cal-link-mark" aria-hidden="true" />}
+                      <span>{link.label}</span>
                     </span>
-                    <span class="cal-link-copy">
-                      <span class="cal-link-label">
-                        {Mark && <Mark class="cal-link-mark" aria-hidden="true" />}
-                        <span>{link.label}</span>
-                      </span>
-                      <span class="cal-link-url" aria-hidden="true">
-                        {shortUrl(link.url)}
-                      </span>
+                    <span class="cal-link-url" aria-hidden="true">
+                      {shortUrl(link.url)}
                     </span>
-                  </a>
-                </li>
-              );
-            })
-          }
+                  </span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
-      {
-        profile.projects && profile.projects.length > 0 && (
-          <section class="cal-section cal-projects" data-reveal aria-labelledby="cal-projects-title">
-            <div class="cal-section-heading">
-              <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-              <h2 class="cal-section-title" id="cal-projects-title">{t.projectsTitle}</h2>
-              <span class="cal-section-count" aria-hidden="true">
-                {pad(profile.projects.length)}
-                <small>{t.projectsUnit}</small>
-              </span>
-            </div>
+      {profile.projects && profile.projects.length > 0 && (
+        <section class="cal-section cal-projects" data-reveal aria-labelledby="cal-projects-title">
+          <div class="cal-section-heading">
+            <span class="cal-section-no" aria-hidden="true">
+              {nextSection()}
+            </span>
+            <h2 class="cal-section-title" id="cal-projects-title">
+              {t.projectsTitle}
+            </h2>
+            <span class="cal-section-count" aria-hidden="true">
+              {pad(profile.projects.length)}
+              <small>{t.projectsUnit}</small>
+            </span>
+          </div>
 
-            <ol class="cal-mosaic">
-              {profile.projects.map((project, index) => (
-                <li class:list={['cal-project', `cal-project--${(index % 4) + 1}`]}>
-                  <div class="cal-project-top">
-                    <span class="cal-project-index" aria-hidden="true">
-                      {pad(index + 1)}
-                    </span>
-                    <h3 class="cal-project-title">
-                      {project.url ? (
-                        <a class="cal-project-link" href={project.url}>{project.title}</a>
-                      ) : (
-                        project.title
-                      )}
-                    </h3>
-                  </div>
-
-                  {project.description && <p class="cal-project-desc">{project.description}</p>}
-
-                  {project.tags && project.tags.length > 0 && (
-                    <ul class="cal-tags">
-                      {project.tags.map((tag) => (
-                        <li>{tag}</li>
-                      ))}
-                    </ul>
-                  )}
-
-                  <span class="cal-project-corner" aria-hidden="true"></span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )
-      }
-
-      {
-        profile.experience && profile.experience.length > 0 && (
-          <section class="cal-section cal-stairs" data-reveal aria-labelledby="cal-experience-title">
-            <div class="cal-section-heading">
-              <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-              <h2 class="cal-section-title" id="cal-experience-title">{t.experienceTitle}</h2>
-              <span class="cal-section-count" aria-hidden="true">
-                {pad(profile.experience.length)}
-                <small>{t.experienceUnit}</small>
-              </span>
-            </div>
-
-            <ol class="cal-stairway">
-              {profile.experience.map((item, index) => (
-                <li class:list={['cal-step', `cal-step--${(index % 4) + 1}`]}>
-                  <span class="cal-step-no" aria-hidden="true">
+          <ol class="cal-mosaic">
+            {profile.projects.map((project, index) => (
+              <li class:list={['cal-project', `cal-project--${(index % 4) + 1}`]}>
+                <div class="cal-project-top">
+                  <span class="cal-project-index" aria-hidden="true">
                     {pad(index + 1)}
                   </span>
-                  <div class="cal-step-body">
-                    {item.period && <p class="cal-period">{item.period}</p>}
-                    <h3 class="cal-org">{item.org}</h3>
-                    {item.role && <p class="cal-role">{item.role}</p>}
-                    {item.description && <p class="cal-step-desc">{item.description}</p>}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )
-      }
+                  <h3 class="cal-project-title">
+                    {project.url ? (
+                      <a class="cal-project-link" href={project.url}>
+                        {project.title}
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h3>
+                </div>
+
+                {project.description && <p class="cal-project-desc">{project.description}</p>}
+
+                {project.tags && project.tags.length > 0 && (
+                  <ul class="cal-tags">
+                    {project.tags.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
+                )}
+
+                <span class="cal-project-corner" aria-hidden="true"></span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {profile.experience && profile.experience.length > 0 && (
+        <section class="cal-section cal-stairs" data-reveal aria-labelledby="cal-experience-title">
+          <div class="cal-section-heading">
+            <span class="cal-section-no" aria-hidden="true">
+              {nextSection()}
+            </span>
+            <h2 class="cal-section-title" id="cal-experience-title">
+              {t.experienceTitle}
+            </h2>
+            <span class="cal-section-count" aria-hidden="true">
+              {pad(profile.experience.length)}
+              <small>{t.experienceUnit}</small>
+            </span>
+          </div>
+
+          <ol class="cal-stairway">
+            {profile.experience.map((item, index) => (
+              <li class:list={['cal-step', `cal-step--${(index % 4) + 1}`]}>
+                <span class="cal-step-no" aria-hidden="true">
+                  {pad(index + 1)}
+                </span>
+                <div class="cal-step-body">
+                  {item.period && <p class="cal-period">{item.period}</p>}
+                  <h3 class="cal-org">{item.org}</h3>
+                  {item.role && <p class="cal-role">{item.role}</p>}
+                  {item.description && <p class="cal-step-desc">{item.description}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <div
         class:list={[
@@ -239,45 +248,47 @@ const nextSection = () => pad((sectionIndex += 1));
           { 'cal-lower--contact-only': !profile.skills || profile.skills.length === 0 },
         ]}
       >
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="cal-section cal-skills" data-reveal aria-labelledby="cal-skills-title">
-              <div class="cal-section-heading">
-                <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-                <h2 class="cal-section-title" id="cal-skills-title">{t.skillsTitle}</h2>
-                <span class="cal-section-count" aria-hidden="true">
-                  {pad(profile.skills.length)}
-                  <small>{t.skillsUnit}</small>
-                </span>
-              </div>
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="cal-section cal-skills" data-reveal aria-labelledby="cal-skills-title">
+            <div class="cal-section-heading">
+              <span class="cal-section-no" aria-hidden="true">
+                {nextSection()}
+              </span>
+              <h2 class="cal-section-title" id="cal-skills-title">
+                {t.skillsTitle}
+              </h2>
+              <span class="cal-section-count" aria-hidden="true">
+                {pad(profile.skills.length)}
+                <small>{t.skillsUnit}</small>
+              </span>
+            </div>
 
-              <ul class="cal-badges">
-                {profile.skills.map((skill, index) => (
-                  <li class:list={['cal-badge', `cal-badge--${(index % 6) + 1}`]}>
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+            <ul class="cal-badges">
+              {profile.skills.map((skill, index) => (
+                <li class:list={['cal-badge', `cal-badge--${(index % 6) + 1}`]}>{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="cal-section cal-contact" data-reveal aria-labelledby="cal-contact-title">
           <div class="cal-pack-panel">
             <div class="cal-section-heading">
-              <span class="cal-section-no" aria-hidden="true">{nextSection()}</span>
-              <h2 class="cal-section-title" id="cal-contact-title">{t.contactTitle}</h2>
+              <span class="cal-section-no" aria-hidden="true">
+                {nextSection()}
+              </span>
+              <h2 class="cal-section-title" id="cal-contact-title">
+                {t.contactTitle}
+              </h2>
             </div>
 
             <div class="cal-contact-body">
-              {
-                profile.contact?.email && (
-                  <p class="cal-email">
-                    <span class="cal-email-label">{t.emailLabel}</span>
-                    <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-                  </p>
-                )
-              }
+              {profile.contact?.email && (
+                <p class="cal-email">
+                  <span class="cal-email-label">{t.emailLabel}</span>
+                  <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+                </p>
+              )}
 
               {profile.contact?.note && <p class="cal-contact-note">{profile.contact.note}</p>}
 
@@ -287,7 +298,9 @@ const nextSection = () => pad((sectionIndex += 1));
             </div>
 
             <div class="cal-barcode" aria-hidden="true">
-              {barcodeBars.map(() => <span />)}
+              {barcodeBars.map(() => (
+                <span />
+              ))}
             </div>
           </div>
         </section>

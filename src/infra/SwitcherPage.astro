@@ -55,7 +55,10 @@ const previewModules = import.meta.glob('../designs/*/Preview.astro', {
 }) as Record<string, PreviewModule>;
 
 /** 设计 id → 预览组件与它用到的字体族（`fonts` 具名导出，实测可被调用方读取）。 */
-const previews: Record<string, { Component: AstroComponentFactory; fonts: import('astro:assets').CssVariable[] }> = {};
+const previews: Record<
+  string,
+  { Component: AstroComponentFactory; fonts: import('astro:assets').CssVariable[] }
+> = {};
 for (const [key, mod] of Object.entries(previewModules)) {
   const id = key.split('/').at(-2);
   if (id && mod?.default) previews[id] = { Component: mod.default, fonts: mod.fonts ?? [] };
@@ -79,14 +82,12 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
 <!doctype html>
 <html lang={locale.code}>
   <head>
-    <HeadMeta
-      title={heading}
-      description={m.switcher.description}
-      robots="noindex, follow"
-    />
+    <HeadMeta title={heading} description={m.switcher.description} robots="noindex, follow" />
     {/* 预览字体：按族去重后页面级声明一次（A5）。不 preload——预览是辅助信息，
         `display: swap` + 系统回退已足够，不值得为它抢首屏带宽。 */}
-    {previewFonts.map((cssVariable) => <Font cssVariable={cssVariable} />)}
+    {previewFonts.map((cssVariable) => (
+      <Font cssVariable={cssVariable} />
+    ))}
   </head>
   <body>
     <InfraStyles />
@@ -96,49 +97,53 @@ const contextMenu = buildActionMenuConfig(model, locale, { kind: 'switcher' }, h
       <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。
            JS 开启时本段完全不渲染，运行时不会出现两个可见的语言入口。 -->
       <noscript>
-        <LanguageSwitcher language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path, 'designs/'))} />
+        <LanguageSwitcher
+          language={languageSwitcherData(model, locale, (entry) =>
+            localeHref(entry.path, 'designs/'),
+          )}
+        />
       </noscript>
       <ul class="infra-list">
-        {
-          localeDesigns.map((design) => {
-            const preview = previews[design.id];
-            const Preview = preview?.Component;
-            return (
-              <li>
-                <a
-                  class="infra-card"
-                  href={localeDesignHref(locale.path, design.id)}
-                  data-design={design.id}
-                  data-has-preview={preview ? '' : undefined}
-                >
-                  {/* 预览是**装饰性引述**：aria-hidden 使其不进入链接可访问名、
+        {localeDesigns.map((design) => {
+          const preview = previews[design.id];
+          const Preview = preview?.Component;
+          return (
+            <li>
+              <a
+                class="infra-card"
+                href={localeDesignHref(locale.path, design.id)}
+                data-design={design.id}
+                data-has-preview={preview ? '' : undefined}
+              >
+                {/* 预览是**装饰性引述**：aria-hidden 使其不进入链接可访问名、
                       内部无可聚焦元素、不进焦点顺序（A7）。链接的可访问名仍由 name + desc 承担。 */}
-                  {Preview ? (
-                    <span class="pv" aria-hidden="true">
-                      <Preview
-                        locale={locale.code}
-                        name={profile.name}
-                        headline={profile.headline}
-                        location={profile.location}
-                        links={profile.links}
-                      />
-                    </span>
-                  ) : null}
-                  <span class="name">
-                    {design.meta.accent ? (
-                      <span class="chip" style={`--chip:${design.meta.accent}`}></span>
-                    ) : null}
-                    {design.meta.displayName}
-                    <span class="lang-badge" data-lang-badge hidden>
-                      {m.switcher.currentBadge}
-                    </span>
+                {Preview ? (
+                  <span class="pv" aria-hidden="true">
+                    <Preview
+                      locale={locale.code}
+                      name={profile.name}
+                      headline={profile.headline}
+                      location={profile.location}
+                      links={profile.links}
+                    />
                   </span>
-                  <span class="desc">{designDescriptions[design.id]?.[locale.code] ?? design.meta.description}</span>
-                </a>
-              </li>
-            );
-          })
-        }
+                ) : null}
+                <span class="name">
+                  {design.meta.accent ? (
+                    <span class="chip" style={`--chip:${design.meta.accent}`}></span>
+                  ) : null}
+                  {design.meta.displayName}
+                  <span class="lang-badge" data-lang-badge hidden>
+                    {m.switcher.currentBadge}
+                  </span>
+                </span>
+                <span class="desc">
+                  {designDescriptions[design.id]?.[locale.code] ?? design.meta.description}
+                </span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </main>
     <ContextMenu config={contextMenu} />

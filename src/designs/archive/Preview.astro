@@ -37,8 +37,13 @@ const rows = links.slice(0, 2);
 <div class="ar-pv">
   <div class="ar-pv-drawer">
     <div class="ar-pv-card">
-      <span class="ar-pv-tab"><span class="ar-pv-tabno">01</span>{t.headTab}</span>
-      <p class="ar-pv-brand">SENRENBANKA<span class="ar-pv-dim"> · {t.archiveTag}</span></p>
+      <span class="ar-pv-tab">
+        <span class="ar-pv-tabno">01</span>
+        {t.headTab}
+      </span>
+      <p class="ar-pv-brand">
+        SENRENBANKA<span class="ar-pv-dim"> · {t.archiveTag}</span>
+      </p>
       <p class="ar-pv-name">{name}</p>
       <p class="ar-pv-headline">{headline}</p>
       <ul class="ar-pv-entries">
@@ -76,7 +81,8 @@ const rows = links.slice(0, 2);
       var(--ar-back-deep) 100%
     );
     font-family:
-      var(--font-courier-prime), "Courier New", var(--font-gowun-batang), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", monospace;
+      var(--font-courier-prime), 'Courier New', var(--font-gowun-batang), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', monospace;
     font-size: 0.625rem;
     line-height: 1.7;
     color: var(--ar-ink);
@@ -118,7 +124,7 @@ const rows = links.slice(0, 2);
 
   /* 卡底打孔：一排暗孔，露出抽屉（正式页同款 motif，尺寸按缩略比例） */
   .ar-pv-card::after {
-    content: "";
+    content: '';
     position: absolute;
     right: 0.8rem;
     bottom: 0.4rem;
@@ -175,8 +181,9 @@ const rows = links.slice(0, 2);
 
   .ar-pv-name {
     margin: 0 0 0.1rem;
-    font-family: var(--font-sorts-mill-goudy), Georgia, var(--font-gowun-batang), var(--font-zhuque), "Songti SC", "SimSun",
-      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    font-family:
+      var(--font-sorts-mill-goudy), Georgia, var(--font-gowun-batang), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
     font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.15;
@@ -185,8 +192,9 @@ const rows = links.slice(0, 2);
   .ar-pv-headline {
     margin: 0 0 0.6rem;
     max-width: 34ch;
-    font-family: var(--font-sorts-mill-goudy), Georgia, var(--font-gowun-batang), var(--font-zhuque), "Songti SC", "SimSun",
-      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    font-family:
+      var(--font-sorts-mill-goudy), Georgia, var(--font-gowun-batang), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
     font-size: 0.6875rem;
   }
 

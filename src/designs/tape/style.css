@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-tape-hand: var(--font-uglytypist);
@@ -13,11 +13,17 @@
 .tp {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(115% 85% at 50% -12%, var(--tp-back-rise), var(--tp-back) 58%, var(--tp-back-deep))
+  background: radial-gradient(
+      115% 85% at 50% -12%,
+      var(--tp-back-rise),
+      var(--tp-back) 58%,
+      var(--tp-back-deep)
+    )
     var(--tp-back-deep);
   color: var(--tp-ink);
-  font-family: var(--font-tape-mono), var(--font-poor-story), var(--font-zhuque), "Consolas", "Courier New", "Songti SC", "SimSun",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  font-family:
+    var(--font-tape-mono), var(--font-poor-story), var(--font-zhuque), 'Consolas', 'Courier New',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.875rem;
   line-height: 1.75;
   padding: clamp(1.25rem, 4vw, 3rem) clamp(0.9rem, 3.5vw, 2rem) clamp(2rem, 6vw, 4rem);
@@ -46,7 +52,12 @@
   overflow: hidden;
   border: 1px solid var(--tp-shell-edge);
   border-radius: 10px;
-  background: linear-gradient(168deg, var(--tp-shell-hi), var(--tp-shell) 58%, var(--tp-shell-edge));
+  background: linear-gradient(
+    168deg,
+    var(--tp-shell-hi),
+    var(--tp-shell) 58%,
+    var(--tp-shell-edge)
+  );
   box-shadow:
     0 22px 40px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -96,8 +107,9 @@
 }
 
 .tp-label-name {
-  font-family: var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), "Songti SC",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+  font-family:
+    var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), 'Songti SC',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
   font-size: clamp(1.05rem, 2.4vw + 0.6rem, 1.5rem);
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -157,7 +169,12 @@
   width: 31%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 38%, var(--tp-window-hi), var(--tp-window) 62%, var(--tp-window-lo));
+  background: radial-gradient(
+    circle at 50% 38%,
+    var(--tp-window-hi),
+    var(--tp-window) 62%,
+    var(--tp-window-lo)
+  );
   box-shadow:
     inset 0 3px 8px rgba(0, 0, 0, 0.72),
     inset 0 -1px 0 rgba(255, 255, 255, 0.05);
@@ -209,7 +226,7 @@
 }
 
 .tp-screw::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 42% 20%;
   background: #0e0d0c;
@@ -254,15 +271,21 @@
 .tp-card {
   padding: clamp(1.4rem, 3.4vw, 2.2rem) clamp(1.2rem, 3.2vw, 2rem) clamp(1.2rem, 3vw, 1.7rem);
   border-radius: 2px;
-  background: linear-gradient(178deg, var(--tp-label) 0%, var(--tp-label) 60%, var(--tp-label-2) 100%);
+  background: linear-gradient(
+    178deg,
+    var(--tp-label) 0%,
+    var(--tp-label) 60%,
+    var(--tp-label-2) 100%
+  );
   box-shadow: 0 24px 46px rgba(0, 0, 0, 0.52);
   color: var(--tp-ink);
 }
 
 .tp-name {
   margin: 0 0 0.35rem;
-  font-family: var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), "Songti SC",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+  font-family:
+    var(--font-tape-hand), var(--font-poor-story), var(--font-zhuque), 'Songti SC',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
   font-size: clamp(1.9rem, 5.5vw, 2.6rem);
   font-weight: 400;
   line-height: 1.15;
@@ -432,11 +455,11 @@
 }
 
 .tp-tags::before {
-  content: "[ ";
+  content: '[ ';
 }
 
 .tp-tags::after {
-  content: " ]";
+  content: ' ]';
 }
 
 /* ---------- 纪录（experience） ---------- */

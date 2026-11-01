@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-fr: var(--font-inter);
@@ -18,8 +18,16 @@
   background: var(--fr-canvas);
   color: var(--fr-label);
   font-family:
-    var(--font-fr), var(--font-gothic-a1), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
-    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    var(--font-fr),
+    var(--font-gothic-a1),
+    system-ui,
+    -apple-system,
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Noto Sans KR',
+    sans-serif;
   font-size: 1.0625rem; /* body 17 */
   line-height: 1.47;
   -webkit-font-smoothing: antialiased;
@@ -232,7 +240,7 @@
 }
 
 .fr-row + .fr-row::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 1rem;

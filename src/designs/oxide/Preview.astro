@@ -16,16 +16,24 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
 
 <div class="ox-pv">
   <div class="ox-pv-bar">
-    <span class="ox-pv-brand">SENRENBANKA<span aria-hidden="true"> ●</span></span>
+    <span class="ox-pv-brand">
+      SENRENBANKA<span aria-hidden="true"> ●</span>
+    </span>
     <span class="ox-pv-loc">{location ?? t.locationFallback}</span>
   </div>
-  <p class="ox-pv-wave" aria-hidden="true">{wave}</p>
+  <p class="ox-pv-wave" aria-hidden="true">
+    {wave}
+  </p>
   <p class="ox-pv-label">IDENTITY / 身份</p>
   <p class="ox-pv-name">{name}</p>
   <p class="ox-pv-headline">{headline}</p>
   <p class="ox-pv-label">CHANNELS / 链接</p>
-  <p class="ox-pv-link"><span>01</span> niconico <i></i> ↗</p>
-  <p class="ox-pv-link"><span>02</span> bb-vault <i></i> ↗</p>
+  <p class="ox-pv-link">
+    <span>01</span> niconico <i></i> ↗
+  </p>
+  <p class="ox-pv-link">
+    <span>02</span> bb-vault <i></i> ↗
+  </p>
 </div>
 
 <style>
@@ -36,37 +44,31 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇';
     overflow: hidden;
     background:
       linear-gradient(var(--ox-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--ox-line) 1px, transparent 1px),
-      var(--ox-bg);
-    background-size: 2.5rem 2.5rem, 2.5rem 2.5rem, auto;
+      linear-gradient(90deg, var(--ox-line) 1px, transparent 1px), var(--ox-bg);
+    background-size:
+      2.5rem 2.5rem,
+      2.5rem 2.5rem,
+      auto;
     color: var(--ox-fg);
     font-family:
-      var(--font-geist-mono),
-      var(--font-noto-sans-mono-cjk-kr),
-      ui-monospace,
-      SFMono-Regular,
-      Menlo,
-      Consolas,
-      'Segoe UI Symbol',
-      'Apple Symbols',
-      'PingFang SC',
-      'Microsoft YaHei',
-      'Hiragino Sans',
-      'Yu Gothic UI',
-      'Apple SD Gothic Neo',
-      'Malgun Gothic',
-      'Noto Sans KR',
+      var(--font-geist-mono), var(--font-noto-sans-mono-cjk-kr), ui-monospace, SFMono-Regular,
+      Menlo, Consolas, 'Segoe UI Symbol', 'Apple Symbols', 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
       monospace;
     font-size: 0.5625rem;
     line-height: 1.55;
   }
 
   .ox-pv::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--ox-bg) 80%, transparent));
+    background: linear-gradient(
+      180deg,
+      transparent 55%,
+      color-mix(in srgb, var(--ox-bg) 80%, transparent)
+    );
   }
 
   .ox-pv-bar {

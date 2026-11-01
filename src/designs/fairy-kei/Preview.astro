@@ -59,12 +59,14 @@ const charms = links.slice(0, 2);
     padding: 0.55rem 0.7rem 0.6rem;
     overflow: hidden;
     background:
-      radial-gradient(circle at 10px 10px, rgba(62, 44, 77, 0.09) 0 1px, transparent 1.5px) 0 0 / 20px 20px,
+      radial-gradient(circle at 10px 10px, rgba(62, 44, 77, 0.09) 0 1px, transparent 1.5px) 0 0 /
+        20px 20px,
       linear-gradient(135deg, var(--fk-cream), var(--fk-room) 72%, var(--fk-butter));
     color: var(--fk-ink);
     font-family:
-      var(--font-inter), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-inter), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: 0.5rem;
     line-height: 1.4;
   }
@@ -117,8 +119,9 @@ const charms = links.slice(0, 2);
     border-radius: 999px;
     background: var(--fk-paper);
     font-family:
-      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: 0.42rem;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -164,12 +167,14 @@ const charms = links.slice(0, 2);
     border: 2px solid var(--fk-outline);
     border-radius: 46% 46% 0.45rem 0.45rem / 22% 22% 0.45rem 0.45rem;
     background: var(--fk-butter);
-    box-shadow: 0 0.2rem 0 var(--fk-rose), 0 0.36rem 0 var(--fk-outline);
+    box-shadow:
+      0 0.2rem 0 var(--fk-rose),
+      0 0.36rem 0 var(--fk-outline);
     transform: rotate(1.2deg);
   }
 
   .fk-pv-window::before {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     height: 100%;
@@ -191,7 +196,18 @@ const charms = links.slice(0, 2);
     width: 37%;
     aspect-ratio: 1;
     background: var(--fk-rose);
-    clip-path: polygon(50% 0, 61% 35%, 98% 36%, 68% 57%, 79% 94%, 50% 72%, 21% 94%, 32% 57%, 2% 36%, 39% 35%);
+    clip-path: polygon(
+      50% 0,
+      61% 35%,
+      98% 36%,
+      68% 57%,
+      79% 94%,
+      50% 72%,
+      21% 94%,
+      32% 57%,
+      2% 36%,
+      39% 35%
+    );
     filter: drop-shadow(0 0.12rem 0 var(--fk-outline));
     transform: translate(-50%, -50%) rotate(8deg);
   }
@@ -207,8 +223,9 @@ const charms = links.slice(0, 2);
     overflow: hidden;
     color: var(--fk-plum);
     font-family:
-      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: 0.34rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -222,8 +239,9 @@ const charms = links.slice(0, 2);
     margin: 0;
     overflow: hidden;
     font-family:
-      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: clamp(1.05rem, 4vw, 1.55rem);
     font-weight: 600;
     letter-spacing: -0.035em;
@@ -277,7 +295,10 @@ const charms = links.slice(0, 2);
   .fk-pv-charm-no {
     flex: none;
     color: var(--fk-plum);
-    font-family: var(--font-fredoka), "Arial Narrow", var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-fredoka), 'Arial Narrow', var(--font-dongle), var(--font-lxgw), 'PingFang SC',
+      'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', sans-serif;
     font-size: 0.29rem;
   }
 

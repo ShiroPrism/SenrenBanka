@@ -19,10 +19,7 @@ function sortIds(families) {
 function overrideByFile(config) {
   return new Map(
     (config?.families ?? []).flatMap((family) =>
-      (family.variantOverrides ?? []).map((variant) => [
-        `${family.id}:${variant.file}`,
-        variant,
-      ]),
+      (family.variantOverrides ?? []).map((variant) => [`${family.id}:${variant.file}`, variant]),
     ),
   );
 }
@@ -31,11 +28,7 @@ export function buildLocalFontDefinitions(snapshot, config) {
   const overrides = overrideByFile(config);
   return sortIds(snapshot.families).map((id) => {
     const family = snapshot.families[id];
-    const cacheDirectory = familyCacheRelativePath(
-      snapshot.catalogVersion,
-      id,
-      family.version,
-    );
+    const cacheDirectory = familyCacheRelativePath(snapshot.catalogVersion, id, family.version);
     return {
       name: family.manifest.familyName,
       cssVariable: family.manifest.cssVariable,

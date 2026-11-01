@@ -23,7 +23,12 @@ const designsRoot = path.join(process.cwd(), 'src', 'designs');
 
 const sourceSchema = z
   .object({
-    type: z.enum(['official-vendor', 'official-docs-derived', 'third-party-analysis', 'self-produced']),
+    type: z.enum([
+      'official-vendor',
+      'official-docs-derived',
+      'third-party-analysis',
+      'self-produced',
+    ]),
     url: z.string().min(1).optional(),
     fetchedAt: z.string().min(1).optional(),
     license: z.string().min(1).optional(),
@@ -64,10 +69,10 @@ export const designMetaSchema = z
 export type DesignMeta = z.infer<typeof designMetaSchema>;
 
 // design.json 是纯数据（eager JSON 导入不产生样式边，安全）。
-const metaModules = import.meta.glob('./*/design.json', { eager: true, import: 'default' }) as Record<
-  string,
-  unknown
->;
+const metaModules = import.meta.glob('./*/design.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, unknown>;
 
 export interface DesignEntry {
   id: string;

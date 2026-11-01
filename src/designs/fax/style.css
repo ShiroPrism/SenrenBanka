@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* fax — 复古办公室 / 传真机
    一张刚从传真机里吐出来的传输纸。纸是主体，桌面只是背景；
@@ -15,14 +15,22 @@
 
 .fx {
   /* 字面：标签走 Courier Prime，正文走磨损的 TT2020 Style D，中文落朱雀仿宋 */
-  --fx-type-label: var(--font-courier-prime), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
-  --fx-type-body: var(--font-tt2020-styled), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), "Courier New", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  --fx-type-label:
+    var(--font-courier-prime), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), 'Courier New',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+  --fx-type-body:
+    var(--font-tt2020-styled), var(--font-noto-sans-mono-cjk-kr), var(--font-zhuque), 'Courier New',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
 
   margin: 0;
   min-height: 100vh;
   padding: clamp(1.75rem, 5vw, 3.5rem) clamp(0.5rem, 3vw, 2rem) clamp(2.5rem, 7vw, 5rem);
-  background:
-    radial-gradient(120% 85% at 50% -12%, var(--fx-back) 0%, var(--fx-back) 38%, var(--fx-back-deep) 100%)
+  background: radial-gradient(
+      120% 85% at 50% -12%,
+      var(--fx-back) 0%,
+      var(--fx-back) 38%,
+      var(--fx-back-deep) 100%
+    )
     var(--fx-back-deep);
   color: var(--fx-ink);
   font-family: var(--fx-type-body);
@@ -51,7 +59,12 @@
   padding: 2.75rem clamp(1.25rem, 4vw, 3.25rem) 2rem;
   /* 明度衰减只在最后 12%（页脚纸边）展开：正文所在的 88% 保持 paper，
      淡墨 dim 因此在正文可能出现的最低处仍 ≥4.57:1（数值见 DESIGN.md） */
-  background: linear-gradient(180deg, var(--fx-paper) 0%, var(--fx-paper) 88%, var(--fx-paper-2) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--fx-paper) 0%,
+    var(--fx-paper) 88%,
+    var(--fx-paper-2) 100%
+  );
   counter-reset: fx-page 1;
 }
 
@@ -60,7 +73,11 @@
   position: absolute;
   inset-block: 0;
   width: 1.5rem;
-  background-image: radial-gradient(circle at 50% 50%, var(--fx-back-deep) 0 3px, transparent 3.2px);
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    var(--fx-back-deep) 0 3px,
+    transparent 3.2px
+  );
   background-size: 1.5rem 0.95rem;
   background-position: 0 0.7rem;
   background-repeat: repeat-y;
@@ -190,7 +207,7 @@
 
 /* 段末页码：由纸面计数器生成，不占 DOM（见 DESIGN.md） */
 .fx-block::after {
-  content: "P." counter(fx-page, decimal-leading-zero);
+  content: 'P.' counter(fx-page, decimal-leading-zero);
   display: block;
   margin-top: 0.55rem;
   text-align: right;
@@ -215,7 +232,7 @@
 
 /* 标签后的虚线拉到纸边（单侧虚线，与票机的两翼夹标不同） */
 .fx-sec::after {
-  content: "";
+  content: '';
   flex: 1;
   border-top: 1px dashed var(--fx-line);
 }

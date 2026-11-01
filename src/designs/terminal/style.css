@@ -1,11 +1,11 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 /* 预览碎片**不得**被本页的 Tailwind 扫描：它含 `display: flex` / `border:` / `transform:`
    等属性文本，会被扫描器当作候选工具类，把 .flex / .border / .transform 等规则注进**正式页** CSS
    （2026-10-18 实测：正式页 CSS 多出 ~1.3KB 与配套 @property，且与预览文件产生耦合）。
    `@source not` 是 Tailwind 4 的否定来源语法（实测 4.3.3 支持）。 */
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-terminal: var(--font-jetbrains-mono);
@@ -17,22 +17,9 @@
   background: var(--tm-bg);
   color: var(--tm-fg);
   font-family:
-    var(--font-terminal),
-    var(--font-noto-sans-mono-cjk-kr),
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Consolas,
-    'Segoe UI Symbol',
-    'Apple Symbols',
-    'PingFang SC',
-    'Microsoft YaHei',
-    'Hiragino Sans',
-    'Yu Gothic UI',
-    'Apple SD Gothic Neo',
-    'Malgun Gothic',
-    'Noto Sans KR',
-    monospace;
+    var(--font-terminal), var(--font-noto-sans-mono-cjk-kr), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, 'Segoe UI Symbol', 'Apple Symbols', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans',
+    'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.9375rem;
   line-height: 1.6;
   display: grid;
@@ -213,7 +200,9 @@
   /* 滚动显现：隐藏态一律以 html[data-reveal-ready] 为唯一门控（契约见 docs/rules/visual-language.md）。
      隐藏态带 :not([data-reveal-in]) 兜底（过渡失效时内容也不会被静态隐藏）；
      过渡声明在"揭示后仍匹配"的规则上，--d 提供级联延迟。 */
-  html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) :is(.tm-ty, .tm-lit, .tm-out, .tm-name),
+  html[data-reveal-ready]
+    [data-reveal]:not([data-reveal-in])
+    :is(.tm-ty, .tm-lit, .tm-out, .tm-name),
   html[data-reveal-ready] [data-reveal]:not([data-reveal-in]) .tm-list > li {
     opacity: 0;
   }

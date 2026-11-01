@@ -25,14 +25,12 @@ const previewLinks = links.slice(0, 2);
     <p class="cal-pv-headline">{headline}</p>
 
     <div class="cal-pv-tags">
-      {
-        previewLinks.map((link, index) => (
-          <span class="cal-pv-tag">
-            <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            {link.label}
-          </span>
-        ))
-      }
+      {previewLinks.map((link, index) => (
+        <span class="cal-pv-tag">
+          <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+          {link.label}
+        </span>
+      ))}
     </div>
 
     <span class="cal-pv-shape cal-pv-shape--star" aria-hidden="true"></span>
@@ -58,8 +56,9 @@ const previewLinks = links.slice(0, 2);
     background: var(--cal-paper);
     color: var(--cal-ink);
     font-family:
-      var(--font-inter), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-inter), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: 0.55rem;
     line-height: 1.4;
   }
@@ -93,7 +92,10 @@ const previewLinks = links.slice(0, 2);
     border: 1.5px solid var(--cal-ink);
     border-radius: 999px;
     background: var(--cal-sky);
-    font-family: var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw),
+      'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.42rem;
     font-weight: 700;
     line-height: 1.2;
@@ -104,8 +106,9 @@ const previewLinks = links.slice(0, 2);
   .cal-pv-name {
     margin: 0;
     font-family:
-      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans",
-      "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-fredoka), var(--font-dongle), var(--font-lxgw), 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+      sans-serif;
     font-size: clamp(1.6rem, 6vw, 2.7rem);
     font-weight: 700;
     line-height: 0.88;
@@ -140,7 +143,10 @@ const previewLinks = links.slice(0, 2);
     border: 1.5px solid var(--cal-ink);
     border-radius: 999px;
     background: var(--cal-paper-bright);
-    font-family: var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw),
+      'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.42rem;
     font-weight: 700;
     line-height: 1.25;
@@ -158,7 +164,20 @@ const previewLinks = links.slice(0, 2);
     width: 2.25rem;
     height: 2.25rem;
     background: var(--cal-red);
-    clip-path: polygon(50% 0, 61% 33%, 96% 22%, 72% 50%, 96% 78%, 61% 67%, 50% 100%, 39% 67%, 4% 78%, 28% 50%, 4% 22%, 39% 33%);
+    clip-path: polygon(
+      50% 0,
+      61% 33%,
+      96% 22%,
+      72% 50%,
+      96% 78%,
+      61% 67%,
+      50% 100%,
+      39% 67%,
+      4% 78%,
+      28% 50%,
+      4% 22%,
+      39% 33%
+    );
     transform: rotate(9deg);
   }
 
@@ -184,7 +203,10 @@ const previewLinks = links.slice(0, 2);
     border-radius: 999px;
     background: var(--cal-ink);
     color: var(--cal-paper);
-    font-family: var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-mono), var(--font-inter), var(--font-dongle), var(--font-lxgw),
+      'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.42rem;
     font-weight: 700;
     line-height: 1.25;
@@ -203,7 +225,7 @@ const previewLinks = links.slice(0, 2);
 
   .cal-pv-contact span::before,
   .cal-pv-contact span::after {
-    content: "";
+    content: '';
     position: absolute;
     background: var(--cal-ink);
   }

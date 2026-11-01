@@ -50,13 +50,17 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
     )}
   </head>
   <body id="top" class="h99">
-    <a class="h99-skip" href="#h99-main">{t.skipLink}</a>
+    <a class="h99-skip" href="#h99-main">
+      {t.skipLink}
+    </a>
 
     <div class="h99-page">
       <header class="h99-masthead">
         <div class="h99-topbar">
           <span class="h99-brand">{t.brand}</span>
-          <span class="h99-topbar-mark" aria-hidden="true">//</span>
+          <span class="h99-topbar-mark" aria-hidden="true">
+            //
+          </span>
           <span class="h99-topbar-meta">{t.volume}</span>
           <span class="h99-topbar-status">{t.statusLine}</span>
         </div>
@@ -88,7 +92,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
 
         <div class="h99-masthead-foot">
           <span>{t.statusLine}</span>
-          <span class="h99-foot-rule" aria-hidden="true">////////////////</span>
+          <span class="h99-foot-rule" aria-hidden="true">
+            ////////////////
+          </span>
           <span>{t.volume}</span>
         </div>
       </header>
@@ -101,7 +107,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           <ul class="h99-toc">
             {contents.map((item, index) => (
               <li>
-                <span class="h99-toc-no" aria-hidden="true">{pad(index)}</span>
+                <span class="h99-toc-no" aria-hidden="true">
+                  {pad(index)}
+                </span>
                 <a href={`#${item.id}`}>{item.label}</a>
               </li>
             ))}
@@ -110,7 +118,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           <h2 class="h99-directory-subtitle">{t.elsewhere}</h2>
           <ul class="h99-navlinks">
             {profile.links.map((link) => (
-              <li><a href={link.url}>{link.label}</a></li>
+              <li>
+                <a href={link.url}>{link.label}</a>
+              </li>
             ))}
           </ul>
 
@@ -128,15 +138,23 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           <section class="h99-section" id="h99-links" aria-labelledby="h99-links-title">
             <div class="h99-section-head">
               <h2 id="h99-links-title">{t.links}</h2>
-              <span class="h99-section-mark" aria-hidden="true">{t.linksMark}</span>
+              <span class="h99-section-mark" aria-hidden="true">
+                {t.linksMark}
+              </span>
             </div>
             <ul class="h99-link-list">
               {profile.links.map((link, index) => (
                 <li class="h99-link-row">
-                  <span class="h99-link-no" aria-hidden="true">{pad(index)}</span>
+                  <span class="h99-link-no" aria-hidden="true">
+                    {pad(index)}
+                  </span>
                   <span class="h99-link-copy">
-                    <a class="h99-link-label" href={link.url}>{link.label}</a>
-                    <span class="h99-link-url" aria-hidden="true">{link.url}</span>
+                    <a class="h99-link-label" href={link.url}>
+                      {link.label}
+                    </a>
+                    <span class="h99-link-url" aria-hidden="true">
+                      {link.url}
+                    </span>
                   </span>
                 </li>
               ))}
@@ -147,26 +165,30 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
             <section class="h99-section" id="h99-projects" aria-labelledby="h99-projects-title">
               <div class="h99-section-head">
                 <h2 id="h99-projects-title">{t.projects}</h2>
-                <span class="h99-section-mark" aria-hidden="true">{t.projectsMark}</span>
+                <span class="h99-section-mark" aria-hidden="true">
+                  {t.projectsMark}
+                </span>
               </div>
               <ol class="h99-projects">
                 {profile.projects!.map((project, index) => (
                   <li class="h99-project">
-                    <span class="h99-project-no" aria-hidden="true">{pad(index)}</span>
+                    <span class="h99-project-no" aria-hidden="true">
+                      {pad(index)}
+                    </span>
                     <div class="h99-project-copy">
                       <h3 class="h99-project-title">
-                        {project.url ? (
-                          <a href={project.url}>{project.title}</a>
-                        ) : (
-                          project.title
-                        )}
+                        {project.url ? <a href={project.url}>{project.title}</a> : project.title}
                       </h3>
-                      {project.url && <span class="h99-project-url" aria-hidden="true">{project.url}</span>}
+                      {project.url && (
+                        <span class="h99-project-url" aria-hidden="true">
+                          {project.url}
+                        </span>
+                      )}
                       {project.description && <p class="h99-project-desc">{project.description}</p>}
                       {project.tags && project.tags.length > 0 && (
                         <p class="h99-project-tags">
-                          <span class="h99-field-label">{t.tagsLabel}</span>
-                          {' '}{project.tags.map((tag) => `[${tag}]`).join(' ')}
+                          <span class="h99-field-label">{t.tagsLabel}</span>{' '}
+                          {project.tags.map((tag) => `[${tag}]`).join(' ')}
                         </p>
                       )}
                     </div>
@@ -180,7 +202,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
             <section class="h99-section" id="h99-experience" aria-labelledby="h99-experience-title">
               <div class="h99-section-head">
                 <h2 id="h99-experience-title">{t.experience}</h2>
-                <span class="h99-section-mark" aria-hidden="true">{t.experienceMark}</span>
+                <span class="h99-section-mark" aria-hidden="true">
+                  {t.experienceMark}
+                </span>
               </div>
               <div class="h99-table-wrap">
                 <table class="h99-exp">
@@ -198,15 +222,21 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
                       <tr>
                         <th scope="row">{item.org}</th>
                         <td>
-                          <span class="h99-mobile-label" aria-hidden="true">{t.role}</span>
+                          <span class="h99-mobile-label" aria-hidden="true">
+                            {t.role}
+                          </span>
                           <span class="h99-cell-value">{item.role ?? ''}</span>
                         </td>
                         <td>
-                          <span class="h99-mobile-label" aria-hidden="true">{t.period}</span>
+                          <span class="h99-mobile-label" aria-hidden="true">
+                            {t.period}
+                          </span>
                           <span class="h99-cell-value">{item.period ?? ''}</span>
                         </td>
                         <td>
-                          <span class="h99-mobile-label" aria-hidden="true">{t.description}</span>
+                          <span class="h99-mobile-label" aria-hidden="true">
+                            {t.description}
+                          </span>
                           <span class="h99-cell-value">{item.description ?? ''}</span>
                         </td>
                       </tr>
@@ -221,12 +251,16 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
             <section class="h99-section" id="h99-skills" aria-labelledby="h99-skills-title">
               <div class="h99-section-head">
                 <h2 id="h99-skills-title">{t.skills}</h2>
-                <span class="h99-section-mark" aria-hidden="true">{t.skillsMark}</span>
+                <span class="h99-section-mark" aria-hidden="true">
+                  {t.skillsMark}
+                </span>
               </div>
               <ul class="h99-skills">
                 {profile.skills!.map((skill) => (
                   <li>
-                    <span class="h99-check" aria-hidden="true">[x]</span>
+                    <span class="h99-check" aria-hidden="true">
+                      [x]
+                    </span>
                     <span>{skill}</span>
                   </li>
                 ))}
@@ -238,7 +272,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
             <section class="h99-section" id="h99-contact" aria-labelledby="h99-contact-title">
               <div class="h99-section-head">
                 <h2 id="h99-contact-title">{t.contact}</h2>
-                <span class="h99-section-mark" aria-hidden="true">{t.contactMark}</span>
+                <span class="h99-section-mark" aria-hidden="true">
+                  {t.contactMark}
+                </span>
               </div>
               <address class="h99-contact">
                 {profile.contact?.note && <p class="h99-contact-note">{profile.contact.note}</p>}
@@ -267,12 +303,16 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           </div>
 
           <div class="h99-badge-stack" aria-hidden="true">
-            {t.badges.map((badge) => <span class="h99-badge">{badge}</span>)}
+            {t.badges.map((badge) => (
+              <span class="h99-badge">{badge}</span>
+            ))}
           </div>
 
           <div class="h99-counter" role="group" aria-labelledby="h99-counter-title">
             <h3 id="h99-counter-title">{t.counterTitle}</h3>
-            <p class="h99-counter-display" aria-hidden="true">{t.counterDisplay}</p>
+            <p class="h99-counter-display" aria-hidden="true">
+              {t.counterDisplay}
+            </p>
             <p class="h99-counter-offline">{t.counterOffline}</p>
             <p class="h99-counter-note">{t.counterNote}</p>
           </div>
@@ -282,7 +322,9 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
       <footer class="h99-footer">
         <p class="h99-footer-name">{profile.name}</p>
         <p>{t.footerNote}</p>
-        <p class="h99-top-link"><a href="#top">{t.backToTop}</a></p>
+        <p class="h99-top-link">
+          <a href="#top">{t.backToTop}</a>
+        </p>
       </footer>
     </div>
 

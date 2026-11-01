@@ -19,7 +19,10 @@ const t = messages[locale];
     <p class="gv-pv-headline">{headline}</p>
     <p class="gv-pv-link">↗ {t.projects}</p>
     <p class="gv-pv-button">→ {t.contact}</p>
-    <div class="gv-pv-footer"><span>{t.skills}</span><strong>{t.experience}</strong></div>
+    <div class="gv-pv-footer">
+      <span>{t.skills}</span>
+      <strong>{t.experience}</strong>
+    </div>
   </div>
 </div>
 
@@ -28,7 +31,9 @@ const t = messages[locale];
     min-height: 9rem;
     background: #fff;
     color: var(--gv-text);
-    font-family: Arial, Helvetica, var(--font-gothic-a1), "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      Arial, Helvetica, var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', sans-serif;
     font-size: 0.625rem;
     line-height: 1.35;
   }

@@ -29,6 +29,7 @@ const script = renderRouterScript({
 });
 const fallbackUrl = localeDesignHref(locale.path, model.default.id);
 ---
+
 <html lang={locale.code}>
   <head>
     <meta charset="utf-8" />
@@ -48,15 +49,13 @@ const fallbackUrl = localeDesignHref(locale.path, model.default.id);
         <h1>{m.entry.noscriptHeading}</h1>
         <p>{m.entry.noscriptBody}</p>
         <ul class="infra-list">
-          {
-            localeDesigns.map((design) => (
-              <li>
-                <a class="infra-card" href={localeDesignHref(locale.path, design.id)}>
-                  <span class="name">{design.meta.displayName}</span>
-                </a>
-              </li>
-            ))
-          }
+          {localeDesigns.map((design) => (
+            <li>
+              <a class="infra-card" href={localeDesignHref(locale.path, design.id)}>
+                <span class="name">{design.meta.displayName}</span>
+              </a>
+            </li>
+          ))}
         </ul>
       </noscript>
     </main>

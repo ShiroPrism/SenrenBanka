@@ -77,9 +77,7 @@ export function verifyAgentDocs(root = projectRoot) {
   }
 
   for (const [gate, ruleFile] of REQUIRED_GATES) {
-    const gateLine = agents
-      .split(/\r?\n/)
-      .find((line) => line.includes(`<!-- gate:${gate} -->`));
+    const gateLine = agents.split(/\r?\n/).find((line) => line.includes(`<!-- gate:${gate} -->`));
     if (!gateLine) {
       errors.push(`AGENTS.md is missing hard gate "${gate}"`);
       continue;

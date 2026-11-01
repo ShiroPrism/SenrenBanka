@@ -73,7 +73,11 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
 
       <header class="rd-head">
         <p class="rd-brand">
-          SENRENBANKA<span class="rd-brand-sep" aria-hidden="true"> · </span>
+          SENRENBANKA
+          <span class="rd-brand-sep" aria-hidden="true">
+            {' '}
+            ·{' '}
+          </span>
           <span class="rd-brand-tag">{t.brandTag}</span>
         </p>
         <div class="rd-lamps" aria-hidden="true">
@@ -91,16 +95,18 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
 
           <div class="rd-scale" aria-hidden="true">
             <div class="rd-ticks">
-              {
-                ticks.map((tick) => (
-                  <span class:list={['rd-tick', tick.major && 'is-major']}>
-                    {tick.label ? <span class:list={['rd-tick-label', tick.edge]}>{tick.label}</span> : null}
-                  </span>
-                ))
-              }
+              {ticks.map((tick) => (
+                <span class:list={['rd-tick', tick.major && 'is-major']}>
+                  {tick.label ? (
+                    <span class:list={['rd-tick-label', tick.edge]}>{tick.label}</span>
+                  ) : null}
+                </span>
+              ))}
             </div>
             <div class="rd-needle">
-              <span class="rd-needle-bar"><span class="rd-needle-tip"></span></span>
+              <span class="rd-needle-bar">
+                <span class="rd-needle-tip"></span>
+              </span>
             </div>
           </div>
         </div>
@@ -110,141 +116,163 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
             <span class="rd-meta-key">{t.channelKey}</span>
             <span class="rd-meta-num">{String(profile.links.length).padStart(2, '0')}</span>
           </p>
-          {
-            profile.location && (
-              <p class="rd-meta-item">
-                <span class="rd-meta-key">{t.qthLabel}</span>
-                <span class="rd-meta-val">{profile.location}</span>
-              </p>
-            )
-          }
+          {profile.location && (
+            <p class="rd-meta-item">
+              <span class="rd-meta-key">{t.qthLabel}</span>
+              <span class="rd-meta-val">{profile.location}</span>
+            </p>
+          )}
         </div>
       </div>
 
       <div class="rd-modules">
         <section class="rd-mod" data-reveal aria-labelledby="rd-memo-title">
           <h2 class="rd-mod-title" id="rd-memo-title">
-            <span class="rd-mod-no" aria-hidden="true">{pad(0)}</span>{t.memoTitle}
+            <span class="rd-mod-no" aria-hidden="true">
+              {pad(0)}
+            </span>
+            {t.memoTitle}
           </h2>
           <p class="rd-bio">{profile.bio}</p>
         </section>
 
         <section class="rd-mod" data-reveal aria-labelledby="rd-channels-title">
           <h2 class="rd-mod-title" id="rd-channels-title">
-            <span class="rd-mod-no" aria-hidden="true">{pad(1)}</span>{t.channelsTitle}
+            <span class="rd-mod-no" aria-hidden="true">
+              {pad(1)}
+            </span>
+            {t.channelsTitle}
           </h2>
           <ul class="rd-channels">
-            {
-              profile.links.map((link, index) => (
-                <li class="rd-chan">
-                  <span class="rd-chan-no" aria-hidden="true">{pad(index)}</span>
-                  <a class="rd-link" href={link.url}>{link.label}</a>
-                  <span class="rd-leader" aria-hidden="true"></span>
-                  <span class="rd-chan-url" aria-hidden="true">{shortUrl(link.url)}</span>
-                </li>
-              ))
-            }
+            {profile.links.map((link, index) => (
+              <li class="rd-chan">
+                <span class="rd-chan-no" aria-hidden="true">
+                  {pad(index)}
+                </span>
+                <a class="rd-link" href={link.url}>
+                  {link.label}
+                </a>
+                <span class="rd-leader" aria-hidden="true"></span>
+                <span class="rd-chan-url" aria-hidden="true">
+                  {shortUrl(link.url)}
+                </span>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="rd-mod" data-reveal aria-labelledby="rd-programs-title">
-              <h2 class="rd-mod-title" id="rd-programs-title">
-                <span class="rd-mod-no" aria-hidden="true">{pad(2)}</span>{t.programsTitle}
-              </h2>
-              <ol class="rd-programs">
-                {profile.projects.map((project, index) => (
-                  <li class="rd-program">
-                    <p class="rd-program-head">
-                      <span class="rd-chan-no" aria-hidden="true">{pad(index)}</span>
-                      {project.url ? <a class="rd-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
-                    </p>
-                    {project.description && <p class="rd-note">{project.description}</p>}
-                    {project.tags && project.tags.length > 0 && (
-                      <ul class="rd-tags">
-                        {project.tags.map((tag) => (
-                          <li class="rd-tag">{tag}</li>
-                        ))}
-                      </ul>
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="rd-mod" data-reveal aria-labelledby="rd-programs-title">
+            <h2 class="rd-mod-title" id="rd-programs-title">
+              <span class="rd-mod-no" aria-hidden="true">
+                {pad(2)}
+              </span>
+              {t.programsTitle}
+            </h2>
+            <ol class="rd-programs">
+              {profile.projects.map((project, index) => (
+                <li class="rd-program">
+                  <p class="rd-program-head">
+                    <span class="rd-chan-no" aria-hidden="true">
+                      {pad(index)}
+                    </span>
+                    {project.url ? (
+                      <a class="rd-link" href={project.url}>
+                        {project.title}
+                      </a>
+                    ) : (
+                      <span>{project.title}</span>
                     )}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )
-        }
+                  </p>
+                  {project.description && <p class="rd-note">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <ul class="rd-tags">
+                      {project.tags.map((tag) => (
+                        <li class="rd-tag">{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="rd-mod" data-reveal aria-labelledby="rd-log-title">
-              <h2 class="rd-mod-title" id="rd-log-title">
-                <span class="rd-mod-no" aria-hidden="true">{pad(3)}</span>{t.logTitle}
-              </h2>
-              <ul class="rd-logs">
-                {profile.experience.map((item) => (
-                  <li class="rd-log">
-                    <p class="rd-log-head">
-                      {item.period && <span class="rd-period">{item.period}</span>}
-                      <span class="rd-org">{item.org}</span>
-                      {item.role ? <span class="rd-role">{item.role}</span> : null}
-                    </p>
-                    {item.description && <p class="rd-note">{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="rd-mod" data-reveal aria-labelledby="rd-log-title">
+            <h2 class="rd-mod-title" id="rd-log-title">
+              <span class="rd-mod-no" aria-hidden="true">
+                {pad(3)}
+              </span>
+              {t.logTitle}
+            </h2>
+            <ul class="rd-logs">
+              {profile.experience.map((item) => (
+                <li class="rd-log">
+                  <p class="rd-log-head">
+                    {item.period && <span class="rd-period">{item.period}</span>}
+                    <span class="rd-org">{item.org}</span>
+                    {item.role ? <span class="rd-role">{item.role}</span> : null}
+                  </p>
+                  {item.description && <p class="rd-note">{item.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="rd-mod" data-reveal aria-labelledby="rd-skills-title">
-              <h2 class="rd-mod-title" id="rd-skills-title">
-                <span class="rd-mod-no" aria-hidden="true">{pad(4)}</span>{t.skillsTitle}
-              </h2>
-              <ul class="rd-tags rd-skills">
-                {profile.skills.map((skill) => (
-                  <li class="rd-tag">{skill}</li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="rd-mod" data-reveal aria-labelledby="rd-skills-title">
+            <h2 class="rd-mod-title" id="rd-skills-title">
+              <span class="rd-mod-no" aria-hidden="true">
+                {pad(4)}
+              </span>
+              {t.skillsTitle}
+            </h2>
+            <ul class="rd-tags rd-skills">
+              {profile.skills.map((skill) => (
+                <li class="rd-tag">{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="rd-mod" data-reveal aria-labelledby="rd-contact-title">
           <h2 class="rd-mod-title" id="rd-contact-title">
-            <span class="rd-mod-no" aria-hidden="true">{pad(5)}</span>{t.contactTitle}
+            <span class="rd-mod-no" aria-hidden="true">
+              {pad(5)}
+            </span>
+            {t.contactTitle}
           </h2>
           <p class="rd-total">
             <span class="rd-total-label">{t.totalLabel}</span>
             <span class="rd-total-num">{String(profile.links.length).padStart(2, '0')}</span>
             <span class="rd-total-unit">{t.totalUnit}</span>
           </p>
-          {
-            profile.contact?.email ? (
-              <p class="rd-contact">
-                <span class="rd-meta-key">{t.contactVia}</span>
-                <a class="rd-link rd-mailto" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-              </p>
-            ) : (
-              <p class="rd-note">{t.noMail}</p>
-            )
-          }
+          {profile.contact?.email ? (
+            <p class="rd-contact">
+              <span class="rd-meta-key">{t.contactVia}</span>
+              <a class="rd-link rd-mailto" href={`mailto:${profile.contact.email}`}>
+                {profile.contact.email}
+              </a>
+            </p>
+          ) : (
+            <p class="rd-note">{t.noMail}</p>
+          )}
           {profile.contact?.note && <p class="rd-note">{profile.contact.note}</p>}
         </section>
       </div>
 
       <footer class="rd-foot" aria-labelledby="rd-foot-label">
         <div class="rd-vu" aria-hidden="true">
-          {
-            vuBars.map((bar) => (
-              <span class:list={['rd-vu-bar', bar.red && 'is-red']}></span>
-            ))
-          }
+          {vuBars.map((bar) => (
+            <span class:list={['rd-vu-bar', bar.red && 'is-red']}></span>
+          ))}
         </div>
         <div class="rd-foot-meta">
-          <p class="rd-band" id="rd-foot-label">{t.band}</p>
+          <p class="rd-band" id="rd-foot-label">
+            {t.band}
+          </p>
           <p class="rd-sample">{t.sampleNote}</p>
         </div>
       </footer>

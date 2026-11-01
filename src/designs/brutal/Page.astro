@@ -18,6 +18,7 @@ const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -38,7 +39,9 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
     <div class="bt-page">
       <header class="bt-header">
         <div class="bt-header-mark">
-          <span class="bt-mark" aria-hidden="true">BT</span>
+          <span class="bt-mark" aria-hidden="true">
+            BT
+          </span>
           <span>{profile.name}</span>
         </div>
         <span class="bt-header-meta">
@@ -48,130 +51,146 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 
       <main class="bt-main">
         <section class="bt-hero" aria-labelledby="bt-hero-title">
-          <p class="bt-kicker bt-snap" style="--bt-delay: 0ms">{t.portfolio}</p>
+          <p class="bt-kicker bt-snap" style="--bt-delay: 0ms">
+            {t.portfolio}
+          </p>
           <h1 id="bt-hero-title" class="bt-name bt-snap" style="--bt-delay: 30ms">
             {profile.name}
           </h1>
-          <p class="bt-headline bt-snap" style="--bt-delay: 60ms">{profile.headline}</p>
+          <p class="bt-headline bt-snap" style="--bt-delay: 60ms">
+            {profile.headline}
+          </p>
 
           <div class="bt-notice bt-snap" style="--bt-delay: 90ms">
             <span class="bt-notice-label">{t.notice}</span>
             <p class="bt-bio">{profile.bio}</p>
           </div>
 
-          {
-            profile.links.length > 0 && (
-              <div class="bt-actions bt-snap" style="--bt-delay: 120ms">
-                {profile.links.map((link) => (
-                  <a class="bt-link" href={link.url}>
-                    {link.label}
-                    <span class="bt-ext" aria-hidden="true">↗</span>
-                  </a>
-                ))}
-              </div>
-            )
-          }
+          {profile.links.length > 0 && (
+            <div class="bt-actions bt-snap" style="--bt-delay: 120ms">
+              {profile.links.map((link) => (
+                <a class="bt-link" href={link.url}>
+                  {link.label}
+                  <span class="bt-ext" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              ))}
+            </div>
+          )}
 
-          <span class="bt-sticker" aria-hidden="true">{t.index} / ★</span>
+          <span class="bt-sticker" aria-hidden="true">
+            {t.index} / ★
+          </span>
         </section>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="bt-section" aria-labelledby="bt-projects-title" data-reveal>
-              <div class="bt-section-head">
-                <span class="bt-section-num" aria-hidden="true">01</span>
-                <h2 id="bt-projects-title" class="bt-section-title">{t.projects}</h2>
-              </div>
-              <ul class="bt-projects">
-                {profile.projects.map((project, index) => (
-                  <li class="bt-card" data-reveal>
-                    <span class="bt-card-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <h3 class="bt-card-title">
-                      {project.url ? (
-                        <a href={project.url}>
-                          {project.title}
-                          <span class="bt-ext" aria-hidden="true">↗</span>
-                        </a>
-                      ) : (
-                        project.title
-                      )}
-                    </h3>
-                    {project.description && <p class="bt-card-desc">{project.description}</p>}
-                    {project.tags && project.tags.length > 0 && (
-                      <ul class="bt-tags">
-                        {project.tags.map((tag) => (
-                          <li>{tag}</li>
-                        ))}
-                      </ul>
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="bt-section" aria-labelledby="bt-projects-title" data-reveal>
+            <div class="bt-section-head">
+              <span class="bt-section-num" aria-hidden="true">
+                01
+              </span>
+              <h2 id="bt-projects-title" class="bt-section-title">
+                {t.projects}
+              </h2>
+            </div>
+            <ul class="bt-projects">
+              {profile.projects.map((project, index) => (
+                <li class="bt-card" data-reveal>
+                  <span class="bt-card-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 class="bt-card-title">
+                    {project.url ? (
+                      <a href={project.url}>
+                        {project.title}
+                        <span class="bt-ext" aria-hidden="true">
+                          ↗
+                        </span>
+                      </a>
+                    ) : (
+                      project.title
                     )}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+                  </h3>
+                  {project.description && <p class="bt-card-desc">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <ul class="bt-tags">
+                      {project.tags.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="bt-section" aria-labelledby="bt-experience-title" data-reveal>
-              <div class="bt-section-head">
-                <span class="bt-section-num" aria-hidden="true">02</span>
-                <h2 id="bt-experience-title" class="bt-section-title">{t.experience}</h2>
-              </div>
-              <ol class="bt-ledger">
-                {profile.experience.map((item) => (
-                  <li class="bt-ledger-row">
-                    <div class="bt-ledger-main">
-                      <span class="bt-ledger-org">{item.org}</span>
-                      {item.role && <span class="bt-ledger-role">{item.role}</span>}
-                    </div>
-                    {item.period && <span class="bt-ledger-period">{item.period}</span>}
-                    {item.description && <p class="bt-ledger-desc">{item.description}</p>}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="bt-section" aria-labelledby="bt-experience-title" data-reveal>
+            <div class="bt-section-head">
+              <span class="bt-section-num" aria-hidden="true">
+                02
+              </span>
+              <h2 id="bt-experience-title" class="bt-section-title">
+                {t.experience}
+              </h2>
+            </div>
+            <ol class="bt-ledger">
+              {profile.experience.map((item) => (
+                <li class="bt-ledger-row">
+                  <div class="bt-ledger-main">
+                    <span class="bt-ledger-org">{item.org}</span>
+                    {item.role && <span class="bt-ledger-role">{item.role}</span>}
+                  </div>
+                  {item.period && <span class="bt-ledger-period">{item.period}</span>}
+                  {item.description && <p class="bt-ledger-desc">{item.description}</p>}
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
 
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="bt-section" aria-labelledby="bt-skills-title" data-reveal>
-              <div class="bt-section-head">
-                <span class="bt-section-num" aria-hidden="true">03</span>
-                <h2 id="bt-skills-title" class="bt-section-title">{t.skills}</h2>
-              </div>
-              <ul class="bt-skills">
-                {profile.skills.map((skill) => (
-                  <li class="bt-skill">{skill}</li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="bt-section" aria-labelledby="bt-skills-title" data-reveal>
+            <div class="bt-section-head">
+              <span class="bt-section-num" aria-hidden="true">
+                03
+              </span>
+              <h2 id="bt-skills-title" class="bt-section-title">
+                {t.skills}
+              </h2>
+            </div>
+            <ul class="bt-skills">
+              {profile.skills.map((skill) => (
+                <li class="bt-skill">{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          hasContact && (
-            <section class="bt-contact" aria-labelledby="bt-contact-title" data-reveal>
-              <div class="bt-section-head">
-                <span class="bt-section-num" aria-hidden="true">04</span>
-                <h2 id="bt-contact-title" class="bt-section-title">{t.contact}</h2>
-              </div>
-              <div class="bt-contact-body">
-                {profile.contact?.email ? (
-                  <a class="bt-contact-link" href={`mailto:${profile.contact.email}`}>
-                    {profile.contact.email}
-                  </a>
-                ) : (
-                  <p class="bt-contact-note">{t.noContact}</p>
-                )}
-                {profile.contact?.note && <p class="bt-contact-note">{profile.contact.note}</p>}
-              </div>
-            </section>
-          )
-        }
+        {hasContact && (
+          <section class="bt-contact" aria-labelledby="bt-contact-title" data-reveal>
+            <div class="bt-section-head">
+              <span class="bt-section-num" aria-hidden="true">
+                04
+              </span>
+              <h2 id="bt-contact-title" class="bt-section-title">
+                {t.contact}
+              </h2>
+            </div>
+            <div class="bt-contact-body">
+              {profile.contact?.email ? (
+                <a class="bt-contact-link" href={`mailto:${profile.contact.email}`}>
+                  {profile.contact.email}
+                </a>
+              ) : (
+                <p class="bt-contact-note">{t.noContact}</p>
+              )}
+              {profile.contact?.note && <p class="bt-contact-note">{profile.contact.note}</p>}
+            </div>
+          </section>
+        )}
       </main>
 
       <footer class="bt-footer">

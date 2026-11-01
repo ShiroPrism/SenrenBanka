@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-poster-display: var(--font-league-gothic);
@@ -29,7 +29,9 @@ html:has(.ps) {
   padding: clamp(0.75rem, 3vw, 2.5rem) clamp(0.5rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3.5rem);
   background: var(--ps-paper-2);
   color: var(--ps-ink);
-  font-family: var(--font-poster-text), var(--font-gothic-a1), var(--font-zhuque), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+  font-family:
+    var(--font-poster-text), var(--font-gothic-a1), var(--font-zhuque), Georgia, 'Songti SC',
+    'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
   font-size: 1rem;
   line-height: 1.65;
 }
@@ -102,7 +104,7 @@ html:has(.ps) {
 
 .ps-reg::before,
 .ps-reg::after {
-  content: "";
+  content: '';
   position: absolute;
   background: var(--ps-ink);
 }
@@ -156,8 +158,9 @@ html:has(.ps) {
 /* 巨幅窄体标题：League Gothic 的 wdth 轴压到 82%；中文自动落到 Zhuque（同一声部的"方正"版本） */
 .ps-name {
   margin: 0;
-  font-family: var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun",
-    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), 'Arial Narrow',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 82%;
   font-size: clamp(2.6rem, 11vw, 6rem);
   font-weight: 400;
@@ -191,7 +194,9 @@ html:has(.ps) {
   flex-wrap: wrap;
   gap: 0.2rem 1.2rem;
   margin: 0;
-  font-family: var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), 'Arial Narrow',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 90%;
   font-size: 0.75rem;
   line-height: 1.5;
@@ -244,7 +249,7 @@ html:has(.ps) {
 
 /* 分区上方的粗规线（6px）——随滚动画出，见 motion 一节 */
 .ps-sec::before {
-  content: "";
+  content: '';
   display: block;
   height: 6px;
   margin-bottom: 1rem;
@@ -254,7 +259,7 @@ html:has(.ps) {
 
 /* 每行两栏之间的竖规线：落在栏间距的中线上 */
 .ps-sec--rule::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
@@ -273,7 +278,10 @@ html:has(.ps) {
 }
 
 .ps-sec-mark {
-  font-family: var(--font-poster-mark), var(--font-poster-display), "Arial Black", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-mark), var(--font-poster-display), 'Arial Black', var(--font-gothic-a1),
+    var(--font-zhuque), 'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic',
+    'Noto Sans KR', sans-serif;
   font-size: 1.75rem;
   font-weight: 400;
   line-height: 1;
@@ -282,7 +290,9 @@ html:has(.ps) {
 }
 
 .ps-sec-name {
-  font-family: var(--font-poster-text), var(--font-gothic-a1), var(--font-zhuque), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+  font-family:
+    var(--font-poster-text), var(--font-gothic-a1), var(--font-zhuque), Georgia, 'Songti SC',
+    'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
   font-size: 0.9375rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -296,7 +306,9 @@ html:has(.ps) {
 /* 编号：窄体数字（League Gothic），与标题同一油墨声部 */
 .ps-num {
   flex: none;
-  font-family: var(--font-poster-display), "Arial Narrow", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), 'Arial Narrow', var(--font-gothic-a1), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 86%;
   font-size: 0.875rem;
   line-height: 1.4;
@@ -399,7 +411,9 @@ html:has(.ps) {
 }
 
 .ps-log-period {
-  font-family: var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), var(--font-gothic-a1), var(--font-zhuque), 'Arial Narrow',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 100%;
   font-size: 1rem;
   line-height: 1.4;
@@ -439,7 +453,7 @@ html:has(.ps) {
 }
 
 .ps-skill + .ps-skill::before {
-  content: "/";
+  content: '/';
   margin-inline: 0.6ch;
   color: var(--ps-muted);
 }
@@ -462,7 +476,9 @@ html:has(.ps) {
 }
 
 .ps-total-num {
-  font-family: var(--font-poster-display), "Arial Narrow", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), 'Arial Narrow', var(--font-gothic-a1), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 78%;
   font-size: clamp(2.4rem, 5vw, 3.25rem);
   line-height: 0.85;
@@ -511,7 +527,7 @@ html:has(.ps) {
 
 /* 页脚的粗规线：作为 flex 首行占满宽度，同样随滚动画出 */
 .ps-foot::before {
-  content: "";
+  content: '';
   flex: 0 0 100%;
   height: 6px;
   margin-bottom: 0.5rem;
@@ -521,7 +537,9 @@ html:has(.ps) {
 
 .ps-imprint-line {
   margin: 0;
-  font-family: var(--font-poster-display), "Arial Narrow", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  font-family:
+    var(--font-poster-display), 'Arial Narrow', var(--font-gothic-a1), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
   font-stretch: 85%;
   font-size: clamp(1.1rem, 2.2vw, 1.5rem);
   line-height: 1.05;

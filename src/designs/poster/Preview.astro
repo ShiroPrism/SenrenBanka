@@ -35,8 +35,14 @@ const t = messages[locale];
       <section>
         <p class="ps-pv-mark">{t.itemsMark}</p>
         <p class="ps-pv-title">{t.itemsTitle}</p>
-        <p class="ps-pv-link"><span>01</span>{t.ordersTitle}</p>
-        <p class="ps-pv-link"><span>02</span>{t.checkoutTitle}</p>
+        <p class="ps-pv-link">
+          <span>01</span>
+          {t.ordersTitle}
+        </p>
+        <p class="ps-pv-link">
+          <span>02</span>
+          {t.checkoutTitle}
+        </p>
       </section>
     </div>
     <p class="ps-pv-foot">{t.imprint}</p>
@@ -50,7 +56,9 @@ const t = messages[locale];
     overflow: hidden;
     background: var(--ps-paper-2);
     color: var(--ps-ink);
-    font-family: var(--font-prociono), var(--font-gothic-a1), var(--font-zhuque), Georgia, "Songti SC", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+    font-family:
+      var(--font-prociono), var(--font-gothic-a1), var(--font-zhuque), Georgia, 'Songti SC',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
     font-size: 0.55rem;
     line-height: 1.4;
   }
@@ -73,7 +81,7 @@ const t = messages[locale];
 
   .ps-pv-reg::before,
   .ps-pv-reg::after {
-    content: "";
+    content: '';
     position: absolute;
     background: var(--ps-ink);
   }
@@ -110,7 +118,9 @@ const t = messages[locale];
     gap: 0.7rem;
     margin: 0 0 0.2rem 0.75rem;
     color: var(--ps-muted);
-    font-family: var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), 'Arial Narrow',
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.42rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -118,7 +128,9 @@ const t = messages[locale];
 
   .ps-pv-name {
     margin: 0;
-    font-family: var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), "Arial Narrow", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), 'Arial Narrow',
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-stretch: 82%;
     font-size: clamp(1.7rem, 8vw, 2.9rem);
     font-weight: 400;
@@ -161,7 +173,10 @@ const t = messages[locale];
 
   .ps-pv-mark {
     margin: 0;
-    font-family: var(--font-blackout), var(--font-league-gothic), "Arial Black", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-blackout), var(--font-league-gothic), 'Arial Black', var(--font-gothic-a1),
+      var(--font-zhuque), 'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', sans-serif;
     font-size: 0.88rem;
     line-height: 1;
     letter-spacing: 0.03em;
@@ -198,7 +213,9 @@ const t = messages[locale];
     padding-top: 0.3rem;
     border-top: 0.12rem solid var(--ps-ink);
     color: var(--ps-muted);
-    font-family: var(--font-league-gothic), "Arial Narrow", var(--font-gothic-a1), var(--font-zhuque), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-league-gothic), 'Arial Narrow', var(--font-gothic-a1), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.48rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;

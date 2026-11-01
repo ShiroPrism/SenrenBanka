@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* GOV.UK Design System（官方文档汇编）：直角 + 内容优先 + 黄黑焦点 + 实体感按钮。
    数值与来源见 src/designs/govuk/DESIGN.md；适配见 docs/designs/govuk/ADAPTATION.md。
@@ -11,7 +11,9 @@
   margin: 0;
   background: #ffffff;
   color: var(--gv-text);
-  font-family: Arial, Helvetica, var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  font-family:
+    Arial, Helvetica, var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
+    sans-serif;
   font-size: 19px;
   line-height: 1.3158; /* 25/19 */
   -webkit-font-smoothing: antialiased;

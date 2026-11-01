@@ -4,10 +4,7 @@ import { messages } from './messages';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
-export const fonts: import('astro:assets').CssVariable[] = [
-  '--font-geist',
-  '--font-geist-mono',
-];
+export const fonts: import('astro:assets').CssVariable[] = ['--font-geist', '--font-geist-mono'];
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
 const t = messages[locale];
@@ -26,7 +23,9 @@ const t = messages[locale];
       <span class="kern-pv-btn kern-pv-btn-inv">{t.contact}</span>
     </div>
     <div class="kern-pv-grid">
-      <span>01 / {t.projects}</span><span>02 / {t.experience}</span><span>03 / {t.skills}</span>
+      <span>01 / {t.projects}</span>
+      <span>02 / {t.experience}</span>
+      <span>03 / {t.skills}</span>
     </div>
   </div>
 </div>
@@ -37,11 +36,15 @@ const t = messages[locale];
     padding: 0.65rem 0.85rem 0.8rem;
     background:
       linear-gradient(var(--kern-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--kern-line) 1px, transparent 1px),
-      #000;
-    background-size: 3rem 3rem, 3rem 3rem, auto;
+      linear-gradient(90deg, var(--kern-line) 1px, transparent 1px), #000;
+    background-size:
+      3rem 3rem,
+      3rem 3rem,
+      auto;
     color: var(--kern-fg-body);
-    font-family: var(--font-geist), var(--font-gothic-a1), system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    font-family:
+      var(--font-geist), var(--font-gothic-a1), system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', sans-serif;
     font-size: 0.5625rem;
     line-height: 1.45;
   }
@@ -53,7 +56,9 @@ const t = messages[locale];
     padding-bottom: 0.4rem;
     border-bottom: 1px solid var(--kern-line);
     color: var(--kern-fg-faint);
-    font-family: var(--font-geist-mono), var(--font-gothic-a1), ui-monospace, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+    font-family:
+      var(--font-geist-mono), var(--font-gothic-a1), ui-monospace, 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', monospace;
     letter-spacing: 0.04em;
   }
 
@@ -64,11 +69,13 @@ const t = messages[locale];
 
   .kern-pv-body::before,
   .kern-pv-body::after {
-    content: "+";
+    content: '+';
     position: absolute;
     top: -0.55rem;
     color: var(--kern-line-strong);
-    font-family: var(--font-geist-mono), var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+    font-family:
+      var(--font-geist-mono), var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', monospace;
     font-size: 0.7rem;
   }
 
@@ -124,7 +131,9 @@ const t = messages[locale];
     padding-top: 0.45rem;
     border-top: 1px solid var(--kern-line);
     color: var(--kern-fg-faint);
-    font-family: var(--font-geist-mono), var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+    font-family:
+      var(--font-geist-mono), var(--font-gothic-a1), 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans KR', monospace;
     font-size: 0.5rem;
   }
 

@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 /* brutal — 新粗野告示板
    纸张 + 胶带 + 印章 + 编号。粗黑边框与硬偏移阴影承担「贴上去」的物理感；
@@ -16,9 +16,15 @@
 
 .bt {
   /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前。 */
-  --bt-type-display: var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --bt-type-body: var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --bt-type-mono: var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  --bt-type-display:
+    var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+    'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  --bt-type-body:
+    var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC', 'Microsoft YaHei',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  --bt-type-mono:
+    var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+    'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
 
   margin: 0;
   min-height: 100vh;
@@ -27,7 +33,10 @@
   background-image:
     linear-gradient(rgba(11, 11, 11, 0.055) 1px, transparent 1px),
     linear-gradient(90deg, rgba(11, 11, 11, 0.055) 1px, transparent 1px);
-  background-size: 2rem 2rem, 2rem 2rem, auto;
+  background-size:
+    2rem 2rem,
+    2rem 2rem,
+    auto;
   color: var(--bt-ink);
   font-family: var(--bt-type-body);
   font-size: 1rem;

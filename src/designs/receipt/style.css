@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-receipt: var(--font-cutive-mono);
@@ -12,10 +12,17 @@
 .rc {
   margin: 0;
   min-height: 100vh;
-  background: radial-gradient(120% 90% at 50% -10%, #36312a, var(--rc-back) 62%, var(--rc-back-deep))
+  background: radial-gradient(
+      120% 90% at 50% -10%,
+      #36312a,
+      var(--rc-back) 62%,
+      var(--rc-back-deep)
+    )
     var(--rc-back-deep);
   color: var(--rc-ink);
-  font-family: var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  font-family:
+    var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.9375rem;
   line-height: 1.8;
   display: grid;
@@ -26,7 +33,12 @@
 /* 撕边由页面构建期生成的 clip-path polygon 剪出（见 Page.astro）。 */
 .rc-paper {
   width: min(30rem, 100%);
-  background: linear-gradient(180deg, var(--rc-paper) 0%, var(--rc-paper) 55%, var(--rc-paper-2) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--rc-paper) 0%,
+    var(--rc-paper) 55%,
+    var(--rc-paper-2) 100%
+  );
   padding: 2.6rem 1.6rem 1.5rem;
   filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.5));
 }
@@ -101,7 +113,7 @@
 
 .rc-sec::before,
 .rc-sec::after {
-  content: "";
+  content: '';
   flex: 1;
   border-top: 1px dashed var(--rc-line);
 }
@@ -196,24 +208,28 @@
 }
 
 .rc-tags::before {
-  content: "[ ";
+  content: '[ ';
 }
 
 .rc-tags::after {
-  content: " ]";
+  content: ' ]';
 }
 
 /* 段码数字：日期与编号走 DSEG7，中文自动回落到像素字 */
 .rc-period {
   margin-right: 0.4ch;
-  font-family: var(--font-dseg7), var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  font-family:
+    var(--font-dseg7), var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
 }
 
 /* 英文任期是句子而非段码；DSEG7 对同一文本会报出远大于可见字形的宽度，导致叠印。 */
 .rc-period-text {
-  font-family: var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  font-family:
+    var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   letter-spacing: 0;
 }
 
@@ -237,7 +253,9 @@
 }
 
 .rc-total-num {
-  font-family: var(--font-dseg7), var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+  font-family:
+    var(--font-dseg7), var(--font-receipt), var(--font-galmuri11), var(--font-ark-pixel),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 1.9rem;
   line-height: 1;
   letter-spacing: 0.08em;

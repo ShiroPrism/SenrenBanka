@@ -38,7 +38,9 @@ const itemCount = String(links.length).padStart(2, '0');
     </span>
     <span class="pxt-pv-shop"></span>
     <span class="pxt-pv-flags">
-      <i></i><i></i><i></i>
+      <i></i>
+      <i></i>
+      <i></i>
     </span>
 
     <span class="pxt-pv-node pxt-pv-node--identity">{t.identityTitle}</span>
@@ -61,11 +63,13 @@ const itemCount = String(links.length).padStart(2, '0');
 
   .pxt-pv {
     --pxt-pv-ui-stack:
-      var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "PingFang SC",
-      "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+      var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+      'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', monospace;
     --pxt-pv-number-stack:
-      var(--font-handjet), var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC",
-      "SimSun", "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+      var(--font-handjet), var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel),
+      'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
     height: 100%;
@@ -111,7 +115,10 @@ const itemCount = String(links.length).padStart(2, '0');
     color: var(--pxt-gold);
     font-family: var(--pxt-pv-number-stack);
     font-size: 1rem;
-    font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+    font-variation-settings:
+      'wght' 700,
+      'ELGR' 1,
+      'ELSH' 8;
     line-height: 1;
   }
 
@@ -152,9 +159,24 @@ const itemCount = String(links.length).padStart(2, '0');
     height: 25%;
     background: var(--pxt-grass-dark);
     clip-path: polygon(
-      0 70%, 8% 70%, 8% 42%, 20% 42%, 20% 20%, 34% 20%, 34% 42%, 47% 42%,
-      47% 10%, 62% 10%, 62% 36%, 74% 36%, 74% 20%, 88% 20%, 88% 48%, 100% 48%,
-      100% 100%, 0 100%
+      0 70%,
+      8% 70%,
+      8% 42%,
+      20% 42%,
+      20% 20%,
+      34% 20%,
+      34% 42%,
+      47% 42%,
+      47% 10%,
+      62% 10%,
+      62% 36%,
+      74% 36%,
+      74% 20%,
+      88% 20%,
+      88% 48%,
+      100% 48%,
+      100% 100%,
+      0 100%
     );
     opacity: 0.76;
   }
@@ -199,7 +221,7 @@ const itemCount = String(links.length).padStart(2, '0');
   }
 
   .pxt-pv-hall::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -34%;
     right: -10%;
@@ -211,7 +233,7 @@ const itemCount = String(links.length).padStart(2, '0');
   }
 
   .pxt-pv-hall::after {
-    content: "";
+    content: '';
     position: absolute;
     right: 34%;
     bottom: 0;
@@ -231,7 +253,7 @@ const itemCount = String(links.length).padStart(2, '0');
   }
 
   .pxt-pv-hall i::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: calc(100% + 1.2rem);
@@ -248,12 +270,8 @@ const itemCount = String(links.length).padStart(2, '0');
     height: 28%;
     border: 3px solid var(--pxt-night);
     background:
-      repeating-linear-gradient(
-        90deg,
-        var(--pxt-coral) 0 0.45rem,
-        var(--pxt-cream) 0.45rem 0.9rem
-      )
-      top / 100% 28% no-repeat,
+      repeating-linear-gradient(90deg, var(--pxt-coral) 0 0.45rem, var(--pxt-cream) 0.45rem 0.9rem)
+        top / 100% 28% no-repeat,
       var(--pxt-cream);
   }
 
@@ -276,7 +294,7 @@ const itemCount = String(links.length).padStart(2, '0');
   }
 
   .pxt-pv-flags i::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 3px;

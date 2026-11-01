@@ -24,7 +24,11 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     <span class="rd-pv-screw rd-pv-screw--br"></span>
     <div class="rd-pv-head">
       <span>SENRENBANKA · {t.brandTag}</span>
-      <span class="rd-pv-lamps"><i></i><i></i><i></i></span>
+      <span class="rd-pv-lamps">
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
     </div>
     <div class="rd-pv-glass">
       <p class="rd-pv-label">{t.callSignLabel}</p>
@@ -32,14 +36,23 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
       <p class="rd-pv-headline">{headline}</p>
       <div class="rd-pv-dial">
         <span class="rd-pv-ticks">
-          {ticks.map((tick) => <i>{tick}</i>)}
+          {ticks.map((tick) => (
+            <i>{tick}</i>
+          ))}
         </span>
         <span class="rd-pv-needle"></span>
       </div>
     </div>
     <div class="rd-pv-foot">
-      <span><b>{t.channelKey}</b><strong>04</strong></span>
-      {location && <span>{t.qthLabel} {location}</span>}
+      <span>
+        <b>{t.channelKey}</b>
+        <strong>04</strong>
+      </span>
+      {location && (
+        <span>
+          {t.qthLabel} {location}
+        </span>
+      )}
       <span class="rd-pv-knob"></span>
     </div>
   </div>
@@ -54,7 +67,9 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     overflow: hidden;
     background: radial-gradient(120% 78% at 50% -6%, var(--rd-panel), var(--rd-back) 58%);
     color: var(--rd-cream);
-    font-family: var(--font-share-tech-mono), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-share-tech-mono), var(--font-galmuri11), var(--font-ark-pixel), 'PingFang SC',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.52rem;
     line-height: 1.45;
   }
@@ -64,7 +79,10 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     width: 100%;
     padding: 0.55rem 0.65rem 0.6rem;
     background: var(--rd-panel);
-    box-shadow: inset 0 1px 0 var(--rd-highlight), inset 0 -1px 0 var(--rd-groove), inset 0 0 0 1px var(--rd-line);
+    box-shadow:
+      inset 0 1px 0 var(--rd-highlight),
+      inset 0 -1px 0 var(--rd-groove),
+      inset 0 0 0 1px var(--rd-line);
   }
 
   .rd-pv-screw {
@@ -72,14 +90,31 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: radial-gradient(circle at 34% 30%, var(--rd-dim) 0 16%, var(--rd-line) 46%, var(--rd-panel-deep) 80%);
+    background: radial-gradient(
+      circle at 34% 30%,
+      var(--rd-dim) 0 16%,
+      var(--rd-line) 46%,
+      var(--rd-panel-deep) 80%
+    );
     box-shadow: inset 0 0 0 1px var(--rd-groove);
   }
 
-  .rd-pv-screw--tl { top: 4px; left: 4px; }
-  .rd-pv-screw--tr { top: 4px; right: 4px; }
-  .rd-pv-screw--bl { bottom: 4px; left: 4px; }
-  .rd-pv-screw--br { right: 4px; bottom: 4px; }
+  .rd-pv-screw--tl {
+    top: 4px;
+    left: 4px;
+  }
+  .rd-pv-screw--tr {
+    top: 4px;
+    right: 4px;
+  }
+  .rd-pv-screw--bl {
+    bottom: 4px;
+    left: 4px;
+  }
+  .rd-pv-screw--br {
+    right: 4px;
+    bottom: 4px;
+  }
 
   .rd-pv-head {
     display: flex;
@@ -88,7 +123,9 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     padding: 0 0.55rem 0.3rem;
     border-bottom: 1px solid var(--rd-line);
     color: var(--rd-dim);
-    font-family: var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.4rem;
     letter-spacing: 0.12em;
   }
@@ -115,13 +152,17 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     margin-top: 0.35rem;
     padding: 0.4rem 0.55rem 0.35rem;
     background: var(--rd-panel-deep);
-    box-shadow: inset 0 2px 5px var(--rd-shade), inset 0 0 0 1px var(--rd-line);
+    box-shadow:
+      inset 0 2px 5px var(--rd-shade),
+      inset 0 0 0 1px var(--rd-line);
   }
 
   .rd-pv-label {
     margin: 0;
     color: var(--rd-amber);
-    font-family: var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.38rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -153,7 +194,10 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     display: flex;
     justify-content: space-between;
     color: var(--rd-amber);
-    font-family: var(--font-dseg14), var(--font-share-tech-mono), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-dseg14), var(--font-share-tech-mono), var(--font-galmuri11), var(--font-ark-pixel),
+      'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.38rem;
   }
 
@@ -175,7 +219,7 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
   }
 
   .rd-pv-needle::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -0.15rem;
     left: -2px;
@@ -191,7 +235,9 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     margin-top: 0.35rem;
     padding: 0 0.15rem;
     color: var(--rd-dim);
-    font-family: var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-family:
+      var(--font-format-1452), var(--font-galmuri11), var(--font-ark-pixel), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.38rem;
   }
 
@@ -203,7 +249,9 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
 
   .rd-pv-foot strong {
     color: var(--rd-amber);
-    font-family: var(--font-dseg14), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-dseg14), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.56rem;
     font-weight: 400;
   }
@@ -214,6 +262,8 @@ const ticks = [6, 7, 8, 9, 10, 11, 12];
     margin-left: auto;
     border-radius: 50%;
     background: radial-gradient(circle at 36% 28%, var(--rd-panel), var(--rd-panel-deep) 72%);
-    box-shadow: inset 0 0 0 1px var(--rd-groove), 0 0 0 2px var(--rd-line);
+    box-shadow:
+      inset 0 0 0 1px var(--rd-groove),
+      0 0 0 2px var(--rd-line);
   }
 </style>

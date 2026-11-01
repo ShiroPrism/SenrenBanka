@@ -39,129 +39,127 @@ const { profile, contextMenu } = view;
 
     <main class="fr-main">
       <section class="fr-hero" aria-labelledby="fr-title">
-        {
-          profile.avatar && (
-            <img
-              class="fr-avatar fr-rise"
-              style="--rise-delay: 0ms"
-              src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
-              alt=""
-              width="88"
-              height="88"
-              loading="eager"
-            />
-          )
-        }
+        {profile.avatar && (
+          <img
+            class="fr-avatar fr-rise"
+            style="--rise-delay: 0ms"
+            src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+            alt=""
+            width="88"
+            height="88"
+            loading="eager"
+          />
+        )}
         <h1 id="fr-title" class="fr-large-title fr-rise" style="--rise-delay: 0ms">
           {profile.name}
         </h1>
-        <p class="fr-title2 fr-rise" style="--rise-delay: 40ms">{profile.headline}</p>
-        <p class="fr-bio fr-rise" style="--rise-delay: 80ms">{profile.bio}</p>
+        <p class="fr-title2 fr-rise" style="--rise-delay: 40ms">
+          {profile.headline}
+        </p>
+        <p class="fr-bio fr-rise" style="--rise-delay: 80ms">
+          {profile.bio}
+        </p>
         <div class="fr-actions fr-rise" style="--rise-delay: 120ms">
-          {
-            profile.links.map((link) => (
-              <a class="fr-capsule fr-capsule--fill" href={link.url}>
-                {link.icon === 'github' && <GithubMark class="fr-mark" aria-hidden="true" />}
-                {link.icon === 'mail' && <Mail class="fr-mark" aria-hidden="true" />}
-                <span>{link.label}</span>
-              </a>
-            ))
-          }
+          {profile.links.map((link) => (
+            <a class="fr-capsule fr-capsule--fill" href={link.url}>
+              {link.icon === 'github' && <GithubMark class="fr-mark" aria-hidden="true" />}
+              {link.icon === 'mail' && <Mail class="fr-mark" aria-hidden="true" />}
+              <span>{link.label}</span>
+            </a>
+          ))}
         </div>
       </section>
 
-      {
-        profile.projects && profile.projects.length > 0 && (
-          <section class="fr-group" aria-labelledby="fr-projects" data-reveal>
-            <h2 id="fr-projects" class="fr-group-label">{ t.projects }</h2>
-            <div class="fr-card">
-              <ul class="fr-rows">
-                {profile.projects.map((project) => (
-                  <li class="fr-row" data-reveal>
-                    <div class="fr-row-head">
-                      <h3 class="fr-row-title">
-                        {project.url ? (
-                          <a class="fr-row-link" href={project.url}>
-                            {project.title}
-                            <ArrowUpRight class="fr-ext" aria-hidden="true" />
-                          </a>
-                        ) : (
-                          project.title
-                        )}
-                      </h3>
-                    </div>
-                    {project.description && <p class="fr-row-sub">{project.description}</p>}
-                    {project.tags && (
-                      <ul class="fr-chips">
-                        {project.tags.map((tag) => (
-                          <li class="fr-chip">{tag}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )
-      }
+      {profile.projects && profile.projects.length > 0 && (
+        <section class="fr-group" aria-labelledby="fr-projects" data-reveal>
+          <h2 id="fr-projects" class="fr-group-label">
+            {t.projects}
+          </h2>
+          <div class="fr-card">
+            <ul class="fr-rows">
+              {profile.projects.map((project) => (
+                <li class="fr-row" data-reveal>
+                  <div class="fr-row-head">
+                    <h3 class="fr-row-title">
+                      {project.url ? (
+                        <a class="fr-row-link" href={project.url}>
+                          {project.title}
+                          <ArrowUpRight class="fr-ext" aria-hidden="true" />
+                        </a>
+                      ) : (
+                        project.title
+                      )}
+                    </h3>
+                  </div>
+                  {project.description && <p class="fr-row-sub">{project.description}</p>}
+                  {project.tags && (
+                    <ul class="fr-chips">
+                      {project.tags.map((tag) => (
+                        <li class="fr-chip">{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
-      {
-        profile.experience && profile.experience.length > 0 && (
-          <section class="fr-group" aria-labelledby="fr-experience" data-reveal>
-            <h2 id="fr-experience" class="fr-group-label">{ t.experience }</h2>
-            <div class="fr-card">
-              <ul class="fr-rows">
-                {profile.experience.map((item) => (
-                  <li class="fr-row" data-reveal>
-                    <div class="fr-row-head">
-                      <h3 class="fr-row-title">{item.org}</h3>
-                      {item.period && <span class="fr-row-meta">{item.period}</span>}
-                    </div>
-                    {item.role && <p class="fr-row-sub">{item.role}</p>}
-                    {item.description && <p class="fr-row-sub">{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )
-      }
+      {profile.experience && profile.experience.length > 0 && (
+        <section class="fr-group" aria-labelledby="fr-experience" data-reveal>
+          <h2 id="fr-experience" class="fr-group-label">
+            {t.experience}
+          </h2>
+          <div class="fr-card">
+            <ul class="fr-rows">
+              {profile.experience.map((item) => (
+                <li class="fr-row" data-reveal>
+                  <div class="fr-row-head">
+                    <h3 class="fr-row-title">{item.org}</h3>
+                    {item.period && <span class="fr-row-meta">{item.period}</span>}
+                  </div>
+                  {item.role && <p class="fr-row-sub">{item.role}</p>}
+                  {item.description && <p class="fr-row-sub">{item.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
-      {
-        profile.skills && profile.skills.length > 0 && (
-          <section class="fr-group" aria-labelledby="fr-skills" data-reveal>
-            <h2 id="fr-skills" class="fr-group-label">{ t.skills }</h2>
-            <div class="fr-card fr-card--pad">
-              <ul class="fr-chips">
-                {profile.skills.map((skill) => (
-                  <li class="fr-chip">{skill}</li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )
-      }
+      {profile.skills && profile.skills.length > 0 && (
+        <section class="fr-group" aria-labelledby="fr-skills" data-reveal>
+          <h2 id="fr-skills" class="fr-group-label">
+            {t.skills}
+          </h2>
+          <div class="fr-card fr-card--pad">
+            <ul class="fr-chips">
+              {profile.skills.map((skill) => (
+                <li class="fr-chip">{skill}</li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section class="fr-group" aria-labelledby="fr-contact" data-reveal>
-        <h2 id="fr-contact" class="fr-group-label">{ t.contact }</h2>
+        <h2 id="fr-contact" class="fr-group-label">
+          {t.contact}
+        </h2>
         <div class="fr-contact-card">
           {profile.contact?.note && <p class="fr-contact-note">{profile.contact.note}</p>}
-          {
-            profile.contact?.email && (
-              <a class="fr-capsule fr-capsule--accent" href={`mailto:${profile.contact.email}`}>
-                <Mail class="fr-mark" aria-hidden="true" />
-                <span>{profile.contact.email}</span>
-              </a>
-            )
-          }
+          {profile.contact?.email && (
+            <a class="fr-capsule fr-capsule--accent" href={`mailto:${profile.contact.email}`}>
+              <Mail class="fr-mark" aria-hidden="true" />
+              <span>{profile.contact.email}</span>
+            </a>
+          )}
         </div>
       </section>
     </main>
 
-    <footer class="fr-footer">
-      {profile.name}
-    </footer>
+    <footer class="fr-footer">{profile.name}</footer>
     <ContextMenu config={contextMenu} />
   </body>
 </html>

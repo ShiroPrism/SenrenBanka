@@ -1,47 +1,56 @@
 # ニコニコ動画・真夏の夜の淫夢 完全準拠 profile.yaml
 
-name: "田所浩二"
-headline: "24歳、学生です / 王道を行く、空手部主将兼BB劇場のカリスマ"
-bio: "24歳、学生です。現在は空手部で後輩の指導に励みつつ、真夏の屋上での日光浴と冷えたアイスティーの調合を日課としている。ネットの集合無意識が生み出した概念的存在として、BB劇場や音MAD界隈で365日フル稼働中！"
-avatar: "TadokoroKoji.png"
-location: "東京都世田谷区下北沢"
+name: '田所浩二'
+headline: '24歳、学生です / 王道を行く、空手部主将兼BB劇場のカリスマ'
+bio: '24歳、学生です。現在は空手部で後輩の指導に励みつつ、真夏の屋上での日光浴と冷えたアイスティーの調合を日課としている。ネットの集合無意識が生み出した概念的存在として、BB劇場や音MAD界隈で365日フル稼働中！'
+avatar: 'TadokoroKoji.png'
+location: '東京都世田谷区下北沢'
 
 links:
   - label: niconico (野獣先輩)
-    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    url: 'https://www.nicovideo.jp/tag/野獣先輩'
     icon: tv
   - label: BB素材庫
-    url: "https://example.com/bb-theater"
+    url: 'https://example.com/bb-theater'
     icon: video
   - label: 下北沢通信
-    url: "https://example.com/114514"
+    url: 'https://example.com/114514'
     icon: coffee
 
 projects:
-  - title: "王道を行く (The Royal Road)"
-    description: "空手部の日常組手と、後輩（遠野）との親密な特別指導を克明に記録した、汗と咆哮のドキュメンタリー。"
-    url: "https://example.com/oudou"
-    tags: ["114514", "王道を行く", "空手部"]
-  - title: "冷えたアイスティー（特製レシピ）"
-    description: "稽古後のクールダウン用に開発された一杯。口にした者を急速なリラックスと深い昏睡へと誘う奇跡の配合。"
-    url: "https://example.com/tea-lab"
-    tags: ["アイスティー", "睡眠薬", "114514"]
-  - title: "マルチバースBB劇場ワールドツアー"
-    description: "金閣銀閣、咆哮する怪獣化、狂気の音MAD調教までを網羅する、サブカルチャー界の金字塔的動画プロジェクト。"
-    tags: ["音MAD", "AviUtl", "YTPMV"]
+  - title: '王道を行く (The Royal Road)'
+    description: '空手部の日常組手と、後輩（遠野）との親密な特別指導を克明に記録した、汗と咆哮のドキュメンタリー。'
+    url: 'https://example.com/oudou'
+    tags: ['114514', '王道を行く', '空手部']
+  - title: '冷えたアイスティー（特製レシピ）'
+    description: '稽古後のクールダウン用に開発された一杯。口にした者を急速なリラックスと深い昏睡へと誘う奇跡の配合。'
+    url: 'https://example.com/tea-lab'
+    tags: ['アイスティー', '睡眠薬', '114514']
+  - title: 'マルチバースBB劇場ワールドツアー'
+    description: '金閣銀閣、咆哮する怪獣化、狂気の音MAD調教までを網羅する、サブカルチャー界の金字塔的動画プロジェクト。'
+    tags: ['音MAD', 'AviUtl', 'YTPMV']
 
 experience:
-  - org: "下北沢大学 空手部"
-    role: "主将 / レジェンド先輩"
-    period: "24歳 – 永遠"
-    description: "道場での組手指導や護身術の伝授。練習後は疲れた後輩たちのために冷蔵庫の冷たいドリンク管理を徹底。"
-  - org: "ニコニコ動画 / 地下ネットミーム連合"
-    role: "概念的レジェンド俳優 / 万能音MADコア"
-    period: "2001 – 現在"
-    description: "不朽のフリー素材として数十万件に及ぶBB劇場やMAD動画に出演し、ネット民による脱構築と玩具化の源泉であり続けている。"
+  - org: '下北沢大学 空手部'
+    role: '主将 / レジェンド先輩'
+    period: '24歳 – 永遠'
+    description: '道場での組手指導や護身術の伝授。練習後は疲れた後輩たちのために冷蔵庫の冷たいドリンク管理を徹底。'
+  - org: 'ニコニコ動画 / 地下ネットミーム連合'
+    role: '概念的レジェンド俳優 / 万能音MADコア'
+    period: '2001 – 現在'
+    description: '不朽のフリー素材として数十万件に及ぶBB劇場やMAD動画に出演し、ネット民による脱構築と玩具化の源泉であり続けている。'
 
-skills: ["実戦組手", "王道を行く", "アイスティー調合", "屋上日光浴", "BB素材化", "野獣の咆哮", "114514共鳴"]
+skills:
+  [
+    '実戦組手',
+    '王道を行く',
+    'アイスティー調合',
+    '屋上日光浴',
+    'BB素材化',
+    '野獣の咆哮',
+    '114514共鳴',
+  ]
 
 contact:
-  email: "114514@shimokitazawa.jp"
-  note: "いいよ！こいよ！稽古が終わったら、いつでも屋上の道場に来て冷たいお茶でも飲んでいってくれよな。"
+  email: '114514@shimokitazawa.jp'
+  note: 'いいよ！こいよ！稽古が終わったら、いつでも屋上の道場に来て冷たいお茶でも飲んでいってくれよな。'

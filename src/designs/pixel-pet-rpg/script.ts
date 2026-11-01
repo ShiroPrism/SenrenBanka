@@ -56,8 +56,10 @@ if (root) {
       if (nodes.length === 0 || panels.length === 0) return;
       const hashPlace = decodeURIComponent(location.hash.replace(/^#/, ''));
       const initial =
-        nodes.find((node) => placeFromNode(node) === hashPlace)?.getAttribute('href')?.slice(1) ??
-        'pxt-identity';
+        nodes
+          .find((node) => placeFromNode(node) === hashPlace)
+          ?.getAttribute('href')
+          ?.slice(1) ?? 'pxt-identity';
       if (!activate(initial)) return;
       root.dataset.pxtReady = 'true';
 

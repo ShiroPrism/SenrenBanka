@@ -12,9 +12,7 @@ type Direction = 'next' | 'previous' | 'jump';
 const root = document.querySelector<HTMLElement>('[data-sd-root]');
 
 if (root) {
-  const spreads = Array.from(
-    root.querySelectorAll<HTMLElement>('[data-sd-spread]'),
-  );
+  const spreads = Array.from(root.querySelectorAll<HTMLElement>('[data-sd-spread]'));
   const tabs = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-sd-tab]'));
   const previous = root.querySelector<HTMLButtonElement>('[data-sd-prev]');
   const next = root.querySelector<HTMLButtonElement>('[data-sd-next]');
@@ -47,9 +45,7 @@ if (root) {
       throw new Error('Spread transport is incomplete');
     }
 
-    const spreadIndex = new Map(
-      spreads.map((spread, index) => [spread.id, index] as const),
-    );
+    const spreadIndex = new Map(spreads.map((spread, index) => [spread.id, index] as const));
 
     const goTo = (
       requestedIndex: number,
@@ -57,10 +53,7 @@ if (root) {
       moveFocus: boolean,
       updateHash = true,
     ) => {
-      const targetIndex = Math.max(
-        0,
-        Math.min(spreads.length - 1, requestedIndex),
-      );
+      const targetIndex = Math.max(0, Math.min(spreads.length - 1, requestedIndex));
 
       spreads.forEach((spread, index) => {
         const isCurrent = index === targetIndex;
@@ -96,8 +89,7 @@ if (root) {
       }
 
       if (moveFocus) {
-        const focusTarget =
-          spreads[targetIndex].querySelector<HTMLElement>('[data-sd-focus]');
+        const focusTarget = spreads[targetIndex].querySelector<HTMLElement>('[data-sd-focus]');
         if (focusTarget) {
           focusTarget.focus({ preventScroll: true });
           focusTarget.scrollIntoView({ block: 'start' });

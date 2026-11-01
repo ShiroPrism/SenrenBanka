@@ -25,7 +25,9 @@ const { profile, contextMenu } = view;
     )}
   </head>
   <body class="gv">
-    <a class="gv-skip-link" href="#gv-main">{t.skipLink}</a>
+    <a class="gv-skip-link" href="#gv-main">
+      {t.skipLink}
+    </a>
 
     <header class="gv-header">
       <div class="gv-container gv-header__inner">
@@ -37,104 +39,104 @@ const { profile, contextMenu } = view;
     <div class="gv-container">
       <main id="gv-main" class="gv-main">
         <section aria-labelledby="gv-title">
-          <h1 id="gv-title" class="gv-h1">{profile.headline}</h1>
+          <h1 id="gv-title" class="gv-h1">
+            {profile.headline}
+          </h1>
           <p class="gv-body-l gv-secondary gv-hero-bio">{profile.bio}</p>
           <ul class="gv-list gv-hero-links">
-            {
-              profile.links.map((link) => (
-                <li>
-                  <a class="gv-link" href={link.url}>
-                    {link.icon === 'github' && <GithubMark class="gv-mark" aria-hidden="true" />}
-                    {link.icon === 'mail' && <Mail class="gv-mark" aria-hidden="true" />}
-                    {link.label}
-                  </a>
-                </li>
-              ))
-            }
+            {profile.links.map((link) => (
+              <li>
+                <a class="gv-link" href={link.url}>
+                  {link.icon === 'github' && <GithubMark class="gv-mark" aria-hidden="true" />}
+                  {link.icon === 'mail' && <Mail class="gv-mark" aria-hidden="true" />}
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="gv-section" aria-labelledby="gv-projects">
-              <h2 id="gv-projects" class="gv-h2">{ t.projects }</h2>
-              <div class="gv-projects">
-                {profile.projects.map((project, index) => (
-                  <div class="gv-project">
-                    {index > 0 && <hr class="gv-hr" />}
-                    <h3 class="gv-h3">
-                      {project.url ? (
-                        <a class="gv-link" href={project.url}>
-                          {project.title}
-                          <ArrowUpRight class="gv-ext" aria-hidden="true" />
-                        </a>
-                      ) : (
-                        project.title
-                      )}
-                    </h3>
-                    {project.description && <p class="gv-body">{project.description}</p>}
-                    {project.tags && (
-                      <ul class="gv-tags">
-                        {project.tags.map((tag) => (
-                          <li>
-                            <strong class="gv-tag">{tag}</strong>
-                          </li>
-                        ))}
-                      </ul>
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="gv-section" aria-labelledby="gv-projects">
+            <h2 id="gv-projects" class="gv-h2">
+              {t.projects}
+            </h2>
+            <div class="gv-projects">
+              {profile.projects.map((project, index) => (
+                <div class="gv-project">
+                  {index > 0 && <hr class="gv-hr" />}
+                  <h3 class="gv-h3">
+                    {project.url ? (
+                      <a class="gv-link" href={project.url}>
+                        {project.title}
+                        <ArrowUpRight class="gv-ext" aria-hidden="true" />
+                      </a>
+                    ) : (
+                      project.title
                     )}
-                  </div>
-                ))}
-              </div>
-            </section>
-          )
-        }
+                  </h3>
+                  {project.description && <p class="gv-body">{project.description}</p>}
+                  {project.tags && (
+                    <ul class="gv-tags">
+                      {project.tags.map((tag) => (
+                        <li>
+                          <strong class="gv-tag">{tag}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="gv-section" aria-labelledby="gv-experience">
-              <h2 id="gv-experience" class="gv-h2">{ t.experience }</h2>
-              <dl class="gv-summary">
-                {profile.experience.map((item) => (
-                  <div class="gv-summary-row">
-                    <dt class="gv-summary-key">{item.org}</dt>
-                    <dd class="gv-summary-value">
-                      {item.role && <p class="gv-summary-role">{item.role}</p>}
-                      {item.period && <p class="gv-summary-period gv-secondary">{item.period}</p>}
-                      {item.description && <p>{item.description}</p>}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="gv-section" aria-labelledby="gv-experience">
+            <h2 id="gv-experience" class="gv-h2">
+              {t.experience}
+            </h2>
+            <dl class="gv-summary">
+              {profile.experience.map((item) => (
+                <div class="gv-summary-row">
+                  <dt class="gv-summary-key">{item.org}</dt>
+                  <dd class="gv-summary-value">
+                    {item.role && <p class="gv-summary-role">{item.role}</p>}
+                    {item.period && <p class="gv-summary-period gv-secondary">{item.period}</p>}
+                    {item.description && <p>{item.description}</p>}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="gv-section" aria-labelledby="gv-skills">
-              <h2 id="gv-skills" class="gv-h2">{ t.skills }</h2>
-              <ul class="gv-tags">
-                {profile.skills.map((skill) => (
-                  <li>
-                    <strong class="gv-tag">{skill}</strong>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="gv-section" aria-labelledby="gv-skills">
+            <h2 id="gv-skills" class="gv-h2">
+              {t.skills}
+            </h2>
+            <ul class="gv-tags">
+              {profile.skills.map((skill) => (
+                <li>
+                  <strong class="gv-tag">{skill}</strong>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="gv-section" aria-labelledby="gv-contact">
-          <h2 id="gv-contact" class="gv-h2">{ t.contact }</h2>
+          <h2 id="gv-contact" class="gv-h2">
+            {t.contact}
+          </h2>
           <div class="gv-inset">
             {profile.contact?.note && <p class="gv-body">{profile.contact.note}</p>}
-            {
-              profile.contact?.email && (
-                <a class="gv-button" href={`mailto:${profile.contact.email}`}>
-                  {profile.contact.email}
-                </a>
-              )
-            }
+            {profile.contact?.email && (
+              <a class="gv-button" href={`mailto:${profile.contact.email}`}>
+                {profile.contact.email}
+              </a>
+            )}
           </div>
         </section>
       </main>
@@ -143,9 +145,7 @@ const { profile, contextMenu } = view;
     <footer class="gv-footer">
       <div class="gv-container">
         <p>{profile.name}</p>
-        <p class="gv-secondary">
-          {t.licenceNotice}
-        </p>
+        <p class="gv-secondary">{t.licenceNotice}</p>
       </div>
     </footer>
     <ContextMenu config={contextMenu} />

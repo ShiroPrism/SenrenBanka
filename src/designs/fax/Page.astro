@@ -41,6 +41,7 @@ const sectionCount =
   1; // 结账
 const pageCount = pad(sectionCount + 1);
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -78,7 +79,9 @@ const pageCount = pad(sectionCount + 1);
                 <tr>
                   <th scope="row">{t.fieldFrom}</th>
                   <td>
-                    <h1 class="fx-name" id="fx-name">{profile.name}</h1>
+                    <h1 class="fx-name" id="fx-name">
+                      {profile.name}
+                    </h1>
                     <p class="fx-headline">{profile.headline}</p>
                   </td>
                 </tr>
@@ -88,7 +91,10 @@ const pageCount = pad(sectionCount + 1);
                 </tr>
                 <tr>
                   <th scope="row">{t.fieldPages}</th>
-                  <td>{pageCount}<span class="fx-dim"> {t.pagesUnit}</span></td>
+                  <td>
+                    {pageCount}
+                    <span class="fx-dim"> {t.pagesUnit}</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -97,89 +103,107 @@ const pageCount = pad(sectionCount + 1);
                 <span class="fx-dim">{t.originLabel}</span> {profile.location}
               </p>
             )}
-            <div class="fx-stamp" aria-hidden="true">{t.stamp}</div>
+            <div class="fx-stamp" aria-hidden="true">
+              {t.stamp}
+            </div>
           </header>
 
           <section class="fx-block" data-reveal aria-labelledby="fx-memo">
-            <h2 class="fx-sec" id="fx-memo">{t.memoTitle}</h2>
+            <h2 class="fx-sec" id="fx-memo">
+              {t.memoTitle}
+            </h2>
             <p class="fx-bio">{profile.bio}</p>
           </section>
 
           <section class="fx-block" data-reveal aria-labelledby="fx-items">
-            <h2 class="fx-sec" id="fx-items">{t.itemsTitle}</h2>
+            <h2 class="fx-sec" id="fx-items">
+              {t.itemsTitle}
+            </h2>
             <ul class="fx-links">
-              {
-                profile.links.map((link, index) => (
-                  <li class="fx-linkrow">
-                    <span class="fx-idx" aria-hidden="true">{pad(index + 1)}</span>
-                    <a class="fx-link" href={link.url}>{link.label}</a>
-                    <span class="fx-handle" aria-hidden="true">{shortUrl(link.url)}</span>
-                  </li>
-                ))
-              }
+              {profile.links.map((link, index) => (
+                <li class="fx-linkrow">
+                  <span class="fx-idx" aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <a class="fx-link" href={link.url}>
+                    {link.label}
+                  </a>
+                  <span class="fx-handle" aria-hidden="true">
+                    {shortUrl(link.url)}
+                  </span>
+                </li>
+              ))}
             </ul>
           </section>
 
-          {
-            profile.projects && profile.projects.length > 0 && (
-              <section class="fx-block" data-reveal aria-labelledby="fx-orders">
-                <h2 class="fx-sec" id="fx-orders">{t.ordersTitle}</h2>
-                <ol class="fx-orders">
-                  {profile.projects.map((project, index) => (
-                    <li class="fx-order">
-                      <p class="fx-order-head">
-                        <span class="fx-idx" aria-hidden="true">{pad(index + 1)}</span>
-                        {project.url ? (
-                          <a class="fx-link" href={project.url}>{project.title}</a>
-                        ) : (
-                          <span>{project.title}</span>
-                        )}
-                        {project.url && (
-                          <span class="fx-handle" aria-hidden="true">{shortUrl(project.url)}</span>
-                        )}
-                      </p>
-                      {project.description && <p class="fx-note">{project.description}</p>}
-                      {project.tags && project.tags.length > 0 && (
-                        <p class="fx-tags">{project.tags.join(' / ')}</p>
+          {profile.projects && profile.projects.length > 0 && (
+            <section class="fx-block" data-reveal aria-labelledby="fx-orders">
+              <h2 class="fx-sec" id="fx-orders">
+                {t.ordersTitle}
+              </h2>
+              <ol class="fx-orders">
+                {profile.projects.map((project, index) => (
+                  <li class="fx-order">
+                    <p class="fx-order-head">
+                      <span class="fx-idx" aria-hidden="true">
+                        {pad(index + 1)}
+                      </span>
+                      {project.url ? (
+                        <a class="fx-link" href={project.url}>
+                          {project.title}
+                        </a>
+                      ) : (
+                        <span>{project.title}</span>
                       )}
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            )
-          }
+                      {project.url && (
+                        <span class="fx-handle" aria-hidden="true">
+                          {shortUrl(project.url)}
+                        </span>
+                      )}
+                    </p>
+                    {project.description && <p class="fx-note">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <p class="fx-tags">{project.tags.join(' / ')}</p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
-          {
-            profile.experience && profile.experience.length > 0 && (
-              <section class="fx-block" data-reveal aria-labelledby="fx-log">
-                <h2 class="fx-sec" id="fx-log">{t.logTitle}</h2>
-                <ul class="fx-logs">
-                  {profile.experience.map((item) => (
-                    <li class="fx-log">
-                      <p class="fx-log-head">
-                        <span class="fx-period">{item.period ?? '----'}</span>
-                        <span>{item.org}</span>
-                        {item.role ? <span class="fx-dim"> · {item.role}</span> : null}
-                      </p>
-                      {item.description && <p class="fx-note fx-dim">{item.description}</p>}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )
-          }
+          {profile.experience && profile.experience.length > 0 && (
+            <section class="fx-block" data-reveal aria-labelledby="fx-log">
+              <h2 class="fx-sec" id="fx-log">
+                {t.logTitle}
+              </h2>
+              <ul class="fx-logs">
+                {profile.experience.map((item) => (
+                  <li class="fx-log">
+                    <p class="fx-log-head">
+                      <span class="fx-period">{item.period ?? '----'}</span>
+                      <span>{item.org}</span>
+                      {item.role ? <span class="fx-dim"> · {item.role}</span> : null}
+                    </p>
+                    {item.description && <p class="fx-note fx-dim">{item.description}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
 
-          {
-            profile.skills && profile.skills.length > 0 && (
-              <section class="fx-block" data-reveal aria-labelledby="fx-skills">
-                <h2 class="fx-sec" id="fx-skills">{t.skillsTitle}</h2>
-                <p class="fx-skills">{profile.skills.join(' / ')}</p>
-              </section>
-            )
-          }
+          {profile.skills && profile.skills.length > 0 && (
+            <section class="fx-block" data-reveal aria-labelledby="fx-skills">
+              <h2 class="fx-sec" id="fx-skills">
+                {t.skillsTitle}
+              </h2>
+              <p class="fx-skills">{profile.skills.join(' / ')}</p>
+            </section>
+          )}
 
           <section class="fx-block" data-reveal aria-labelledby="fx-checkout">
-            <h2 class="fx-sec" id="fx-checkout">{t.checkoutTitle}</h2>
+            <h2 class="fx-sec" id="fx-checkout">
+              {t.checkoutTitle}
+            </h2>
             <p class="fx-total">
               <span class="fx-total-label">{t.totalLabel}</span>
               <span class="fx-total-num">{pad(profile.links.length)}</span>
@@ -188,7 +212,9 @@ const pageCount = pad(sectionCount + 1);
             {profile.contact?.email ? (
               <p class="fx-return">
                 <span class="fx-dim">{t.returnLabel}</span>{' '}
-                <a class="fx-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+                <a class="fx-link" href={`mailto:${profile.contact.email}`}>
+                  {profile.contact.email}
+                </a>
               </p>
             ) : (
               <p class="fx-dim">{t.noMail}</p>
@@ -197,7 +223,9 @@ const pageCount = pad(sectionCount + 1);
           </section>
 
           <footer class="fx-foot" data-reveal>
-            <p class="fx-end">{t.footerEnd} · P.{pageCount}</p>
+            <p class="fx-end">
+              {t.footerEnd} · P.{pageCount}
+            </p>
             <p class="fx-sample">{t.sampleNote}</p>
           </footer>
         </article>

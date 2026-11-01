@@ -38,7 +38,9 @@ function buildFixture({ rootText, rules = {}, extraLinks = '', headings = {} } =
   fs.writeFileSync(path.join(root, 'AGENTS.md'), rootText ?? defaultRoot, 'utf8');
 
   for (const fileName of requiredRules) {
-    const body = rules[fileName] ?? `# ${fileName}\n\n## ${headings[fileName] ?? `Section ${fileName}`}\n\nRule body.\n`;
+    const body =
+      rules[fileName] ??
+      `# ${fileName}\n\n## ${headings[fileName] ?? `Section ${fileName}`}\n\nRule body.\n`;
     fs.writeFileSync(path.join(rulesDir, fileName), body, 'utf8');
   }
 
@@ -109,7 +111,10 @@ test('rejects a hard gate without its rule link', () => {
   });
   try {
     const result = verifyAgentDocs(root);
-    assert.match(result.errors.join('\n'), /hard gate "data-loader" must link to docs\/rules\/data-and-i18n\.md/);
+    assert.match(
+      result.errors.join('\n'),
+      /hard gate "data-loader" must link to docs\/rules\/data-and-i18n\.md/,
+    );
   } finally {
     cleanup(root);
   }

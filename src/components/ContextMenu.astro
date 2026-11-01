@@ -41,8 +41,7 @@ interface Props {
 const { config } = Astro.props;
 const t = config.messages.contextMenu;
 const isDesign = config.context.kind === 'design';
-const accent =
-  config.context.kind === 'design' ? config.context.accent : undefined;
+const accent = config.context.kind === 'design' ? config.context.accent : undefined;
 
 // 切换页上「进入切换页」是重复动作 → 构建期就不渲染，而不是运行时隐藏
 const showSwitchItem = config.designActionsEnabled && config.context.kind !== 'switcher';
@@ -120,14 +119,14 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
 
 <style is:global>
   /* 共享操作菜单（项目 chrome，中性样式，随系统明暗；不参与各设计 Tailwind 扫描）。
-     桌面浮层与移动端底部面板是同一份数据的两套容器，不是两套设计语言。 */
+       桌面浮层与移动端底部面板是同一份数据的两套容器，不是两套设计语言。 */
 
   /* `hidden` 属性是两份 DOM 之间的唯一开关（同时移出无障碍树），
-     因此它必须**压过**下面所有容器的 `display` 声明。
-     作者样式表的优先级高于 UA 样式表的 `[hidden] { display: none }`——
-     面板与悬浮球都声明了 `display: flex`，若不加这条，它们会无视 `hidden` 恒常可见
-     （表现为"面板一直开着、点关闭无效、悬浮球看不见"，2026-10-13 实测踩坑）。
-     桌面菜单没有 display 声明所以幸免，但规则对四者统一生效。 */
+       因此它必须**压过**下面所有容器的 `display` 声明。
+       作者样式表的优先级高于 UA 样式表的 `[hidden] { display: none }`——
+       面板与悬浮球都声明了 `display: flex`，若不加这条，它们会无视 `hidden` 恒常可见
+       （表现为"面板一直开着、点关闭无效、悬浮球看不见"，2026-10-13 实测踩坑）。
+       桌面菜单没有 display 声明所以幸免，但规则对四者统一生效。 */
   .cm[hidden],
   .cm-submenu[hidden],
   .cm-sheet[hidden],
@@ -145,12 +144,20 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
   .cm-launcher,
   .cm-toast {
     box-sizing: border-box;
-    font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'PingFang SC',
-      'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      'PingFang SC',
+      'Hiragino Sans GB',
+      'Microsoft YaHei',
+      sans-serif;
     color-scheme: light dark;
   }
   /* 桌面浮层：独立的浮起表面，用 1px 描边 + 分层投影。
-     底部面板贴边且面积大，描边会显脏，因此它的表面处理单独一套（见下）。 */
+       底部面板贴边且面积大，描边会显脏，因此它的表面处理单独一套（见下）。 */
   .cm {
     z-index: 9999;
     background: light-dark(#ffffff, #202024);
@@ -180,7 +187,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     border-radius: 0.75rem;
   }
   /* 身份条：设计强调色圆点（与切换页芯片同源）+ 设计名 + 右对齐「当前设计」标签。
-     只在 design 页存在——切换页与 404 没有"当前主题"，不渲染。 */
+       只在 design 页存在——切换页与 404 没有"当前主题"，不渲染。 */
   .cm-head {
     display: flex;
     align-items: center;
@@ -213,7 +220,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     color: light-dark(#6f6f74, #9d9da6);
   }
   /* 面板内的身份条：改为一枚 chip。它回答"我现在在看哪一套"，但不该和操作项
-     长得一样——否则用户会以为点它有反应。 */
+       长得一样——否则用户会以为点它有反应。 */
   .cm-sheet .cm-head {
     align-items: center;
     gap: 0.5rem;
@@ -243,7 +250,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     background: light-dark(#f4f4f5, #2b2b31);
   }
   /* 语言二级菜单：悬浮 / 键盘 / 点击均可打开（不依赖 hover）。
-     主菜单高度与语言数量无关——语言项全部收进子菜单，子菜单自身限高可滚动。 */
+       主菜单高度与语言数量无关——语言项全部收进子菜单，子菜单自身限高可滚动。 */
   .cm-submenu {
     position: fixed;
     min-width: 9.5rem;
@@ -258,24 +265,24 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
   }
 
   /* ---------- 移动：底部动作面板 ----------
-     设计取向：对齐 iOS / Material 的 action sheet 契约，而不是桌面菜单的等比放大。
-     桌面菜单的全部出口是「点外面」——桌面有指针、有 hover、有 Esc，指针不在菜单上时
-     点哪都能关。触屏没有这些：面板常驻拇指区、遮罩只是背景、Esc 不存在。因此移动端
-     必须有**面板内可见的关闭控件**。
+       设计取向：对齐 iOS / Material 的 action sheet 契约，而不是桌面菜单的等比放大。
+       桌面菜单的全部出口是「点外面」——桌面有指针、有 hover、有 Esc，指针不在菜单上时
+       点哪都能关。触屏没有这些：面板常驻拇指区、遮罩只是背景、Esc 不存在。因此移动端
+       必须有**面板内可见的关闭控件**。
 
-     两条显式路径（头部 ✕ / 底部取消条）+ 遮罩 + Esc 兜底。
+       两条显式路径（头部 ✕ / 底部取消条）+ 遮罩 + Esc 兜底。
 
-     **为什么不做下拉关闭手势**（2026-10-13 项目所有者裁定，此前实现过又移除）：
-     实现它必须给面板头部加 `touch-action: none` 抢占触屏手势，代价是**页面顶部的
-     下拉刷新同时被禁用**——移动浏览器把"在页首下拉"当作用户要求重新加载。Material 的
-     做法正是这个代价（`ModalBottomSheet` 默认抢手势），但 Compose 那类实现的结论是：
-     不打算靠下拉关 sheet 时，应直接 `sheetGesturesEnabled = false` 关掉竞争。
-     为一个"少点一次 ✕"的便利，牺牲整站的下拉刷新，方向反了。抓手因此降级为纯装饰，
-     不再暗示可拖动。
+       **为什么不做下拉关闭手势**（2026-10-13 项目所有者裁定，此前实现过又移除）：
+       实现它必须给面板头部加 `touch-action: none` 抢占触屏手势，代价是**页面顶部的
+       下拉刷新同时被禁用**——移动浏览器把"在页首下拉"当作用户要求重新加载。Material 的
+       做法正是这个代价（`ModalBottomSheet` 默认抢手势），但 Compose 那类实现的结论是：
+       不打算靠下拉关 sheet 时，应直接 `sheetGesturesEnabled = false` 关掉竞争。
+       为一个"少点一次 ✕"的便利，牺牲整站的下拉刷新，方向反了。抓手因此降级为纯装饰，
+       不再暗示可拖动。
 
-     **移动端动作项少于桌面**（见上方 `sheetActions` 的逐项依据）：
-     移动端只有「重新加载 / 复制链接 / 分享」——「回到页面顶部」在惯性滚动面前是冗余
-     （且 iOS 有"点屏幕顶端回顶"的原生手势），「打印」在 iOS Safari 上完全静默失败。 */
+       **移动端动作项少于桌面**（见上方 `sheetActions` 的逐项依据）：
+       移动端只有「重新加载 / 复制链接 / 分享」——「回到页面顶部」在惯性滚动面前是冗余
+       （且 iOS 有"点屏幕顶端回顶"的原生手势），「打印」在 iOS Safari 上完全静默失败。 */
 
   .cm-sheet {
     position: fixed;
@@ -290,14 +297,15 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     background: light-dark(#ffffff, #202024);
     color: light-dark(#1c1c1e, #ececee);
     /* 82dvh 而非 82vh：移动浏览器地址栏收缩时 dvh 才对应**真实可见视口**，
-       否则面板在地址栏收起时会有一截永远够不到 */
+         否则面板在地址栏收起时会有一截永远够不到 */
     max-height: min(82vh, 82dvh);
     overflow: hidden;
     padding: 0;
     border: 0;
     border-radius: 1.25rem 1.25rem 0 0;
     /* 贴边大表面：不用 1px 描边（会在全宽面板上显脏），改用向上投影表达"从底部升起" */
-    box-shadow: 0 -1px 0 light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.09)),
+    box-shadow:
+      0 -1px 0 light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.09)),
       0 -12px 40px light-dark(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.6));
     font-size: 1rem;
     line-height: 1.4;
@@ -306,9 +314,9 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     -webkit-overflow-scrolling: touch;
   }
 
-/* 顶部栏：标题 + 关闭按钮。
-     这是一个**纯视觉**的头部，不再承载任何拖拽语义——见下方"为什么不做下拉关闭"。 */
-.cm-sheet-bar {
+  /* 顶部栏：标题 + 关闭按钮。
+       这是一个**纯视觉**的头部，不再承载任何拖拽语义——见下方"为什么不做下拉关闭"。 */
+  .cm-sheet-bar {
     position: relative;
     flex: none;
     display: grid;
@@ -317,8 +325,8 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     padding: 0.6rem 0.75rem 0.35rem;
   }
   /* 抓手降级为纯装饰：它只表达"这块面板是从下面升上来的"，不再暗示可拖动。
-     留一条 4px 的短横是为了给面板一个视觉顶端——全宽白色面板贴在页面上时
-     没有这条线会显得像被裁切。 */
+       留一条 4px 的短横是为了给面板一个视觉顶端——全宽白色面板贴在页面上时
+       没有这条线会显得像被裁切。 */
   .cm-sheet-grip {
     position: absolute;
     left: 50%;
@@ -339,7 +347,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     color: light-dark(#1c1c1e, #f2f2f4);
   }
   /* 关闭按钮：44×44 命中，是面板内最显眼的出口，
-     不依赖用户知道"要按遮罩"这种隐性知识。 */
+       不依赖用户知道"要按遮罩"这种隐性知识。 */
   .cm-sheet-close {
     grid-column: 3;
     justify-self: end;
@@ -372,7 +380,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     overscroll-behavior: contain;
     padding: 0.5rem 0.75rem 0.5rem;
     /* 面板内部的滚动条不该被读成"页面还能继续滚"——它会被误当成可拖动的区域，
-       也会让文字列在有/无滚动条时对不齐。保留滚动能力，隐藏轨道。 */
+         也会让文字列在有/无滚动条时对不齐。保留滚动能力，隐藏轨道。 */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -381,9 +389,9 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     height: 0;
   }
   /* 分组标题：把"页面 / 设计 / 语言"三层结构显性化。
-     三组而不是一个大列表——动作被裁到 3 项后，用户需要一眼看出"这是三类不同的东西"，
-     而不是读一串同优先级的行。 */
-.cm-sheet-group {
+       三组而不是一个大列表——动作被裁到 3 项后，用户需要一眼看出"这是三类不同的东西"，
+       而不是读一串同优先级的行。 */
+  .cm-sheet-group {
     padding: 0.85rem 0.6rem 0.25rem;
     font-size: 0.6875rem;
     font-weight: 600;
@@ -396,8 +404,8 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
   }
 
   /* 面板内的项：整行可点，命中区 52px（>44 要求）；左侧图标固定槽位保证文字左对齐成列。
-     动作少了一轮，版面从"几乎撑满"变成"紧凑的一块"——因此把项高从 52px 收到 50px、
-     组间距同步收紧，避免面板底部留出一大段空白。 */
+       动作少了一轮，版面从"几乎撑满"变成"紧凑的一块"——因此把项高从 52px 收到 50px、
+       组间距同步收紧，避免面板底部留出一大段空白。 */
   .cm-sheet .cm-item {
     padding: 0.8rem 0.75rem;
     border-radius: 0.75rem;
@@ -421,8 +429,8 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     color: light-dark(#0b7a3b, #6ede9f);
   }
   /* 底部取消条：action sheet 的收尾动作，与上方项组之间留一道物理间隙 + 分隔线。
-     这是 iOS 的既有约定——"取消"永远是最后一块，和具体动作分开，
-     用户不需要判断"关掉它"到底算不算一个操作项。 */
+       这是 iOS 的既有约定——"取消"永远是最后一块，和具体动作分开，
+       用户不需要判断"关掉它"到底算不算一个操作项。 */
   .cm-sheet-foot {
     flex: none;
     padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
@@ -460,14 +468,15 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     border: 0;
     border-radius: 50%;
     /* 反相配色：页面多为浅色主题，中性白底会"融"进内容；
-       深色药丸在任何主题上都是明确的"浮在上面的东西" */
+         深色药丸在任何主题上都是明确的"浮在上面的东西" */
     background: light-dark(#1c1c1e, #f2f2f4);
     color: light-dark(#f7f7f8, #1c1c1e);
-    box-shadow: 0 2px 6px light-dark(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.5)),
+    box-shadow:
+      0 2px 6px light-dark(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.5)),
       0 10px 26px light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.55));
     cursor: pointer;
     /* 图标不得吞掉点击：`event.target` 会是图标而不是按钮，
-       运行时的"点在面板外"判定必须用 contains() 而不是 === 按钮（2026-10-13 实测踩坑） */
+         运行时的"点在面板外"判定必须用 contains() 而不是 === 按钮（2026-10-13 实测踩坑） */
     -webkit-tap-highlight-color: transparent;
   }
   .cm-launcher:active {
@@ -492,7 +501,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
 
   /* ---------- 遮罩 + 背景滚动锁 ---------- */
   /* 遮罩是"背景退后"的信号，不是主要关闭控件。它仍然可点关闭（平台惯例），
-     但用户不该"只能"靠它——面板内已有三条更明确的路径。 */
+       但用户不该"只能"靠它——面板内已有三条更明确的路径。 */
   .cm-scrim {
     position: fixed;
     inset: 0;
@@ -531,15 +540,15 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     outline: none;
   }
   /* 键盘打开 / 键盘导航时才显示焦点环：鼠标打开首项不预高亮（对齐平台原生菜单观感），
-     触屏打开面板时给的焦点也**不画任何标记**——触屏没有"当前项"，
-     预高亮会被读成误选。键盘用户则以非颜色的 outline 明确聚焦位置（不只依赖底色变化）。 */
+       触屏打开面板时给的焦点也**不画任何标记**——触屏没有"当前项"，
+       预高亮会被读成误选。键盘用户则以非颜色的 outline 明确聚焦位置（不只依赖底色变化）。 */
   .cm[data-cm-key] .cm-item:focus,
   .cm-sheet[data-cm-key] .cm-item:focus {
     outline: 2px solid currentColor;
     outline-offset: -2px;
   }
   /* 面板打开时落在首项的焦点属于"程序性聚焦"，必须无痕：
-     去掉 `:focus` 默认底色，只在键盘导航开始后才恢复。 */
+       去掉 `:focus` 默认底色，只在键盘导航开始后才恢复。 */
   .cm-sheet:not([data-cm-key]) .cm-item:focus {
     background: transparent;
   }
@@ -591,15 +600,15 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
       animation: cm-in 120ms ease-out;
     }
     /* 入场动画**只作为增强**：不得使用 `both` / `forwards` 之类会把起始帧
-       （`translateY(...)`）固化的 fill-mode——一旦动画未播完（后台标签页、
-       rAF 被节流、reduced-motion 切换），面板会永远停在半路，用户点了像没反应。
-       运行时还会在 `animationend` 后摘掉 `data-cm-open`，让面板回到无动画的自然终态。
-       2026-10-13 实测：headless 环境下该动画全程不推进，fill-mode 必须为 none。 */
+         （`translateY(...)`）固化的 fill-mode——一旦动画未播完（后台标签页、
+         rAF 被节流、reduced-motion 切换），面板会永远停在半路，用户点了像没反应。
+         运行时还会在 `animationend` 后摘掉 `data-cm-open`，让面板回到无动画的自然终态。
+         2026-10-13 实测：headless 环境下该动画全程不推进，fill-mode 必须为 none。 */
     .cm-sheet[data-cm-open] {
       animation: cm-sheet-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     /* 退场：运行时挂 `data-cm-closing`，动画结束或兜底超时后隐藏。
-       退场用 `both` 是安全的——它结束后面板就要被隐藏，起始帧固化无害。 */
+         退场用 `both` 是安全的——它结束后面板就要被隐藏，起始帧固化无害。 */
     .cm-sheet[data-cm-closing] {
       animation: cm-sheet-out 200ms cubic-bezier(0.4, 0, 1, 1) both;
     }
@@ -624,8 +633,8 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     }
   }
   /* 面板入场：起点用**部分**位移而不是 `translateY(100%)`。全量位移会让
-     "动画未播完"等价于"面板完全不可见"，用户点悬浮球像没反应；
-     部分位移保证退化状态下仍有相当一部分在视口内可点可读。 */
+       "动画未播完"等价于"面板完全不可见"，用户点悬浮球像没反应；
+       部分位移保证退化状态下仍有相当一部分在视口内可点可读。 */
   @keyframes cm-sheet-in {
     from {
       transform: translateY(14%);
@@ -680,93 +689,83 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
   hidden
   style={accentStyle}
 >
-  {
-    isDesign && config.context.kind === 'design' && (
-      <header class="cm-head">
-        <span class="cm-dot" aria-hidden="true" />
-        <span class="cm-design">{config.context.designName}</span>
-        <span class="cm-tag">{t.currentDesignTag}</span>
-      </header>
-    )
-  }
-  {
-    desktopActions.map((action) => {
-      const Icon = actionIcon[action];
-      return (
-        <button class="cm-item" type="button" role="menuitem" data-cm-action={action}>
-          <Icon class="cm-icon" aria-hidden="true" />
-          <span class="cm-label">{actionLabel[action]}</span>
-        </button>
-      );
-    })
-  }
-  {
-    config.designActionsEnabled && (
-      <>
-        <div class="cm-sep" role="separator" />
-        <button
-          class="cm-item"
-          type="button"
-          role="menuitem"
-          data-cm-action="random"
-          aria-disabled={randomDisabled ? 'true' : undefined}
-        >
-          <Shuffle class="cm-icon" aria-hidden="true" />
-          <span class="cm-label">{t.random}</span>
-        </button>
-        {showSwitchItem && (
-          <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
-            <Palette class="cm-icon" aria-hidden="true" />
-            <span class="cm-label">{t.switchDesign}</span>
+  {isDesign && config.context.kind === 'design' && (
+    <header class="cm-head">
+      <span class="cm-dot" aria-hidden="true" />
+      <span class="cm-design">{config.context.designName}</span>
+      <span class="cm-tag">{t.currentDesignTag}</span>
+    </header>
+  )}
+  {desktopActions.map((action) => {
+    const Icon = actionIcon[action];
+    return (
+      <button class="cm-item" type="button" role="menuitem" data-cm-action={action}>
+        <Icon class="cm-icon" aria-hidden="true" />
+        <span class="cm-label">{actionLabel[action]}</span>
+      </button>
+    );
+  })}
+  {config.designActionsEnabled && (
+    <>
+      <div class="cm-sep" role="separator" />
+      <button
+        class="cm-item"
+        type="button"
+        role="menuitem"
+        data-cm-action="random"
+        aria-disabled={randomDisabled ? 'true' : undefined}
+      >
+        <Shuffle class="cm-icon" aria-hidden="true" />
+        <span class="cm-label">{t.random}</span>
+      </button>
+      {showSwitchItem && (
+        <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
+          <Palette class="cm-icon" aria-hidden="true" />
+          <span class="cm-label">{t.switchDesign}</span>
+        </a>
+      )}
+    </>
+  )}
+  {config.languages.length > 0 && (
+    <>
+      <div class="cm-sep" role="separator" />
+      <button
+        class="cm-item cm-sub-trigger"
+        type="button"
+        role="menuitem"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="cm-lang-submenu"
+        data-cm-submenu-trigger
+      >
+        <Globe class="cm-icon" aria-hidden="true" />
+        <span class="cm-label">{t.languageGroup}</span>
+        <ChevronRight class="cm-icon cm-arrow" aria-hidden="true" />
+      </button>
+      <div
+        class="cm cm-submenu"
+        id="cm-lang-submenu"
+        role="menu"
+        aria-label={t.languageGroup}
+        data-cm-submenu
+        hidden
+      >
+        {config.languages.map((item) => (
+          <a
+            class="cm-item cm-lang"
+            role="menuitem"
+            href={item.href}
+            hreflang={item.code}
+            lang={item.code}
+            aria-current={item.isCurrent ? 'page' : undefined}
+          >
+            <span class="cm-label">{item.label}</span>
+            {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
           </a>
-        )}
-      </>
-    )
-  }
-  {
-    config.languages.length > 0 && (
-      <>
-        <div class="cm-sep" role="separator" />
-        <button
-          class="cm-item cm-sub-trigger"
-          type="button"
-          role="menuitem"
-          aria-haspopup="true"
-          aria-expanded="false"
-          aria-controls="cm-lang-submenu"
-          data-cm-submenu-trigger
-        >
-          <Globe class="cm-icon" aria-hidden="true" />
-          <span class="cm-label">{t.languageGroup}</span>
-          <ChevronRight class="cm-icon cm-arrow" aria-hidden="true" />
-        </button>
-        <div
-          class="cm cm-submenu"
-          id="cm-lang-submenu"
-          role="menu"
-          aria-label={t.languageGroup}
-          data-cm-submenu
-          hidden
-        >
-          {
-            config.languages.map((item) => (
-              <a
-                class="cm-item cm-lang"
-                role="menuitem"
-                href={item.href}
-                hreflang={item.code}
-                lang={item.code}
-                aria-current={item.isCurrent ? 'page' : undefined}
-              >
-                <span class="cm-label">{item.label}</span>
-                {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
-              </a>
-            ))
-          }
-        </div>
-      </>
-    )
-  }
+        ))}
+      </div>
+    </>
+  )}
 </div>
 
 <!-- 移动形态：底部动作面板。语言项平铺（触屏无 hover 二级菜单的心智模型），
@@ -792,76 +791,74 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     </button>
   </div>
   <div class="cm-sheet-body" data-cm-sheet-body>
-    {
-      isDesign && config.context.kind === 'design' && (
-        <header class="cm-head">
-          <span class="cm-dot" aria-hidden="true" />
-          <span class="cm-design">{config.context.designName}</span>
-          <span class="cm-tag">{t.currentDesignTag}</span>
-        </header>
-      )
-    }
-    <div class="cm-sheet-group" aria-hidden="true">{t.pageGroup}</div>
-    {
-      sheetActions.map((action) => {
-        const Icon = actionIcon[action];
-        return (
-          <button class="cm-item" type="button" role="menuitem" data-cm-action={action}>
-            <Icon class="cm-icon" aria-hidden="true" />
-            <span class="cm-label">{actionLabel[action]}</span>
-          </button>
-        );
-      })
-    }
-    {
-      config.designActionsEnabled && (
-        <>
-          <div class="cm-sheet-group" aria-hidden="true">{t.designGroup}</div>
-          <button
-            class="cm-item"
-            type="button"
+    {isDesign && config.context.kind === 'design' && (
+      <header class="cm-head">
+        <span class="cm-dot" aria-hidden="true" />
+        <span class="cm-design">{config.context.designName}</span>
+        <span class="cm-tag">{t.currentDesignTag}</span>
+      </header>
+    )}
+    <div class="cm-sheet-group" aria-hidden="true">
+      {t.pageGroup}
+    </div>
+    {sheetActions.map((action) => {
+      const Icon = actionIcon[action];
+      return (
+        <button class="cm-item" type="button" role="menuitem" data-cm-action={action}>
+          <Icon class="cm-icon" aria-hidden="true" />
+          <span class="cm-label">{actionLabel[action]}</span>
+        </button>
+      );
+    })}
+    {config.designActionsEnabled && (
+      <>
+        <div class="cm-sheet-group" aria-hidden="true">
+          {t.designGroup}
+        </div>
+        <button
+          class="cm-item"
+          type="button"
+          role="menuitem"
+          data-cm-action="random"
+          aria-disabled={randomDisabled ? 'true' : undefined}
+        >
+          <Shuffle class="cm-icon" aria-hidden="true" />
+          <span class="cm-label">{t.random}</span>
+        </button>
+        {showSwitchItem && (
+          <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
+            <Palette class="cm-icon" aria-hidden="true" />
+            <span class="cm-label">{t.switchDesign}</span>
+          </a>
+        )}
+      </>
+    )}
+    {config.languages.length > 0 && (
+      <>
+        <div class="cm-sheet-group" aria-hidden="true">
+          {t.languageGroup}
+        </div>
+        {config.languages.map((item) => (
+          <a
+            class="cm-item cm-lang"
             role="menuitem"
-            data-cm-action="random"
-            aria-disabled={randomDisabled ? 'true' : undefined}
+            href={item.href}
+            hreflang={item.code}
+            lang={item.code}
+            aria-current={item.isCurrent ? 'page' : undefined}
           >
-            <Shuffle class="cm-icon" aria-hidden="true" />
-            <span class="cm-label">{t.random}</span>
-          </button>
-          {showSwitchItem && (
-            <a class="cm-item" role="menuitem" data-cm-action="switch" href={config.switcherHref}>
-              <Palette class="cm-icon" aria-hidden="true" />
-              <span class="cm-label">{t.switchDesign}</span>
-            </a>
-          )}
-        </>
-      )
-    }
-    {
-      config.languages.length > 0 && (
-        <>
-          <div class="cm-sheet-group" aria-hidden="true">{t.languageGroup}</div>
-          {
-            config.languages.map((item) => (
-              <a
-                class="cm-item cm-lang"
-                role="menuitem"
-                href={item.href}
-                hreflang={item.code}
-                lang={item.code}
-                aria-current={item.isCurrent ? 'page' : undefined}
-              >
-                <Globe class="cm-icon" aria-hidden="true" />
-                <span class="cm-label">{item.label}</span>
-                {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
-              </a>
-            ))
-          }
-        </>
-      )
-    }
+            <Globe class="cm-icon" aria-hidden="true" />
+            <span class="cm-label">{item.label}</span>
+            {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+          </a>
+        ))}
+      </>
+    )}
   </div>
   <div class="cm-sheet-foot">
-    <button class="cm-sheet-cancel" type="button" data-cm-close>{t.cancel}</button>
+    <button class="cm-sheet-cancel" type="button" data-cm-close>
+      {t.cancel}
+    </button>
   </div>
 </div>
 

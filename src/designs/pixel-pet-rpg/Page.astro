@@ -24,7 +24,10 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) =>
-  url.replace(/^https?:\/\//, '').replace(/^mailto:/, '').replace(/\/$/, '');
+  url
+    .replace(/^https?:\/\//, '')
+    .replace(/^mailto:/, '')
+    .replace(/\/$/, '');
 
 const stationDefinitions = [
   { id: 'identity', label: t.identityTitle, icon: 'hall', available: true },
@@ -55,12 +58,10 @@ const stationNo = (id: string) => {
       </>
     )}
   </head>
-  <body
-    class="pxt"
-    data-pxt-root
-    data-pxt-live-template={t.liveTemplate}
-  >
-    <a class="pxt-skip" href="#pxt-main">{t.skipLink}</a>
+  <body class="pxt" data-pxt-root data-pxt-live-template={t.liveTemplate}>
+    <a class="pxt-skip" href="#pxt-main">
+      {t.skipLink}
+    </a>
 
     <div class="pxt-frame">
       <header
@@ -69,14 +70,19 @@ const stationNo = (id: string) => {
       >
         <div class="pxt-brand">
           <span class="pxt-brand-mark" aria-hidden="true">
-            <i></i><i></i><i></i><i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
           </span>
           <span class="pxt-brand-name">{t.gameTitle}</span>
         </div>
 
         <div class="pxt-player-heading">
           <span class="pxt-player-label">{t.playerLabel}</span>
-          <h1 class="pxt-name" id="pxt-title">{profile.name}</h1>
+          <h1 class="pxt-name" id="pxt-title">
+            {profile.name}
+          </h1>
         </div>
 
         {profile.location && (
@@ -94,7 +100,9 @@ const stationNo = (id: string) => {
         <div class="pxt-workbench">
           <section class="pxt-map-section" aria-labelledby="pxt-map-title">
             <div class="pxt-map-heading">
-              <h2 id="pxt-map-title" class="pxt-map-title">{t.mapTitle}</h2>
+              <h2 id="pxt-map-title" class="pxt-map-title">
+                {t.mapTitle}
+              </h2>
               <p class="pxt-map-hint">{t.mapHint}</p>
             </div>
 
@@ -127,10 +135,7 @@ const stationNo = (id: string) => {
                   class="pxt-hill-back"
                   d="M0 286V258h72v-16h64v-18h80v18h72v22h72v-18h88v-20h72v20h64v18h80v-14h88v18h88v20h80v-18h48v46z"
                 ></path>
-                <path
-                  class="pxt-ground"
-                  d="M0 286h960v314H0z"
-                ></path>
+                <path class="pxt-ground" d="M0 286h960v314H0z"></path>
                 <path
                   class="pxt-ground-shade"
                   d="M0 408h48v-24h64v-18h72v16h80v-22h80v18h72v-30h96v28h80v-18h96v20h80v-16h112v20h100v38h-48v28h-80v-18h-72v24h-88v-18h-80v22h-80v-20h-96v26h-80v-18H320v22h-88v-24H112v24H0z"
@@ -166,14 +171,20 @@ const stationNo = (id: string) => {
                   <rect class="pxt-building-shadow" x="10" y="38" width="178" height="116"></rect>
                   <rect class="pxt-building" x="0" y="28" width="178" height="124"></rect>
                   <rect class="pxt-shop-sign" x="22" y="44" width="134" height="28"></rect>
-                  <path class="pxt-awning" d="M0 28 18 2h24l12 26h22L88 2h24l12 26h22L158 2h20v26z"></path>
+                  <path
+                    class="pxt-awning"
+                    d="M0 28 18 2h24l12 26h22L88 2h24l12 26h22L158 2h20v26z"
+                  ></path>
                   <rect class="pxt-shop-window" x="24" y="88" width="54" height="40"></rect>
                   <rect class="pxt-shop-door" x="108" y="94" width="42" height="58"></rect>
                   <rect class="pxt-shop-knob" x="118" y="122" width="6" height="6"></rect>
                 </g>
 
                 <g class="pxt-project-hill" transform="translate(704 242)">
-                  <path class="pxt-project-ground" d="M0 92h48V72h48V46h56V18h72v28h48v26h40v20h32v84H0z"></path>
+                  <path
+                    class="pxt-project-ground"
+                    d="M0 92h48V72h48V46h56V18h72v28h48v26h40v20h32v84H0z"
+                  ></path>
                   <rect class="pxt-flag-pole" x="42" y="28" width="6" height="74"></rect>
                   <path class="pxt-roof-flag" d="M48 30h48v28H48z"></path>
                   <rect class="pxt-flag-pole" x="104" y="6" width="6" height="96"></rect>
@@ -229,8 +240,12 @@ const stationNo = (id: string) => {
                 </g>
               </svg>
 
-              <span class="pxt-pet pxt-pet--mint" aria-hidden="true"><i></i></span>
-              <span class="pxt-pet pxt-pet--gold" aria-hidden="true"><i></i></span>
+              <span class="pxt-pet pxt-pet--mint" aria-hidden="true">
+                <i></i>
+              </span>
+              <span class="pxt-pet pxt-pet--gold" aria-hidden="true">
+                <i></i>
+              </span>
 
               <nav class="pxt-map-nav" aria-label={t.mapNavLabel}>
                 <ul class="pxt-map-nodes">
@@ -243,7 +258,9 @@ const stationNo = (id: string) => {
                         data-pxt-place-link
                         data-pxt-label={station.label}
                       >
-                        <span class="pxt-node-index" aria-hidden="true">{pad(index)}</span>
+                        <span class="pxt-node-index" aria-hidden="true">
+                          {pad(index)}
+                        </span>
                         <span
                           class="pxt-node-pin"
                           data-pxt-icon={station.icon}
@@ -271,7 +288,9 @@ const stationNo = (id: string) => {
                 data-pxt-hint={t.mapHint}
                 aria-live="polite"
                 aria-atomic="true"
-              >{t.mapHint}</p>
+              >
+                {t.mapHint}
+              </p>
             </div>
 
             <div class="pxt-panels">
@@ -282,7 +301,9 @@ const stationNo = (id: string) => {
                 aria-labelledby="pxt-identity-title"
               >
                 <div class="pxt-panel-head">
-                  <span class="pxt-panel-index" aria-hidden="true">{stationNo('identity')}</span>
+                  <span class="pxt-panel-index" aria-hidden="true">
+                    {stationNo('identity')}
+                  </span>
                   <h2 id="pxt-identity-title">{t.identityTitle}</h2>
                 </div>
                 <div
@@ -292,7 +313,9 @@ const stationNo = (id: string) => {
                     <figure class="pxt-avatar-frame">
                       <img
                         class="pxt-avatar"
-                        src={typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src}
+                        src={
+                          typeof profile.avatar === 'string' ? profile.avatar : profile.avatar.src
+                        }
                         alt={avatarAlt}
                         width="128"
                         height="128"
@@ -320,22 +343,22 @@ const stationNo = (id: string) => {
                 aria-labelledby="pxt-links-title"
               >
                 <div class="pxt-panel-head">
-                  <span class="pxt-panel-index" aria-hidden="true">{stationNo('links')}</span>
+                  <span class="pxt-panel-index" aria-hidden="true">
+                    {stationNo('links')}
+                  </span>
                   <h2 id="pxt-links-title">{t.linksTitle}</h2>
                 </div>
                 {profile.links.length > 0 ? (
                   <ul class="pxt-inventory">
                     {profile.links.map((link) => (
                       <li>
-                        <a
-                          class="pxt-item-link"
-                          href={link.url}
-                          data-pxt-link-kind={link.icon}
-                        >
+                        <a class="pxt-item-link" href={link.url} data-pxt-link-kind={link.icon}>
                           <span class="pxt-item-icon" aria-hidden="true"></span>
                           <span class="pxt-item-copy">
                             <span class="pxt-item-label">{link.label}</span>
-                            <span class="pxt-item-host" aria-hidden="true">{shortUrl(link.url)}</span>
+                            <span class="pxt-item-host" aria-hidden="true">
+                              {shortUrl(link.url)}
+                            </span>
                           </span>
                           <span class="pxt-item-arrow" aria-hidden="true"></span>
                         </a>
@@ -355,7 +378,9 @@ const stationNo = (id: string) => {
                   aria-labelledby="pxt-projects-title"
                 >
                   <div class="pxt-panel-head">
-                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('projects')}</span>
+                    <span class="pxt-panel-index" aria-hidden="true">
+                      {stationNo('projects')}
+                    </span>
                     <h2 id="pxt-projects-title">{t.projectsTitle}</h2>
                   </div>
                   <ul class="pxt-destinations">
@@ -365,9 +390,7 @@ const stationNo = (id: string) => {
                         <div class="pxt-destination-copy">
                           <h3 class="pxt-destination-title">
                             {project.url ? (
-                              <a
-                                href={project.url}
-                              >{project.title}</a>
+                              <a href={project.url}>{project.title}</a>
                             ) : (
                               project.title
                             )}
@@ -382,7 +405,9 @@ const stationNo = (id: string) => {
                           )}
                           {project.tags && project.tags.length > 0 && (
                             <ul class="pxt-tags" aria-label={t.tagsLabel}>
-                              {project.tags.map((tag) => <li>{tag}</li>)}
+                              {project.tags.map((tag) => (
+                                <li>{tag}</li>
+                              ))}
                             </ul>
                           )}
                         </div>
@@ -400,7 +425,9 @@ const stationNo = (id: string) => {
                   aria-labelledby="pxt-experience-title"
                 >
                   <div class="pxt-panel-head">
-                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('experience')}</span>
+                    <span class="pxt-panel-index" aria-hidden="true">
+                      {stationNo('experience')}
+                    </span>
                     <h2 id="pxt-experience-title">{t.experienceTitle}</h2>
                   </div>
                   <ol class="pxt-log">
@@ -416,9 +443,7 @@ const stationNo = (id: string) => {
                               <span class="pxt-log-time">{item.period}</span>
                             </p>
                           )}
-                          {item.description && (
-                            <p class="pxt-log-notes">{item.description}</p>
-                          )}
+                          {item.description && <p class="pxt-log-notes">{item.description}</p>}
                         </div>
                       </li>
                     ))}
@@ -434,7 +459,9 @@ const stationNo = (id: string) => {
                   aria-labelledby="pxt-skills-title"
                 >
                   <div class="pxt-panel-head">
-                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('skills')}</span>
+                    <span class="pxt-panel-index" aria-hidden="true">
+                      {stationNo('skills')}
+                    </span>
                     <h2 id="pxt-skills-title">{t.skillsTitle}</h2>
                   </div>
                   <ul class="pxt-tools">
@@ -456,13 +483,13 @@ const stationNo = (id: string) => {
                   aria-labelledby="pxt-contact-title"
                 >
                   <div class="pxt-panel-head">
-                    <span class="pxt-panel-index" aria-hidden="true">{stationNo('contact')}</span>
+                    <span class="pxt-panel-index" aria-hidden="true">
+                      {stationNo('contact')}
+                    </span>
                     <h2 id="pxt-contact-title">{t.contactTitle}</h2>
                   </div>
                   <address class="pxt-postbox-copy">
-                    {profile.contact?.note && (
-                      <p class="pxt-post-note">{profile.contact.note}</p>
-                    )}
+                    {profile.contact?.note && <p class="pxt-post-note">{profile.contact.note}</p>}
                     <p class="pxt-post-line">
                       <span class="pxt-field-label">{t.emailLabel}</span>
                       {profile.contact?.email ? (

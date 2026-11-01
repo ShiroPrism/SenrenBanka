@@ -82,12 +82,18 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
             <span class="pg-bar"></span>
           </span>
           <span class="pg-batt"></span>
-          <span class="pg-count">{t.msgLabel} <span class="pg-digit">{count}</span></span>
+          <span class="pg-count">
+            {t.msgLabel} <span class="pg-digit">{count}</span>
+          </span>
         </div>
 
         <header class="pg-head">
-          <h1 class="pg-name pg-line" style={`--d:${d(2)}`}>{profile.name}</h1>
-          <p class="pg-headline pg-line" style={`--d:${d(3)}`}>{profile.headline}</p>
+          <h1 class="pg-name pg-line" style={`--d:${d(2)}`}>
+            {profile.name}
+          </h1>
+          <p class="pg-headline pg-line" style={`--d:${d(3)}`}>
+            {profile.headline}
+          </p>
           {profile.location && (
             <p class="pg-loc pg-line" style={`--d:${d(4)}`}>
               <span class="pg-k">{t.locLabel}</span> {profile.location}
@@ -97,107 +103,150 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
 
         <section class="pg-msg" aria-labelledby="pg-memo-title">
           <div class="pg-msg-head pg-line" style={`--d:${d(5)}`}>
-            <span class="pg-msg-no" aria-hidden="true">{no.bio}</span>
-            <h2 class="pg-msg-title" id="pg-memo-title">{t.memoTitle}</h2>
+            <span class="pg-msg-no" aria-hidden="true">
+              {no.bio}
+            </span>
+            <h2 class="pg-msg-title" id="pg-memo-title">
+              {t.memoTitle}
+            </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>
-          <p class="pg-body pg-line" style={`--d:${d(6)}`}>{profile.bio}</p>
+          <p class="pg-body pg-line" style={`--d:${d(6)}`}>
+            {profile.bio}
+          </p>
         </section>
 
         <section class="pg-msg" data-reveal aria-labelledby="pg-links-title">
           <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
-            <span class="pg-msg-no" aria-hidden="true">{no.links}</span>
-            <h2 class="pg-msg-title" id="pg-links-title">{t.linksTitle}</h2>
+            <span class="pg-msg-no" aria-hidden="true">
+              {no.links}
+            </span>
+            <h2 class="pg-msg-title" id="pg-links-title">
+              {t.linksTitle}
+            </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>
           <ul class="pg-links">
-            {
-              profile.links.map((link, index) => (
-                <li class="pg-line" style={`--d:${d(index + 1)}`}>
-                  <a class="pg-link" href={link.url}>{link.label}</a>{' '}
-                  <span class="pg-url" aria-hidden="true">{shortUrl(link.url)}</span>
-                </li>
-              ))
-            }
+            {profile.links.map((link, index) => (
+              <li class="pg-line" style={`--d:${d(index + 1)}`}>
+                <a class="pg-link" href={link.url}>
+                  {link.label}
+                </a>{' '}
+                <span class="pg-url" aria-hidden="true">
+                  {shortUrl(link.url)}
+                </span>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {
-          hasProjects && (
-            <section class="pg-msg" data-reveal aria-labelledby="pg-projects-title">
-              <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
-                <span class="pg-msg-no" aria-hidden="true">{no.projects}</span>
-                <h2 class="pg-msg-title" id="pg-projects-title">{t.projectsTitle}</h2>
-                <span class="pg-msg-rule" aria-hidden="true"></span>
-              </div>
-              <ul class="pg-projects">
-                {profile.projects?.map((project, index) => (
-                  <li class="pg-line" style={`--d:${d(index * 2 + 1)}`}>
-                    <p class="pg-row-head">
-                      {project.url ? <a class="pg-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}
+        {hasProjects && (
+          <section class="pg-msg" data-reveal aria-labelledby="pg-projects-title">
+            <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
+              <span class="pg-msg-no" aria-hidden="true">
+                {no.projects}
+              </span>
+              <h2 class="pg-msg-title" id="pg-projects-title">
+                {t.projectsTitle}
+              </h2>
+              <span class="pg-msg-rule" aria-hidden="true"></span>
+            </div>
+            <ul class="pg-projects">
+              {profile.projects?.map((project, index) => (
+                <li class="pg-line" style={`--d:${d(index * 2 + 1)}`}>
+                  <p class="pg-row-head">
+                    {project.url ? (
+                      <a class="pg-link" href={project.url}>
+                        {project.title}
+                      </a>
+                    ) : (
+                      <span>{project.title}</span>
+                    )}
+                  </p>
+                  {project.url && (
+                    <p class="pg-meta" aria-hidden="true">
+                      {shortUrl(project.url)}
                     </p>
-                    {project.url && <p class="pg-meta" aria-hidden="true">{shortUrl(project.url)}</p>}
-                    {project.description && <p class="pg-note">{project.description}</p>}
-                    {project.tags && project.tags.length > 0 && <p class="pg-tags">{project.tags.join(' · ')}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+                  )}
+                  {project.description && <p class="pg-note">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <p class="pg-tags">{project.tags.join(' · ')}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          hasExperience && (
-            <section class="pg-msg" data-reveal aria-labelledby="pg-history-title">
-              <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
-                <span class="pg-msg-no" aria-hidden="true">{no.experience}</span>
-                <h2 class="pg-msg-title" id="pg-history-title">{t.experienceTitle}</h2>
-                <span class="pg-msg-rule" aria-hidden="true"></span>
-              </div>
-              <ul class="pg-history">
-                {profile.experience?.map((item, index) => (
-                  <li class="pg-line" style={`--d:${d(index * 2 + 1)}`}>
-                    <p class="pg-row-head">
-                      <span class="pg-period">{item.period ?? '----'}</span>{' '}
-                      <span>{item.org}</span>
-                      {item.role ? <span class="pg-dim"> — {item.role}</span> : null}
-                    </p>
-                    {item.description && <p class="pg-note">{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {hasExperience && (
+          <section class="pg-msg" data-reveal aria-labelledby="pg-history-title">
+            <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
+              <span class="pg-msg-no" aria-hidden="true">
+                {no.experience}
+              </span>
+              <h2 class="pg-msg-title" id="pg-history-title">
+                {t.experienceTitle}
+              </h2>
+              <span class="pg-msg-rule" aria-hidden="true"></span>
+            </div>
+            <ul class="pg-history">
+              {profile.experience?.map((item, index) => (
+                <li class="pg-line" style={`--d:${d(index * 2 + 1)}`}>
+                  <p class="pg-row-head">
+                    <span class="pg-period">{item.period ?? '----'}</span> <span>{item.org}</span>
+                    {item.role ? <span class="pg-dim"> — {item.role}</span> : null}
+                  </p>
+                  {item.description && <p class="pg-note">{item.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          hasSkills && (
-            <section class="pg-msg" data-reveal aria-labelledby="pg-skills-title">
-              <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
-                <span class="pg-msg-no" aria-hidden="true">{no.skills}</span>
-                <h2 class="pg-msg-title" id="pg-skills-title">{t.skillsTitle}</h2>
-                <span class="pg-msg-rule" aria-hidden="true"></span>
-              </div>
-              <p class="pg-body pg-line" style={`--d:${d(1)}`}>{profile.skills?.join(' ・ ')}</p>
-            </section>
-          )
-        }
+        {hasSkills && (
+          <section class="pg-msg" data-reveal aria-labelledby="pg-skills-title">
+            <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
+              <span class="pg-msg-no" aria-hidden="true">
+                {no.skills}
+              </span>
+              <h2 class="pg-msg-title" id="pg-skills-title">
+                {t.skillsTitle}
+              </h2>
+              <span class="pg-msg-rule" aria-hidden="true"></span>
+            </div>
+            <p class="pg-body pg-line" style={`--d:${d(1)}`}>
+              {profile.skills?.join(' ・ ')}
+            </p>
+          </section>
+        )}
 
         <section class="pg-msg" data-reveal aria-labelledby="pg-contact-title">
           <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
-            <span class="pg-msg-no" aria-hidden="true">{no.contact}</span>
-            <h2 class="pg-msg-title" id="pg-contact-title">{t.contactTitle}</h2>
+            <span class="pg-msg-no" aria-hidden="true">
+              {no.contact}
+            </span>
+            <h2 class="pg-msg-title" id="pg-contact-title">
+              {t.contactTitle}
+            </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>
           {profile.contact?.email ? (
             <p class="pg-mail pg-line" style={`--d:${d(1)}`}>
               <span class="pg-k">{t.replyTo}</span>{' '}
-              <a class="pg-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+              <a class="pg-link" href={`mailto:${profile.contact.email}`}>
+                {profile.contact.email}
+              </a>
             </p>
           ) : (
-            <p class="pg-note pg-line" style={`--d:${d(1)}`}>{t.noMail}</p>
+            <p class="pg-note pg-line" style={`--d:${d(1)}`}>
+              {t.noMail}
+            </p>
           )}
-          {profile.contact?.note && <p class="pg-note pg-line" style={`--d:${d(2)}`}>{profile.contact.note}</p>}
+          {profile.contact?.note && (
+            <p class="pg-note pg-line" style={`--d:${d(2)}`}>
+              {profile.contact.note}
+            </p>
+          )}
           <p class="pg-total pg-line" style={`--d:${d(3)}`}>
             <span class="pg-total-label">{t.totalLabel}</span>
             <span class="pg-total-num">{count}</span>
@@ -206,14 +255,22 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
         </section>
 
         <footer class="pg-end" data-reveal aria-label={t.endLabel}>
-          <p class="pg-end-line pg-line" style={`--d:${d(0)}`}>{t.endLine}</p>
-          <p class="pg-end-note pg-line" style={`--d:${d(1)}`}>{t.sampleNote}</p>
+          <p class="pg-end-line pg-line" style={`--d:${d(0)}`}>
+            {t.endLine}
+          </p>
+          <p class="pg-end-note pg-line" style={`--d:${d(1)}`}>
+            {t.sampleNote}
+          </p>
         </footer>
       </div>
 
       <div class="pg-keys" aria-hidden="true">
-        <span class="pg-key"><span class="pg-key-arrow pg-key-prev"></span></span>
-        <span class="pg-key"><span class="pg-key-arrow pg-key-next"></span></span>
+        <span class="pg-key">
+          <span class="pg-key-arrow pg-key-prev"></span>
+        </span>
+        <span class="pg-key">
+          <span class="pg-key-arrow pg-key-next"></span>
+        </span>
         <span class="pg-wheel"></span>
       </div>
     </main>

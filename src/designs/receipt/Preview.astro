@@ -23,10 +23,16 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
   <div class="rc-pv-machine" aria-hidden="true"></div>
   <div class="rc-pv-paper">
     <header class="rc-pv-head">
-      <p class="rc-pv-brand">SENRENBANKA <span>· {t.receiptTag}</span></p>
+      <p class="rc-pv-brand">
+        SENRENBANKA <span>· {t.receiptTag}</span>
+      </p>
       <p class="rc-pv-name">{name}</p>
       {headline && <p class="rc-pv-headline">{headline}</p>}
-      {location && <p class="rc-pv-addr"># {t.addrLabel} {location}</p>}
+      {location && (
+        <p class="rc-pv-addr">
+          # {t.addrLabel} {location}
+        </p>
+      )}
       <span class="rc-pv-stamp">{t.stamp}</span>
     </header>
     <p class="rc-pv-sec">{t.itemsTitle}</p>
@@ -59,9 +65,16 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
     min-height: 9rem;
     padding: 0.85rem 1rem 0.55rem;
     overflow: hidden;
-    background: radial-gradient(120% 90% at 50% -10%, #36312a, var(--rc-back) 62%, var(--rc-back-deep));
+    background: radial-gradient(
+      120% 90% at 50% -10%,
+      #36312a,
+      var(--rc-back) 62%,
+      var(--rc-back-deep)
+    );
     color: var(--rc-ink);
-    font-family: var(--font-cutive-mono), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-cutive-mono), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.5625rem;
     line-height: 1.55;
   }
@@ -85,17 +98,58 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
     padding: 0.7rem 0.75rem 0.8rem;
     background: linear-gradient(180deg, var(--rc-paper), var(--rc-paper-2));
     clip-path: polygon(
-      0 0.16rem, 4% 0, 8% 0.16rem, 12% 0, 16% 0.16rem, 20% 0, 24% 0.16rem,
-      28% 0, 32% 0.16rem, 36% 0, 40% 0.16rem, 44% 0, 48% 0.16rem, 52% 0,
-      56% 0.16rem, 60% 0, 64% 0.16rem, 68% 0, 72% 0.16rem, 76% 0, 80% 0.16rem,
-      84% 0, 88% 0.16rem, 92% 0, 96% 0.16rem, 100% 0,
-      100% calc(100% - 0.16rem), 96% 100%, 92% calc(100% - 0.16rem), 88% 100%,
-      84% calc(100% - 0.16rem), 80% 100%, 76% calc(100% - 0.16rem), 72% 100%,
-      68% calc(100% - 0.16rem), 64% 100%, 60% calc(100% - 0.16rem), 56% 100%,
-      52% calc(100% - 0.16rem), 48% 100%, 44% calc(100% - 0.16rem), 40% 100%,
-      36% calc(100% - 0.16rem), 32% 100%, 28% calc(100% - 0.16rem), 24% 100%,
-      20% calc(100% - 0.16rem), 16% 100%, 12% calc(100% - 0.16rem), 8% 100%,
-      4% calc(100% - 0.16rem), 0 100%
+      0 0.16rem,
+      4% 0,
+      8% 0.16rem,
+      12% 0,
+      16% 0.16rem,
+      20% 0,
+      24% 0.16rem,
+      28% 0,
+      32% 0.16rem,
+      36% 0,
+      40% 0.16rem,
+      44% 0,
+      48% 0.16rem,
+      52% 0,
+      56% 0.16rem,
+      60% 0,
+      64% 0.16rem,
+      68% 0,
+      72% 0.16rem,
+      76% 0,
+      80% 0.16rem,
+      84% 0,
+      88% 0.16rem,
+      92% 0,
+      96% 0.16rem,
+      100% 0,
+      100% calc(100% - 0.16rem),
+      96% 100%,
+      92% calc(100% - 0.16rem),
+      88% 100%,
+      84% calc(100% - 0.16rem),
+      80% 100%,
+      76% calc(100% - 0.16rem),
+      72% 100%,
+      68% calc(100% - 0.16rem),
+      64% 100%,
+      60% calc(100% - 0.16rem),
+      56% 100%,
+      52% calc(100% - 0.16rem),
+      48% 100%,
+      44% calc(100% - 0.16rem),
+      40% 100%,
+      36% calc(100% - 0.16rem),
+      32% 100%,
+      28% calc(100% - 0.16rem),
+      24% 100%,
+      20% calc(100% - 0.16rem),
+      16% 100%,
+      12% calc(100% - 0.16rem),
+      8% 100%,
+      4% calc(100% - 0.16rem),
+      0 100%
     );
     filter: drop-shadow(0 7px 10px rgba(0, 0, 0, 0.48));
   }
@@ -163,7 +217,7 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
 
   .rc-pv-sec::before,
   .rc-pv-sec::after {
-    content: "";
+    content: '';
     flex: 1;
     border-top: 1px dashed var(--rc-line);
   }
@@ -215,7 +269,9 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
 
   .rc-pv-total strong {
     color: var(--rc-ink);
-    font-family: var(--font-dseg7), var(--font-cutive-mono), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-dseg7), var(--font-cutive-mono), var(--font-galmuri11), var(--font-ark-pixel),
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 1.05rem;
     font-weight: 400;
     line-height: 1;
@@ -234,7 +290,13 @@ const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mail
     width: 68%;
     height: 0.55rem;
     margin: 0.4rem auto 0;
-    background: repeating-linear-gradient(90deg, var(--rc-ink) 0 1px, transparent 1px 3px, var(--rc-ink) 3px 5px, transparent 5px 7px);
+    background: repeating-linear-gradient(
+      90deg,
+      var(--rc-ink) 0 1px,
+      transparent 1px 3px,
+      var(--rc-ink) 3px 5px,
+      transparent 5px 7px
+    );
     opacity: 0.6;
   }
 </style>

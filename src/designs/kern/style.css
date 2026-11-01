@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-kern: var(--font-geist);
@@ -19,8 +19,16 @@
   background: #000000;
   color: var(--kern-fg-body);
   font-family:
-    var(--font-kern), var(--font-gothic-a1), system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
-    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    var(--font-kern),
+    var(--font-gothic-a1),
+    system-ui,
+    -apple-system,
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Noto Sans KR',
+    sans-serif;
   font-size: 0.9375rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -54,7 +62,7 @@
 .kern-section::after,
 .kern-footer::before,
 .kern-footer::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 9px;
   height: 9px;
@@ -104,7 +112,9 @@
 /* ---- 等宽仪表文字 ---- */
 
 .kern-meta {
-  font-family: var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+  font-family:
+    var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo,
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.75rem;
   line-height: 1.4;
   letter-spacing: 0.01em;
@@ -245,7 +255,9 @@
 }
 
 .kern-label {
-  font-family: var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+  font-family:
+    var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo,
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -338,7 +350,9 @@
 /* ---- 芯片（标签 / 技能共用）：等宽微标注 ---- */
 
 .kern-chip {
-  font-family: var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+  font-family:
+    var(--font-kern-mono), var(--font-gothic-a1), ui-monospace, SFMono-Regular, Menlo,
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.08em;

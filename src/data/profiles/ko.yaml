@@ -1,47 +1,56 @@
 # 한국 서브컬처/음MAD 커뮤니티 맞춤 현지화 profile.yaml
 
-name: "타도코로 코지"
-headline: "24세, 학생입니다 / 왕도를 걷는 가라테부 주장 & BB 극장의 제왕"
-bio: "24세, 학생입니다. 현재 시모키타자와 가라테부에서 후배들을 굴리며 땀 흘리는 중. 취미는 옥상에서 삼각팬티 차림으로 일광욕하기와 특제 수면 홍차 대접하기. 인터넷 집단 무의식의 개념적 존재로서 멀티버스 BB 그린스크린 소재로 종횡무진 출근 중!"
-avatar: "TadokoroKoji.png"
-location: "도쿄도 세타가야구 시모키타자와"
+name: '타도코로 코지'
+headline: '24세, 학생입니다 / 왕도를 걷는 가라테부 주장 & BB 극장의 제왕'
+bio: '24세, 학생입니다. 현재 시모키타자와 가라테부에서 후배들을 굴리며 땀 흘리는 중. 취미는 옥상에서 삼각팬티 차림으로 일광욕하기와 특제 수면 홍차 대접하기. 인터넷 집단 무의식의 개념적 존재로서 멀티버스 BB 그린스크린 소재로 종횡무진 출근 중!'
+avatar: 'TadokoroKoji.png'
+location: '도쿄도 세타가야구 시모키타자와'
 
 links:
   - label: niconico (야수선배)
-    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    url: 'https://www.nicovideo.jp/tag/野獣先輩'
     icon: tv
   - label: BB 극장 저장소
-    url: "https://example.com/bb-theater"
+    url: 'https://example.com/bb-theater'
     icon: video
   - label: 시모키타자와 통신
-    url: "https://example.com/114514"
+    url: 'https://example.com/114514'
     icon: coffee
 
 projects:
-  - title: "왕도를 걷다 (The Royal Road)"
-    description: "가라테부 대련(쿠미테)과 후배 토오노와의 은밀한 과외 지도를 담은 눈물의 땀내 나는 스포츠 다큐멘터리."
-    url: "https://example.com/oudou"
-    tags: ["114514", "왕도", "가라테"]
-  - title: "특제 수면 홍차 레시피 (Iced Tea Formula)"
-    description: "운동 후 체력 회복용 아이스티. 한 모금 마시는 순간 깊은 꿀잠과 혼수 상태로 직행하는 기묘한 풍미."
-    url: "https://example.com/tea-lab"
-    tags: ["수면홍차", "114514", "레시피"]
-  - title: "멀티버스 BB 극장 투어"
-    description: "금각은각, 야수의 포효, 인간 관악기 조교를 넘나드는 서브컬처계 전설의 영상 합성 프로젝트."
-    tags: ["음MAD", "YTPMV", "AviUtl"]
+  - title: '왕도를 걷다 (The Royal Road)'
+    description: '가라테부 대련(쿠미테)과 후배 토오노와의 은밀한 과외 지도를 담은 눈물의 땀내 나는 스포츠 다큐멘터리.'
+    url: 'https://example.com/oudou'
+    tags: ['114514', '왕도', '가라테']
+  - title: '특제 수면 홍차 레시피 (Iced Tea Formula)'
+    description: '운동 후 체력 회복용 아이스티. 한 모금 마시는 순간 깊은 꿀잠과 혼수 상태로 직행하는 기묘한 풍미.'
+    url: 'https://example.com/tea-lab'
+    tags: ['수면홍차', '114514', '레시피']
+  - title: '멀티버스 BB 극장 투어'
+    description: '금각은각, 야수의 포효, 인간 관악기 조교를 넘나드는 서브컬처계 전설의 영상 합성 프로젝트.'
+    tags: ['음MAD', 'YTPMV', 'AviUtl']
 
 experience:
-  - org: "시모키타자와 대학 가라테부"
-    role: "주장 / 전설의 선배 (Ace)"
-    period: "24세 – 영원"
-    description: "도장 쿠미테 훈련 주도 및 호신술 전수. 연습 후 지친 후배들을 위해 휴게실 냉장고 음료 보급 전담."
-  - org: "niconico 동영상 / 서브컬처 음MAD 연합"
-    role: "개념급 주인공 / 만능 음MAD 필수요소"
-    period: "2001 – 현재"
-    description: "수십만 건의 2차 창작과 합성물에 영구 출근하며 네티즌들의 해체와 뇌절을 책임지는 불멸의 필수요소."
+  - org: '시모키타자와 대학 가라테부'
+    role: '주장 / 전설의 선배 (Ace)'
+    period: '24세 – 영원'
+    description: '도장 쿠미테 훈련 주도 및 호신술 전수. 연습 후 지친 후배들을 위해 휴게실 냉장고 음료 보급 전담.'
+  - org: 'niconico 동영상 / 서브컬처 음MAD 연합'
+    role: '개념급 주인공 / 만능 음MAD 필수요소'
+    period: '2001 – 현재'
+    description: '수십만 건의 2차 창작과 합성물에 영구 출근하며 네티즌들의 해체와 뇌절을 책임지는 불멸의 필수요소.'
 
-skills: ["실전 쿠미테", "왕도 걷기", "수면 홍차 제조", "옥상 태닝", "BB 소재화", "야수의 포효", "114514 공명"]
+skills:
+  [
+    '실전 쿠미테',
+    '왕도 걷기',
+    '수면 홍차 제조',
+    '옥상 태닝',
+    'BB 소재화',
+    '야수의 포효',
+    '114514 공명',
+  ]
 
 contact:
-  email: "114514@shimokitazawa.jp"
-  note: "이이요! 코이요! (좋아! 와라!) 훈련 끝나면 언제든 옥상 도장으로 와서 시원한 차 한잔 마시고 가라구."
+  email: '114514@shimokitazawa.jp'
+  note: '이이요! 코이요! (좋아! 와라!) 훈련 끝나면 언제든 옥상 도장으로 와서 시원한 차 한잔 마시고 가라구.'

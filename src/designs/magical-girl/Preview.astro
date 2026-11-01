@@ -4,7 +4,11 @@ import type { PreviewProps } from '../preview';
 import { messages } from './messages';
 import './tokens.css';
 
-export const fonts: import('astro:assets').CssVariable[] = ['--font-fraunces', '--font-lxgw', '--font-inter'];
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-fraunces',
+  '--font-lxgw',
+  '--font-inter',
+];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
 const t = messages[locale];
@@ -46,7 +50,9 @@ const rows = links.slice(0, 2);
           <circle cx="60" cy="60" r="47" stroke-dasharray="2 6"></circle>
           <path d="M60 5v8M60 107v8M5 60h8M107 60h8M21 21l6 6M93 93l6 6M99 21l-6 6M27 93l-6 6"></path>
         </svg>
-        <span class="mg-pv-initial" aria-hidden="true">{initial}</span>
+        <span class="mg-pv-initial" aria-hidden="true">
+          {initial}
+        </span>
       </div>
 
       <div class="mg-pv-copy">
@@ -56,9 +62,13 @@ const rows = links.slice(0, 2);
     </div>
 
     <div class="mg-pv-foot">
-      <span class="mg-pv-count">{t.linksNav} {String(links.length).padStart(2, '0')}</span>
+      <span class="mg-pv-count">
+        {t.linksNav} {String(links.length).padStart(2, '0')}
+      </span>
       <span class="mg-pv-items">
-        {rows.map((link) => <span>{link.label}</span>)}
+        {rows.map((link) => (
+          <span>{link.label}</span>
+        ))}
       </span>
       <span class="mg-pv-wax" aria-hidden="true">
         <svg viewBox="0 0 32 32">
@@ -79,8 +89,8 @@ const rows = links.slice(0, 2);
     background: var(--mg-berry-deep);
     color: var(--mg-ivory);
     font-family:
-      var(--font-inter), var(--font-dongle), var(--font-lxgw), system-ui, "PingFang SC", "Microsoft YaHei",
-      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+      var(--font-inter), var(--font-dongle), var(--font-lxgw), system-ui, 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
     font-size: 0.6rem;
     line-height: 1.4;
   }
@@ -123,8 +133,8 @@ const rows = links.slice(0, 2);
     border: 1px solid var(--mg-ink);
     border-radius: 1.4rem 0.55rem 1.4rem 0.55rem;
     background:
-      radial-gradient(circle, rgb(109 23 63 / 0.14) 0 1px, transparent 1.3px) right 0.35rem
-        top 0.35rem / 0.42rem 0.42rem,
+      radial-gradient(circle, rgb(109 23 63 / 0.14) 0 1px, transparent 1.3px) right 0.35rem top
+        0.35rem / 0.42rem 0.42rem,
       var(--mg-ivory-strong);
     color: var(--mg-ink);
     flex-direction: column;
@@ -147,7 +157,8 @@ const rows = links.slice(0, 2);
 
   .mg-pv-crest {
     font-family:
-      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
     font-size: 0.56rem;
     font-style: italic;
     letter-spacing: 0.03em;
@@ -197,7 +208,8 @@ const rows = links.slice(0, 2);
     z-index: 1;
     color: var(--mg-berry-deep);
     font-family:
-      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
     font-size: 2rem;
     font-style: italic;
     font-weight: 700;
@@ -214,13 +226,14 @@ const rows = links.slice(0, 2);
     overflow: hidden;
     color: var(--mg-ink);
     font-family:
-      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
     font-size: clamp(1.28rem, 4.4vw, 1.72rem);
     font-style: italic;
     font-variation-settings:
-      "SOFT" 36,
-      "WONK" 1,
-      "opsz" 72;
+      'SOFT' 36,
+      'WONK' 1,
+      'opsz' 72;
     font-weight: 650;
     line-height: 0.96;
     overflow-wrap: anywhere;
@@ -234,7 +247,8 @@ const rows = links.slice(0, 2);
     overflow: hidden;
     color: var(--mg-berry);
     font-family:
-      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", serif;
+      var(--font-fraunces), var(--font-dongle), var(--font-lxgw), Georgia, 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', serif;
     font-size: 0.55rem;
     font-style: italic;
     font-weight: 560;
@@ -277,7 +291,7 @@ const rows = links.slice(0, 2);
   }
 
   .mg-pv-items span::after {
-    content: "/";
+    content: '/';
     padding-inline-start: 0.28rem;
     color: var(--mg-rose);
   }
@@ -310,5 +324,4 @@ const rows = links.slice(0, 2);
     fill: currentColor;
     stroke: none;
   }
-
 </style>

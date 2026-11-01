@@ -65,38 +65,44 @@ const romanOf = (key: string) => {
         </p>
         <h1 class="lx-title" id="lx-title">
           <span class="lx-title-lemma">{profile.name}</span>
-          <span class="lx-title-latin" aria-hidden="true">SENRENBANKA</span>
-          <span class="lx-title-pos" aria-hidden="true">{t.posProper}</span>
+          <span class="lx-title-latin" aria-hidden="true">
+            SENRENBANKA
+          </span>
+          <span class="lx-title-pos" aria-hidden="true">
+            {t.posProper}
+          </span>
         </h1>
         <p class="lx-headline">{profile.headline}</p>
-        {
-          profile.location && (
-            <p class="lx-origin">
-              <span class="lx-origin-label">{t.originLabel}</span> {profile.location}
-            </p>
-          )
-        }
+        {profile.location && (
+          <p class="lx-origin">
+            <span class="lx-origin-label">{t.originLabel}</span> {profile.location}
+          </p>
+        )}
       </header>
 
       {/* 页边索引签：纯装饰，不承载导航（可访问名由各分区 h2 承担）。 */}
       <div class="lx-tabs" aria-hidden="true">
-        {
-          entries.map((entry, index) => (
-            <span class="lx-tab" style={`--lx-tab-top: ${12 + index * 14}%`}>
-              {index + 1}
-            </span>
-          ))
-        }
+        {entries.map((entry, index) => (
+          <span class="lx-tab" style={`--lx-tab-top: ${12 + index * 14}%`}>
+            {index + 1}
+          </span>
+        ))}
       </div>
 
       <div class="lx-columns">
         <section class="lx-entry" data-reveal aria-labelledby="lx-memo-title">
           <span class="lx-rule" aria-hidden="true"></span>
           <h2 class="lx-entry-head" id="lx-memo-title">
-            <span class="lx-num" aria-hidden="true">{romanOf('memo')}</span>
+            <span class="lx-num" aria-hidden="true">
+              {romanOf('memo')}
+            </span>
             <span class="lx-lemma">{t.memoTitle}</span>
-            <span class="lx-latin" aria-hidden="true">{t.memoLatin}</span>
-            <span class="lx-pos" aria-hidden="true">{t.memoPos}</span>
+            <span class="lx-latin" aria-hidden="true">
+              {t.memoLatin}
+            </span>
+            <span class="lx-pos" aria-hidden="true">
+              {t.memoPos}
+            </span>
           </h2>
           <div class="lx-entry-body">
             <p class="lx-bio">{profile.bio}</p>
@@ -106,106 +112,134 @@ const romanOf = (key: string) => {
         <section class="lx-entry" data-reveal aria-labelledby="lx-links-title">
           <span class="lx-rule" aria-hidden="true"></span>
           <h2 class="lx-entry-head" id="lx-links-title">
-            <span class="lx-num" aria-hidden="true">{romanOf('links')}</span>
+            <span class="lx-num" aria-hidden="true">
+              {romanOf('links')}
+            </span>
             <span class="lx-lemma">{t.linksTitle}</span>
-            <span class="lx-latin" aria-hidden="true">{t.linksLatin}</span>
-            <span class="lx-pos" aria-hidden="true">{t.linksPos}</span>
+            <span class="lx-latin" aria-hidden="true">
+              {t.linksLatin}
+            </span>
+            <span class="lx-pos" aria-hidden="true">
+              {t.linksPos}
+            </span>
           </h2>
           <ul class="lx-refs">
-            {
-              profile.links.map((link) => (
-                <li class="lx-ref">
-                  <span class="lx-arrow" aria-hidden="true">→</span>
-                  <a href={link.url}>{link.label}</a>
-                </li>
-              ))
-            }
+            {profile.links.map((link) => (
+              <li class="lx-ref">
+                <span class="lx-arrow" aria-hidden="true">
+                  →
+                </span>
+                <a href={link.url}>{link.label}</a>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="lx-entry" data-reveal aria-labelledby="lx-projects-title">
-              <span class="lx-rule" aria-hidden="true"></span>
-              <h2 class="lx-entry-head" id="lx-projects-title">
-                <span class="lx-num" aria-hidden="true">{romanOf('projects')}</span>
-                <span class="lx-lemma">{t.projectsTitle}</span>
-                <span class="lx-latin" aria-hidden="true">{t.projectsLatin}</span>
-                <span class="lx-pos" aria-hidden="true">{t.projectsPos}</span>
-              </h2>
-              <ul class="lx-works">
-                {profile.projects.map((project) => (
-                  <li class="lx-work">
-                    <p class="lx-work-title">
-                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
-                    </p>
-                    {project.description && <p class="lx-note">{project.description}</p>}
-                    {project.tags && project.tags.length > 0 && (
-                      <p class="lx-tags">{project.tags.join(' · ')}</p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="lx-entry" data-reveal aria-labelledby="lx-projects-title">
+            <span class="lx-rule" aria-hidden="true"></span>
+            <h2 class="lx-entry-head" id="lx-projects-title">
+              <span class="lx-num" aria-hidden="true">
+                {romanOf('projects')}
+              </span>
+              <span class="lx-lemma">{t.projectsTitle}</span>
+              <span class="lx-latin" aria-hidden="true">
+                {t.projectsLatin}
+              </span>
+              <span class="lx-pos" aria-hidden="true">
+                {t.projectsPos}
+              </span>
+            </h2>
+            <ul class="lx-works">
+              {profile.projects.map((project) => (
+                <li class="lx-work">
+                  <p class="lx-work-title">
+                    {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                  </p>
+                  {project.description && <p class="lx-note">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <p class="lx-tags">{project.tags.join(' · ')}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="lx-entry" data-reveal aria-labelledby="lx-log-title">
-              <span class="lx-rule" aria-hidden="true"></span>
-              <h2 class="lx-entry-head" id="lx-log-title">
-                <span class="lx-num" aria-hidden="true">{romanOf('experience')}</span>
-                <span class="lx-lemma">{t.logTitle}</span>
-                <span class="lx-latin" aria-hidden="true">{t.logLatin}</span>
-                <span class="lx-pos" aria-hidden="true">{t.logPos}</span>
-              </h2>
-              <ul class="lx-logs">
-                {profile.experience.map((item) => (
-                  <li class="lx-log">
-                    <p class="lx-log-head">
-                      {item.period && <span class="lx-period">{item.period}</span>}
-                      <span class="lx-org">{item.org}</span>
-                      {item.role && <span class="lx-role">{item.role}</span>}
-                    </p>
-                    {item.description && <p class="lx-note">{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="lx-entry" data-reveal aria-labelledby="lx-log-title">
+            <span class="lx-rule" aria-hidden="true"></span>
+            <h2 class="lx-entry-head" id="lx-log-title">
+              <span class="lx-num" aria-hidden="true">
+                {romanOf('experience')}
+              </span>
+              <span class="lx-lemma">{t.logTitle}</span>
+              <span class="lx-latin" aria-hidden="true">
+                {t.logLatin}
+              </span>
+              <span class="lx-pos" aria-hidden="true">
+                {t.logPos}
+              </span>
+            </h2>
+            <ul class="lx-logs">
+              {profile.experience.map((item) => (
+                <li class="lx-log">
+                  <p class="lx-log-head">
+                    {item.period && <span class="lx-period">{item.period}</span>}
+                    <span class="lx-org">{item.org}</span>
+                    {item.role && <span class="lx-role">{item.role}</span>}
+                  </p>
+                  {item.description && <p class="lx-note">{item.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="lx-entry" data-reveal aria-labelledby="lx-skills-title">
-              <span class="lx-rule" aria-hidden="true"></span>
-              <h2 class="lx-entry-head" id="lx-skills-title">
-                <span class="lx-num" aria-hidden="true">{romanOf('skills')}</span>
-                <span class="lx-lemma">{t.skillsTitle}</span>
-                <span class="lx-latin" aria-hidden="true">{t.skillsLatin}</span>
-                <span class="lx-pos" aria-hidden="true">{t.skillsPos}</span>
-              </h2>
-              <ul class="lx-skills">
-                {profile.skills.map((skill) => <li class="lx-skill">{skill}</li>)}
-              </ul>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="lx-entry" data-reveal aria-labelledby="lx-skills-title">
+            <span class="lx-rule" aria-hidden="true"></span>
+            <h2 class="lx-entry-head" id="lx-skills-title">
+              <span class="lx-num" aria-hidden="true">
+                {romanOf('skills')}
+              </span>
+              <span class="lx-lemma">{t.skillsTitle}</span>
+              <span class="lx-latin" aria-hidden="true">
+                {t.skillsLatin}
+              </span>
+              <span class="lx-pos" aria-hidden="true">
+                {t.skillsPos}
+              </span>
+            </h2>
+            <ul class="lx-skills">
+              {profile.skills.map((skill) => (
+                <li class="lx-skill">{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="lx-entry" data-reveal aria-labelledby="lx-contact-title">
           <span class="lx-rule" aria-hidden="true"></span>
           <h2 class="lx-entry-head" id="lx-contact-title">
-            <span class="lx-num" aria-hidden="true">{romanOf('contact')}</span>
+            <span class="lx-num" aria-hidden="true">
+              {romanOf('contact')}
+            </span>
             <span class="lx-lemma">{t.contactTitle}</span>
-            <span class="lx-latin" aria-hidden="true">{t.contactLatin}</span>
-            <span class="lx-pos" aria-hidden="true">{t.contactPos}</span>
+            <span class="lx-latin" aria-hidden="true">
+              {t.contactLatin}
+            </span>
+            <span class="lx-pos" aria-hidden="true">
+              {t.contactPos}
+            </span>
           </h2>
           <div class="lx-entry-body">
             {profile.contact?.email ? (
               <p class="lx-contact">
                 <span class="lx-field-label">{t.mailLabel}</span>
-                <a class="lx-mail" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+                <a class="lx-mail" href={`mailto:${profile.contact.email}`}>
+                  {profile.contact.email}
+                </a>
               </p>
             ) : (
               <p class="lx-note">{t.noMail}</p>

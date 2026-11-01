@@ -49,16 +49,12 @@ export function validateFontState(state) {
   if (snapshot.catalogVersion !== lock.catalog.version) {
     throw new Error('fonts.catalog.json catalogVersion does not match fonts.lock.json');
   }
-  if (
-    snapshot.catalogUrl !== lock.catalog.url ||
-    snapshot.catalogSha256 !== lock.catalog.sha256
-  ) {
-    throw new Error('catalog URL or SHA-256 differs between fonts.catalog.json and fonts.lock.json');
+  if (snapshot.catalogUrl !== lock.catalog.url || snapshot.catalogSha256 !== lock.catalog.sha256) {
+    throw new Error(
+      'catalog URL or SHA-256 differs between fonts.catalog.json and fonts.lock.json',
+    );
   }
-  if (
-    config.baseUrl !== snapshot.baseUrl ||
-    snapshot.baseUrl !== lock.baseUrl
-  ) {
+  if (config.baseUrl !== snapshot.baseUrl || snapshot.baseUrl !== lock.baseUrl) {
     throw new Error('baseUrl differs between fonts.config.json, catalog snapshot, and lock');
   }
   const snapshotSha256 = sha256(Buffer.from(stableStringify(snapshot)));
@@ -88,10 +84,7 @@ export function validateFontState(state) {
     if (family.manifest.id !== id || lockFamily.version !== family.version) {
       throw new Error(`family identity/version mismatch for ${id}`);
     }
-    if (
-      family.manifest.version !== family.version ||
-      family.manifest.role !== family.role
-    ) {
+    if (family.manifest.version !== family.version || family.manifest.role !== family.role) {
       throw new Error(`catalog metadata is internally inconsistent for ${id}`);
     }
     if (

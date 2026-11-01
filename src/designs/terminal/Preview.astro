@@ -29,14 +29,27 @@ const t = messages[locale];
 <div class="tm-pv">
   <div class="tm-pv-screen">
     <div class="tm-pv-chrome">
-      <span class="tm-pv-dot"></span><span class="tm-pv-dot"></span><span class="tm-pv-dot"></span>
+      <span class="tm-pv-dot"></span>
+      <span class="tm-pv-dot"></span>
+      <span class="tm-pv-dot"></span>
       <span class="tm-pv-title">guest@senrenbanka: ~</span>
     </div>
     <div class="tm-pv-body">
-      <p class="tm-pv-cmd"><span class="tm-pv-lit">$</span> whoami</p>
-      <p class="tm-pv-name">{name}<span class="tm-pv-cursor"></span></p>
-      {location && <p class="tm-pv-dim"><span class="tm-pv-lit">#</span> {t.basedIn} {location}</p>}
-      <p class="tm-pv-cmd"><span class="tm-pv-lit">$</span> ls links/</p>
+      <p class="tm-pv-cmd">
+        <span class="tm-pv-lit">$</span> whoami
+      </p>
+      <p class="tm-pv-name">
+        {name}
+        <span class="tm-pv-cursor"></span>
+      </p>
+      {location && (
+        <p class="tm-pv-dim">
+          <span class="tm-pv-lit">#</span> {t.basedIn} {location}
+        </p>
+      )}
+      <p class="tm-pv-cmd">
+        <span class="tm-pv-lit">$</span> ls links/
+      </p>
       <p class="tm-pv-dim">01 niconico &nbsp; 02 bb-vault &nbsp; 03 dispatch</p>
     </div>
   </div>
@@ -52,21 +65,9 @@ const t = messages[locale];
     padding: 1rem;
     background: var(--tm-bg);
     font-family:
-      var(--font-jetbrains-mono),
-      var(--font-noto-sans-mono-cjk-kr),
-      ui-monospace,
-      SFMono-Regular,
-      Menlo,
-      Consolas,
-      'Segoe UI Symbol',
-      'Apple Symbols',
-      'PingFang SC',
-      'Microsoft YaHei',
-      'Hiragino Sans',
-      'Yu Gothic UI',
-      'Apple SD Gothic Neo',
-      'Malgun Gothic',
-      'Noto Sans KR',
+      var(--font-jetbrains-mono), var(--font-noto-sans-mono-cjk-kr), ui-monospace, SFMono-Regular,
+      Menlo, Consolas, 'Segoe UI Symbol', 'Apple Symbols', 'PingFang SC', 'Microsoft YaHei',
+      'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR',
       monospace;
     font-size: 0.625rem;
     line-height: 1.55;

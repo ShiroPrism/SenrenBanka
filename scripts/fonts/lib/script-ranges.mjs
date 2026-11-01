@@ -8,8 +8,7 @@ export const HANGUL_RANGES = Object.freeze([
 ]);
 
 export const HANGUL_UNICODE_RANGE = HANGUL_RANGES.map(
-  ([start, end]) =>
-    `U+${start.toString(16).toUpperCase()}-${end.toString(16).toUpperCase()}`,
+  ([start, end]) => `U+${start.toString(16).toUpperCase()}-${end.toString(16).toUpperCase()}`,
 ).join(',');
 
 export function isHangulCodePoint(codePoint) {

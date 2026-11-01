@@ -63,8 +63,7 @@ function propertyName(node) {
 
 function objectProperty(object, name) {
   return object.properties.find(
-    (property) =>
-      ts.isPropertyAssignment(property) && propertyName(property.name) === name,
+    (property) => ts.isPropertyAssignment(property) && propertyName(property.name) === name,
   );
 }
 
@@ -146,21 +145,20 @@ export function inspectAstroFontSource(
     const nameProperty = objectProperty(object, 'name');
     const name = nameProperty?.initializer.getText() ?? '<generated local family>';
     registrations.push({ kind, name });
-    if (!arrayProperty(object, 'fallbacks') || arrayProperty(object, 'fallbacks').elements.length > 0) {
+    if (
+      !arrayProperty(object, 'fallbacks') ||
+      arrayProperty(object, 'fallbacks').elements.length > 0
+    ) {
       findings.push(`${filename}: ${kind} registration ${name} must use fallbacks: []`);
     }
     if (!falseProperty(object, 'optimizedFallbacks')) {
-      findings.push(
-        `${filename}: ${kind} registration ${name} must set optimizedFallbacks: false`,
-      );
+      findings.push(`${filename}: ${kind} registration ${name} must set optimizedFallbacks: false`);
     }
   }
 
   const npmCount = registrations.filter((entry) => entry.kind === 'npm').length;
   if (npmCount !== expectedNpmCount) {
-    findings.push(
-      `${filename}: expected ${expectedNpmCount} npm registrations, found ${npmCount}`,
-    );
+    findings.push(`${filename}: expected ${expectedNpmCount} npm registrations, found ${npmCount}`);
   }
   if (!registrations.some((entry) => entry.kind === 'local')) {
     findings.push(`${filename}: missing generated local registration`);
@@ -332,9 +330,7 @@ export function inspectTypographyCss(
         .slice(0, firstCoreIndex)
         .some((family) => SYSTEM_CJK_FONTS.has(normalizedFamily(family)))
     ) {
-      findings.push(
-        `${filename}: a system CJK fallback precedes a core CJK font variable`,
-      );
+      findings.push(`${filename}: a system CJK fallback precedes a core CJK font variable`);
     }
     if (
       lastCoreIndex !== undefined &&
@@ -360,9 +356,7 @@ async function readIfPresent(filePath) {
 }
 
 export function astroStyleBlocks(source) {
-  return [...source.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)].map(
-    (match) => match[1],
-  );
+  return [...source.matchAll(/<style(?:\s[^>]*)?>([\s\S]*?)<\/style>/gi)].map((match) => match[1]);
 }
 
 export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
@@ -386,9 +380,7 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const directory = path.join(designsDirectory, entry.name);
-    const designJson = JSON.parse(
-      await fs.readFile(path.join(directory, 'design.json'), 'utf8'),
-    );
+    const designJson = JSON.parse(await fs.readFile(path.join(directory, 'design.json'), 'utf8'));
     const renderMode = designJson.renderMode ?? 'styled';
     if (renderMode !== 'styled') continue;
     styledCount += 1;
@@ -399,9 +391,7 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
       findings.push(`${stylePath}: styled design is missing style.css`);
       continue;
     }
-    const cssFiles = (await fs.readdir(directory))
-      .filter((file) => file.endsWith('.css'))
-      .sort();
+    const cssFiles = (await fs.readdir(directory)).filter((file) => file.endsWith('.css')).sort();
     const cssSources = await Promise.all(
       cssFiles.map((file) => fs.readFile(path.join(directory, file), 'utf8')),
     );
@@ -440,9 +430,7 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
   }
 
   if (styledCount !== 26) {
-    findings.push(
-      `${designsDirectory}: expected 26 styled designs, found ${styledCount}`,
-    );
+    findings.push(`${designsDirectory}: expected 26 styled designs, found ${styledCount}`);
   }
   return {
     findings,
@@ -453,8 +441,7 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
 }
 
 async function main() {
-  const { findings, styledCount, coreDesignCount, generatedFamilies } =
-    await checkTypography();
+  const { findings, styledCount, coreDesignCount, generatedFamilies } = await checkTypography();
   if (findings.length > 0) {
     console.error('[senrenbanka:fonts] typography contract failed:');
     for (const finding of findings) console.error(`- ${finding}`);

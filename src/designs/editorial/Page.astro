@@ -18,6 +18,7 @@ const mailtoLink = profile.links.find((link) => link.url.startsWith('mailto:'));
 const inviteEmail =
   profile.contact?.email ?? (mailtoLink ? mailtoLink.url.replace(/^mailto:/, '') : null);
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -37,7 +38,11 @@ const inviteEmail =
       <header class="ed-hero">
         <div class="ed-masthead">
           <p class="ed-kicker">
-            <span class="ed-kicker-mark">{t.issueMark}</span> · {t.personalEdition}<span class="ed-kicker-en" lang="en"> / A magazine about one person</span>
+            <span class="ed-kicker-mark">{t.issueMark}</span> · {t.personalEdition}
+            <span class="ed-kicker-en" lang="en">
+              {' '}
+              / A magazine about one person
+            </span>
           </p>
           <nav class="ed-toc" aria-label="{t.navLabel}">
             <a href="#ed-works">{t.worksLabel}</a>
@@ -54,66 +59,79 @@ const inviteEmail =
         </div>
       </header>
 
-      {
-        profile.projects && profile.projects.length > 0 && (
-          <section class="ed-section" aria-labelledby="ed-works">
-            <div class="ed-section-head" data-reveal>
-              <h2 id="ed-works" class="ed-section-title">Selected Works</h2>
-              <p class="ed-label">{t.worksLabel}</p>
-            </div>
-            <ol class="ed-works">
-              {profile.projects.map((project, index) => (
-                <li class="ed-work" data-reveal>
-                  <span class="ed-index">{pad(index)}</span>
-                  <div class="ed-work-body">
-                    <h3 class="ed-work-title">
-                      {project.url ? <a href={project.url}>{project.title}<ArrowUpRight class="ed-ext" aria-hidden="true" /></a> : project.title}
-                    </h3>
-                    {project.description && <p class="ed-work-desc">{project.description}</p>}
-                    {project.tags && (
-                      <p class="ed-tags">
-                        {project.tags.map((tag) => (
-                          <span class="ed-tag">{tag}</span>
-                        ))}
-                      </p>
+      {profile.projects && profile.projects.length > 0 && (
+        <section class="ed-section" aria-labelledby="ed-works">
+          <div class="ed-section-head" data-reveal>
+            <h2 id="ed-works" class="ed-section-title">
+              Selected Works
+            </h2>
+            <p class="ed-label">{t.worksLabel}</p>
+          </div>
+          <ol class="ed-works">
+            {profile.projects.map((project, index) => (
+              <li class="ed-work" data-reveal>
+                <span class="ed-index">{pad(index)}</span>
+                <div class="ed-work-body">
+                  <h3 class="ed-work-title">
+                    {project.url ? (
+                      <a href={project.url}>
+                        {project.title}
+                        <ArrowUpRight class="ed-ext" aria-hidden="true" />
+                      </a>
+                    ) : (
+                      project.title
                     )}
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-        )
-      }
+                  </h3>
+                  {project.description && <p class="ed-work-desc">{project.description}</p>}
+                  {project.tags && (
+                    <p class="ed-tags">
+                      {project.tags.map((tag) => (
+                        <span class="ed-tag">{tag}</span>
+                      ))}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <section class="ed-section" aria-labelledby="ed-elsewhere">
         <div class="ed-section-head" data-reveal>
-          <h2 id="ed-elsewhere" class="ed-section-title">Elsewhere</h2>
+          <h2 id="ed-elsewhere" class="ed-section-title">
+            Elsewhere
+          </h2>
           <p class="ed-label">{t.elsewhereLabel}</p>
         </div>
         <ul class="ed-links" data-reveal>
-          {
-            profile.links.map((link) => (
-              <li>
-                <a class="ed-link" href={link.url}>{link.icon === 'github' && <GithubMark class="ed-mark" aria-hidden="true" />}{link.icon === 'mail' && <Mail class="ed-mark" aria-hidden="true" />}{link.label}</a>
-              </li>
-            ))
-          }
+          {profile.links.map((link) => (
+            <li>
+              <a class="ed-link" href={link.url}>
+                {link.icon === 'github' && <GithubMark class="ed-mark" aria-hidden="true" />}
+                {link.icon === 'mail' && <Mail class="ed-mark" aria-hidden="true" />}
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
 
       <footer class="ed-footer" data-reveal>
         <div class="ed-invite">
           {profile.contact?.note && <p class="ed-invite-line">{profile.contact.note}</p>}
-          {
-            inviteEmail && (
-              <p class="ed-invite-mail">
-                <a class="ed-link" href={`mailto:${inviteEmail}`}>{inviteEmail}</a>
-              </p>
-            )
-          }
+          {inviteEmail && (
+            <p class="ed-invite-mail">
+              <a class="ed-link" href={`mailto:${inviteEmail}`}>
+                {inviteEmail}
+              </a>
+            </p>
+          )}
         </div>
         <div class="ed-footer-meta">
-          <p class="ed-colophon" lang="en">{t.colophon}</p>
+          <p class="ed-colophon" lang="en">
+            {t.colophon}
+          </p>
         </div>
       </footer>
     </main>

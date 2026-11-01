@@ -217,7 +217,8 @@ const ja: LocaleMessages = {
   entry: {
     redirecting: 'デザインへ移動しています…',
     noscriptHeading: 'デザインを選択',
-    noscriptBody: 'JavaScript が無効なため、ランダムに自動遷移できませんでした。以下から手動で選択してください：',
+    noscriptBody:
+      'JavaScript が無効なため、ランダムに自動遷移できませんでした。以下から手動で選択してください：',
   },
   notFound: {
     titleSuffix: 'ページが見つかりません',

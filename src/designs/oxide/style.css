@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-oxide: var(--font-geist);
@@ -75,22 +75,9 @@
 .ox-row-tags,
 .ox-wave {
   font-family:
-    var(--font-oxide-mono),
-    var(--font-noto-sans-mono-cjk-kr),
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Consolas,
-    'Segoe UI Symbol',
-    'Apple Symbols',
-    'PingFang SC',
-    'Microsoft YaHei',
-    'Hiragino Sans',
-    'Yu Gothic UI',
-    'Apple SD Gothic Neo',
-    'Malgun Gothic',
-    'Noto Sans KR',
-    monospace;
+    var(--font-oxide-mono), var(--font-noto-sans-mono-cjk-kr), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, 'Segoe UI Symbol', 'Apple Symbols', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans',
+    'Yu Gothic UI', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
 }
 
 .ox-brand {

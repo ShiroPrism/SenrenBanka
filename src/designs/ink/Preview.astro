@@ -37,17 +37,21 @@ const slipLabels = (links ?? []).slice(0, 2).map((link) => link.label);
   </div>
 
   <p class="ink-pv-name">{name}</p>
-  <span class="ink-pv-seal" aria-hidden="true">{sealGlyph}</span>
+  <span class="ink-pv-seal" aria-hidden="true">
+    {sealGlyph}
+  </span>
 </div>
 
 <style>
   .ink-pv {
     --ink-pv-display:
-      var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-      "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+      var(--font-sorts-mill-goudy), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Serif KR', serif;
     --ink-pv-text:
-      var(--font-prociono), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque), "Songti SC", "SimSun",
-      "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+      var(--font-prociono), var(--font-gowun-batang), var(--font-lxgw), var(--font-zhuque),
+      'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Serif KR', serif;
 
     position: relative;
     display: grid;
@@ -74,7 +78,7 @@ const slipLabels = (links ?? []).slice(0, 2).map((link) => link.label);
   }
 
   .ink-pv::before {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0.28rem;
     border: 1px solid var(--ink-rule-celadon);
@@ -134,7 +138,7 @@ const slipLabels = (links ?? []).slice(0, 2).map((link) => link.label);
   }
 
   .ink-pv-slip::before {
-    content: "";
+    content: '';
     width: 0.22rem;
     height: 0.22rem;
     flex: 0 0 auto;

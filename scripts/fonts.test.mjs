@@ -212,8 +212,10 @@ async function startHttpServer(routes) {
     server,
     requests,
     baseUrl: `http://127.0.0.1:${address.port}`,
-    close: () => new Promise((resolve, reject) =>
-      server.close((error) => (error ? reject(error) : resolve()))),
+    close: () =>
+      new Promise((resolve, reject) =>
+        server.close((error) => (error ? reject(error) : resolve())),
+      ),
   };
 }
 
@@ -269,10 +271,7 @@ async function setupPublishedFixture({
         fallbacks: fixture.manifest.fallbacks,
       })),
   };
-  await fs.writeFile(
-    path.join(projectRoot, 'fonts.config.json'),
-    stableStringify(config),
-  );
+  await fs.writeFile(path.join(projectRoot, 'fonts.config.json'), stableStringify(config));
   return {
     ...server,
     projectRoot,
@@ -302,12 +301,11 @@ test('fonts:update filters to selected families and prepare reuses a verified ca
   try {
     const summary = await runUpdate(fixture);
     assert.equal(summary.families, 1);
-    assert.equal(fixture.requests.some((request) => request.includes('unselected-font')), false);
-    const trackedOutputs = [
-      'fonts.catalog.json',
-      'fonts.lock.json',
-      'src/fonts/generated.ts',
-    ];
+    assert.equal(
+      fixture.requests.some((request) => request.includes('unselected-font')),
+      false,
+    );
+    const trackedOutputs = ['fonts.catalog.json', 'fonts.lock.json', 'src/fonts/generated.ts'];
     const firstOutputs = await Promise.all(
       trackedOutputs.map((file) => fs.readFile(path.join(fixture.projectRoot, file), 'utf8')),
     );
@@ -328,7 +326,10 @@ test('fonts:update filters to selected families and prepare reuses a verified ca
       fixture.projectRoot,
       ...familyCacheRelativePath(FIXTURE_VERSION, FIXTURE_ID, FIXTURE_VERSION).split('/'),
     );
-    assert.equal(await fs.stat(path.join(cacheRoot, '.complete.json')).then((stat) => stat.isFile()), true);
+    assert.equal(
+      await fs.stat(path.join(cacheRoot, '.complete.json')).then((stat) => stat.isFile()),
+      true,
+    );
 
     const requestCount = fixture.requests.length;
     const reused = await prepareFonts({
@@ -479,16 +480,17 @@ test('package verification rejects outer hash, inner hash/size, and unapproved l
     selected: [makeFamilyFixture({ role: 'core-cjk' })],
   });
   try {
-    await assert.rejects(() => runUpdate(coreWithoutRanges), /core-cjk variants require unicode ranges/i);
+    await assert.rejects(
+      () => runUpdate(coreWithoutRanges),
+      /core-cjk variants require unicode ranges/i,
+    );
   } finally {
     await coreWithoutRanges.close();
   }
 });
 
 test('package verification rejects path traversal, links, duplicates, and extra files', () => {
-  const traversal = createTarGz([
-    { path: '../escape', data: Buffer.from('escape') },
-  ]);
+  const traversal = createTarGz([{ path: '../escape', data: Buffer.from('escape') }]);
   assert.throws(
     () =>
       inspectFamilyPackageBuffer(traversal, {
@@ -655,42 +657,46 @@ test('offline prepare fails clearly when the selected family is not cached', asy
   }
 });
 
-test('concurrent prepare calls serialize installation and leave one valid cache', { timeout: 10_000 }, async () => {
-  const fixture = await setupPublishedFixture();
-  try {
-    await runUpdate(fixture);
-    let arrivals = 0;
-    let releaseDownloads;
-    const bothDownloading = new Promise((resolve) => {
-      releaseDownloads = resolve;
-    });
-    const fetchImpl = async (url, options) => {
-      arrivals += 1;
-      if (arrivals === 2) releaseDownloads();
-      await bothDownloading;
-      return fetch(url, options);
-    };
+test(
+  'concurrent prepare calls serialize installation and leave one valid cache',
+  { timeout: 10_000 },
+  async () => {
+    const fixture = await setupPublishedFixture();
+    try {
+      await runUpdate(fixture);
+      let arrivals = 0;
+      let releaseDownloads;
+      const bothDownloading = new Promise((resolve) => {
+        releaseDownloads = resolve;
+      });
+      const fetchImpl = async (url, options) => {
+        arrivals += 1;
+        if (arrivals === 2) releaseDownloads();
+        await bothDownloading;
+        return fetch(url, options);
+      };
 
-    await Promise.all([
-      prepareFonts({ projectRoot: fixture.projectRoot, fetchImpl }),
-      prepareFonts({ projectRoot: fixture.projectRoot, fetchImpl }),
-    ]);
-    const cached = await checkFonts({ projectRoot: fixture.projectRoot });
-    assert.equal(cached.familyCount, 1);
-    assert.equal(cached.cachedFiles, 4);
+      await Promise.all([
+        prepareFonts({ projectRoot: fixture.projectRoot, fetchImpl }),
+        prepareFonts({ projectRoot: fixture.projectRoot, fetchImpl }),
+      ]);
+      const cached = await checkFonts({ projectRoot: fixture.projectRoot });
+      assert.equal(cached.familyCount, 1);
+      assert.equal(cached.cachedFiles, 4);
 
-    const lockDirectory = path.join(
-      fixture.projectRoot,
-      '.cache',
-      'fonts',
-      FIXTURE_VERSION,
-      '.locks',
-    );
-    assert.deepEqual(await fs.readdir(lockDirectory), []);
-  } finally {
-    await fixture.close();
-  }
-});
+      const lockDirectory = path.join(
+        fixture.projectRoot,
+        '.cache',
+        'fonts',
+        FIXTURE_VERSION,
+        '.locks',
+      );
+      assert.deepEqual(await fs.readdir(lockDirectory), []);
+    } finally {
+      await fixture.close();
+    }
+  },
+);
 
 test('generated registration preserves all legacy local-family metadata', async () => {
   const state = await loadFontState();
@@ -721,9 +727,7 @@ test('generated registration preserves all legacy local-family metadata', async 
       ...(variant.stretch ? { stretch: variant.stretch } : {}),
       ...(variant.unicodeRange ? { unicodeRange: variant.unicodeRange } : {}),
     }));
-    if (
-      ['Zhuque Fangsong', 'Ark Pixel 12px', 'LXGW WenKai GB'].includes(expected.name)
-    ) {
+    if (['Zhuque Fangsong', 'Ark Pixel 12px', 'LXGW WenKai GB'].includes(expected.name)) {
       assert.ok(actualVariants.length >= 1);
       for (const variant of actualVariants) {
         assert.equal(variant.weight, expected.variants[0].weight);
@@ -760,7 +764,10 @@ test('font audit reports covered and uncovered CJK while failing on missing cand
     assert.equal(report.uncovered.length, 2);
     assert.equal(report.uncovered[0].codePoint, 'U+9F98');
     assert.equal(report.uncovered[1].codePoint, 'U+30000');
-    assert.equal(report.uncovered.some((issue) => issue.character === '変'), false);
+    assert.equal(
+      report.uncovered.some((issue) => issue.character === '変'),
+      false,
+    );
     assert.deepEqual(report.deployedGaps, []);
     assert.deepEqual(report.danglingFontUrls, []);
     assert.deepEqual(report.orphanFontFiles, []);

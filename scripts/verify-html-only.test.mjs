@@ -39,9 +39,7 @@ function runProbe(html) {
         fs.mkdirSync(targetDirectory, { recursive: true });
         fs.writeFileSync(
           path.join(targetDirectory, 'index.html'),
-          designId === htmlOnlyDesignIds[0] && localePath === localePaths[0]
-            ? html
-            : validHtml,
+          designId === htmlOnlyDesignIds[0] && localePath === localePaths[0] ? html : validHtml,
           'utf8',
         );
       }
@@ -85,10 +83,7 @@ test('does not treat markup-like text in textarea as a script tag', () => {
 
 test('does not treat markup-like text in title as a script tag', () => {
   const result = runProbe(
-    validHtml.replace(
-      '<head>',
-      '<head><title>literal <script>alert(1)</script> text</title>',
-    ),
+    validHtml.replace('<head>', '<head><title>literal <script>alert(1)</script> text</title>'),
   );
   assert.equal(result.status, 0, result.stderr);
 });

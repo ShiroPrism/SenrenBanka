@@ -5,14 +5,17 @@ import { designDescriptions } from '../designs/descriptions';
 import { storageKeyFor } from './router-script';
 import { BASE, pathSegments, withBase } from './urls';
 import type { ContextMenuRuntimeConfig, PageContext } from './context-menu';
-import { messages as sharedMessages, type LocaleMessages, type MessageLocaleCode } from '../i18n/messages';
+import {
+  messages as sharedMessages,
+  type LocaleMessages,
+  type MessageLocaleCode,
+} from '../i18n/messages';
 import { sharedMessagesFor } from '../i18n/resolve';
 
 // 设计文案是纯数据，不含 CSS/Page 边；构建期在这里做「覆盖 locale 必须有文案」的全量校验。
-const designMessageModules = import.meta.glob('../designs/*/messages.ts', { eager: true }) as Record<
-  string,
-  { messages?: Record<string, unknown> }
->;
+const designMessageModules = import.meta.glob('../designs/*/messages.ts', {
+  eager: true,
+}) as Record<string, { messages?: Record<string, unknown> }>;
 
 export type ProfileData = CollectionEntry<'profile'>['data'];
 export type SiteConfigData = CollectionEntry<'site'>['data'];
@@ -126,7 +129,10 @@ const assetModules = import.meta.glob('../data/assets/*', { eager: true }) as Re
   { default: ImageMetadata }
 >;
 
-function resolveAvatar(avatar: string | undefined, localePath: string): ImageMetadata | string | null {
+function resolveAvatar(
+  avatar: string | undefined,
+  localePath: string,
+): ImageMetadata | string | null {
   if (!avatar) return null;
   if (/^https?:\/\//i.test(avatar)) return avatar;
   const key = `../data/assets/${avatar.replace(/^assets\//, '')}`;
@@ -384,14 +390,17 @@ export function buildActionMenuConfig(
     closeLabel: messages.contextMenu.closeLabel,
     cancel: messages.contextMenu.cancel,
     messages,
-    languages:
-      model.locales.length < 2 ? [] : actionMenuLanguageItems(model, locale, context),
+    languages: model.locales.length < 2 ? [] : actionMenuLanguageItems(model, locale, context),
     designActionsEnabled: model.switcherEnabled,
   };
 }
 
 /** 由 SiteModel 与某套设计派生页面数据（含 head 元信息与索引策略，SPEC §7.4）。 */
-export function buildDesignView(model: SiteModel, design: DesignEntry, locale: LocaleEntry): DesignView {
+export function buildDesignView(
+  model: SiteModel,
+  design: DesignEntry,
+  locale: LocaleEntry,
+): DesignView {
   if (!designCovers(design, locale)) {
     throw new Error(
       `[senrenbanka] 设计 "${design.id}" 未声明支持 locale "${locale.code}"（design.json locales），不应生成该页面。`,
@@ -411,7 +420,8 @@ export function buildDesignView(model: SiteModel, design: DesignEntry, locale: L
         {
           hreflang: 'x-default',
           href: `${model.site.url ?? ''}${localeDesignHref(
-            (model.locales.find((entry) => entry.code === model.defaultLocale) ?? model.locales[0]!).path,
+            (model.locales.find((entry) => entry.code === model.defaultLocale) ?? model.locales[0]!)
+              .path,
             design.id,
           )}`,
         },
@@ -442,12 +452,17 @@ export function buildDesignView(model: SiteModel, design: DesignEntry, locale: L
       lang: locale.code,
       alternates,
     },
-    contextMenu: buildActionMenuConfig(model, locale, {
-      kind: 'design',
-      designId: design.id,
-      designName: design.meta.displayName,
-      accent: design.meta.accent,
-    }, headTitle),
+    contextMenu: buildActionMenuConfig(
+      model,
+      locale,
+      {
+        kind: 'design',
+        designId: design.id,
+        designName: design.meta.displayName,
+        accent: design.meta.accent,
+      },
+      headTitle,
+    ),
   };
 }
 

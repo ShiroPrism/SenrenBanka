@@ -13,6 +13,7 @@ const view = await loadDesignView('fast', Astro.url.pathname);
 const t = designMessages[view.locale.code];
 const { profile, contextMenu } = view;
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -34,85 +35,88 @@ const { profile, contextMenu } = view;
 
       <main>
         <section class="fs-hero">
-          <p class="fs-eyebrow fs-rise" style="--rise-delay: 0ms">{t.portfolio}</p>
-          <h1 class="fs-title fs-rise" style="--rise-delay: 30ms">{profile.headline}</h1>
-          <p class="fs-lead fs-rise" style="--rise-delay: 60ms">{profile.bio}</p>
+          <p class="fs-eyebrow fs-rise" style="--rise-delay: 0ms">
+            {t.portfolio}
+          </p>
+          <h1 class="fs-title fs-rise" style="--rise-delay: 30ms">
+            {profile.headline}
+          </h1>
+          <p class="fs-lead fs-rise" style="--rise-delay: 60ms">
+            {profile.bio}
+          </p>
           <div class="fs-actions fs-rise" style="--rise-delay: 90ms">
-            {
-              profile.links.map((link) => (
-                <a class="fs-btn" href={link.url}>
-                  {link.icon === 'github' && <GithubMark class="fs-btn-mark" aria-hidden="true" />}
-                  {link.icon === 'mail' && <Mail class="fs-btn-mark" aria-hidden="true" />}
-                  {link.label}
-                </a>
-              ))
-            }
+            {profile.links.map((link) => (
+              <a class="fs-btn" href={link.url}>
+                {link.icon === 'github' && <GithubMark class="fs-btn-mark" aria-hidden="true" />}
+                {link.icon === 'mail' && <Mail class="fs-btn-mark" aria-hidden="true" />}
+                {link.label}
+              </a>
+            ))}
           </div>
         </section>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="fs-section" data-reveal>
-              <h2 class="fs-h2">{t.projects}</h2>
-              <ul class="fs-cards md:grid md:grid-cols-3 gap-4">
-                {profile.projects.map((project, index) => (
-                  <li class="fs-card" data-reveal>
-                    <p class="fs-card-num">{String(index + 1).padStart(2, '0')}</p>
-                    <h3 class="fs-card-title">
-                      {project.url ? <a href={project.url}>{project.title}<ArrowUpRight class="fs-card-ext" aria-hidden="true" /></a> : project.title}
-                    </h3>
-                    {project.description && <p class="fs-card-desc">{project.description}</p>}
-                    {project.tags && <p class="fs-card-tags">{project.tags.join(' · ')}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="fs-section" data-reveal>
+            <h2 class="fs-h2">{t.projects}</h2>
+            <ul class="fs-cards md:grid md:grid-cols-3 gap-4">
+              {profile.projects.map((project, index) => (
+                <li class="fs-card" data-reveal>
+                  <p class="fs-card-num">{String(index + 1).padStart(2, '0')}</p>
+                  <h3 class="fs-card-title">
+                    {project.url ? (
+                      <a href={project.url}>
+                        {project.title}
+                        <ArrowUpRight class="fs-card-ext" aria-hidden="true" />
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h3>
+                  {project.description && <p class="fs-card-desc">{project.description}</p>}
+                  {project.tags && <p class="fs-card-tags">{project.tags.join(' · ')}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="fs-section" data-reveal>
-              <h2 class="fs-h2">{t.experience}</h2>
-              <ul class="fs-exp">
-                {profile.experience.map((item) => (
-                  <li class="fs-exp-row" data-reveal>
-                    <div class="fs-exp-head">
-                      <span class="fs-exp-org">{item.org}</span>
-                      <span class="fs-exp-period">{item.period ?? ''}</span>
-                    </div>
-                    {item.role && <p class="fs-exp-role">{item.role}</p>}
-                    {item.description && <p class="fs-exp-desc">{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="fs-section" data-reveal>
+            <h2 class="fs-h2">{t.experience}</h2>
+            <ul class="fs-exp">
+              {profile.experience.map((item) => (
+                <li class="fs-exp-row" data-reveal>
+                  <div class="fs-exp-head">
+                    <span class="fs-exp-org">{item.org}</span>
+                    <span class="fs-exp-period">{item.period ?? ''}</span>
+                  </div>
+                  {item.role && <p class="fs-exp-role">{item.role}</p>}
+                  {item.description && <p class="fs-exp-desc">{item.description}</p>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="fs-section" data-reveal>
-              <h2 class="fs-h2">{t.skills}</h2>
-              <ul class="fs-chips">
-                {profile.skills.map((skill) => (
-                  <li class="fs-chip">{skill}</li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="fs-section" data-reveal>
+            <h2 class="fs-h2">{t.skills}</h2>
+            <ul class="fs-chips">
+              {profile.skills.map((skill) => (
+                <li class="fs-chip">{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section class="fs-section">
           <h2 class="fs-h2">{t.contact}</h2>
           <div class="fs-contact">
-            {
-              profile.contact?.email ? (
-                <a class="fs-btn fs-btn-primary" href={`mailto:${profile.contact.email}`}>
-                  {profile.contact.email}
-                </a>
-              ) : null
-            }
+            {profile.contact?.email ? (
+              <a class="fs-btn fs-btn-primary" href={`mailto:${profile.contact.email}`}>
+                {profile.contact.email}
+              </a>
+            ) : null}
             {profile.contact?.note && <p class="fs-contact-note">{profile.contact.note}</p>}
           </div>
         </section>

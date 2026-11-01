@@ -1,48 +1,57 @@
 # Shimokitazawa Legend Profile (Pure English Meme Localization)
 # Conforms to standard profile schema: name / headline / bio / links / projects / experience / skills / contact
 
-name: "Koji Tadokoro"
-headline: "24 years old, student / Walking the Royal Road, Karate Club Captain & BB Theater Legend"
+name: 'Koji Tadokoro'
+headline: '24 years old, student / Walking the Royal Road, Karate Club Captain & BB Theater Legend'
 bio: "24 years old, just an everyday college student. Currently putting my juniors through their paces at the Shimokitazawa Karate Club. When off the mat, catch me catching rays in speedos on the rooftop or whipping up my signature iced tea formula. Existing purely as an immortal conceptual entity within the internet's collective unconscious, on-duty 24/7 across the multiverse as universal green-screen BB material!"
-avatar: "TadokoroKoji.png"
-location: "Shimokitazawa, Tokyo, Japan"
+avatar: 'TadokoroKoji.png'
+location: 'Shimokitazawa, Tokyo, Japan'
 
 links:
   - label: Niconico
-    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    url: 'https://www.nicovideo.jp/tag/野獣先輩'
     icon: tv
   - label: BB Green Screen Vault
-    url: "https://example.com/bb-theater"
+    url: 'https://example.com/bb-theater'
     icon: video
   - label: Shimokitazawa Dispatch
-    url: "https://example.com/114514"
+    url: 'https://example.com/114514'
     icon: coffee
 
 projects:
-  - title: "The Royal Road (Oudou Seito)"
-    description: "A martial arts documentary project blending daily full-contact kumite drills with intimate academic mentoring for my junior (Tohno), capturing the raw, honest sweat of dedicated athletes."
-    url: "https://example.com/oudou"
-    tags: ["114514", "RoyalRoad", "Karate"]
-  - title: "Secret Iced Tea Formula"
-    description: "A bespoke cold-brew concoction formulated for post-workout recovery. Boasts an uncanny flavor guaranteed to plunge the drinker straight into a dead-to-the-world slumber."
-    url: "https://example.com/tea-lab"
-    tags: ["SleepingTea", "Recipe", "114514"]
-  - title: "Multiverse BB Theater World Tour"
-    description: "A genre-defining subcultural multimedia project spanning the Golden & Silver Pavilions, primal beast roars, and manic audio-visual synthesis."
-    tags: ["OtoMAD", "AviUtl", "YTPMV", "Brainrot"]
+  - title: 'The Royal Road (Oudou Seito)'
+    description: 'A martial arts documentary project blending daily full-contact kumite drills with intimate academic mentoring for my junior (Tohno), capturing the raw, honest sweat of dedicated athletes.'
+    url: 'https://example.com/oudou'
+    tags: ['114514', 'RoyalRoad', 'Karate']
+  - title: 'Secret Iced Tea Formula'
+    description: 'A bespoke cold-brew concoction formulated for post-workout recovery. Boasts an uncanny flavor guaranteed to plunge the drinker straight into a dead-to-the-world slumber.'
+    url: 'https://example.com/tea-lab'
+    tags: ['SleepingTea', 'Recipe', '114514']
+  - title: 'Multiverse BB Theater World Tour'
+    description: 'A genre-defining subcultural multimedia project spanning the Golden & Silver Pavilions, primal beast roars, and manic audio-visual synthesis.'
+    tags: ['OtoMAD', 'AviUtl', 'YTPMV', 'Brainrot']
 
 experience:
-  - org: "Shimokitazawa University Karate Club"
-    role: "Captain / Legendary Senior (Ace)"
-    period: "24 years old – Eternity"
-    description: "Spearheaded dojo sparring drills, shared esoteric self-defense techniques, and maintained top-tier dojo hospitality by keeping the fridge stocked with chilled beverages for exhausted underclassmen."
-  - org: "Niconico Douga / Underground Internet Meme Syndicate"
-    role: "Concept-level Protagonist / Universal OtoMAD Keystone"
-    period: "2001 – Present"
+  - org: 'Shimokitazawa University Karate Club'
+    role: 'Captain / Legendary Senior (Ace)'
+    period: '24 years old – Eternity'
+    description: 'Spearheaded dojo sparring drills, shared esoteric self-defense techniques, and maintained top-tier dojo hospitality by keeping the fridge stocked with chilled beverages for exhausted underclassmen.'
+  - org: 'Niconico Douga / Underground Internet Meme Syndicate'
+    role: 'Concept-level Protagonist / Universal OtoMAD Keystone'
+    period: '2001 – Present'
     description: "Serving as evergreen source material across hundreds of thousands of derivative parodies and remix edits, fueling the web's infinite cycle of deconstruction and collective brainrot."
 
-skills: ["Full-Contact Karate", "Walking the Royal Road", "Artisanal Drink Mixing", "Rooftop Tanning", "BB Asset Adaptation", "Primal Roaring", "114514 Resonance"]
+skills:
+  [
+    'Full-Contact Karate',
+    'Walking the Royal Road',
+    'Artisanal Drink Mixing',
+    'Rooftop Tanning',
+    'BB Asset Adaptation',
+    'Primal Roaring',
+    '114514 Resonance',
+  ]
 
 contact:
-  email: "114514@shimokitazawa.jp"
-  note: "Iiyo! Koiyo! (Hell yeah, bring it on!) Drop by the rooftop dojo anytime after training for a cold glass of tea and some good old-fashioned sparring."
+  email: '114514@shimokitazawa.jp'
+  note: 'Iiyo! Koiyo! (Hell yeah, bring it on!) Drop by the rooftop dojo anytime after training for a cold glass of tea and some good old-fashioned sparring.'

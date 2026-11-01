@@ -28,7 +28,9 @@ const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
 <div class="bt-pv">
   <div class="bt-pv-top">
     <span class="bt-pv-mark">BT</span>
-    <span class="bt-pv-meta">{location ?? t.index} / {t.portfolio}</span>
+    <span class="bt-pv-meta">
+      {location ?? t.index} / {t.portfolio}
+    </span>
   </div>
 
   <p class="bt-pv-name">{name}</p>
@@ -53,9 +55,15 @@ const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
 
 <style>
   .bt-pv {
-    --bt-pv-display: var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-    --bt-pv-body: var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-    --bt-pv-mono: var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), "PingFang SC", "Microsoft YaHei", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    --bt-pv-display:
+      var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --bt-pv-body:
+      var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --bt-pv-mono:
+      var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
 
     display: flex;
     flex-direction: column;
@@ -67,7 +75,10 @@ const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
     background-image:
       linear-gradient(rgba(11, 11, 11, 0.06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(11, 11, 11, 0.06) 1px, transparent 1px);
-    background-size: 1.1rem 1.1rem, 1.1rem 1.1rem, auto;
+    background-size:
+      1.1rem 1.1rem,
+      1.1rem 1.1rem,
+      auto;
     box-shadow: 6px 6px 0 var(--bt-ink);
     color: var(--bt-ink);
     font-family: var(--bt-pv-body);

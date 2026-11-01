@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-pxt-ui: var(--font-silkscreen);
@@ -15,11 +15,13 @@
 
 .pxt {
   --pxt-ui-stack:
-    var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk), "Songti SC", "SimSun", "PingFang SC",
-    "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk), 'Songti SC', 'SimSun',
+    'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI', 'Apple SD Gothic Neo',
+    'Malgun Gothic', 'Noto Sans KR', monospace;
   --pxt-number-stack:
-    var(--font-pxt-number), var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk), "Songti SC", "SimSun",
-    "PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    var(--font-pxt-number), var(--font-pxt-ui), var(--font-galmuri11), var(--font-pxt-cjk),
+    'Songti SC', 'SimSun', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans', 'Yu Gothic UI',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
   min-height: 100vh;
   margin: 0;
   color: var(--pxt-night);
@@ -28,7 +30,10 @@
     linear-gradient(90deg, transparent 0 31px, rgba(168, 230, 193, 0.09) 31px 32px),
     linear-gradient(0deg, transparent 0 31px, rgba(168, 230, 193, 0.09) 31px 32px),
     radial-gradient(circle at 50% -8%, var(--pxt-night-soft), var(--pxt-night) 62%);
-  background-size: 32px 32px, 32px 32px, auto;
+  background-size:
+    32px 32px,
+    32px 32px,
+    auto;
   font-family: var(--pxt-ui-stack);
   font-size: 1rem;
   line-height: 1.7;
@@ -104,7 +109,7 @@
 }
 
 .pxt-hud::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 4rem;
   bottom: 0;
@@ -164,7 +169,10 @@
   color: var(--pxt-gold);
   font-family: var(--pxt-number-stack);
   font-size: 1rem;
-  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  font-variation-settings:
+    'wght' 700,
+    'ELGR' 1,
+    'ELSH' 8;
   letter-spacing: 0.12em;
   line-height: 1.2;
 }
@@ -214,7 +222,7 @@
 }
 
 .pxt-pin-mark::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.22rem;
   left: 0.28rem;
@@ -230,7 +238,9 @@
   background-image:
     linear-gradient(45deg, var(--pxt-mint) 25%, transparent 25% 75%, var(--pxt-mint) 75%),
     linear-gradient(45deg, var(--pxt-mint) 25%, transparent 25% 75%, var(--pxt-mint) 75%);
-  background-position: 0 0, 8px 8px;
+  background-position:
+    0 0,
+    8px 8px;
   background-size: 16px 16px;
   opacity: 0.8;
 }
@@ -506,7 +516,7 @@
 
 .pxt-pet::before,
 .pxt-pet::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 4px;
   width: 4px;
@@ -530,7 +540,7 @@
 
 .pxt-pet i::before,
 .pxt-pet i::after {
-  content: "";
+  content: '';
   position: absolute;
   top: -12px;
   width: 8px;
@@ -600,7 +610,10 @@
   color: var(--pxt-muted);
   font-family: var(--pxt-number-stack);
   font-size: 0.9rem;
-  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  font-variation-settings:
+    'wght' 700,
+    'ELGR' 1,
+    'ELSH' 8;
   line-height: 1;
 }
 
@@ -615,17 +628,17 @@
 
 .pxt-node-pin::before,
 .pxt-node-pin::after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
 }
 
-.pxt-node-pin[data-pxt-icon="hall"]::before {
+.pxt-node-pin[data-pxt-icon='hall']::before {
   inset: 9px 7px 5px;
   background: var(--pxt-cream);
 }
 
-.pxt-node-pin[data-pxt-icon="hall"]::after {
+.pxt-node-pin[data-pxt-icon='hall']::after {
   top: 4px;
   left: 4px;
   width: 16px;
@@ -634,20 +647,16 @@
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
-.pxt-node-pin[data-pxt-icon="shop"]::before {
+.pxt-node-pin[data-pxt-icon='shop']::before {
   top: 6px;
   left: 4px;
   width: 18px;
   height: 7px;
-  background: repeating-linear-gradient(
-    90deg,
-    var(--pxt-coral) 0 4px,
-    var(--pxt-cream) 4px 8px
-  );
+  background: repeating-linear-gradient(90deg, var(--pxt-coral) 0 4px, var(--pxt-cream) 4px 8px);
   border-bottom: 4px solid var(--pxt-night);
 }
 
-.pxt-node-pin[data-pxt-icon="shop"]::after {
+.pxt-node-pin[data-pxt-icon='shop']::after {
   top: 14px;
   left: 6px;
   width: 12px;
@@ -656,11 +665,11 @@
   background: var(--pxt-sky);
 }
 
-.pxt-node-pin[data-pxt-icon="flag"] {
+.pxt-node-pin[data-pxt-icon='flag'] {
   background: var(--pxt-mint);
 }
 
-.pxt-node-pin[data-pxt-icon="flag"]::before {
+.pxt-node-pin[data-pxt-icon='flag']::before {
   top: 4px;
   left: 9px;
   width: 4px;
@@ -668,7 +677,7 @@
   background: var(--pxt-night);
 }
 
-.pxt-node-pin[data-pxt-icon="flag"]::after {
+.pxt-node-pin[data-pxt-icon='flag']::after {
   top: 4px;
   left: 12px;
   width: 10px;
@@ -677,20 +686,19 @@
   background: var(--pxt-coral);
 }
 
-.pxt-node-pin[data-pxt-icon="board"] {
+.pxt-node-pin[data-pxt-icon='board'] {
   background: var(--pxt-paper);
 }
 
-.pxt-node-pin[data-pxt-icon="board"]::before {
+.pxt-node-pin[data-pxt-icon='board']::before {
   inset: 5px 5px 8px;
   border: 4px solid var(--pxt-night);
   background:
-    linear-gradient(var(--pxt-grass-dark) 0 2px, transparent 2px 5px) 3px 3px / 12px 5px
-    repeat-y,
+    linear-gradient(var(--pxt-grass-dark) 0 2px, transparent 2px 5px) 3px 3px / 12px 5px repeat-y,
     var(--pxt-cream);
 }
 
-.pxt-node-pin[data-pxt-icon="board"]::after {
+.pxt-node-pin[data-pxt-icon='board']::after {
   bottom: 4px;
   left: 6px;
   width: 2px;
@@ -699,11 +707,11 @@
   box-shadow: 12px 0 0 var(--pxt-night);
 }
 
-.pxt-node-pin[data-pxt-icon="rack"] {
+.pxt-node-pin[data-pxt-icon='rack'] {
   background: var(--pxt-coral);
 }
 
-.pxt-node-pin[data-pxt-icon="rack"]::before {
+.pxt-node-pin[data-pxt-icon='rack']::before {
   top: 5px;
   left: 5px;
   width: 14px;
@@ -711,7 +719,7 @@
   background: var(--pxt-night);
 }
 
-.pxt-node-pin[data-pxt-icon="rack"]::after {
+.pxt-node-pin[data-pxt-icon='rack']::after {
   top: 11px;
   left: 7px;
   width: 4px;
@@ -720,17 +728,17 @@
   box-shadow: 8px 0 0 var(--pxt-gold);
 }
 
-.pxt-node-pin[data-pxt-icon="post"] {
+.pxt-node-pin[data-pxt-icon='post'] {
   background: var(--pxt-water-hi);
 }
 
-.pxt-node-pin[data-pxt-icon="post"]::before {
+.pxt-node-pin[data-pxt-icon='post']::before {
   inset: 7px 4px 8px;
   border: 4px solid var(--pxt-night);
   background: var(--pxt-coral);
 }
 
-.pxt-node-pin[data-pxt-icon="post"]::after {
+.pxt-node-pin[data-pxt-icon='post']::after {
   top: 9px;
   left: 7px;
   width: 5px;
@@ -775,7 +783,7 @@
   transform: translateX(-50%);
 }
 
-.pxt-node[aria-current="location"] {
+.pxt-node[aria-current='location'] {
   background: var(--pxt-gold);
   box-shadow: 8px 8px 0 var(--pxt-night);
 }
@@ -804,7 +812,7 @@
 
 .pxt-player::before,
 .pxt-player::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 4px;
   width: 4px;
@@ -866,8 +874,7 @@
   padding: 0.85rem;
   background:
     linear-gradient(90deg, transparent 0 31px, rgba(23, 35, 56, 0.06) 31px 32px),
-    linear-gradient(0deg, transparent 0 31px, rgba(23, 35, 56, 0.06) 31px 32px),
-    var(--pxt-paper);
+    linear-gradient(0deg, transparent 0 31px, rgba(23, 35, 56, 0.06) 31px 32px), var(--pxt-paper);
   background-size: 32px 32px;
 }
 
@@ -907,7 +914,10 @@
   background: var(--pxt-gold);
   font-family: var(--pxt-number-stack);
   font-size: 1.15rem;
-  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  font-variation-settings:
+    'wght' 700,
+    'ELGR' 1,
+    'ELSH' 8;
   line-height: 1;
 }
 
@@ -935,7 +945,7 @@
 
 .pxt-avatar-frame::before,
 .pxt-avatar-frame::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 8px;
   height: 8px;
@@ -1041,7 +1051,7 @@
 }
 
 .pxt-item-icon::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.35rem;
   left: 0.35rem;
@@ -1053,7 +1063,7 @@
 }
 
 .pxt-item-icon::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0.25rem;
   bottom: 0.25rem;
@@ -1062,15 +1072,15 @@
   background: var(--pxt-coral);
 }
 
-.pxt-item-link[data-pxt-link-kind="tv"] .pxt-item-icon {
+.pxt-item-link[data-pxt-link-kind='tv'] .pxt-item-icon {
   background: var(--pxt-sky);
 }
 
-.pxt-item-link[data-pxt-link-kind="video"] .pxt-item-icon {
+.pxt-item-link[data-pxt-link-kind='video'] .pxt-item-icon {
   background: var(--pxt-coral);
 }
 
-.pxt-item-link[data-pxt-link-kind="coffee"] .pxt-item-icon {
+.pxt-item-link[data-pxt-link-kind='coffee'] .pxt-item-icon {
   background: var(--pxt-gold);
 }
 
@@ -1105,7 +1115,7 @@
 }
 
 .pxt-item-arrow::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.2rem;
   left: 0;
@@ -1116,7 +1126,7 @@
 }
 
 .pxt-item-arrow::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0;
   bottom: 0.05rem;
@@ -1154,17 +1164,13 @@
 }
 
 .pxt-destinations::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.4rem;
   bottom: 0.4rem;
   left: 0.25rem;
   width: 4px;
-  background: repeating-linear-gradient(
-    180deg,
-    var(--pxt-night) 0 12px,
-    var(--pxt-mint) 12px 20px
-  );
+  background: repeating-linear-gradient(180deg, var(--pxt-night) 0 12px, var(--pxt-mint) 12px 20px);
 }
 
 .pxt-destinations > li {
@@ -1268,7 +1274,7 @@
 }
 
 .pxt-log-dot::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.45rem;
   left: 0.2rem;
@@ -1307,7 +1313,10 @@
 .pxt-log-time {
   font-family: var(--pxt-number-stack);
   font-size: 1rem;
-  font-variation-settings: "wght" 700, "ELGR" 1, "ELSH" 8;
+  font-variation-settings:
+    'wght' 700,
+    'ELGR' 1,
+    'ELSH' 8;
   letter-spacing: 0.04em;
   overflow-wrap: anywhere;
 }
@@ -1345,7 +1354,7 @@
 }
 
 .pxt-tool-icon::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.2rem;
   left: 0.42rem;
@@ -1365,13 +1374,12 @@
   padding: 0.8rem 0.8rem 0.8rem 1.25rem;
   border: 4px solid var(--pxt-night);
   background:
-    linear-gradient(90deg, var(--pxt-coral) 0 0.55rem, transparent 0.55rem),
-    var(--pxt-paper);
+    linear-gradient(90deg, var(--pxt-coral) 0 0.55rem, transparent 0.55rem), var(--pxt-paper);
   font-style: normal;
 }
 
 .pxt-postbox-copy::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.7rem;
   right: 0.7rem;
@@ -1427,7 +1435,7 @@
     box-shadow: 8px 8px 0 var(--pxt-night);
   }
 
-  .pxt-node[aria-current="location"]:hover {
+  .pxt-node[aria-current='location']:hover {
     background: var(--pxt-gold);
   }
 

@@ -144,9 +144,7 @@ const designRoutes = {
 
       // design.json 的 locales 是页面生成白名单；缺失时按全量处理，由注册表在构建期给出明确错误。
       const designs = ids.map((id) => {
-        const meta = JSON.parse(
-          fs.readFileSync(path.join(designsDir, id, 'design.json'), 'utf8'),
-        );
+        const meta = JSON.parse(fs.readFileSync(path.join(designsDir, id, 'design.json'), 'utf8'));
         return { id, locales: Array.isArray(meta.locales) ? meta.locales : null };
       });
 

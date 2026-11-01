@@ -10,15 +10,19 @@
 
 export const designDescriptions: Record<string, Record<string, string>> = {
   brutal: {
-    'zh-CN': '新粗野告示板：粗黑描边、硬偏移阴影、酸性高亮与超大字号，把资料做成一块块不容忽视的标牌。',
-    'zh-TW': '新粗野告示板：粗黑描邊、硬偏移陰影、酸性高亮與超大字號，把資料做成一塊塊不容忽視的標牌。',
+    'zh-CN':
+      '新粗野告示板：粗黑描边、硬偏移阴影、酸性高亮与超大字号，把资料做成一块块不容忽视的标牌。',
+    'zh-TW':
+      '新粗野告示板：粗黑描邊、硬偏移陰影、酸性高亮與超大字號，把資料做成一塊塊不容忽視的標牌。',
     ja: 'ネオ・ブルータルの掲示板——太い黒枠、硬いオフセット影、アシッドな差し色と巨大な文字で、プロフィールを無視できない看板に。',
     en: 'A neo-brutalist noticeboard: thick black outlines, hard offset shadows, acid highlights and oversized type turn the profile into signs you cannot ignore.',
     ko: '네오 브루탈리즘 게시판 — 굵은 검정 테두리, 단단한 오프셋 그림자, 애시드 형광 강조와 거대한 글자로 프로필을 무시할 수 없는 표지판으로.',
   },
   deco: {
-    'zh-CN': 'Art Deco 剧院节目单：墨黑台面、黄铜双线框、金色扇形与对称版式，把资料排成一册夜场演出手册。',
-    'zh-TW': 'Art Deco 劇院節目單：墨黑檯面、黃銅雙線框、金色扇形與對稱版式，把資料排成一冊夜場演出手冊。',
+    'zh-CN':
+      'Art Deco 剧院节目单：墨黑台面、黄铜双线框、金色扇形与对称版式，把资料排成一册夜场演出手册。',
+    'zh-TW':
+      'Art Deco 劇院節目單：墨黑檯面、黃銅雙線框、金色扇形與對稱版式，把資料排成一冊夜場演出手冊。',
     ja: 'アール・デコの劇場プログラム——黒い舞台、真鍮の二重罫線、金色の扇、対称的な組版で夜の公演冊子に。',
     en: 'An Art Deco theatre programme: an ink-black stage, brass double rules, golden fans and symmetry turn the profile into an evening playbill.',
     ko: '아르데코 극장 프로그램 — 먹빛 무대, 황동 이중 괘선, 금빛 부채꼴과 대칭 조판으로 프로필을 한 편의 야간 공연 안내서로.',
@@ -31,15 +35,19 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     ko: '송식 화첩 — 화선지 바탕, 세로쓰기 제서, 주사 작은 인장과 청자 괘선으로 프로필을 펼친 한 장에.',
   },
   'fairy-kei': {
-    'zh-CN': '复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。',
-    'zh-TW': '復古少女玩具收藏箱：開啟的展示盒、懸掛連結飾品與包裝卡資料，糖果色貼紙和多層陳列組成不對稱主頁。',
+    'zh-CN':
+      '复古少女玩具收藏箱：打开的展示盒、悬挂链接饰品与包装卡资料，糖果色贴纸和多层陈列组成不对称主页。',
+    'zh-TW':
+      '復古少女玩具收藏箱：開啟的展示盒、懸掛連結飾品與包裝卡資料，糖果色貼紙和多層陳列組成不對稱主頁。',
     ja: 'レトロな少女の玩具コレクション——開いたショーケース、吊り下げチャームのリンク、パッケージカードのプロフィール。',
     en: 'A retro-girl toy collection case: an open display, charm-like links and a packaging-card profile in candy colours.',
     ko: '레트로 소녀 장난감 컬렉션 케이스 — 열린 진열장, 매달린 참 링크, 패키지 카드형 프로필. 캔디 컬러 스티커와 여러 겹 진열이 비대칭 홈을 이룹니다.',
   },
   'sticker-diary': {
-    'zh-CN': '手帐贴纸日记：跨页笔记本、胶带、手写批注和页边书签，把所有资料逐页贴进一本自己的剪贴簿。',
-    'zh-TW': '手帳貼紙日記：跨頁筆記本、膠帶、手寫批註和頁邊書籤，把所有資料逐頁貼進一本自己的剪貼簿。',
+    'zh-CN':
+      '手帐贴纸日记：跨页笔记本、胶带、手写批注和页边书签，把所有资料逐页贴进一本自己的剪贴簿。',
+    'zh-TW':
+      '手帳貼紙日記：跨頁筆記本、膠帶、手寫批註和頁邊書籤，把所有資料逐頁貼進一本自己的剪貼簿。',
     ja: 'ステッカー手帳の日記——見開きノート、テープ、手書きの注釈と栞でプロフィールを綴る。',
     en: 'A sticker diary: notebook spreads, tape, handwritten notes and bookmarks turn the profile into a scrapbook.',
     ko: '스티커 다이어리 — 노트 펼침면, 테이프, 손글씨 메모와 책갈피로 프로필을 한 권의 스크랩북에 붙여 둡니다.',
@@ -59,8 +67,10 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     ko: '동화 속 숲 그림책 — 입구 팻말에서 오솔길을 따라 오두막까지, 이정표와 나이테, 식물 표본으로 차분하게 풀어낸 프로필.',
   },
   'cute-alism': {
-    'zh-CN': '硬核糖果拼贴：粗黑描边、硬阴影、夸张标题与错位色块贯穿全页，资料成为一套几何视觉系统。',
-    'zh-TW': '硬核糖果拼貼：粗黑描邊、硬陰影、誇張標題與錯位色塊貫穿全頁，資料成為一套幾何視覺系統。',
+    'zh-CN':
+      '硬核糖果拼贴：粗黑描边、硬阴影、夸张标题与错位色块贯穿全页，资料成为一套几何视觉系统。',
+    'zh-TW':
+      '硬核糖果拼貼：粗黑描邊、硬陰影、誇張標題與錯位色塊貫穿全頁，資料成為一套幾何視覺系統。',
     ja: 'ハードキャンディ・コラージュ——太い黒線、ハードシャドウ、巨大な見出しと色ブロックで全編を構成。',
     en: 'Hard-candy collage: thick black outlines, hard shadows, oversized type and colour blocks across every section.',
     ko: '하드 캔디 콜라주 — 굵은 검정 외곽선, 단단한 그림자, 과장된 제목과 어긋난 색면이 전 페이지를 채웁니다.',
@@ -76,12 +86,14 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     'zh-CN': '1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。',
     'zh-TW': '1999 年個人主頁：左目錄、密集中欄與徽章軌，粗雙線、系統字型與離線計數器。',
     ja: '1999年の個人ホームページ——左の目次、密度のある本文、バッジの列。太い二重罫線とシステム書体、オフラインのカウンター。',
-    en: "A 1999 personal homepage: left directory, dense main column and badge rail, with double rules, system fonts and an offline counter.",
+    en: 'A 1999 personal homepage: left directory, dense main column and badge rail, with double rules, system fonts and an offline counter.',
     ko: '1999년 개인 홈페이지 — 왼쪽 목차, 빽빽한 가운데 단과 배지 레일. 굵은 이중 괘선, 시스템 글꼴, 오프라인 카운터.',
   },
   'html-only': {
-    'zh-CN': '原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。',
-    'zh-TW': '原生 HTML：只靠語義結構與瀏覽器預設樣式呈現完整資料，不載入自定義 CSS 或 JavaScript。',
+    'zh-CN':
+      '原生 HTML：只靠语义结构与浏览器默认样式呈现完整资料，不加载自定义 CSS 或 JavaScript。',
+    'zh-TW':
+      '原生 HTML：只靠語義結構與瀏覽器預設樣式呈現完整資料，不載入自定義 CSS 或 JavaScript。',
     ja: '素の HTML——意味構造とブラウザ既定の表示だけでプロフィールを提示し、独自の CSS や JavaScript を読み込まない。',
     en: 'Native HTML: the complete profile through semantic structure and browser defaults, with no custom CSS or JavaScript.',
     ko: '네이티브 HTML — 의미 구조와 브라우저 기본 스타일만으로 전체 프로필을 표시하며, 사용자 CSS나 JavaScript를 불러오지 않습니다.',

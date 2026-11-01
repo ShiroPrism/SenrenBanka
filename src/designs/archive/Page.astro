@@ -58,28 +58,40 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </div>
               <header class="ar-head">
                 <p class="ar-brand">
-                  <span class="ar-brand-mark">SENRENBANKA</span><span class="ar-dim"> · {t.archiveTag}</span>
+                  <span class="ar-brand-mark">SENRENBANKA</span>
+                  <span class="ar-dim"> · {t.archiveTag}</span>
                 </p>
                 <h1 class="ar-name">{profile.name}</h1>
                 <p class="ar-headline">{profile.headline}</p>
                 {profile.location && (
                   <p class="ar-loc">
-                    <span class="ar-field">{t.locationLabel}</span>{profile.location}
+                    <span class="ar-field">{t.locationLabel}</span>
+                    {profile.location}
                   </p>
                 )}
-                <span class="ar-pencil" aria-hidden="true">3-B</span>
+                <span class="ar-pencil" aria-hidden="true">
+                  3-B
+                </span>
               </header>
               <div class="ar-head-foot">
-                <p class="ar-callno" aria-hidden="true">{callNo}</p>
-                <div class="ar-stamp" aria-hidden="true">{t.stamp}</div>
+                <p class="ar-callno" aria-hidden="true">
+                  {callNo}
+                </p>
+                <div class="ar-stamp" aria-hidden="true">
+                  {t.stamp}
+                </div>
               </div>
             </div>
 
             {/* 02 · 备注（bio） */}
             <section class="ar-card" data-reveal aria-labelledby="ar-notes-title" style="--i:1">
               <div class="ar-tab">
-                <span class="ar-tab-no" aria-hidden="true">02</span>
-                <h2 class="ar-tab-title" id="ar-notes-title">{t.memoTitle}</h2>
+                <span class="ar-tab-no" aria-hidden="true">
+                  02
+                </span>
+                <h2 class="ar-tab-title" id="ar-notes-title">
+                  {t.memoTitle}
+                </h2>
               </div>
               <p class="ar-bio">{profile.bio}</p>
             </section>
@@ -87,101 +99,136 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
             {/* 03 · 索引（links）：编号 + 标签 + 点引导 + URL */}
             <section class="ar-card" data-reveal aria-labelledby="ar-index-title" style="--i:2">
               <div class="ar-tab">
-                <span class="ar-tab-no" aria-hidden="true">03</span>
-                <h2 class="ar-tab-title" id="ar-index-title">{t.itemsTitle}</h2>
+                <span class="ar-tab-no" aria-hidden="true">
+                  03
+                </span>
+                <h2 class="ar-tab-title" id="ar-index-title">
+                  {t.itemsTitle}
+                </h2>
               </div>
               <ul class="ar-entries">
-                {
-                  profile.links.map((link, index) => (
-                    <li class="ar-entry">
-                      <span class="ar-entry-no" aria-hidden="true">{pad(index)}</span>
-                      <a class="ar-link" href={link.url}>{link.label}</a>
-                      <span class="ar-dots" aria-hidden="true"></span>
-                      <span class="ar-url" aria-hidden="true">{shortUrl(link.url)}</span>
-                    </li>
-                  ))
-                }
+                {profile.links.map((link, index) => (
+                  <li class="ar-entry">
+                    <span class="ar-entry-no" aria-hidden="true">
+                      {pad(index)}
+                    </span>
+                    <a class="ar-link" href={link.url}>
+                      {link.label}
+                    </a>
+                    <span class="ar-dots" aria-hidden="true"></span>
+                    <span class="ar-url" aria-hidden="true">
+                      {shortUrl(link.url)}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </section>
 
             {/* 04 · 编目（projects） */}
-            {
-              profile.projects && profile.projects.length > 0 && (
-                <section class="ar-card" data-reveal aria-labelledby="ar-catalog-title" style="--i:3">
-                  <div class="ar-tab">
-                    <span class="ar-tab-no" aria-hidden="true">04</span>
-                    <h2 class="ar-tab-title" id="ar-catalog-title">{t.ordersTitle}</h2>
-                  </div>
-                  <ol class="ar-projects">
-                    {profile.projects.map((project, index) => (
-                      <li class="ar-project">
-                        <p class="ar-project-title">
-                          <span class="ar-entry-no" aria-hidden="true">{pad(index)}</span>{' '}
-                          {project.url ? (
-                            <a class="ar-link" href={project.url}>{project.title}</a>
-                          ) : (
-                            <span>{project.title}</span>
-                          )}
-                          {project.url && (
-                            <span class="ar-url" aria-hidden="true"> → {shortUrl(project.url)}</span>
-                          )}
-                        </p>
-                        {project.description && <p class="ar-note">{project.description}</p>}
-                        {project.tags && project.tags.length > 0 && (
-                          <p class="ar-tags">
-                            <span class="ar-tags-label">{t.tagsLabel}</span>{' '}
-                            {project.tags.join(' · ')}
-                          </p>
+            {profile.projects && profile.projects.length > 0 && (
+              <section class="ar-card" data-reveal aria-labelledby="ar-catalog-title" style="--i:3">
+                <div class="ar-tab">
+                  <span class="ar-tab-no" aria-hidden="true">
+                    04
+                  </span>
+                  <h2 class="ar-tab-title" id="ar-catalog-title">
+                    {t.ordersTitle}
+                  </h2>
+                </div>
+                <ol class="ar-projects">
+                  {profile.projects.map((project, index) => (
+                    <li class="ar-project">
+                      <p class="ar-project-title">
+                        <span class="ar-entry-no" aria-hidden="true">
+                          {pad(index)}
+                        </span>{' '}
+                        {project.url ? (
+                          <a class="ar-link" href={project.url}>
+                            {project.title}
+                          </a>
+                        ) : (
+                          <span>{project.title}</span>
                         )}
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-              )
-            }
+                        {project.url && (
+                          <span class="ar-url" aria-hidden="true">
+                            {' '}
+                            → {shortUrl(project.url)}
+                          </span>
+                        )}
+                      </p>
+                      {project.description && <p class="ar-note">{project.description}</p>}
+                      {project.tags && project.tags.length > 0 && (
+                        <p class="ar-tags">
+                          <span class="ar-tags-label">{t.tagsLabel}</span>{' '}
+                          {project.tags.join(' · ')}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
 
             {/* 05 · 履历（experience） */}
-            {
-              profile.experience && profile.experience.length > 0 && (
-                <section class="ar-card" data-reveal aria-labelledby="ar-record-title" style="--i:4">
-                  <div class="ar-tab">
-                    <span class="ar-tab-no" aria-hidden="true">05</span>
-                    <h2 class="ar-tab-title" id="ar-record-title">{t.logTitle}</h2>
-                  </div>
-                  <ul class="ar-logs">
-                    {profile.experience.map((item) => (
-                      <li class="ar-log">
-                        <p class="ar-log-head">
-                          <span class="ar-period">{item.period ?? '----'}</span>{' '}
-                          <span class="ar-org">{item.org}</span>
-                          {item.role ? <span class="ar-role"> · {item.role}</span> : null}
-                        </p>
-                        {item.description && <p class="ar-note">{item.description}</p>}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              )
-            }
+            {profile.experience && profile.experience.length > 0 && (
+              <section class="ar-card" data-reveal aria-labelledby="ar-record-title" style="--i:4">
+                <div class="ar-tab">
+                  <span class="ar-tab-no" aria-hidden="true">
+                    05
+                  </span>
+                  <h2 class="ar-tab-title" id="ar-record-title">
+                    {t.logTitle}
+                  </h2>
+                </div>
+                <ul class="ar-logs">
+                  {profile.experience.map((item) => (
+                    <li class="ar-log">
+                      <p class="ar-log-head">
+                        <span class="ar-period">{item.period ?? '----'}</span>{' '}
+                        <span class="ar-org">{item.org}</span>
+                        {item.role ? <span class="ar-role"> · {item.role}</span> : null}
+                      </p>
+                      {item.description && <p class="ar-note">{item.description}</p>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             {/* 06 · 主题词（skills） */}
-            {
-              profile.skills && profile.skills.length > 0 && (
-                <section class="ar-card" data-reveal aria-labelledby="ar-subjects-title" style="--i:5">
-                  <div class="ar-tab">
-                    <span class="ar-tab-no" aria-hidden="true">06</span>
-                    <h2 class="ar-tab-title" id="ar-subjects-title">{t.skillsTitle}</h2>
-                  </div>
-                  <p class="ar-skills">{profile.skills.join(' · ')}</p>
-                </section>
-              )
-            }
+            {profile.skills && profile.skills.length > 0 && (
+              <section
+                class="ar-card"
+                data-reveal
+                aria-labelledby="ar-subjects-title"
+                style="--i:5"
+              >
+                <div class="ar-tab">
+                  <span class="ar-tab-no" aria-hidden="true">
+                    06
+                  </span>
+                  <h2 class="ar-tab-title" id="ar-subjects-title">
+                    {t.skillsTitle}
+                  </h2>
+                </div>
+                <p class="ar-skills">{profile.skills.join(' · ')}</p>
+              </section>
+            )}
 
             {/* 07 · 借阅（contact + 合计 links.length） */}
-            <section class="ar-card" data-reveal aria-labelledby="ar-circulation-title" style="--i:6">
+            <section
+              class="ar-card"
+              data-reveal
+              aria-labelledby="ar-circulation-title"
+              style="--i:6"
+            >
               <div class="ar-tab">
-                <span class="ar-tab-no" aria-hidden="true">07</span>
-                <h2 class="ar-tab-title" id="ar-circulation-title">{t.contactTitle}</h2>
+                <span class="ar-tab-no" aria-hidden="true">
+                  07
+                </span>
+                <h2 class="ar-tab-title" id="ar-circulation-title">
+                  {t.contactTitle}
+                </h2>
               </div>
               <p class="ar-total">
                 <span class="ar-total-label">{t.totalLabel}</span>
@@ -202,8 +249,15 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
             </section>
 
             {/* 页脚 · 抽屉前沿的著录签（致谢 + DRAWER 03 + 样例声明） */}
-            <footer class="ar-card ar-foot" data-reveal aria-labelledby="ar-colophon-title" style="--i:7">
-              <h2 class="ar-foot-title" id="ar-colophon-title">{t.colophonTitle}</h2>
+            <footer
+              class="ar-card ar-foot"
+              data-reveal
+              aria-labelledby="ar-colophon-title"
+              style="--i:7"
+            >
+              <h2 class="ar-foot-title" id="ar-colophon-title">
+                {t.colophonTitle}
+              </h2>
               <p class="ar-due" aria-hidden="true">
                 <span>{t.dueLabel}</span>
                 <span class="ar-due-rule"></span>

@@ -19,6 +19,7 @@ const wave = '▁▂▃▄▅▆▇█▇▆▅▄▃▂▁▂▃▄▅▆▇█
 // 流动波形：4 份首尾相接；动画位移恰好一份（-25%）即无缝循环
 const waveFlow = wave.repeat(4);
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -37,110 +38,133 @@ const waveFlow = wave.repeat(4);
     <div class="ox-progress" aria-hidden="true"></div>
     <div class="ox-frame">
       <header class="ox-top">
-        <span class="ox-brand">SENRENBANKA<span class="ox-brand-dot" aria-hidden="true"> ●</span></span>
+        <span class="ox-brand">
+          SENRENBANKA
+          <span class="ox-brand-dot" aria-hidden="true">
+            {' '}
+            ●
+          </span>
+        </span>
         <span class="ox-top-meta">{profile.location ?? t.locationFallback}</span>
       </header>
-      <p class="ox-wave" aria-hidden="true"><span class="ox-wave-track">{waveFlow}</span></p>
+      <p class="ox-wave" aria-hidden="true">
+        <span class="ox-wave-track">{waveFlow}</span>
+      </p>
 
       <main>
         <section class="ox-hero" aria-labelledby="ox-identity-label">
-          <p id="ox-identity-label" class="ox-label ox-rise" style="--rise-delay: 0ms">IDENTITY / 身份</p>
-          <h1 class="ox-name ox-rise" style="--rise-delay: 40ms">{profile.name}</h1>
-          <p class="ox-headline ox-rise" style="--rise-delay: 80ms">{profile.headline}</p>
-          <p class="ox-bio ox-rise" style="--rise-delay: 120ms">{profile.bio}</p>
+          <p id="ox-identity-label" class="ox-label ox-rise" style="--rise-delay: 0ms">
+            IDENTITY / 身份
+          </p>
+          <h1 class="ox-name ox-rise" style="--rise-delay: 40ms">
+            {profile.name}
+          </h1>
+          <p class="ox-headline ox-rise" style="--rise-delay: 80ms">
+            {profile.headline}
+          </p>
+          <p class="ox-bio ox-rise" style="--rise-delay: 120ms">
+            {profile.bio}
+          </p>
         </section>
 
         <div class="ox-columns" data-reveal>
           <section aria-labelledby="ox-channels-label">
-            <p id="ox-channels-label" class="ox-label">CHANNELS / 链接</p>
+            <p id="ox-channels-label" class="ox-label">
+              CHANNELS / 链接
+            </p>
             <ul class="ox-links">
-              {
-                profile.links.map((link) => (
-                  <li>
-                    <a class="ox-link" href={link.url}>
-                      {link.icon === 'github' && <GithubMark class="ox-mark" aria-hidden="true" />}{link.icon === 'mail' && <Mail class="ox-mark" aria-hidden="true" />}{link.label}
-                    </a>
-                  </li>
-                ))
-              }
+              {profile.links.map((link) => (
+                <li>
+                  <a class="ox-link" href={link.url}>
+                    {link.icon === 'github' && <GithubMark class="ox-mark" aria-hidden="true" />}
+                    {link.icon === 'mail' && <Mail class="ox-mark" aria-hidden="true" />}
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </section>
-          {
-            profile.skills && profile.skills.length > 0 && (
-              <section aria-labelledby="ox-capabilities-label">
-                <p id="ox-capabilities-label" class="ox-label">CAPABILITIES / 能力</p>
-                <ul class="ox-badges">
-                  {profile.skills.map((skill) => (
-                    <li class="ox-badge">{skill}</li>
-                  ))}
-                </ul>
-              </section>
-            )
-          }
+          {profile.skills && profile.skills.length > 0 && (
+            <section aria-labelledby="ox-capabilities-label">
+              <p id="ox-capabilities-label" class="ox-label">
+                CAPABILITIES / 能力
+              </p>
+              <ul class="ox-badges">
+                {profile.skills.map((skill) => (
+                  <li class="ox-badge">{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="ox-section" aria-labelledby="ox-deployments-label">
-              <p id="ox-deployments-label" class="ox-label">DEPLOYMENTS / 精选项目</p>
-              <ul class="ox-rows">
-                {profile.projects.map((project, index) => (
-                  <li class="ox-row" data-reveal>
-                    <span class="ox-num tabular-nums">{pad(index)}</span>
-                    <div>
-                      <h2 class="ox-row-title">
-                        {project.url ? <a href={project.url}>{project.title}</a> : project.title}
-                      </h2>
-                      {project.description && <p class="ox-row-desc">{project.description}</p>}
-                      {project.tags && (
-                        <p class="ox-row-tags">{project.tags.map((tag) => `[${tag}]`).join(' ')}</p>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="ox-section" aria-labelledby="ox-deployments-label">
+            <p id="ox-deployments-label" class="ox-label">
+              DEPLOYMENTS / 精选项目
+            </p>
+            <ul class="ox-rows">
+              {profile.projects.map((project, index) => (
+                <li class="ox-row" data-reveal>
+                  <span class="ox-num tabular-nums">{pad(index)}</span>
+                  <div>
+                    <h2 class="ox-row-title">
+                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                    </h2>
+                    {project.description && <p class="ox-row-desc">{project.description}</p>}
+                    {project.tags && (
+                      <p class="ox-row-tags">{project.tags.map((tag) => `[${tag}]`).join(' ')}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="ox-section" aria-labelledby="ox-operations-label">
-              <p id="ox-operations-label" class="ox-label">OPERATIONS / 经历</p>
-              <ul class="ox-rows">
-                {profile.experience.map((item) => (
-                  <li class="ox-row" data-reveal>
-                    <span class="ox-num tabular-nums">{item.period ?? t.periodFallback}</span>
-                    <div>
-                      <h2 class="ox-row-title">
-                        {item.org}
-                        {item.role ? <span class="ox-dim"> — {item.role}</span> : null}
-                      </h2>
-                      {item.description && <p class="ox-row-desc">{item.description}</p>}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="ox-section" aria-labelledby="ox-operations-label">
+            <p id="ox-operations-label" class="ox-label">
+              OPERATIONS / 经历
+            </p>
+            <ul class="ox-rows">
+              {profile.experience.map((item) => (
+                <li class="ox-row" data-reveal>
+                  <span class="ox-num tabular-nums">{item.period ?? t.periodFallback}</span>
+                  <div>
+                    <h2 class="ox-row-title">
+                      {item.org}
+                      {item.role ? <span class="ox-dim"> — {item.role}</span> : null}
+                    </h2>
+                    {item.description && <p class="ox-row-desc">{item.description}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </main>
 
       <footer class="ox-footer" data-reveal aria-labelledby="ox-contact-label">
         <div>
-          <p id="ox-contact-label" class="ox-label">CONTACT</p>
-          {
-            profile.contact?.email ? (
-              <a class="ox-link" href={`mailto:${profile.contact.email}`}>
-                <span class="ox-link-arrow" aria-hidden="true">▸</span>{profile.contact.email}
-              </a>
-            ) : (
-              <p class="ox-dim">{t.noChannel}</p>
-            )
-          }
+          <p id="ox-contact-label" class="ox-label">
+            CONTACT
+          </p>
+          {profile.contact?.email ? (
+            <a class="ox-link" href={`mailto:${profile.contact.email}`}>
+              <span class="ox-link-arrow" aria-hidden="true">
+                ▸
+              </span>
+              {profile.contact.email}
+            </a>
+          ) : (
+            <p class="ox-dim">{t.noChannel}</p>
+          )}
         </div>
         <div class="ox-footer-right">
-          <p class="ox-wave ox-wave-small" aria-hidden="true"><span class="ox-wave-track">{waveFlow}</span></p>
+          <p class="ox-wave ox-wave-small" aria-hidden="true">
+            <span class="ox-wave-track">{waveFlow}</span>
+          </p>
         </div>
       </footer>
     </div>

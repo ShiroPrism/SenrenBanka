@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-lexicon: var(--font-sorts-mill-goudy);
@@ -17,7 +17,9 @@
   padding: clamp(0.9rem, 4vw, 2.6rem) clamp(0.5rem, 3vw, 2rem) clamp(1.8rem, 6vw, 3.5rem);
   background: var(--lx-back);
   color: var(--lx-ink);
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Songti SC',
+    'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 1rem;
   line-height: 1.85;
   display: grid;
@@ -45,7 +47,9 @@
   margin: 0 0 1.7rem;
   padding-bottom: 0.45rem;
   border-bottom: 1px solid var(--lx-line);
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -80,7 +84,9 @@
 }
 
 .lx-title-latin {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.6875rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -88,7 +94,9 @@
 }
 
 .lx-title-pos {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-style: italic;
   font-size: 0.75rem;
   letter-spacing: 0.06em;
@@ -147,7 +155,9 @@
 }
 
 .lx-num {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   color: var(--lx-dim);
@@ -160,7 +170,9 @@
 }
 
 .lx-latin {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.6875rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -168,7 +180,9 @@
 }
 
 .lx-pos {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-style: italic;
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
@@ -219,7 +233,9 @@
 
 .lx-arrow {
   flex: none;
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.9375rem;
   color: var(--lx-oxblood);
 }
@@ -270,7 +286,9 @@
 }
 
 .lx-period {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 0.75rem;
   letter-spacing: 0.1em;
   color: var(--lx-dim);
@@ -300,7 +318,7 @@
 }
 
 .lx-skill + .lx-skill::before {
-  content: "・";
+  content: '・';
   margin: 0 0.2em 0 0.05em;
   color: var(--lx-dim);
 }
@@ -341,7 +359,9 @@
 }
 
 .lx-tally-num {
-  font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+  font-family:
+    var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
   font-size: 1.5rem;
   line-height: 1;
   letter-spacing: 0.04em;
@@ -441,7 +461,9 @@
     background: var(--lx-paper);
     writing-mode: vertical-rl;
     text-orientation: upright;
-    font-family: var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, "Times New Roman", "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", serif;
+    font-family:
+      var(--font-lexicon), var(--font-gowun-batang), var(--font-zhuque), Georgia, 'Times New Roman',
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', serif;
     font-size: 0.625rem;
     line-height: 1;
     letter-spacing: 0.06em;

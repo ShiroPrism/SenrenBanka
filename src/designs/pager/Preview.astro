@@ -24,15 +24,34 @@ const count = String(links.length).padStart(2, '0');
     </div>
     <div class="pg-pv-screen">
       <div class="pg-pv-status">
-        <span class="pg-pv-signal"><i></i><i></i><i></i><i></i></span>
+        <span class="pg-pv-signal">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </span>
         <span class="pg-pv-batt"></span>
-        <span>{t.msgLabel} <b>{count}</b></span>
+        <span>
+          {t.msgLabel} <b>{count}</b>
+        </span>
       </div>
       <p class="pg-pv-name">{name}</p>
       <p class="pg-pv-headline">{headline}</p>
-      {location && <p class="pg-pv-loc">{t.locLabel} {location}</p>}
-      <p class="pg-pv-msg"><span>01</span>{t.memoTitle}<i></i></p>
-      <p class="pg-pv-msg"><span>02</span>{t.linksTitle}<i></i></p>
+      {location && (
+        <p class="pg-pv-loc">
+          {t.locLabel} {location}
+        </p>
+      )}
+      <p class="pg-pv-msg">
+        <span>01</span>
+        {t.memoTitle}
+        <i></i>
+      </p>
+      <p class="pg-pv-msg">
+        <span>02</span>
+        {t.linksTitle}
+        <i></i>
+      </p>
       <p class="pg-pv-end">{t.endLine}</p>
     </div>
   </div>
@@ -47,7 +66,9 @@ const count = String(links.length).padStart(2, '0');
     overflow: hidden;
     background: radial-gradient(120% 80% at 50% -10%, var(--pg-back-rise), var(--pg-back) 58%);
     color: var(--pg-ink);
-    font-family: var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-silkscreen), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.55rem;
     line-height: 1.5;
   }
@@ -57,7 +78,9 @@ const count = String(links.length).padStart(2, '0');
     padding: 0.55rem;
     border-radius: 0.8rem;
     background: linear-gradient(180deg, var(--pg-shell), var(--pg-shell-2) 74%);
-    box-shadow: 0 9px 18px rgba(0, 0, 0, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 9px 18px rgba(0, 0, 0, 0.48),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 
   .pg-pv-top {
@@ -110,7 +133,9 @@ const count = String(links.length).padStart(2, '0');
   }
 
   .pg-pv-status b {
-    font-family: var(--font-handjet), var(--font-galmuri11), var(--font-ark-pixel), "Songti SC", "SimSun", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-handjet), var(--font-galmuri11), var(--font-ark-pixel), 'Songti SC', 'SimSun',
+      'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.02em;
@@ -128,10 +153,19 @@ const count = String(links.length).padStart(2, '0');
     background: var(--pg-ink);
   }
 
-  .pg-pv-signal i:nth-child(1) { height: 0.14rem; }
-  .pg-pv-signal i:nth-child(2) { height: 0.24rem; }
-  .pg-pv-signal i:nth-child(3) { height: 0.34rem; }
-  .pg-pv-signal i:nth-child(4) { height: 0.44rem; opacity: 0.28; }
+  .pg-pv-signal i:nth-child(1) {
+    height: 0.14rem;
+  }
+  .pg-pv-signal i:nth-child(2) {
+    height: 0.24rem;
+  }
+  .pg-pv-signal i:nth-child(3) {
+    height: 0.34rem;
+  }
+  .pg-pv-signal i:nth-child(4) {
+    height: 0.44rem;
+    opacity: 0.28;
+  }
 
   .pg-pv-batt {
     width: 0.7rem;
@@ -140,7 +174,7 @@ const count = String(links.length).padStart(2, '0');
   }
 
   .pg-pv-batt::before {
-    content: "";
+    content: '';
     display: block;
     width: 60%;
     height: 100%;

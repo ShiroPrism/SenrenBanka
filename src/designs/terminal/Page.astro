@@ -31,6 +31,7 @@ const cmdSkills = 'cat skills.txt';
 const cmdMail = 'mail';
 const introEnd = afterCmd(cmdIntro);
 ---
+
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
@@ -48,106 +49,229 @@ const introEnd = afterCmd(cmdIntro);
   <body class="tm">
     <main class="tm-screen" aria-label="SenrenBanka terminal">
       <div class="tm-chrome">
-        <span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span><span class="tm-dot" aria-hidden="true"></span>
-        <span class="tm-chrome-title" aria-hidden="true">guest@senrenbanka: ~</span>
+        <span class="tm-dot" aria-hidden="true"></span>
+        <span class="tm-dot" aria-hidden="true"></span>
+        <span class="tm-dot" aria-hidden="true"></span>
+        <span class="tm-chrome-title" aria-hidden="true">
+          guest@senrenbanka: ~
+        </span>
       </div>
 
       <div class="tm-body">
         <section class="tm-block tm-block-intro" aria-label="Intro 简介">
-          <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdIntro).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdIntro)}ms`} aria-hidden="true"># 简介</span></p>
-          <h1 class="tm-name" style={`--d:${lane(introEnd, 0)}ms`}>{profile.name}<span class="tm-cursor" aria-hidden="true"></span></h1>
-          <p class="tm-out tm-headline" style={`--d:${lane(introEnd, 1)}ms`}>{profile.headline}</p>
-          <p class="tm-out tm-bio" style={`--d:${lane(introEnd, 2)}ms`}>{profile.bio}</p>
+          <p class="tm-cmd">
+            <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+              $
+            </span>{' '}
+            {typed(cmdIntro).map(({ ch, d }) => (
+              <span class="tm-ty" style={`--d:${d}ms`}>
+                {ch}
+              </span>
+            ))}{' '}
+            <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdIntro)}ms`} aria-hidden="true">
+              # 简介
+            </span>
+          </p>
+          <h1 class="tm-name" style={`--d:${lane(introEnd, 0)}ms`}>
+            {profile.name}
+            <span class="tm-cursor" aria-hidden="true"></span>
+          </h1>
+          <p class="tm-out tm-headline" style={`--d:${lane(introEnd, 1)}ms`}>
+            {profile.headline}
+          </p>
+          <p class="tm-out tm-bio" style={`--d:${lane(introEnd, 2)}ms`}>
+            {profile.bio}
+          </p>
           {profile.location && (
-            <p class="tm-out tm-dim" style={`--d:${lane(introEnd, 3)}ms`}><span aria-hidden="true">#</span> {t.basedIn} {profile.location}</p>
+            <p class="tm-out tm-dim" style={`--d:${lane(introEnd, 3)}ms`}>
+              <span aria-hidden="true">#</span> {t.basedIn} {profile.location}
+            </p>
           )}
         </section>
 
         <section class="tm-block" data-reveal aria-labelledby="tm-links-title">
-          <h2 id="tm-links-title" class="sr-only"><span lang="en">Links</span> 链接</h2>
-          <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdLinks).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdLinks)}ms`} aria-hidden="true"># 链接</span></p>
+          <h2 id="tm-links-title" class="sr-only">
+            <span lang="en">Links</span> 链接
+          </h2>
+          <p class="tm-cmd">
+            <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+              $
+            </span>{' '}
+            {typed(cmdLinks).map(({ ch, d }) => (
+              <span class="tm-ty" style={`--d:${d}ms`}>
+                {ch}
+              </span>
+            ))}{' '}
+            <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdLinks)}ms`} aria-hidden="true">
+              # 链接
+            </span>
+          </p>
           <ul class="tm-list tm-list-links">
-            {
-              profile.links.map((link, index) => (
-                <li style={`--d:${lane(afterCmd(cmdLinks), index)}ms`}>
-                  <span class="tm-dim" aria-hidden="true">└─</span>{' '}
-                  <a class="tm-link" href={link.url} aria-label={`${link.label}: ${link.url}`}>
-                    {link.label.toLowerCase()}
-                  </a>{' '}
-                  <span class="tm-dim" aria-hidden="true">→ {shortUrl(link.url)}</span>
-                </li>
-              ))
-            }
+            {profile.links.map((link, index) => (
+              <li style={`--d:${lane(afterCmd(cmdLinks), index)}ms`}>
+                <span class="tm-dim" aria-hidden="true">
+                  └─
+                </span>{' '}
+                <a class="tm-link" href={link.url} aria-label={`${link.label}: ${link.url}`}>
+                  {link.label.toLowerCase()}
+                </a>{' '}
+                <span class="tm-dim" aria-hidden="true">
+                  → {shortUrl(link.url)}
+                </span>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {
-          profile.experience && profile.experience.length > 0 && (
-            <section class="tm-block" data-reveal aria-labelledby="tm-experience-title">
-              <h2 id="tm-experience-title" class="sr-only"><span lang="en">Experience</span> 经历</h2>
-              <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdExperience).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdExperience)}ms`} aria-hidden="true"># 经历</span></p>
-              {profile.experience.map((item, index) => (
-                <p class="tm-out" style={`--d:${lane(afterCmd(cmdExperience), index)}ms`}>
-                  <span class="tm-dim">[{item.period ?? '----'}]</span>{' '}
-                  <span class="tm-org">{item.org}</span>
-                  {item.role ? ` — ${item.role}` : ''}
-                  {item.description ? (
-                    <span class="tm-dim tm-note">
+        {profile.experience && profile.experience.length > 0 && (
+          <section class="tm-block" data-reveal aria-labelledby="tm-experience-title">
+            <h2 id="tm-experience-title" class="sr-only">
+              <span lang="en">Experience</span> 经历
+            </h2>
+            <p class="tm-cmd">
+              <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+                $
+              </span>{' '}
+              {typed(cmdExperience).map(({ ch, d }) => (
+                <span class="tm-ty" style={`--d:${d}ms`}>
+                  {ch}
+                </span>
+              ))}{' '}
+              <span
+                class="tm-dim tm-lit"
+                style={`--d:${afterCmd(cmdExperience)}ms`}
+                aria-hidden="true"
+              >
+                # 经历
+              </span>
+            </p>
+            {profile.experience.map((item, index) => (
+              <p class="tm-out" style={`--d:${lane(afterCmd(cmdExperience), index)}ms`}>
+                <span class="tm-dim">[{item.period ?? '----'}]</span>{' '}
+                <span class="tm-org">{item.org}</span>
+                {item.role ? ` — ${item.role}` : ''}
+                {item.description ? (
+                  <span class="tm-dim tm-note">
+                    {' '}
+                    <span aria-hidden="true">#</span> {item.description}
+                  </span>
+                ) : null}
+              </p>
+            ))}
+          </section>
+        )}
+
+        {profile.projects && profile.projects.length > 0 && (
+          <section class="tm-block" data-reveal aria-labelledby="tm-projects-title">
+            <h2 id="tm-projects-title" class="sr-only">
+              <span lang="en">Projects</span> 项目
+            </h2>
+            <p class="tm-cmd">
+              <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+                $
+              </span>{' '}
+              {typed(cmdProjects).map(({ ch, d }) => (
+                <span class="tm-ty" style={`--d:${d}ms`}>
+                  {ch}
+                </span>
+              ))}{' '}
+              <span
+                class="tm-dim tm-lit"
+                style={`--d:${afterCmd(cmdProjects)}ms`}
+                aria-hidden="true"
+              >
+                # 项目
+              </span>
+            </p>
+            <ul class="tm-list">
+              {profile.projects.map((project, index) => (
+                <li class="tm-proj" style={`--d:${lane(afterCmd(cmdProjects), index)}ms`}>
+                  <span class="tm-dim">{pad(index)}</span>{' '}
+                  {project.url ? (
+                    <a class="tm-link" href={project.url}>
+                      {project.title}
+                    </a>
+                  ) : (
+                    <span>{project.title}</span>
+                  )}
+                  {project.url && (
+                    <span class="tm-dim" aria-hidden="true">
                       {' '}
-                      <span aria-hidden="true">#</span> {item.description}
+                      → {shortUrl(project.url)}
                     </span>
+                  )}
+                  {project.description ? (
+                    <span class="tm-dim"> — {project.description}</span>
                   ) : null}
-                </p>
+                  {project.tags && <span class="tm-dim"> [{project.tags.join(', ')}]</span>}
+                </li>
               ))}
-            </section>
-          )
-        }
+            </ul>
+          </section>
+        )}
 
-        {
-          profile.projects && profile.projects.length > 0 && (
-            <section class="tm-block" data-reveal aria-labelledby="tm-projects-title">
-              <h2 id="tm-projects-title" class="sr-only"><span lang="en">Projects</span> 项目</h2>
-              <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdProjects).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdProjects)}ms`} aria-hidden="true"># 项目</span></p>
-              <ul class="tm-list">
-                {profile.projects.map((project, index) => (
-                  <li class="tm-proj" style={`--d:${lane(afterCmd(cmdProjects), index)}ms`}>
-                    <span class="tm-dim">{pad(index)}</span>{' '}
-                    {project.url ? <a class="tm-link" href={project.url}>{project.title}</a> : <span>{project.title}</span>}{project.url && <span class="tm-dim" aria-hidden="true"> → {shortUrl(project.url)}</span>}
-                    {project.description ? <span class="tm-dim"> — {project.description}</span> : null}
-                    {project.tags && <span class="tm-dim"> [{project.tags.join(', ')}]</span>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
-
-        {
-          profile.skills && profile.skills.length > 0 && (
-            <section class="tm-block" data-reveal aria-labelledby="tm-skills-title">
-              <h2 id="tm-skills-title" class="sr-only"><span lang="en">Skills</span> 技能</h2>
-              <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdSkills).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdSkills)}ms`} aria-hidden="true"># 技能</span></p>
-              <p class="tm-out tm-skills" style={`--d:${lane(afterCmd(cmdSkills), 0)}ms`}>{profile.skills.join('  ·  ')}</p>
-            </section>
-          )
-        }
+        {profile.skills && profile.skills.length > 0 && (
+          <section class="tm-block" data-reveal aria-labelledby="tm-skills-title">
+            <h2 id="tm-skills-title" class="sr-only">
+              <span lang="en">Skills</span> 技能
+            </h2>
+            <p class="tm-cmd">
+              <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+                $
+              </span>{' '}
+              {typed(cmdSkills).map(({ ch, d }) => (
+                <span class="tm-ty" style={`--d:${d}ms`}>
+                  {ch}
+                </span>
+              ))}{' '}
+              <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdSkills)}ms`} aria-hidden="true">
+                # 技能
+              </span>
+            </p>
+            <p class="tm-out tm-skills" style={`--d:${lane(afterCmd(cmdSkills), 0)}ms`}>
+              {profile.skills.join('  ·  ')}
+            </p>
+          </section>
+        )}
 
         <section class="tm-block" data-reveal aria-labelledby="tm-contact-title">
-          <h2 id="tm-contact-title" class="sr-only"><span lang="en">Contact</span> 联系</h2>
-          <p class="tm-cmd"><span class="tm-lit" style="--d:0ms" aria-hidden="true">$</span>{' '}{typed(cmdMail).map(({ ch, d }) => <span class="tm-ty" style={`--d:${d}ms`}>{ch}</span>)}{' '}<span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdMail)}ms`} aria-hidden="true"># 联系</span></p>
+          <h2 id="tm-contact-title" class="sr-only">
+            <span lang="en">Contact</span> 联系
+          </h2>
+          <p class="tm-cmd">
+            <span class="tm-lit" style="--d:0ms" aria-hidden="true">
+              $
+            </span>{' '}
+            {typed(cmdMail).map(({ ch, d }) => (
+              <span class="tm-ty" style={`--d:${d}ms`}>
+                {ch}
+              </span>
+            ))}{' '}
+            <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdMail)}ms`} aria-hidden="true">
+              # 联系
+            </span>
+          </p>
           {profile.contact?.email ? (
             <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}>
               {profile.contact.note ?? t.sayHello} →{' '}
-              <a class="tm-link" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+              <a class="tm-link" href={`mailto:${profile.contact.email}`}>
+                {profile.contact.email}
+              </a>
             </p>
           ) : (
-            <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}><span class="tm-dim">{t.noMail}</span></p>
+            <p class="tm-out" style={`--d:${lane(afterCmd(cmdMail), 0)}ms`}>
+              <span class="tm-dim">{t.noMail}</span>
+            </p>
           )}
         </section>
 
         <footer class="tm-footer" data-reveal>
-          <p class="tm-out tm-dim whitespace-pre" style="--d:0ms" aria-hidden="true">{rule}</p>
-          <p class="tm-out tm-dim" style="--d:140ms">{t.sessionEnd}</p>
+          <p class="tm-out tm-dim whitespace-pre" style="--d:0ms" aria-hidden="true">
+            {rule}
+          </p>
+          <p class="tm-out tm-dim" style="--d:140ms">
+            {t.sessionEnd}
+          </p>
         </footer>
       </div>
     </main>

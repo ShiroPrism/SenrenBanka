@@ -27,15 +27,29 @@ const t = messages[locale];
       <span class="tp-pv-note">{t.labelNote}</span>
     </div>
     <div class="tp-pv-reels">
-      <span class="tp-pv-reel"><i></i><b></b></span>
-      <span class="tp-pv-reel"><i></i><b></b></span>
+      <span class="tp-pv-reel">
+        <i></i>
+        <b></b>
+      </span>
+      <span class="tp-pv-reel">
+        <i></i>
+        <b></b>
+      </span>
     </div>
   </div>
   <div class="tp-pv-card">
     <p class="tp-pv-headline">{headline}</p>
-    <p class="tp-pv-track"><span>A1</span>{t.memoTitle}<i></i></p>
+    <p class="tp-pv-track">
+      <span>A1</span>
+      {t.memoTitle}
+      <i></i>
+    </p>
     {links.slice(0, 2).map((link, index) => (
-      <p class="tp-pv-track"><span>A{index + 2}</span>{link.label}<i></i></p>
+      <p class="tp-pv-track">
+        <span>A{index + 2}</span>
+        {link.label}
+        <i></i>
+      </p>
     ))}
     <p class="tp-pv-foot">C-60 · TYPE II</p>
   </div>
@@ -49,10 +63,16 @@ const t = messages[locale];
     min-height: 9rem;
     padding: 0.65rem 0.7rem;
     overflow: hidden;
-    background: radial-gradient(115% 85% at 50% -12%, var(--tp-back-rise), var(--tp-back) 58%, var(--tp-back-deep));
+    background: radial-gradient(
+      115% 85% at 50% -12%,
+      var(--tp-back-rise),
+      var(--tp-back) 58%,
+      var(--tp-back-deep)
+    );
     color: var(--tp-ink);
-    font-family: var(--font-league-mono), var(--font-poor-story), var(--font-zhuque), "Courier New", "Songti SC",
-      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", monospace;
+    font-family:
+      var(--font-league-mono), var(--font-poor-story), var(--font-zhuque), 'Courier New',
+      'Songti SC', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
     font-size: 0.5rem;
     line-height: 1.45;
   }
@@ -64,8 +84,15 @@ const t = messages[locale];
     overflow: hidden;
     border: 1px solid var(--tp-shell-edge);
     border-radius: 0.45rem;
-    background: linear-gradient(168deg, var(--tp-shell-hi), var(--tp-shell) 58%, var(--tp-shell-edge));
-    box-shadow: 0 7px 13px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    background: linear-gradient(
+      168deg,
+      var(--tp-shell-hi),
+      var(--tp-shell) 58%,
+      var(--tp-shell-edge)
+    );
+    box-shadow:
+      0 7px 13px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .tp-pv-label {
@@ -96,8 +123,9 @@ const t = messages[locale];
   .tp-pv-name {
     display: block;
     overflow: hidden;
-    font-family: var(--font-uglytypist), var(--font-poor-story), var(--font-zhuque), "Segoe Print", "Songti SC", "SimSun",
-      "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", cursive;
+    font-family:
+      var(--font-uglytypist), var(--font-poor-story), var(--font-zhuque), 'Segoe Print',
+      'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', cursive;
     font-size: 0.85rem;
     line-height: 1.15;
     text-overflow: ellipsis;
@@ -125,7 +153,12 @@ const t = messages[locale];
     width: 30%;
     aspect-ratio: 1;
     border-radius: 50%;
-    background: radial-gradient(circle at 50% 38%, var(--tp-window-hi), var(--tp-window) 62%, var(--tp-window-lo));
+    background: radial-gradient(
+      circle at 50% 38%,
+      var(--tp-window-hi),
+      var(--tp-window) 62%,
+      var(--tp-window-lo)
+    );
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.72);
   }
 
@@ -133,7 +166,9 @@ const t = messages[locale];
     width: 44%;
     height: 2px;
     background: var(--tp-hub);
-    box-shadow: 0 -0.28rem 0 var(--tp-hub), 0 0.28rem 0 var(--tp-hub);
+    box-shadow:
+      0 -0.28rem 0 var(--tp-hub),
+      0 0.28rem 0 var(--tp-hub);
   }
 
   .tp-pv-reel b {
@@ -154,10 +189,22 @@ const t = messages[locale];
     background: var(--tp-shell-hi);
   }
 
-  .tp-pv-screw--tl { top: 3px; left: 3px; }
-  .tp-pv-screw--tr { top: 3px; right: 3px; }
-  .tp-pv-screw--bl { bottom: 3px; left: 3px; }
-  .tp-pv-screw--br { right: 3px; bottom: 3px; }
+  .tp-pv-screw--tl {
+    top: 3px;
+    left: 3px;
+  }
+  .tp-pv-screw--tr {
+    top: 3px;
+    right: 3px;
+  }
+  .tp-pv-screw--bl {
+    bottom: 3px;
+    left: 3px;
+  }
+  .tp-pv-screw--br {
+    right: 3px;
+    bottom: 3px;
+  }
 
   .tp-pv-card {
     align-self: center;

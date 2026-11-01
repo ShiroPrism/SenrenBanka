@@ -5,112 +5,73 @@
       "id": "cutive-mono",
       "name": "Cutive Mono",
       "cssVariable": "--font-cutive-mono",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "courier-prime",
       "name": "Courier Prime",
       "cssVariable": "--font-courier-prime",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "sorts-mill-goudy",
       "name": "Sorts Mill Goudy",
       "cssVariable": "--font-sorts-mill-goudy",
-      "fallbacks": [
-        "Georgia",
-        "Times New Roman"
-      ]
+      "fallbacks": ["Georgia", "Times New Roman"]
     },
     {
       "id": "share-tech-mono",
       "name": "Share Tech Mono",
       "cssVariable": "--font-share-tech-mono",
-      "fallbacks": [
-        "Consolas",
-        "Courier New",
-        "monospace"
-      ]
+      "fallbacks": ["Consolas", "Courier New", "monospace"]
     },
     {
       "id": "league-mono",
       "name": "League Mono",
       "cssVariable": "--font-league-mono",
-      "fallbacks": [
-        "Consolas",
-        "Courier New"
-      ]
+      "fallbacks": ["Consolas", "Courier New"]
     },
     {
       "id": "silkscreen",
       "name": "Silkscreen",
       "cssVariable": "--font-silkscreen",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "prociono",
       "name": "Prociono",
       "cssVariable": "--font-prociono",
-      "fallbacks": [
-        "Georgia",
-        "serif"
-      ]
+      "fallbacks": ["Georgia", "serif"]
     },
     {
       "id": "handjet",
       "name": "Handjet Variable",
       "cssVariable": "--font-handjet",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "league-gothic",
       "name": "League Gothic Variable",
       "cssVariable": "--font-league-gothic",
-      "fallbacks": [
-        "Arial Narrow",
-        "sans-serif"
-      ]
+      "fallbacks": ["Arial Narrow", "sans-serif"]
     },
     {
       "id": "blackout",
       "name": "Blackout 2AM",
       "cssVariable": "--font-blackout",
-      "fallbacks": [
-        "Impact",
-        "Arial Black",
-        "sans-serif"
-      ]
+      "fallbacks": ["Impact", "Arial Black", "sans-serif"]
     },
     {
       "id": "uglytypist",
       "name": "UglyTypist",
       "cssVariable": "--font-uglytypist",
-      "fallbacks": [
-        "Segoe Print",
-        "Comic Sans MS"
-      ]
+      "fallbacks": ["Segoe Print", "Comic Sans MS"]
     },
     {
       "id": "format-1452",
       "name": "Format 1452",
       "cssVariable": "--font-format-1452",
-      "fallbacks": [
-        "Arial Narrow",
-        "Helvetica",
-        "sans-serif"
-      ],
+      "fallbacks": ["Arial Narrow", "Helvetica", "sans-serif"],
       "variantOverrides": [
         {
           "file": "Format_1452.woff2",
@@ -135,181 +96,109 @@
       "id": "dseg7-classic",
       "name": "DSEG7 Classic",
       "cssVariable": "--font-dseg7",
-      "fallbacks": [
-        "Consolas",
-        "monospace"
-      ]
+      "fallbacks": ["Consolas", "monospace"]
     },
     {
       "id": "dseg14-classic",
       "name": "DSEG14 Classic",
       "cssVariable": "--font-dseg14",
-      "fallbacks": [
-        "Consolas",
-        "monospace"
-      ]
+      "fallbacks": ["Consolas", "monospace"]
     },
     {
       "id": "tt2020-base",
       "name": "TT2020 Base",
       "cssVariable": "--font-tt2020",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "tt2020-style-d",
       "name": "TT2020 Style D",
       "cssVariable": "--font-tt2020-styled",
-      "fallbacks": [
-        "Courier New",
-        "Courier"
-      ]
+      "fallbacks": ["Courier New", "Courier"]
     },
     {
       "id": "zhuque-fangsong",
       "name": "Zhuque Fangsong",
       "cssVariable": "--font-zhuque",
-      "fallbacks": [
-        "Songti SC",
-        "SimSun",
-        "serif"
-      ]
+      "fallbacks": ["Songti SC", "SimSun", "serif"]
     },
     {
       "id": "ark-pixel-12px",
       "name": "Ark Pixel 12px",
       "cssVariable": "--font-ark-pixel",
-      "fallbacks": [
-        "SimSun",
-        "monospace"
-      ]
+      "fallbacks": ["SimSun", "monospace"]
     },
     {
       "id": "lxgw-wenkai",
       "name": "LXGW WenKai GB",
       "cssVariable": "--font-lxgw",
-      "fallbacks": [
-        "PingFang SC",
-        "Microsoft YaHei",
-        "Hiragino Sans",
-        "Yu Gothic UI",
-        "serif"
-      ]
+      "fallbacks": ["PingFang SC", "Microsoft YaHei", "Hiragino Sans", "Yu Gothic UI", "serif"]
     },
     {
       "id": "gothic-a1",
       "name": "Gothic A1",
       "cssVariable": "--font-gothic-a1",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "Noto Sans KR",
-        "sans-serif"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "sans-serif"]
     },
     {
       "id": "gowun-batang",
       "name": "Gowun Batang",
       "cssVariable": "--font-gowun-batang",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "Noto Serif KR",
-        "serif"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "Noto Serif KR", "serif"]
     },
     {
       "id": "galmuri11",
       "name": "Galmuri11",
       "cssVariable": "--font-galmuri11",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "monospace"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "monospace"]
     },
     {
       "id": "noto-sans-mono-cjk-kr",
       "name": "Noto Sans Mono CJK KR",
       "cssVariable": "--font-noto-sans-mono-cjk-kr",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "monospace"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "monospace"]
     },
     {
       "id": "dongle",
       "name": "Dongle",
       "cssVariable": "--font-dongle",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "sans-serif"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "sans-serif"]
     },
     {
       "id": "poor-story",
       "name": "Poor Story",
       "cssVariable": "--font-poor-story",
-      "fallbacks": [
-        "Apple SD Gothic Neo",
-        "Malgun Gothic",
-        "cursive",
-        "sans-serif"
-      ]
+      "fallbacks": ["Apple SD Gothic Neo", "Malgun Gothic", "cursive", "sans-serif"]
     },
     {
       "id": "noto-sans-tc",
       "name": "Noto Sans TC",
       "cssVariable": "--font-noto-sans-tc",
-      "fallbacks": [
-        "PingFang TC",
-        "Microsoft JhengHei",
-        "sans-serif"
-      ]
+      "fallbacks": ["PingFang TC", "Microsoft JhengHei", "sans-serif"]
     },
     {
       "id": "noto-serif-tc",
       "name": "Noto Serif TC",
       "cssVariable": "--font-noto-serif-tc",
-      "fallbacks": [
-        "Songti TC",
-        "PingFang TC",
-        "serif"
-      ]
+      "fallbacks": ["Songti TC", "PingFang TC", "serif"]
     },
     {
       "id": "lxgw-wenkai-tc",
       "name": "LXGW WenKai TC",
       "cssVariable": "--font-lxgw-tc",
-      "fallbacks": [
-        "Kaiti TC",
-        "Songti TC",
-        "serif"
-      ]
+      "fallbacks": ["Kaiti TC", "Songti TC", "serif"]
     },
     {
       "id": "fusion-pixel-tc",
       "name": "Fusion Pixel 12px TC",
       "cssVariable": "--font-fusion-pixel-tc",
-      "fallbacks": [
-        "PingFang TC",
-        "Microsoft JhengHei",
-        "monospace"
-      ]
+      "fallbacks": ["PingFang TC", "Microsoft JhengHei", "monospace"]
     },
     {
       "id": "noto-sans-mono-cjk-tc",
       "name": "Noto Sans Mono CJK TC",
       "cssVariable": "--font-noto-sans-mono-cjk-tc",
-      "fallbacks": [
-        "PingFang TC",
-        "Microsoft JhengHei",
-        "monospace"
-      ]
+      "fallbacks": ["PingFang TC", "Microsoft JhengHei", "monospace"]
     }
   ],
   "schemaVersion": 1

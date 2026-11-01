@@ -1,7 +1,7 @@
-@import "tailwindcss" source(none);
+@import 'tailwindcss' source(none);
 @source "./";
 @source not "./Preview.astro";
-@import "./tokens.css";
+@import './tokens.css';
 
 @theme inline {
   --font-m3: var(--font-roboto-flex);
@@ -18,8 +18,17 @@
   background: var(--m3-surface);
   color: var(--m3-on-surface);
   font-family:
-    var(--font-m3), var(--font-gothic-a1), 'Roboto', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
-    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    var(--font-m3),
+    var(--font-gothic-a1),
+    'Roboto',
+    system-ui,
+    -apple-system,
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Apple SD Gothic Neo',
+    'Malgun Gothic',
+    'Noto Sans KR',
+    sans-serif;
   font-size: 1rem; /* body-large 16/24 */
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;

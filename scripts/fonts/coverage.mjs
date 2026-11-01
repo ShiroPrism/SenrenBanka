@@ -12,11 +12,7 @@ import {
 
 const DEFAULT_PROJECT_ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const TC_SKIP_FAMILY = '__senrenbanka_tc_skip__';
-const SC_HAN_CORE_VARIABLES = new Set([
-  '--font-lxgw',
-  '--font-zhuque',
-  '--font-ark-pixel',
-]);
+const SC_HAN_CORE_VARIABLES = new Set(['--font-lxgw', '--font-zhuque', '--font-ark-pixel']);
 
 function collectFontStacks(source, sharedCustomProperties) {
   const declarations = declarationValues(source);
@@ -147,9 +143,7 @@ function evaluateTraditionalCoverage({
     tcFamilyVariables.add(target);
   }
 
-  const hasHanCore = [...usedVariables].some((variable) =>
-    SC_HAN_CORE_VARIABLES.has(variable),
-  );
+  const hasHanCore = [...usedVariables].some((variable) => SC_HAN_CORE_VARIABLES.has(variable));
   if (!hasHanCore && tcFamilyVariables.size === 0) {
     findings.push(
       `${design.id} (${locale}): system-CJK design does not remap a font variable to a han-traditional family inside html:lang(${locale})`,
@@ -188,9 +182,9 @@ export function evaluateDesignCoverage({
   if ((design.renderMode ?? 'styled') === 'html-only') return [];
   const findings = [];
   const locales = design.locales ?? [];
-  const registered = [...pageAstro.matchAll(
-    /<Font\b[^>]*cssVariable\s*=\s*["'](--font-[a-z0-9-]+)["']/gi,
-  )].map((match) => match[1]);
+  const registered = [
+    ...pageAstro.matchAll(/<Font\b[^>]*cssVariable\s*=\s*["'](--font-[a-z0-9-]+)["']/gi),
+  ].map((match) => match[1]);
   const sharedCustomProperties = new Map();
   for (const { source } of cssSources) {
     for (const declaration of declarationValues(withoutLocaleBlocks(source))) {
@@ -245,9 +239,7 @@ export async function checkFontCoverage(projectRoot = DEFAULT_PROJECT_ROOT) {
   const siteConfig = parseYaml(
     await fs.readFile(path.join(projectRoot, 'src/data/site.config.yaml'), 'utf8'),
   );
-  const config = JSON.parse(
-    await fs.readFile(path.join(projectRoot, 'fonts.config.json'), 'utf8'),
-  );
+  const config = JSON.parse(await fs.readFile(path.join(projectRoot, 'fonts.config.json'), 'utf8'));
   const snapshot = JSON.parse(
     await fs.readFile(path.join(projectRoot, 'fonts.catalog.json'), 'utf8'),
   );
@@ -277,16 +269,12 @@ export async function checkFontCoverage(projectRoot = DEFAULT_PROJECT_ROOT) {
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
     const directory = path.join(designsRoot, entry.name);
-    const design = JSON.parse(
-      await fs.readFile(path.join(directory, 'design.json'), 'utf8'),
-    );
+    const design = JSON.parse(await fs.readFile(path.join(directory, 'design.json'), 'utf8'));
     const locales = design.locales ?? [];
     if (!locales.some((locale) => requiredScripts.has(locale))) continue;
 
     const cssSources = [];
-    const cssFiles = (await fs.readdir(directory))
-      .filter((file) => file.endsWith('.css'))
-      .sort();
+    const cssFiles = (await fs.readdir(directory)).filter((file) => file.endsWith('.css')).sort();
     for (const file of cssFiles) {
       cssSources.push({
         filename: `${entry.name}/${file}`,

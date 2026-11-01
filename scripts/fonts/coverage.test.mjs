@@ -72,7 +72,9 @@ test('does not enforce Korean coverage on designs without a ko locale', () => {
   const findings = evaluateDesignCoverage({
     design: { id: 'fixture', locales: ['en'], renderMode: 'styled' },
     requiredScripts,
-    cssSources: [{ filename: 'fixture/style.css', source: 'body { font-family: Georgia, serif; }' }],
+    cssSources: [
+      { filename: 'fixture/style.css', source: 'body { font-family: Georgia, serif; }' },
+    ],
     pageAstro: '',
     familyByVariable,
   });
@@ -111,9 +113,8 @@ const traditionalFamilyByVariable = new Map([
 const traditionalDesign = { id: 'fixture', locales: ['zh-TW'], renderMode: 'styled' };
 const traditionalCss =
   'body { font-family: var(--font-gowun-batang), var(--font-lxgw), serif; }\n' +
-  "html:lang(zh-TW) { --font-gowun-batang: __senrenbanka_tc_skip__; --font-lxgw: var(--font-lxgw-tc); }";
-const traditionalPage =
-  "{view.locale.code === 'zh-TW' && <Font cssVariable=\"--font-lxgw-tc\" />}";
+  'html:lang(zh-TW) { --font-gowun-batang: __senrenbanka_tc_skip__; --font-lxgw: var(--font-lxgw-tc); }';
+const traditionalPage = '{view.locale.code === \'zh-TW\' && <Font cssVariable="--font-lxgw-tc" />}';
 
 test('accepts a TC design that remaps its Han core and companion in html:lang(zh-TW)', () => {
   const findings = evaluateDesignCoverage({
@@ -185,8 +186,7 @@ test('accepts a system-CJK design that remaps its Korean companion to a TC famil
           'html:lang(zh-TW) { --font-gothic-a1: var(--font-noto-sans-tc); }',
       },
     ],
-    pageAstro:
-      "{view.locale.code === 'zh-TW' && <Font cssVariable=\"--font-noto-sans-tc\" />}",
+    pageAstro: '{view.locale.code === \'zh-TW\' && <Font cssVariable="--font-noto-sans-tc" />}',
     familyByVariable: traditionalFamilyByVariable,
   });
   assert.deepEqual(findings, []);
