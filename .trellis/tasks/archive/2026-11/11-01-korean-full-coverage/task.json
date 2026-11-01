@@ -1,0 +1,30 @@
+{
+  "id": "korean-full-coverage",
+  "name": "korean-full-coverage",
+  "title": "韩语全设计覆盖",
+  "description": "父任务：把韩语从首批 5 套扩展到全部 27 套设计；覆盖文案/页面与字体呈现两个维度；拥有需求集、子任务映射、跨子任务验收与最终集成审查。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-01",
+  "completedAt": "2026-11-01",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-01-korean-fonts-release",
+    "11-01-korean-font-integration",
+    "11-01-korean-content-rollout"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}
