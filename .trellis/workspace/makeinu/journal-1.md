@@ -265,3 +265,25 @@ catalog v1.1.0（6 个韩语核心族）发布并接入；26 套设计字体栈 
 ### Status
 
 [OK] **Completed**
+
+
+## Session 10: 打包体积优化：字体语料按引用页 + 跳转页样式精简
+<!-- trellis-session: v=2 fp=c480a19fd3a42b07 -->
+
+**Date**: 2026-11-01
+**Task**: 打包体积优化：字体语料按引用页 + 跳转页样式精简
+**Branch**: `main`
+
+### Summary
+
+fonts:subset 改为按每个 core 族实际引用页收集语料（共享非 HTML 资产全量纳入），未引用族跳过；LegacyRedirect 改用专用最小样式。dist 8,855,728 -> 7,632,396 B（7.28 MiB），字体 14 族 1,625,116 B（8 非 Hangul 1,502,884），28 个跳转页 119,080 -> 45,076 B。npm run build/test（80/80）/fonts:audit（0 部署缺口、0 孤儿）通过；5 语言代表页与 html-only 浏览器实测通过。新增 ADR 0019 与两份验证记录。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `878b62d` | perf: reduce dist size with per-page font corpus and redirect style trim |
+
+### Status
+
+[OK] **Completed**
