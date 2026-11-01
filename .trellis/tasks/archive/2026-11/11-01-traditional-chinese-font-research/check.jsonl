@@ -1,0 +1,4 @@
+{"file": ".trellis/tasks/11-01-traditional-chinese-locale/prd.md", "reason": "验收标准"}
+{"file": ".trellis/tasks/11-01-traditional-chinese-locale/design.md", "reason": "技术设计与风险"}
+{"file": "docs/rules/operations.md", "reason": "构建与体积门禁"}
+{"file": "docs/rules/data-and-i18n.md", "reason": "多语言与覆盖规则"}

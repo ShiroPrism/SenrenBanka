@@ -1,0 +1,32 @@
+{
+  "id": "traditional-chinese-locale",
+  "name": "traditional-chinese-locale",
+  "title": "繁体中文全设计覆盖",
+  "description": "父任务：新增 zh-TW（繁體中文）第 5 语言并覆盖全部 27 套设计；包含字体调研/字体仓库发布/主站字体集成/内容三批/文档与验证。拥有需求集、子任务映射、跨子任务验收与最终集成审查。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-01",
+  "completedAt": "2026-11-01",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-01-traditional-chinese-font-research",
+    "11-01-traditional-chinese-fonts-release",
+    "11-01-traditional-chinese-font-integration",
+    "11-01-traditional-chinese-content-rollout",
+    "11-01-traditional-chinese-docs-verify"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

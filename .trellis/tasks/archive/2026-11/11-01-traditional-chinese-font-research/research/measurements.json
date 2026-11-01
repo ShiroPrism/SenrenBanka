@@ -1,0 +1,207 @@
+{
+  "generatedAt": "2026-11-01T08:43:16.609Z",
+  "corpus": {
+    "existingCodePoints": 1634,
+    "existingTextBytes": 3978866,
+    "tcConvertedUnique": 1552,
+    "unionUnique": 1839
+  },
+  "fonts": [
+    {
+      "id": "noto-sans-tc",
+      "sourceFile": "NotoSansTC-Regular.otf",
+      "sourceBytes": 5683368,
+      "subsetBytes": 303352,
+      "subsetCharacters": 1179,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 165,
+      "scope": "full-dist-union"
+    },
+    {
+      "id": "noto-sans-tc (tc-pages-only)",
+      "sourceFile": "NotoSansTC-Regular.otf",
+      "sourceBytes": 5683368,
+      "subsetBytes": 281968,
+      "subsetCharacters": 1067,
+      "corpusCharacters": 1552,
+      "bytesPerCharacter": 182,
+      "scope": "tc-pages-only"
+    },
+    {
+      "id": "noto-serif-tc",
+      "sourceFile": "NotoSerifTC-Regular.otf",
+      "sourceBytes": 7936104,
+      "subsetBytes": 432408,
+      "subsetCharacters": 1179,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 235,
+      "scope": "full-dist-union"
+    },
+    {
+      "id": "noto-serif-tc (tc-pages-only)",
+      "sourceFile": "NotoSerifTC-Regular.otf",
+      "sourceBytes": 7936104,
+      "subsetBytes": 404488,
+      "subsetCharacters": 1067,
+      "corpusCharacters": 1552,
+      "bytesPerCharacter": 261,
+      "scope": "tc-pages-only"
+    },
+    {
+      "id": "lxgw-wenkai-tc",
+      "sourceFile": "LXGWWenKaiTC-Regular.ttf",
+      "sourceBytes": 15341148,
+      "subsetBytes": 381244,
+      "subsetCharacters": 1385,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 207,
+      "scope": "full-dist-union"
+    },
+    {
+      "id": "lxgw-wenkai-tc (tc-pages-only)",
+      "sourceFile": "LXGWWenKaiTC-Regular.ttf",
+      "sourceBytes": 15341148,
+      "subsetBytes": 318000,
+      "subsetCharacters": 1098,
+      "corpusCharacters": 1552,
+      "bytesPerCharacter": 205,
+      "scope": "tc-pages-only"
+    },
+    {
+      "id": "ark-pixel-tc",
+      "sourceFile": "ark-pixel-12px-monospaced-zh_tw.otf",
+      "sourceBytes": 3628044,
+      "subsetBytes": 39844,
+      "subsetCharacters": 1335,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 22,
+      "scope": "full-dist-union"
+    },
+    {
+      "id": "ark-pixel-tc (tc-pages-only)",
+      "sourceFile": "ark-pixel-12px-monospaced-zh_tw.otf",
+      "sourceBytes": 3628044,
+      "subsetBytes": 32592,
+      "subsetCharacters": 1051,
+      "corpusCharacters": 1552,
+      "bytesPerCharacter": 21,
+      "scope": "tc-pages-only"
+    },
+    {
+      "id": "noto-sans-mono-cjk-tc",
+      "sourceFile": "NotoSansMonoCJKtc-Regular.otf",
+      "sourceBytes": 16392304,
+      "subsetBytes": 580420,
+      "subsetCharacters": 1838,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 316,
+      "scope": "full-dist-union"
+    },
+    {
+      "id": "noto-sans-mono-cjk-tc (tc-pages-only)",
+      "sourceFile": "NotoSansMonoCJKtc-Regular.otf",
+      "sourceBytes": 16392304,
+      "subsetBytes": 514372,
+      "subsetCharacters": 1551,
+      "corpusCharacters": 1552,
+      "bytesPerCharacter": 331,
+      "scope": "tc-pages-only"
+    },
+    {
+      "id": "lxgw-wenkai",
+      "sourceFile": "LXGWWenKaiGB-Medium.ttf",
+      "sourceBytes": 25596480,
+      "subsetBytes": 288928,
+      "subsetCharacters": 1633,
+      "corpusCharacters": 1634,
+      "bytesPerCharacter": 177,
+      "variable": "--font-lxgw",
+      "scope": "current-dist"
+    },
+    {
+      "id": "lxgw-wenkai (with-tc-text)",
+      "sourceFile": "LXGWWenKaiGB-Medium.ttf",
+      "sourceBytes": 25596480,
+      "subsetBytes": 358348,
+      "subsetCharacters": 1838,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 195,
+      "variable": "--font-lxgw",
+      "scope": "with-tc-text"
+    },
+    {
+      "id": "zhuque-fangsong",
+      "sourceFile": "ZhuqueFangsong-Regular.ttf",
+      "sourceBytes": 8824084,
+      "subsetBytes": 357396,
+      "subsetCharacters": 1165,
+      "corpusCharacters": 1634,
+      "bytesPerCharacter": 219,
+      "variable": "--font-zhuque",
+      "scope": "current-dist"
+    },
+    {
+      "id": "zhuque-fangsong (with-tc-text)",
+      "sourceFile": "ZhuqueFangsong-Regular.ttf",
+      "sourceBytes": 8824084,
+      "subsetBytes": 457780,
+      "subsetCharacters": 1370,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 249,
+      "variable": "--font-zhuque",
+      "scope": "with-tc-text"
+    },
+    {
+      "id": "ark-pixel-12px",
+      "sourceFile": "ark-pixel-12px-monospaced-zh_hans.otf",
+      "sourceBytes": 3607968,
+      "subsetBytes": 33840,
+      "subsetCharacters": 1154,
+      "corpusCharacters": 1634,
+      "bytesPerCharacter": 21,
+      "variable": "--font-ark-pixel",
+      "scope": "current-dist"
+    },
+    {
+      "id": "ark-pixel-12px (with-tc-text)",
+      "sourceFile": "ark-pixel-12px-monospaced-zh_hans.otf",
+      "sourceBytes": 3607968,
+      "subsetBytes": 39720,
+      "subsetCharacters": 1335,
+      "corpusCharacters": 1839,
+      "bytesPerCharacter": 22,
+      "variable": "--font-ark-pixel",
+      "scope": "with-tc-text"
+    },
+    {
+      "id": "noto-sans-tc (tc-sample-coverage)",
+      "scope": "cmap",
+      "missing": "",
+      "covered": "44/44"
+    },
+    {
+      "id": "noto-serif-tc (tc-sample-coverage)",
+      "scope": "cmap",
+      "missing": "",
+      "covered": "44/44"
+    },
+    {
+      "id": "lxgw-wenkai-tc (tc-sample-coverage)",
+      "scope": "cmap",
+      "missing": "",
+      "covered": "44/44"
+    },
+    {
+      "id": "ark-pixel-tc (tc-sample-coverage)",
+      "scope": "cmap",
+      "missing": "應",
+      "covered": "43/44"
+    },
+    {
+      "id": "noto-sans-mono-cjk-tc (tc-sample-coverage)",
+      "scope": "cmap",
+      "missing": "",
+      "covered": "44/44"
+    }
+  ]
+}
