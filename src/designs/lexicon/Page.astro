@@ -43,10 +43,16 @@ const romanOf = (key: string) => {
   <head>
     <HeadMeta {...view.head} />
     {/* 不预加载：辞书是"翻到即读"的页面，swap + 系统宋体回退足够（书的字不该抢在纸前面）。 */}
-    <Font cssVariable="--font-zhuque" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
     <Font cssVariable="--font-sorts-mill-goudy" />
-    <Font cssVariable="--font-gowun-batang" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gowun-batang" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-serif-tc" />
+      </>
+    )}
   </head>
   <body class="lx">
     <main class="lx-page" aria-labelledby="lx-title">

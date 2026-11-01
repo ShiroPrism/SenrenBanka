@@ -67,11 +67,11 @@ _Avoid_: locale（指代代码本身时）、lang
 _Avoid_: lang、slug
 
 **Language self-name（语言自称）**:
-语言选择器中展示该语言的名字，由各语言自己书写（简体中文 / 日本語 / English），不使用英文名或其他语言名。
+语言选择器中展示该语言的名字，由各语言自己书写（简体中文 / 繁體中文 / 日本語 / English），不使用英文名或其他语言名。
 _Avoid_: 语言英文名、显示名
 
 **Localized profile（本地化资料）**:
-某语言下的人物资料文件；三种语言共用同一套字段契约，不为语言拆分 schema。
+某语言下的人物资料文件；五种语言共用同一套字段契约，不为语言拆分 schema。
 _Avoid_: 翻译文件、多语言副本
 
 **Shared messages（共享文案）**:
@@ -225,11 +225,11 @@ _Avoid_: 站内子集、字体裁剪发行版
 _Avoid_: 站内子集、字体发行版、固定子集
 
 **Core script font（核心文字系统字体）**:
-承诺按源字体字形覆盖范围承接某一文字系统的字体角色；CJK 由 Zhuque、LXGW WenKai 与 Ark Pixel 承担，韩语按同一许可、分片与覆盖契约新增。新增字体需显式取得该角色。
+承诺按源字体字形覆盖范围承接某一文字系统的字体角色；CJK 由 Zhuque、LXGW WenKai 与 Ark Pixel 承担，韩语按同一许可、分片与覆盖契约新增；繁体中文由 Noto Sans TC、Noto Serif TC、LXGW WenKai TC、Fusion Pixel TC 与 Noto Sans Mono CJK TC 承担，按页面级字体路由部署。新增字体需显式取得该角色。
 _Avoid_: 中文字体、韩文字体、默认字体
 
 **Core CJK font（核心 CJK 字体）**:
-`Core script font` 在 CJK 文字系统下的角色集合；单个族只承诺其源字体实际覆盖的文字系统（Zhuque 只有汉字、LXGW 另含谚文），不得把 CJK 标签当作全文字系统覆盖承诺；源码字体缺字时仍回退系统字体。
+`Core script font` 在 CJK 文字系统下的角色集合；单个族只承诺其源字体实际覆盖的文字系统（Zhuque 只有汉字、LXGW 另含谚文），不得把 CJK 标签当作全文字系统覆盖承诺；繁体中文族只承诺繁体字形与相应 Han 覆盖，繁中页面通过 `html:lang(zh-TW)` 的变量重映射选择 TC 族；源码字体缺字时仍回退系统字体。
 _Avoid_: 中文字体、默认中文字体、CJK 全字库
 
 **Font coverage contract（字体覆盖契约）**:

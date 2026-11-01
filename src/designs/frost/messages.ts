@@ -17,6 +17,12 @@ export const messages: Record<string, FrostMessages> = {
     skills: '技能',
     contact: '联系',
   },
+  'zh-TW': {
+    projects: '專案',
+    experience: '經歷',
+    skills: '技能',
+    contact: '聯絡',
+  },
   ja: {
     projects: 'プロジェクト',
     experience: '経歴',

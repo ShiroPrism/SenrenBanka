@@ -30,6 +30,17 @@ export const messages: Record<string, BrutalMessages> = {
     noContact: '未配置联系方式',
     sampleNote: '示例资料・仅作演示',
   },
+  'zh-TW': {
+    portfolio: '作品集',
+    projects: '專案',
+    experience: '經歷',
+    skills: '技能',
+    contact: '聯絡',
+    notice: '告示',
+    index: '索引',
+    noContact: '未配置聯絡方式',
+    sampleNote: '示例資料・僅作演示',
+  },
   ja: {
     portfolio: 'ポートフォリオ',
     projects: 'プロジェクト',

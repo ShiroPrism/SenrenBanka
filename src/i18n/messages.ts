@@ -128,6 +128,59 @@ const zhCN: LocaleMessages = {
   },
 };
 
+const zhTW: LocaleMessages = {
+  contextMenu: {
+    currentDesignTag: '目前設計',
+    menuLabel: '快速操作',
+    launcherLabel: '開啟快速操作選單',
+    closeLabel: '關閉選單',
+    cancel: '取消',
+    pageGroup: '頁面',
+    designGroup: '設計',
+    reload: '重新載入',
+    toTop: '回到頁面頂端',
+    copyLink: '複製目前頁面連結',
+    print: '列印 / 儲存為 PDF',
+    share: '分享頁面',
+    random: '隨機一個設計',
+    switchDesign: '切換設計…',
+    languageGroup: '語言',
+  },
+  toast: {
+    copied: '已複製頁面連結',
+    copyFailed: '複製失敗，請手動複製網址列連結',
+    shared: '已分享',
+    shareCancelled: '已取消分享',
+    shareFailed: '分享失敗',
+    noOtherDesign: '沒有其他設計可選',
+  },
+  switcher: {
+    titleSuffix: '切換設計',
+    description: '一份資料，多套設計。點選任意一套即可手動切換。',
+    heading: '切換設計',
+    body: '同一份個人資料的 {count} 套設計。隨機分配的選擇會被記住一段時間，點選任意一套即可手動切換。',
+    currentBadge: '目前',
+  },
+  entry: {
+    redirecting: '正在進入你的設計…',
+    noscriptHeading: '選擇一個設計',
+    noscriptBody: 'JavaScript 已停用，未能自動進入隨機設計。請手動選擇：',
+  },
+  notFound: {
+    titleSuffix: '找不到頁面',
+    body: '這個網址沒有對應的頁面或設計。',
+    backToEntry: '回到入口',
+    allDesigns: '查看全部設計',
+  },
+  language: {
+    navLabel: '語言選擇',
+    label: '語言',
+  },
+  legacyRedirect: {
+    body: '正在跳轉到預設語言版本…',
+  },
+};
+
 const ja: LocaleMessages = {
   contextMenu: {
     currentDesignTag: '現在のデザイン',
@@ -290,6 +343,7 @@ const en: LocaleMessages = {
 /** 全部语言文案；键以语言 code 索引（与 site.config.yaml 的 i18n.locales 对应）。 */
 export const messages = {
   'zh-CN': zhCN,
+  'zh-TW': zhTW,
   ja,
   en,
   ko,

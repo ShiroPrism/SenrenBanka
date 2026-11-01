@@ -46,6 +46,17 @@ export const messages: Record<string, DecoMessages> = {
     actWord: '幕次',
     sampleNote: '示例资料・仅作演示',
   },
+  'zh-TW': {
+    portfolio: '節目單',
+    overtureLabel: '序言',
+    linksTitle: '劇目表',
+    projectsTitle: '幕次',
+    experienceTitle: '演出單',
+    skillsTitle: '演職員表',
+    contactTitle: '售票處',
+    actWord: '幕次',
+    sampleNote: '示例資料・僅作演示',
+  },
   ja: {
     portfolio: 'プログラム',
     overtureLabel: '序文',

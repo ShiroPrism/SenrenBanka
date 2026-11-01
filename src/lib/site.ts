@@ -34,8 +34,8 @@ export interface LocaleEntry {
   /** 该语言的站点 SEO 元数据。 */
   title: string;
   description: string;
-  /** 显式文字系统档位（latin / vietnamese / cjk / korean）；不从语言代码推断。 */
-  fontProfile?: 'latin' | 'vietnamese' | 'cjk' | 'korean';
+  /** 显式文字系统档位（latin / vietnamese / cjk / korean / traditional-chinese）；不从语言代码推断。 */
+  fontProfile?: 'latin' | 'vietnamese' | 'cjk' | 'korean' | 'traditional-chinese';
 }
 
 /**

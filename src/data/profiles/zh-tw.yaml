@@ -1,0 +1,47 @@
+# 繁體中文（台灣在地迷因對齊版）profile.yaml
+
+name: "李田所"
+headline: "24歲，是學生 / 貫徹王道征途，迫真空手部主將兼 BB 劇場巨星"
+bio: "24歲，是學生。目前在下北澤空手部帶領後輩揮灑汗水，日常熱衷於在頂樓進行日光浴以及調製秘製昏睡紅茶。作為網路集體潛意識的概念級存在，長期在各大平台以多元宇宙 BB 素材的形態全年無休出勤！"
+avatar: "TadokoroKoji.png"
+location: "東京都世田谷區下北澤"
+
+links:
+  - label: niconico
+    url: "https://www.nicovideo.jp/tag/野獣先輩"
+    icon: tv
+  - label: BB 素材庫
+    url: "https://example.com/bb-theater"
+    icon: video
+  - label: 下北澤通訊
+    url: "https://example.com/114514"
+    icon: coffee
+
+projects:
+  - title: "王道征途 (The Royal Road)"
+    description: "空手部日常組手訓練與指導後輩（遠野）學術切磋企劃，真實記錄武道健兒揮汗如雨的日常。"
+    url: "https://example.com/oudou"
+    tags: ["114514", "王道", "空手道"]
+  - title: "昏睡紅茶秘方 (Iced Tea Formula)"
+    description: "訓練後補充體能研發的冷泡飲品方案，具備讓人迅速進入深度放鬆與昏睡狀態的奇妙風味。"
+    url: "https://example.com/tea-lab"
+    tags: ["昏睡紅茶", "114514", "配方"]
+  - title: "多元宇宙 BB 劇場巡演"
+    description: "橫跨金閣銀閣、咆哮怪獸化與各種喪心病狂音聲調教的次文化現象級演藝工程。"
+    tags: ["音MAD", "AviUtl", "人力VOCALOID"]
+
+experience:
+  - org: "下北澤大學 空手部"
+    role: "主將 / 先輩 (Ace)"
+    period: "24歲 – 永恆"
+    description: "主導部活組手訓練，傳授防身術與體能技巧，順帶負責道場休息室的冷飲補給與後輩身心關懷。"
+  - org: "niconico 動畫 / 次文化二次創作同盟"
+    role: "概念級主演 / 萬能音 MAD 核心"
+    period: "2001 – 至今"
+    description: "作為高頻登場的經典素材，參與數以萬計的二次創作衍生劇場，成為廣大鄉民與島民解構及二創的靈感泉源。"
+
+skills: ["空手道組手", "王道征途", "昏睡紅茶製作", "頂樓日光浴", "BB 素材化", "迫真咆哮", "114514共鳴"]
+
+contact:
+  email: "114514@shimokitazawa.jp"
+  note: "いいよ！こいよ！練完隨時來頂樓道場喝杯冰茶交流切磋。"

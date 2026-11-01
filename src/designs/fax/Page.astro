@@ -44,12 +44,18 @@ const pageCount = pad(sectionCount + 1);
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    <Font cssVariable="--font-noto-sans-mono-cjk-kr" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-noto-sans-mono-cjk-kr" />}
     {/* 不预加载：正文一行字就是这套的主角，swap + 打字机回退在纸面上不刺眼 */}
     <Font cssVariable="--font-courier-prime" />
     <Font cssVariable="--font-tt2020-styled" />
-    <Font cssVariable="--font-zhuque" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-serif-tc" />
+      </>
+    )}
   </head>
   <body class="fx">
     <main class="fx-scene">

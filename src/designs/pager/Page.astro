@@ -55,9 +55,15 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
     {/* 不预加载：像素小字 + 点阵数字 + 中文像素各一；swap + 系统回退已足够（开机闪一下是主题的一部分） */}
     <Font cssVariable="--font-silkscreen" />
     <Font cssVariable="--font-handjet" />
-    <Font cssVariable="--font-ark-pixel" />
-    <Font cssVariable="--font-galmuri11" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-ark-pixel" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-galmuri11" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-fusion-pixel-tc" />
+      </>
+    )}
   </head>
   <body class="pg">
     <main class="pg-device" aria-label={t.pageLabel}>

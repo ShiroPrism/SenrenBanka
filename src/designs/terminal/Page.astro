@@ -36,8 +36,14 @@ const introEnd = afterCmd(cmdIntro);
     <HeadMeta {...view.head} />
     {/* 正文等宽字体不预加载（6 个子集文件过多）；display:swap + 系统 mono 回退已足够 */}
     <Font cssVariable="--font-jetbrains-mono" />
-    <Font cssVariable="--font-noto-sans-mono-cjk-kr" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-noto-sans-mono-cjk-kr" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-sans-mono-cjk-tc" />
+      </>
+    )}
   </head>
   <body class="tm">
     <main class="tm-screen" aria-label="SenrenBanka terminal">

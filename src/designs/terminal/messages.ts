@@ -22,6 +22,12 @@ export const messages: Record<string, TerminalMessages> = {
     noMail: 'no mail configured',
     sessionEnd: 'session ends — 谢谢访问 / EOF',
   },
+  'zh-TW': {
+    basedIn: '常駐',
+    sayHello: 'Say hello',
+    noMail: 'no mail configured',
+    sessionEnd: 'session ends — 謝謝訪問 / EOF',
+  },
   ja: {
     basedIn: '拠点',
     sayHello: 'Say hello',

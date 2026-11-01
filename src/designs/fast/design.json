@@ -2,7 +2,7 @@
   "displayName": "FAST",
   "description": "企业级明暗双主题：语义化 token、分区卡片、克制的品牌蓝与清晰的信息层级。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#0f6cbd",
   "source": {
     "type": "official-vendor",

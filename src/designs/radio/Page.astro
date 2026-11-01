@@ -54,9 +54,15 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
     <Font cssVariable="--font-share-tech-mono" />
     <Font cssVariable="--font-format-1452" />
     <Font cssVariable="--font-dseg14" />
-    <Font cssVariable="--font-ark-pixel" />
-    <Font cssVariable="--font-galmuri11" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-ark-pixel" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-galmuri11" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-fusion-pixel-tc" />
+      </>
+    )}
   </head>
   <body class="rd">
     <main class="rd-panel" aria-label={`SENRENBANKA · ${t.panelLabel}`}>

@@ -2,7 +2,7 @@
   "displayName": "Fax",
   "description": "传真传输纸：FAX TRANSMISSION 表单表头、两侧走纸孔与磨损的打字机字面，纸从机器里走纸进入、红章落下。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#9c3b31",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-17（八方向新主题·传真机）"

@@ -98,5 +98,5 @@ test('repository typography contract passes', async () => {
   assert.deepEqual(result.findings, []);
   assert.equal(result.styledCount, 26);
   assert.equal(result.coreDesignCount, 26);
-  assert.equal(result.generatedFamilies, 26);
+  assert.equal(result.generatedFamilies, 31);
 });

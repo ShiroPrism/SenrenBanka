@@ -2,7 +2,7 @@
   "displayName": "Magical Girl",
   "description": "魔法少女角色档案与舞台登场：星轨章回、变身年表、道具与蜡封信笺组成一张会开演的档案。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "renderMode": "styled",
   "accent": "#A72D5A",
   "source": {

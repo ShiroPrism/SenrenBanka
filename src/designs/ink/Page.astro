@@ -52,12 +52,19 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    <Font cssVariable="--font-gowun-batang" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gowun-batang" />}
     <Font cssVariable="--font-sorts-mill-goudy" />
     <Font cssVariable="--font-prociono" />
-    <Font cssVariable="--font-lxgw" />
-    <Font cssVariable="--font-zhuque" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-lxgw" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-lxgw-tc" />
+        <Font cssVariable="--font-noto-serif-tc" />
+      </>
+    )}
   </head>
   <body class="ink">
     <div class="ink-leaf">

@@ -193,7 +193,7 @@
 
 - `src/data/profiles/<locale.path>.yaml`（各语言的个人资料）与 `src/data/site.config.yaml`（站点/多语言/行为配置），均为内容层集合（glob loader），Zod schema 校验（`strict()` 拒绝未知键，防拼写错误）。
 - 所有设计通过统一数据接口（`src/lib/site.ts`）获取资料，**禁止每套设计重复维护信息**。
-- 三种语言共用**同一套** `profileSchema`，不为语言拆分字段契约。
+- 各语言共用**同一套** `profileSchema`，不为语言拆分字段契约。
 
 ### 5.2 profile 完整示例（以 `src/data/profiles/zh-cn.yaml` 为例）
 
@@ -253,7 +253,13 @@ i18n:                # 语言清单只在此处维护一处，路由/资料/SEO 
       label: 简体中文     # 语言自称，用于语言选择器
       title: "Your Name — Portfolio"      # 该语言 SEO 标题
       description: "SEO 描述"             # 该语言 SEO 描述
-      fontProfile: cjk                    # 显式文字系统档位：latin / vietnamese / cjk / korean
+      fontProfile: cjk                    # 显式文字系统档位：latin / vietnamese / cjk / korean / traditional-chinese
+    - code: zh-TW
+      path: zh-tw
+      label: 繁體中文
+      title: "…"
+      description: "…"
+      fontProfile: traditional-chinese
     - code: ja
       path: ja
       label: 日本語
@@ -288,7 +294,7 @@ design:
 | `path` | URL 语言前缀，同时是对应资料文件的标识（要求唯一、合法） |
 | `label` | 语言选择器展示的**语言自称** |
 | `title` / `description` | 该语言的站点 SEO 元数据 |
-| `fontProfile` | 显式文字系统档位（`latin` / `vietnamese` / `cjk` / `korean`），不从 BCP 47 推断；供字体角色与覆盖校验使用 |
+| `fontProfile` | 显式文字系统档位（`latin` / `vietnamese` / `cjk` / `korean` / `traditional-chinese`），不从 BCP 47 推断；供字体角色与覆盖校验使用 |
 
 **文案分两层**：
 
@@ -424,7 +430,7 @@ src/designs/<id>/
 
 延续"每种语言只有默认主题可索引"的策略，避免 24 个视觉不同但内容相近的主题页全部参与索引。
 
-**hreflang**：只标注在**各语言的默认主题页面**上，三种语言互指 + `x-default` 指向默认语言版本。`noindex` 的非默认主题**不标注** hreflang——它们不是可索引的等价翻译页。
+**hreflang**：只标注在**各语言的默认主题页面**上，各语言互指 + `x-default` 指向默认语言版本。`noindex` 的非默认主题**不标注** hreflang——它们不是可索引的等价翻译页。
 
 `canonical` 必须包含实际 locale 路径与部署 base 前缀。
 
@@ -474,7 +480,7 @@ src/designs/<id>/
 2. **动态类名禁止**（实测不可靠）；确需安全列表时用 `@source inline("…")`。
 3. **原生 CSS 自由使用**（同文件或设计私有文件）；不为强行使用工具类牺牲设计还原度——复杂动画、伪元素、独特装饰、非标准布局优先原生 CSS。
 4. 共享组件（`HeadMeta` 等）原则上**保持零 Tailwind 类**，避免把共享目录拖进每个设计的扫描范围。
-5. **字体**：人工启用关系只在 `fonts.config.json`；`fonts:update` 从固定外部目录生成锁、快照与 `src/fonts/generated.ts`，`fonts:prepare` 准备忽略缓存，`fonts:check` 是 `npm run build` 第一步且完全离线。`astro.config.mjs` 展开生成定义接入 `local` provider，页面 `<Font cssVariable preload?>`，`@theme inline` 注册进 Tailwind；6 个 Fontsource npm family 与全部 local family 必须 `fallbacks: []` + `optimizedFallbacks:false`，npm 还必须 `remote:false` 并通过本地 URL 包装层只读已安装包。每个设计 CSS 的 `font` / `font-family` 必须给出显式 fallback；承诺 CJK 时按拉丁变量 → Zhuque / LXGW / Ark Pixel → 系统中文字体 → 通用族排序，已选用 core-cjk 的设计还必须在每个字体变量栈（含预览）中保留核心变量，`npm run fonts:typography` 门禁。新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，本地隔离见 `docs/adr/0008-local-font-library-isolation.md`，生产分发见 `docs/adr/0012-external-font-catalog-and-cjk-shards.md`）。韩语核心族以 `scripts: ["hangul"]` 发布，`fonts:subset` 只按 Hangul 区块生成子集并写 Hangul-only `unicode-range`；`fonts:audit` 按 script 分开校验；声明 `ko` 的 `styled` 设计由 `npm run fonts:coverage` 校验每个字体栈含 Hangul 核心变量且页面注册 `<Font>`（`html-only` 豁免，ADR 0017）。
+5. **字体**：人工启用关系只在 `fonts.config.json`；`fonts:update` 从固定外部目录生成锁、快照与 `src/fonts/generated.ts`，`fonts:prepare` 准备忽略缓存，`fonts:check` 是 `npm run build` 第一步且完全离线。`astro.config.mjs` 展开生成定义接入 `local` provider，页面 `<Font cssVariable preload?>`，`@theme inline` 注册进 Tailwind；6 个 Fontsource npm family 与全部 local family 必须 `fallbacks: []` + `optimizedFallbacks:false`，npm 还必须 `remote:false` 并通过本地 URL 包装层只读已安装包。每个设计 CSS 的 `font` / `font-family` 必须给出显式 fallback；承诺 CJK 时按拉丁变量 → Zhuque / LXGW / Ark Pixel → 系统中文字体 → 通用族排序，已选用 core-cjk 的设计还必须在每个字体变量栈（含预览）中保留核心变量，`npm run fonts:typography` 门禁。新增主题的字体选型流程见 `docs/fonts/selection-guide.md`（本地字体库仅用于发现与预览，不参与构建；未核实许可的字体不得进入生产管线，本地隔离见 `docs/adr/0008-local-font-library-isolation.md`，生产分发见 `docs/adr/0012-external-font-catalog-and-cjk-shards.md`）。韩语核心族以 `scripts: ["hangul"]` 发布，`fonts:subset` 只按 Hangul 区块生成子集并写 Hangul-only `unicode-range`；`fonts:audit` 按 script 分开校验；声明 `ko` 的 `styled` 设计由 `npm run fonts:coverage` 校验每个字体栈含 Hangul 核心变量且页面注册 `<Font>`（`html-only` 豁免，ADR 0017）。繁中核心族以 `scripts: ["cjk","han-traditional"]` 发布，页面通过 `html:lang(zh-TW)` 重映射 CJK/伴生变量，TC `<Font>` 只在 zh-TW 页注册；`fonts:coverage` 校验重映射完整性与条件注册，`fonts:audit` 忽略 locale 重映射产生的 `var(...)`/哨兵值（ADR 0018）。
 6. 图片：设计私有资产放各自 `assets/`（Vite 处理）；profile 头像由数据层解析（`src/data/assets/` 本地文件或外部 URL）。
 7. **禁止**把所有设计样式合并进公共 CSS、禁止跨设计共享设计 Token。
 8. **预览碎片的样式隔离**（v0.10.0+，见 `docs/rules/design-contract.md`）：`Preview.astro` 不得 import 本设计 `style.css`；令牌只能来自命名空间类作用域的 `tokens.css`（禁止 `:root`）；预览样式只出现在切换页，设计页 0 个预览选择器；`style.css` 必须 `@source not "./Preview.astro";` 排除预览文件。预览 CSS 在切换页聚合为单个样式表——这**不违反**第 1 条（它不是设计 CSS 入口，且不含 preflight 与整页规则）。
@@ -549,6 +555,7 @@ SenrenBanka/
 │  ├─ data/                          # ★ 使用者日常只改这里
 │  │  ├─ profiles/                   #   各语言的个人资料（文件名 = i18n.locales[].path）
 │  │  │  ├─ zh-cn.yaml               #   简体中文资料（共用同一套 schema）
+│  │  │  ├─ zh-tw.yaml               #   繁體中文资料（共用同一套 schema）
 │  │  │  ├─ ja.yaml                  #   日语资料
 │  │  │  └─ en.yaml                  #   英语资料
 │  │  ├─ site.config.yaml            #   站点 + i18n 语言清单 + 行为配置（mode/default/manualSwitch…）
@@ -646,7 +653,7 @@ SenrenBanka/
 7. 无 JS（禁用浏览器 JS）：根路径 meta refresh 进入 default；设计页与切换页内容可读、链接可导航。`styled` 设计页的菜单语言入口仍不可达（这是已知取舍，不得把隐藏菜单 DOM 声称为回退）；`html-only` 的目录、语言与资料链接必须以普通锚点保持可达。
 8. SEO：根路径与切换页 `noindex`；仅 default 设计页 `index` + self-canonical；其余设计 `noindex,follow`。
 9. 根路径零第三方请求（Network 面板确认，无字体/CSS/JS 请求）；切换在首屏前完成（无明显闪烁）。
-10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；prepare 下载 package 与核心 source archive，之后断网构建通过，dist 内自托管且无第三方字体引用；所有 Astro 字体变量只暴露主 face，设计 CSS 回退栈含显式系统中文字体。`fonts:typography` 对 26 套 styled 设计、预览、npm / local registration 全绿；缓存/锁/快照/生成注册/source cache 任一不一致时 build 失败。`fonts:subset` 为核心 CJK family 生成内容子集，`fonts:prune` 之后 `dist`（全部文件字节之和，1 MiB = 1,048,576 B）不超过 **10 MiB**，页面可见文本与子集/裁剪前逐字一致，`@font-face` 只存在于共享字体 CSS；`fonts:audit` 按部署集合校验：`@font-face` 的 URL 必须存在、`dist/_astro/fonts/` 不得有孤儿分片、无 `unicode-range` 的核心子集必须用真实 cmap 覆盖该页源字体覆盖的 CJK 字符（否则失败），源字体本身缺字只警告并写报告。韩语族按 Hangul-only 子集/`unicode-range` 部署，审计按 script 分开（Hangul 族不要求 Hanja / 假名）；`fonts:coverage` 对声明 `ko` 的 styled 设计硬门禁（字体栈 + `<Font>` 注册），`html-only` 豁免。全部使用 core-cjk 的设计必须用普通加载的字体请求或 CDP 平台字体信息证明 Zhuque / LXGW / Ark Pixel 实际命中，不得以强制 `document.fonts.load()` 代替。
+10. 字体：干净 clone 执行 `npm ci && npm run fonts:prepare && npm run build` 成功；prepare 下载 package 与核心 source archive，之后断网构建通过，dist 内自托管且无第三方字体引用；所有 Astro 字体变量只暴露主 face，设计 CSS 回退栈含显式系统中文字体。`fonts:typography` 对 26 套 styled 设计、预览、npm / local registration 全绿；缓存/锁/快照/生成注册/source cache 任一不一致时 build 失败。`fonts:subset` 为核心 CJK family 生成内容子集，`fonts:prune` 之后 `dist`（全部文件字节之和，1 MiB = 1,048,576 B）不超过 **10 MiB**，页面可见文本与子集/裁剪前逐字一致，`@font-face` 只存在于共享字体 CSS；`fonts:audit` 按部署集合校验：`@font-face` 的 URL 必须存在、`dist/_astro/fonts/` 不得有孤儿分片、无 `unicode-range` 的核心子集必须用真实 cmap 覆盖该页源字体覆盖的 CJK 字符（否则失败），源字体本身缺字只警告并写报告。韩语族按 Hangul-only 子集/`unicode-range` 部署，审计按 script 分开（Hangul 族不要求 Hanja / 假名）；`fonts:coverage` 对声明 `ko` 的 styled 设计硬门禁（字体栈 + `<Font>` 注册），`html-only` 豁免。繁中族按页面级路由部署：`html:lang(zh-TW)` 重映射每个被用到的 CJK/伴生变量，TC `<Font>` 只在 zh-TW 页注册；`fonts:coverage` 硬门禁重映射与条件注册，`fonts:audit` 按 `cjk` 审计 TC 页且忽略哨兵/`var(...)` 值；`dist` 实测 8.44 MiB。全部使用 core-cjk 的设计必须用普通加载的字体请求或 CDP 平台字体信息证明 Zhuque / LXGW / Ark Pixel / TC 族实际命中，不得以强制 `document.fonts.load()` 代替。
 11. 每套设计含 `DESIGN.md` + `design.json` + `Page.astro` + `messages.ts`（provenance 完整）；`design.json.renderMode` 缺省按 `styled` 处理，`html-only` 不提供 `style.css` / `tokens.css`，但可提供自包含 `Preview.astro`；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本、切换页链接与 html-only 语言 / 设计链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。

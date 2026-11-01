@@ -18,8 +18,14 @@ const { profile, contextMenu } = view;
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-inter" />
-    <Font cssVariable="--font-gothic-a1" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gothic-a1" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-sans-tc" />
+      </>
+    )}
   </head>
   <body class="fr">
     <div class="fr-aurora" aria-hidden="true"></div>

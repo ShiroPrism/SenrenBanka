@@ -20,6 +20,11 @@ export const messages: Record<string, OxideMessages> = {
     noChannel: '尚未配置联系方式',
     periodFallback: '----',
   },
+  'zh-TW': {
+    locationFallback: '遠端',
+    noChannel: '尚未配置聯絡方式',
+    periodFallback: '----',
+  },
   ja: {
     locationFallback: 'リモート',
     noChannel: '連絡先が未設定です',

@@ -31,6 +31,18 @@ export const messages: Record<string, EditorialMessages> = {
     elsewhereLabel: '外部链接',
     colophon: 'Designed in the shape of a magazine',
   },
+  'zh-TW': {
+    issueMark: '第 01 期',
+    personalEdition: '個人特刊',
+    navLabel: '本期導航',
+    tocWorks: '精選作品',
+    tocLinks: '外部連結',
+    worksHeading: 'Selected Works',
+    worksLabel: '精選作品',
+    elsewhereHeading: 'Elsewhere',
+    elsewhereLabel: '外部連結',
+    colophon: 'Designed in the shape of a magazine',
+  },
   ja: {
     issueMark: '第 01 号',
     personalEdition: '個人特集',

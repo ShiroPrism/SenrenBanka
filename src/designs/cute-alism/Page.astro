@@ -32,13 +32,19 @@ const nextSection = () => pad((sectionIndex += 1));
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    <Font cssVariable="--font-dongle" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-dongle" />}
     {/* 不预加载：拼贴的第一帧不依赖字体；swap + CJK 系统回退已足够。 */}
     <Font cssVariable="--font-fredoka" />
-    <Font cssVariable="--font-lxgw" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-lxgw" />}
     <Font cssVariable="--font-inter" />
     <Font cssVariable="--font-league-mono" />
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-lxgw-tc" />
+      </>
+    )}
   </head>
   <body class="cal">
     <main class="cal-world" aria-label={t.pageLabel}>

@@ -419,7 +419,13 @@ export async function auditFonts({
 
     const active = coreFamilies
       .map((family) => ({ family, value: cssVariableValue(css, family.cssVariable) }))
-      .filter((entry) => entry.value !== null);
+      .filter((entry) => entry.value !== null)
+      // Locale remaps point at another variable or the TC skip sentinel; neither
+      // is a deployed family name, so they must not count as active sources.
+      .filter(
+        (entry) =>
+          entry.value !== '__senrenbanka_tc_skip__' && !/^var\(/i.test(entry.value),
+      );
     if (active.length === 0) {
       pagesWithoutActiveCoreFont += 1;
       continue;

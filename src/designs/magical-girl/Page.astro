@@ -41,9 +41,15 @@ const navItems = [
   <head>
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-fraunces" />
-    <Font cssVariable="--font-lxgw" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-lxgw" />}
     <Font cssVariable="--font-inter" />
-    <Font cssVariable="--font-dongle" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-dongle" />}
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-lxgw-tc" />
+      </>
+    )}
   </head>
   <body class="mg" data-mg-root>
     <a class="mg-skip-link" href="#mg-main">{t.skipToContent}</a>

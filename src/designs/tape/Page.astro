@@ -40,9 +40,15 @@ const track = () => `A${(trackIndex += 1)}`;
     {/* 不预加载：中文 core-cjk 由多枚分片按 unicode-range 取件，swap + 系统回退已足够（贴标闪一下是主题的一部分） */}
     <Font cssVariable="--font-uglytypist" />
     <Font cssVariable="--font-league-mono" />
-    <Font cssVariable="--font-zhuque" />
-    <Font cssVariable="--font-poor-story" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-poor-story" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-serif-tc" />
+      </>
+    )}
   </head>
   <body class="tp">
     <main class="tp-scene" aria-label="SenrenBanka tape">

@@ -15,6 +15,11 @@ const CORE_FONT_VARIABLES = new Set([
   '--font-noto-sans-mono-cjk-kr',
   '--font-dongle',
   '--font-poor-story',
+  '--font-noto-sans-tc',
+  '--font-noto-serif-tc',
+  '--font-lxgw-tc',
+  '--font-fusion-pixel-tc',
+  '--font-noto-sans-mono-cjk-tc',
 ]);
 const SYSTEM_CJK_FONTS = new Set([
   'apple ligothic',
@@ -31,13 +36,18 @@ const SYSTEM_CJK_FONTS = new Set([
   'nanum myeongjo',
   'noto sans cjk',
   'noto sans cjk sc',
+  'noto sans cjk tc',
   'noto sans kr',
   'noto serif cjk',
   'noto serif cjk sc',
+  'noto serif cjk tc',
   'noto serif kr',
   'pingfang sc',
+  'pingfang tc',
   'simsun',
   'songti sc',
+  'songti tc',
+  'kaiti tc',
   'source han sans',
   'source han serif',
   'yu gothic ui',
@@ -365,8 +375,8 @@ export async function checkTypography(projectRoot = DEFAULT_PROJECT_ROOT) {
     generatedPath,
   );
   findings.push(...astro.findings, ...generated.findings);
-  if (generated.count !== 26) {
-    findings.push(`${generatedPath}: expected 26 generated families, found ${generated.count}`);
+  if (generated.count !== 31) {
+    findings.push(`${generatedPath}: expected 31 generated families, found ${generated.count}`);
   }
 
   const designsDirectory = path.join(projectRoot, 'src/designs');

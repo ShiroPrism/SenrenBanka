@@ -1,13 +1,13 @@
 # SenrenBanka
 
-一份个人资料，多套由 AI 依据 `DESIGN.md` 生成的完整设计，支持简中 / 日 / 英 / 韩四语言——构建期产出纯静态页面，可部署到任何静态托管。
+一份个人资料，多套由 AI 依据 `DESIGN.md` 生成的完整设计，支持简中 / 繁中 / 日 / 英 / 韩五语言——构建期产出纯静态页面，可部署到任何静态托管。
 
 One profile, many AI-designed homepages, in three languages. Astro + TypeScript + Tailwind CSS 4, shipped as static files.
 
 ## 特性
 
 - 24 套视觉与结构不同的设计（23 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
-- **多语言（当前 `zh-CN` / `ja` / `en` / `ko`）**：每套设计在每种**它声明覆盖**的语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离；未覆盖的 locale 不生成该设计页面
+- **多语言（当前 `zh-CN` / `zh-TW` / `ja` / `en` / `ko`）**：每套设计在每种**它声明覆盖**的语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离；未覆盖的 locale 不生成该设计页面
 - **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
@@ -29,9 +29,9 @@ npm run preview
 `fonts:check` 会完全离线重算锁、快照、缓存文件与生成注册的哈希。缓存缺失或
 损坏时会给出修复命令并失败。
 
-`--font-*` 变量只暴露主 face；6 个 npm family 与 20 个外部 local family 都不
+`--font-*` 变量只暴露主 face；6 个 npm family 与 31 个外部 local family 都不
 携带 Astro fallback。每套设计的 `style.css` 自己维护“拉丁声部 → 核心 CJK
-（Zhuque / LXGW / Ark Pixel）→ 系统中文字体 → 通用族”的完整顺序，
+（Zhuque / LXGW / Ark Pixel / 繁中 TC 族）→ 系统中文字体 → 通用族”的完整顺序，
 `npm run fonts:typography` 会静态检查这条契约。
 
 `fonts:prepare` 还会为核心 CJK 字体下载并校验 source archive；构建末尾的
@@ -51,7 +51,7 @@ links:
     url: "https://github.com/you"
 ```
 
-- 改资料：`src/data/profiles/*.yaml`（每种配置语言一份，当前 `zh-cn` / `ja` / `en` / `ko`；**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
+- 改资料：`src/data/profiles/*.yaml`（每种配置语言一份，当前 `zh-cn` / `zh-tw` / `ja` / `en` / `ko`；**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
 - 普通可选字段：`avatar`（部分风格不放照片）/ `location`
 - 高级可选扩展区块：`projects` / `experience` / `skills` / `contact`。它们仅为兼容现有设计而保留，可整体省略；不是自定义内容机制，也不会继续扩充同类字段或区块
 - 站外内容：通过 `links` 指向作品集、文章或社交资料等更多信息；内容离开本站后，其可用性、可访问性、归属与持久性由外部平台控制
@@ -76,7 +76,7 @@ npm run fonts:check
 
 ```
 /                         根入口 → 进入默认语言（zh-CN），随机 / 固定模式同既有行为
-/zh-cn/<设计>/  /ja/<设计>/  /en/<设计>/  /ko/<设计>/    各语言下已声明覆盖的设计页（唯一权威地址）
+/zh-cn/<设计>/  /zh-tw/<设计>/  /ja/<设计>/  /en/<设计>/  /ko/<设计>/    各语言下已声明覆盖的设计页（唯一权威地址）
 /zh-cn/designs/ 等          各语言的主题切换页（manualSwitch 关闭时不构建）
 /<设计>/  /designs/         旧无前缀路径 → 默认语言版本的静态跳转（meta refresh + canonical + noindex）
 ```

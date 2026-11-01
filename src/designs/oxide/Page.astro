@@ -24,8 +24,14 @@ const waveFlow = wave.repeat(4);
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-geist" />
     <Font cssVariable="--font-geist-mono" />
-    <Font cssVariable="--font-noto-sans-mono-cjk-kr" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-noto-sans-mono-cjk-kr" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-sans-mono-cjk-tc" />
+      </>
+    )}
   </head>
   <body class="ox">
     <div class="ox-progress" aria-hidden="true"></div>

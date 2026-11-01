@@ -22,6 +22,14 @@ export const messages: Record<string, Material3Messages> = {
     contact: '联系',
     footerSource: 'Material 3 设计系统汇编',
   },
+  'zh-TW': {
+    portfolio: '作品集',
+    projects: '專案',
+    experience: '經歷',
+    skills: '技能',
+    contact: '聯絡',
+    footerSource: 'Material 3 設計系統彙編',
+  },
   ja: {
     portfolio: 'ポートフォリオ',
     projects: 'プロジェクト',

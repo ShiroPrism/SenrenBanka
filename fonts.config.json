@@ -260,6 +260,56 @@
         "cursive",
         "sans-serif"
       ]
+    },
+    {
+      "id": "noto-sans-tc",
+      "name": "Noto Sans TC",
+      "cssVariable": "--font-noto-sans-tc",
+      "fallbacks": [
+        "PingFang TC",
+        "Microsoft JhengHei",
+        "sans-serif"
+      ]
+    },
+    {
+      "id": "noto-serif-tc",
+      "name": "Noto Serif TC",
+      "cssVariable": "--font-noto-serif-tc",
+      "fallbacks": [
+        "Songti TC",
+        "PingFang TC",
+        "serif"
+      ]
+    },
+    {
+      "id": "lxgw-wenkai-tc",
+      "name": "LXGW WenKai TC",
+      "cssVariable": "--font-lxgw-tc",
+      "fallbacks": [
+        "Kaiti TC",
+        "Songti TC",
+        "serif"
+      ]
+    },
+    {
+      "id": "fusion-pixel-tc",
+      "name": "Fusion Pixel 12px TC",
+      "cssVariable": "--font-fusion-pixel-tc",
+      "fallbacks": [
+        "PingFang TC",
+        "Microsoft JhengHei",
+        "monospace"
+      ]
+    },
+    {
+      "id": "noto-sans-mono-cjk-tc",
+      "name": "Noto Sans Mono CJK TC",
+      "cssVariable": "--font-noto-sans-mono-cjk-tc",
+      "fallbacks": [
+        "PingFang TC",
+        "Microsoft JhengHei",
+        "monospace"
+      ]
     }
   ],
   "schemaVersion": 1

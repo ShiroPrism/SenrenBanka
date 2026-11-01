@@ -82,7 +82,7 @@ const allowedUrlSchema = z
   .string()
   .refine(isAllowedUrl, 'must use HTTPS or a loopback HTTP fixture');
 const unicodeRangeSchema = z.string().regex(UNICODE_RANGE_PATTERN, 'must be a valid unicode range');
-const scriptsSchema = z.array(z.enum(['cjk', 'hangul'])).min(1).optional();
+const scriptsSchema = z.array(z.enum(['cjk', 'hangul', 'han-traditional'])).min(1).optional();
 
 const releaseAssetSchema = z
   .object({

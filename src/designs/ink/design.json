@@ -2,7 +2,7 @@
   "displayName": "Ink",
   "description": "宋式册页：宣纸底色、一列竖排题署、朱砂小印与青瓷细线，把资料排成一页摊开的册页。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#a13c2c",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-31（宋式/侘寂方向）"

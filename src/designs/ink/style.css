@@ -815,3 +815,10 @@ html:has(.ink) {
     width: 100%;
   }
 }
+
+/* 繁體中文：TC 字體只在 zh-TW 頁面註冊；韓文伴生槽位不承擔漢字角色。 */
+html:lang(zh-TW) {
+  --font-gowun-batang: __senrenbanka_tc_skip__;
+  --font-lxgw: var(--font-lxgw-tc);
+  --font-zhuque: var(--font-noto-serif-tc);
+}

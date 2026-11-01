@@ -43,6 +43,18 @@ export const messages: Record<string, InkMessages> = {
     footerNote: '示例资料・仅作演示',
     numerals: ['一', '二', '三', '四'],
   },
+  'zh-TW': {
+    portfolio: '冊頁',
+    preface: '小引',
+    imprint: '印譜',
+    projects: '卷帙',
+    experience: '年表',
+    skills: '筆觸',
+    contact: '落款',
+    leaf: '第一葉',
+    footerNote: '示例資料・僅作演示',
+    numerals: ['一', '二', '三', '四'],
+  },
   ja: {
     portfolio: '画帖',
     preface: '小引',

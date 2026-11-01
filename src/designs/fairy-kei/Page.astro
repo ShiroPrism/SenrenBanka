@@ -43,12 +43,18 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
-    <Font cssVariable="--font-dongle" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-dongle" />}
     {/* 三个声部：Fredoka 负责糖果标签，LXGW 负责中日文手写尾链，Inter 负责阅读正文。 */}
     <Font cssVariable="--font-fredoka" />
-    <Font cssVariable="--font-lxgw" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-lxgw" />}
     <Font cssVariable="--font-inter" />
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-lxgw-tc" />
+      </>
+    )}
   </head>
   <body class="fk">
     <a class="fk-skip" href="#fk-main">{t.skipToContent}</a>

@@ -2,7 +2,7 @@
   "displayName": "Frost",
   "description": "对 Apple HIG 材料与层次语言的非官方致敬复刻：极光底上的双层毛玻璃、iOS 系统色与 17px 型阶、胶囊控件的安静主页。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#0A84FF",
   "source": {
     "type": "third-party-analysis",

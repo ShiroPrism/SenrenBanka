@@ -10,7 +10,7 @@
 
 ## 构建
 
-- `npm run check`：文档门禁 + `fonts:typography`（Astro 字体注册与 23 套 styled CSS / 预览回退契约）+ `astro check`
+- `npm run check`：文档门禁 + `fonts:typography`（Astro 字体注册与 26 套 styled CSS / 预览回退契约）+ `astro check`
 - `npm run fonts:update`：显式从固定字体目录更新 lock / catalog snapshot / 生成注册；不得自动追最新版本
 - `npm run fonts:prepare`：按锁文件下载缺失 family 生产包并校验到 `.cache/fonts/`；同时为核心 CJK family 下载 source archive 并校验到 `.cache/font-sources/`。已有完整缓存只复核不重下；`-- --offline` 禁止网络
 - `npm run fonts:check`：完全离线复核配置、锁、快照、生成注册、生产包缓存与核心 source cache；普通 `npm run build` 的第一步
@@ -30,6 +30,7 @@
 - **语料来源是产物本身**：`fonts:subset` / `fonts:prune` 读取最终 `dist` 的每个 HTML（原始文本 + 它链接的本地 CSS / JS），解码 HTML 实体与 CSS 转义后收集码位。语料是有意过近似（属性值、内联 JSON、模板与 JS 字符串都算），宁可多留字形/分片，也不漏掉页面真正需要的字符。**不要**另建语料清单或从源码渲染文本另行推导——那会与产物脱节。
 - **核心字体内容子集**：`fonts:subset` 用固定版本的 `subset-font`（HarfBuzz WASM）从 source font 生成每族一个 WOFF2 子集，写入 `dist/_astro/fonts/`；逐页把该族全部分片规则替换为一条不带 `unicode-range` 的子集规则（保留 `font-family`、weight/style/display）。子集文件按语料哈希，内容变化会重新生成；不发布可安装桌面字体。子集字体必须是 Web-only WOFF2，许可依据见 ADR 0013 / 0014。
 - **韩语 Hangul-only 子集与覆盖门禁**：`scripts: ["hangul"]` 的核心族只按 Hangul 区块生成子集并写 Hangul-only `unicode-range`；`fonts:audit` 按 script 分开校验（Hangul 族不要求覆盖 Hanja / 假名）；`fonts:coverage` 对声明 `ko` 的 `styled` 设计硬门禁（每个字体栈含 Hangul 核心变量 + 页面注册对应 `<Font>`），`html-only` 豁免。决策见 ADR 0017。
+- **繁中页面级字体路由与覆盖门禁**：`scripts: ["cjk", "han-traditional"]` 的 TC 核心族用全站语料生成内容子集；繁中页面在 `html:lang(zh-TW)` 内把 CJK/伴生变量重映射到 TC 族（伴生槽位用 `__senrenbanka_tc_skip__` 哨兵），TC `<Font>` 只在 zh-TW 页注册，简体核心与韩文伴生不在 TC 页注册。`fonts:coverage` 校验重映射与条件注册；`fonts:audit` 仍按 `cjk` 审计 TC 页，并忽略 locale 重映射产生的 `var(...)`/哨兵值。决策见 ADR 0018。
 - **逐页决策、全站保留**：`fonts:prune` 每页只保留与该页语料相交的 `unicode-range` 规则（无 `unicode-range` 的子集规则始终保留）；字体文件按全站并集保留，任何页面仍需要的分片不删。删除范围固定为 `dist/_astro/fonts/`，路径解析拒绝 `..` 且必须落在 `dist` 内。
 - **字体 CSS 外置**：保留规则写入 `dist/_astro/fonts-<hash>.css`，页面 `<head>` 用一条 `<link rel="stylesheet">` 引用；`--font-*` 变量与其他内联 CSS 原样保留。字体族集合相同的页面（同一设计的多语言版本）复用同一个包，包内是这些页面所需规则的并集。外置文件**只含 `@font-face`**，不含 `@charset`、注释或设计 CSS；不得把不同设计的普通 CSS 合并。
 - **base 前缀来自既有产物 URL**：链接前缀从页面内已有的字体 URL 推导（`/demo/_astro/fonts/x.woff2` → `/demo/_astro/`），不读配置、不写死 `/`。带 `--base` 的构建必须重新执行本步骤后再验证。

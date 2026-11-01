@@ -24,6 +24,15 @@ export const messages: Record<string, GovukMessages> = {
     licenceNotice:
       'Contains public sector information licensed under the Open Government Licence v3.0.',
   },
+  'zh-TW': {
+    skipLink: '跳到主要內容',
+    projects: '專案',
+    experience: '經歷',
+    skills: '技能',
+    contact: '聯絡',
+    licenceNotice:
+      'Contains public sector information licensed under the Open Government Licence v3.0.',
+  },
   ja: {
     skipLink: 'メインコンテンツへスキップ',
     projects: 'プロジェクト',

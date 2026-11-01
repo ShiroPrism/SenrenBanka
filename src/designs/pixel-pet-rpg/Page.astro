@@ -46,8 +46,14 @@ const stationNo = (id: string) => {
     <HeadMeta {...view.head} />
     <Font cssVariable="--font-silkscreen" />
     <Font cssVariable="--font-handjet" />
-    <Font cssVariable="--font-ark-pixel" />
-    <Font cssVariable="--font-galmuri11" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-ark-pixel" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-galmuri11" />}
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-fusion-pixel-tc" />
+      </>
+    )}
   </head>
   <body
     class="pxt"

@@ -15,13 +15,19 @@ i18n:
     - code: zh-CN       # HTML lang / 翻译字典键（BCP 47）
       path: zh-cn       # URL 前缀 + 资料文件名（src/data/profiles/zh-cn.yaml）
       label: 简体中文        # 语言自称
-      title: "田所浩二 / Tadokoro Koji (野獣先輩)"
+      title: "李田所(野獣先輩)"
       description: "独立开发者与界面工程师的个人主页。"
       fontProfile: cjk
+    - code: zh-TW       # HTML lang / 翻译字典键（BCP 47）
+      path: zh-tw       # URL 前缀 + 资料文件名（src/data/profiles/zh-tw.yaml）
+      label: 繁體中文        # 语言自称
+      title: "李田所(野獸先輩)"
+      description: "獨立開發者與介面工程師的個人首頁。"
+      fontProfile: traditional-chinese
     - code: ja
       path: ja
       label: 日本語
-      title: "田所浩二 / 野獣先輩"
+      title: "田所浩二(野獣先輩)"
       description: "個人ポートフォリオサイト。"
       fontProfile: cjk
     - code: en
@@ -33,7 +39,7 @@ i18n:
     - code: ko
       path: ko
       label: 한국어
-      title: "타도코로 코지 (야수 선배)"
+      title: "타도코로 코지(야수 선배)"
       description: "독립 개발자이자 인터페이스 엔지니어의 개인 홈페이지."
       fontProfile: korean
 

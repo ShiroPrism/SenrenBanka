@@ -2,7 +2,7 @@
   "displayName": "Receipt",
   "description": "热敏小票：一条从票据机里吐出的长票——虚线分栏、点引导线、段码数字与一枚红章。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#b3372c",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-17（八方向新主题·小票机）"

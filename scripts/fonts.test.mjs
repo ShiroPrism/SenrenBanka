@@ -695,8 +695,8 @@ test('concurrent prepare calls serialize installation and leave one valid cache'
 test('generated registration preserves all legacy local-family metadata', async () => {
   const state = await loadFontState();
   const summary = validateFontState(state);
-  assert.equal(summary.familyCount, 26);
-  assert.equal(summary.variantCount, 939);
+  assert.equal(summary.familyCount, 31);
+  assert.equal(summary.variantCount, 1582);
   assert.equal(state.generated, renderGeneratedSource(state.snapshot, state.config));
 
   const legacy = JSON.parse(
@@ -706,9 +706,9 @@ test('generated registration preserves all legacy local-family metadata', async 
     ),
   );
   const definitions = buildLocalFontDefinitions(state.snapshot, state.config);
-  assert.equal(definitions.length, legacy.length + 6);
-  assert.equal(new Set(definitions.map((family) => family.name)).size, legacy.length + 6);
-  assert.equal(new Set(definitions.map((family) => family.cssVariable)).size, legacy.length + 6);
+  assert.equal(definitions.length, legacy.length + 11);
+  assert.equal(new Set(definitions.map((family) => family.name)).size, legacy.length + 11);
+  assert.equal(new Set(definitions.map((family) => family.cssVariable)).size, legacy.length + 11);
   const definitionsByName = new Map(definitions.map((family) => [family.name, family]));
   for (const expected of legacy) {
     const actual = definitionsByName.get(expected.name);

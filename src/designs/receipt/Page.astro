@@ -24,10 +24,16 @@ const { contextMenu } = view;
     <HeadMeta {...view.head} />
     {/* 不预加载：核心 CJK 分片较多，固定字重亦无需提前取件；swap + 系统回退已足够（热敏纸闪一下是主题的一部分） */}
     <Font cssVariable="--font-cutive-mono" />
-    <Font cssVariable="--font-ark-pixel" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-ark-pixel" />}
     <Font cssVariable="--font-dseg7" />
-    <Font cssVariable="--font-galmuri11" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-galmuri11" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-fusion-pixel-tc" />
+      </>
+    )}
   </head>
   <body class="rc">
     <main class="rc-scene">

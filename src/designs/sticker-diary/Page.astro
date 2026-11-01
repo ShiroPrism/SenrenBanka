@@ -63,9 +63,15 @@ const shortUrl = (url: string) =>
     <HeadMeta {...view.head} />
     {/* Three voices, no preload: hand-drawn Latin, warm CJK, readable body. */}
     <Font cssVariable="--font-uglytypist" />
-    <Font cssVariable="--font-lxgw" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-lxgw" />}
     <Font cssVariable="--font-inter" />
-    <Font cssVariable="--font-poor-story" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-poor-story" />}
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-lxgw-tc" />
+      </>
+    )}
   </head>
   <body class="sd" data-sd-root>
     <main class="sd-scene" aria-label={`${profile.name} · ${t.bookLabel}`}>

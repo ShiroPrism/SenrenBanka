@@ -40,6 +40,7 @@
 - **每套设计必须提供 `src/designs/<id>/messages.ts`**，导出 `messages`，为 `design.json` 的 `locales` 中**每种 code** 各给一份文案（默认设计必须覆盖 `i18n.locales` 的全部 code）。缺文件或缺键在构建期报错；文案必须遵循该设计的视觉语言，**不得**把所有设计统一翻译成相同表述。
 - **设计语言覆盖**：`design.json` 必须声明 `locales: string[]`（非空、去重）。默认设计（`design.default`）必须覆盖全部配置 locale；非默认设计可覆盖子集。未覆盖的 locale **不生成该设计页面**（直接 404）；`/<locale>/designs/` 与随机池只包含覆盖当前 locale 的设计。声明覆盖但 `messages.ts` 缺该语言文案、或 `descriptions.ts` 缺切换页描述 → **构建失败**；`design.json` 中列出但未在 `site.config.yaml` 配置的 code → **告警并忽略**（单语言 fork 不必逐套清理 design.json）。
 - **Locale typography coverage（韩语）**：`fontProfile: korean` 由 `fonts:coverage` 消费；声明 `ko` 的 `styled` 设计，每个 `font` / `font-family` 栈必须包含 Hangul 核心变量，页面必须注册对应 `<Font>`；`html-only` 在字体维度豁免。CJK 核心存在性仍由 `fonts:typography` 处理。决策见 ADR 0017。
+- **Locale typography coverage（繁体中文）**：`fontProfile: traditional-chinese` 由 `fonts:coverage` 消费；声明 `zh-TW` 的 `styled` 设计必须在 `html:lang(zh-TW)` 内重映射每个被用到的 CJK/伴生变量（韩文伴生槽位可映射到 `__senrenbanka_tc_skip__` 哨兵，不得提升为新的字形角色），TC `<Font>` 只在 zh-TW 页注册；`html-only` 豁免。TC 族的 `scripts` 必须同时含 `cjk` 与 `han-traditional`，否则会绕过汉字审计。决策见 ADR 0018。
 - **单语言 fork**：只保留一种语言时，改 `site.config.yaml` 的 `i18n.locales` 为 1 条并删除多余 `src/data/profiles/*.yaml`；`design.json` 中未配置的 code 被忽略。`locales.length < 2` 时语言分组、`LanguageSwitcher`、注入 JSON 与 `html-only` 原生语言区整组不渲染；保留 `/<locale>/` URL 前缀。
 - 不翻译的文本（命令、ASCII 装饰、刻意的双语标识、品牌专有名词、法律署名）**必须在该设计 `messages.ts` 的文件注释中写明理由**，否则视为漏译
 - 用户可见静态文案**不得**留在 `Page.astro` 的模板字面量里；也包括运行时生成的提示（菜单 Toast 等）——后者由 `view.messages` 注入

@@ -2,7 +2,7 @@
   "displayName": "Editorial",
   "description": "杂志排版风：衬线大标题、不对称留白、发丝分隔线与单一焦赭强调。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#9a3412",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable v4.5.2 · document（scan 模式规范化固化，2026-10-10）"

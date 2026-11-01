@@ -32,9 +32,15 @@ const linkCount = profile.links.length;
     <Font cssVariable="--font-league-gothic" />
     <Font cssVariable="--font-blackout" />
     <Font cssVariable="--font-prociono" />
-    <Font cssVariable="--font-zhuque" />
-    <Font cssVariable="--font-gothic-a1" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gothic-a1" />}
     <Reveal />
+
+    {view.locale.code === 'zh-TW' && (
+      <>
+        <Font cssVariable="--font-noto-serif-tc" />
+      </>
+    )}
   </head>
   <body class="ps">
     <main class="ps-stage" aria-label={t.sheetLabel}>

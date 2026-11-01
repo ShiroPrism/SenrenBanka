@@ -19,6 +19,13 @@ export const messages: Record<string, FastMessages> = {
     skills: '技能',
     contact: '联系',
   },
+  'zh-TW': {
+    portfolio: '作品集',
+    projects: '專案',
+    experience: '經歷',
+    skills: '技能',
+    contact: '聯絡',
+  },
   ja: {
     portfolio: 'ポートフォリオ',
     projects: 'プロジェクト',

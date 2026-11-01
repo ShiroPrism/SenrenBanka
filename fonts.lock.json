@@ -1,10 +1,10 @@
 {
   "baseUrl": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download",
   "catalog": {
-    "sha256": "a61b225c5edca6a3b023fdfa1d3ef2ffdb0c1b3b98f81cd4c5c0dbe26b399029",
-    "snapshotSha256": "e88428992c183e7df3fe30248a5063f5317f5036bc1d6886268f9d9974f14b38",
-    "url": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.1.0/catalog.json",
-    "version": "1.1.0"
+    "sha256": "430cb587dcb9cfa850fc25d16953e5092ac6c48c3865e4138722cd68b7039635",
+    "snapshotSha256": "a090c4080c25f9407d4609e24cd10139b8a6cb41e58a8408f75825111cfc88a6",
+    "url": "https://github.com/whitehair-failure/SenrenBanka-fonts/releases/download/catalog-v1.2.0/catalog.json",
+    "version": "1.2.0"
   },
   "families": {
     "ark-pixel-12px": {
@@ -160,6 +160,23 @@
       },
       "version": "1.0.0"
     },
+    "fusion-pixel-tc": {
+      "manifestSha256": "92cf561f5bb1f6ee84cb7c9653fe613df1cb99e348cde1e17521adc37ba7a573",
+      "package": {
+        "fileName": "fusion-pixel-tc-v1.0.0.tar.gz",
+        "releaseTag": "font-fusion-pixel-tc-v1.0.0",
+        "sha256": "291c7dd6f3fcb86c4a98cb8d246958968d6c869d754337ef1d2cd2386741d2ca",
+        "size": 1708824
+      },
+      "packageFilesSha256": "fc3581fdc4de753a1c7b8e9aac7bf0cdbf2ef6715fe30947131a0e76c604a070",
+      "source": {
+        "fileName": "fusion-pixel-tc-v1.0.0-source.tar.gz",
+        "releaseTag": "font-fusion-pixel-tc-v1.0.0",
+        "sha256": "670dd5a6ca50d6183b902d9c66eb9c4a1ce1ae44bfe3f533c21b7ffb9b63a513",
+        "size": 1092324
+      },
+      "version": "1.0.0"
+    },
     "galmuri11": {
       "manifestSha256": "c8684ae61fbafb0f76133d8a4dc4a316e6c33ee91393f48ed14227bb22e09fdb",
       "package": {
@@ -279,6 +296,23 @@
       },
       "version": "1.0.0"
     },
+    "lxgw-wenkai-tc": {
+      "manifestSha256": "5256dc0cf8848950e5e3a241e568f6034a4618a3b8ad01c1ffc06ed1bf4b6867",
+      "package": {
+        "fileName": "lxgw-wenkai-tc-v1.0.0.tar.gz",
+        "releaseTag": "font-lxgw-wenkai-tc-v1.0.0",
+        "sha256": "ed98f5acda7c342bccad8684f5f1cdcafb9989bf59b776f4015d0516b99a1d00",
+        "size": 8540734
+      },
+      "packageFilesSha256": "d5f98703a071141a67174441617fc4cee1c430250b6d637f1bad1cf2e134103f",
+      "source": {
+        "fileName": "lxgw-wenkai-tc-v1.0.0-source.tar.gz",
+        "releaseTag": "font-lxgw-wenkai-tc-v1.0.0",
+        "sha256": "2ab959a383eeee206cdadf34e5a92ddfca30590b2f620d69d4b9e9796042890f",
+        "size": 8943661
+      },
+      "version": "1.0.0"
+    },
     "noto-sans-mono-cjk-kr": {
       "manifestSha256": "1f91ff691c0c23c5197582c6ce43486ede298e666e2efb79ec23389d05513ef0",
       "package": {
@@ -293,6 +327,57 @@
         "releaseTag": "font-noto-sans-mono-cjk-kr-v1.0.0",
         "sha256": "dfc462e8a1f7121e3e6d88317939a2f83d8660a538cff33a81ea2c08335943bc",
         "size": 13658884
+      },
+      "version": "1.0.0"
+    },
+    "noto-sans-mono-cjk-tc": {
+      "manifestSha256": "4f419af8798c7618d98f879f91dd6eaec3f5ee7dc6282c02c7475917738c42f6",
+      "package": {
+        "fileName": "noto-sans-mono-cjk-tc-v1.0.0.tar.gz",
+        "releaseTag": "font-noto-sans-mono-cjk-tc-v1.0.0",
+        "sha256": "f5ddd60ec8aa4bd4476a718fc02a595ec0616db9f81055fdf41c4666735727ba",
+        "size": 13245126
+      },
+      "packageFilesSha256": "13234ae68d8ca763bab545133c7da997f818558a6d34a2ff5578260655c1a94e",
+      "source": {
+        "fileName": "noto-sans-mono-cjk-tc-v1.0.0-source.tar.gz",
+        "releaseTag": "font-noto-sans-mono-cjk-tc-v1.0.0",
+        "sha256": "73bd409192332e11c166adb042ee796868cf4a84dd0fb6ae5bf80269992a35e1",
+        "size": 13660313
+      },
+      "version": "1.0.0"
+    },
+    "noto-sans-tc": {
+      "manifestSha256": "b89d9dd469b22b18b6c40faddad1b4bf678ce5d25596d80b7f37bc67b1b6e11c",
+      "package": {
+        "fileName": "noto-sans-tc-v1.0.0.tar.gz",
+        "releaseTag": "font-noto-sans-tc-v1.0.0",
+        "sha256": "950eeb991d3af61e64d556d4a31c65f95f3f53d26c907500d56fbfa0a79967ef",
+        "size": 5025778
+      },
+      "packageFilesSha256": "7d8f4f34ea788e6f440cd1ee1fe8278ed8e49fd60371b46f48666f22bea4494a",
+      "source": {
+        "fileName": "noto-sans-tc-v1.0.0-source.tar.gz",
+        "releaseTag": "font-noto-sans-tc-v1.0.0",
+        "sha256": "bf2e809782fe6b3bbf52457a3803e9c2420ad8f24a477bcc6a7473535ed89d59",
+        "size": 4913544
+      },
+      "version": "1.0.0"
+    },
+    "noto-serif-tc": {
+      "manifestSha256": "56f4d3a473db04ad2fe01b4b1b62ffff033eabdd01cb6b752fbbc9e96c34549f",
+      "package": {
+        "fileName": "noto-serif-tc-v1.0.0.tar.gz",
+        "releaseTag": "font-noto-serif-tc-v1.0.0",
+        "sha256": "8fac4aeeebfb3e778d3af80e3fa1f18295b0cffe9794edcbc1f046e88d818f11",
+        "size": 7385031
+      },
+      "packageFilesSha256": "8d7f17d7f21af6fa0912dce65014386fb9dde09396af3a878491f3b7dcca85ab",
+      "source": {
+        "fileName": "noto-serif-tc-v1.0.0-source.tar.gz",
+        "releaseTag": "font-noto-serif-tc-v1.0.0",
+        "sha256": "3faf16dcf28a0c4437f598584bbb999cbb721c9737f871e91aa873ea97c9b77f",
+        "size": 6778259
       },
       "version": "1.0.0"
     },

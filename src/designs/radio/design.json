@@ -2,7 +2,7 @@
   "displayName": "Radio",
   "description": "短波收信机：1970s 工业面板、刻线刻度盘与琥珀读数——名字就是表盘上的当前呼号。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "accent": "#e0a13f",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-17（八方向新主题·短波收信机）"

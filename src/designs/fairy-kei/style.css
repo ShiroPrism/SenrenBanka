@@ -1922,3 +1922,9 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 繁體中文：TC 字體只在 zh-TW 頁面註冊；韓文伴生槽位不承擔漢字角色。 */
+html:lang(zh-TW) {
+  --font-dongle: __senrenbanka_tc_skip__;
+  --font-lxgw: var(--font-lxgw-tc);
+}

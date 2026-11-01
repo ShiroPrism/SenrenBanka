@@ -2,7 +2,7 @@
   "displayName": "Fairy Kei",
   "description": "一只打开的复古少女玩具收藏盒：中央收藏窗、悬挂饰品、包装说明卡、玩具抽屉、丝带卷轴、贴纸册与便签。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en", "ko"],
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
   "renderMode": "styled",
   "accent": "#b7487c",
   "source": { "type": "self-produced" },
