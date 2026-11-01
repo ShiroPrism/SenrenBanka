@@ -201,3 +201,45 @@ Implemented design.json locale coverage and single-locale fork; added Korean loc
 ### Status
 
 [OK] **Completed**
+
+
+## Session 8: 韩语全设计覆盖：字体发行与 27 套韩语页面
+<!-- trellis-session: v=2 fp=fc94ee1b8a5b533a -->
+
+**Date**: 2026-11-01
+**Task**: 韩语全设计覆盖：字体发行与 27 套韩语页面
+**Branch**: `feat/font-content-subset`
+
+### Summary
+
+catalog v1.1.0（6 个韩语核心族）发布并接入；26 套设计字体栈 + Hangul-only 子集 + 覆盖门禁；5 套既有与 22 套新增韩语文案/descriptions/<Font>；27 个 ko 页面构建与冒烟通过；文案经用户确认审校；C1/C2/C3/父任务归档。
+
+### Main Changes
+
+- 字体仓库：6 族 catalog v1.1.0 发布（外部仓库 commit bab1a4f）；既有 20 族 package/source 字节零漂移。
+- 主站：26 套字体栈、Hangul-only 子集/unicode-range、fonts:coverage、5 套既有 ko + 22 套新增文案/descriptions/<Font>。
+- 文案：用户确认已人工审校；terminal/oxide 双语为刻意不翻译项；archive 补 :lang(ko) 防合成斜体。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `2447de2` | feat: integrate Korean core fonts and coverage gates |
+| `fa44b73` | feat: add Korean content for all designs |
+| `e221eaa` | docs: record Korean copy review |
+
+### Testing
+
+- [OK] 字体仓库：npm test 61/61；catalog:validate 26；release:verify --compare-dir reproducible: true；6 族样张通过。
+- [OK] 主站：npm test 74/74；npm run check 0 error；npm run build 146 页；dist 6,056,936 B；fonts:coverage 27；fonts:audit 0 部署缺口。
+- [OK] 浏览器：22 个新 ko 页 375×812 / 1280×800 全部 200 / lang=ko / 韩语字体加载 / 无溢出 / 0 console；6 族抽样截图。
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- 完整 27 页 design-page-verify 矩阵（菜单/无 JS/对比度/动效）。
+- 主站 feat/font-content-subset 的 push/PR；字体仓库 catalog v1.1.0 已发布。
+- 未来字体升级：修 renameSfntFont 后评估 Pretendard/D2Coding；Black Han Sans 仍不建议。

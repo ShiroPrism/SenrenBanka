@@ -8,7 +8,7 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 7
+- **Total Sessions**: 8
 - **Last Active**: 2026-11-01
 <!-- @@@/auto:current-status -->
 
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~203 | Active |
+| `journal-1.md` | ~245 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 8 | 2026-11-01 | 韩语全设计覆盖：字体发行与 27 套韩语页面 | `2447de2`, `fa44b73`, `e221eaa` | `feat/font-content-subset` |
 | 7 | 2026-11-01 | Locale coverage, Korean first batch, and menu CSS externalization | `fe4bf37` | `feat/font-content-subset` |
 | 6 | 2026-10-31 | Design batch: brutal, ink, deco | `cf829ef` | `feat/font-content-subset` |
 | 5 | 2026-10-31 | Font shipping: shard pruning and core content subsets | `eefdbc1`, `5f66e03` | `feat/font-content-subset` |
