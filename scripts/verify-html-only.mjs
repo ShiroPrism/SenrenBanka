@@ -61,10 +61,7 @@ function readLocales() {
 
   const paths = locales.map((locale) => locale?.path);
   for (const localePath of paths) {
-    if (
-      typeof localePath !== 'string' ||
-      !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(localePath)
-    ) {
+    if (typeof localePath !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(localePath)) {
       fail(`invalid locale path "${String(localePath)}"`);
     }
   }
@@ -151,10 +148,7 @@ function findStartTagEnd(html, start) {
     }
 
     const nameStart = index;
-    while (
-      index < html.length &&
-      !/[\s=/>]/.test(html[index])
-    ) {
+    while (index < html.length && !/[\s=/>]/.test(html[index])) {
       index += 1;
     }
     if (nameStart === index) {
@@ -264,6 +258,7 @@ function decodeCharacterReferences(value) {
 function isJavascriptUrl(value) {
   const normalize = (candidate) =>
     decodeCharacterReferences(candidate)
+      // eslint-disable-next-line no-control-regex -- URL normalization strips control characters
       .replace(/[\u0000-\u0020\u007f-\u009f]/g, '')
       .toLowerCase();
 
@@ -296,9 +291,7 @@ function scanStartTags(html) {
       // DOCTYPE identifiers may contain ">" inside quotes. Other "<!" forms
       // are bogus comments in HTML, whose tokenizer ignores quote syntax.
       const isDoctype = /^<!doctype(?:\s|>)/i.test(html.slice(open, open + 10));
-      const close = isDoctype
-        ? findTagEnd(html, open + 2)
-        : html.indexOf('>', open + 2);
+      const close = isDoctype ? findTagEnd(html, open + 2) : html.indexOf('>', open + 2);
       if (close === -1) fail(`unterminated markup declaration at offset ${open}`);
       index = close + 1;
       continue;

@@ -7,11 +7,7 @@ import { renderGeneratedSource } from './lib/generated.mjs';
 import { machinePathFindings, stableStringify, sha256 } from './lib/json.mjs';
 import { acquireFileLock } from './lib/lock.mjs';
 import { FONT_PATHS, PROJECT_ROOT, resolveProjectPath } from './lib/paths.mjs';
-import {
-  catalogSchema,
-  fontsConfigSchema,
-  parseWithSchema,
-} from './lib/schema.mjs';
+import { catalogSchema, fontsConfigSchema, parseWithSchema } from './lib/schema.mjs';
 
 const MAX_CATALOG_BYTES = 2 * 1024 * 1024;
 
@@ -20,7 +16,7 @@ async function readOptionalJson(filePath) {
     return JSON.parse(await fs.readFile(filePath, 'utf8'));
   } catch (error) {
     if (error.code === 'ENOENT') return null;
-    throw new Error(`cannot use the existing font lock: ${error.message}`);
+    throw new Error(`cannot use the existing font lock: ${error.message}`, { cause: error });
   }
 }
 
@@ -73,7 +69,9 @@ async function writeOutputsAtomically(projectRoot, outputs) {
 
 function assertMachineFree(value, label) {
   if (machinePathFindings(value).length > 0) {
-    throw new Error(`${label} would contain a machine-specific path or local font workspace reference`);
+    throw new Error(
+      `${label} would contain a machine-specific path or local font workspace reference`,
+    );
   }
 }
 
@@ -121,7 +119,7 @@ export async function updateFonts({
   try {
     rawCatalog = JSON.parse(catalogBuffer.toString('utf8'));
   } catch (error) {
-    throw new Error(`font catalog is not valid JSON: ${error.message}`);
+    throw new Error(`font catalog is not valid JSON: ${error.message}`, { cause: error });
   }
   const catalog = parseWithSchema(catalogSchema, rawCatalog, 'font catalog');
   if (catalog.baseUrl !== config.baseUrl) {
@@ -143,9 +141,7 @@ export async function updateFonts({
     const catalogFamily = catalog.families[id];
     const selected = configById.get(id);
     const packageUrl = `${catalog.baseUrl}/${catalogFamily.package.releaseTag}/${catalogFamily.package.fileName}`;
-    logger(
-      `fetch ${id}@${catalogFamily.version} (${catalogFamily.package.size} bytes)`,
-    );
+    logger(`fetch ${id}@${catalogFamily.version} (${catalogFamily.package.size} bytes)`);
     const packageBuffer = await fetchBuffer(packageUrl, {
       fetchImpl,
       maxBytes: catalogFamily.package.size + 1,

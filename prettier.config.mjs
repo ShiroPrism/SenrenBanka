@@ -1,0 +1,8 @@
+export default {
+  printWidth: 100,
+  singleQuote: true,
+  semi: true,
+  trailingComma: 'all',
+  endOfLine: 'lf',
+  plugins: ['prettier-plugin-astro'],
+};

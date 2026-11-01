@@ -20,9 +20,11 @@ One profile, many AI-designed homepages, in three languages. Astro + TypeScript 
 npm ci
 npm run fonts:prepare  # 按 fonts.lock.json 下载并校验到 .cache/fonts/ 与 .cache/font-sources/
 npm run dev            # http://localhost:4321
-npm run build          # fonts:check + astro check + build + fonts:subset + fonts:prune + HTML 审计
+npm run build          # eol/lint/format + fonts:check + astro check + build + fonts:subset + fonts:prune + HTML 审计
 npm run preview
 ```
+
+代码与配置统一走 Prettier + ESLint；新增或修改文件后运行 `npm run format && npm run lint`。行尾由 `.gitattributes` / `.editorconfig` 固定为 LF，`npm run check:eol` 会在构建前拦截 CRLF。
 
 字体缓存不进入版本控制，也不在 `postinstall` 中隐式联网。干净 clone 必须先
 显式执行 `npm run fonts:prepare`；准备完成后，`npm run build` 的

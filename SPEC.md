@@ -503,7 +503,11 @@ src/designs/<id>/
 ```jsonc
 {
   "dev": "astro dev",
-  "check": "npm run check:docs && npm run fonts:typography && npm run fonts:coverage && astro check",
+  "check": "npm run check:docs && npm run check:eol && npm run lint && npm run format:check && npm run fonts:typography && npm run fonts:coverage && astro check",
+  "check:eol": "node scripts/check-line-endings.mjs",
+  "lint": "eslint \"src/**/*.{astro,ts}\" \"scripts/**/*.mjs\" astro.config.mjs eslint.config.mjs prettier.config.mjs",
+  "format": "prettier --write .",
+  "format:check": "prettier --check .",
   "fonts:subset": "node scripts/fonts/cli.mjs subset",
   "fonts:coverage": "node scripts/fonts/coverage.mjs",
   "fonts:prune": "node scripts/fonts/cli.mjs prune",
@@ -514,7 +518,7 @@ src/designs/<id>/
 }
 ```
 
-- `engines.node >= 22.12`；提交 `package-lock.json`。
+- `engines.node` 为 `^22.22.3 || ^24.16.0 || >=26.3.0`（匹配 ESLint 10 / eslint-plugin-astro 3）；`.nvmrc` 为 24；提交 `package-lock.json`。
 - `scripts/verify-html-only.mjs` 使用 Node 标准库与现有 `yaml`，读取 `site.config.yaml` / `design.json`，逐 `html-only` 设计 × locale 检查最终 HTML；无候选、缺页面或违规资源均非零退出，支持 `--dist <dir>`。注册表校验在 Astro 构建期 fail-fast。
 - `scripts/fonts/subset.mjs` 在 `astro build` 之后、`fonts:prune` 之前：按最终 `dist` 中实际引用该族的页面语料（共享非 HTML 资产全量纳入）从 catalog source font 生成每族一个 WOFF2 子集，把页面的核心分片 `@font-face` 替换为一条子集规则（CJK 族无 `unicode-range`；`scripts: ["hangul"]` 族写 Hangul-only `unicode-range`）；未被任何页面引用的族跳过；`--dist <dir>` / `--dry-run` 受支持，报告写到 `.cache/fonts/subset-report.json`。规则见 `docs/rules/operations.md`「字体裁剪、内容子集与体积门禁」与 ADR 0014 / 0017 / 0019。
 - `scripts/fonts/prune.mjs` 在 `fonts:subset` 之后：按最终 `dist` 文本裁剪剩余 `@font-face`、把保留规则外置为共享哈希 CSS、删除无人引用的分片，并执行 **10 MiB** 体积门禁；`--dist <dir>` / `--dry-run` 受支持，规则见 `docs/rules/operations.md`「字体裁剪、内容子集与体积门禁」。

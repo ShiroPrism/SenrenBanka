@@ -5,12 +5,16 @@
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": ">=22.12.0"
+    "node": "^22.22.3 || ^24.16.0 || >=26.3.0"
   },
   "scripts": {
     "dev": "astro dev",
     "check:docs": "node --test scripts/verify-agent-docs.test.mjs && node scripts/verify-agent-docs.mjs",
-    "check": "npm run check:docs && npm run fonts:typography && npm run fonts:coverage && astro check",
+    "check:eol": "node scripts/check-line-endings.mjs",
+    "lint": "eslint \"src/**/*.{astro,ts}\" \"scripts/**/*.mjs\" astro.config.mjs eslint.config.mjs prettier.config.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run check:docs && npm run check:eol && npm run lint && npm run format:check && npm run fonts:typography && npm run fonts:coverage && astro check",
     "fonts:update": "node scripts/fonts/cli.mjs update",
     "fonts:prepare": "node scripts/fonts/cli.mjs prepare",
     "fonts:check": "node scripts/fonts/cli.mjs check",
@@ -19,7 +23,7 @@
     "fonts:coverage": "node scripts/fonts/coverage.mjs",
     "fonts:prune": "node scripts/fonts/cli.mjs prune",
     "fonts:audit": "node scripts/fonts/cli.mjs audit",
-    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
+    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/check-line-endings.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
     "test:html-only": "node --test scripts/verify-html-only.test.mjs",
     "test:fonts": "node --test scripts/fonts.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
     "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
@@ -42,9 +46,16 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.5",
+    "eslint": "^10.14.0",
+    "eslint-plugin-astro": "^3.2.1",
     "fontkitten": "1.0.3",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
     "subset-font": "2.9.0",
-    "typescript": "^5.0.0 || ^6.0.0"
+    "typescript": "^5.0.0 || ^6.0.0",
+    "typescript-eslint": "^8.72.1"
   }
 }

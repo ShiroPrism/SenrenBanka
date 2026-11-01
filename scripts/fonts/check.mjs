@@ -20,6 +20,7 @@ export async function checkFonts({ projectRoot = PROJECT_ROOT } = {}) {
   } catch (error) {
     throw new Error(
       `${error.message}. Run npm run fonts:prepare to download or repair the locked cache.`,
+      { cause: error },
     );
   }
   return {

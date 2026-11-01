@@ -19,8 +19,9 @@ async function lstatRequired(filePath, label) {
   try {
     return await fs.lstat(filePath);
   } catch (error) {
-    if (error.code === 'ENOENT') throw new Error(`${label} is missing: ${filePath}`);
-    throw new Error(`${label} cannot be inspected: ${error.message}`);
+    if (error.code === 'ENOENT')
+      throw new Error(`${label} is missing: ${filePath}`, { cause: error });
+    throw new Error(`${label} cannot be inspected: ${error.message}`, { cause: error });
   }
 }
 
@@ -102,7 +103,9 @@ async function verifySourceCacheDirectory(root, snapshot, family) {
   try {
     rawManifest = JSON.parse(manifestBytes.toString('utf8'));
   } catch (error) {
-    throw new Error(`font source cache ${MANIFEST_FILE} is invalid JSON: ${error.message}`);
+    throw new Error(`font source cache ${MANIFEST_FILE} is invalid JSON: ${error.message}`, {
+      cause: error,
+    });
   }
   const validated = validateSourceManifest(rawManifest, expectedSource(family));
 
@@ -143,7 +146,9 @@ async function verifySourceCacheDirectory(root, snapshot, family) {
   try {
     marker = JSON.parse(markerText);
   } catch (error) {
-    throw new Error(`font source cache ${MARKER_FILE} is invalid JSON: ${error.message}`);
+    throw new Error(`font source cache ${MARKER_FILE} is invalid JSON: ${error.message}`, {
+      cause: error,
+    });
   }
   const expectedMarker = {
     ...markerIdentity(snapshot, family),
@@ -256,6 +261,7 @@ async function replaceDirectoryAtomically(temporary, destination, verifyInstalle
       throw new AggregateError(
         [error, ...rollbackErrors],
         `font source cache install failed and the previous cache could not be restored: ${destination}`,
+        { cause: error },
       );
     }
     throw error;
@@ -315,7 +321,9 @@ export async function installSourceCache({ projectRoot, snapshot, id, inspected 
         family,
       );
       if (verification.files !== inspected.files.length) {
-        throw new Error('temporary font source cache verification returned an unexpected file count');
+        throw new Error(
+          'temporary font source cache verification returned an unexpected file count',
+        );
       }
 
       const destination = resolveProjectPath(
@@ -323,11 +331,7 @@ export async function installSourceCache({ projectRoot, snapshot, id, inspected 
         sourceCacheRelativePath(snapshot.catalogVersion, id, family.version),
       );
       await replaceDirectoryAtomically(temporary, destination, async (installedDirectory) => {
-        await verifySourceCacheDirectory(
-          installedDirectory,
-          { ...snapshot, projectRoot },
-          family,
-        );
+        await verifySourceCacheDirectory(installedDirectory, { ...snapshot, projectRoot }, family);
       });
       return destination;
     } catch (error) {

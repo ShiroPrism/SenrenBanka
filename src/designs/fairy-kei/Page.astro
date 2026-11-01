@@ -32,12 +32,13 @@ const projects = profile.projects ?? [];
 const experience = profile.experience ?? [];
 const skills = profile.skills ?? [];
 
-let sectionNumber = 1;
-const bioSectionNo = pad(sectionNumber++);
-const projectsSectionNo = projects.length > 0 ? pad(sectionNumber++) : '';
-const experienceSectionNo = experience.length > 0 ? pad(sectionNumber++) : '';
-const skillsSectionNo = skills.length > 0 ? pad(sectionNumber++) : '';
-const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
+let sectionNumber = 0;
+const bioSectionNo = pad(++sectionNumber);
+const projectsSectionNo = projects.length > 0 ? pad(++sectionNumber) : '';
+const experienceSectionNo = experience.length > 0 ? pad(++sectionNumber) : '';
+const skillsSectionNo = skills.length > 0 ? pad(++sectionNumber) : '';
+// eslint-disable-next-line no-useless-assignment -- 最后一个分区编号只用于当前表达式
+const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
 ---
 
 <html lang={view.head.lang}>
@@ -57,7 +58,9 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
     )}
   </head>
   <body class="fk">
-    <a class="fk-skip" href="#fk-main">{t.skipToContent}</a>
+    <a class="fk-skip" href="#fk-main">
+      {t.skipToContent}
+    </a>
 
     <main class="fk-room" id="fk-main" tabindex="-1" aria-labelledby="fk-title">
       <article class="fk-case">
@@ -84,20 +87,22 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
                 <span class="fk-kicker-dot" aria-hidden="true"></span>
                 {t.collectionLabel}
               </p>
-              <h1 class="fk-name" id="fk-title">{profile.name}</h1>
+              <h1 class="fk-name" id="fk-title">
+                {profile.name}
+              </h1>
               <p class="fk-headline">{profile.headline}</p>
-              {
-                profile.location && (
-                  <p class="fk-location">
-                    <span class="fk-location-label">{t.locationLabel}</span>
-                    <span>{profile.location}</span>
-                  </p>
-                )
-              }
+              {profile.location && (
+                <p class="fk-location">
+                  <span class="fk-location-label">{t.locationLabel}</span>
+                  <span>{profile.location}</span>
+                </p>
+              )}
             </div>
 
             <div class="fk-portrait">
-              <span class="fk-portrait-tag" aria-hidden="true">{t.portraitLabel}</span>
+              <span class="fk-portrait-tag" aria-hidden="true">
+                {t.portraitLabel}
+              </span>
               <div class="fk-window">
                 <div class="fk-window-inner">
                   {profile.avatar ? (
@@ -120,7 +125,9 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
             </div>
 
             <span class="fk-catalog-tab" aria-hidden="true">
-              <i></i><i></i><i></i>
+              <i></i>
+              <i></i>
+              <i></i>
             </span>
           </header>
 
@@ -139,152 +146,174 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
               <span class="fk-chain-bead fk-chain-bead--three"></span>
             </div>
 
-            {
-              profile.links.length > 0 ? (
-                <ul class="fk-charm-list">
-                  {profile.links.map((link, index) => (
-                    <li class="fk-charm">
-                      <a href={link.url}>
-                        <span class="fk-charm-no" aria-hidden="true">{pad(index + 1)}</span>
-                        <span class="fk-charm-label">{link.label}</span>
-                        <span class="fk-charm-url" aria-hidden="true">{shortUrl(link.url)}</span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p class="fk-empty">{t.noLinks}</p>
-              )
-            }
+            {profile.links.length > 0 ? (
+              <ul class="fk-charm-list">
+                {profile.links.map((link, index) => (
+                  <li class="fk-charm">
+                    <a href={link.url}>
+                      <span class="fk-charm-no" aria-hidden="true">
+                        {pad(index + 1)}
+                      </span>
+                      <span class="fk-charm-label">{link.label}</span>
+                      <span class="fk-charm-url" aria-hidden="true">
+                        {shortUrl(link.url)}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="fk-empty">{t.noLinks}</p>
+            )}
           </nav>
 
           <section class="fk-package" data-reveal aria-labelledby="fk-bio-title">
             <div class="fk-package-inner">
               <span class="fk-package-tape" aria-hidden="true"></span>
               <div class="fk-section-heading">
-                <span class="fk-section-no" aria-hidden="true">{bioSectionNo}</span>
+                <span class="fk-section-no" aria-hidden="true">
+                  {bioSectionNo}
+                </span>
                 <h2 id="fk-bio-title">{t.bioTitle}</h2>
               </div>
               <p class="fk-bio">{profile.bio}</p>
-              <span class="fk-package-seal" aria-hidden="true">{t.packageSeal}</span>
+              <span class="fk-package-seal" aria-hidden="true">
+                {t.packageSeal}
+              </span>
             </div>
           </section>
 
-          {
-            projects.length > 0 && (
-              <section class="fk-projects" data-reveal aria-labelledby="fk-projects-title">
-                <div class="fk-section-heading fk-section-heading--wide">
-                  <span class="fk-section-no" aria-hidden="true">{projectsSectionNo}</span>
-                  <h2 id="fk-projects-title">{t.projectsTitle}</h2>
-                  <span class="fk-section-count" aria-hidden="true">{pad(projects.length)}</span>
-                </div>
+          {projects.length > 0 && (
+            <section class="fk-projects" data-reveal aria-labelledby="fk-projects-title">
+              <div class="fk-section-heading fk-section-heading--wide">
+                <span class="fk-section-no" aria-hidden="true">
+                  {projectsSectionNo}
+                </span>
+                <h2 id="fk-projects-title">{t.projectsTitle}</h2>
+                <span class="fk-section-count" aria-hidden="true">
+                  {pad(projects.length)}
+                </span>
+              </div>
 
-                <ol class="fk-toy-grid">
-                  {projects.map((project, index) => (
-                    <li class="fk-toy-box">
-                      <details open>
-                        <summary>
-                          <span class="fk-toy-no" aria-hidden="true">{pad(index + 1)}</span>
-                          <span class="fk-toy-heading">
-                            <span class="fk-toy-title">{project.title}</span>
-                            <span class="fk-toy-hint">{t.drawerHint}</span>
-                          </span>
-                          <span class="fk-toy-pull" aria-hidden="true"><i></i></span>
-                        </summary>
-                        <div class="fk-toy-inside">
-                          {project.description && <p class="fk-project-copy">{project.description}</p>}
-                          {
-                            project.tags && project.tags.length > 0 && (
-                              <ul class="fk-tags" aria-label={t.tagsLabel}>
-                                {project.tags.map((tag) => <li>{tag}</li>)}
-                              </ul>
-                            )
-                          }
-                          {
-                            project.url && (
-                              <a class="fk-project-link" href={project.url}>
-                                <span>{t.projectLink}</span>
-                                <span class="fk-project-arrow" aria-hidden="true"></span>
-                              </a>
-                            )
-                          }
-                        </div>
-                      </details>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            )
-          }
-
-          {
-            experience.length > 0 && (
-              <section class="fk-ribbon" data-reveal aria-labelledby="fk-experience-title">
-                <div class="fk-section-heading fk-section-heading--wide">
-                  <span class="fk-section-no" aria-hidden="true">{experienceSectionNo}</span>
-                  <h2 id="fk-experience-title">{t.experienceTitle}</h2>
-                  <span class="fk-section-count" aria-hidden="true">{pad(experience.length)}</span>
-                </div>
-
-                <ol class="fk-ribbon-list">
-                  {experience.map((item, index) => (
-                    <li class="fk-ribbon-item">
-                      <span class="fk-ribbon-no" aria-hidden="true">{pad(index + 1)}</span>
-                      <div class="fk-ribbon-card">
-                        <div class="fk-experience-meta">
-                          {item.period && <span class="fk-period">{item.period}</span>}
-                          {item.role && <span class="fk-role">{item.role}</span>}
-                        </div>
-                        <h3 class="fk-org">{item.org}</h3>
-                        {item.description && <p class="fk-experience-copy">{item.description}</p>}
+              <ol class="fk-toy-grid">
+                {projects.map((project, index) => (
+                  <li class="fk-toy-box">
+                    <details open>
+                      <summary>
+                        <span class="fk-toy-no" aria-hidden="true">
+                          {pad(index + 1)}
+                        </span>
+                        <span class="fk-toy-heading">
+                          <span class="fk-toy-title">{project.title}</span>
+                          <span class="fk-toy-hint">{t.drawerHint}</span>
+                        </span>
+                        <span class="fk-toy-pull" aria-hidden="true">
+                          <i></i>
+                        </span>
+                      </summary>
+                      <div class="fk-toy-inside">
+                        {project.description && (
+                          <p class="fk-project-copy">{project.description}</p>
+                        )}
+                        {project.tags && project.tags.length > 0 && (
+                          <ul class="fk-tags" aria-label={t.tagsLabel}>
+                            {project.tags.map((tag) => (
+                              <li>{tag}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {project.url && (
+                          <a class="fk-project-link" href={project.url}>
+                            <span>{t.projectLink}</span>
+                            <span class="fk-project-arrow" aria-hidden="true"></span>
+                          </a>
+                        )}
                       </div>
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            )
-          }
+                    </details>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
-          {
-            skills.length > 0 && (
-              <section class="fk-stickers" data-reveal aria-labelledby="fk-skills-title">
-                <span class="fk-sticker-holes" aria-hidden="true"></span>
-                <div class="fk-section-heading fk-section-heading--wide">
-                  <span class="fk-section-no" aria-hidden="true">{skillsSectionNo}</span>
-                  <h2 id="fk-skills-title">{t.skillsTitle}</h2>
-                  <span class="fk-section-count" aria-hidden="true">{pad(skills.length)}</span>
-                </div>
-                <ul class="fk-sticker-list">
-                  {skills.map((skill) => <li>{skill}</li>)}
-                </ul>
-              </section>
-            )
-          }
+          {experience.length > 0 && (
+            <section class="fk-ribbon" data-reveal aria-labelledby="fk-experience-title">
+              <div class="fk-section-heading fk-section-heading--wide">
+                <span class="fk-section-no" aria-hidden="true">
+                  {experienceSectionNo}
+                </span>
+                <h2 id="fk-experience-title">{t.experienceTitle}</h2>
+                <span class="fk-section-count" aria-hidden="true">
+                  {pad(experience.length)}
+                </span>
+              </div>
 
-          {
-            hasContact && (
-              <section class="fk-contact" data-reveal aria-labelledby="fk-contact-title">
-                <div class="fk-contact-note">
-                  <span class="fk-note-pin" aria-hidden="true"><i></i></span>
-                  <div class="fk-section-heading">
-                    <span class="fk-section-no" aria-hidden="true">{contactSectionNo}</span>
-                    <h2 id="fk-contact-title">{t.contactTitle}</h2>
-                  </div>
-                  {
-                    profile.contact?.email ? (
-                      <p class="fk-contact-line">
-                        <span class="fk-contact-label">{t.emailLabel}</span>
-                        <a class="fk-mail" href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-                      </p>
-                    ) : (
-                      <p class="fk-contact-line fk-empty">{t.noMail}</p>
-                    )
-                  }
-                  {profile.contact?.note && <p class="fk-contact-copy">{profile.contact.note}</p>}
+              <ol class="fk-ribbon-list">
+                {experience.map((item, index) => (
+                  <li class="fk-ribbon-item">
+                    <span class="fk-ribbon-no" aria-hidden="true">
+                      {pad(index + 1)}
+                    </span>
+                    <div class="fk-ribbon-card">
+                      <div class="fk-experience-meta">
+                        {item.period && <span class="fk-period">{item.period}</span>}
+                        {item.role && <span class="fk-role">{item.role}</span>}
+                      </div>
+                      <h3 class="fk-org">{item.org}</h3>
+                      {item.description && <p class="fk-experience-copy">{item.description}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {skills.length > 0 && (
+            <section class="fk-stickers" data-reveal aria-labelledby="fk-skills-title">
+              <span class="fk-sticker-holes" aria-hidden="true"></span>
+              <div class="fk-section-heading fk-section-heading--wide">
+                <span class="fk-section-no" aria-hidden="true">
+                  {skillsSectionNo}
+                </span>
+                <h2 id="fk-skills-title">{t.skillsTitle}</h2>
+                <span class="fk-section-count" aria-hidden="true">
+                  {pad(skills.length)}
+                </span>
+              </div>
+              <ul class="fk-sticker-list">
+                {skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {hasContact && (
+            <section class="fk-contact" data-reveal aria-labelledby="fk-contact-title">
+              <div class="fk-contact-note">
+                <span class="fk-note-pin" aria-hidden="true">
+                  <i></i>
+                </span>
+                <div class="fk-section-heading">
+                  <span class="fk-section-no" aria-hidden="true">
+                    {contactSectionNo}
+                  </span>
+                  <h2 id="fk-contact-title">{t.contactTitle}</h2>
                 </div>
-              </section>
-            )
-          }
+                {profile.contact?.email ? (
+                  <p class="fk-contact-line">
+                    <span class="fk-contact-label">{t.emailLabel}</span>
+                    <a class="fk-mail" href={`mailto:${profile.contact.email}`}>
+                      {profile.contact.email}
+                    </a>
+                  </p>
+                ) : (
+                  <p class="fk-contact-line fk-empty">{t.noMail}</p>
+                )}
+                {profile.contact?.note && <p class="fk-contact-copy">{profile.contact.note}</p>}
+              </div>
+            </section>
+          )}
 
           <footer class="fk-foot" data-reveal aria-labelledby="fk-foot-title">
             <div class="fk-foot-main">
@@ -293,11 +322,16 @@ const contactSectionNo = hasContact ? pad(sectionNumber++) : '';
             </div>
             <div class="fk-foot-marks">
               <span class="fk-barcode" aria-hidden="true"></span>
-              <p><span>{t.brand}</span><span>{t.sampleNote}</span></p>
+              <p>
+                <span>{t.brand}</span>
+                <span>{t.sampleNote}</span>
+              </p>
             </div>
           </footer>
 
-          <span class="fk-case-latch" aria-hidden="true"><i></i></span>
+          <span class="fk-case-latch" aria-hidden="true">
+            <i></i>
+          </span>
         </div>
       </article>
     </main>

@@ -1,0 +1,29 @@
+# Documentation is maintained separately and must not be reflowed.
+*.md
+docs/
+change-log/
+
+# Generated or package-managed files.
+src/fonts/generated.ts
+fonts.catalog.json
+fonts.lock.json
+package-lock.json
+
+# Build output, caches and local tooling.
+dist/
+.astro/
+.cache/
+node_modules/
+node_modules*/
+public/
+.trellis/
+.agents/
+.impeccable/
+.local-fonts/
+.playwright-mcp/
+.qoder/
+.codex/
+.trae/
+.workbuddy/
+.agent/
+.codebuddy/

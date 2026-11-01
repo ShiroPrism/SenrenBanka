@@ -39,12 +39,13 @@ const location = profile.location ?? '';
 const hasContact = Boolean(contactEmail || contactNote);
 
 /* 引首编号随实际渲染的分区连续递增（缺区块时不留空号）。装饰性，aria-hidden。 */
-let mark = 0;
+let mark = -1;
 const marks = {
-  projects: hasProjects ? mark++ : -1,
-  experience: hasExperience ? mark++ : -1,
-  skills: hasSkills ? mark++ : -1,
-  contact: hasContact ? mark++ : -1,
+  projects: hasProjects ? ++mark : -1,
+  experience: hasExperience ? ++mark : -1,
+  skills: hasSkills ? ++mark : -1,
+  // eslint-disable-next-line no-useless-assignment -- 最后一个标记只用于当前表达式
+  contact: hasContact ? ++mark : -1,
 };
 const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
 ---
@@ -80,12 +81,18 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
       <main>
         <section class="ink-hero" aria-labelledby="ink-name">
           <div class="ink-tiers">
-            <p class="ink-kicker ink-rise" style="--ink-delay: 0ms">{t.portfolio}</p>
+            <p class="ink-kicker ink-rise" style="--ink-delay: 0ms">
+              {t.portfolio}
+            </p>
             <h1 id="ink-name" class="ink-name ink-rise" style="--ink-delay: 90ms">
               {profile.name}
             </h1>
-            <p class="ink-headline ink-rise" style="--ink-delay: 180ms">{profile.headline}</p>
-            <span class="ink-seal" aria-hidden="true">{sealGlyph}</span>
+            <p class="ink-headline ink-rise" style="--ink-delay: 180ms">
+              {profile.headline}
+            </p>
+            <span class="ink-seal" aria-hidden="true">
+              {sealGlyph}
+            </span>
           </div>
 
           <div class="ink-prose">
@@ -94,121 +101,125 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
               <p class="ink-bio">{profile.bio}</p>
             </div>
 
-            {
-              profile.links.length > 0 && (
-                <div class="ink-block">
-                  <p class="ink-label">{t.imprint}</p>
-                  <ul class="ink-slips">
-                    {profile.links.map((link) => (
-                      <li>
-                        <a class="ink-slip-link" href={link.url}>
-                          <span class="ink-slip-mark" aria-hidden="true" />
-                          {link.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            }
+            {profile.links.length > 0 && (
+              <div class="ink-block">
+                <p class="ink-label">{t.imprint}</p>
+                <ul class="ink-slips">
+                  {profile.links.map((link) => (
+                    <li>
+                      <a class="ink-slip-link" href={link.url}>
+                        <span class="ink-slip-mark" aria-hidden="true" />
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </section>
 
-        {
-          hasProjects && (
-            <section class="ink-section" aria-labelledby="ink-projects-title" data-reveal>
-              <p class="ink-gutter" aria-hidden="true">{numeral(marks.projects)}</p>
-              <div class="ink-section-body">
-                <div class="ink-section-head">
-                  <h2 id="ink-projects-title" class="ink-section-title">{t.projects}</h2>
-                  <span class="ink-rule-line" aria-hidden="true" />
-                </div>
-                <ul class="ink-volumes">
-                  {projects.map((project) => (
-                    <li class="ink-volume" data-reveal>
-                      <h3 class="ink-volume-title">
-                        {project.url ? <a href={project.url}>{project.title}</a> : project.title}
-                      </h3>
-                      {project.description && (
-                        <p class="ink-volume-desc">{project.description}</p>
-                      )}
-                      {project.tags && project.tags.length > 0 && (
-                        <p class="ink-volume-tags">{project.tags.join(' · ')}</p>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+        {hasProjects && (
+          <section class="ink-section" aria-labelledby="ink-projects-title" data-reveal>
+            <p class="ink-gutter" aria-hidden="true">
+              {numeral(marks.projects)}
+            </p>
+            <div class="ink-section-body">
+              <div class="ink-section-head">
+                <h2 id="ink-projects-title" class="ink-section-title">
+                  {t.projects}
+                </h2>
+                <span class="ink-rule-line" aria-hidden="true" />
               </div>
-            </section>
-          )
-        }
+              <ul class="ink-volumes">
+                {projects.map((project) => (
+                  <li class="ink-volume" data-reveal>
+                    <h3 class="ink-volume-title">
+                      {project.url ? <a href={project.url}>{project.title}</a> : project.title}
+                    </h3>
+                    {project.description && <p class="ink-volume-desc">{project.description}</p>}
+                    {project.tags && project.tags.length > 0 && (
+                      <p class="ink-volume-tags">{project.tags.join(' · ')}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
-        {
-          hasExperience && (
-            <section class="ink-section" aria-labelledby="ink-experience-title" data-reveal>
-              <p class="ink-gutter" aria-hidden="true">{numeral(marks.experience)}</p>
-              <div class="ink-section-body">
-                <div class="ink-section-head">
-                  <h2 id="ink-experience-title" class="ink-section-title">{t.experience}</h2>
-                  <span class="ink-rule-line" aria-hidden="true" />
-                </div>
-                <ol class="ink-chronology">
-                  {experience.map((item) => (
-                    <li class="ink-chrono-row" data-reveal>
-                      <div class="ink-chrono-main">
-                        <span class="ink-chrono-org">{item.org}</span>
-                        {item.role && <span class="ink-chrono-role">{item.role}</span>}
-                      </div>
-                      {item.period && <span class="ink-chrono-period">{item.period}</span>}
-                      {item.description && (
-                        <p class="ink-chrono-desc">{item.description}</p>
-                      )}
-                    </li>
-                  ))}
-                </ol>
+        {hasExperience && (
+          <section class="ink-section" aria-labelledby="ink-experience-title" data-reveal>
+            <p class="ink-gutter" aria-hidden="true">
+              {numeral(marks.experience)}
+            </p>
+            <div class="ink-section-body">
+              <div class="ink-section-head">
+                <h2 id="ink-experience-title" class="ink-section-title">
+                  {t.experience}
+                </h2>
+                <span class="ink-rule-line" aria-hidden="true" />
               </div>
-            </section>
-          )
-        }
+              <ol class="ink-chronology">
+                {experience.map((item) => (
+                  <li class="ink-chrono-row" data-reveal>
+                    <div class="ink-chrono-main">
+                      <span class="ink-chrono-org">{item.org}</span>
+                      {item.role && <span class="ink-chrono-role">{item.role}</span>}
+                    </div>
+                    {item.period && <span class="ink-chrono-period">{item.period}</span>}
+                    {item.description && <p class="ink-chrono-desc">{item.description}</p>}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
 
-        {
-          hasSkills && (
-            <section class="ink-section" aria-labelledby="ink-skills-title" data-reveal>
-              <p class="ink-gutter" aria-hidden="true">{numeral(marks.skills)}</p>
-              <div class="ink-section-body">
-                <div class="ink-section-head">
-                  <h2 id="ink-skills-title" class="ink-section-title">{t.skills}</h2>
-                  <span class="ink-rule-line" aria-hidden="true" />
-                </div>
-                <ul class="ink-brushwork">
-                  {skills.map((skill) => (
-                    <li class="ink-stroke">{skill}</li>
-                  ))}
-                </ul>
+        {hasSkills && (
+          <section class="ink-section" aria-labelledby="ink-skills-title" data-reveal>
+            <p class="ink-gutter" aria-hidden="true">
+              {numeral(marks.skills)}
+            </p>
+            <div class="ink-section-body">
+              <div class="ink-section-head">
+                <h2 id="ink-skills-title" class="ink-section-title">
+                  {t.skills}
+                </h2>
+                <span class="ink-rule-line" aria-hidden="true" />
               </div>
-            </section>
-          )
-        }
+              <ul class="ink-brushwork">
+                {skills.map((skill) => (
+                  <li class="ink-stroke">{skill}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
 
-        {
-          hasContact && (
-            <section class="ink-section" aria-labelledby="ink-contact-title" data-reveal>
-              <p class="ink-gutter" aria-hidden="true">{numeral(marks.contact)}</p>
-              <div class="ink-section-body">
-                <div class="ink-section-head">
-                  <h2 id="ink-contact-title" class="ink-section-title">{t.contact}</h2>
-                  <span class="ink-rule-line" aria-hidden="true" />
-                </div>
-                <div class="ink-colophon">
-                  {contactEmail && (
-                    <a class="ink-colophon-mail" href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  )}
-                  {contactNote && <p class="ink-colophon-note">{contactNote}</p>}
-                </div>
+        {hasContact && (
+          <section class="ink-section" aria-labelledby="ink-contact-title" data-reveal>
+            <p class="ink-gutter" aria-hidden="true">
+              {numeral(marks.contact)}
+            </p>
+            <div class="ink-section-body">
+              <div class="ink-section-head">
+                <h2 id="ink-contact-title" class="ink-section-title">
+                  {t.contact}
+                </h2>
+                <span class="ink-rule-line" aria-hidden="true" />
               </div>
-            </section>
-          )
-        }
+              <div class="ink-colophon">
+                {contactEmail && (
+                  <a class="ink-colophon-mail" href={`mailto:${contactEmail}`}>
+                    {contactEmail}
+                  </a>
+                )}
+                {contactNote && <p class="ink-colophon-note">{contactNote}</p>}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
 
       <footer class="ink-footer">

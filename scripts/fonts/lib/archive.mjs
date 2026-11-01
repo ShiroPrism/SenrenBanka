@@ -24,19 +24,13 @@ function safeArchivePath(value) {
     value.includes('\\') ||
     value.includes(':') ||
     /(^|\/)\.{1,2}(\/|$)/.test(value) ||
+    // eslint-disable-next-line no-control-regex -- archive paths must reject control characters
     /[\u0000-\u001f\u007f]/.test(value)
   ) {
     throw new Error(`package archive contains an unsafe path: ${JSON.stringify(value)}`);
   }
   if (
-    value
-      .split('/')
-      .some(
-        (part) =>
-          part.length === 0 ||
-          part.endsWith('.') ||
-          part.endsWith(' '),
-      )
+    value.split('/').some((part) => part.length === 0 || part.endsWith('.') || part.endsWith(' '))
   ) {
     throw new Error(`package archive contains an unsafe path: ${JSON.stringify(value)}`);
   }
@@ -67,7 +61,7 @@ function readTarGz(input, label = 'font package') {
   try {
     tar = zlib.gunzipSync(input, { maxOutputLength: LIMITS.maxExpandedBytes });
   } catch (error) {
-    throw new Error(`${label} could not be decompressed: ${error.message}`);
+    throw new Error(`${label} could not be decompressed: ${error.message}`, { cause: error });
   }
   if (tar.length % BLOCK_SIZE !== 0) {
     throw new Error(`${label} has an invalid tar length`);
@@ -123,7 +117,8 @@ function readTarGz(input, label = 'font package') {
     if (mode !== 0o644 || uid !== 0 || gid !== 0 || mtime !== 0) {
       throw new Error(`${label} entry metadata is not normalized: ${entryPath}`);
     }
-    if (entries.has(entryPath)) throw new Error(`${label} contains a duplicate entry: ${entryPath}`);
+    if (entries.has(entryPath))
+      throw new Error(`${label} contains a duplicate entry: ${entryPath}`);
     if (previousPath && entryPath < previousPath) {
       throw new Error(`${label} entries are not sorted: ${entryPath}`);
     }
@@ -142,7 +137,8 @@ function readTarGz(input, label = 'font package') {
       throw new Error(`${label} contains nonzero padding: ${entryPath}`);
     }
     expanded += size;
-    if (expanded > LIMITS.maxExpandedBytes) throw new Error(`${label} expands beyond the size limit`);
+    if (expanded > LIMITS.maxExpandedBytes)
+      throw new Error(`${label} expands beyond the size limit`);
     entries.set(entryPath, Buffer.from(tar.subarray(offset, offset + size)));
     if (entries.size > LIMITS.maxEntries) throw new Error(`${label} has too many entries`);
     offset = nextOffset;
@@ -172,7 +168,7 @@ export function inspectFamilyPackageBuffer(buffer, expected) {
   try {
     rawManifest = JSON.parse(manifestBytes.toString('utf8'));
   } catch (error) {
-    throw new Error(`${label} manifest.json is invalid JSON: ${error.message}`);
+    throw new Error(`${label} manifest.json is invalid JSON: ${error.message}`, { cause: error });
   }
   const manifest = parseWithSchema(familyManifestSchema, rawManifest, `${label} manifest.json`);
   if (manifest.id !== expected.id || manifest.version !== expected.version) {
@@ -205,7 +201,9 @@ export function inspectFamilyPackageBuffer(buffer, expected) {
   const verifyFile = (entryPath, fileSha256, fileSize) => {
     const data = entries.get(entryPath);
     if (data.length !== fileSize) {
-      throw new Error(`${label} ${entryPath} size mismatch: expected ${fileSize}, got ${data.length}`);
+      throw new Error(
+        `${label} ${entryPath} size mismatch: expected ${fileSize}, got ${data.length}`,
+      );
     }
     const actual = sha256(data);
     if (actual !== fileSha256) {
@@ -270,6 +268,7 @@ function sourceManifestFileEntry(entry, index, prefix, label, listName) {
     name.includes(':') ||
     name.endsWith('.') ||
     name.endsWith(' ') ||
+    // eslint-disable-next-line no-control-regex -- source manifest names must reject control characters
     /[\u0000-\u001f\u007f]/.test(name)
   ) {
     sourceManifestFailure(
@@ -288,7 +287,9 @@ function sourceManifestFileEntry(entry, index, prefix, label, listName) {
 
 function catalogLicenseName(value) {
   if (typeof value !== 'string' || !value.startsWith('licenses/')) {
-    throw new Error(`catalog license file path must start with licenses/: ${JSON.stringify(value)}`);
+    throw new Error(
+      `catalog license file path must start with licenses/: ${JSON.stringify(value)}`,
+    );
   }
   return value.slice('licenses/'.length);
 }
@@ -367,9 +368,7 @@ export function validateSourceManifest(rawManifest, expected) {
   for (const [name, file] of sourceByName) {
     const catalogFile = catalogSourceFiles.get(name);
     if (catalogFile.sha256 !== file.sha256 || catalogFile.size !== file.size) {
-      throw new Error(
-        `${label} source font ${name} digest does not match the catalog manifest`,
-      );
+      throw new Error(`${label} source font ${name} digest does not match the catalog manifest`);
     }
   }
 
@@ -399,8 +398,12 @@ export function validateSourceManifest(rawManifest, expected) {
     sourceManifest: rawManifest,
     sourceFiles,
     licenseFiles,
-    sourceFilesSha256: sha256(Buffer.from(stableStringify(normalizeSourceManifestList(sourceFiles)))),
-    licenseFilesSha256: sha256(Buffer.from(stableStringify(normalizeSourceManifestList(licenseFiles)))),
+    sourceFilesSha256: sha256(
+      Buffer.from(stableStringify(normalizeSourceManifestList(sourceFiles))),
+    ),
+    licenseFilesSha256: sha256(
+      Buffer.from(stableStringify(normalizeSourceManifestList(licenseFiles))),
+    ),
   };
 }
 
@@ -428,7 +431,9 @@ export function inspectSourceArchiveBuffer(buffer, expected) {
   try {
     rawManifest = JSON.parse(manifestBytes.toString('utf8'));
   } catch (error) {
-    throw new Error(`${label} source-manifest.json is invalid JSON: ${error.message}`);
+    throw new Error(`${label} source-manifest.json is invalid JSON: ${error.message}`, {
+      cause: error,
+    });
   }
   const validated = validateSourceManifest(rawManifest, expected);
 

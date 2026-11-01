@@ -6,8 +6,7 @@ const SEMVER_PATTERN =
   /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
 const WEIGHT_PATTERN =
   /^(?:100|200|300|400|500|600|700|800|900)(?: (?:100|200|300|400|500|600|700|800|900))?$/;
-const STRETCH_PATTERN =
-  /^(?:\d{1,3}(?:\.\d+)?%|\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%)$/;
+const STRETCH_PATTERN = /^(?:\d{1,3}(?:\.\d+)?%|\d{1,3}(?:\.\d+)?% \d{1,3}(?:\.\d+)?%)$/;
 const UNICODE_RANGE_PATTERN = /^U\+[0-9A-F?]{1,6}(?:-[0-9A-F]{1,6})?$/i;
 const CSS_VARIABLE_PATTERN = /^--[a-z0-9-]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
@@ -23,6 +22,7 @@ function isSafeRelativePath(value) {
     value.includes('\\') ||
     value.includes(':') ||
     /(^|\/)\.{1,2}(\/|$)/.test(value) ||
+    // eslint-disable-next-line no-control-regex -- catalog paths must reject control characters
     /[\u0000-\u001f\u007f]/.test(value)
   ) {
     return false;
@@ -51,6 +51,7 @@ function isSafeFileName(value) {
     value !== '..' &&
     !value.endsWith('.') &&
     !value.endsWith(' ') &&
+    // eslint-disable-next-line no-control-regex -- catalog file names must reject control characters
     !/[\u0000-\u001f\u007f]/.test(value)
   );
 }
@@ -73,7 +74,9 @@ export function isAllowedUrl(value) {
   }
 }
 
-const safeRelativePathSchema = z.string().refine(isSafeRelativePath, 'must be a safe relative POSIX path');
+const safeRelativePathSchema = z
+  .string()
+  .refine(isSafeRelativePath, 'must be a safe relative POSIX path');
 const safeFileNameSchema = z.string().refine(isSafeFileName, 'must be a safe file name');
 const sha256Schema = z.string().regex(SHA256_PATTERN, 'must be a lowercase SHA-256 digest');
 const idSchema = z.string().regex(ID_PATTERN, 'must be a lowercase kebab-case id');
@@ -82,14 +85,21 @@ const allowedUrlSchema = z
   .string()
   .refine(isAllowedUrl, 'must use HTTPS or a loopback HTTP fixture');
 const unicodeRangeSchema = z.string().regex(UNICODE_RANGE_PATTERN, 'must be a valid unicode range');
-const scriptsSchema = z.array(z.enum(['cjk', 'hangul', 'han-traditional'])).min(1).optional();
+const scriptsSchema = z
+  .array(z.enum(['cjk', 'hangul', 'han-traditional']))
+  .min(1)
+  .optional();
 
 const releaseAssetSchema = z
   .object({
     releaseTag: z.string().regex(RELEASE_TAG_PATTERN),
     fileName: safeFileNameSchema,
     sha256: sha256Schema,
-    size: z.number().int().positive().max(512 * 1024 * 1024),
+    size: z
+      .number()
+      .int()
+      .positive()
+      .max(512 * 1024 * 1024),
   })
   .strict();
 
@@ -200,12 +210,7 @@ const licenseFileSchema = z
 
 const rfnSchema = z
   .object({
-    status: z.enum([
-      'not-applicable',
-      'unmodified-distribution',
-      'permission-granted',
-      'renamed',
-    ]),
+    status: z.enum(['not-applicable', 'unmodified-distribution', 'permission-granted', 'renamed']),
     basis: z.string().min(1),
     permissionEvidenceUrl: allowedUrlSchema.optional(),
     permissionText: z.string().min(1).optional(),

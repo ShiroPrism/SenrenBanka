@@ -169,11 +169,15 @@ export async function pruneFonts({
     const stat = await fs.stat(distRoot);
     if (!stat.isDirectory()) throw new Error('not a directory');
   } catch (error) {
-    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`);
+    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`, {
+      cause: error,
+    });
   }
   const htmlFiles = await walkFiles(distRoot, { extensions: new Set(['.html']) });
   if (htmlFiles.length === 0) {
-    throw new Error(`cannot prune fonts: ${distDir} contains no HTML files. Run astro build first.`);
+    throw new Error(
+      `cannot prune fonts: ${distDir} contains no HTML files. Run astro build first.`,
+    );
   }
 
   const distLabel = toPosixPath(path.relative(path.resolve(projectRoot), distRoot)) || '.';
@@ -223,7 +227,7 @@ export async function pruneFonts({
       try {
         resolved = resolveDistAsset(distRoot, label, url);
       } catch (error) {
-        throw new Error(`${label}: ${error.message}`);
+        throw new Error(`${label}: ${error.message}`, { cause: error });
       }
       if (!resolved.exists) continue;
       const text = await fs.readFile(resolved.absolutePath, 'utf8');
@@ -267,7 +271,7 @@ export async function pruneFonts({
         try {
           resolved = resolveDistAsset(distRoot, label, url);
         } catch (error) {
-          throw new Error(`${label}: ${error.message}`);
+          throw new Error(`${label}: ${error.message}`, { cause: error });
         }
         if (!resolved.exists) {
           throw new Error(
@@ -329,7 +333,7 @@ export async function pruneFonts({
       try {
         resolved = resolveDistAsset(distRoot, link.page, link.href);
       } catch (error) {
-        throw new Error(`${link.page}: ${error.message}`);
+        throw new Error(`${link.page}: ${error.message}`, { cause: error });
       }
       if (!resolved.exists) {
         throw new Error(`${link.page}: font stylesheet is missing from ${distLabel}: ${link.href}`);
@@ -452,7 +456,9 @@ export async function pruneFonts({
     for (const file of deletions) {
       const absolute = path.resolve(file.absolutePath);
       if (path.relative(fontDirectory, absolute).startsWith('..')) {
-        throw new Error(`refusing to delete a file outside ${FONT_DIRECTORY}: ${file.relativePath}`);
+        throw new Error(
+          `refusing to delete a file outside ${FONT_DIRECTORY}: ${file.relativePath}`,
+        );
       }
       await fs.rm(absolute, { force: true });
     }
@@ -468,7 +474,9 @@ export async function pruneFonts({
             return rewritten === undefined ? file : { ...file, size: rewritten };
           }),
         ...cssFiles
-          .filter((file) => !statsBefore.some((record) => record.relativePath === `_astro/${file.name}`))
+          .filter(
+            (file) => !statsBefore.some((record) => record.relativePath === `_astro/${file.name}`),
+          )
           .map((file) => ({ relativePath: `_astro/${file.name}`, size: file.bytes })),
       ])
     : summarise(await readDistFiles(distRoot));

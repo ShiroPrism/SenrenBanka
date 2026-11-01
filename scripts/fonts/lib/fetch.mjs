@@ -14,7 +14,8 @@ export async function fetchBuffer(
   if (!isAllowedUrl(url)) {
     throw new Error(`${label} URL must use HTTPS (loopback HTTP is allowed only in tests): ${url}`);
   }
-  if (typeof fetchImpl !== 'function') throw new Error('this Node.js runtime has no fetch implementation');
+  if (typeof fetchImpl !== 'function')
+    throw new Error('this Node.js runtime has no fetch implementation');
 
   let response;
   try {
@@ -26,6 +27,7 @@ export async function fetchBuffer(
   } catch (error) {
     throw new Error(
       `${label} failed: ${error.message}. Check network access or run npm run fonts:prepare with a reachable release mirror.`,
+      { cause: error },
     );
   }
   if (!response.ok) {

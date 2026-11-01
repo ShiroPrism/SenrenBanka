@@ -367,18 +367,19 @@ export async function auditFonts({
       scripts: Array.isArray(family.manifest.scripts) ? family.manifest.scripts : ['cjk'],
       coverage: coverageForFamily(family),
     }));
-  const distRoot = path.isAbsolute(distDir)
-    ? distDir
-    : resolveProjectPath(projectRoot, distDir);
+  const distRoot = path.isAbsolute(distDir) ? distDir : resolveProjectPath(projectRoot, distDir);
   let htmlFiles;
   try {
     const stat = await fs.stat(distRoot);
     if (!stat.isDirectory()) throw new Error('not a directory');
     htmlFiles = await findHtmlFiles(distRoot);
   } catch (error) {
-    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`);
+    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`, {
+      cause: error,
+    });
   }
-  if (htmlFiles.length === 0) throw new Error(`cannot audit fonts: ${distDir} contains no HTML files`);
+  if (htmlFiles.length === 0)
+    throw new Error(`cannot audit fonts: ${distDir} contains no HTML files`);
   const auditTextFiles = await verifyArtifactSafety(distRoot);
 
   const pages = [];
@@ -402,7 +403,7 @@ export async function auditFonts({
         try {
           resolved = resolveDistAsset(distRoot, page, url);
         } catch (error) {
-          throw new Error(`${page}: ${error.message}`);
+          throw new Error(`${page}: ${error.message}`, { cause: error });
         }
         if (!resolved.exists) {
           danglingFontUrls.push({
@@ -422,10 +423,7 @@ export async function auditFonts({
       .filter((entry) => entry.value !== null)
       // Locale remaps point at another variable or the TC skip sentinel; neither
       // is a deployed family name, so they must not count as active sources.
-      .filter(
-        (entry) =>
-          entry.value !== '__senrenbanka_tc_skip__' && !/^var\(/i.test(entry.value),
-      );
+      .filter((entry) => entry.value !== '__senrenbanka_tc_skip__' && !/^var\(/i.test(entry.value));
     if (active.length === 0) {
       pagesWithoutActiveCoreFont += 1;
       continue;
@@ -439,12 +437,11 @@ export async function auditFonts({
     const deployedByName = new Map();
     for (const rule of rules) {
       if (!rule.family) continue;
-      const entry =
-        deployedByName.get(rule.family) ?? {
-          coversAll: false,
-          intervals: [],
-          characters: null,
-        };
+      const entry = deployedByName.get(rule.family) ?? {
+        coversAll: false,
+        intervals: [],
+        characters: null,
+      };
       if (rule.ranges && rule.ranges.length > 0) {
         entry.intervals.push(...rule.ranges);
       } else if (rule.urls.length === 0 || !activeValues.has(rule.family)) {
@@ -457,7 +454,7 @@ export async function auditFonts({
           try {
             resolved = resolveDistAsset(distRoot, page, url);
           } catch (error) {
-            throw new Error(`${page}: ${error.message}`);
+            throw new Error(`${page}: ${error.message}`, { cause: error });
           }
           if (!resolved.exists) continue; // recorded as dangling above
           const absolutePath = path.resolve(resolved.absolutePath);
@@ -469,6 +466,7 @@ export async function auditFonts({
             } catch (error) {
               throw new Error(
                 `${page}: deployed font ${url} cannot be parsed for coverage: ${error.message}`,
+                { cause: error },
               );
             }
             characters = new Set(font.characterSet);
@@ -497,16 +495,12 @@ export async function auditFonts({
       if (!isCjkCodePoint(codePoint) || seen.has(codePoint)) continue;
       seen.add(codePoint);
       const script = codePointScript(codePoint);
-      const activeForScript = active.filter(({ family }) =>
-        family.scripts.includes(script),
-      );
+      const activeForScript = active.filter(({ family }) => family.scripts.includes(script));
       if (activeForScript.length === 0) continue;
       const sourceCovered = activeForScript.some(
         ({ family }) => family.coverage.coversAll || covers(family.coverage.intervals, codePoint),
       );
-      const deployedForScript = deployedFor.filter(({ family }) =>
-        family.scripts.includes(script),
-      );
+      const deployedForScript = deployedFor.filter(({ family }) => family.scripts.includes(script));
       const deployedCovered = deployedForScript.some(
         ({ deployed }) =>
           deployed !== null &&
@@ -618,7 +612,8 @@ export async function auditFonts({
       `warning: ${issue.page} ${issue.character} (${issue.codePoint}) is not covered by active core font(s) ${issue.activeCoreFonts.map((family) => family.id).join(', ')}`,
     );
   }
-  if (uncovered.length > 25) logger(`warning: ${uncovered.length - 25} more uncovered code points omitted`);
+  if (uncovered.length > 25)
+    logger(`warning: ${uncovered.length - 25} more uncovered code points omitted`);
   logger(
     `deployed font set: ${deployedRules} @font-face rules, ` +
       `${report.deployed.fontFilesReferenced} referenced font files, 0 orphan`,

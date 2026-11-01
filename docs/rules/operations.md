@@ -4,23 +4,34 @@
 >
 > **权威级别**：本文件是该项目主题规则的唯一正文来源；根 `AGENTS.md` 只提供硬门禁与路由。
 >
-> **相关决策**：[`../adr/0010-agents-doc-index.md`](../adr/0010-agents-doc-index.md), [`../adr/0013-build-time-font-shard-pruning.md`](../adr/0013-build-time-font-shard-pruning.md), [`../adr/0014-content-subset-fonts.md`](../adr/0014-content-subset-fonts.md)
+> **相关决策**：[`../adr/0010-agents-doc-index.md`](../adr/0010-agents-doc-index.md), [`../adr/0013-build-time-font-shard-pruning.md`](../adr/0013-build-time-font-shard-pruning.md), [`../adr/0014-content-subset-fonts.md`](../adr/0014-content-subset-fonts.md), [`../adr/0020-lint-format-and-lf-line-endings.md`](../adr/0020-lint-format-and-lf-line-endings.md)
 >
 > **维护归属**：规则变更先修改本文件，再检查根索引与引用。
 
 ## 构建
 
-- `npm run check`：文档门禁 + `fonts:typography`（Astro 字体注册与 26 套 styled CSS / 预览回退契约）+ `astro check`
+- `npm run check`：文档门禁 + `check:eol` + `lint` + `format:check` + `fonts:typography`（Astro 字体注册与 26 套 styled CSS / 预览回退契约）+ `fonts:coverage` + `astro check`
+- `npm run check:eol`：解析 `git ls-files --eol`，任一文本文件 index / worktree 不是 LF（CRLF 或 mixed）即失败
+- `npm run lint`：ESLint flat config，覆盖 `src/**/*.{astro,ts}`、`scripts/**/*.mjs` 与配置文件；`Preview.astro` 的 `fonts` 导出按预览契约局部豁免
+- `npm run format` / `npm run format:check`：Prettier 写入 / 检查源码与配置；`docs/`、Markdown、生成物与 lock 文件由 `.prettierignore` 排除
 - `npm run fonts:update`：显式从固定字体目录更新 lock / catalog snapshot / 生成注册；不得自动追最新版本
 - `npm run fonts:prepare`：按锁文件下载缺失 family 生产包并校验到 `.cache/fonts/`；同时为核心 CJK family 下载 source archive 并校验到 `.cache/font-sources/`。已有完整缓存只复核不重下；`-- --offline` 禁止网络
 - `npm run fonts:check`：完全离线复核配置、锁、快照、生成注册、生产包缓存与核心 source cache；普通 `npm run build` 的第一步
 - `npm run fonts:typography`：静态检查所有 npm / local registration 只有主 face，并检查所有 `styled` 设计及预览中字体变量后的显式回退与 CJK 顺序；已选用 core-cjk 的设计还必须在每个字体变量栈中保留核心字体
-- `npm run fonts:subset`：`astro build` 之后的构建步骤，按最终 `dist` 语料从 core source font 生成每族一个 WOFF2 字形子集，并把页面的核心分片 `@font-face` 替换为一条无 `unicode-range` 的子集规则；`-- --dist <dir>` / `-- --dry-run` 可用
+- `npm run fonts:subset`：`astro build` 之后的构建步骤，按最终 `dist` 中实际引用该族的页面语料从 core source font 生成每族一个 WOFF2 字形子集，并把页面的核心分片 `@font-face` 替换为一条无 `unicode-range` 的子集规则；未被引用的族跳过；`-- --dist <dir>` / `-- --dry-run` 可用
 - `npm run fonts:prune`：`fonts:subset` 之后的构建步骤，按最终 `dist` 文本裁剪剩余分片并把保留的 `@font-face` 外置为共享哈希 CSS；`-- --dist <dir>` 指向其他产物目录，`-- --dry-run` 只报告不写盘。规则见下文「字体裁剪、内容子集与体积门禁」
-- `npm run build`：`fonts:check` + check（含 typography）+ Astro 构建 + **`fonts:subset`** + **`fonts:prune`** + HTML-only 门禁 + CJK 字体审计（部署集合适配）；设计注册表校验失败时以 `[senrenbanka]` 前缀明确报错，字体基础设施失败以 `[senrenbanka:fonts]` 前缀报错
+- `npm run build`：`fonts:check` + check（含 lint / format / eol / typography / coverage）+ Astro 构建 + **`fonts:subset`** + **`fonts:prune`** + HTML-only 门禁 + CJK 字体审计（部署集合适配）；设计注册表校验失败时以 `[senrenbanka]` 前缀明确报错，字体基础设施失败以 `[senrenbanka:fonts]` 前缀报错
 - 干净 clone / CI / 三平台部署必须先执行 `npm run fonts:prepare`；`.cache/fonts/` 与 `.cache/font-sources/` 不入库，CI 按 `fonts.lock.json` 与 source 哈希复用
 - 新设计页完成、或任一设计页 / 样式 / 构建配置 / 共享机制改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程（步骤与通过标准以 skill 为准，本文件不重复维护清单）；验证状态更新至 `../verification/`（见「文档维护」节）
 - 临时调整 `site.config.yaml`（如切 `mode: fixed`）验证行为后，请恢复示例配置再提交
+
+## 代码规范与行尾
+
+- **Prettier**：`prettier.config.mjs` 固定 100 列、单引号、分号、尾逗号、`endOfLine: lf`，使用 `prettier-plugin-astro`。`prettier --write .` / `--check .` 覆盖源码与配置；`.prettierignore` 排除 `docs/`、Markdown、`dist/`、`.cache/`、`.astro/`、`src/fonts/generated.ts`、`fonts.catalog.json`、`fonts.lock.json`、`package-lock.json` 与本地工具目录。**不得**格式化生成文件或文档来通过检查。
+- **ESLint**：`eslint.config.mjs` 使用 flat config（`@eslint/js` + `typescript-eslint` + `eslint-plugin-astro` + browser/node globals）。`src/designs/*/Preview.astro` 的 `fonts` 导出是切换页预览契约（`design-contract.md`），只对该路径关闭 `astro/no-exports-from-components`；不得全局关闭该规则。
+- **行尾**：`.gitattributes` 的 `* text=auto eol=lf` + `.editorconfig` 把所有文本文件固定为 LF；二进制扩展名显式标记。`npm run check:eol` 用 `git ls-files --eol` 拦截 CRLF / mixed，已接入 `check`。Windows 下不要依赖 `core.autocrlf` 的默认行为；`fonts:check` 要求 `src/fonts/generated.ts` 为 LF。
+- **存量修复**：错误链使用 `new Error(message, { cause })`；控制字符正则只在确有解析需求的 5 处局部禁用并写明理由；计数器最后一个自增的 `no-useless-assignment` 只对具体行豁免，不关闭规则。
+- 新文件默认 LF、UTF-8、2 空格；Markdown 保留行尾空格以支持硬换行。改完源码后先 `npm run format`、`npm run lint`，再跑完整验证。决策见 `../adr/0020-lint-format-and-lf-line-endings.md`。
 
 ## 字体裁剪、内容子集与体积门禁
 

@@ -30,12 +30,12 @@ export async function readJson(filePath, label = path.basename(filePath)) {
   try {
     text = await fs.readFile(filePath, 'utf8');
   } catch (error) {
-    throw new Error(`${label} cannot be read: ${error.message}`);
+    throw new Error(`${label} cannot be read: ${error.message}`, { cause: error });
   }
   try {
     return JSON.parse(text);
   } catch (error) {
-    throw new Error(`${label} is not valid JSON: ${error.message}`);
+    throw new Error(`${label} is not valid JSON: ${error.message}`, { cause: error });
   }
 }
 

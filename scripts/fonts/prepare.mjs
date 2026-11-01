@@ -1,8 +1,4 @@
-import {
-  familyCacheRelativePath,
-  PROJECT_ROOT,
-  sourceCacheRelativePath,
-} from './lib/paths.mjs';
+import { familyCacheRelativePath, PROJECT_ROOT, sourceCacheRelativePath } from './lib/paths.mjs';
 import { fetchBuffer } from './lib/fetch.mjs';
 import { inspectFamilyPackageBuffer, inspectSourceArchiveBuffer } from './lib/archive.mjs';
 import { installFamilyCache, verifyAllCaches, verifyFamilyCache } from './lib/cache.mjs';
@@ -34,6 +30,7 @@ export async function prepareFonts({
       if (offline) {
         throw new Error(
           `cached font package is not usable for ${id}: ${cacheError.message}. Run npm run fonts:prepare while network access is available.`,
+          { cause: cacheError },
         );
       }
       const family = state.snapshot.families[id];
@@ -52,7 +49,10 @@ export async function prepareFonts({
         source: family.source,
       });
       if (stableStringify(inspected.files) !== stableStringify(family.files)) {
-        throw new Error(`downloaded package file inventory differs from fonts.catalog.json for ${id}`);
+        throw new Error(
+          `downloaded package file inventory differs from fonts.catalog.json for ${id}`,
+          { cause: cacheError },
+        );
       }
       await installFamilyCache({
         projectRoot,
@@ -85,6 +85,7 @@ export async function prepareFonts({
       if (offline) {
         throw new Error(
           `cached source archive is not usable for ${id}: ${cacheError.message}. Run npm run fonts:prepare while network access is available to download the locked source archive.`,
+          { cause: cacheError },
         );
       }
     }

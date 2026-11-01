@@ -26,10 +26,7 @@ import {
   unquoteCssValue,
 } from './lib/font-css.mjs';
 import { extractVisibleText } from './audit.mjs';
-import {
-  HANGUL_UNICODE_RANGE,
-  isHangulCodePoint,
-} from './lib/script-ranges.mjs';
+import { HANGUL_UNICODE_RANGE, isHangulCodePoint } from './lib/script-ranges.mjs';
 
 const require = createRequire(import.meta.url);
 
@@ -183,11 +180,14 @@ async function loadCoreSource({ projectRoot, snapshot, core }) {
     manifestBytes = await fs.readFile(manifestPath);
   } catch (error) {
     if (error.code !== 'ENOENT') {
-      throw new Error(`core font source cache for ${core.id} cannot be read: ${error.message}`);
+      throw new Error(`core font source cache for ${core.id} cannot be read: ${error.message}`, {
+        cause: error,
+      });
     }
     throw new Error(
       `core font source cache is missing for ${core.id} (${cacheRelative}/source-manifest.json). ` +
         'Run npm run fonts:prepare to download the locked source archive.',
+      { cause: error },
     );
   }
 
@@ -198,6 +198,7 @@ async function loadCoreSource({ projectRoot, snapshot, core }) {
     throw new Error(
       `core font source cache for ${core.id} has an invalid source-manifest.json: ${error.message}. ` +
         'Run npm run fonts:prepare to repair the locked source archive.',
+      { cause: error },
     );
   }
 
@@ -210,7 +211,10 @@ async function loadCoreSource({ projectRoot, snapshot, core }) {
       manifest: core.family.manifest,
     });
   } catch (error) {
-    throw new Error(`${error.message}. Run npm run fonts:prepare to repair the locked source archive.`);
+    throw new Error(
+      `${error.message}. Run npm run fonts:prepare to repair the locked source archive.`,
+      { cause: error },
+    );
   }
   if (validated.sourceFiles.length !== 1) {
     throw new Error(
@@ -225,11 +229,14 @@ async function loadCoreSource({ projectRoot, snapshot, core }) {
     buffer = await fs.readFile(sourcePath);
   } catch (error) {
     if (error.code !== 'ENOENT') {
-      throw new Error(`core source font for ${core.id} cannot be read: ${error.message}`);
+      throw new Error(`core source font for ${core.id} cannot be read: ${error.message}`, {
+        cause: error,
+      });
     }
     throw new Error(
       `core source font is missing for ${core.id} (${cacheRelative}/${sourceFile.file}). ` +
         'Run npm run fonts:prepare to download the locked source archive.',
+      { cause: error },
     );
   }
   if (buffer.length !== sourceFile.size) {
@@ -458,13 +465,16 @@ export async function subsetCoreFonts({
     const stat = await fs.stat(distRoot);
     if (!stat.isDirectory()) throw new Error('not a directory');
   } catch (error) {
-    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`);
+    throw new Error(`cannot scan ${distDir}: ${error.message}. Run astro build first.`, {
+      cause: error,
+    });
   }
   const distLabel = toPosixPath(path.relative(path.resolve(projectRoot), distRoot)) || '.';
   const reportPath = path.isAbsolute(reportPathOption)
     ? reportPathOption
     : resolveProjectPath(projectRoot, reportPathOption);
-  const reportDisplay = toPosixPath(path.relative(path.resolve(projectRoot), reportPath)) || reportPath;
+  const reportDisplay =
+    toPosixPath(path.relative(path.resolve(projectRoot), reportPath)) || reportPath;
 
   const cores = coreFaces(state.snapshot);
   const htmlFiles = await walkFiles(distRoot, { extensions: HTML_EXTENSIONS });
@@ -601,8 +611,7 @@ export async function subsetCoreFonts({
         replacements.push({
           elementStart: style.elementStart,
           elementEnd: style.elementEnd,
-          replacement:
-            nextCss.trim() === '' ? '' : `<style${style.attributes}>${nextCss}</style>`,
+          replacement: nextCss.trim() === '' ? '' : `<style${style.attributes}>${nextCss}</style>`,
         });
       }
       for (const replacement of [...replacements].sort(
@@ -658,7 +667,10 @@ export async function subsetCoreFonts({
   if (pagesWithCoreRules === 0) {
     const externalized = pagePlans.some((plan) =>
       [...plan.original.matchAll(/<link\b[^>]*?\bhref\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].some(
-        (match) => FONT_CSS_FILE_PATTERN.test(path.posix.basename((match[1] ?? match[2] ?? '').split('?')[0])),
+        (match) =>
+          FONT_CSS_FILE_PATTERN.test(
+            path.posix.basename((match[1] ?? match[2] ?? '').split('?')[0]),
+          ),
       ),
     );
     if (externalized) {

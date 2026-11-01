@@ -15,8 +15,9 @@ async function lstatRequired(filePath, label) {
   try {
     return await fs.lstat(filePath);
   } catch (error) {
-    if (error.code === 'ENOENT') throw new Error(`${label} is missing: ${filePath}`);
-    throw new Error(`${label} cannot be inspected: ${error.message}`);
+    if (error.code === 'ENOENT')
+      throw new Error(`${label} is missing: ${filePath}`, { cause: error });
+    throw new Error(`${label} cannot be inspected: ${error.message}`, { cause: error });
   }
 }
 
@@ -40,9 +41,7 @@ async function walkCache(root) {
     const entries = await fs.readdir(directory, { withFileTypes: true });
     entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
     for (const entry of entries) {
-      const relative = relativeDirectory
-        ? `${relativeDirectory}/${entry.name}`
-        : entry.name;
+      const relative = relativeDirectory ? `${relativeDirectory}/${entry.name}` : entry.name;
       const fullPath = path.join(directory, entry.name);
       const stat = await fs.lstat(fullPath);
       if (stat.isSymbolicLink()) throw new Error(`font cache contains a symlink: ${relative}`);
@@ -81,7 +80,8 @@ async function verifyCacheDirectory(root, snapshot, family, lockFamily) {
   const expected = new Map(family.files.map((file) => [file.path, file]));
   expected.set('.complete.json', null);
   for (const filePath of actualFiles.keys()) {
-    if (!expected.has(filePath)) throw new Error(`font cache contains an undeclared file: ${filePath}`);
+    if (!expected.has(filePath))
+      throw new Error(`font cache contains an undeclared file: ${filePath}`);
   }
   for (const filePath of expected.keys()) {
     if (!actualFiles.has(filePath)) throw new Error(`font cache is missing ${filePath}`);
@@ -147,9 +147,7 @@ async function copyVerifiedStage(temporary, destination) {
     const sourceDirectory = path.join(temporary, relativeDirectory);
     const entries = await fs.readdir(sourceDirectory, { withFileTypes: true });
     for (const entry of entries) {
-      const relative = relativeDirectory
-        ? `${relativeDirectory}/${entry.name}`
-        : entry.name;
+      const relative = relativeDirectory ? `${relativeDirectory}/${entry.name}` : entry.name;
       if (relative === '.complete.json') continue;
       const source = path.join(temporary, relative);
       const destinationPath = path.join(destination, relative);
@@ -214,6 +212,7 @@ async function replaceDirectoryAtomically(temporary, destination, verifyInstalle
       throw new AggregateError(
         [error, ...rollbackErrors],
         `font cache install failed and the previous cache could not be restored: ${destination}`,
+        { cause: error },
       );
     }
     throw error;
@@ -222,13 +221,7 @@ async function replaceDirectoryAtomically(temporary, destination, verifyInstalle
   }
 }
 
-export async function installFamilyCache({
-  projectRoot,
-  snapshot,
-  lock,
-  id,
-  inspected,
-}) {
+export async function installFamilyCache({ projectRoot, snapshot, lock, id, inspected }) {
   const family = snapshot.families[id];
   const lockFamily = lock.families[id];
   const installLock = await acquireFileLock({
@@ -246,10 +239,7 @@ export async function installFamilyCache({
       // the cache between verification and the marker-last install below.
     }
 
-    const versionRoot = resolveProjectPath(
-      projectRoot,
-      `.cache/fonts/${snapshot.catalogVersion}`,
-    );
+    const versionRoot = resolveProjectPath(projectRoot, `.cache/fonts/${snapshot.catalogVersion}`);
     await ensureDirectoryWithoutSymlinks(projectRoot, versionRoot);
     const temporary = path.join(
       versionRoot,
