@@ -1,0 +1,29 @@
+{
+  "id": "bundle-size-optimization",
+  "name": "bundle-size-optimization",
+  "title": "优化打包体积：字体语料按引用页 + 跳转页样式精简",
+  "description": "在不改变设计展示与交互的前提下，把 dist 体积从 8.85MB 降到约 7.7MB 以下：字体子集按实际引用页限定语料，旧路径重定向页只保留实际使用的内联样式；头像与菜单图标不在本轮范围。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-01",
+  "completedAt": "2026-11-01",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-01-font-subset-page-corpus",
+    "11-01-legacy-redirect-style-trim"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}
