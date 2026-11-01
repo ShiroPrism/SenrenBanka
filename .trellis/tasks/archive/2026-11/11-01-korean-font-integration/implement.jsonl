@@ -1,0 +1,10 @@
+{"file":"docs/rules/operations.md","reason":"核心字体内容子集、分片裁剪、审计与 10 MiB 门禁"}
+{"file":"docs/rules/data-and-i18n.md","reason":"locale 覆盖、fontProfile 与设计文案契约"}
+{"file":"docs/rules/design-contract.md","reason":"styled/html-only 字体与资源契约"}
+{"file":"docs/rules/visual-language.md","reason":"字体顺序、回退与视觉语言"}
+{"file":"docs/rules/pitfalls.md","reason":"已知字体/样式/构建坑"}
+{"file":"docs/fonts/selection-guide.md","reason":"字体选型、许可、样张目检与回退流程"}
+{"file":"docs/adr/0016-korean-first-batch-fonts.md","reason":"被替代的 Noto KR 计划与首版限制"}
+{"file":"docs/adr/0014-content-subset-fonts.md","reason":"核心内容子集架构"}
+{"file":"docs/adr/0013-build-time-font-shard-pruning.md","reason":"分片裁剪与体积门禁"}
+{"file":".trellis/tasks/11-01-korean-fonts-release/research/korean-font-candidates.md","reason":"6 族、映射、Hangul-only 路由与尺寸依据"}
