@@ -243,3 +243,25 @@ catalog v1.1.0（6 个韩语核心族）发布并接入；26 套设计字体栈 
 - 完整 27 页 design-page-verify 矩阵（菜单/无 JS/对比度/动效）。
 - 主站 feat/font-content-subset 的 push/PR；字体仓库 catalog v1.1.0 已发布。
 - 未来字体升级：修 renameSfntFont 后评估 Pretendard/D2Coding；Black Han Sans 仍不建议。
+
+
+## Session 9: 繁體中文 locale 全设计覆盖与字体发布
+<!-- trellis-session: v=2 fp=1b9e69e7b16a1e5a -->
+
+**Date**: 2026-11-01
+**Task**: 繁體中文 locale 全设计覆盖与字体发布
+**Branch**: `feat/traditional-chinese`
+
+### Summary
+
+新增 zh-TW 第 5 语言并覆盖 27 套设计；5 族 TC 字体、页面级字体路由、coverage/audit 门禁与 ADR 0018；字体仓库发布 catalog v1.2.0（31 族 / 1,582 variants，catalog SHA 430cb587dcb9cfa850fc25d16953e5092ac6c48c3865e4138722cd68b7039635，commit f282642），主站切回公开 URL；npm run check/test/build 全绿（79/79、175 页、dist 8,845,322 B、0 部署缺口）；繁中文案经用户审校。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `fe77a6a` | feat: add Traditional Chinese locale and design coverage |
+
+### Status
+
+[OK] **Completed**
