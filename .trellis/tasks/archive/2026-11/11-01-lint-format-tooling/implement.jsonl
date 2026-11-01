@@ -1,0 +1,4 @@
+{"file": "AGENTS.md", "reason": "硬门禁与任务路由；共享机制改动需验证记录"}
+{"file": "docs/rules/operations.md", "reason": "构建、文档维护与验证流程的权威规则"}
+{"file": "docs/rules/pitfalls.md", "reason": "已知 Windows/字体缓存/构建坑，避免行尾问题复发"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "frontend spec 入口与权威规则路由"}
