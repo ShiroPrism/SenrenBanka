@@ -1,0 +1,6 @@
+{"file":"docs/rules/data-and-i18n.md","reason":"locale 覆盖、messages.ts/descriptions.ts 契约与翻译纪律"}
+{"file":"docs/rules/design-contract.md","reason":"styled 页面资源与字体接线契约"}
+{"file":"docs/rules/visual-language.md","reason":"韩语字体栈顺序、回退与设计语域"}
+{"file":"docs/fonts/selection-guide.md","reason":"字体回退与设计字体角色"}
+{"file":"docs/adr/0017-korean-full-coverage-fonts.md","reason":"6 族映射与 Hangul-only 路由决策"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"设计页验证流程与韩语字体检查"}

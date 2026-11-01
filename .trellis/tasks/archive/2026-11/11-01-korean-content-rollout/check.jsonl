@@ -1,0 +1,4 @@
+{"file":"docs/rules/data-and-i18n.md","reason":"文案 key 完整性、翻译纪律与 locale 覆盖"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"375px、横向溢出与可访问性检查"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"验证矩阵与记录收口"}
+{"file":"docs/adr/0017-korean-full-coverage-fonts.md","reason":"韩语字体映射与覆盖门禁"}
