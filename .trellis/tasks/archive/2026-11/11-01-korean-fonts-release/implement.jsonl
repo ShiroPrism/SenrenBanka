@@ -1,0 +1,6 @@
+{"file":"F:/SenrenBanka-fonts/docs/ADDING-A-FONT.md","reason":"字体族 descriptor、源文件与分片生成契约"}
+{"file":"F:/SenrenBanka-fonts/docs/LICENSING.md","reason":"许可闸门、SPDX 允许列表与 RFN 策略"}
+{"file":"F:/SenrenBanka-fonts/docs/RELEASING.md","reason":"catalog 发布事务、发布顺序与不可变规则"}
+{"file":"F:/SenrenBanka-fonts/schemas/family.schema.json","reason":"descriptor 字段、role/output 约束与 scripts 扩展位置"}
+{"file":"F:/SenrenBanka-fonts/catalog/families/lxgw-wenkai/1.0.0.json","reason":"现有 core-cjk descriptor 样例"}
+{"file":".trellis/tasks/11-01-korean-fonts-release/research/korean-font-candidates.md","reason":"候选矩阵、6 族短名单、源 URL、许可与体积证据"}
