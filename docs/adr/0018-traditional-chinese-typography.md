@@ -1,5 +1,7 @@
 # 繁体中文全设计字体：5 族、页面级字体路由与 `han-traditional`
 
+> 后续：ADR 0019 取代本文“TC 族用全站语料”的语料范围；TC 页面级路由与覆盖门禁不变。
+
 - 状态：Accepted（2026-11-01）
 - 相关：`CONTEXT.md` 的 `Design locale coverage` / `Locale typography coverage` / `Core CJK font`；ADR 0017；`docs/rules/operations.md`；字体仓库 catalog v1.2.0
 - 证据：`.trellis/tasks/11-01-traditional-chinese-font-research/research/tc-font-research.md`；`docs/verification/traditional-chinese.md`

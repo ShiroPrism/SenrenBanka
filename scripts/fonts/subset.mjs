@@ -253,6 +253,28 @@ async function loadCoreSource({ projectRoot, snapshot, core }) {
   };
 }
 
+function finishCorpus(corpus, { textFiles, textBytes }) {
+  const sorted = [...corpus].sort((left, right) => left - right);
+  const chunks = [];
+  for (let index = 0; index < sorted.length; index += 1024) {
+    chunks.push(String.fromCodePoint(...sorted.slice(index, index + 1024)));
+  }
+  const text = chunks.join('');
+  return {
+    text,
+    codePoints: sorted.length,
+    sha256: sha256(text),
+    textFiles,
+    textBytes,
+  };
+}
+
+function collectTextCorpus(raw, corpus) {
+  const text = raw.replace(FONT_FACE_BLOCK_PATTERN, '');
+  collectCorpus(decodeHtmlEntities(text), corpus);
+  collectCorpus(decodeCssEscapes(text), corpus);
+}
+
 /**
  * Global corpus of every text asset in `dist`.
  *
@@ -268,22 +290,48 @@ export async function buildCorpus(distRoot) {
   for (const filePath of files) {
     const raw = await fs.readFile(filePath, 'utf8');
     bytes += Buffer.byteLength(raw, 'utf8');
-    const text = raw.replace(FONT_FACE_BLOCK_PATTERN, '');
-    collectCorpus(decodeHtmlEntities(text), corpus);
-    collectCorpus(decodeCssEscapes(text), corpus);
+    collectTextCorpus(raw, corpus);
   }
-  const sorted = [...corpus].sort((left, right) => left - right);
-  const chunks = [];
-  for (let index = 0; index < sorted.length; index += 1024) {
-    chunks.push(String.fromCodePoint(...sorted.slice(index, index + 1024)));
+  return finishCorpus(corpus, { textFiles: files.length, textBytes: bytes });
+}
+
+/**
+ * Corpus shared by every core family: all non-HTML text assets in `dist`.
+ * Page HTML is added per family from the pages that actually reference it.
+ */
+export async function buildSharedCorpus(distRoot) {
+  const files = await walkFiles(distRoot, { extensions: new Set(TEXT_ASSET_EXTENSIONS) });
+  const corpus = new Set();
+  let bytes = 0;
+  let textFiles = 0;
+  for (const filePath of files) {
+    if (HTML_EXTENSIONS.has(path.extname(filePath).toLowerCase())) continue;
+    const raw = await fs.readFile(filePath, 'utf8');
+    bytes += Buffer.byteLength(raw, 'utf8');
+    textFiles += 1;
+    collectTextCorpus(raw, corpus);
   }
-  const text = chunks.join('');
+  return finishCorpus(corpus, { textFiles, textBytes: bytes });
+}
+
+/**
+ * Corpus for one core family: shared assets plus the raw HTML of every page
+ * that declares a matching `@font-face` rule for that family.
+ */
+function buildFamilyCorpus({ core, pageContexts, sharedCorpus }) {
+  const corpus = new Set();
+  collectCorpus(sharedCorpus.text, corpus);
+  let pages = 0;
+  let bytes = sharedCorpus.textBytes;
+  for (const context of pageContexts) {
+    if (!context.coreRuleIds.includes(core.id)) continue;
+    pages += 1;
+    bytes += Buffer.byteLength(context.html, 'utf8');
+    collectTextCorpus(context.html, corpus);
+  }
   return {
-    text,
-    codePoints: sorted.length,
-    sha256: sha256(text),
-    textFiles: files.length,
-    textBytes: bytes,
+    ...finishCorpus(corpus, { textFiles: sharedCorpus.textFiles + pages, textBytes: bytes }),
+    pages,
   };
 }
 
@@ -314,6 +362,51 @@ async function pageCss({ distRoot, label, html, styles }) {
     parts.push(await fs.readFile(resolved.absolutePath, 'utf8'));
   }
   return parts.join('\n');
+}
+
+/**
+ * Read every page once and resolve which core families it declares and which
+ * of them actually own a matching `@font-face` rule. The rewrite pass reuses
+ * this context instead of parsing the pages a second time.
+ */
+async function planPageCores({ distRoot, htmlFiles, cores }) {
+  const pageContexts = [];
+  for (const htmlFile of htmlFiles) {
+    const label = pageLabel(distRoot, htmlFile);
+    const html = await fs.readFile(htmlFile, 'utf8');
+    const styles = extractInlineStyles(html);
+    const css = await pageCss({ distRoot, label, html, styles });
+
+    const coreByFamilyName = new Map();
+    for (const core of cores) {
+      for (const familyName of cssVariableFamilies(css, core.cssVariable)) {
+        if (!coreByFamilyName.has(familyName)) coreByFamilyName.set(familyName, core);
+      }
+    }
+
+    const styleContexts = styles.map((style) => ({
+      style,
+      rules: parseFontFaceRules(style.css),
+    }));
+    const coreRuleIds = new Set();
+    for (const { rules } of styleContexts) {
+      for (const rule of rules) {
+        if (rule.family && coreByFamilyName.has(rule.family)) {
+          coreRuleIds.add(coreByFamilyName.get(rule.family).id);
+        }
+      }
+    }
+
+    pageContexts.push({
+      label,
+      htmlFile,
+      html,
+      styleContexts,
+      coreByFamilyName,
+      coreRuleIds: [...coreRuleIds].sort(),
+    });
+  }
+  return pageContexts;
 }
 
 function syntheticRule({ familyName, url, face, unicodeRange }) {
@@ -384,38 +477,50 @@ export async function subsetCoreFonts({
   if (cores.length === 0) {
     logger('no core-cjk families selected; nothing to subset');
     const report = {
-      schemaVersion: 1,
+      schemaVersion: 2,
+      corpusScope: 'per-family',
       dist: distLabel,
       dryRun,
       catalogVersion: state.snapshot.catalogVersion,
       corpusSha256: null,
       corpusCodePoints: 0,
       corpusTextFiles: 0,
+      corpusTextBytes: 0,
+      sharedCorpus: null,
       subsetter: { ...SUBSETTER },
       coverageReader: { ...COVERAGE_READER },
       families: [],
       pages: [],
+      subsetBytes: 0,
+      subsetFileCount: 0,
     };
     if (!dryRun) await writeFileAtomic(reportPath, stableStringify(report));
     return { ...report, reportPath, reportDisplay };
   }
 
-  const corpus = await buildCorpus(distRoot);
-  if (corpus.text.length === 0) {
-    throw new Error(`cannot subset fonts: ${distLabel} contains no readable text assets`);
-  }
+  const pageContexts = await planPageCores({ distRoot, htmlFiles, cores });
+  const usedCoreIds = new Set(pageContexts.flatMap((context) => context.coreRuleIds));
+  const sharedCorpus = await buildSharedCorpus(distRoot);
   logger(
-    `corpus: ${corpus.codePoints} code points from ${corpus.textFiles} text assets (${corpus.textBytes} bytes)`,
+    `shared corpus: ${sharedCorpus.codePoints} code points from ${sharedCorpus.textFiles} non-HTML assets (${sharedCorpus.textBytes} bytes)`,
   );
-  const hangulText = filterCorpusText(corpus.text, isHangulCodePoint);
 
-  // Pass 1: one subset file per core family.
+  const usedCores = cores.filter((core) => usedCoreIds.has(core.id));
+  for (const skipped of cores.filter((core) => !usedCoreIds.has(core.id))) {
+    logger(`skip ${skipped.id}: no page declares its core @font-face rules`);
+  }
+
+  // Pass 1: one subset file per core family, using only the pages that reference it.
   const subsets = [];
-  for (const core of cores) {
-    const source = await loadCoreSource({ projectRoot, snapshot: state.snapshot, core });
+  for (const core of usedCores) {
+    const familyCorpus = buildFamilyCorpus({ core, pageContexts, sharedCorpus });
+    if (familyCorpus.text.length === 0) {
+      throw new Error(`cannot subset fonts: no corpus text for core family ${core.id}`);
+    }
     const hangulOnly = isHangulOnly(core.scripts);
-    const subsetText =
-      hangulOnly && hangulText.length > 0 ? hangulText : corpus.text;
+    const hangulText = hangulOnly ? filterCorpusText(familyCorpus.text, isHangulCodePoint) : '';
+    const subsetText = hangulOnly && hangulText.length > 0 ? hangulText : familyCorpus.text;
+    const source = await loadCoreSource({ projectRoot, snapshot: state.snapshot, core });
     const output = await subsetFont(source.buffer, subsetText, { targetFormat: 'woff2' });
     if (!Buffer.isBuffer(output) || output.subarray(0, 4).toString('ascii') !== 'wOF2') {
       throw new Error(`subset-font did not return a WOFF2 buffer for ${core.id}`);
@@ -434,30 +539,24 @@ export async function subsetCoreFonts({
       source,
       scripts: core.scripts,
       unicodeRange: hangulOnly ? HANGUL_UNICODE_RANGE : undefined,
-      corpus: hangulOnly ? (hangulText.length > 0 ? 'hangul' : 'full-fallback') : 'full',
+      corpus: hangulOnly ? (hangulText.length > 0 ? 'hangul' : 'full-fallback') : 'page-scope',
+      corpusPages: familyCorpus.pages,
+      corpusCodePoints: familyCorpus.codePoints,
+      corpusSha256: familyCorpus.sha256,
+      corpusText: familyCorpus.text,
     });
     logger(
-      `subset ${core.id} [${core.scripts.join(',')}]: ${source.sourceBytes} -> ${output.length} bytes, ${characters} characters (${fileName})`,
+      `subset ${core.id} [${core.scripts.join(',')}] pages=${familyCorpus.pages}: ${source.sourceBytes} -> ${output.length} bytes, ${characters} characters (${fileName})`,
     );
   }
   const subsetById = new Map(subsets.map((subset) => [subset.id, subset]));
 
-  // Pass 2: plan the inline `@font-face` rewrite for every HTML page.
+  // Pass 2: plan the inline `@font-face` rewrite using the planned page contexts.
   const pagePlans = [];
   let pagesWithCoreRules = 0;
   const summary = [];
-  for (const htmlFile of htmlFiles) {
-    const label = pageLabel(distRoot, htmlFile);
-    const html = await fs.readFile(htmlFile, 'utf8');
-    const styles = extractInlineStyles(html);
-    const css = await pageCss({ distRoot, label, html, styles });
-
-    const coreByFamilyName = new Map();
-    for (const core of cores) {
-      for (const familyName of cssVariableFamilies(css, core.cssVariable)) {
-        if (!coreByFamilyName.has(familyName)) coreByFamilyName.set(familyName, core);
-      }
-    }
+  for (const context of pageContexts) {
+    const { label, html, styleContexts, coreByFamilyName } = context;
     const pageCores = [];
     let output = html;
     let shardRules = 0;
@@ -465,8 +564,7 @@ export async function subsetCoreFonts({
       const emitted = new Set();
       const replacements = [];
       let prefix = null;
-      for (const style of styles) {
-        const rules = parseFontFaceRules(style.css);
+      for (const { style, rules } of styleContexts) {
         const coreRules = rules.filter((rule) => rule.family && coreByFamilyName.has(rule.family));
         if (coreRules.length === 0) continue;
         if (prefix === null) {
@@ -486,6 +584,9 @@ export async function subsetCoreFonts({
           if (emitted.has(core.id)) continue;
           emitted.add(core.id);
           const subset = subsetById.get(core.id);
+          if (!subset) {
+            throw new Error(`${label}: no subset was generated for core family ${core.id}`);
+          }
           planned.push(
             syntheticRule({
               familyName: rule.family,
@@ -522,7 +623,7 @@ export async function subsetCoreFonts({
     }
     const plan = {
       path: label,
-      htmlFile,
+      htmlFile: context.htmlFile,
       original: html,
       output,
       coreFamilies: coreFamilyIds,
@@ -537,6 +638,22 @@ export async function subsetCoreFonts({
       changed: plan.changed,
     });
   }
+
+  const deployedPageContexts = pageContexts.filter((context) => context.coreRuleIds.length > 0);
+  const unionCorpus = new Set();
+  collectCorpus(sharedCorpus.text, unionCorpus);
+  for (const context of deployedPageContexts) {
+    collectTextCorpus(context.html, unionCorpus);
+  }
+  const corpus = finishCorpus(unionCorpus, {
+    textFiles: sharedCorpus.textFiles + deployedPageContexts.length,
+    textBytes:
+      sharedCorpus.textBytes +
+      deployedPageContexts.reduce(
+        (total, context) => total + Buffer.byteLength(context.html, 'utf8'),
+        0,
+      ),
+  });
 
   if (pagesWithCoreRules === 0) {
     const externalized = pagePlans.some((plan) =>
@@ -556,7 +673,8 @@ export async function subsetCoreFonts({
       `no inline @font-face rule for a core-cjk family in ${distLabel}; skipping core content subset`,
     );
     const report = {
-      schemaVersion: 1,
+      schemaVersion: 2,
+      corpusScope: 'per-family',
       dist: distLabel,
       dryRun,
       catalogVersion: state.snapshot.catalogVersion,
@@ -564,6 +682,12 @@ export async function subsetCoreFonts({
       corpusCodePoints: corpus.codePoints,
       corpusTextFiles: corpus.textFiles,
       corpusTextBytes: corpus.textBytes,
+      sharedCorpus: {
+        codePoints: sharedCorpus.codePoints,
+        textFiles: sharedCorpus.textFiles,
+        textBytes: sharedCorpus.textBytes,
+        sha256: sharedCorpus.sha256,
+      },
       subsetter: { ...SUBSETTER },
       coverageReader: { ...COVERAGE_READER },
       families: [],
@@ -576,7 +700,8 @@ export async function subsetCoreFonts({
   }
 
   const report = {
-    schemaVersion: 1,
+    schemaVersion: 2,
+    corpusScope: 'per-family',
     dist: distLabel,
     dryRun,
     catalogVersion: state.snapshot.catalogVersion,
@@ -584,6 +709,12 @@ export async function subsetCoreFonts({
     corpusCodePoints: corpus.codePoints,
     corpusTextFiles: corpus.textFiles,
     corpusTextBytes: corpus.textBytes,
+    sharedCorpus: {
+      codePoints: sharedCorpus.codePoints,
+      textFiles: sharedCorpus.textFiles,
+      textBytes: sharedCorpus.textBytes,
+      sha256: sharedCorpus.sha256,
+    },
     subsetter: { ...SUBSETTER },
     coverageReader: { ...COVERAGE_READER },
     families: subsets.map((subset) => ({
@@ -599,11 +730,15 @@ export async function subsetCoreFonts({
       scripts: subset.scripts,
       unicodeRange: subset.unicodeRange ?? null,
       corpus: subset.corpus,
+      corpusPages: subset.corpusPages,
+      corpusCodePoints: subset.corpusCodePoints,
+      corpusSha256: subset.corpusSha256,
       weight: subset.core.face.weight,
       style: subset.core.face.style,
       display: subset.core.face.display,
     })),
     subsetBytes: subsets.reduce((total, subset) => total + subset.bytes, 0),
+    subsetFileCount: subsets.length,
     pages: summary,
   };
 

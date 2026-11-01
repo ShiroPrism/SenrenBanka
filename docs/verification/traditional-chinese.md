@@ -17,7 +17,7 @@
 | `npm test` | **79/79** 通过 |
 | `npm run build` | **EXIT 0**；`astro build` 175 页；`fonts:subset` 14 个核心子集 / **2,756,908 B**；`fonts:prune` **677** 条 `@font-face` / **45** 个字体文件 / **3,668,492 B** |
 | `fonts:audit` | **0 部署缺口** / **0 孤儿** / **64** 条内容级缺字警告（源字体本身缺字） |
-| `dist` | **8,845,322 B（8.44 MiB）**，10 MiB 硬门禁与 8.5 MiB 软目标均满足 |
+| `dist` | 本任务交付时 **8,845,322 B（8.44 MiB）**；ADR 0019 字体语料按引用页收窄后当前 **7,632,396 B（7.28 MiB）**，见 `font-corpus-scope.md` |
 | TC 页面 | **27** 个 `/zh-tw/<design>/` + `/zh-tw/` 入口 + `/zh-tw/designs/` = 29 个；全部设计无缺失 |
 
 TC 核心子集实测：

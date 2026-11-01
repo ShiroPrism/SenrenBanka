@@ -1,5 +1,5 @@
 ---
-import InfraStyles from '../components/InfraStyles.astro';
+import LegacyRedirectStyles from './LegacyRedirectStyles.astro';
 import { designsForLocale, loadSite } from '../lib/site';
 import { sharedMessagesFor } from '../i18n/resolve';
 
@@ -38,7 +38,7 @@ const targetUrl = `${model.base}${locale.path}/${target}`;
     {targetUrl ? <meta http-equiv="refresh" content={`0;url=${targetUrl}`} /> : null}
   </head>
   <body>
-    <InfraStyles />
+    <LegacyRedirectStyles />
     <main class="infra">
       <p class="infra-redirect">{m.legacyRedirect.body}</p>
       {targetUrl ? <a class="infra-card" href={targetUrl}>{targetUrl}</a> : null}

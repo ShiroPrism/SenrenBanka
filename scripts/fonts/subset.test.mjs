@@ -478,9 +478,16 @@ test('subset rewrites core shard rules into one range-free rule per page', async
     const plainOriginal = await read(project.projectRoot, dist.plainPath);
 
     const report = await subsetCoreFonts({ projectRoot: project.projectRoot, logger: () => {} });
+    assert.equal(report.schemaVersion, 2);
+    assert.equal(report.corpusScope, 'per-family');
     assert.equal(report.families.length, 1);
     const [entry] = report.families;
     assert.equal(entry.id, 'fixture-core');
+    assert.equal(entry.corpus, 'page-scope');
+    assert.equal(entry.corpusPages, 1);
+    assert.equal(entry.corpusCodePoints > 0, true);
+    assert.equal(entry.corpusSha256.length, 64);
+    assert.equal(report.sharedCorpus.textFiles, 0);
     assert.match(entry.subsetFile, /^_astro\/fonts\/fixture-core-subset-[0-9a-f]{16}\.woff2$/);
     assert.equal(entry.subsetSha256.length, 64);
     assert.equal(entry.subsetBytes > 0, true);
@@ -792,3 +799,65 @@ test(
     }
   },
 );
+
+test('subset scopes each core family to the pages that reference it', async () => {
+  const sourceFont = await fs.readFile(REAL_LATIN_FONT);
+  const families = ['a', 'b', 'c'].map((suffix) =>
+    makeFamilyFixture({ id: `fixture-core-${suffix}`, sourceFont }),
+  );
+  const project = await setupFontProject({ families });
+  try {
+    const names = {
+      a: 'Fixture fixture-core-a-aaaaaa',
+      b: 'Fixture fixture-core-b-bbbbbb',
+      c: 'Fixture fixture-core-c-cccccc',
+    };
+    const page = (suffix, body) =>
+      pageHtml({
+        styles: [
+          fontFace({ family: names[suffix], url: `/_astro/fonts/${suffix}.woff2`, ranges: 'U+4E00' }),
+          `:root{--font-fixture-core-${suffix}:"${names[suffix]}";}`,
+        ],
+        body,
+      });
+    await write(project.projectRoot, 'dist/zh-cn/a/index.html', page('a', '<p>QQQQ</p>'));
+    await write(project.projectRoot, 'dist/zh-cn/b/index.html', page('b', '<p>ZZZZ</p>'));
+    await write(project.projectRoot, 'dist/_astro/fonts/a.woff2', fakeShard('a'));
+    await write(project.projectRoot, 'dist/_astro/fonts/b.woff2', fakeShard('b'));
+
+    const report = await subsetCoreFonts({ projectRoot: project.projectRoot, logger: () => {} });
+    assert.equal(report.schemaVersion, 2);
+    assert.equal(report.corpusScope, 'per-family');
+    assert.equal(report.families.length, 2, 'a core family with no referencing page is skipped');
+    const byId = new Map(report.families.map((entry) => [entry.id, entry]));
+    assert.equal(byId.get('fixture-core-a').corpusPages, 1);
+    assert.equal(byId.get('fixture-core-b').corpusPages, 1);
+    assert.equal(byId.has('fixture-core-c'), false);
+
+    const subsetPath = (id) =>
+      path.join(project.projectRoot, 'dist', ...byId.get(id).subsetFile.split('/'));
+    const fontA = fontkitten.create(await fs.readFile(subsetPath('fixture-core-a')));
+    const fontB = fontkitten.create(await fs.readFile(subsetPath('fixture-core-b')));
+    assert.equal(fontA.hasGlyphForCodePoint('Q'.codePointAt(0)), true);
+    assert.equal(fontA.hasGlyphForCodePoint('Z'.codePointAt(0)), false, 'page B text stays out of A');
+    assert.equal(fontB.hasGlyphForCodePoint('Z'.codePointAt(0)), true);
+    assert.equal(fontB.hasGlyphForCodePoint('Q'.codePointAt(0)), false, 'page A text stays out of B');
+
+    const fontDirectory = path.join(project.projectRoot, 'dist', '_astro', 'fonts');
+    const files = await fs.readdir(fontDirectory);
+    assert.equal(
+      files.some((file) => file.startsWith('fixture-core-c-subset-')),
+      false,
+      'no subset file is emitted for an unreferenced core',
+    );
+
+    const beforeA = await read(project.projectRoot, 'dist/zh-cn/a/index.html');
+    const beforeB = await read(project.projectRoot, 'dist/zh-cn/b/index.html');
+    const second = await subsetCoreFonts({ projectRoot: project.projectRoot, logger: () => {} });
+    assert.equal(second.families.length, 2);
+    assert.equal(await read(project.projectRoot, 'dist/zh-cn/a/index.html'), beforeA);
+    assert.equal(await read(project.projectRoot, 'dist/zh-cn/b/index.html'), beforeB);
+  } finally {
+    await project.close();
+  }
+});

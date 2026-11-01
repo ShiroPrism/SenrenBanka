@@ -1,5 +1,7 @@
 # 核心字体内容子集：源字体保持完整，部署按最终文本生成字形子集
 
+> 后续：ADR 0019 将子集语料从全站统一语料改为按实际引用页限定；本文的源字体/子集机制不变。
+
 SenrenBanka 在 `astro build` 之后、`fonts:prune` 之前新增 `fonts:subset`：从外部字体目录的 source archive 读取三套核心 CJK 源字体，按最终 `dist` 的文本生成每族一个 HarfBuzz/WASM 字形子集，替换页面上的分片 `@font-face` 规则。源字体、catalog、lock 与生成注册保持不变；部署只带当前构建需要的字形。`dist` 上限从 15 MiB 收紧到 10 MiB。
 
 ## 背景

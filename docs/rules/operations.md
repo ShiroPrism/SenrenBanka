@@ -24,19 +24,19 @@
 
 ## 字体裁剪、内容子集与体积门禁
 
-核心字体按最终文本生成内容子集（ADR `../adr/0014-content-subset-fonts.md`）；非核心字体继续按分片裁剪，源字体、字体目录锁与分片集合保持不变（ADR `../adr/0013-build-time-font-shard-pruning.md`）。
+核心字体按最终产物中**实际引用该族的页面文本**生成内容子集（ADR `../adr/0014-content-subset-fonts.md` / `../adr/0019-per-family-font-corpus.md`）；非核心字体继续按分片裁剪，源字体、字体目录锁与分片集合保持不变（ADR `../adr/0013-build-time-font-shard-pruning.md`）。
 
 - **源字体缓存**：`fonts:prepare` 只为核心 CJK family 下载 source archive 到 `.cache/font-sources/<catalogVersion>/<id>@<version>/`，验证外层哈希、source-manifest、源字体与 license 哈希；`fonts:check` 完全离线复核。source cache 缺失时必须先执行 prepare，不得让 `fonts:subset` 静默回退到分片。
-- **语料来源是产物本身**：`fonts:subset` / `fonts:prune` 读取最终 `dist` 的每个 HTML（原始文本 + 它链接的本地 CSS / JS），解码 HTML 实体与 CSS 转义后收集码位。语料是有意过近似（属性值、内联 JSON、模板与 JS 字符串都算），宁可多留字形/分片，也不漏掉页面真正需要的字符。**不要**另建语料清单或从源码渲染文本另行推导——那会与产物脱节。
+- **语料来源是产物本身、粒度按族引用页**：`fonts:subset` 先解析最终 `dist` 的每个 HTML（原始文本 + 它链接的本地 CSS / JS），确定每页实际声明了哪些 core 族的 `@font-face` 规则；每个族的语料 = **所有非 HTML 文本资产**（共享 CSS / JS / JSON / SVG / XML / TXT / webmanifest）∪ **实际引用该族的页面原始 HTML**。解码 HTML 实体与 CSS 转义后收集码位；属性值、内联 JSON、模板与 JS 字符串都算，宁可多留字形，也不漏掉页面真正需要的字符。未被任何页面引用的族不生成子集、不产文件。**不要**另建语料清单或从源码渲染文本另行推导——那会与产物脱节。
 - **核心字体内容子集**：`fonts:subset` 用固定版本的 `subset-font`（HarfBuzz WASM）从 source font 生成每族一个 WOFF2 子集，写入 `dist/_astro/fonts/`；逐页把该族全部分片规则替换为一条不带 `unicode-range` 的子集规则（保留 `font-family`、weight/style/display）。子集文件按语料哈希，内容变化会重新生成；不发布可安装桌面字体。子集字体必须是 Web-only WOFF2，许可依据见 ADR 0013 / 0014。
-- **韩语 Hangul-only 子集与覆盖门禁**：`scripts: ["hangul"]` 的核心族只按 Hangul 区块生成子集并写 Hangul-only `unicode-range`；`fonts:audit` 按 script 分开校验（Hangul 族不要求覆盖 Hanja / 假名）；`fonts:coverage` 对声明 `ko` 的 `styled` 设计硬门禁（每个字体栈含 Hangul 核心变量 + 页面注册对应 `<Font>`），`html-only` 豁免。决策见 ADR 0017。
-- **繁中页面级字体路由与覆盖门禁**：`scripts: ["cjk", "han-traditional"]` 的 TC 核心族用全站语料生成内容子集；繁中页面在 `html:lang(zh-TW)` 内把 CJK/伴生变量重映射到 TC 族（伴生槽位用 `__senrenbanka_tc_skip__` 哨兵），TC `<Font>` 只在 zh-TW 页注册，简体核心与韩文伴生不在 TC 页注册。`fonts:coverage` 校验重映射与条件注册；`fonts:audit` 仍按 `cjk` 审计 TC 页，并忽略 locale 重映射产生的 `var(...)`/哨兵值。决策见 ADR 0018。
+- **韩语 Hangul-only 子集与覆盖门禁**：`scripts: ["hangul"]` 的核心族先按引用页语料（与其它 core 族相同）收窄，再只保留 Hangul 区块并写 Hangul-only `unicode-range`；`fonts:audit` 按 script 分开校验（Hangul 族不要求覆盖 Hanja / 假名）；`fonts:coverage` 对声明 `ko` 的 `styled` 设计硬门禁（每个字体栈含 Hangul 核心变量 + 页面注册对应 `<Font>`），`html-only` 豁免。决策见 ADR 0017 / 0019。
+- **繁中页面级字体路由与覆盖门禁**：`scripts: ["cjk", "han-traditional"]` 的 TC 核心族按实际引用页生成内容子集（不再使用全站统一语料，ADR 0019）；繁中页面在 `html:lang(zh-TW)` 内把 CJK/伴生变量重映射到 TC 族（伴生槽位用 `__senrenbanka_tc_skip__` 哨兵），TC `<Font>` 只在 zh-TW 页注册，简体核心与韩文伴生不在 TC 页注册。`fonts:coverage` 校验重映射与条件注册；`fonts:audit` 仍按 `cjk` 审计 TC 页，并忽略 locale 重映射产生的 `var(...)`/哨兵值。决策见 ADR 0018。
 - **逐页决策、全站保留**：`fonts:prune` 每页只保留与该页语料相交的 `unicode-range` 规则（无 `unicode-range` 的子集规则始终保留）；字体文件按全站并集保留，任何页面仍需要的分片不删。删除范围固定为 `dist/_astro/fonts/`，路径解析拒绝 `..` 且必须落在 `dist` 内。
 - **字体 CSS 外置**：保留规则写入 `dist/_astro/fonts-<hash>.css`，页面 `<head>` 用一条 `<link rel="stylesheet">` 引用；`--font-*` 变量与其他内联 CSS 原样保留。字体族集合相同的页面（同一设计的多语言版本）复用同一个包，包内是这些页面所需规则的并集。外置文件**只含 `@font-face`**，不含 `@charset`、注释或设计 CSS；不得把不同设计的普通 CSS 合并。
 - **base 前缀来自既有产物 URL**：链接前缀从页面内已有的字体 URL 推导（`/demo/_astro/fonts/x.woff2` → `/demo/_astro/`），不读配置、不写死 `/`。带 `--base` 的构建必须重新执行本步骤后再验证。
 - **不变量**：不改源字体与已发布分片字节、不改设计页面 / 文案 / 设计 CSS、不改锁与生成注册；核心子集是新生成的派生 Web WOFF2。重写后逐页 HTML 可见文本必须与重写前一致，否则中止且不删除任何字体文件。
 - **体积门禁**：`dist` 全部文件字节之和（1 MiB = 1,048,576 B）超过 **10 MiB** 即构建失败；报错输出总量、字体统计、桶统计、最大文件与报告路径。**不得**为提高余量放宽阈值，应减少重复 HTML / 字体 CSS。
-- **报告与复现**：`.cache/fonts/subset-report.json` 记录语料哈希/码位数、source 哈希、subsetter 版本、子集文件哈希/字节/覆盖字符；`.cache/fonts/prune-report.json` 记录前后字节、保留 / 删除的规则与分片、每页决策、体积桶与可见文本哈希。两者不入库，不含时间戳或机器路径。
+- **报告与复现**：`.cache/fonts/subset-report.json`（schema v2）记录 `corpusScope: "per-family"`、共享语料与每族的 `corpusPages` / `corpusCodePoints` / `corpusSha256`，以及 source 哈希、subsetter 版本、子集文件哈希/字节/覆盖字符；`.cache/fonts/prune-report.json` 记录前后字节、保留 / 删除的规则与分片、每页决策、体积桶与可见文本哈希。两者不入库，不含时间戳或机器路径。
 - **审计按部署集合判定**（`fonts:audit`）：解析内联样式与链接的本地 CSS 中的 `@font-face`，任一 URL 指向的文件必须存在；`dist/_astro/fonts/` 下不得存在无人引用的分片；无 `unicode-range` 的核心子集规则必须用 `fontkitten` 读取真实 cmap，而不是当作全覆盖。源字体覆盖的 CJK 字符若未被该页部署规则/子集 cmap 覆盖必须失败；源字体本身缺字仍只警告。
 - **不要手写 `@font-face`**：分片/子集注册由 `fonts:update` / `fonts:subset` 生成、字体 CSS 外置由 `fonts:prune` 完成；在设计 CSS 或组件里手写 `@font-face` 会绕过语料判定并让审计的孤儿检查失败。
 
