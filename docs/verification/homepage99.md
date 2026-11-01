@@ -1,6 +1,6 @@
 # verification — Homepage '99
 
-> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/homepage99/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案 AI 起草，待人工审校。
+> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/homepage99/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案已人工审校（用户确认 2026-11-01）。
 
 > Current verification state for `homepage99` (update in place; history is
 > kept by Git). Rules: `docs/rules/README.md`. Process:

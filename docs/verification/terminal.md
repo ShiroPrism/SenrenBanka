@@ -1,6 +1,6 @@
 # verification — terminal（自产：复古琥珀终端）
 
-> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/terminal/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案 AI 起草，待人工审校。
+> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/terminal/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案已人工审校（用户确认 2026-11-01）。
 
 > 本文件是该主题**当前**的完整验证状态；重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）；记录归属见 `docs/README.md`。
