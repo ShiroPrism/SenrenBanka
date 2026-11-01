@@ -1,0 +1,4 @@
+{"file": "AGENTS.md", "reason": "硬门禁与任务路由：共享机制改动必须执行 design-page-verify 并更新验证记录"}
+{"file": "docs/rules/operations.md", "reason": "构建、文档、验证与体积门禁流程"}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "跳转页无 JS 降级与亮暗色可见性要求"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "frontend spec 入口与权威规则路由"}

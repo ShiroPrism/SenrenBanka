@@ -1,0 +1,3 @@
+{"file": "AGENTS.md", "reason": "验收必须覆盖硬门禁与 changes 范围"}
+{"file": "docs/rules/operations.md", "reason": "验证、文档与体积门禁"}
+{"file": ".trellis/spec/guides/index.md", "reason": "交叉层与复用检查清单"}
