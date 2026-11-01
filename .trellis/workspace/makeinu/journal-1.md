@@ -287,3 +287,26 @@ fonts:subset 改为按每个 core 族实际引用页收集语料（共享非 HTM
 ### Status
 
 [OK] **Completed**
+
+
+## Session 11: 代码规范与行尾：Prettier + ESLint + LF
+<!-- trellis-session: v=2 fp=183f22fe82d45d83 -->
+
+**Date**: 2026-11-01
+**Task**: 代码规范与行尾：Prettier + ESLint + LF
+**Branch**: `main`
+
+### Summary
+
+新增 Prettier / ESLint flat config / EditorConfig / .gitattributes LF 约束与 check:eol 门禁；ESLint 69→0，152 个源码与 CSS/配置格式化，docs Markdown 与生成物排除；npm test 84/84、npm run build 175 页、dist 7,632,396→7,634,316 B（+0.025%）；175 页可见文本一致，格式化前后 HEAD 构建在动效禁用条件下 12/12 像素差 0；新增 ADR 0020 与验证记录。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `3a625c3` | chore: add lint/format tooling and normalize LF |
+| `0b53856` | style: format source with prettier |
+
+### Status
+
+[OK] **Completed**
