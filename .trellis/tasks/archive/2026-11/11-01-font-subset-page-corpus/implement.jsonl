@@ -1,0 +1,6 @@
+{"file": "docs/rules/operations.md", "reason": "字体裁剪、内容子集、报告与体积门禁的权威规则"}
+{"file": "SPEC.md", "reason": "字体管线与验收契约（含 fonts:subset / fonts:audit）"}
+{"file": "docs/adr/0014-content-subset-fonts.md", "reason": "内容子集字体决策"}
+{"file": "docs/adr/0017-korean-full-coverage-fonts.md", "reason": "Hangul-only 子集与 unicode-range 约束"}
+{"file": "docs/adr/0018-traditional-chinese-typography.md", "reason": "TC 族页面级路由与全站语料现状"}
+{"file": ".trellis/spec/frontend/font-release-operations.md", "reason": "字体发布操作约束"}
