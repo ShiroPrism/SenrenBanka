@@ -235,7 +235,8 @@ html {
 
 /* 中日文副标题不用合成斜体：仿宋保持正体，斜体只属于拉丁声部 */
 :lang(zh-CN) .ar-headline,
-:lang(ja) .ar-headline {
+:lang(ja) .ar-headline,
+:lang(ko) .ar-headline {
   font-style: normal;
 }
 

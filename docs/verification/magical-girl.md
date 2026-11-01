@@ -1,5 +1,7 @@
 # verification — Magical Girl
 
+> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/magical-girl/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案 AI 起草，待人工审校。
+
 > Current verification state for `magical-girl`; update in place, history stays in Git.
 > Process: `.agents/skills/design-page-verify/SKILL.md`. Implementation date: 2026-10-29.
 

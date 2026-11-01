@@ -38,6 +38,14 @@ export const messages: Record<string, Material3Messages> = {
     contact: 'Contact',
     footerSource: 'Material 3 design system compilation',
   },
+  ko: {
+    portfolio: '포트폴리오',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
+    footerSource: 'Material 3 디자인 시스템 편찬',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

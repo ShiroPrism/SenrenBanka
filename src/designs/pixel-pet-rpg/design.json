@@ -2,7 +2,7 @@
   "displayName": "Pixel Pet RPG",
   "description": "像素宠物小镇：旅人 HUD、可探索地图、地点面板、物品栏与足迹日志共同组织个人资料。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en"],
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "renderMode": "styled",
   "accent": "#f4c75b",
   "source": { "type": "self-produced" },

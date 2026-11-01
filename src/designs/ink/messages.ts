@@ -67,6 +67,18 @@ export const messages: Record<string, InkMessages> = {
     footerNote: 'Sample profile — demo only',
     numerals: ['I', 'II', 'III', 'IV'],
   },
+  ko: {
+    portfolio: '화첩',
+    preface: '서문',
+    imprint: '인보',
+    projects: '권질',
+    experience: '연표',
+    skills: '필치',
+    contact: '낙관',
+    leaf: '제일엽',
+    footerNote: '샘플 자료 · 데모용',
+    numerals: ['일', '이', '삼', '사'],
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

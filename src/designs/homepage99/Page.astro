@@ -10,6 +10,7 @@
  * The Under Construction stripe is the sole infinite animation and stops
  * under prefers-reduced-motion.
  */
+import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
@@ -40,6 +41,7 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Font cssVariable="--font-gothic-a1" />
   </head>
   <body id="top" class="h99">
     <a class="h99-skip" href="#h99-main">{t.skipLink}</a>

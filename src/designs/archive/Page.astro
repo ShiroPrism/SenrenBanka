@@ -32,6 +32,7 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Font cssVariable="--font-gowun-batang" />
     {/* 三个声部各一面：卡头衬线 / 记录打字机 / 中文仿宋尾链（不 preload，swap 足够） */}
     <Font cssVariable="--font-sorts-mill-goudy" />
     <Font cssVariable="--font-courier-prime" />

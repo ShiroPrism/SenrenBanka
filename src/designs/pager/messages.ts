@@ -96,6 +96,25 @@ export const messages: Record<string, PagerMessages> = {
     endLabel: 'END OF MESSAGES',
     sampleNote: 'SAMPLE PAGER - DEMO ONLY',
   },
+  ko: {
+    brand: 'SENRENBANKA',
+    pageLabel: '삐삐',
+    locLabel: '위치',
+    msgLabel: 'MSG',
+    memoTitle: '메모',
+    linksTitle: '링크',
+    projectsTitle: '작업',
+    experienceTitle: '경력',
+    skillsTitle: '기술',
+    contactTitle: '연락',
+    replyTo: '회신',
+    noMail: '연락처 없음',
+    totalLabel: '합계',
+    totalUnit: '건',
+    endLine: '-- END OF MESSAGES --',
+    endLabel: '메시지 끝',
+    sampleNote: '예시 메시지・데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

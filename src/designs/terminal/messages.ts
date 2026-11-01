@@ -34,6 +34,12 @@ export const messages: Record<string, TerminalMessages> = {
     noMail: 'no mail configured',
     sessionEnd: 'session ends — 谢谢访问 / EOF',
   },
+  ko: {
+    basedIn: '거점',
+    sayHello: 'Say hello',
+    noMail: 'no mail configured',
+    sessionEnd: 'session ends — 감사합니다 / EOF',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

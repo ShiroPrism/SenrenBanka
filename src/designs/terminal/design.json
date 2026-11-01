@@ -2,7 +2,7 @@
   "displayName": "Terminal",
   "description": "复古终端：琥珀磷光、等宽字体、命令行式信息组织与扫描线纹理。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en"],
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "accent": "#ffb000",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable v4.5.2 · document（scan 模式规范化固化，2026-10-10）"

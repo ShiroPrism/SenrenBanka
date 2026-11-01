@@ -1,5 +1,7 @@
 # verification — Fairy Kei
 
+> **2026-11-01 韩语覆盖（C3）**：新增 `/ko/fairy-kei/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案 AI 起草，待人工审校。
+
 > Current verification state for `fairy-kei`; update in place, history stays in Git.
 > Process: `.agents/skills/design-page-verify/SKILL.md`. Implementation date: 2026-10-29.
 

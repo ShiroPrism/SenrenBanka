@@ -32,6 +32,7 @@ const nextSection = () => pad((sectionIndex += 1));
 <html lang={view.head.lang}>
   <head>
     <HeadMeta {...view.head} />
+    <Font cssVariable="--font-dongle" />
     {/* 不预加载：拼贴的第一帧不依赖字体；swap + CJK 系统回退已足够。 */}
     <Font cssVariable="--font-fredoka" />
     <Font cssVariable="--font-lxgw" />

@@ -95,6 +95,25 @@ export const messages: Record<string, RadioMessages> = {
     band: 'BAND: 41m · SW',
     sampleNote: 'SAMPLE RECEIVER — DEMO ONLY',
   },
+  ko: {
+    panelLabel: '단파 수신기',
+    brandTag: 'SW 수신기',
+    callSignLabel: '콜사인',
+    channelKey: 'CH',
+    qthLabel: '위치',
+    memoTitle: '메모',
+    channelsTitle: '채널',
+    programsTitle: '프로그램',
+    logTitle: '기록',
+    skillsTitle: '기술',
+    contactTitle: '교신',
+    totalLabel: '채널',
+    totalUnit: '국',
+    contactVia: '메일',
+    noMail: '연락처 미설정',
+    band: 'BAND: 41m · SW',
+    sampleNote: '예시 수신기・데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

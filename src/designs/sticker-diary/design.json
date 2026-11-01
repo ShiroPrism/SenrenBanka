@@ -2,7 +2,7 @@
   "displayName": "Sticker Diary",
   "description": "A handmade sticker diary: washi tape, handwritten notes, layered stickers and page-edge bookmarks turn the profile into scrapbook spreads.",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en"],
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "renderMode": "styled",
   "accent": "#a73e56",
   "source": { "type": "self-produced" },

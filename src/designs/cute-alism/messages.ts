@@ -95,6 +95,27 @@ export const messages: Record<string, CuteAlismMessages> = {
     footerMark: 'SENRENBANKA · HARD CANDY COLLAGE',
     sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
+  ko: {
+    pageLabel: '하드 캔디 기하학 콜라주',
+    heroStamp: '프로필 콜라주',
+    collageCue: '자르고 / 붙이고 / 반복',
+    portraitLabel: '포트레이트',
+    locationLabel: '좌표',
+    bioTitle: '소개',
+    linksTitle: '링크',
+    linksUnit: '개',
+    projectsTitle: '프로젝트',
+    projectsUnit: '점',
+    experienceTitle: '경력',
+    experienceUnit: '줄',
+    skillsTitle: '기술',
+    skillsUnit: '장',
+    contactTitle: '연락처',
+    emailLabel: '메일 쓰기',
+    contactMissing: '아직 연락처 정보 없음',
+    footerMark: 'SENRENBANKA · 하드 캔디 콜라주',
+    sampleNote: '샘플 프로필 · 데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

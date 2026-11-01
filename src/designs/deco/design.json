@@ -2,7 +2,7 @@
   "displayName": "Deco",
   "description": "Art Deco 剧院节目单：墨黑台面、黄铜双线框、金色扇形与对称版式，把资料排成一册夜场演出手册。",
   "enabled": true,
-  "locales": ["zh-CN", "ja", "en"],
+  "locales": ["zh-CN", "ja", "en", "ko"],
   "accent": "#d4af37",
   "source": { "type": "self-produced" },
   "generatedBy": "impeccable · 2026-10-31（Art Deco/暗黑奢华方向）"

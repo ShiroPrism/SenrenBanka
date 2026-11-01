@@ -52,6 +52,17 @@ export const messages: Record<string, BrutalMessages> = {
     noContact: 'NO CONTACT CONFIGURED',
     sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
+  ko: {
+    portfolio: '포트폴리오',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
+    notice: '공지',
+    index: '색인',
+    noContact: '연락처 미설정',
+    sampleNote: '샘플 자료 · 데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

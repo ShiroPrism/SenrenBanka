@@ -99,6 +99,28 @@ export const messages: Record<string, ArchiveMessages> = {
     drawerLine: 'DRAWER 03 · ARCHIVE',
     sampleNote: 'SAMPLE RECORD — DEMO ONLY',
   },
+  ko: {
+    archiveTag: '색인 카드',
+    headTab: '카드 머리',
+    locationLabel: '소장처',
+    memoTitle: '비고',
+    itemsTitle: '색인',
+    ordersTitle: '목록',
+    logTitle: '이력',
+    skillsTitle: '주제어',
+    contactTitle: '대출',
+    totalLabel: '합계',
+    totalUnit: '장',
+    contactLabel: '연락처',
+    noMail: '연락처 미등록',
+    tagsLabel: '주제어',
+    stamp: '보관 완료',
+    colophonTitle: '판권',
+    dueLabel: '대출 기한',
+    footerThanks: '열람해 주셔서 감사합니다 · 다시 오세요',
+    drawerLine: 'DRAWER 03 · ARCHIVE',
+    sampleNote: '샘플 기록 · 데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

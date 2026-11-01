@@ -33,6 +33,13 @@ export const messages: Record<string, KernMessages> = {
     skills: 'Skills',
     contact: 'Contact',
   },
+  ko: {
+    portfolio: '포트폴리오',
+    projects: '프로젝트',
+    experience: '경력',
+    skills: '기술',
+    contact: '연락처',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

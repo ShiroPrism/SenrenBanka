@@ -80,6 +80,23 @@ export const messages: Record<string, ReceiptMessages> = {
     footerThanks: 'THANK YOU — COME AGAIN',
     sampleNote: 'SAMPLE RECEIPT — DEMO ONLY',
   },
+  ko: {
+    receiptTag: '영수증',
+    addrLabel: '주소',
+    memoTitle: '안내',
+    itemsTitle: '내역',
+    ordersTitle: '주문',
+    logTitle: '기록',
+    skillsTitle: '기술',
+    totalLabel: '합계',
+    totalUnit: '건',
+    contactTitle: '계산대',
+    payVia: '결제',
+    noMail: '연락처 미설정',
+    stamp: '수령',
+    footerThanks: '감사합니다. 또 들러 주세요.',
+    sampleNote: '예시 영수증・데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

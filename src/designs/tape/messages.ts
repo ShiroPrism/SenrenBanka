@@ -89,6 +89,24 @@ export const messages: Record<string, TapeMessages> = {
     sideEnd: 'END OF SIDE A / PLEASE TURN OVER',
     sampleNote: 'SAMPLE TAPE / DEMO ONLY',
   },
+  ko: {
+    cardTag: 'J카드',
+    sideLabel: 'A면',
+    recAt: '녹음 장소',
+    memoTitle: '라이너 노트',
+    tracksTitle: '수록곡',
+    projectsTitle: '기획',
+    logTitle: '기록',
+    skillsTitle: '기술',
+    contactTitle: '정산',
+    totalLabel: '합계',
+    totalUnit: '곡',
+    mailLabel: '연락처',
+    noMail: '연락처 미설정',
+    labelNote: '손글씨 라벨',
+    sideEnd: 'A면 끝 · 뒷면으로 넘겨 주세요',
+    sampleNote: '예시 테이프 · 데모용',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

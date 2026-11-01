@@ -30,6 +30,11 @@ export const messages: Record<string, OxideMessages> = {
     noChannel: 'no channel configured',
     periodFallback: '----',
   },
+  ko: {
+    locationFallback: '원격',
+    noChannel: '연락처가 설정되지 않음',
+    periodFallback: '----',
+  },
 };
 
 export type MessageLocale = keyof typeof messages;

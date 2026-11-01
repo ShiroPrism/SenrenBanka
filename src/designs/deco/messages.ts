@@ -68,6 +68,17 @@ export const messages: Record<string, DecoMessages> = {
     actWord: 'ACT',
     sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
+  ko: {
+    portfolio: '프로그램',
+    overtureLabel: '서곡',
+    linksTitle: '공연 목록',
+    projectsTitle: '막',
+    experienceTitle: '출연 기록',
+    skillsTitle: '크레딧',
+    contactTitle: '매표소',
+    actWord: '막',
+    sampleNote: '샘플 자료 · 데모용',
+  },
 };
 
 export type DecoMessageLocale = keyof typeof messages;
