@@ -1,0 +1,31 @@
+{
+  "id": "next-style-batch",
+  "name": "next-style-batch",
+  "title": "下一批风格扩展：Aero / Transit / Zine",
+  "description": "按 2026 趋势与 27 套缺口调研，新增 Aero（2000s 科技乐观）、Transit（交通导视）、Zine（Riso/复印朋克）三套自产设计；先刷新 SPEC §4.4.1 视觉差异化矩阵，再逐套实现并验证；保持 5 语言、纯 CSS/无 JS、10 MiB 体积门禁。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-02",
+  "completedAt": "2026-11-02",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-02-spec-matrix-refresh",
+    "11-02-aero-design",
+    "11-02-transit-design",
+    "11-02-zine-design"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

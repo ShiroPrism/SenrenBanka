@@ -1,0 +1,8 @@
+{"file":"AGENTS.md","reason":"八条硬门禁与任务路由，所有实现前必读"}
+{"file":"docs/rules/design-contract.md","reason":"styled 设计的必交文件、共享菜单、字体、预览与构建契约"}
+{"file":"docs/rules/visual-language.md","reason":"动效、图标、视觉素材、字体选型规则"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"无障碍与响应式验收口径"}
+{"file":"docs/rules/pitfalls.md","reason":"CSS 聚合、字体栈、预览、Windows 行尾等已知坑"}
+{"file":"docs/rules/data-and-i18n.md","reason":"loadDesignView、五语言资料与内部链接生成规则"}
+{"file":"docs/fonts/selection-guide.md","reason":"复用现有字体家族与字体选型/许可流程"}
+{"file":"SPEC.md","reason":"§4.4.1 视觉差异化矩阵、批次节奏与设计清单口径"}

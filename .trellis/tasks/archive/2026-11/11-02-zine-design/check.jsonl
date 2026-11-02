@@ -1,0 +1,6 @@
+{"file":"AGENTS.md","reason":"八条硬门禁逐条复核"}
+{"file":"docs/rules/design-contract.md","reason":"设计交付契约检查"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"无障碍与响应式检查"}
+{"file":"docs/rules/pitfalls.md","reason":"已知坑复核"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"设计页验证流程与记录格式"}
+{"file":"docs/verification/shared.md","reason":"体积/字体/共享验证基线"}
