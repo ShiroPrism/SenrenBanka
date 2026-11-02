@@ -270,6 +270,7 @@ i18n:                # 语言清单只在此处维护一处，路由/资料/SEO 
       label: 简体中文     # 语言自称，用于语言选择器
       title: "Your Name — Portfolio"      # 该语言 SEO 标题
       description: "SEO 描述"             # 该语言 SEO 描述
+      notice: "示例资料・仅作演示"          # 可选：站点声明（示例数据提示）；fork 后删除
       fontProfile: cjk                    # 显式文字系统档位：latin / vietnamese / cjk / korean / traditional-chinese
     - code: zh-TW
       path: zh-tw
@@ -299,7 +300,7 @@ design:
     avoidImmediateRepeat: true
 ```
 
-校验规则：`default` 必须是存在的启用设计；至少 1 个启用设计；`cacheHours >= 0`。
+校验规则：`default` 必须是存在的启用设计；至少 1 个启用设计；`cacheHours >= 0`。`i18n.locales[].notice` 按 locale 可选，是示例数据提示等站点声明的单行纯文本；示例站五语言均配置，fork 使用真实资料时必须删除或替换。
 
 ### 5.5 多语言契约【已定，v0.9.0】
 
@@ -381,7 +382,8 @@ src/designs/<id>/
 - 设计 `Page.astro` 是**完整文档**（含 `<html>`），由 `astro.config.mjs` 为**设计声明覆盖的**每种 locale 注入固定路由。
 - 统一数据接口 `src/lib/site.ts`（async `loadSite()`）：合并 site 配置 + 注册表 + profile，完成交叉校验，向设计提供：
   - `profile`（类型化个人资料，头像已解析为可直接渲染的图片引用）；
-  - `site`（title/description/lang/manualSwitch）；
+  - `locale`（当前语言条目：`code` / `path` / `label` / `title` / `description` / 可选 `notice`）；
+  - `site`（manualSwitch）；
   - `design`（自身元信息：id、displayName、isDefault）；
   - `contextMenu`（共享操作菜单的构建期配置：`context` 页面上下文判别联合 `design` / `switcher` / `not-found` / 目标池 / `switcherHref` / 模式与存储语义 / `designActionsEnabled`；v0.10.0 起**没有** `enabled` 字段）。`styled` 页面必须渲染该配置；`html-only` 不渲染菜单，见 §7.5 与 ADR 0009；
   - URL helper（`src/lib/urls.ts`，所有内部链接必须经它拼接 base 前缀）。

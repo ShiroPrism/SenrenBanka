@@ -273,7 +273,7 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
           <p class="rd-band" id="rd-foot-label">
             {t.band}
           </p>
-          <p class="rd-sample">{t.sampleNote}</p>
+          {view.locale.notice && <p class="rd-sample">{view.locale.notice}</p>}
         </div>
       </footer>
     </main>

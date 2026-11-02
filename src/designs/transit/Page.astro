@@ -246,7 +246,7 @@ const lineCode = (index: number) => `T${index + 1}`;
 
       <footer class="tr-footer">
         <span>{profile.name}</span>
-        <span>{t.sampleNote}</span>
+        {view.locale.notice && <span>{view.locale.notice}</span>}
       </footer>
     </div>
 

@@ -28,7 +28,6 @@ export interface CuteAlismMessages {
   emailLabel: string;
   contactMissing: string;
   footerMark: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, CuteAlismMessages> = {
@@ -51,7 +50,6 @@ export const messages: Record<string, CuteAlismMessages> = {
     emailLabel: '发信',
     contactMissing: '暂无联系信息',
     footerMark: 'SENRENBANKA · 硬糖几何拼贴',
-    sampleNote: '示例资料 · 仅作演示',
   },
   'zh-TW': {
     pageLabel: '硬糖幾何拼貼主頁',
@@ -72,7 +70,6 @@ export const messages: Record<string, CuteAlismMessages> = {
     emailLabel: '發信',
     contactMissing: '暫無聯絡資訊',
     footerMark: 'SENRENBANKA · 硬糖幾何拼貼',
-    sampleNote: '示例資料 · 僅作演示',
   },
   ja: {
     pageLabel: 'ハードキャンディの幾何学コラージュ',
@@ -93,7 +90,6 @@ export const messages: Record<string, CuteAlismMessages> = {
     emailLabel: 'メール',
     contactMissing: '連絡先は未設定',
     footerMark: 'SENRENBANKA · 硬質キャンディ・コラージュ',
-    sampleNote: 'サンプルプロフィール · デモ用',
   },
   en: {
     pageLabel: 'Hard-candy geometric collage',
@@ -114,7 +110,6 @@ export const messages: Record<string, CuteAlismMessages> = {
     emailLabel: 'WRITE TO',
     contactMissing: 'No contact info yet',
     footerMark: 'SENRENBANKA · HARD CANDY COLLAGE',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
   ko: {
     pageLabel: '하드 캔디 기하학 콜라주',
@@ -135,7 +130,6 @@ export const messages: Record<string, CuteAlismMessages> = {
     emailLabel: '메일 쓰기',
     contactMissing: '아직 연락처 정보 없음',
     footerMark: 'SENRENBANKA · 하드 캔디 콜라주',
-    sampleNote: '샘플 프로필 · 데모용',
   },
 };
 

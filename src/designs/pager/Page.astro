@@ -258,9 +258,11 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
           <p class="pg-end-line pg-line" style={`--d:${d(0)}`}>
             {t.endLine}
           </p>
-          <p class="pg-end-note pg-line" style={`--d:${d(1)}`}>
-            {t.sampleNote}
-          </p>
+          {view.locale.notice && (
+            <p class="pg-end-note pg-line" style={`--d:${d(1)}`}>
+              {view.locale.notice}
+            </p>
+          )}
         </footer>
       </div>
 

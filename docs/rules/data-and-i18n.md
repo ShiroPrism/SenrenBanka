@@ -4,7 +4,7 @@
 >
 > **权威级别**：本文件是该项目主题规则的唯一正文来源；根 `AGENTS.md` 只提供硬门禁与路由。
 >
-> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md)
+> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md), [`../adr/0021-site-notice-configuration.md`](../adr/0021-site-notice-configuration.md)
 >
 > **维护归属**：规则变更先修改本文件，再检查根索引与引用。
 
@@ -15,7 +15,7 @@
 - `view` 结构：
   - `profile`：核心字段 `name` / `headline` / `bio` / `links` **必须全部渲染**；
     `avatar` / `location` 是普通可选字段；`projects` / `experience` / `skills` / `contact` 是兼容保留的高级可选扩展区块，由设计按自身风格**自行取舍**（取舍结果写进该设计的 DESIGN.md）。资料**按当前语言**选取，页面不需要关心文件路径
-  - `locale`：当前语言条目（`code` / `path` / `label` / `title` / `description`）；`locales` 为全部语言
+  - `locale`：当前语言条目（`code` / `path` / `label` / `title` / `description` / 可选 `notice`）；`locales` 为全部语言。`notice` 是站点声明（如示例数据提示），缺省不渲染，设计直接读取 `view.locale.notice`
   - `messages`：当前语言的共享文案（共享操作菜单 / 切换页 / 404 / 语言选择器）
   - `site`：manualSwitch
   - `design`：id / displayName / description / isDefault
@@ -27,6 +27,7 @@
 
 ## 资料契约边界（强制）
 
+- `i18n.locales[].notice` 是站点级声明，不进入 profile schema；设计通过 `view.locale.notice` 读取，缺省不渲染。它是单行纯文本，不承载富文本或任意内容区块
 - 资料契约是固定 schema：字段集合不随语言、设计或使用者增减，也不提供用户自定义字段、自定义内容区块、任意内容模型或通用内容渲染兜底
 - 新需求**不得直接解释为**新的自定义字段或自定义区块，也不得在设计页面或数据层自行增加通用渲染兜底；契约边界有变化时先回到产品层确认
 - `projects` / `experience` / `skills` / `contact` 仅为兼容现有设计而保留的高级可选扩展区块；它们不是可继续扩充的词汇表或插件机制，不新增同类字段或区块
@@ -34,6 +35,7 @@
 
 ## 多语言（i18n）
 
+- **Fork 配置义务**：fork 后必须修改 `src/data/site.config.yaml`——`i18n.locales[].title` / `description` 是该语言的站点 SEO 元数据，保留示例值会把示例人物信息带到新站；`i18n.locales[].notice` 是示例数据声明，填入真实资料后删除；语言清单 `i18n.locales` 也只在 `site.config.yaml` 维护，增删语言必须同步增删 `profiles/<path>.yaml`，且 `defaultLocale` 必须存在于清单。只替换 profile 不等于完成 fork 配置
 - 语言清单**只在一处维护**：`src/data/site.config.yaml` 的 `i18n.locales`（`code` / `path` / `label` / `title` / `description`）。不得在其他文件重复列出语言
 - 每种语言必须有 `src/data/profiles/<locale.path>.yaml`，字段契约与 `zh-CN` **完全一致**（同一套 `profileSchema`）
 - 站点 SEO 元数据按语言提供（`i18n.locales[].title/description`）；**不再**保留全局 `site.title` / `site.description` / `site.lang`

@@ -37,6 +37,8 @@ export interface LocaleEntry {
   /** 该语言的站点 SEO 元数据。 */
   title: string;
   description: string;
+  /** 可选站点声明（示例数据提示等单行纯文本）；缺省不渲染。 */
+  notice?: string;
   /** 显式文字系统档位（latin / vietnamese / cjk / korean / traditional-chinese）；不从语言代码推断。 */
   fontProfile?: 'latin' | 'vietnamese' | 'cjk' | 'korean' | 'traditional-chinese';
 }

@@ -54,6 +54,10 @@ _Avoid_: 菜单回退、自建 Context Menu
 站点支持的一种语言，由 `site.config.yaml` 的 `i18n.locales` 唯一声明；每种语言同时决定 URL 前缀、资料文件、HTML `lang`、文案字典、字体档位与 SEO 元数据。
 _Avoid_: 语言包、lang、语系
 
+**Site notice（站点声明）**:
+`site.config.yaml` 的 `i18n.locales[].notice` 定义的可选单行纯文本声明，用于示例数据提示等站点级说明；缺省不渲染，不进入人物资料契约。
+_Avoid_: 页脚固定文案、示例 profile 字段
+
 **Locale typography profile（语言排版档位）**:
 Locale 显式声明的文字系统与字符覆盖需求，用于选择核心字体角色并验证覆盖；不得从语言代码静默推断。
 _Avoid_: 语系、脚本推断、字体语言

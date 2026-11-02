@@ -24,8 +24,6 @@ export interface TransitMessages {
   ticket: string;
   /** 无联系方式。 */
   noContact: string;
-  /** 页脚示例声明。 */
-  sampleNote: string;
   /** 地点缺失时的回退。 */
   local: string;
   /** 装饰性站台标签。 */
@@ -43,7 +41,6 @@ export const messages: Record<string, TransitMessages> = {
     badges: '线路徽章',
     ticket: '售票处',
     noContact: '未配置联系方式',
-    sampleNote: '示例资料・仅作演示',
     local: '本地',
     platform: '站台',
   },
@@ -57,7 +54,6 @@ export const messages: Record<string, TransitMessages> = {
     badges: '路線徽章',
     ticket: '售票處',
     noContact: '未配置聯絡方式',
-    sampleNote: '示例資料・僅作演示',
     local: '本地',
     platform: '月台',
   },
@@ -71,7 +67,6 @@ export const messages: Record<string, TransitMessages> = {
     badges: '路線バッジ',
     ticket: '切符売り場',
     noContact: '連絡先未設定',
-    sampleNote: 'サンプル・デモ用',
     local: 'ローカル',
     platform: 'ホーム',
   },
@@ -85,7 +80,6 @@ export const messages: Record<string, TransitMessages> = {
     badges: 'LINE BADGES',
     ticket: 'TICKET OFFICE',
     noContact: 'NO CONTACT CONFIGURED',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
     local: 'LOCAL',
     platform: 'PLATFORM',
   },
@@ -99,7 +93,6 @@ export const messages: Record<string, TransitMessages> = {
     badges: '노선 배지',
     ticket: '매표소',
     noContact: '연락처 미설정',
-    sampleNote: '샘플 자료 · 데모용',
     local: '로컬',
     platform: '승강장',
   },

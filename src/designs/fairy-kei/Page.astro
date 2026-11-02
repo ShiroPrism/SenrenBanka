@@ -324,7 +324,7 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
               <span class="fk-barcode" aria-hidden="true"></span>
               <p>
                 <span>{t.brand}</span>
-                <span>{t.sampleNote}</span>
+                {view.locale.notice && <span>{view.locale.notice}</span>}
               </p>
             </div>
           </footer>

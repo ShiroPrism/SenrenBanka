@@ -25,7 +25,6 @@ export interface ReceiptMessages {
   noMail: string;
   stamp: string;
   footerThanks: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, ReceiptMessages> = {
@@ -44,7 +43,6 @@ export const messages: Record<string, ReceiptMessages> = {
     noMail: '未配置联系方式',
     stamp: '受领',
     footerThanks: '谢谢惠顾・请多指教',
-    sampleNote: '示例小票・仅作演示',
   },
   'zh-TW': {
     receiptTag: '小票',
@@ -61,7 +59,6 @@ export const messages: Record<string, ReceiptMessages> = {
     noMail: '未配置聯絡方式',
     stamp: '受領',
     footerThanks: '謝謝惠顧・請多指教',
-    sampleNote: '示例小票・僅作演示',
   },
   ja: {
     receiptTag: 'レシート',
@@ -78,7 +75,6 @@ export const messages: Record<string, ReceiptMessages> = {
     noMail: '連絡先未設定',
     stamp: '受領',
     footerThanks: 'ありがとうございました。またのお越しを。',
-    sampleNote: 'サンプルレシート・デモ用',
   },
   en: {
     receiptTag: 'RECEIPT',
@@ -95,7 +91,6 @@ export const messages: Record<string, ReceiptMessages> = {
     noMail: 'no contact configured',
     stamp: 'RECEIVED',
     footerThanks: 'THANK YOU — COME AGAIN',
-    sampleNote: 'SAMPLE RECEIPT — DEMO ONLY',
   },
   ko: {
     receiptTag: '영수증',
@@ -112,7 +107,6 @@ export const messages: Record<string, ReceiptMessages> = {
     noMail: '연락처 미설정',
     stamp: '수령',
     footerThanks: '감사합니다. 또 들러 주세요.',
-    sampleNote: '예시 영수증・데모용',
   },
 };
 

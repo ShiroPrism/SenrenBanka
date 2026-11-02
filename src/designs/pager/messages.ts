@@ -35,7 +35,6 @@ export interface PagerMessages {
   endLine: string;
   /** 页脚分区的可访问名。 */
   endLabel: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, PagerMessages> = {
@@ -56,7 +55,6 @@ export const messages: Record<string, PagerMessages> = {
     totalUnit: '件',
     endLine: '-- END OF MESSAGES --',
     endLabel: '消息结束',
-    sampleNote: '示例消息・仅作演示',
   },
   'zh-TW': {
     brand: 'SENRENBANKA',
@@ -75,7 +73,6 @@ export const messages: Record<string, PagerMessages> = {
     totalUnit: '件',
     endLine: '-- END OF MESSAGES --',
     endLabel: '訊息結束',
-    sampleNote: '示例訊息・僅作演示',
   },
   ja: {
     brand: 'SENRENBANKA',
@@ -94,7 +91,6 @@ export const messages: Record<string, PagerMessages> = {
     totalUnit: '件',
     endLine: '-- END OF MESSAGES --',
     endLabel: 'メッセージここまで',
-    sampleNote: 'サンプルポケベル・デモ用',
   },
   en: {
     brand: 'SENRENBANKA',
@@ -113,7 +109,6 @@ export const messages: Record<string, PagerMessages> = {
     totalUnit: 'MSG',
     endLine: '-- END OF MESSAGES --',
     endLabel: 'END OF MESSAGES',
-    sampleNote: 'SAMPLE PAGER - DEMO ONLY',
   },
   ko: {
     brand: 'SENRENBANKA',
@@ -132,7 +127,6 @@ export const messages: Record<string, PagerMessages> = {
     totalUnit: '건',
     endLine: '-- END OF MESSAGES --',
     endLabel: '메시지 끝',
-    sampleNote: '예시 메시지・데모용',
   },
 };
 

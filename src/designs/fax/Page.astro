@@ -226,7 +226,7 @@ const pageCount = pad(sectionCount + 1);
             <p class="fx-end">
               {t.footerEnd} · P.{pageCount}
             </p>
-            <p class="fx-sample">{t.sampleNote}</p>
+            {view.locale.notice && <p class="fx-sample">{view.locale.notice}</p>}
           </footer>
         </article>
       </div>

@@ -12,7 +12,7 @@ One profile, many AI-designed homepages, in five languages. Astro + TypeScript +
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
 - 根路径是零外部请求的客户端路由；每种语言仅其默认设计对外可索引（避免近重复内容）
-- fork 后只需改资料与少量配置即可部署 GitHub Pages / Cloudflare Pages / Vercel
+- fork 后只需改资料与 `src/data/site.config.yaml` 即可部署 GitHub Pages / Cloudflare Pages / Vercel
 
 ## 快速开始
 
@@ -54,6 +54,10 @@ links:
 ```
 
 - 改资料：`src/data/profiles/*.yaml`（每种配置语言一份，当前 `zh-cn` / `zh-tw` / `ja` / `en` / `ko`；**共用同一套固定字段契约**；核心必填：`name` / `headline` / `bio` / `links`）
+- **fork 必改：`src/data/site.config.yaml`**——只替换 profile 会保留示例人物的站点标题 / 描述与语言清单：
+  - `i18n.locales[].title` / `description`：该语言的 SEO 标题与描述；
+  - `i18n.locales[].notice`：示例数据声明；填入真实资料后删除该键；
+  - `i18n.locales`：语言清单只在这里维护；增删语言 = 改这里 + 增删对应的 `profiles/<path>.yaml`；`defaultLocale` 必须在清单中
 - 普通可选字段：`avatar`（部分风格不放照片）/ `location`
 - 高级可选扩展区块：`projects` / `experience` / `skills` / `contact`。它们仅为兼容现有设计而保留，可整体省略；不是自定义内容机制，也不会继续扩充同类字段或区块
 - 站外内容：通过 `links` 指向作品集、文章或社交资料等更多信息；内容离开本站后，其可用性、可访问性、归属与持久性由外部平台控制

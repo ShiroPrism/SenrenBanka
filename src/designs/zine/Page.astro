@@ -233,7 +233,7 @@ const pad = (value: number) => String(value).padStart(2, '0');
 
       <footer class="zn-footer">
         <span>{profile.name}</span>
-        <span>{t.sampleNote}</span>
+        {view.locale.notice && <span>{view.locale.notice}</span>}
       </footer>
     </div>
 

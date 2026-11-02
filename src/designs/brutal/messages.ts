@@ -15,7 +15,6 @@ export interface BrutalMessages {
   notice: string;
   index: string;
   noContact: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, BrutalMessages> = {
@@ -28,7 +27,6 @@ export const messages: Record<string, BrutalMessages> = {
     notice: '告示',
     index: '索引',
     noContact: '未配置联系方式',
-    sampleNote: '示例资料・仅作演示',
   },
   'zh-TW': {
     portfolio: '作品集',
@@ -39,7 +37,6 @@ export const messages: Record<string, BrutalMessages> = {
     notice: '告示',
     index: '索引',
     noContact: '未配置聯絡方式',
-    sampleNote: '示例資料・僅作演示',
   },
   ja: {
     portfolio: 'ポートフォリオ',
@@ -50,7 +47,6 @@ export const messages: Record<string, BrutalMessages> = {
     notice: '告知',
     index: '索引',
     noContact: '連絡先未設定',
-    sampleNote: 'サンプル・デモ用',
   },
   en: {
     portfolio: 'PORTFOLIO',
@@ -61,7 +57,6 @@ export const messages: Record<string, BrutalMessages> = {
     notice: 'NOTICE',
     index: 'INDEX',
     noContact: 'NO CONTACT CONFIGURED',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
   ko: {
     portfolio: '포트폴리오',
@@ -72,7 +67,6 @@ export const messages: Record<string, BrutalMessages> = {
     notice: '공지',
     index: '색인',
     noContact: '연락처 미설정',
-    sampleNote: '샘플 자료 · 데모용',
   },
 };
 

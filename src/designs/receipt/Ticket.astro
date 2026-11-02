@@ -214,8 +214,10 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
       {t.footerThanks}
     </p>
     <div class="rc-barcode rc-line" style={`--d:${seg(1)}`} aria-hidden="true"></div>
-    <p class="rc-sample rc-line rc-dim" style={`--d:${seg(2)}`}>
-      {t.sampleNote}
-    </p>
+    {locale.notice && (
+      <p class="rc-sample rc-line rc-dim" style={`--d:${seg(2)}`}>
+        {locale.notice}
+      </p>
+    )}
   </footer>
 </article>

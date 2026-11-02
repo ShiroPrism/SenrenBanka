@@ -40,7 +40,7 @@ DOM 与移动端视觉顺序一致：
 | 6 | 丝带卷轴 | `experience[].org / role / period / description`，每个非空子字段条件显示 |
 | 7 | 贴纸册 | `skills[]` |
 | 8 | 便签 | `contact.email` / `contact.note`；两项都为空时不渲染该分区 |
-| 9 | 收藏卡背面 | 设计收尾句、品牌与示例声明；不承载个人事实 |
+| 9 | 收藏卡背面 | 设计收尾句、品牌与可选站点声明；不承载个人事实 |
 
 - `name / headline / bio / links` 始终存在；`links` 为空时显示诚实的空态。
 - `avatar` 缺失时保留完整拱形窗口与 CSS 收藏徽章，构图不塌陷。

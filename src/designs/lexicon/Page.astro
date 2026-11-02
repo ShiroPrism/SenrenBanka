@@ -256,7 +256,7 @@ const romanOf = (key: string) => {
 
       <footer class="lx-foot">
         <p class="lx-finis">{t.finis}</p>
-        <p class="lx-sample">{t.sampleNote}</p>
+        {view.locale.notice && <p class="lx-sample">{view.locale.notice}</p>}
       </footer>
     </main>
     <ContextMenu config={contextMenu} />

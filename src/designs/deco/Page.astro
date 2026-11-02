@@ -245,7 +245,7 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
           <span class="deco-ornament-line"></span>
         </div>
         <p class="deco-footer-name">{profile.name}</p>
-        <p class="deco-footer-note">{t.sampleNote}</p>
+        {view.locale.notice && <p class="deco-footer-note">{view.locale.notice}</p>}
       </footer>
     </div>
     <ContextMenu config={contextMenu} />

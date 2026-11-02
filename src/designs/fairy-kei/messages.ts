@@ -34,7 +34,6 @@ export interface FairyKeiMessages {
   noMail: string;
   footerTitle: string;
   footerLine: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, FairyKeiMessages> = {
@@ -62,7 +61,6 @@ export const messages: Record<string, FairyKeiMessages> = {
     noMail: '还没有留下投递地址',
     footerTitle: '收藏卡背面',
     footerLine: '从一只旧玩具盒里，把喜欢的东西一件件摆出来。',
-    sampleNote: '示例收藏卡 · 仅作演示',
   },
   'zh-TW': {
     brand: 'SENRENBANKA',
@@ -88,7 +86,6 @@ export const messages: Record<string, FairyKeiMessages> = {
     noMail: '還沒有留下投遞地址',
     footerTitle: '收藏卡背面',
     footerLine: '從一隻舊玩具盒裡，把喜歡的東西一件件擺出來。',
-    sampleNote: '示例收藏卡 · 僅作演示',
   },
   ja: {
     brand: 'SENRENBANKA',
@@ -114,7 +111,6 @@ export const messages: Record<string, FairyKeiMessages> = {
     noMail: '宛先はまだありません',
     footerTitle: 'コレクションカードの裏',
     footerLine: '古いおもちゃ箱から、好きなものをひとつずつ。',
-    sampleNote: 'サンプルのコレクションカード · デモ用',
   },
   en: {
     brand: 'SENRENBANKA',
@@ -140,7 +136,6 @@ export const messages: Record<string, FairyKeiMessages> = {
     noMail: 'No return address tucked in yet',
     footerTitle: 'BACK OF THE COLLECTOR CARD',
     footerLine: 'A few favourite things, tucked into an old toy case.',
-    sampleNote: 'SAMPLE COLLECTION CARD · DEMO ONLY',
   },
   ko: {
     brand: 'SENRENBANKA',
@@ -166,7 +161,6 @@ export const messages: Record<string, FairyKeiMessages> = {
     noMail: '아직 보낼 주소가 없습니다',
     footerTitle: '컬렉션 카드 뒷면',
     footerLine: '낡은 장난감 상자에서 좋아하는 것들을 하나씩 꺼내 놓았습니다.',
-    sampleNote: '샘플 컬렉션 카드 · 데모용',
   },
 };
 

@@ -26,8 +26,6 @@ export interface ZineMessages {
   cutHere: string;
   /** 无联系方式。 */
   noContact: string;
-  /** 页脚示例声明。 */
-  sampleNote: string;
   /** 地点缺失时的回退。 */
   local: string;
 }
@@ -44,7 +42,6 @@ export const messages: Record<string, ZineMessages> = {
     coupon: '邮购回执',
     cutHere: '沿此裁切',
     noContact: '未配置联系方式',
-    sampleNote: '示例资料・仅作演示',
     local: '本地',
   },
   'zh-TW': {
@@ -58,7 +55,6 @@ export const messages: Record<string, ZineMessages> = {
     coupon: '郵購回執',
     cutHere: '沿此裁切',
     noContact: '未配置聯絡方式',
-    sampleNote: '示例資料・僅作演示',
     local: '本地',
   },
   ja: {
@@ -72,7 +68,6 @@ export const messages: Record<string, ZineMessages> = {
     coupon: '郵便振替',
     cutHere: 'ここで切る',
     noContact: '連絡先未設定',
-    sampleNote: 'サンプル・デモ用',
     local: 'ローカル',
   },
   en: {
@@ -86,7 +81,6 @@ export const messages: Record<string, ZineMessages> = {
     coupon: 'MAIL-IN COUPON',
     cutHere: 'CUT HERE',
     noContact: 'NO CONTACT CONFIGURED',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
     local: 'LOCAL',
   },
   ko: {
@@ -100,7 +94,6 @@ export const messages: Record<string, ZineMessages> = {
     coupon: '우편 주문 쿠폰',
     cutHere: '여기서 자르기',
     noContact: '연락처 미설정',
-    sampleNote: '샘플 자료 · 데모용',
     local: '로컬',
   },
 };

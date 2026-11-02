@@ -308,7 +308,7 @@ const nextSection = () => pad((sectionIndex += 1));
 
       <footer class="cal-footer" data-reveal>
         <p class="cal-footer-mark">{t.footerMark}</p>
-        <p class="cal-footer-sample">{t.sampleNote}</p>
+        {view.locale.notice && <p class="cal-footer-sample">{view.locale.notice}</p>}
       </footer>
     </main>
     <ContextMenu config={view.contextMenu} />

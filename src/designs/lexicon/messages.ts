@@ -49,7 +49,6 @@ export interface LexiconMessages {
   noMail: string;
   /** 页脚终记号（含破折号，随语言）。 */
   finis: string;
-  sampleNote: string;
 }
 
 /** 拉丁对应词与文法缩写：三语共用（辞典的拉丁声部，不随界面语言翻译）。 */
@@ -95,7 +94,6 @@ export const messages: Record<string, LexiconMessages> = {
     tallyUnit: '条',
     noMail: '未配置联系方式',
     finis: '— 终 —',
-    sampleNote: '示例词条・仅作演示',
   },
   'zh-TW': {
     lexiconWord: 'LEXICON',
@@ -126,7 +124,6 @@ export const messages: Record<string, LexiconMessages> = {
     tallyUnit: '條',
     noMail: '未配置聯絡方式',
     finis: '— 終 —',
-    sampleNote: '示例詞條・僅作演示',
   },
   ja: {
     lexiconWord: 'LEXICON',
@@ -157,7 +154,6 @@ export const messages: Record<string, LexiconMessages> = {
     tallyUnit: '件',
     noMail: '連絡先未設定',
     finis: '— 終 —',
-    sampleNote: 'サンプル項目・デモ用',
   },
   en: {
     lexiconWord: 'LEXICON',
@@ -188,7 +184,6 @@ export const messages: Record<string, LexiconMessages> = {
     tallyUnit: 'ITEMS',
     noMail: 'no contact configured',
     finis: '— FINIS —',
-    sampleNote: 'SAMPLE ENTRY — DEMO ONLY',
   },
   ko: {
     lexiconWord: 'LEXICON',
@@ -219,7 +214,6 @@ export const messages: Record<string, LexiconMessages> = {
     tallyUnit: '건',
     noMail: '연락처가 설정되지 않음',
     finis: '— 끝 —',
-    sampleNote: '예시 표제어・데모용',
   },
 };
 

@@ -30,8 +30,6 @@ export interface DecoMessages {
   contactTitle: string;
   /** 幕次卡片序号前的类别词（装饰性，作用于 `aria-hidden` 容器）。 */
   actWord: string;
-  /** 页脚：资料是示例数据的声明。 */
-  sampleNote: string;
 }
 
 export const messages: Record<string, DecoMessages> = {
@@ -44,7 +42,6 @@ export const messages: Record<string, DecoMessages> = {
     skillsTitle: '演职员表',
     contactTitle: '售票处',
     actWord: '幕次',
-    sampleNote: '示例资料・仅作演示',
   },
   'zh-TW': {
     portfolio: '節目單',
@@ -55,7 +52,6 @@ export const messages: Record<string, DecoMessages> = {
     skillsTitle: '演職員表',
     contactTitle: '售票處',
     actWord: '幕次',
-    sampleNote: '示例資料・僅作演示',
   },
   ja: {
     portfolio: 'プログラム',
@@ -66,7 +62,6 @@ export const messages: Record<string, DecoMessages> = {
     skillsTitle: 'クレジット',
     contactTitle: '当日券売所',
     actWord: '幕',
-    sampleNote: 'サンプル資料・デモ用',
   },
   en: {
     portfolio: 'PROGRAMME',
@@ -77,7 +72,6 @@ export const messages: Record<string, DecoMessages> = {
     skillsTitle: 'CREDITS',
     contactTitle: 'BOX OFFICE',
     actWord: 'ACT',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
   ko: {
     portfolio: '프로그램',
@@ -88,7 +82,6 @@ export const messages: Record<string, DecoMessages> = {
     skillsTitle: '크레딧',
     contactTitle: '매표소',
     actWord: '막',
-    sampleNote: '샘플 자료 · 데모용',
   },
 };
 

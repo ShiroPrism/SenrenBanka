@@ -454,7 +454,7 @@ const shortUrl = (url: string) =>
             </div>
             <p class="sd-closing">{t.closing}</p>
             <p class="sd-brand">{t.brand}</p>
-            <p class="sd-sample">{t.sampleNote}</p>
+            {view.locale.notice && <p class="sd-sample">{view.locale.notice}</p>}
             <span class="sd-page-no" aria-hidden="true">
               {pageNo('sd-contact', 1)}
             </span>

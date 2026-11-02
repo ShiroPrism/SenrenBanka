@@ -29,7 +29,6 @@ export interface ArchiveMessages {
   dueLabel: string;
   footerThanks: string;
   drawerLine: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, ArchiveMessages> = {
@@ -53,7 +52,6 @@ export const messages: Record<string, ArchiveMessages> = {
     dueLabel: '借阅期限',
     footerThanks: '感谢查阅・欢迎再来',
     drawerLine: 'DRAWER 03 · ARCHIVE',
-    sampleNote: '示例档案・仅作演示',
   },
   'zh-TW': {
     archiveTag: '索引卡',
@@ -75,7 +73,6 @@ export const messages: Record<string, ArchiveMessages> = {
     dueLabel: '借閱期限',
     footerThanks: '感謝查閱・歡迎再來',
     drawerLine: 'DRAWER 03 · ARCHIVE',
-    sampleNote: '示例檔案・僅作演示',
   },
   ja: {
     archiveTag: 'カード目録',
@@ -97,7 +94,6 @@ export const messages: Record<string, ArchiveMessages> = {
     dueLabel: '返却期限',
     footerThanks: 'ご閲覧ありがとうございました',
     drawerLine: 'DRAWER 03 · ARCHIVE',
-    sampleNote: 'サンプル記録・デモ用',
   },
   en: {
     archiveTag: 'CARD CATALOG',
@@ -119,7 +115,6 @@ export const messages: Record<string, ArchiveMessages> = {
     dueLabel: 'DATE DUE',
     footerThanks: 'THANK YOU FOR LOOKING',
     drawerLine: 'DRAWER 03 · ARCHIVE',
-    sampleNote: 'SAMPLE RECORD — DEMO ONLY',
   },
   ko: {
     archiveTag: '색인 카드',
@@ -141,7 +136,6 @@ export const messages: Record<string, ArchiveMessages> = {
     dueLabel: '대출 기한',
     footerThanks: '열람해 주셔서 감사합니다 · 다시 오세요',
     drawerLine: 'DRAWER 03 · ARCHIVE',
-    sampleNote: '샘플 기록 · 데모용',
   },
 };
 

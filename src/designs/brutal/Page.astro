@@ -195,7 +195,7 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 
       <footer class="bt-footer">
         <span>{profile.name}</span>
-        <span>{t.sampleNote}</span>
+        {view.locale.notice && <span>{view.locale.notice}</span>}
       </footer>
     </div>
     <ContextMenu config={contextMenu} />

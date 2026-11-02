@@ -4,6 +4,9 @@
 #
 # 语言清单只在本文件的 i18n 段维护一处；路由、资料选择、SEO 元数据
 # 都从这里派生，不在其他文件重复列出语言（SPEC §5.5）。
+#
+# fork 必改：i18n.locales[].title / description 是示例人物的站点元数据；
+# i18n.locales[].notice 是示例数据声明。填入真实资料时替换标题/描述并删除 notice。
 
 site:
   # url: "https://your-domain.example"   # 可选；构建时优先使用 SITE_URL 环境变量
@@ -17,30 +20,35 @@ i18n:
       label: 简体中文 # 语言自称
       title: '李田所(野獣先輩)'
       description: '独立开发者与界面工程师的个人主页。'
+      notice: '示例资料・仅作演示'
       fontProfile: cjk
     - code: zh-TW # HTML lang / 翻译字典键（BCP 47）
       path: zh-tw # URL 前缀 + 资料文件名（src/data/profiles/zh-tw.yaml）
       label: 繁體中文 # 语言自称
       title: '李田所(野獸先輩)'
       description: '獨立開發者與介面工程師的個人首頁。'
+      notice: '示例資料・僅作演示'
       fontProfile: traditional-chinese
     - code: ja
       path: ja
       label: 日本語
       title: '田所浩二(野獣先輩)'
       description: '個人ポートフォリオサイト。'
+      notice: 'サンプル・デモ用'
       fontProfile: cjk
     - code: en
       path: en
       label: English
       title: 'Tadokoro Koji (野獣先輩)'
       description: 'Personal portfolio of an independent developer.'
+      notice: 'Sample profile — demo only'
       fontProfile: latin
     - code: ko
       path: ko
       label: 한국어
       title: '타도코로 코지(야수 선배)'
       description: '독립 개발자이자 인터페이스 엔지니어의 개인 홈페이지.'
+      notice: '샘플 자료 · 데모용'
       fontProfile: korean
 
 design:

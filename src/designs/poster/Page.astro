@@ -208,7 +208,7 @@ const linkCount = profile.links.length;
 
         <footer class="ps-foot" data-reveal>
           <p class="ps-imprint-line">{t.imprint}</p>
-          <p class="ps-sample">{t.sampleNote}</p>
+          {view.locale.notice && <p class="ps-sample">{view.locale.notice}</p>}
         </footer>
       </article>
     </main>

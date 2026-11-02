@@ -1,5 +1,6 @@
 # verification — Sticker Diary
 
+> **2026-11-02 页脚站点声明**：示例数据声明改由 `site.config.yaml` 的 `i18n.locales[].notice` 提供；示例站可见，缺省不渲染，无布局残留。跨设计验证见 `shared.md`。
 > **2026-11-01 韩语覆盖（C3）**：新增 `/ko/sticker-diary/` 与韩语文案；375×812 / 1280×800 冒烟通过（`lang=ko`、韩语字体加载、无横向溢出、0 console）；文案已人工审校（用户确认 2026-11-01）。
 
 > Current verification state for `sticker-diary`; update in place, history stays in Git.

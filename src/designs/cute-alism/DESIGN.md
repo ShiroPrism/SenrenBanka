@@ -328,7 +328,7 @@ Preview 的 `0.54rem` / `0.42rem` 是切换页 16:10 缩略画幅的登记档位
   继续以同一规则流式拼贴。
 - **Experience:** 右对齐 70rem 色带阶梯；前四项依次下沉 0 / 2 / 4 / 5.5rem，每条只改变宽度而非遮挡内容。
 - **Lower grid:** 技能约 1.18fr，联系约 0.82fr；联系板拉伸等高，但正文不裁切。
-- **Footer:** 黑底纸字条，右侧是示例声明胶囊；红硬阴影把它从墙面抬起。
+- **Footer:** 黑底纸字条，右侧是可选站点声明胶囊；红硬阴影把它从墙面抬起。
 - **Responsive:** `<=64rem` 保留两栏结构并压缩错位；`<=48rem` hero、项目、lower 全部单列，
   链接与经历恢复满宽；`<=30rem` 缩小描边 / 阴影并隐藏可见 URL 辅助行。
 
@@ -393,7 +393,7 @@ Preview 的 `0.54rem` / `0.42rem` 是切换页 16:10 缩略画幅的登记档位
 - `contact.email` → 可见 `mailto:` 链接，`emailLabel` 标明字段。
 - `contact.note` → 薄荷注释卡。
 - 两者均缺失时显示 `contactMissing`，不把空白伪装成联系方式。
-- 条码、包装顶条是装饰；`footerMark` / `sampleNote` 来自 messages。
+- 条码、包装顶条是装饰；`footerMark` 来自 messages，站点声明来自 `view.locale.notice`（可选）。
 
 ## Motion
 

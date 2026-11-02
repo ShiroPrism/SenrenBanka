@@ -1,5 +1,6 @@
 # verification — Aero（自产：2000s 科技乐观）
 
+> **2026-11-02 页脚站点声明**：示例数据声明改由 `site.config.yaml` 的 `i18n.locales[].notice` 提供；示例站可见，缺省不渲染，无布局残留。跨设计验证见 `shared.md`。
 > 本文件是 `aero` 的**当前**完整验证状态；重复验证时更新本文件，历史由 Git 保留。
 > 验证流程：`.agents/skills/design-page-verify/SKILL.md`。实现与验收日期：2026-11-02。
 

@@ -26,8 +26,6 @@ export interface AeroMessages {
   contact: string;
   /** 无联系方式时的说明。 */
   noContact: string;
-  /** 页脚示例声明。 */
-  sampleNote: string;
   /** 地点缺失时的回退。 */
   local: string;
 }
@@ -44,7 +42,6 @@ export const messages: Record<string, AeroMessages> = {
     skills: '功能',
     contact: '发送消息',
     noContact: '未配置联系方式',
-    sampleNote: '示例资料・仅作演示',
     local: '本地',
   },
   'zh-TW': {
@@ -58,7 +55,6 @@ export const messages: Record<string, AeroMessages> = {
     skills: '功能',
     contact: '傳送訊息',
     noContact: '未配置聯絡方式',
-    sampleNote: '示例資料・僅作演示',
     local: '本地',
   },
   ja: {
@@ -72,7 +68,6 @@ export const messages: Record<string, AeroMessages> = {
     skills: '機能',
     contact: 'メッセージを送る',
     noContact: '連絡先未設定',
-    sampleNote: 'サンプル・デモ用',
     local: 'ローカル',
   },
   en: {
@@ -86,7 +81,6 @@ export const messages: Record<string, AeroMessages> = {
     skills: 'FEATURES',
     contact: 'SEND MESSAGE',
     noContact: 'NO CONTACT CONFIGURED',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
     local: 'LOCAL',
   },
   ko: {
@@ -100,7 +94,6 @@ export const messages: Record<string, AeroMessages> = {
     skills: '기능',
     contact: '메시지 보내기',
     noContact: '연락처 미설정',
-    sampleNote: '샘플 자료 · 데모용',
     local: '로컬',
   },
 };

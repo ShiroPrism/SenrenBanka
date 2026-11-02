@@ -31,7 +31,6 @@ export interface TapeMessages {
   labelNote: string;
   /** A 面收尾句。 */
   sideEnd: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, TapeMessages> = {
@@ -51,7 +50,6 @@ export const messages: Record<string, TapeMessages> = {
     noMail: '未配置联系方式',
     labelNote: '手写贴标',
     sideEnd: 'A 面结束 · 请翻面',
-    sampleNote: '示例磁带 · 仅作演示',
   },
   'zh-TW': {
     cardTag: '磁帶內頁',
@@ -69,7 +67,6 @@ export const messages: Record<string, TapeMessages> = {
     noMail: '未配置聯絡方式',
     labelNote: '手寫貼標',
     sideEnd: 'A 面結束 · 請翻面',
-    sampleNote: '示例磁帶 · 僅作演示',
   },
   ja: {
     cardTag: 'ライナー',
@@ -87,7 +84,6 @@ export const messages: Record<string, TapeMessages> = {
     noMail: '連絡先未設定',
     labelNote: '手書きラベル',
     sideEnd: 'A 面終了 · 裏返してください',
-    sampleNote: 'サンプルテープ · デモ用',
   },
   en: {
     cardTag: 'J-CARD',
@@ -105,7 +101,6 @@ export const messages: Record<string, TapeMessages> = {
     noMail: 'no contact configured',
     labelNote: 'handwritten',
     sideEnd: 'END OF SIDE A / PLEASE TURN OVER',
-    sampleNote: 'SAMPLE TAPE / DEMO ONLY',
   },
   ko: {
     cardTag: 'J카드',
@@ -123,7 +118,6 @@ export const messages: Record<string, TapeMessages> = {
     noMail: '연락처 미설정',
     labelNote: '손글씨 라벨',
     sideEnd: 'A면 끝 · 뒷면으로 넘겨 주세요',
-    sampleNote: '예시 테이프 · 데모용',
   },
 };
 

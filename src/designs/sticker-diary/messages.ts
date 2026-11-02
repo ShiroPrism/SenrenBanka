@@ -37,7 +37,6 @@ export interface StickerDiaryMessages {
   nextLabel: string;
   statusTemplate: string;
   closing: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, StickerDiaryMessages> = {
@@ -69,7 +68,6 @@ export const messages: Record<string, StickerDiaryMessages> = {
     nextLabel: '下一页',
     statusTemplate: '第 {n} 页，共 {total} 页：{label}',
     closing: '写到这里，先合上手帐。',
-    sampleNote: '示例手帐 · 仅作演示',
   },
   'zh-TW': {
     brand: 'SENRENBANKA',
@@ -99,7 +97,6 @@ export const messages: Record<string, StickerDiaryMessages> = {
     nextLabel: '下一頁',
     statusTemplate: '第 {n} 頁，共 {total} 頁：{label}',
     closing: '寫到這裡，先合上手帳。',
-    sampleNote: '示例手帳 · 僅作演示',
   },
   ja: {
     brand: 'SENRENBANKA',
@@ -129,7 +126,6 @@ export const messages: Record<string, StickerDiaryMessages> = {
     nextLabel: '次のページ',
     statusTemplate: '見開き {n} / {total}：{label}',
     closing: 'ここまで。そっと手帳を閉じます。',
-    sampleNote: 'サンプル手帳・デモ用',
   },
   en: {
     brand: 'SENRENBANKA',
@@ -159,7 +155,6 @@ export const messages: Record<string, StickerDiaryMessages> = {
     nextLabel: 'Next page',
     statusTemplate: 'Spread {n} of {total}: {label}',
     closing: 'The end, for now.',
-    sampleNote: 'Sample diary / demo only',
   },
   ko: {
     brand: 'SENRENBANKA',
@@ -189,7 +184,6 @@ export const messages: Record<string, StickerDiaryMessages> = {
     nextLabel: '다음 장',
     statusTemplate: '펼침면 {n} / {total}: {label}',
     closing: '여기까지. 다이어리를 살며시 덮어요.',
-    sampleNote: '예시 다이어리 · 데모용',
   },
 };
 

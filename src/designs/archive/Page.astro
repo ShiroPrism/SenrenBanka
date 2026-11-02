@@ -264,7 +264,7 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </p>
               <p class="ar-thanks">{t.footerThanks}</p>
               <p class="ar-drawer-line">{t.drawerLine}</p>
-              <p class="ar-sample">{t.sampleNote}</p>
+              {view.locale.notice && <p class="ar-sample">{view.locale.notice}</p>}
             </footer>
           </div>
         </div>

@@ -24,8 +24,6 @@ export interface InkMessages {
   contact: string;
   /** 页眉右端页次。 */
   leaf: string;
-  /** 页脚声明：说明资料为示例。 */
-  footerNote: string;
   /** 装饰用引首编号（一一对应分区顺序）。 */
   numerals: string[];
 }
@@ -40,7 +38,6 @@ export const messages: Record<string, InkMessages> = {
     skills: '笔触',
     contact: '落款',
     leaf: '第一叶',
-    footerNote: '示例资料・仅作演示',
     numerals: ['一', '二', '三', '四'],
   },
   'zh-TW': {
@@ -52,7 +49,6 @@ export const messages: Record<string, InkMessages> = {
     skills: '筆觸',
     contact: '落款',
     leaf: '第一葉',
-    footerNote: '示例資料・僅作演示',
     numerals: ['一', '二', '三', '四'],
   },
   ja: {
@@ -64,7 +60,6 @@ export const messages: Record<string, InkMessages> = {
     skills: '筆致',
     contact: '落款',
     leaf: '第一葉',
-    footerNote: 'サンプル・デモ用',
     numerals: ['一', '二', '三', '四'],
   },
   en: {
@@ -76,7 +71,6 @@ export const messages: Record<string, InkMessages> = {
     skills: 'Brushwork',
     contact: 'Colophon',
     leaf: 'Leaf I',
-    footerNote: 'Sample profile — demo only',
     numerals: ['I', 'II', 'III', 'IV'],
   },
   ko: {
@@ -88,7 +82,6 @@ export const messages: Record<string, InkMessages> = {
     skills: '필치',
     contact: '낙관',
     leaf: '제일엽',
-    footerNote: '샘플 자료 · 데모용',
     numerals: ['일', '이', '삼', '사'],
   },
 };

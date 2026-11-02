@@ -224,7 +224,7 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
 
       <footer class="ink-footer">
         <span>{profile.name}</span>
-        <span>{t.footerNote}</span>
+        {view.locale.notice && <span>{view.locale.notice}</span>}
       </footer>
     </div>
     <ContextMenu config={contextMenu} />

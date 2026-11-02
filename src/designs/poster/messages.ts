@@ -37,7 +37,6 @@ export interface PosterMessages {
   noMail: string;
   /** 页脚印刷署名（不译，见文件头）。 */
   imprint: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, PosterMessages> = {
@@ -62,7 +61,6 @@ export const messages: Record<string, PosterMessages> = {
     payVia: '联络',
     noMail: '未配置联系方式',
     imprint: 'SENRENBANKA · PRINTED MATTER',
-    sampleNote: '示例资料・仅作演示',
   },
   'zh-TW': {
     sheetLabel: '絲網印刷海報',
@@ -85,7 +83,6 @@ export const messages: Record<string, PosterMessages> = {
     payVia: '聯絡',
     noMail: '未配置聯絡方式',
     imprint: 'SENRENBANKA · PRINTED MATTER',
-    sampleNote: '示例資料・僅作演示',
   },
   ja: {
     sheetLabel: 'シルクスクリーンのポスター',
@@ -108,7 +105,6 @@ export const messages: Record<string, PosterMessages> = {
     payVia: '連絡先',
     noMail: '連絡先未設定',
     imprint: 'SENRENBANKA · PRINTED MATTER',
-    sampleNote: 'サンプル・デモ用',
   },
   en: {
     sheetLabel: 'SCREENPRINT POSTER',
@@ -131,7 +127,6 @@ export const messages: Record<string, PosterMessages> = {
     payVia: 'WRITE TO',
     noMail: 'no contact configured',
     imprint: 'SENRENBANKA · PRINTED MATTER',
-    sampleNote: 'SAMPLE PROFILE — DEMO ONLY',
   },
   ko: {
     sheetLabel: '실크스크린 포스터',
@@ -154,7 +149,6 @@ export const messages: Record<string, PosterMessages> = {
     payVia: '연락처',
     noMail: '연락처 미설정',
     imprint: 'SENRENBANKA · PRINTED MATTER',
-    sampleNote: '예시 프로필・데모용',
   },
 };
 

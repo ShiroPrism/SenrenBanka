@@ -43,7 +43,6 @@ export interface FaxMessages {
   stamp: string;
   /** 页脚机打行（固定英文行）。 */
   footerEnd: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, FaxMessages> = {
@@ -69,7 +68,6 @@ export const messages: Record<string, FaxMessages> = {
     noMail: '未登记回传地址',
     stamp: '已收',
     footerEnd: 'END OF TRANSMISSION',
-    sampleNote: '样例传输・仅作演示',
   },
   'zh-TW': {
     masthead: 'FAX TRANSMISSION',
@@ -93,7 +91,6 @@ export const messages: Record<string, FaxMessages> = {
     noMail: '未登記回傳地址',
     stamp: '已收',
     footerEnd: 'END OF TRANSMISSION',
-    sampleNote: '樣例傳輸・僅作演示',
   },
   ja: {
     masthead: 'FAX TRANSMISSION',
@@ -117,7 +114,6 @@ export const messages: Record<string, FaxMessages> = {
     noMail: '返信先が未登録です',
     stamp: '受領',
     footerEnd: 'END OF TRANSMISSION',
-    sampleNote: 'サンプル送信・デモ用',
   },
   en: {
     masthead: 'FAX TRANSMISSION',
@@ -141,7 +137,6 @@ export const messages: Record<string, FaxMessages> = {
     noMail: 'no return number on file',
     stamp: 'RECEIVED',
     footerEnd: 'END OF TRANSMISSION',
-    sampleNote: 'SAMPLE TRANSMISSION — DEMO ONLY',
   },
   ko: {
     masthead: 'FAX TRANSMISSION',
@@ -165,7 +160,6 @@ export const messages: Record<string, FaxMessages> = {
     noMail: '회신 주소 미등록',
     stamp: '수신',
     footerEnd: 'END OF TRANSMISSION',
-    sampleNote: '샘플 전송 · 데모용',
   },
 };
 

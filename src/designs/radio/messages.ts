@@ -34,7 +34,6 @@ export interface RadioMessages {
   noMail: string;
   /** 页脚波段铭牌（同时也是页脚的可访问名，三语同值）。 */
   band: string;
-  sampleNote: string;
 }
 
 export const messages: Record<string, RadioMessages> = {
@@ -55,7 +54,6 @@ export const messages: Record<string, RadioMessages> = {
     contactVia: '来信',
     noMail: '未配置联络方式',
     band: 'BAND: 41m · SW',
-    sampleNote: '示例收信机・仅作演示',
   },
   'zh-TW': {
     panelLabel: '短波收信機',
@@ -74,7 +72,6 @@ export const messages: Record<string, RadioMessages> = {
     contactVia: '來信',
     noMail: '未配置聯絡方式',
     band: 'BAND: 41m · SW',
-    sampleNote: '示例收信機・僅作演示',
   },
   ja: {
     panelLabel: '短波受信機',
@@ -93,7 +90,6 @@ export const messages: Record<string, RadioMessages> = {
     contactVia: '連絡先',
     noMail: '連絡先未設定',
     band: 'BAND: 41m · SW',
-    sampleNote: 'サンプル受信機・デモ用',
   },
   en: {
     panelLabel: 'SHORTWAVE RECEIVER',
@@ -112,7 +108,6 @@ export const messages: Record<string, RadioMessages> = {
     contactVia: 'MAIL',
     noMail: 'no contact configured',
     band: 'BAND: 41m · SW',
-    sampleNote: 'SAMPLE RECEIVER — DEMO ONLY',
   },
   ko: {
     panelLabel: '단파 수신기',
@@ -131,7 +126,6 @@ export const messages: Record<string, RadioMessages> = {
     contactVia: '메일',
     noMail: '연락처 미설정',
     band: 'BAND: 41m · SW',
-    sampleNote: '예시 수신기・데모용',
   },
 };
 

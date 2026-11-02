@@ -280,7 +280,8 @@ const track = () => `A${(trackIndex += 1)}`;
           <p class="tp-marks">C-60 · TYPE II · NR ON</p>
           <p class="tp-side-end">{t.sideEnd}</p>
           <p class="tp-sample">
-            SENRENBANKA · {t.cardTag} · {t.sampleNote}
+            SENRENBANKA · {t.cardTag}
+            {view.locale.notice ? ` · ${view.locale.notice}` : ''}
           </p>
         </footer>
       </article>
