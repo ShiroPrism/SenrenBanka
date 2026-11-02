@@ -1,0 +1,6 @@
+{"file": "docs/rules/data-and-i18n.md", "reason": "资料契约边界、locale 配置、view.locale 字段与 fork 配置义务"}
+{"file": "docs/rules/design-contract.md", "reason": "styled 设计页的取数、渲染与共享机制接入契约"}
+{"file": "docs/rules/operations.md", "reason": "构建、文档与验证操作的正确命令与门禁"}
+{"file": "CONTEXT.md", "reason": "Profile / Locale / Site notice 领域术语与契约边界"}
+{"file": "SPEC.md", "reason": "site.config 与 view.locale 的权威规格；更新示例与字段说明"}
+{"file": "docs/verification/shared.md", "reason": "共享机制验证记录格式与当前基线"}
