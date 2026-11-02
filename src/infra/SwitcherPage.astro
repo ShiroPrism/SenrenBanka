@@ -5,7 +5,7 @@
  * 点击 = 写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
  * 设计说明取自各设计 messages 的本地化描述，而非单一语言的 design.json.description。
  * 共享操作菜单（context.kind = 'switcher'）在本页同样接入：页面上没有"当前主题"，
- * 因此不渲染身份条、随机抽选不排除任何主题、「切换设计…」是重复动作故不渲染；
+ * 因此不渲染身份条、随机抽选不排除任何主题、「全部设计」是重复动作故不渲染；
  * 语言切换保持"同一切换页"的上下文（→ /{目标语言}/designs/）。
  */
 import ContextMenu from '../components/ContextMenu.astro';

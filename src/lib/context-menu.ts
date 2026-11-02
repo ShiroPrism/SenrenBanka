@@ -31,7 +31,7 @@ export type PageContext =
 export interface ContextMenuRuntimeConfig {
   /** 当前页面上下文：`designId` 只在 design 页存在，随机抽选才需要排除它。 */
   context: PageContext;
-  /** 「切换设计…」目标（当前语言下的 /designs/，已经过 withBase）。切换页上该动作不渲染。 */
+  /** 「全部设计」目标（当前语言下的 /designs/，已经过 withBase）。切换页上该动作不渲染。 */
   switcherHref: string;
   /** Web Share 的 title 字段（页面标题）。 */
   shareTitle: string;
@@ -761,7 +761,7 @@ export function initContextMenu(): void {
       closeMenu(false);
       return;
     }
-    if (action !== 'switch') closeMenu(false); // 「切换设计…」是原生 <a> 导航，不拦截默认行为
+    if (action !== 'switch') closeMenu(false); // 「全部设计」是原生 <a> 导航，不拦截默认行为
     switch (action) {
       case 'reload':
         window.location.reload();

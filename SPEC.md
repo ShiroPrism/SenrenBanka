@@ -457,7 +457,7 @@ src/designs/<id>/
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
 - **页面级操作入口 = 全站共享操作菜单（Action menu）**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
   - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。
-  - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。**菜单标签与 Toast 文案均随当前语言**（由 `view.messages` 注入，组件本身不判断语言）。
+  - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印·保存 PDF / 分享页面）+ 设计操作（随机一个设计 / 全部设计）；`navigator.share` 不可用时**移除**该项（不留无效项）；复制 / 分享以 Toast（`role="status"`）给出成功 / 取消 / 失败反馈。**菜单标签与 Toast 文案均随当前语言**（由 `view.messages` 注入，组件本身不判断语言）。
   - **随机语义**：复用 §7.1 存储键与格式、`withBase()` URL；必须排除当前设计；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后导航目标固定 URL；直达固定 URL 不覆盖既有选择。**所有目标保留当前语言前缀**。
   - **键盘 / a11y**：`role="menu"` + `role="menuitem"`（icon `aria-hidden`，文本承担可访问名）；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困焦点；菜单随视口边界自动翻转收敛，点击外部 / 滚动 / 尺寸变化 / 再次右键关闭；打开时不锁定页面滚动。
   - **移动端（v0.10.0 修订 · ADR 0007）**：提供**悬浮球**入口，点击打开**底部动作面板**；**不模拟长按**、不拦截原生长按与文本选择。面板与桌面菜单**共享同一份文案 / 动作语义 / 状态语义**，但**动作清单按端裁剪**（见下条），容器形态与语言项呈现也分叉（桌面二级子菜单、移动平铺）。移动形态按 **action sheet** 契约实现（`bar` / `body` / `foot` 三段）：面板内自带**头部 ✕ 按钮**与**底部取消条**，遮罩仅作兜底——触屏没有指针、没有 hover、没有 Esc，关闭控件必须出现在面板内部。
@@ -470,7 +470,7 @@ src/designs/<id>/
   - 语言项是**普通 `<a>`**（非 button），逐个带 `hreflang` / `lang`，当前语言标 `aria-current="page"` 并附勾选标记；语言名用各语言**自称**；子菜单带翻译后的 `aria-label`。
   - 目标：目标 locale 覆盖当前设计时**保持同一主题 id**；未覆盖时落到目标 locale 的默认设计（`design.default`）。不重置随机有效期。
   - **键盘**：`↑↓` 在当前层级内移动；移到触发项时展开子菜单、移开时收起；`→` 进入子菜单并聚焦首项，`←` 返回触发项；`Esc` 关闭整个菜单。导航层级由 `activeMenu` 跟踪——**子菜单的项不会混进主菜单的 `↑↓` 序列**（这是二级菜单最易出错的地方）。
-  - **`manualSwitch` 只控制主题切换入口**（`styled` 的随机 / 切换设计…由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这些入口不渲染，`html-only` 的「全部设计」链接也不渲染，**但语言入口在两种模式下照常可用**。
+  - **`manualSwitch` 只控制主题切换入口**（`styled` 的随机 / 全部设计由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这些入口不渲染，`html-only` 的「全部设计」链接也不渲染，**但语言入口在两种模式下照常可用**。
   - **移动菜单的静态 DOM 不是无 JavaScript 回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与菜单交互依赖运行时，因此无 JS 时这些语言链接不可见、不可达。该表述曾是已知文档错误，ADR 0009 已更正。
   - **基础设施页例外**：切换页与 404 也接入共享菜单（v0.10.0 起），其可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）**包进 `<noscript>`**——运行时只有菜单一个可见入口，无 JS 时靠它回退。设计页不渲染它。
 - `html-only` 以普通链接提供页内目录、同主题语言链接，并在 `manualSwitch:true` 时提供一条「全部设计」链接；不得渲染随机入口、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或 `LanguageSwitcher`。
@@ -678,7 +678,7 @@ SenrenBanka/
 11. 每套设计含 `DESIGN.md` + `design.json` + `Page.astro` + `messages.ts`（provenance 完整）；`design.json.renderMode` 缺省按 `styled` 处理，`html-only` 不提供 `style.css` / `tokens.css`，但可提供自包含 `Preview.astro`；移动端（375px 宽）无横向溢出、内容可读；核心字段均被渲染。
 12. 部署自检：`BASE_PATH=/demo npm run build` 后，产物内链接正确带 `/demo` 前缀（抽查根页脚本、切换页链接与 html-only 语言 / 设计链接）。
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。
-14. 共享操作菜单（`manualSwitch:true`，所有 `styled` 设计）：桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「切换设计…」项；所有 `styled` 设计均不存在旧的可见 `Switch design` 入口。`html-only` 不接入菜单。
+14. 共享操作菜单（`manualSwitch:true`，所有 `styled` 设计）：桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「全部设计」项；所有 `styled` 设计均不存在旧的可见 `Switch design` 入口。`html-only` 不接入菜单。
 15. HTML-only 产物门禁：每个 `html-only` 设计 × locale 的最终 HTML 不含 `<style>`、`style` 属性、`<script>`、事件处理器、`iframe` / `object` / `embed`、`javascript:` URL 或 meta refresh；`<link>` 只含 `canonical` / `alternate` / `icon`，无 stylesheet / preload。缺少候选或页面、任一项违规均让 `npm run verify:html-only` 非零退出；该命令先跑 Node 内置回归测试，`--dist` 可检查指定产物目录。
 
 ---

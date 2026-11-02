@@ -45,7 +45,7 @@ export interface LocaleEntry {
  * 全站共享操作菜单的构建期配置（ADR 0007；运行时见 src/lib/context-menu.ts）。
  *
  * 菜单本体恒渲染（页面操作与语言切换在任何配置下都可达）；`designActionsEnabled`
- * 只控制主题切换项组（随机 / 切换设计…），`manualSwitch: false` 时它为 false。
+ * 只控制主题切换项组（随机 / 全部设计），`manualSwitch: false` 时它为 false。
  */
 export interface ActionMenuConfig extends ContextMenuRuntimeConfig {
   /** 当前语言的共享文案：组件静态标签（组件本身不判断语言）。 */
@@ -53,7 +53,7 @@ export interface ActionMenuConfig extends ContextMenuRuntimeConfig {
   /** 语言切换项：目标由 `context.kind` 决定——design 页保持同一主题，切换页保持同一切换页，404 指向语言入口。 */
   languages: LanguageSwitcherData['items'];
   /**
-   * 是否渲染主题切换项（随机 / 切换设计…）。
+   * 是否渲染主题切换项（随机 / 全部设计）。
    * `manualSwitch: false` 时为 false——但**语言项仍渲染**（SPEC §7.5）。
    */
   designActionsEnabled: boolean;

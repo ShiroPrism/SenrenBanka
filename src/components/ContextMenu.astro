@@ -13,7 +13,7 @@
  *   移动面板的静态 DOM 因此顺带充当无 JavaScript 时的语言切换回退。
  * - **语言切换入口也在这里**：各设计页不再单独渲染可见的语言切换器，语言项作为菜单的
  *   一个分组呈现，消除 8 套设计重复排版的成本。语言项是普通 `<a>`，不依赖运行时即可导航。
- *   主题切换项（随机 / 切换设计…）受 `manualSwitch` 门控，语言项**不受影响**——
+ *   主题切换项（随机 / 全部设计）受 `manualSwitch` 门控，语言项**不受影响**——
  *   `manualSwitch: false` 时菜单依然渲染（SPEC §7.5）。
  * - 行为全部在共享运行时 src/lib/context-menu.ts。原生右键保留规则不变：
  *   链接 / 图片 / 输入控件 / 已选文字 / 触屏来源一律不接管。
@@ -532,8 +532,24 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     text-decoration: none;
     cursor: default;
   }
-  .cm-item:hover,
-  .cm-item:focus {
+  /* 链接项必须自持外观：设计页常写 `.gv a` / `.lx a` 这类 (0,2,1) 的行内链接规则，
+     且菜单 CSS 先于设计 CSS 加载——若不复位，「全部设计」与语言项会被套上页面的
+     下划线 / 颜色 / visited / 焦点底色。用 (0,3,1) 压过设计页最高的 `.design a:state`，
+     只复位页面可能写入的链接属性；菜单自己的 hover / focus 底色与键盘焦点环见下。 */
+  .cm a.cm-item[role='menuitem'],
+  .cm-sheet a.cm-item[role='menuitem'] {
+    color: inherit;
+    text-decoration: none;
+    box-shadow: none;
+    outline: none;
+    transition: none;
+  }
+  /* (0,3,0)：高于设计页 `.design a:hover / :focus` 的 (0,2,1)，
+       保证页面焦点底色不会盖掉菜单自身的 hover / focus 反馈。 */
+  .cm .cm-item:hover,
+  .cm .cm-item:focus,
+  .cm-sheet .cm-item:hover,
+  .cm-sheet .cm-item:focus {
     background: light-dark(#f4f4f5, #2b2b31);
   }
   .cm-item:focus {

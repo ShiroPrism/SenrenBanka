@@ -3,14 +3,14 @@
 > 本文件维护**共享操作菜单**（`ContextMenu.astro` + `context-menu.ts`）的当前完整验证状态。它的验证维度**跨设计、跨输入环境、跨配置**，与 `shared.md` 的"路由 / 字体 / Reveal / 资产 provenance"不同职责，因此独立成文（见 `docs/README.md`）。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 > 验证步骤与通过标准见 `design-page-verify` skill。
-> 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归；**2026-10-31 追加菜单 CSS 外置复测（桌面 / 375px 触控 / 无 JS / 体积）**。
+> 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归；**2026-10-31 追加菜单 CSS 外置复测（桌面 / 375px 触控 / 无 JS / 体积）**；**2026-11-02 追加菜单链接样式隔离复测（GOV.UK `.gv a` 覆盖修复）**。
 > 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。2026-10-29（v0.17.0）：六套新增 `styled` 设计均在桌面与 375px 触控环境实测共享菜单；当前 **26 套 `styled`** 设计。
 
 ## 形态与接入面
 
 一份数据，两种容器形态。SSR 同时输出 `.cm`（桌面浮层）与 `.cm-sheet`（移动面板）+ `.cm-launcher`（悬浮球）+ `.cm-scrim`（遮罩），运行时按输入能力把不需要的那份设 `hidden`。
 
-| 页面上下文 | 接入 | 身份条 | 随机主题 | 「切换设计…」 | 语言项目标 |
+| 页面上下文 | 接入 | 身份条 | 随机主题 | 「全部设计」 | 语言项目标 |
 |---|---|---|---|---|---|
 | `design`（`styled`；当前 26 套；三语 78 页 + 韩语覆盖 4 套 = 82 页） | ✅ | ✅ | 排除当前 | ✅ | 目标 locale 覆盖当前设计时同一主题，否则默认设计 |
 | `design`（`html-only`；3 页） | ❌（ADR 0009 显式例外） | — | — | — | 原生同主题语言链接 |
@@ -34,7 +34,7 @@
 - 悬浮球：实测 **52×52px**（≥ `docs/rules/accessibility-responsive.md` 要求的 44px），让开 `env(safe-area-inset-*)`；反相配色（深色药丸 / 浅色药丸随系统明暗翻转），`:active` 缩放 0.94 提供按压反馈；`aria-label` 三语言分别为「打开快捷操作菜单」/「クイック操作メニューを開く」/「Open quick actions menu」，`aria-haspopup="true"`、`aria-expanded` 随开合翻转、`aria-controls="cm-sheet"`。面板打开时球淡出并 `pointer-events: none`（它的职责是"打开"，展开态下留在原位只会让人再点一次关闭）。
 - **命中尺寸实测**（切换页 375×812）：关闭 ✕ **44px**、取消条 **48px**、操作项 **48px** —— 全部 ≥ 44px。
 - **动作清单按端裁剪**（构建期，`ContextMenu.astro` 的 `desktopActions` 5 项 / `sheetActions` **2 项**）：
-  - 移动端面板实测 `[data-cm-action]` = `copy` / `share`（切换页 + 随机 = 3 项、主题页 + 随机 + 切换设计 = 4 项）——**无 `reload`、无 `top`、无 `print`**。
+  - 移动端面板实测 `[data-cm-action]` = `copy` / `share`（切换页 + 随机 = 3 项、主题页 + 随机 + 全部设计 = 4 项）——**无 `reload`、无 `top`、无 `print`**。
   - 桌面浮层实测 `[data-cm-action]` = `reload` / `top` / `copy` / `print` / `share` / `random` / `switch` —— **三项全部仍在**。裁剪精确落在移动容器内，未误伤桌面。
   - 裁剪判断标准：**移动端浏览器 / 系统是否已原生提供这个动作**。`copy` / `share` 保留（前者原生长按地址栏拷贝要 2~3 步且把用户带离页面；后者 `navigator.share()` 唤起的就是系统原生分享表单本身），三项原生已提供的全部删除。
 - **下拉刷新未被禁用**（本次移除手势的核心目的）：实测全页 `getComputedStyle(el).touchAction === 'none'` 的元素数 = **0**，`html` 的 `touch-action` = `auto`；面板关闭后 `html` `overflow: visible`、`cm-scroll-locked` 已移除。此前 `.cm-sheet-bar` 上的 `touch-action: none` 已连同手势实现一起删除。
@@ -64,7 +64,7 @@
 ## 语言与主题跳转正交性
 
 - `design` 页（`/ja/material3/`）：8 个随机目标**全为 `ja` 前缀**；池（排除 material3 后）= **7**，`excludesCurrent: true`；语言项 = `/zh-cn/material3/`、`/ja/material3/`、`/en/material3/`。
-- `switcher` 页（`/zh-cn/designs/`）：8 个目标全为 `zh-cn`；无身份条；无「切换设计…」；随机实测跳转 `→ /zh-cn/oxide/`，存储写入 `{"designId":"oxide","expiresAt":1791989119493}`（`random` 模式 + `cacheHours: 24`）。
+- `switcher` 页（`/zh-cn/designs/`）：8 个目标全为 `zh-cn`；无身份条；无「全部设计」；随机实测跳转 `→ /zh-cn/oxide/`，存储写入 `{"designId":"oxide","expiresAt":1791989119493}`（`random` 模式 + `cacheHours: 24`）。
 - `not-found`（`/nonexistent-path/` 真实 404）：语言项 = `/zh-cn/`、`/ja/`、`/en/`；有随机与切换页项；无身份条。
 - 存储语义未变：`storageKey = senrenbanka.design.v1:root`（不含 locale）、`mode: random`、`cacheHours: 24`、`avoidRepeat: true`。语言切换**不会**重置主题偏好。
 
@@ -119,6 +119,31 @@
 - 韩语 4 语言（`/ko/editorial/`）：桌面两份 DOM 合计 8 个 `.cm-lang`（4 × 2），当前项为 `ko`；4 个目标保持 `/ko|zh-cn|ja|en/editorial/`；移动 375×812 触控面板 4 个语言项平铺、项高 48px、面板底边 812、无横向溢出、0 console（截图 `docs/verification/assets/action-menu-ko-mobile.png`）。
 - 覆盖回退：`/ja/archive/`（archive 仅覆盖 zh/ja/en）的语言项 `ko` 目标为 `/ko/editorial/`（默认设计），不是 `/ko/archive/`。
 - 未复测：真机 Safari / Android、`--base /demo` 全链路、200% 缩放；颜色与对比度值未改动，沿用既有结论。
+
+## 2026-11-02 菜单链接样式与设计页隔离（GOV.UK `.gv a` 覆盖修复）
+
+**范围**：`ContextMenu.astro` 共享样式新增链接项复位；不改菜单 DOM、动作清单、运行时与语言项目标。
+
+- **根因**：菜单 `<a class="cm-item">` 挂在带设计根类的 `<body>` 下（如 `body.gv`），设计页的 `.gv a` / `.lx a`（(0,2,1)）优先于 `.cm-item`（(0,1,0)），且菜单 CSS 先于页面 CSS 加载；GOV.UK 的「全部设计」与语言项因此被套上页面行内链接外观（下划线 / 页面色 / visited / 焦点底色）。
+- **修法**：共享菜单 CSS 增加 `.cm a.cm-item[role="menuitem"]` / `.cm-sheet a.cm-item[role="menuitem"]` 复位（(0,3,1)），显式收回 `color` / `text-decoration` / `box-shadow` / `outline` / `transition`；菜单自身 hover / focus 底色规则提升到 (0,3,0)，压过设计页 `.design a:focus` 的 (0,2,1)。键盘焦点环仍由 `.cm[data-cm-key] .cm-item:focus`（(0,4,0)）恢复。
+- **构建**：`npm run build` 通过（193 页）；`dist` **8,346,847 B**；字体审计 0 孤儿 / 0 部署缺口（64 条既有缺字警告不变）。
+- **桌面实测**（Chromium，`/zh-cn/govuk/`）：菜单「全部设计」计算样式 `color: rgb(28,28,30)`、`text-decoration-line: none`、`box-shadow: none`、`transition: none`；hover 底色 `rgb(244,244,245)`；`Shift+F10` 打开后焦点项 `outline: solid`；页面正文链接仍为 GOV.UK 蓝色下划线。
+- **其他设计抽查**：`/zh-cn/lexicon/`（`.lx a` 同样全局下划线）菜单链接同为 `text-decoration: none`；`/zh-cn/aero/`（全局 `a:focus-visible`）程序性聚焦菜单链接不再继承页面 outline。
+- **375×812 触控实测**：`(pointer: coarse)=true`；面板底边 = `innerHeight` = 812；「全部设计」项高 48px、无下划线、无页面阴影；当前语言项保留菜单自己的 `rgb(238,241,246)` 底色；无横向溢出；全页 `touch-action: none` 计数 0。
+- **截图**：`.cache/verification/menu-govuk-desktop-fixed.png`、`.cache/verification/menu-govuk-mobile-fixed.png`。
+- **检测器**：`impeccable detect src/designs/govuk` → `[]`；反证 `src/designs/oxide` 仍命中既有 advisory，非空转。
+- **未复测**：30 套设计的逐页菜单视觉矩阵；本轮抽查 govuk / lexicon / aero 与移动面板。
+
+### 2026-11-02 · 「切换设计」更名为「全部设计」（菜单项 + 列表页标题）
+
+- 五语言 `switchDesign`：`全部设计` / `全部設計` / `すべてのデザイン` / `모든 디자인` / `All designs`；菜单项仍用 `data-cm-action="switch"`，目标仍为当前语言 `/designs/`，仅可见标签变化。
+- `switcher.titleSuffix` / `switcher.heading` 同步更名：五语言分别为 `全部设计` / `全部設計` / `すべてのデザイン` / `모든 디자인` / `All designs`；`/{locale}/designs/` 的 `<title>` 与可见 H1 均随之更新。
+- 桌面实测（五语言 `/govuk/`）：`.cm` 与 `.cm-sheet` 的该标签逐语言正确，旧文案计数 0；href 分别为 `/{locale}/designs/`。
+- 列表页实测（五语言 `/{locale}/designs/`）：H1 与 `<title>` 逐语言正确，旧「切换设计」文案计数 0。
+- 375×812 触控（`/zh-cn/govuk/`）：面板打开后标签「全部设计」、项高 48px、面板底边 812、无旧文案。
+- 375×812 触控（`/zh-cn/designs/`）：H1「全部设计」、`scrollWidth = innerWidth = 375`、无横向溢出。
+- 构建：193 页；`dist` **8,341,544 B**；`npm test` 84/84；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）。
+- 截图：`.cache/verification/menu-govuk-label-all-designs.png`、`.cache/verification/designs-all-designs-375.png`。
 
 ## 未覆盖 / 需后续补测
 

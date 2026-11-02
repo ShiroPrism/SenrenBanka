@@ -14,6 +14,7 @@
 
 - **唯一实现（`styled` 页面）**：`src/components/ContextMenu.astro`（标记 / 样式 / 配置注入）+ `src/lib/context-menu.ts`（运行时）。**禁止**每套 `styled` 设计复制菜单实现或自建切换入口；数据来自 `view.contextMenu`（设计页）或 `buildActionMenuConfig()`（基础设施页），构建期都在 `src/lib/site.ts` 派生。`html-only` 不渲染菜单，使用契约规定的原生链接导航。
 - **样式分发**：菜单样式构建为单一共享 hash CSS（`_astro/ContextMenu.<hash>.css`），所有含菜单的页面链接它；不得退回逐页 `is:inline`，也不得把菜单样式复制进任何设计 `style.css`。`html-only` 不链接该 CSS。详见 [`../adr/0015-externalized-action-menu-css.md`](../adr/0015-externalized-action-menu-css.md)。
+- **菜单链接项必须自持外观**：设计页常写以 `<body>` 类为作用域的链接规则（如 `.gv a` / `.lx a`，最高 (0,2,1)），菜单里的 `<a class="cm-item">` 不得继承它们。共享菜单 CSS 用 `.cm a.cm-item[role="menuitem"]` / `.cm-sheet a.cm-item[role="menuitem"]` 的 (0,3,1) 复位收回 `color` / `text-decoration` / `box-shadow` / `outline` / `transition`；菜单自身 hover / focus 底色提升到 (0,3,0)，压过设计页 `.design a:focus` 的 (0,2,1)。不得靠调整 `<link>` 顺序或给设计页加 `.cm` 例外来修；新增菜单链接项必须带 `role="menuitem"` 以命中该复位。
 - **单语言构建**：`i18n.locales` 只有 1 项时，语言分组**整组不渲染**——桌面语言触发项与子菜单、移动面板语言分组、注入 JSON 的 `languages`、`LanguageSwitcher`、`html-only` 原生语言区均不得出现；不得留下空标题、空 `<ul>` 或空数组。语言项的目标规则仍为「目标 locale 覆盖当前设计则保持设计，否则落到默认设计」。
 - **一份数据，两种容器形态**：SSR 同时输出两份 DOM（`.cm` 桌面浮层 / `.cm-sheet` 移动面板），运行时按输入能力把不需要的那份设为 `hidden`——**必须用 `hidden` 属性**（它同时移出无障碍树，不会被重复朗读），不要用 `display: none` 类。两份共享同一批 `<a href>` / `<button data-cm-action>` / Toast 容器与事件委托。**静态 DOM 不是无 JS 回退**：两份容器初始都带 `hidden`，悬浮球与菜单交互也依赖运行时；无 JS 时这些语言链接不可见、不可达。基础设施页的回退是单独的 `<noscript><LanguageSwitcher /></noscript>`。
 - **触发方式**（与菜单本体解耦）：
@@ -21,8 +22,8 @@
   - 移动：点击悬浮球，门控 `(any-pointer: coarse)`。
   - **原生右键保留规则在两种环境下都不变**：链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律交还浏览器原生菜单——**不得对全页无条件 `preventDefault()`**。移动端**不靠长按打开**，也不拦截原生长按与文本选择。
   - **混合输入设备按真实输入能力处理**：媒体查询只做初判，收到真实 `pointerdown` 的 `pointerType`（`touch` / `mouse`）即切换形态并记入**会话级 `sessionStorage`**（键 `senrenbanka.input.v1`）。该键**不得**与 `storageKeyFor()` 的主题偏好混用，也不得写入 `localStorage`。
-- **页面上下文（`context`，判别联合）**：`design` / `switcher` / `not-found` 三值，**不得**假设每页都存在"当前主题"。它决定：身份条是否渲染（仅 `design`）、随机抽选是否排除当前（仅 `design`）、「切换设计…」是否隐藏（`switcher` 上是重复动作，构建期就不渲染）、语言项目的标 URL。
-- **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印 / 分享页面）+ 主题操作（随机一个设计 / 切换设计…）；`navigator.share` 不可用时移除「分享页面」；复制 / 分享结果以 Toast（`role="status"`）反馈，各配置语言各有文案。
+- **页面上下文（`context`，判别联合）**：`design` / `switcher` / `not-found` 三值，**不得**假设每页都存在"当前主题"。它决定：身份条是否渲染（仅 `design`）、随机抽选是否排除当前（仅 `design`）、「全部设计」是否隐藏（`switcher` 上是重复动作，构建期就不渲染）、语言项目的标 URL。
+- **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印 / 分享页面）+ 主题操作（随机一个设计 / 全部设计）；`navigator.share` 不可用时移除「分享页面」；复制 / 分享结果以 Toast（`role="status"`）反馈，各配置语言各有文案。
 - **随机语义**（与 `/designs/` 切换页、根脚本一致）：复用 `storageKey` 与 `{ designId, expiresAt }` 格式；**`design` 页**必须排除当前设计（保证确实切换），**`switcher` / `not-found`** 没有当前主题，走**全池**（绝不能排除一个不存在的"当前"）；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后直接导航目标设计的固定 URL；打开菜单 / 页面加载均不写存储。**随机主题在所有页面可用**。
 - **键盘 / 焦点**：菜单 `role="menu"`，项为 `role="menuitem"`；↑↓/Home/End 移动、Enter/Space 激活、Esc 关闭并归还焦点、Tab 关闭不困住焦点；鼠标打开不预高亮首项，键盘打开才显示焦点环（`data-cm-key`）。
   - **子菜单层级判据是「焦点实际所在处」，不是「子菜单是否已展开」**：`↑↓` 移到语言触发项会自动展开子菜单但焦点仍留在触发项，此时 `→` 必须能进入；焦点进入子菜单后 `↑↓` 必须在子菜单内循环。这是 v0.10.0 实测修正的既有缺陷。
