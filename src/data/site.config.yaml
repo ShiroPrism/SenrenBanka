@@ -1,6 +1,8 @@
 # 站点信息、多语言与设计行为配置。
-# design.default 必须是某个已启用设计（design.json 中 "enabled": true）的 id。
-# 设计清单不在这里维护：src/designs/<id>/ 目录存在即注册（SPEC §6）。
+# design.default 必须是某个打包且启用设计（未被 design.exclude 排除，且 design.json 中
+# "enabled": true）的 id。
+# 设计注册仍由 src/designs/<id>/ 目录存在自动发现；这里只维护部署级打包排除名单
+# design.exclude。被排除的设计不构建页面/旧跳转，也不进入随机池与切换页（SPEC §6）。
 #
 # 语言清单只在本文件的 i18n 段维护一处；路由、资料选择、SEO 元数据
 # 都从这里派生，不在其他文件重复列出语言（SPEC §5.5）。
@@ -55,6 +57,7 @@ design:
   mode: random # random | fixed
   default: editorial # random 模式下为无 JS / SEO 回退设计；fixed 模式下为固定展示
   manualSwitch: true
+  exclude: [] # 部署级打包排除；缺省 [] = 全部设计。示例：[magical-girl]
   random:
     cacheHours: 24 # 0 = 每次访问都重新随机（仍避免连续重复）
     avoidImmediateRepeat: true

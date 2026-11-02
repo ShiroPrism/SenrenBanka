@@ -4,7 +4,7 @@
 >
 > **权威级别**：本文件是该项目主题规则的唯一正文来源；根 `AGENTS.md` 只提供硬门禁与路由。
 >
-> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md), [`../adr/0021-site-notice-configuration.md`](../adr/0021-site-notice-configuration.md)
+> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md), [`../adr/0021-site-notice-configuration.md`](../adr/0021-site-notice-configuration.md), [`../adr/0022-design-packaging-scope.md`](../adr/0022-design-packaging-scope.md)
 >
 > **维护归属**：规则变更先修改本文件，再检查根索引与引用。
 
@@ -32,6 +32,16 @@
 - 新需求**不得直接解释为**新的自定义字段或自定义区块，也不得在设计页面或数据层自行增加通用渲染兜底；契约边界有变化时先回到产品层确认
 - `projects` / `experience` / `skills` / `contact` 仅为兼容现有设计而保留的高级可选扩展区块；它们不是可继续扩充的词汇表或插件机制，不新增同类字段或区块
 - 超出固定契约的更多个人信息应通过核心 `links` 指向站外页面或联系方式。站点只负责呈现入口，不托管目标内容；其可用性、可访问性、归属与持久性由外部平台控制
+
+## 设计打包范围（Packaging scope）
+
+- **四层区分**：Registered design（目录存在且通过 registry 校验）→ Packaged design（当前部署实际构建）→ Enabled design（打包且 `design.json.enabled: true`，进入随机池/切换页）→ Default design（必须打包 + 启用，覆盖全部 locale）。
+- `site.config.yaml` 的 `design.exclude` 是唯一打包排除入口，缺省 `[]` = 全部注册设计；全站一份，不按 locale 拆分。
+- `design.exclude` 的 ID 必须已注册且不重复；默认设计不得被排除；打包集合不得为空；排除后仍需至少 1 个启用设计。违反任一条构建期失败。
+- 被排除设计不注入多语言页面或旧路径跳转，不生成页面 HTML / Page CSS，不进入随机池、切换页与语言入口；`enabled` 在打包集合外静默失效（不报错、不告警）。
+- 语言覆盖 / `messages.ts` / `descriptions.ts` 只校验打包设计；registry 仍校验全部目录的四件套与元数据。
+- 切换页的 `Preview.astro` 为 eager glob，被排除设计的预览 CSS / 描述可能仍聚合进切换页资源，属于已知限制（见 ADR 0022）；不得因此把被排除设计重新列入切换页。
+- 决策见 [`../adr/0022-design-packaging-scope.md`](../adr/0022-design-packaging-scope.md)。
 
 ## 多语言（i18n）
 

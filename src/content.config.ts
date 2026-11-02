@@ -126,6 +126,8 @@ const siteConfigSchema = z
         mode: z.enum(['random', 'fixed']),
         default: z.string().min(1),
         manualSwitch: z.boolean().default(true),
+        /** 部署级打包排除名单；缺省 [] = 全部注册设计。 */
+        exclude: z.array(z.string().min(1)).default([]),
         random: z
           .object({
             cacheHours: z.number().min(0).default(24),

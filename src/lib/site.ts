@@ -1,6 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
-import { allDesigns, enabledDesigns, type DesignEntry } from '../designs/registry';
+import { allDesigns, type DesignEntry } from '../designs/registry';
 import { designDescriptions } from '../designs/descriptions';
 import { storageKeyFor } from './router-script';
 import { BASE, pathSegments, withBase } from './urls';
@@ -121,6 +121,9 @@ export interface SiteModel {
   base: string;
   storageKey: string;
   designs: readonly DesignEntry[];
+  /** 当前部署打包的设计（全部注册设计 - design.exclude）。 */
+  packaged: readonly DesignEntry[];
+  /** 打包且启用：进入随机池、切换页与语言入口。 */
   enabled: readonly DesignEntry[];
   default: DesignEntry;
   switcherEnabled: boolean;
@@ -202,17 +205,58 @@ export async function loadSite(): Promise<SiteModel> {
     }
   }
 
-  if (enabledDesigns.length === 0) {
+  const exclude = cfg.design.exclude;
+  const excludeSet = new Set<string>();
+  for (const id of exclude) {
+    if (excludeSet.has(id)) {
+      throw new Error(
+        `[senrenbanka] site.config.yaml 的 design.exclude 重复列出 "${id}"；请去重。`,
+      );
+    }
+    if (!allDesigns.some((design) => design.id === id)) {
+      throw new Error(
+        `[senrenbanka] site.config.yaml 的 design.exclude 包含未知设计 "${id}"。可用：${allDesigns
+          .map((design) => design.id)
+          .join(', ')}`,
+      );
+    }
+    excludeSet.add(id);
+  }
+
+  const packagedDesigns = allDesigns.filter((design) => !excludeSet.has(design.id));
+  if (packagedDesigns.length === 0) {
+    throw new Error('[senrenbanka] design.exclude 排除了所有设计；至少保留一套打包设计。');
+  }
+
+  const visibleDesigns = packagedDesigns.filter((design) => design.meta.enabled);
+  if (visibleDesigns.length === 0) {
     throw new Error(
-      '[senrenbanka] 没有已启用的设计：请在至少一个 design.json 中设置 "enabled": true',
+      '[senrenbanka] 打包集合内没有已启用的设计：请在至少一个 design.json 中设置 "enabled": true',
     );
   }
-  const defaultDesign = enabledDesigns.find((design) => design.id === cfg.design.default);
+
+  const defaultDesign = packagedDesigns.find((design) => design.id === cfg.design.default);
   if (!defaultDesign) {
+    const registered = allDesigns.find((design) => design.id === cfg.design.default);
+    if (!registered) {
+      throw new Error(
+        `[senrenbanka] site.config.yaml 的 design.default "${cfg.design.default}" 不是已注册设计。可用：${allDesigns
+          .map((design) => design.id)
+          .join(', ')}`,
+      );
+    }
+    if (excludeSet.has(registered.id)) {
+      throw new Error(
+        `[senrenbanka] site.config.yaml 的 design.default "${cfg.design.default}" 被 design.exclude 排除；默认设计必须打包。`,
+      );
+    }
     throw new Error(
-      `[senrenbanka] site.config.yaml 的 design.default "${cfg.design.default}" 不是已启用的设计。可用：${enabledDesigns
-        .map((design) => design.id)
-        .join(', ')}`,
+      `[senrenbanka] site.config.yaml 的 design.default "${cfg.design.default}" 不在打包集合内。`,
+    );
+  }
+  if (!defaultDesign.meta.enabled) {
+    throw new Error(
+      `[senrenbanka] site.config.yaml 的 design.default "${cfg.design.default}" 未启用；默认设计必须同时打包并启用。`,
     );
   }
 
@@ -225,7 +269,7 @@ export async function loadSite(): Promise<SiteModel> {
 
   // 覆盖契约：默认设计全量；声明覆盖的 locale 必须有设计文案与切换页描述。
   // 未在 site.config.yaml 配置的 code 忽略并告警，便于单语言 fork 不必逐套清理 design.json。
-  for (const design of enabledDesigns) {
+  for (const design of packagedDesigns) {
     const declared = design.meta.locales;
     const unknown = declared.filter((code) => !configuredCodes.has(code));
     if (unknown.length > 0) {
@@ -282,7 +326,8 @@ export async function loadSite(): Promise<SiteModel> {
     // 主题偏好跨语言共享：storageKey 只按 base 派生，不含locale（SPEC §7.5）
     storageKey: storageKeyFor(BASE, cfg.site.storageKey),
     designs: allDesigns,
-    enabled: enabledDesigns,
+    packaged: packagedDesigns,
+    enabled: visibleDesigns,
     default: defaultDesign,
     switcherEnabled: cfg.design.manualSwitch,
   };
@@ -403,6 +448,9 @@ export function buildDesignView(
   design: DesignEntry,
   locale: LocaleEntry,
 ): DesignView {
+  if (!model.packaged.some((entry) => entry.id === design.id)) {
+    throw new Error(`[senrenbanka] 设计 "${design.id}" 被 design.exclude 排除，不应生成该页面。`);
+  }
   if (!designCovers(design, locale)) {
     throw new Error(
       `[senrenbanka] 设计 "${design.id}" 未声明支持 locale "${locale.code}"（design.json locales），不应生成该页面。`,

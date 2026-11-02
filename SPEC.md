@@ -40,7 +40,7 @@
 | Q3 | 切换与持久化语义 | 随机：存储有效→用存储；过期→重随机（排除上次）并写新窗口；手选=写入+重开窗口。固定：手选**永久记住**，无则用 default；手选在随机模式下**按 cacheHours 过期**。直达 URL 不写存储。 |
 | Q4 | 切换入口形态 | 共享 `/designs/` 切换页 + **全站共享操作菜单**（v0.5.0 起替代初版"每套设计必留一个可见入口"；v0.10.0 起扩展到移动端：桌面右键 / `Shift+F10`，移动端悬浮球 → 底部动作面板，见 ADR 0007）。共享操作菜单用于 `styled` 页面；`html-only` 按 ADR 0009 使用普通链接。`manualSwitch:false` → 主题入口不渲染、切换页不构建（404）；设计固定 URL 仍可直达。 |
 | Q5 | 根路径与 SEO | 根路径=零外部请求的轻量路由页（内联脚本 `location.replace`；noscript meta refresh→default+链接列表）。索引策略 **B**：仅 default 设计可索引，其余 `noindex,follow`。 |
-| Q6 | 设计注册机制 | **目录自动发现**：`src/designs/<id>/` 存在即注册，元数据在同目录 `design.json`；站点配置不含设计清单；`_` 前缀目录忽略；构建期校验强制完整性。`enabled:false` = 页面仍构建可直达，退出随机池与切换页。 |
+| Q6 | 设计注册机制 | **目录自动发现**：`src/designs/<id>/` 存在即注册，元数据在同目录 `design.json`；设计注册仍由目录发现，站点配置只维护部署级 `design.exclude` 打包排除名单（缺省空 = 全部注册设计）；`_` 前缀目录忽略；构建期校验强制完整性。`enabled:false` = 在打包集合内退出随机池与切换页，页面仍构建可直达。 |
 | Q7 | 部署基线 | `site`/`base` 由环境变量驱动（`SITE_URL` / `BASE_PATH`，默认 `/`）；GH workflow 自动注入本仓库上下文 → fork 后零配置；CF Pages/Vercel 用面板配置（文档说明）。一期验证深度：本地构建 + 文档核实，不做实际部署。 |
 | Q8 | 一期设计选型 | **4 套** = 官方 2（Oxide，已实测可抓取 + Vercel，待核实；备选 Resend/Nuxt/FAST）+ 自产 2（编辑杂志风 / 复古终端风）。最终定稿在实施第 4 步（抓取 + 目检 + 许可核实）。 |
 
@@ -295,12 +295,13 @@ design:
   mode: random       # random | fixed
   default: editorial # 必填；random 模式下是无 JS/SEO 回退设计，fixed 模式下是固定展示
   manualSwitch: true
+  exclude: []        # 部署级打包排除；缺省 [] = 全部注册设计。示例：[magical-girl]
   random:
     cacheHours: 24   # 0 = 每次访问都重新随机（仍避免连续重复）
     avoidImmediateRepeat: true
 ```
 
-校验规则：`default` 必须是存在的启用设计；至少 1 个启用设计；`cacheHours >= 0`。`i18n.locales[].notice` 按 locale 可选，是示例数据提示等站点声明的单行纯文本；示例站五语言均配置，fork 使用真实资料时必须删除或替换。
+校验规则：`default` 必须是已注册、已打包且已启用的设计；至少 1 个打包设计且打包集合内至少 1 个启用设计；`design.exclude` 的 ID 必须已注册且不重复，默认设计不得被排除；`cacheHours >= 0`。`i18n.locales[].notice` 按 locale 可选，是示例数据提示等站点声明的单行纯文本；示例站五语言均配置，fork 使用真实资料时必须删除或替换。
 
 ### 5.5 多语言契约【已定，v0.9.0】
 
@@ -351,7 +352,7 @@ src/designs/<id>/
 {
   "displayName": "Editorial",            // 切换页显示名
   "description": "杂志排版风，强调字体层级与留白",  // 一句话描述
-  "enabled": true,                       // false = 不随机、不上切换页，但页面仍构建可直达
+  "enabled": true,                       // false = 打包集合内不随机、不上切换页；页面是否构建由 design.exclude 决定
   "renderMode": "styled",                // styled | html-only；省略时默认 styled
   "accent": "#b45309",                   // 可选，切换页色块
   "source": {
@@ -374,8 +375,8 @@ src/designs/<id>/
   - `renderMode: "styled"`（默认）：`style.css` 必须存在；
   - `renderMode: "html-only"`：`style.css` / `tokens.css` 必须不存在；`Preview.astro` 可选但必须自包含，且不得 import 正式页 CSS。显式声明后最终页面只允许语义 HTML 与 `canonical` / `alternate` / `icon` metadata 链接；
   - `design.json` 通过 Zod 校验；必填 `locales` 非空、去重；默认设计覆盖全部配置 locale；覆盖数组中未配置的 code 告警并忽略；非自产来源的 provenance 字段齐全；
-  - 至少 1 个启用设计；`site.config.default` 存在且已启用。
-- 派生数据：全部设计列表、启用设计列表（随机池）、default 设计。
+  - `design.exclude` 的 ID 必须已注册且不重复；默认设计不得被排除；打包集合不得为空，且打包集合内至少 1 个启用设计；`site.config.default` 必须同时打包且启用。
+- 派生数据：全部注册设计列表、打包设计列表、打包且启用的设计列表（随机池）、default 设计。
 
 ### 6.4 页面接口【已定】
 
@@ -455,7 +456,7 @@ src/designs/<id>/
 
 ### 7.5 切换页与入口【已定；v0.5.0 入口形态修订；v0.9.0 多语言修订】
 
-- `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出**覆盖当前 locale** 的启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
+- `/<locale.path>/designs/`：共享基础设施页（中性极简风格，不模仿任何设计），列出**覆盖当前 locale** 的打包且启用设计（displayName + **本地化** description + 可选 accent 色块 + 当前标记）。设计说明取自各主题消息的本地化描述，而不是把单一语言的 `design.json.description` 强用于所有语言。
 - 点击 = 内联脚本写入手选存储 + 正常导航（无 JS 时导航仍可用，只是不持久化）。
 - **页面级操作入口 = 全站共享操作菜单（Action menu）**（v0.5.0 起替代初版"每套设计必留可见入口"；共享组件 `src/components/ContextMenu.astro` + 运行时 `src/lib/context-menu.ts`，禁止逐设计复制实现）：
   - **触发**：仅 `(hover: hover) and (pointer: fine)`（桌面鼠标）环境，在非交互区域右键 / `Shift+F10` / 上下文菜单键打开；**链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律保留浏览器原生菜单**，不得全页无条件 `preventDefault()`。

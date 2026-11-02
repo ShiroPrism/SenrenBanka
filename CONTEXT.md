@@ -40,8 +40,24 @@ _Avoid_: 无样式页面、裸 HTML、零前端设计
 为同一次交付共同规划、但分别注册与验证的一组独立设计；批次只约束质量标准与协作边界，不构成共享视觉系统或运行时分类。
 _Avoid_: 主题包、模板族、换色系列
 
+**Registered design（注册设计）**:
+`src/designs/<id>/` 目录存在、且四件套与 `design.json` 通过构建期校验的设计；注册不等于一定部署。
+_Avoid_: 设计清单、可用设计
+
+**Packaged design（打包设计）**:
+当前部署实际构建的设计集合 = 全部注册设计 − `site.config.yaml` 的 `design.exclude`；被打包的设计生成页面与旧路径跳转。
+_Avoid_: 启用设计、随机池
+
+**Enabled design（启用设计）**:
+打包集合中 `design.json.enabled` 为 true 的设计，进入随机池、切换页与语言入口；`enabled` 只在打包集合内生效。
+_Avoid_: 打包设计、可用设计
+
+**Packaging scope（打包范围）**:
+由 `site.config.yaml` 的 `design.exclude` 声明的部署级设计排除名单；缺省为空 = 全部注册设计打包，不按 locale 拆分。
+_Avoid_: 设计清单、白名单、主题包
+
 **Default design（默认设计）**:
-必须在所有 Locale 下可用的那套设计，承担无 JavaScript 回退与 SEO 默认页职责；其他设计按 Design locale coverage 决定可用语言。
+必须在所有 Locale 下可用、且属于打包 + 启用集合的那套设计，承担无 JavaScript 回退与 SEO 默认页职责；其他设计按 Design locale coverage 决定可用语言。
 _Avoid_: 主主题、首选主题
 
 **Native HTML navigation（原生 HTML 导航）**:

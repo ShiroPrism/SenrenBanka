@@ -134,6 +134,11 @@
 - **检测器**：`impeccable detect src/designs/govuk` → `[]`；反证 `src/designs/oxide` 仍命中既有 advisory，非空转。
 - **未复测**：30 套设计的逐页菜单视觉矩阵；本轮抽查 govuk / lexicon / aero 与移动面板。
 
+### 2026-11-02 · 设计打包范围（design.exclude）
+
+- 随机 / 切换目标池与语言入口现在基于 `SiteModel.enabled = packaged ∩ enabled`；被 `design.exclude` 排除的设计不进入菜单目标池。
+- 排除构建实测：五语言切换页各 29 项、无 magical-girl；`/zh-cn/magical-girl/` 与 `/magical-girl/` 均 404。完整记录见 `shared.md`。
+
 ### 2026-11-02 · 「切换设计」更名为「全部设计」（菜单项 + 列表页标题）
 
 - 五语言 `switchDesign`：`全部设计` / `全部設計` / `すべてのデザイン` / `모든 디자인` / `All designs`；菜单项仍用 `data-cm-action="switch"`，目标仍为当前语言 `/designs/`，仅可见标签变化。

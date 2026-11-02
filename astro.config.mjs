@@ -89,8 +89,8 @@ function localNpmProvider() {
  */
 function readSiteConfig() {
   const configPath = path.join(projectRoot, 'src', 'data', 'site.config.yaml');
-  /** @type {{ locales: Array<{ code: string, path: string }>, manualSwitch: boolean }} */
-  const fallback = { locales: [{ code: 'zh-CN', path: 'zh-cn' }], manualSwitch: true };
+  /** @type {{ locales: Array<{ code: string, path: string }>, manualSwitch: boolean, exclude: string[] }} */
+  const fallback = { locales: [{ code: 'zh-CN', path: 'zh-cn' }], manualSwitch: true, exclude: [] };
   if (!fs.existsSync(configPath)) return fallback;
   const raw = parseYaml(fs.readFileSync(configPath, 'utf8'));
   /** @type {unknown} */
@@ -106,9 +106,14 @@ function readSiteConfig() {
             locale.path.length > 0,
         )
     : [];
+  const declaredExclude = raw?.design?.exclude;
+  const exclude = Array.isArray(declaredExclude)
+    ? declaredExclude.filter((/** @type {unknown} */ id) => typeof id === 'string' && id.length > 0)
+    : [];
   return {
     locales: locales.length > 0 ? locales : fallback.locales,
     manualSwitch: raw?.design?.manualSwitch !== false,
+    exclude,
   };
 }
 
@@ -123,6 +128,7 @@ function readSiteConfig() {
  * - manualSwitch !== false 时注入 `/<locale.path>/designs`；否则不构建（404）。
  * - 旧的无语言前缀路径 `/<design>/` 与 `/designs/` 保留为**默认语言兼容入口**
  *   （静态 meta refresh + canonical + noindex，不做真 301——静态托管无法在代码内实现）。
+ * - `site.config.yaml` 的 `design.exclude` 是部署级打包排除：被排除设计不注入任何路由。
  * - 新增/删除设计目录后需重启 dev 服务器；构建（CI）总是重新读取目录。
  */
 /** @type {import('astro').AstroIntegration} */
@@ -140,10 +146,12 @@ const designRoutes = {
             .filter((id) => fs.existsSync(path.join(designsDir, id, 'Page.astro')))
         : [];
 
-      const { locales, manualSwitch } = readSiteConfig();
+      const { locales, manualSwitch, exclude } = readSiteConfig();
+      // design.exclude 是部署级打包范围：路由与旧路径跳转只注入未排除的设计。
+      const packagedIds = ids.filter((id) => !exclude.includes(id));
 
       // design.json 的 locales 是页面生成白名单；缺失时按全量处理，由注册表在构建期给出明确错误。
-      const designs = ids.map((id) => {
+      const designs = packagedIds.map((id) => {
         const meta = JSON.parse(fs.readFileSync(path.join(designsDir, id, 'design.json'), 'utf8'));
         return { id, locales: Array.isArray(meta.locales) ? meta.locales : null };
       });
@@ -169,7 +177,7 @@ const designRoutes = {
       }
 
       // 旧路径兼容入口（无 JavaScript 依赖的静态跳转页）
-      for (const id of ids) {
+      for (const id of packagedIds) {
         injectRoute({ pattern: `/${id}`, entrypoint: './src/infra/LegacyRedirect.astro' });
       }
       if (manualSwitch) {
