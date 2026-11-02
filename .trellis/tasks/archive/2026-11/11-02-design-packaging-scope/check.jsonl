@@ -1,0 +1,5 @@
+{"file": "docs/rules/data-and-i18n.md", "reason": "核对 packaging 契约与四层术语是否一致"}
+{"file": "docs/rules/design-contract.md", "reason": "核对排除设计后设计页契约未被破坏"}
+{"file": "docs/rules/accessibility-responsive.md", "reason": "核对排除构建的切换页 / 404 在 375px 下无溢出"}
+{"file": "docs/verification/shared.md", "reason": "核对默认与排除构建证据、预览限制是否记录"}
+{"file": ".trellis/tasks/11-02-design-packaging-scope/design.md", "reason": "按设计文档检查实现与校验语义"}

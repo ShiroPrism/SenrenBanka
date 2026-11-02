@@ -1,0 +1,6 @@
+{"file": "docs/rules/data-and-i18n.md", "reason": "设计注册、语言覆盖与 packaging 范围的规则落点"}
+{"file": "docs/rules/design-contract.md", "reason": "设计页交付与共享机制接入契约"}
+{"file": "docs/rules/operations.md", "reason": "构建、验证与文档操作门禁"}
+{"file": "CONTEXT.md", "reason": "Registered / Packaged / Enabled / Default 四层术语"}
+{"file": "SPEC.md", "reason": "Q6 注册机制与 site.config / design.json 权威规格"}
+{"file": "docs/verification/shared.md", "reason": "共享机制验证记录格式与当前基线"}
