@@ -310,3 +310,25 @@ fonts:subset 改为按每个 core 族实际引用页收集语料（共享非 HTM
 ### Status
 
 [OK] **Completed**
+
+
+## Session 12: 批次 4：Aero / Transit / Zine
+<!-- trellis-session: v=2 fp=c99177f3954703aa -->
+
+**Date**: 2026-11-02
+**Task**: 批次 4：Aero / Transit / Zine
+**Branch**: `main`
+
+### Summary
+
+Implemented aero (2000s techno-optimism), transit (wayfinding), and zine (Riso/photocopy punk) across five locales; refreshed SPEC matrix and README, added verification records; build 193 pages / 7.96 MiB, check green, tests 84/84, browser matrix and impeccable detector pass.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `f11a991` | feat(designs): add aero, transit, and zine themes |
+
+### Status
+
+[OK] **Completed**

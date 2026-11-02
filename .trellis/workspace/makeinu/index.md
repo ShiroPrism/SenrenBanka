@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 11
-- **Last Active**: 2026-11-01
+- **Total Sessions**: 12
+- **Last Active**: 2026-11-02
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~312 | Active |
+| `journal-1.md` | ~334 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 12 | 2026-11-02 | 批次 4：Aero / Transit / Zine | `f11a991` | `main` |
 | 11 | 2026-11-01 | 代码规范与行尾：Prettier + ESLint + LF | `3a625c3`, `0b53856` | `main` |
 | 10 | 2026-11-01 | 打包体积优化：字体语料按引用页 + 跳转页样式精简 | `878b62d` | `main` |
 | 9 | 2026-11-01 | 繁體中文 locale 全设计覆盖与字体发布 | `fe77a6a` | `feat/traditional-chinese` |
