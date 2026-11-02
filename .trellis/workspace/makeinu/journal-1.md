@@ -332,3 +332,37 @@ Implemented aero (2000s techno-optimism), transit (wayfinding), and zine (Riso/p
 ### Status
 
 [OK] **Completed**
+
+
+## Session 13: 站点级示例声明与菜单样式修复
+<!-- trellis-session: v=2 fp=7c26308396cfc98f -->
+
+**Date**: 2026-11-02
+**Task**: 站点级示例声明与菜单样式修复
+**Branch**: `main`
+
+### Summary
+
+菜单链接样式隔离与「全部设计」命名统一；17 套设计的页脚示例声明迁到 site.config.yaml 的 i18n.locales[].notice，缺省不渲染；新增 Site notice 术语与 ADR 0021，明确 fork 必须修改 site.config.yaml 的标题/描述/语言清单/notice。
+
+### Main Changes
+
+- 菜单链接项样式隔离，页面 .design a 规则不再覆盖 chrome；切换设计文案统一为全部设计
+- 17 套设计页脚示例声明改为 view.locale.notice 条件渲染，删除 sampleNote/footerNote
+- 新增 ADR 0021、CONTEXT Site notice 术语与 fork 配置义务
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `c370696` | fix(menu): isolate page styles and rename switcher copy |
+| `34538b5` | feat(site): make sample notice configurable per locale |
+
+### Testing
+
+- [OK] npm run build 193 页；npm test 84/84；npm run check 全绿
+- [OK] 示例站五语言 17/17 声明可见；无 notice 构建 17/17 隐藏且无布局残留
+
+### Status
+
+[OK] **Completed**
