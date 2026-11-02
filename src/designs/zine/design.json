@@ -1,0 +1,9 @@
+{
+  "displayName": "Zine",
+  "description": "Riso 复印朋克：荧光专色、错位套印、颗粒与剪贴，把资料做成一本地下小杂志。",
+  "enabled": true,
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
+  "accent": "#ff3b5c",
+  "source": { "type": "self-produced" },
+  "generatedBy": "impeccable · 2026-11-02（Riso/复印朋克方向）"
+}

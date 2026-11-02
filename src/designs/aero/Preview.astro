@@ -1,0 +1,218 @@
+---
+/**
+ * aero 预览碎片（切换页用）：保留天空/草地、设备条、玻璃球与凝胶按钮的签名。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；无可聚焦元素；调用方加 `aria-hidden`。
+ * - 纯装饰：不是完整页面，不带动效机制，不引交互依赖。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-fredoka',
+  '--font-inter',
+  '--font-zhuque',
+  '--font-noto-sans-tc',
+  '--font-gothic-a1',
+];
+
+const { locale, name, headline, links } = Astro.props as PreviewProps;
+const t = messages[locale] ?? messages['zh-CN'];
+const chips = (links ?? []).slice(0, 2).map((link) => link.label);
+const initial = Array.from(name ?? '')[0] ?? 'A';
+---
+
+<div class="aero-pv">
+  <div class="aero-pv-sky" aria-hidden="true"></div>
+  <div class="aero-pv-device">
+    <div class="aero-pv-bar">
+      <span class="aero-pv-dot" aria-hidden="true"></span>
+      <span>{t.portfolio}</span>
+      <span class="aero-pv-status">{t.status}</span>
+    </div>
+    <div class="aero-pv-body">
+      <div class="aero-pv-copy">
+        <p class="aero-pv-kicker">{t.device}</p>
+        <p class="aero-pv-name">{name}</p>
+        <p class="aero-pv-headline">{headline ?? t.about}</p>
+        <div class="aero-pv-chips">
+          {chips.length > 0 ? (
+            chips.map((chip) => <span class="aero-pv-chip">{chip}</span>)
+          ) : (
+            <>
+              <span class="aero-pv-chip">{t.links}</span>
+              <span class="aero-pv-chip">{t.projects}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <span class="aero-pv-orb" aria-hidden="true">
+        {initial}
+      </span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .aero-pv {
+    --aero-pv-display:
+      var(--font-fredoka), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --aero-pv-body:
+      var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+
+    position: relative;
+    min-height: 9rem;
+    padding: 0.55rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--ae-sky), var(--ae-sky-2) 62%, var(--ae-grass));
+    color: var(--ae-ink);
+    font-family: var(--aero-pv-body);
+    font-size: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .aero-pv-sky {
+    position: absolute;
+    top: -2.5rem;
+    right: -2rem;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 255 255 / 0.9), transparent 68%);
+  }
+
+  .aero-pv-device {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 8rem;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.9);
+    border-radius: 0.85rem;
+    background: rgb(247 253 255 / 0.82);
+    box-shadow: 0 8px 22px rgb(15 111 158 / 0.28);
+  }
+
+  .aero-pv-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.45rem;
+    background: linear-gradient(180deg, var(--ae-sky-deep), var(--ae-sky-deeper));
+    color: var(--ae-paper);
+    font-size: 0.42rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .aero-pv-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--ae-grass);
+  }
+
+  .aero-pv-status {
+    margin-left: auto;
+    color: rgb(247 253 255 / 0.8);
+  }
+
+  .aero-pv-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem;
+    align-items: center;
+    flex: 1;
+    padding: 0.5rem 0.55rem;
+    background: linear-gradient(180deg, rgb(191 233 255 / 0.55), rgb(247 253 255 / 0.9));
+  }
+
+  .aero-pv-copy {
+    display: grid;
+    gap: 0.22rem;
+    min-width: 0;
+  }
+
+  .aero-pv-kicker {
+    margin: 0;
+    color: var(--ae-accent-ink);
+    font-size: 0.4rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    overflow-wrap: anywhere;
+  }
+
+  .aero-pv-name {
+    margin: 0;
+    font-family: var(--aero-pv-display);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+  }
+
+  .aero-pv-headline {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--ae-ink-soft);
+    font-size: 0.5rem;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .aero-pv-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.18rem;
+    margin-top: 0.1rem;
+  }
+
+  .aero-pv-chip {
+    max-width: 6rem;
+    padding: 0.12rem 0.3rem;
+    overflow: hidden;
+    border: 1px solid rgb(15 111 158 / 0.2);
+    border-radius: 999px;
+    background: linear-gradient(180deg, #fff, #e8f8ff);
+    color: var(--ae-ink-soft);
+    font-size: 0.4rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .aero-pv-orb {
+    display: grid;
+    place-items: center;
+    width: 3.1rem;
+    height: 3.1rem;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 32% 24%, #fff 0 6%, rgb(255 255 255 / 0.7) 7% 18%, transparent 34%),
+      radial-gradient(circle at 50% 50%, #7ed0f4 0 38%, #2f9fe0 68%, #0f6f9e 100%);
+    box-shadow:
+      inset -6px -8px 14px rgb(6 44 66 / 0.35),
+      inset 4px 5px 10px rgb(255 255 255 / 0.55),
+      0 8px 16px rgb(15 111 158 / 0.3);
+    color: #fff;
+    font-family: var(--aero-pv-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+</style>

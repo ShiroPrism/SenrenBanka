@@ -1,0 +1,255 @@
+---
+/**
+ * transit — 交通导视 / 环境图形。
+ *
+ * 数据只经 `loadDesignView('transit', Astro.url.pathname)`；页面不接触文件路径、
+ * 不自行判断语言。所有可见设计文案来自 `messages.ts`；资料字段按契约渲染。
+ *
+ * 视觉：浅色路网图 + 线路色带 + 站点圆点 + 时刻表；项目是站点，经历是时刻表。
+ * 动效：一次性线路展开 + 站点点亮；滚动显现由共享 Reveal 触发。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('transit', Astro.url.pathname);
+const t = designMessages[view.locale.code];
+const { profile, contextMenu } = view;
+
+const projects = profile.projects ?? [];
+const experience = profile.experience ?? [];
+const skills = profile.skills ?? [];
+const contactEmail = profile.contact?.email ?? '';
+const contactNote = profile.contact?.note ?? '';
+const hasContact = Boolean(contactEmail || contactNote);
+const location = profile.location ?? t.local;
+
+const pad = (value: number) => String(value).padStart(2, '0');
+const lineCode = (index: number) => `T${index + 1}`;
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-inter" />
+    <Font cssVariable="--font-jetbrains-mono" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gothic-a1" />}
+    {view.locale.code === 'zh-TW' && <Font cssVariable="--font-noto-sans-tc" />}
+    <Reveal />
+  </head>
+  <body class="transit">
+    <div class="tr-shell">
+      <header class="tr-network">
+        <span class="tr-network-brand">
+          <span class="tr-network-badge" aria-hidden="true">
+            T
+          </span>
+          <span>{t.portfolio}</span>
+          <span class="tr-network-name">{t.network}</span>
+        </span>
+        <span class="tr-network-meta">
+          {location} · {t.terminus}
+        </span>
+      </header>
+
+      <main>
+        <section class="tr-hero" aria-labelledby="tr-name">
+          <div class="tr-hero-copy">
+            <p class="tr-kicker tr-rise" style="--tr-delay: 0ms">
+              {t.terminus}
+            </p>
+            <h1 id="tr-name" class="tr-name tr-rise" style="--tr-delay: 80ms">
+              {profile.name}
+            </h1>
+            <p class="tr-headline tr-rise" style="--tr-delay: 160ms">
+              {profile.headline}
+            </p>
+            <p class="tr-bio tr-rise" style="--tr-delay: 240ms">
+              {profile.bio}
+            </p>
+          </div>
+
+          <div class="tr-diagram" aria-hidden="true">
+            <span class="tr-diagram-badge">T</span>
+            <span class="tr-diagram-line"></span>
+            <span class="tr-diagram-stop tr-stop-a"></span>
+            <span class="tr-diagram-stop tr-stop-b"></span>
+            <span class="tr-diagram-stop tr-stop-c"></span>
+            <span class="tr-diagram-stop tr-stop-d"></span>
+            <span class="tr-diagram-code tr-code-a">01</span>
+            <span class="tr-diagram-code tr-code-b">02</span>
+            <span class="tr-diagram-code tr-code-c">03</span>
+            <span class="tr-diagram-code tr-code-d">04</span>
+          </div>
+        </section>
+
+        {profile.links.length > 0 && (
+          <section class="tr-section tr-lines" aria-labelledby="tr-lines-title" data-reveal>
+            <div class="tr-section-head">
+              <span class="tr-section-num" aria-hidden="true">
+                01
+              </span>
+              <h2 id="tr-lines-title" class="tr-section-title">
+                {t.lines}
+              </h2>
+              <span class="tr-section-count" aria-hidden="true">
+                {pad(profile.links.length)}
+              </span>
+            </div>
+            <ul class="tr-line-list">
+              {profile.links.map((link, index) => (
+                <li>
+                  <a class="tr-line-link" href={link.url}>
+                    <span class="tr-line-code" aria-hidden="true">
+                      {lineCode(index)}
+                    </span>
+                    <span class="tr-line-label">{link.label}</span>
+                    <span class="tr-line-arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {projects.length > 0 && (
+          <section class="tr-section" aria-labelledby="tr-stations-title" data-reveal>
+            <div class="tr-section-head">
+              <span class="tr-section-num" aria-hidden="true">
+                02
+              </span>
+              <h2 id="tr-stations-title" class="tr-section-title">
+                {t.stations}
+              </h2>
+              <span class="tr-section-count" aria-hidden="true">
+                {pad(projects.length)}
+              </span>
+            </div>
+            <ul class="tr-stations">
+              {projects.map((project, index) => (
+                <li class="tr-station" data-reveal>
+                  <div class="tr-station-top">
+                    <span class="tr-station-code" aria-hidden="true">
+                      {lineCode(index)}
+                    </span>
+                    <span class="tr-station-dot" aria-hidden="true" />
+                  </div>
+                  <h3 class="tr-station-title">
+                    {project.url ? (
+                      <a href={project.url}>
+                        {project.title}
+                        <span class="tr-station-arrow" aria-hidden="true">
+                          ↗
+                        </span>
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h3>
+                  {project.description && <p class="tr-station-desc">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <ul class="tr-station-tags">
+                      {project.tags.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {experience.length > 0 && (
+          <section class="tr-section" aria-labelledby="tr-timetable-title" data-reveal>
+            <div class="tr-section-head">
+              <span class="tr-section-num" aria-hidden="true">
+                03
+              </span>
+              <h2 id="tr-timetable-title" class="tr-section-title">
+                {t.timetable}
+              </h2>
+              <span class="tr-section-count" aria-hidden="true">
+                {pad(experience.length)}
+              </span>
+            </div>
+            <ol class="tr-timetable">
+              {experience.map((item) => (
+                <li class="tr-trip">
+                  <span class="tr-trip-period">{item.period ?? t.platform}</span>
+                  <div class="tr-trip-main">
+                    <div class="tr-trip-top">
+                      <span class="tr-trip-org">{item.org}</span>
+                      <span class="tr-trip-platform" aria-hidden="true">
+                        {t.platform}
+                      </span>
+                    </div>
+                    {item.role && <p class="tr-trip-role">{item.role}</p>}
+                    {item.description && <p class="tr-trip-desc">{item.description}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {skills.length > 0 && (
+          <section class="tr-section" aria-labelledby="tr-badges-title" data-reveal>
+            <div class="tr-section-head">
+              <span class="tr-section-num" aria-hidden="true">
+                04
+              </span>
+              <h2 id="tr-badges-title" class="tr-section-title">
+                {t.badges}
+              </h2>
+              <span class="tr-section-count" aria-hidden="true">
+                {pad(skills.length)}
+              </span>
+            </div>
+            <ul class="tr-badges">
+              {skills.map((skill) => (
+                <li class="tr-badge">
+                  <span class="tr-badge-dot" aria-hidden="true" />
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasContact && (
+          <section class="tr-ticket" aria-labelledby="tr-ticket-title" data-reveal>
+            <div class="tr-ticket-inner">
+              <p class="tr-ticket-kicker">{t.ticket}</p>
+              <h2 id="tr-ticket-title" class="tr-ticket-title">
+                {t.ticket}
+              </h2>
+              {contactEmail ? (
+                <a class="tr-ticket-link" href={`mailto:${contactEmail}`}>
+                  {contactEmail}
+                </a>
+              ) : (
+                <p class="tr-ticket-note">{t.noContact}</p>
+              )}
+              {contactNote && <p class="tr-ticket-note">{contactNote}</p>}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <footer class="tr-footer">
+        <span>{profile.name}</span>
+        <span>{t.sampleNote}</span>
+      </footer>
+    </div>
+
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

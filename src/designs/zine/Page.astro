@@ -1,0 +1,242 @@
+---
+/**
+ * zine — Riso / 复印朋克。
+ *
+ * 数据只经 `loadDesignView('zine', Astro.url.pathname)`；页面不接触文件路径、
+ * 不自行判断语言。所有可见设计文案来自 `messages.ts`；资料字段按契约渲染。
+ *
+ * 视觉： photocopied 地下小杂志——2–3 专色、错位套印、颗粒、复印条纹、剪贴与邮购回执。
+ * 动效：一次性印章落下 + 复印扫描带；滚动显现由共享 Reveal 触发。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('zine', Astro.url.pathname);
+const t = designMessages[view.locale.code];
+const { profile, contextMenu } = view;
+
+const projects = profile.projects ?? [];
+const experience = profile.experience ?? [];
+const skills = profile.skills ?? [];
+const contactEmail = profile.contact?.email ?? '';
+const contactNote = profile.contact?.note ?? '';
+const hasContact = Boolean(contactEmail || contactNote);
+const location = profile.location ?? t.local;
+
+const pad = (value: number) => String(value).padStart(2, '0');
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-league-gothic" />
+    <Font cssVariable="--font-inter" />
+    <Font cssVariable="--font-courier-prime" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gothic-a1" />}
+    {view.locale.code === 'zh-TW' && <Font cssVariable="--font-noto-sans-tc" />}
+    <Reveal />
+  </head>
+  <body class="zine">
+    <div class="zn-sheet">
+      <header class="zn-masthead">
+        <div class="zn-masthead-meta">
+          <span class="zn-issue" aria-hidden="true">
+            {t.issue}
+          </span>
+          <span>{t.portfolio}</span>
+          <span class="zn-location">{location}</span>
+        </div>
+
+        <h1 class="zn-name">
+          <span class="zn-name-layer zn-name-red" aria-hidden="true">
+            {profile.name}
+          </span>
+          <span class="zn-name-layer zn-name-blue" aria-hidden="true">
+            {profile.name}
+          </span>
+          <span class="zn-name-main">{profile.name}</span>
+        </h1>
+
+        <p class="zn-coverline zn-rise" style="--zn-delay: 80ms">
+          {profile.headline}
+        </p>
+        <span class="zn-tape zn-tape-a" aria-hidden="true" />
+        <span class="zn-tape zn-tape-b" aria-hidden="true" />
+      </header>
+
+      <main>
+        <section class="zn-section zn-manifesto" aria-labelledby="zn-manifesto-title" data-reveal>
+          <div class="zn-section-head">
+            <span class="zn-section-num" aria-hidden="true">
+              01
+            </span>
+            <h2 id="zn-manifesto-title" class="zn-section-title">
+              {t.manifesto}
+            </h2>
+          </div>
+          <p class="zn-bio">{profile.bio}</p>
+        </section>
+
+        {profile.links.length > 0 && (
+          <section class="zn-section" aria-labelledby="zn-classifieds-title" data-reveal>
+            <div class="zn-section-head">
+              <span class="zn-section-num" aria-hidden="true">
+                02
+              </span>
+              <h2 id="zn-classifieds-title" class="zn-section-title">
+                {t.classifieds}
+              </h2>
+              <span class="zn-section-count" aria-hidden="true">
+                {pad(profile.links.length)}
+              </span>
+            </div>
+            <ul class="zn-classifieds">
+              {profile.links.map((link, index) => (
+                <li class="zn-ad">
+                  <span class="zn-ad-index" aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <a class="zn-ad-link" href={link.url}>
+                    {link.label}
+                  </a>
+                  <span class="zn-ad-mark" aria-hidden="true">
+                    →
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {projects.length > 0 && (
+          <section class="zn-section" aria-labelledby="zn-spreads-title" data-reveal>
+            <div class="zn-section-head">
+              <span class="zn-section-num" aria-hidden="true">
+                03
+              </span>
+              <h2 id="zn-spreads-title" class="zn-section-title">
+                {t.spreads}
+              </h2>
+              <span class="zn-section-count" aria-hidden="true">
+                {pad(projects.length)}
+              </span>
+            </div>
+            <ul class="zn-spreads">
+              {projects.map((project, index) => (
+                <li class="zn-spread" data-reveal>
+                  <span class="zn-spread-index" aria-hidden="true">
+                    {pad(index + 1)}
+                  </span>
+                  <h3 class="zn-spread-title">
+                    {project.url ? (
+                      <a href={project.url}>
+                        {project.title}
+                        <span class="zn-spread-arrow" aria-hidden="true">
+                          ↗
+                        </span>
+                      </a>
+                    ) : (
+                      project.title
+                    )}
+                  </h3>
+                  {project.description && <p class="zn-spread-desc">{project.description}</p>}
+                  {project.tags && project.tags.length > 0 && (
+                    <ul class="zn-spread-tags">
+                      {project.tags.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {experience.length > 0 && (
+          <section class="zn-section" aria-labelledby="zn-notes-title" data-reveal>
+            <div class="zn-section-head">
+              <span class="zn-section-num" aria-hidden="true">
+                04
+              </span>
+              <h2 id="zn-notes-title" class="zn-section-title">
+                {t.notes}
+              </h2>
+              <span class="zn-section-count" aria-hidden="true">
+                {pad(experience.length)}
+              </span>
+            </div>
+            <ol class="zn-notes">
+              {experience.map((item) => (
+                <li class="zn-note">
+                  <span class="zn-note-period">{item.period ?? t.issue}</span>
+                  <div class="zn-note-main">
+                    <span class="zn-note-org">{item.org}</span>
+                    {item.role && <p class="zn-note-role">{item.role}</p>}
+                    {item.description && <p class="zn-note-desc">{item.description}</p>}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {skills.length > 0 && (
+          <section class="zn-section" aria-labelledby="zn-stamps-title" data-reveal>
+            <div class="zn-section-head">
+              <span class="zn-section-num" aria-hidden="true">
+                05
+              </span>
+              <h2 id="zn-stamps-title" class="zn-section-title">
+                {t.stamps}
+              </h2>
+              <span class="zn-section-count" aria-hidden="true">
+                {pad(skills.length)}
+              </span>
+            </div>
+            <ul class="zn-stamps">
+              {skills.map((skill) => (
+                <li class="zn-stamp">{skill}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {hasContact && (
+          <section class="zn-coupon" aria-labelledby="zn-coupon-title" data-reveal>
+            <span class="zn-cut" aria-hidden="true">
+              {t.cutHere}
+            </span>
+            <div class="zn-coupon-inner">
+              <p class="zn-coupon-kicker">{t.coupon}</p>
+              <h2 id="zn-coupon-title" class="zn-coupon-title">
+                {t.coupon}
+              </h2>
+              {contactEmail ? (
+                <a class="zn-coupon-link" href={`mailto:${contactEmail}`}>
+                  {contactEmail}
+                </a>
+              ) : (
+                <p class="zn-coupon-note">{t.noContact}</p>
+              )}
+              {contactNote && <p class="zn-coupon-note">{contactNote}</p>}
+            </div>
+          </section>
+        )}
+      </main>
+
+      <footer class="zn-footer">
+        <span>{profile.name}</span>
+        <span>{t.sampleNote}</span>
+      </footer>
+    </div>
+
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

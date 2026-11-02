@@ -1,0 +1,9 @@
+{
+  "displayName": "Transit",
+  "description": "交通导视：线路色带、站点圆点、换乘与方向箭头，把资料排成一张城市轨道网络图。",
+  "enabled": true,
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
+  "accent": "#0b7a5c",
+  "source": { "type": "self-produced" },
+  "generatedBy": "impeccable · 2026-11-02（交通导视方向）"
+}

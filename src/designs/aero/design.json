@@ -1,0 +1,9 @@
+{
+  "displayName": "Aero",
+  "description": "2000s 科技乐观：天蓝与草绿、玻璃泡与凝胶按钮、镜头光晕与半透明层，把资料做成一块会发光的桌面。",
+  "enabled": true,
+  "locales": ["zh-CN", "ja", "en", "ko", "zh-TW"],
+  "accent": "#2f9fe0",
+  "source": { "type": "self-produced" },
+  "generatedBy": "impeccable · 2026-11-02（2000s 科技乐观方向）"
+}

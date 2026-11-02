@@ -9,6 +9,15 @@
  */
 
 export const designDescriptions: Record<string, Record<string, string>> = {
+  aero: {
+    'zh-CN':
+      '2000s 科技乐观：天蓝与草绿、玻璃泡与凝胶按钮、镜头光晕与半透明层，把资料做成一块会发光的桌面。',
+    'zh-TW':
+      '2000s 科技樂觀：天藍與草綠、玻璃泡與凝膠按鈕、鏡頭光暈與半透明層，把資料做成一塊會發光的桌面。',
+    ja: '2000年代のテック・オプティミズム——空色と草色、ガラスの泡、ジェルボタン、レンズフレアでプロフィールを光るデスクトップに。',
+    en: '2000s techno-optimism: sky blue and grass green, glass bubbles, gel buttons and lens flares turn the profile into a glowing desktop.',
+    ko: '2000년대 테크 낙관주의 — 하늘색과 잔디색, 유리 방울, 젤 버튼, 렌즈 플레어로 프로필을 빛나는 데스크톱으로.',
+  },
   brutal: {
     'zh-CN':
       '新粗野告示板：粗黑描边、硬偏移阴影、酸性高亮与超大字号，把资料做成一块块不容忽视的标牌。',
@@ -209,5 +218,19 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     ja: '三言語の辞書見開き——見出し語、語義、参照項目。',
     en: 'A trilingual dictionary spread: headwords, definitions and cross-references.',
     ko: '다국어 사전 펼침면 — 표제어와 뜻풀이, 참조 항목.',
+  },
+  transit: {
+    'zh-CN': '交通导视：线路色带、站点圆点、换乘与方向箭头，把资料排成一张城市轨道网络图。',
+    'zh-TW': '交通導視：線路色帶、站點圓點、轉乘與方向箭頭，把資料排成一張城市軌道網路圖。',
+    ja: '交通サイン——路線色、駅の点、乗換、方向矢印でプロフィールを都市の路線図に。',
+    en: 'Transit wayfinding: route bands, station dots, interchanges and arrows turn the profile into a city rail map.',
+    ko: '교통 안내 — 노선 색띠, 역 점, 환승, 방향 화살표로 프로필을 도시 철도 노선도로.',
+  },
+  zine: {
+    'zh-CN': 'Riso 复印朋克：荧光专色、错位套印、颗粒与剪贴，把资料做成一本地下小杂志。',
+    'zh-TW': 'Riso 影印龐克：螢光特別色、錯位套印、顆粒與剪貼，把資料做成一本地下小雜誌。',
+    ja: 'Riso コピー・パンク——蛍光スポット色、ズレた重ね刷り、粒子と切り貼りでプロフィールを地下 zine に。',
+    en: 'Riso photocopy punk: fluorescent spot colours, misregistration, grain and cut-and-paste turn the profile into an underground zine.',
+    ko: '리소 복사 펑크 — 형광 별색, 어긋난 겹인쇄, 입자와 오려 붙이기로 프로필을 언더그라운드 zine으로.',
   },
 };

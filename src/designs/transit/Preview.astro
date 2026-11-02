@@ -1,0 +1,245 @@
+---
+/**
+ * transit 预览碎片（切换页用）：保留网络条、线路色带、站点圆点与站码的签名。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；无可聚焦元素；调用方加 `aria-hidden`。
+ * - 纯装饰：不是完整页面，不带动效机制，不引交互依赖。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-inter',
+  '--font-jetbrains-mono',
+  '--font-zhuque',
+  '--font-noto-sans-tc',
+  '--font-gothic-a1',
+];
+
+const { locale, name, headline, links } = Astro.props as PreviewProps;
+const t = messages[locale] ?? messages['zh-CN'];
+const chips = (links ?? []).slice(0, 2).map((link) => link.label);
+---
+
+<div class="transit-pv">
+  <div class="transit-pv-network">
+    <span class="transit-pv-badge">T</span>
+    <span>{t.portfolio}</span>
+    <span class="transit-pv-network-name">{t.network}</span>
+  </div>
+
+  <div class="transit-pv-body">
+    <div class="transit-pv-copy">
+      <p class="transit-pv-kicker">{t.terminus}</p>
+      <p class="transit-pv-name">{name}</p>
+      <p class="transit-pv-headline">{headline ?? t.stations}</p>
+      <div class="transit-pv-chips">
+        {chips.length > 0 ? (
+          chips.map((chip, index) => (
+            <span class="transit-pv-chip" data-line={index % 3}>
+              {chip}
+            </span>
+          ))
+        ) : (
+          <>
+            <span class="transit-pv-chip" data-line="0">
+              {t.lines}
+            </span>
+            <span class="transit-pv-chip" data-line="1">
+              {t.stations}
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+
+    <div class="transit-pv-map" aria-hidden="true">
+      <span class="transit-pv-line"></span>
+      <span class="transit-pv-stop transit-pv-stop-a"></span>
+      <span class="transit-pv-stop transit-pv-stop-b"></span>
+      <span class="transit-pv-stop transit-pv-stop-c"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .transit-pv {
+    --transit-pv-body:
+      var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --transit-pv-mono:
+      var(--font-jetbrains-mono), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 9rem;
+    overflow: hidden;
+    border: 1px solid var(--tr-rule);
+    background: radial-gradient(var(--tr-rule) 0.6px, transparent 0.7px), var(--tr-paper);
+    background-size:
+      0.9rem 0.9rem,
+      auto;
+    color: var(--tr-ink);
+    font-family: var(--transit-pv-body);
+    font-size: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .transit-pv-network {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.32rem 0.45rem;
+    border-bottom: 1px solid var(--tr-ink);
+    font-size: 0.42rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .transit-pv-badge {
+    display: grid;
+    place-items: center;
+    width: 1rem;
+    height: 1rem;
+    background: var(--tr-line);
+    color: var(--tr-paper);
+    font-size: 0.52rem;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .transit-pv-network-name {
+    margin-left: auto;
+    color: var(--tr-muted);
+    font-family: var(--transit-pv-mono);
+    font-size: 0.38rem;
+    letter-spacing: 0.06em;
+  }
+
+  .transit-pv-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 5.2rem;
+    gap: 0.35rem;
+    align-items: center;
+    flex: 1;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .transit-pv-copy {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .transit-pv-kicker {
+    margin: 0;
+    color: var(--tr-muted);
+    font-family: var(--transit-pv-mono);
+    font-size: 0.38rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .transit-pv-name {
+    margin: 0;
+    font-size: 0.94rem;
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    overflow-wrap: anywhere;
+  }
+
+  .transit-pv-headline {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--tr-muted);
+    font-size: 0.46rem;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .transit-pv-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.18rem;
+    margin-top: 0.1rem;
+  }
+
+  .transit-pv-chip {
+    max-width: 5rem;
+    padding: 0.1rem 0.26rem;
+    overflow: hidden;
+    border: 1px solid var(--tr-rule);
+    background: var(--tr-paper);
+    color: var(--tr-ink-soft);
+    font-family: var(--transit-pv-mono);
+    font-size: 0.36rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .transit-pv-chip[data-line='0'] {
+    border-left: 0.18rem solid var(--tr-line);
+  }
+
+  .transit-pv-chip[data-line='1'] {
+    border-left: 0.18rem solid var(--tr-line-2);
+  }
+
+  .transit-pv-chip[data-line='2'] {
+    border-left: 0.18rem solid var(--tr-line-3);
+  }
+
+  .transit-pv-map {
+    position: relative;
+    height: 3.2rem;
+    border: 1px solid var(--tr-rule);
+    background: var(--tr-paper-2);
+  }
+
+  .transit-pv-line {
+    position: absolute;
+    top: 50%;
+    left: 0.45rem;
+    right: 0.45rem;
+    height: 0.22rem;
+    background: var(--tr-line);
+    transform: translateY(-50%);
+  }
+
+  .transit-pv-stop {
+    position: absolute;
+    top: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 0.14rem solid var(--tr-line);
+    border-radius: 50%;
+    background: var(--tr-paper);
+    transform: translate(-50%, -50%);
+  }
+
+  .transit-pv-stop-a {
+    left: 18%;
+  }
+
+  .transit-pv-stop-b {
+    left: 48%;
+    border-color: var(--tr-line-2);
+  }
+
+  .transit-pv-stop-c {
+    left: 82%;
+  }
+</style>

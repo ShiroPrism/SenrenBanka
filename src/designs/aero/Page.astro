@@ -1,0 +1,235 @@
+---
+/**
+ * aero — 2000s 科技乐观。
+ *
+ * 数据只经 `loadDesignView('aero', Astro.url.pathname)`；页面不接触文件路径、
+ * 不自行判断语言。所有可见设计文案来自 `messages.ts`；资料字段按契约渲染。
+ *
+ * 视觉：一台 2007 年个人设备的桌面——天空/草地、玻璃球、凝胶按钮、窗口卡片。
+ * 动效：一次性开机淡入 + 气泡/窗口上浮；滚动显现由共享 Reveal 触发。
+ */
+import { Font } from 'astro:assets';
+import ContextMenu from '../../components/ContextMenu.astro';
+import HeadMeta from '../../components/HeadMeta.astro';
+import Reveal from '../../components/Reveal.astro';
+import { loadDesignView } from '../../lib/site';
+import { messages as designMessages } from './messages';
+import './style.css';
+
+const view = await loadDesignView('aero', Astro.url.pathname);
+const t = designMessages[view.locale.code];
+const { profile, contextMenu } = view;
+
+const projects = profile.projects ?? [];
+const experience = profile.experience ?? [];
+const skills = profile.skills ?? [];
+const contactEmail = profile.contact?.email ?? '';
+const contactNote = profile.contact?.note ?? '';
+const hasContact = Boolean(contactEmail || contactNote);
+const location = profile.location ?? t.local;
+
+const initialOf = (value: string) => Array.from(value)[0] ?? '·';
+const pad = (value: number) => String(value).padStart(2, '0');
+---
+
+<html lang={view.head.lang}>
+  <head>
+    <HeadMeta {...view.head} />
+    <Font cssVariable="--font-fredoka" />
+    <Font cssVariable="--font-inter" />
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-zhuque" />}
+    {view.locale.code !== 'zh-TW' && <Font cssVariable="--font-gothic-a1" />}
+    {view.locale.code === 'zh-TW' && <Font cssVariable="--font-noto-sans-tc" />}
+    <Reveal />
+  </head>
+  <body class="aero">
+    <div class="aero-sky" aria-hidden="true">
+      <span class="aero-sun"></span>
+      <span class="aero-cloud aero-cloud-a"></span>
+      <span class="aero-cloud aero-cloud-b"></span>
+      <span class="aero-hill"></span>
+    </div>
+
+    <div class="aero-device">
+      <header class="aero-statusbar">
+        <span class="aero-status-brand">
+          <span class="aero-status-dot" aria-hidden="true"></span>
+          {t.portfolio}
+        </span>
+        <span class="aero-status-meta">
+          {location} · {t.status}
+        </span>
+      </header>
+
+      <div class="aero-body">
+        <main>
+          <section class="aero-hero" aria-labelledby="ae-name">
+            <div class="aero-hero-copy">
+              <p class="aero-kicker aero-boot" style="--ae-delay: 0ms">
+                {t.device}
+              </p>
+              <h1 id="ae-name" class="aero-name aero-boot" style="--ae-delay: 90ms">
+                {profile.name}
+              </h1>
+              <p class="aero-headline aero-boot" style="--ae-delay: 180ms">
+                {profile.headline}
+              </p>
+              <p class="aero-bio aero-boot" style="--ae-delay: 270ms">
+                {profile.bio}
+              </p>
+            </div>
+
+            <div class="aero-orb-wrap" aria-hidden="true">
+              <span class="aero-orb"></span>
+              <span class="aero-bubble aero-bubble-a"></span>
+              <span class="aero-bubble aero-bubble-b"></span>
+              <span class="aero-bubble aero-bubble-c"></span>
+            </div>
+          </section>
+
+          {profile.links.length > 0 && (
+            <section class="aero-dock-section" aria-labelledby="ae-links-title">
+              <div class="aero-section-head">
+                <h2 id="ae-links-title" class="aero-section-title">
+                  {t.links}
+                </h2>
+                <span class="aero-section-hint" aria-hidden="true">
+                  {pad(profile.links.length)}
+                </span>
+              </div>
+              <nav class="aero-dock" aria-labelledby="ae-links-title">
+                {profile.links.map((link) => (
+                  <a class="aero-dock-link" href={link.url}>
+                    <span class="aero-dock-mark" aria-hidden="true">
+                      {initialOf(link.label)}
+                    </span>
+                    <span>{link.label}</span>
+                  </a>
+                ))}
+              </nav>
+            </section>
+          )}
+
+          {projects.length > 0 && (
+            <section class="aero-section" aria-labelledby="ae-projects-title" data-reveal>
+              <div class="aero-section-head">
+                <h2 id="ae-projects-title" class="aero-section-title">
+                  {t.projects}
+                </h2>
+                <span class="aero-section-hint" aria-hidden="true">
+                  {pad(projects.length)}
+                </span>
+              </div>
+              <ul class="aero-windows">
+                {projects.map((project, index) => (
+                  <li class="aero-window" data-reveal>
+                    <div class="aero-window-bar" aria-hidden="true">
+                      <span class="aero-window-dot" />
+                      <span class="aero-window-dot" />
+                      <span class="aero-window-dot" />
+                      <span class="aero-window-index">{pad(index + 1)}</span>
+                    </div>
+                    <div class="aero-window-body">
+                      <h3 class="aero-window-title">
+                        {project.url ? (
+                          <a href={project.url}>
+                            {project.title}
+                            <span class="aero-window-arrow" aria-hidden="true">
+                              ↗
+                            </span>
+                          </a>
+                        ) : (
+                          project.title
+                        )}
+                      </h3>
+                      {project.description && <p class="aero-window-desc">{project.description}</p>}
+                      {project.tags && project.tags.length > 0 && (
+                        <ul class="aero-window-tags">
+                          {project.tags.map((tag) => (
+                            <li>{tag}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {experience.length > 0 && (
+            <section class="aero-section" aria-labelledby="ae-experience-title" data-reveal>
+              <div class="aero-section-head">
+                <h2 id="ae-experience-title" class="aero-section-title">
+                  {t.experience}
+                </h2>
+                <span class="aero-section-hint" aria-hidden="true">
+                  {pad(experience.length)}
+                </span>
+              </div>
+              <ol class="aero-timeline">
+                {experience.map((item) => (
+                  <li class="aero-timeline-item">
+                    <span class="aero-timeline-node" aria-hidden="true" />
+                    <div class="aero-timeline-main">
+                      <div class="aero-timeline-top">
+                        <span class="aero-timeline-org">{item.org}</span>
+                        {item.period && <span class="aero-timeline-period">{item.period}</span>}
+                      </div>
+                      {item.role && <p class="aero-timeline-role">{item.role}</p>}
+                      {item.description && <p class="aero-timeline-desc">{item.description}</p>}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {skills.length > 0 && (
+            <section class="aero-section" aria-labelledby="ae-skills-title" data-reveal>
+              <div class="aero-section-head">
+                <h2 id="ae-skills-title" class="aero-section-title">
+                  {t.skills}
+                </h2>
+                <span class="aero-section-hint" aria-hidden="true">
+                  {pad(skills.length)}
+                </span>
+              </div>
+              <ul class="aero-features">
+                {skills.map((skill) => (
+                  <li class="aero-feature">{skill}</li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {hasContact && (
+            <section class="aero-message" aria-labelledby="ae-contact-title" data-reveal>
+              <div class="aero-message-inner">
+                <p class="aero-message-kicker">{t.device}</p>
+                <h2 id="ae-contact-title" class="aero-message-title">
+                  {t.contact}
+                </h2>
+                {contactEmail ? (
+                  <a class="aero-message-link" href={`mailto:${contactEmail}`}>
+                    {contactEmail}
+                  </a>
+                ) : (
+                  <p class="aero-message-note">{t.noContact}</p>
+                )}
+                {contactNote && <p class="aero-message-note">{contactNote}</p>}
+              </div>
+            </section>
+          )}
+        </main>
+
+        <footer class="aero-footer">
+          <span>{profile.name}</span>
+          <span>{t.sampleNote}</span>
+        </footer>
+      </div>
+    </div>
+
+    <ContextMenu config={contextMenu} />
+  </body>
+</html>

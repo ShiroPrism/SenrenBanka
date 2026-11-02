@@ -1,0 +1,40 @@
+/**
+ * transit 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.transit, .transit-pv)`），不是 `:root`。
+ * - 只放调色板与量值；字体角色由 `style.css` 的 `@theme inline` 承担。
+ * - 纯 CSS，不含 Tailwind 指令。
+ * - 对比度实测值登记在 `DESIGN.md` §2，改色值必须同步那张表。
+ */
+
+:is(.transit, .transit-pv) {
+  /* 纸 / 网格 */
+  --tr-paper: #f5f4ef;
+  --tr-paper-2: #e9e7de;
+  --tr-paper-3: #dedbd0;
+
+  /* 墨 */
+  --tr-ink: #101418;
+  --tr-ink-soft: #3b4248;
+  --tr-muted: #5d646b;
+
+  /* 线路色 */
+  --tr-line: #0b7a5c;
+  --tr-line-2: #d7263d;
+  --tr-line-3: #f2b705;
+
+  /* 线 / 焦点 */
+  --tr-rule: #c9c7bd;
+  --tr-rule-strong: #8e938f;
+  --tr-accent: #0b7a5c;
+
+  /* 尺度 */
+  --tr-max: 72rem;
+  --tr-pad: clamp(1.15rem, 4vw, 3.5rem);
+  --tr-gap: clamp(1.25rem, 4vw, 2.75rem);
+
+  /* 动效 */
+  --tr-dur: 240ms;
+  --tr-dur-line: 600ms;
+  --tr-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
+}

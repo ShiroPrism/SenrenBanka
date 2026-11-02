@@ -1,0 +1,50 @@
+/**
+ * aero 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.aero, .aero-pv)`），不是 `:root`：预览内联时 `:root` 会泄漏成切换页全局令牌。
+ * - 只放调色板与量值；字体角色由 `style.css` 的 `@theme inline` 承担（祖先 `html` 取不到
+ *   后代作用域变量，放进令牌会让正式页字体静默回退）。
+ * - 纯 CSS，不含 Tailwind 指令。
+ * - 对比度实测值登记在 `DESIGN.md` §2，改色值必须同步那张表。
+ */
+
+:is(.aero, .aero-pv) {
+  /* 天空 / 草地 / 纸面 */
+  --ae-sky: #bfe9ff;
+  --ae-sky-2: #e8f8ff;
+  --ae-sky-deep: #0f6f9e;
+  --ae-sky-deeper: #0b5a83;
+  --ae-grass: #7fcf6a;
+  --ae-grass-deep: #4f9e43;
+  --ae-paper: #f7fdff;
+  --ae-white: #ffffff;
+
+  /* 墨 */
+  --ae-ink: #123247;
+  --ae-ink-soft: #2c536b;
+  --ae-ink-muted: #3d6076;
+
+  /* 签名色 */
+  --ae-accent: #2f9fe0;
+  --ae-accent-ink: #0b6fa4;
+  --ae-gloss: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.95),
+    rgb(255 255 255 / 0.45) 48%,
+    rgb(255 255 255 / 0.08) 49%,
+    rgb(255 255 255 / 0.32)
+  );
+
+  /* 尺度 */
+  --ae-max: 74rem;
+  --ae-pad: clamp(1.15rem, 4vw, 3.5rem);
+  --ae-gap: clamp(1.25rem, 4vw, 3rem);
+  --ae-radius: 30px;
+  --ae-radius-sm: 18px;
+
+  /* 动效 */
+  --ae-dur: 520ms;
+  --ae-dur-boot: 700ms;
+  --ae-dur-hover: 180ms;
+  --ae-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
+}

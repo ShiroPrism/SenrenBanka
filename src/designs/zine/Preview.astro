@@ -1,0 +1,163 @@
+---
+/**
+ * zine 预览碎片（切换页用）：保留刊头、错位套印、荧光红与分类广告的签名。
+ *
+ * 约束（docs/rules/design-contract.md「可选 · 切换页预览碎片」）：
+ * - 不 import `style.css`；只 import `./tokens.css`（与正式页同源）。
+ * - 无 `:root`；无 `<Font>`；无可聚焦元素；调用方加 `aria-hidden`。
+ * - 纯装饰：不是完整页面，不带动效机制，不引交互依赖。
+ */
+import { messages } from './messages';
+import type { PreviewProps } from '../preview';
+import './tokens.css';
+
+/** 本预览实际用到的字体族；切换页据此按族去重并声明一次 `<Font>`。 */
+export const fonts: import('astro:assets').CssVariable[] = [
+  '--font-league-gothic',
+  '--font-inter',
+  '--font-courier-prime',
+  '--font-zhuque',
+  '--font-noto-sans-tc',
+  '--font-gothic-a1',
+];
+
+const { locale, name, headline, links } = Astro.props as PreviewProps;
+const t = messages[locale] ?? messages['zh-CN'];
+const chips = (links ?? []).slice(0, 2).map((link) => link.label);
+---
+
+<div class="zine-pv">
+  <div class="zine-pv-masthead">
+    <span class="zine-pv-issue">{t.issue}</span>
+    <span class="zine-pv-mark">{t.portfolio}</span>
+    <span class="zine-pv-name">{name}</span>
+  </div>
+  <p class="zine-pv-headline">{headline ?? t.manifesto}</p>
+  <div class="zine-pv-chips">
+    {chips.length > 0 ? (
+      chips.map((chip) => <span class="zine-pv-chip">{chip}</span>)
+    ) : (
+      <>
+        <span class="zine-pv-chip">{t.classifieds}</span>
+        <span class="zine-pv-chip">{t.spreads}</span>
+      </>
+    )}
+  </div>
+</div>
+
+<style>
+  .zine-pv {
+    --zine-pv-display:
+      var(--font-league-gothic), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --zine-pv-body:
+      var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+    --zine-pv-mono:
+      var(--font-courier-prime), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+      'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', monospace;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    min-height: 9rem;
+    padding: 0.55rem;
+    overflow: hidden;
+    border: 1px solid var(--zn-rule-strong);
+    background-color: var(--zn-paper);
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgb(17 17 17 / 0.04) 0,
+      rgb(17 17 17 / 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    color: var(--zn-ink);
+    font-family: var(--zine-pv-body);
+    font-size: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .zine-pv-masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.45rem;
+    padding-bottom: 0.28rem;
+    border-bottom: 2px solid var(--zn-ink);
+  }
+
+  .zine-pv-issue {
+    padding: 0.06rem 0.22rem;
+    background: var(--zn-red);
+    color: var(--zn-ink);
+    font-family: var(--zine-pv-mono);
+    font-size: 0.36rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .zine-pv-mark {
+    color: var(--zn-ink-soft);
+    font-family: var(--zine-pv-mono);
+    font-size: 0.36rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  .zine-pv-name {
+    width: 100%;
+    margin-top: 0.05rem;
+    color: var(--zn-ink);
+    font-family: var(--zine-pv-display);
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 0.82;
+    letter-spacing: 0.01em;
+    text-shadow:
+      -0.035em 0.025em 0 var(--zn-red),
+      0.03em -0.022em 0 var(--zn-blue);
+    overflow-wrap: anywhere;
+  }
+
+  .zine-pv-headline {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--zn-ink-soft);
+    font-size: 0.46rem;
+    font-weight: 700;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow-wrap: anywhere;
+  }
+
+  .zine-pv-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.18rem;
+    margin-top: auto;
+  }
+
+  .zine-pv-chip {
+    max-width: 5.5rem;
+    padding: 0.1rem 0.26rem;
+    overflow: hidden;
+    border: 1px solid var(--zn-red-ink);
+    background: var(--zn-paper-2);
+    color: var(--zn-ink);
+    font-family: var(--zine-pv-mono);
+    font-size: 0.36rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: rotate(-0.8deg);
+  }
+
+  .zine-pv-chip:nth-child(2n) {
+    border-color: var(--zn-blue);
+    transform: rotate(0.8deg);
+  }
+</style>

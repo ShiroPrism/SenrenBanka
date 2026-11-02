@@ -1,0 +1,40 @@
+/**
+ * zine 设计令牌（**单一来源**）：正式页 `style.css` 与切换页预览 `Preview.astro` 共用。
+ *
+ * - 作用域是类（`:is(.zine, .zine-pv)`），不是 `:root`。
+ * - 只放调色板与量值；字体角色由 `style.css` 的 `@theme inline` 承担。
+ * - 纯 CSS，不含 Tailwind 指令。
+ * - 对比度实测值登记在 `DESIGN.md` §2，改色值必须同步那张表。
+ */
+
+:is(.zine, .zine-pv) {
+  /* 纸 */
+  --zn-paper: #f3efe6;
+  --zn-paper-2: #e8e2d5;
+  --zn-paper-3: #ded6c5;
+
+  /* 墨 */
+  --zn-ink: #111111;
+  --zn-ink-soft: #2b2b2b;
+
+  /* 专色：荧光红/粉只做装饰/大字；深红做小字链接 */
+  --zn-red: #ff3b5c;
+  --zn-red-ink: #c81e3a;
+  --zn-blue: #1f4bff;
+  --zn-pink: #ff8fb1;
+
+  /* 线 */
+  --zn-rule: #b9b2a4;
+  --zn-rule-strong: #6f6a5e;
+  --zn-accent: #c81e3a;
+
+  /* 尺度 */
+  --zn-max: 72rem;
+  --zn-pad: clamp(1.15rem, 4vw, 3.25rem);
+  --zn-gap: clamp(1.25rem, 4vw, 2.75rem);
+
+  /* 动效 */
+  --zn-dur: 180ms;
+  --zn-dur-scan: 300ms;
+  --zn-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

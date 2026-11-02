@@ -1,0 +1,867 @@
+@import 'tailwindcss' source(none);
+@source "./";
+@source not "./Preview.astro";
+@import './tokens.css';
+
+/* aero — 2000s 科技乐观
+   天空 / 草地 / 玻璃球 / 凝胶按钮 / 窗口卡片。光泽与饱和色承担时代感，
+   信息层级由字号、留白与半透明面板表达；不铺位图、不做 OS 复刻。 */
+
+@theme inline {
+  --font-ae-display: var(--font-fredoka);
+  --font-ae-body: var(--font-inter);
+  --font-ae-cjk: var(--font-zhuque);
+}
+
+html:has(.aero) {
+  overflow-x: clip;
+}
+
+.aero {
+  /* 完整回退链由设计 CSS 拥有；Zhuque 必须排在系统中文之前。 */
+  --ae-type-display:
+    var(--font-fredoka), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC',
+    'Microsoft YaHei', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  --ae-type-body:
+    var(--font-inter), var(--font-gothic-a1), var(--font-zhuque), 'PingFang SC', 'Microsoft YaHei',
+    'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--ae-sky);
+  color: var(--ae-ink);
+  font-family: var(--ae-type-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.aero ::selection {
+  background: var(--ae-grass);
+  color: var(--ae-ink);
+}
+
+/* ---------- 天空 / 草地 ---------- */
+
+.aero-sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--ae-sky) 0%, var(--ae-sky-2) 48%, var(--ae-paper) 100%);
+}
+
+.aero-sun {
+  position: absolute;
+  top: -10rem;
+  right: 6%;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.95) 0 8%,
+    rgb(255 255 255 / 0.55) 9% 24%,
+    rgb(255 255 255 / 0.18) 25% 46%,
+    transparent 68%
+  );
+}
+
+.aero-cloud {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgb(255 255 255 / 0.92),
+    rgb(255 255 255 / 0.45) 55%,
+    transparent 72%
+  );
+  filter: blur(1px);
+}
+
+.aero-cloud-a {
+  top: 12%;
+  left: 4%;
+  width: 18rem;
+  height: 5.5rem;
+  transform: rotate(-4deg);
+}
+
+.aero-cloud-b {
+  top: 24%;
+  right: 18%;
+  width: 12rem;
+  height: 4rem;
+  opacity: 0.75;
+  transform: rotate(3deg);
+}
+
+.aero-hill {
+  position: absolute;
+  bottom: -12rem;
+  left: -12%;
+  width: 124%;
+  height: 28rem;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(180deg, rgb(127 207 106 / 0.55), rgb(79 158 67 / 0.88));
+}
+
+/* ---------- 设备外壳 ---------- */
+
+.aero-device {
+  position: relative;
+  width: min(var(--ae-max), calc(100% - 2 * var(--ae-pad)));
+  margin: clamp(1rem, 4vw, 3rem) auto;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.9);
+  border-radius: var(--ae-radius);
+  background: rgb(247 253 255 / 0.78);
+  box-shadow:
+    0 30px 90px rgb(15 111 158 / 0.28),
+    inset 0 2px 0 rgb(255 255 255 / 0.85);
+}
+
+.aero-statusbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
+  padding: 0.8rem clamp(1rem, 3vw, 1.75rem);
+  background: linear-gradient(180deg, var(--ae-sky-deep), var(--ae-sky-deeper));
+  color: var(--ae-paper);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.aero-status-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+}
+
+.aero-status-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--ae-grass);
+  box-shadow:
+    0 0 0 3px rgb(127 207 106 / 0.22),
+    0 0 12px rgb(127 207 106 / 0.8);
+}
+
+.aero-status-meta {
+  color: rgb(247 253 255 / 0.84);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.aero-body {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background:
+    radial-gradient(ellipse at 78% -10%, rgb(255 255 255 / 0.9), transparent 46%),
+    linear-gradient(
+      180deg,
+      rgb(191 233 255 / 0.5),
+      rgb(247 253 255 / 0.85) 32%,
+      var(--ae-paper) 70%,
+      rgb(127 207 106 / 0.12)
+    );
+}
+
+/* ---------- Hero ---------- */
+
+.aero-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem) 0 clamp(2rem, 5vw, 3.5rem);
+}
+
+.aero-hero-copy {
+  min-width: 0;
+}
+
+.aero-kicker {
+  display: inline-block;
+  margin: 0 0 0.9rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgb(15 111 158 / 0.22);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.7);
+  box-shadow: inset 0 1px 0 #fff;
+  color: var(--ae-accent-ink);
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.aero-name {
+  margin: 0;
+  color: var(--ae-ink);
+  font-family: var(--ae-type-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-shadow:
+    0 1px 0 #fff,
+    0 12px 30px rgb(15 111 158 / 0.18);
+  overflow-wrap: anywhere;
+}
+
+.aero-headline {
+  max-width: 56ch;
+  margin: 1rem 0 0;
+  color: var(--ae-ink-soft);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.aero-bio {
+  max-width: 62ch;
+  margin: 1rem 0 0;
+  color: var(--ae-ink-soft);
+  font-size: 1rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.aero-orb-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 18rem;
+}
+
+.aero-orb {
+  position: relative;
+  width: clamp(12rem, 22vw, 18rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 32% 24%,
+      #fff 0 5%,
+      rgb(255 255 255 / 0.85) 6% 12%,
+      rgb(255 255 255 / 0.18) 22%,
+      transparent 34%
+    ),
+    radial-gradient(circle at 68% 74%, rgb(127 207 106 / 0.65), transparent 52%),
+    radial-gradient(circle at 50% 50%, #7ed0f4 0 38%, #2f9fe0 68%, #0f6f9e 100%);
+  box-shadow:
+    inset -22px -28px 48px rgb(6 44 66 / 0.35),
+    inset 16px 18px 36px rgb(255 255 255 / 0.55),
+    0 32px 60px rgb(15 111 158 / 0.35);
+}
+
+.aero-orb::before {
+  content: '';
+  position: absolute;
+  inset: 12% 18% 56% 20%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.92), rgb(255 255 255 / 0));
+  filter: blur(2px);
+  transform: rotate(-18deg);
+}
+
+.aero-orb::after {
+  content: '';
+  position: absolute;
+  left: 24%;
+  bottom: 18%;
+  width: 18%;
+  height: 9%;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.5);
+  filter: blur(3px);
+  transform: rotate(-18deg);
+}
+
+.aero-bubble {
+  position: absolute;
+  border: 1px solid rgb(255 255 255 / 0.6);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    #fff,
+    rgb(255 255 255 / 0.35) 35%,
+    rgb(47 159 224 / 0.18) 70%
+  );
+  box-shadow: inset 0 0 12px rgb(255 255 255 / 0.6);
+}
+
+.aero-bubble-a {
+  top: 8%;
+  right: 12%;
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.aero-bubble-b {
+  bottom: 16%;
+  left: 8%;
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.aero-bubble-c {
+  top: 28%;
+  left: 18%;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ---------- 分区 / Dock ---------- */
+
+.aero-section,
+.aero-dock-section {
+  padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+  border-top: 1px solid rgb(18 50 71 / 0.12);
+}
+
+.aero-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.aero-section-title {
+  margin: 0;
+  font-family: var(--ae-type-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.aero-section-hint {
+  color: var(--ae-ink-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.aero-dock {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid rgb(255 255 255 / 0.8);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 0.5);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 16px 36px rgb(15 111 158 / 0.12);
+}
+
+.aero-dock-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid rgb(15 111 158 / 0.22);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff, #e8f8ff);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 4px 12px rgb(15 111 158 / 0.12);
+  color: var(--ae-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    transform var(--ae-dur-hover) var(--ae-ease),
+    box-shadow var(--ae-dur-hover) var(--ae-ease),
+    background var(--ae-dur-hover) var(--ae-ease);
+}
+
+.aero-dock-mark {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, #7ed0f4 32%, #2f9fe0 100%);
+  box-shadow: inset 0 1px 2px rgb(255 255 255 / 0.8);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* ---------- 窗口卡片 ---------- */
+
+.aero-windows {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aero-window {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgb(15 111 158 / 0.18);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 0.78);
+  box-shadow:
+    0 20px 40px rgb(15 111 158 / 0.12),
+    inset 0 1px 0 #fff;
+  transition:
+    transform var(--ae-dur-hover) var(--ae-ease),
+    box-shadow var(--ae-dur-hover) var(--ae-ease);
+}
+
+.aero-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid rgb(15 111 158 / 0.14);
+  background: linear-gradient(180deg, #f7fdff, #e8f8ff);
+}
+
+.aero-window-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #ff8f8f;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6);
+}
+
+.aero-window-dot:nth-child(2) {
+  background: #ffd36e;
+}
+
+.aero-window-dot:nth-child(3) {
+  background: #7fcf6a;
+}
+
+.aero-window-index {
+  margin-left: auto;
+  color: var(--ae-ink-muted);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.aero-window-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 10rem;
+  padding: 1rem 1.05rem 1.15rem;
+}
+
+.aero-window-title {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.aero-window-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ae-accent);
+  text-underline-offset: 4px;
+}
+
+@media (pointer: coarse) {
+  .aero-window-title a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+.aero-window-arrow {
+  color: var(--ae-accent-ink);
+  font-size: 0.85em;
+}
+
+.aero-window-desc {
+  margin: 0;
+  color: var(--ae-ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.aero-window-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aero-window-tags li {
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgb(191 233 255 / 0.6);
+  color: var(--ae-ink-soft);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 时间线 ---------- */
+
+.aero-timeline {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  list-style: none;
+}
+
+.aero-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  left: 0.32rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--ae-accent), rgb(127 207 106 / 0.7));
+}
+
+.aero-timeline-item {
+  position: relative;
+  padding: 0 0 1.15rem;
+}
+
+.aero-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.aero-timeline-node {
+  position: absolute;
+  top: 0.4rem;
+  left: -1.5rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, #7ed0f4 40%, #2f9fe0);
+  box-shadow: 0 0 0 3px rgb(47 159 224 / 0.16);
+}
+
+.aero-timeline-main {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.aero-timeline-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+.aero-timeline-org {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.aero-timeline-period {
+  color: var(--ae-ink-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.aero-timeline-role {
+  margin: 0;
+  color: var(--ae-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.aero-timeline-desc {
+  margin: 0.15rem 0 0;
+  color: var(--ae-ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 功能徽章 ---------- */
+
+.aero-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aero-feature {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgb(15 111 158 / 0.22);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff, #e8f8ff);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 3px 8px rgb(15 111 158 / 0.1);
+  color: var(--ae-ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 联系 ---------- */
+
+.aero-message {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border-radius: 24px;
+  background: linear-gradient(135deg, var(--ae-sky-deep), var(--ae-sky-deeper));
+  box-shadow:
+    0 24px 50px rgb(15 111 158 / 0.28),
+    inset 0 1px 0 rgb(255 255 255 / 0.3);
+  color: var(--ae-paper);
+}
+
+.aero-message-inner {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 48rem;
+}
+
+.aero-message-kicker {
+  margin: 0;
+  color: rgb(247 253 255 / 0.75);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.aero-message-title {
+  margin: 0;
+  font-family: var(--ae-type-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.aero-message-link {
+  justify-self: start;
+  min-height: 44px;
+  color: #fff;
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+  overflow-wrap: anywhere;
+}
+
+.aero-message-note {
+  margin: 0;
+  color: rgb(247 253 255 / 0.82);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 页脚 ---------- */
+
+.aero-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  padding-top: 1rem;
+  border-top: 1px solid rgb(18 50 71 / 0.12);
+  color: var(--ae-ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- 焦点 / 交互 ---------- */
+
+.aero a:focus-visible {
+  outline: 3px solid var(--ae-accent-ink);
+  outline-offset: 3px;
+}
+
+.aero-message-link:focus-visible {
+  outline-color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .aero-dock-link:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 #fff,
+      0 8px 18px rgb(15 111 158 / 0.22);
+  }
+
+  .aero-window:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 26px 50px rgb(15 111 158 / 0.18),
+      inset 0 1px 0 #fff;
+  }
+}
+
+/* ---------- 入场 / 显现 ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .aero-boot {
+    animation: ae-boot var(--ae-dur-boot) var(--ae-ease) both;
+    animation-delay: var(--ae-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity var(--ae-dur) var(--ae-ease) var(--ae-reveal-delay, 0ms),
+      transform var(--ae-dur) var(--ae-ease) var(--ae-reveal-delay, 0ms);
+  }
+
+  html[data-reveal-ready] [data-reveal][data-reveal-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  html[data-reveal-ready] .aero-windows > :nth-child(2) {
+    --ae-reveal-delay: 70ms;
+  }
+
+  html[data-reveal-ready] .aero-windows > :nth-child(3) {
+    --ae-reveal-delay: 140ms;
+  }
+}
+
+@keyframes ae-boot {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aero-boot {
+    animation: none;
+  }
+
+  html[data-reveal-ready] [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 响应式 ---------- */
+
+@media (max-width: 1023.98px) {
+  .aero-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .aero-orb-wrap {
+    min-height: 14rem;
+  }
+
+  .aero-windows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .aero-body {
+    padding: 1.25rem;
+  }
+
+  .aero-statusbar {
+    align-items: flex-start;
+  }
+
+  .aero-status-meta {
+    text-align: left;
+  }
+
+  .aero-windows {
+    grid-template-columns: 1fr;
+  }
+
+  .aero-orb-wrap {
+    min-height: 12rem;
+  }
+
+  .aero-name {
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
+  }
+
+  .aero-footer {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .aero-device {
+    width: calc(100% - 1.25rem);
+    border-radius: 22px;
+  }
+
+  .aero-body {
+    padding: 1rem;
+  }
+
+  .aero-dock {
+    padding: 0.55rem;
+  }
+
+  .aero-dock-link {
+    width: 100%;
+  }
+
+  .aero-timeline-period {
+    white-space: normal;
+  }
+}
+
+/* 繁體中文：TC 字體只在 zh-TW 頁面註冊；韓文伴生槽位不承擔漢字角色。 */
+html:lang(zh-TW) {
+  --font-gothic-a1: __senrenbanka_tc_skip__;
+  --font-zhuque: var(--font-noto-sans-tc);
+}
