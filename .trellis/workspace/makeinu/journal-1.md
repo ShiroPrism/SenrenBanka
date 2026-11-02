@@ -366,3 +366,35 @@ Implemented aero (2000s techno-optimism), transit (wayfinding), and zine (Riso/p
 ### Status
 
 [OK] **Completed**
+
+
+## Session 14: 设计打包范围配置
+<!-- trellis-session: v=2 fp=428ca87a57b1f915 -->
+
+**Date**: 2026-11-02
+**Task**: 设计打包范围配置
+**Branch**: `main`
+
+### Summary
+
+新增 site.config.yaml 的 design.exclude 部署级打包范围：被排除设计不注入页面/旧跳转，不进入随机池与切换页；拆出 Registered/Packaged/Enabled/Default 四层语义，更新 SPEC、README、规则、ADR 0022 与验证记录。
+
+### Main Changes
+
+- site.config design.exclude；astro.config 路由过滤；SiteModel packaged/enabled；default 打包+启用校验
+- 新增 ADR 0022 与四层术语；排除构建 187 页、切换页 29 项
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `0f67f47` | feat(designs): add deployment-level packaging scope |
+
+### Testing
+
+- [OK] 默认构建 193 页、dist 8,340,020 B；npm test 84/84；npm run check 全绿
+- [OK] 排除构建无 magical-girl 页面/旧跳转；四类非法配置均构建失败
+
+### Status
+
+[OK] **Completed**
