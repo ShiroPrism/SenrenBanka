@@ -398,3 +398,25 @@ Implemented aero (2000s techno-optimism), transit (wayfinding), and zine (Riso/p
 ### Status
 
 [OK] **Completed**
+
+
+## Session 15: Retire govuk and fast designs
+<!-- trellis-session: v=2 fp=10e2829363dc9399 -->
+
+**Date**: 2026-11-04
+**Task**: Retire govuk and fast designs
+**Branch**: `main`
+
+### Summary
+
+Retired govuk and fast: removed implementations, current verification/adaptation docs, descriptions and active references; updated SPEC/README/current verification and typography counts; bumped to 0.21.0. Final build 28 designs / 181 pages / dist 8,036,433 B (7.66 MiB); npm check, 84/84 tests, font audit and HTML-only gate pass; retired URLs return 404. Historical ADR/change-log/archive/dated assets preserved.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `09cb1de` | chore(designs): retire govuk and fast |
+
+### Status
+
+[OK] **Completed**

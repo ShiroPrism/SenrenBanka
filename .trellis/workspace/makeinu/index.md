@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 14
-- **Last Active**: 2026-11-02
+- **Total Sessions**: 15
+- **Last Active**: 2026-11-04
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~400 | Active |
+| `journal-1.md` | ~422 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 15 | 2026-11-04 | Retire govuk and fast designs | `09cb1de` | `main` |
 | 14 | 2026-11-02 | 设计打包范围配置 | `0f67f47` | `main` |
 | 13 | 2026-11-02 | 站点级示例声明与菜单样式修复 | `c370696`, `34538b5` | `main` |
 | 12 | 2026-11-02 | 批次 4：Aero / Transit / Zine | `f11a991` | `main` |
