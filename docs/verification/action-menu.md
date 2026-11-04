@@ -122,6 +122,8 @@
 
 ## 2026-11-02 菜单链接样式与设计页隔离（GOV.UK `.gv a` 覆盖修复）
 
+> **2026-11-04**：`govuk` 已退役；本节保留为历史修复记录。共享菜单的隔离修复仍有效，当前复核目标为 `lexicon`；`aero` 沿用既有记录。
+
 **范围**：`ContextMenu.astro` 共享样式新增链接项复位；不改菜单 DOM、动作清单、运行时与语言项目标。
 
 - **根因**：菜单 `<a class="cm-item">` 挂在带设计根类的 `<body>` 下（如 `body.gv`），设计页的 `.gv a` / `.lx a`（(0,2,1)）优先于 `.cm-item`（(0,1,0)），且菜单 CSS 先于页面 CSS 加载；GOV.UK 的「全部设计」与语言项因此被套上页面行内链接外观（下划线 / 页面色 / visited / 焦点底色）。
@@ -131,8 +133,8 @@
 - **其他设计抽查**：`/zh-cn/lexicon/`（`.lx a` 同样全局下划线）菜单链接同为 `text-decoration: none`；`/zh-cn/aero/`（全局 `a:focus-visible`）程序性聚焦菜单链接不再继承页面 outline。
 - **375×812 触控实测**：`(pointer: coarse)=true`；面板底边 = `innerHeight` = 812；「全部设计」项高 48px、无下划线、无页面阴影；当前语言项保留菜单自己的 `rgb(238,241,246)` 底色；无横向溢出；全页 `touch-action: none` 计数 0。
 - **截图**：`.cache/verification/menu-govuk-desktop-fixed.png`、`.cache/verification/menu-govuk-mobile-fixed.png`。
-- **检测器**：`impeccable detect src/designs/govuk` → `[]`；反证 `src/designs/oxide` 仍命中既有 advisory，非空转。
-- **未复测**：30 套设计的逐页菜单视觉矩阵；本轮抽查 govuk / lexicon / aero 与移动面板。
+- **检测器（历史）**：`impeccable detect src/designs/govuk` → `[]`（govuk 已退役）；反证 `src/designs/oxide` 仍命中既有 advisory，非空转。
+- **未复测**：28 套设计的逐页菜单视觉矩阵；本轮仅做 lexicon 页面 smoke，未重开菜单面板；菜单实现未改，沿用既有矩阵（govuk 历史记录保留）。
 
 ### 2026-11-02 · 设计打包范围（design.exclude）
 
@@ -141,11 +143,13 @@
 
 ### 2026-11-02 · 「切换设计」更名为「全部设计」（菜单项 + 列表页标题）
 
+> **2026-11-04**：`govuk` 已退役；以下 `/govuk/` 实测为历史记录，当前共享菜单行为不受影响。
+
 - 五语言 `switchDesign`：`全部设计` / `全部設計` / `すべてのデザイン` / `모든 디자인` / `All designs`；菜单项仍用 `data-cm-action="switch"`，目标仍为当前语言 `/designs/`，仅可见标签变化。
 - `switcher.titleSuffix` / `switcher.heading` 同步更名：五语言分别为 `全部设计` / `全部設計` / `すべてのデザイン` / `모든 디자인` / `All designs`；`/{locale}/designs/` 的 `<title>` 与可见 H1 均随之更新。
-- 桌面实测（五语言 `/govuk/`）：`.cm` 与 `.cm-sheet` 的该标签逐语言正确，旧文案计数 0；href 分别为 `/{locale}/designs/`。
+- 历史桌面实测（五语言 `/govuk/`，govuk 已退役）：`.cm` 与 `.cm-sheet` 的该标签逐语言正确，旧文案计数 0；href 分别为 `/{locale}/designs/`。
 - 列表页实测（五语言 `/{locale}/designs/`）：H1 与 `<title>` 逐语言正确，旧「切换设计」文案计数 0。
-- 375×812 触控（`/zh-cn/govuk/`）：面板打开后标签「全部设计」、项高 48px、面板底边 812、无旧文案。
+- 历史 375×812 触控（`/zh-cn/govuk/`，govuk 已退役）：面板打开后标签「全部设计」、项高 48px、面板底边 812、无旧文案。
 - 375×812 触控（`/zh-cn/designs/`）：H1「全部设计」、`scrollWidth = innerWidth = 375`、无横向溢出。
 - 构建：193 页；`dist` **8,341,544 B**；`npm test` 84/84；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）。
 - 截图：`.cache/verification/menu-govuk-label-all-designs.png`、`.cache/verification/designs-all-designs-375.png`。

@@ -114,26 +114,12 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     en: 'Magazine layout: one person per issue, restrained whitespace and hairline rules.',
     ko: '잡지 편집 — 한 호에 한 사람. 절제된 여백과 실 같은 구분선.',
   },
-  fast: {
-    'zh-CN': '极简单色：紧凑栅格、无装饰，优先保证信息密度与加载速度。',
-    'zh-TW': '極簡單色：緊湊柵格、無裝飾，優先保證資訊密度與載入速度。',
-    ja: '極簡のモノクロ——密なグリッドと装飾なし。情報密度と速度を優先。',
-    en: 'Minimal monochrome: a tight grid, no decoration, prioritising density and speed.',
-    ko: '미니멀 모노크롬 — 촘촘한 그리드, 장식 없음. 정보 밀도와 속도 우선.',
-  },
   frost: {
     'zh-CN': '毛玻璃与极光：柔和渐层、悬浮卡片，苹果风光的克制复刻。',
     'zh-TW': '毛玻璃與極光：柔和漸層、懸浮卡片，蘋果風光的剋制復刻。',
     ja: 'グラスとオーロラ——柔らかなレイヤーと浮遊するカード。Apple HIG の再現。',
     en: 'Frosted glass and aurora: soft layers, floating cards, a restrained Apple HIG echo.',
     ko: '프로스트 글라스와 오로라 — 부드러운 레이어, 떠 있는 카드. Apple HIG의 절제된 재현.',
-  },
-  govuk: {
-    'zh-CN': 'GOV.UK 设计系统：强对比、方正栅格与标志性的黄色焦点样式。',
-    'zh-TW': 'GOV.UK 設計系統：強對比、方正柵格與標誌性的黃色焦點樣式。',
-    ja: 'GOV.UK Design System——高いコントラストと正味のあるグリッド。',
-    en: 'The GOV.UK Design System: high contrast, a strict grid and unmistakable focus styles.',
-    ko: 'GOV.UK 디자인 시스템 — 강한 대비, 반듯한 그리드, 상징적인 포커스 스타일.',
   },
   kern: {
     'zh-CN': '瑞士排版：网格骨架、十字准星与紧凑的标签式信息组织。',

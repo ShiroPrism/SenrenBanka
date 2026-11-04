@@ -33,18 +33,20 @@ TC 核心子集实测：
 ## 静态产物检查
 
 - `dist/zh-tw/editorial/index.html`：`<html lang="zh-TW">`、canonical 含 `/zh-tw/editorial/`、hreflang 5 种语言 + `x-default`（仅默认设计 `editorial`）、`robots: index, follow`。
-- 非默认设计 `/zh-tw/fast/`：`robots: noindex, follow`、`<link rel=alternate hreflang>` 计数 **0**。
+- 非默认设计 `/zh-tw/frost/`：`robots: noindex, follow`、`<link rel=alternate hreflang>` 计数 **0**。
 - 同一设计的 zh-CN / zh-TW 页面引用相同的 `ContextMenu` 与设计 CSS；只有逐页裁剪的 `fonts-*.css` 不同（字体子集按页面命中，预期）。
 - TC 页面的字体 CSS 只含实际注册的 TC/Latin family；简体核心与韩文伴生不出现。
 - `html-only` TC 页：0 stylesheet、0 script、0 woff2、5 个原生语言链接。
 
 ## 浏览器实测（Chromium，`http://localhost:4322`）
 
+> **2026-11-04**：`fast` 已退役；非默认 TC 抽查目标由 `/zh-tw/fast/` 改为 `/zh-tw/frost/`，本轮复测通过。
+
 | 页面 | 结果 |
 |---|---|
 | `/zh-tw/editorial/` | 200；`--font-lxgw` = `LXGW WenKai TC-857bc1a99ec8431d`；`--font-gowun-batang` = `__senrenbanka_tc_skip__`；woff2 仅 Fraunces + LXGW TC；`.cm-lang` 10（5 locale × 2 形态）/ `aria-current` 2；无横向溢出 |
 | `/zh-tw/archive/` | 200；`--font-zhuque` = `Noto Serif TC-7be7db09c10d4114`；woff2 仅 Latin 2 个 + Noto Serif TC；无 Zhuque/Gowun 下载 |
-| `/zh-tw/fast/` | 200；`--font-gothic-a1` 解析为 `Noto Sans TC-...`；woff2 仅 Noto Sans TC |
+| `/zh-tw/frost/` | 200；`--font-gothic-a1` 解析为 `Noto Sans TC-...`；woff2 仅 Noto Sans TC |
 | `/zh-tw/pager/` | 200；`--font-ark-pixel` 解析为 `Fusion Pixel 12px TC-...`；woff2 仅 2 个 Latin 像素族 + Fusion Pixel TC |
 | `/zh-tw/terminal/` | 200；`--font-noto-sans-mono-cjk-kr` 解析为 `Noto Sans Mono CJK TC-...`；woff2 仅 JetBrains Mono + TC Mono |
 | `/zh-tw/html-only/` | 200；0 CSS / 0 JS / 0 字体；5 个原生语言链接 |

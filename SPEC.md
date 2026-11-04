@@ -119,7 +119,7 @@
 1. 填写 `design.json.source`：`type`（official-vendor / official-docs-derived / third-party-analysis / self-produced）、`url`、`fetchedAt`（ISO 日期）、`license`、`attribution`。
 2. 许可要求保留声明时，附 `SOURCE-LICENSE.txt`（快照：原文许可；汇编：逐来源许可全文合集）。
 3. 构建校验通过（缺 provenance 字段时**构建失败**）。
-4. 厂商来源（快照 / 汇编 / 复刻）建 `docs/designs/<id>/ADAPTATION.md` 记录适配与取舍（对齐 fast / oxide 惯例），并更新 `docs/verification/` 与 `change-log/`。
+4. 厂商来源（快照 / 汇编 / 复刻）建 `docs/designs/<id>/ADAPTATION.md` 记录适配与取舍（对齐 oxide / material3 惯例），并更新 `docs/verification/` 与 `change-log/`。
 5. 无法获取、文件不完整或许可不明确时：**如实报告，不得伪造**；改选其他来源。
 
 ### 4.3 一期选型【已定】
@@ -127,11 +127,11 @@
 | 设计 id | 来源 | 许可 | 状态 |
 |---|---|---|---|
 | oxide | 官方（oxidecomputer/design-system） | MPL-2.0 | 已归档（含 SOURCE-LICENSE.txt） |
-| fast | 官方（microsoft/fast） | MIT | 已归档（含 SOURCE-LICENSE.txt） |
+| fast | 官方（microsoft/fast） | MIT | **已退役**（2026-11-04；原含 SOURCE-LICENSE.txt） |
 | editorial | 自产（impeccable 规范化） | — | 已实现 |
 | terminal | 自产（impeccable 规范化） | — | 已实现 |
 
-实施结果（2026-10-10）：Vercel 的 design.md 挂在官网、无许可声明，按合规策略弃用，替换为许可已核实的 Microsoft FAST。自产规范已由 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范。
+实施结果（2026-10-10）：Vercel 的 design.md 挂在官网、无许可声明，按合规策略弃用，替换为许可已核实的 Microsoft FAST（该设计已于 2026-11-04 退役）。自产规范已由 **impeccable v4.5.2 `document`（scan 模式）** 规范化固化为正式规范。
 
 ### 4.4 二期扩充选型【已定，2026-10-11】
 
@@ -139,10 +139,10 @@
 
 | 序 | id（草案） | 来源 | 形态 | 许可 | 状态 |
 |---|---|---|---|---|---|
-| 1 | carbon | IBM Carbon Design System | 汇编 | Apache-2.0 | **已移除**（2026-10-11 打样后同质复核：与 fast 重叠；recipe 经验保留） |
+| 1 | carbon | IBM Carbon Design System | 汇编 | Apache-2.0 | **已移除**（2026-10-11 打样后同质复核：与当时已有的 fast 重叠，fast 已于 2026-11-04 退役；recipe 经验保留） |
 | 2 | uswds | US Web Design System | 汇编 | CC0 1.0 | 待批 |
 | 3 | material3 | Google Material 3 | 汇编 | CC BY 4.0（内容）/ Apache-2.0（代码） | **已实现**（v0.7.0；整合前逐页复核完成） |
-| 4 | govuk | GOV.UK Design System | 汇编 | OGL v3 | **已实现**（v0.8.0；2025 品牌刷新口径，GDS Transport 回退 Arial） |
+| 4 | govuk | GOV.UK Design System | 汇编 | OGL v3 | **已退役**（2026-11-04；原 v0.8.0 实现，2025 品牌刷新口径） |
 | 5 | patternfly | Red Hat PatternFly | 汇编 | MIT | 待批 |
 | 6 | gitlab | GitLab Pajamas | 汇编 | MIT | 待批（材料量最大） |
 | 7 | ant-design | Ant Group Ant Design | 汇编 | MIT | 待批 |
@@ -162,9 +162,9 @@
 
 排除（明示）：Atlassian、Shopify Polaris（禁止再分发 / 演绎，快照与复刻均回避）；Vercel、Nuxt、Resend、Clerk、Mintlify（官网文件无许可声明）；外部抽取 / 逆向索引一律不接入（见 §4.1）。
 
-批次节奏（2026-10-11 修订）：Carbon 打样批次已移除（打样产出与 fast 同质，复核后删去；汇编 recipe 经验保留——见 §4.2 与实测坑）。批次 2 起按「视觉差异化矩阵」（与现有设计的正交性）过滤重排后推进——每批 2–3 套、版本 +0.1/批；复刻批与汇编同批推进（2026-10-11 修订：批次 2 = `material3` + 复刻首套 `kern`，原「数批后插入」不再适用）。**批次 2 已完成（v0.7.0，2026-10-11）；批次 3 已完成（v0.8.0，2026-10-11：`govuk` + 复刻 `frost`）；批次 4 已完成（2026-11-02）：`aero` + `transit` + `zine`。**
+批次节奏（2026-10-11 修订）：Carbon 打样批次已移除（打样产出与 fast 同质，复核后删去；汇编 recipe 经验保留——见 §4.2 与实测坑）。批次 2 起按「视觉差异化矩阵」（与现有设计的正交性）过滤重排后推进——每批 2–3 套、版本 +0.1/批；复刻批与汇编同批推进（2026-10-11 修订：批次 2 = `material3` + 复刻首套 `kern`，原「数批后插入」不再适用）。**批次 2 已完成（v0.7.0，2026-10-11）；批次 3 已完成（v0.8.0，2026-10-11：`govuk` + 复刻 `frost`；`govuk` 已于 2026-11-04 退役）；批次 4 已完成（2026-11-02）：`aero` + `transit` + `zine`。**
 
-#### 4.4.1 视觉差异化矩阵与分级【2026-11-02 复核】
+#### 4.4.1 视觉差异化矩阵与分级【2026-11-04 复核】
 
 锚点画像（现有设计；五维 = 色温 · 明度｜几何｜字体｜装饰语言）：
 
@@ -173,7 +173,6 @@
 | editorial | 暖（米白 + 焦赭）· 浅 | 直角发丝线 / 非对称编辑网格 | 衬线主导 | 期号 / 序号 |
 | terminal | 暖橙 · 极暗 | 屏框 / 扫描线 | 等宽 | ASCII 波形 / 光标呼吸 |
 | oxide | 冷绿 · 深 | 发丝线 / 致密纹理 | 无衬线 + 等宽标签 | ASCII 波形 / 网格 |
-| fast | 冷蓝 · 浅 | 圆角卡片 | 系统无衬线 | 克制，零装饰 |
 | ink | 暖纸 · 浅 | 竖排题署 / 界栏 / 不对称留白 | 楷 + 仿宋 + 旧体衬线 | 朱砂印 / 青瓷细线 / 页次 |
 | brutal | 暖纸 + 酸性高亮 · 浅 | 粗黑边 / 硬偏移阴影 / 可见网格 | 窄体展示 + 中性正文 + 等宽标签 | 告示 / 贴纸 / 编号 |
 | deco | 近黑 · 极暗 | 中轴对称 / 双线框 / 阶梯角 | Didone 衬线 + 中性正文 | 扇形 / 菱形 / 金色 monogram |
@@ -181,12 +180,12 @@
 | transit | 冷纸 + 线路绿/红/黄 · 浅 | 直角网格 / 线路 / 站点圆点 | 中性 grotesque + 等宽站码 | 线路色带 / 站台牌 / 时刻表 |
 | zine | 暖纸 + 荧光红/蓝 · 浅 | 错位套印 / 剪贴 / 裁切线 | 窄体刊头 + 打字机标签 | 复印条纹 / 颗粒 / 印章 |
 
-覆盖缺口（2026-11-02 批次 4 后复核）：色彩缺口已由 `ink` 朱砂、`brutal` 橙红、`deco` 金补足；「浅色红系」降为可选色轴，不再单列为最高优先级。批次 4 已补上 **2000s 数字怀旧 / Neo-Aero**、**信息姿态 / 环境图形（交通导视）**、**Riso / 复印朋克** 三条轴；下一批缺口转为第二梯队（Broadsheet/LaTeX、自然史 / 珍奇柜、哥特 / 中世纪抄本、孟菲斯 / 80s、节庆 / 记分牌等）。
+覆盖缺口（2026-11-04 批次 5 后复核；`govuk` / `fast` 已退役，剩余 28 套）：色彩缺口已由 `ink` 朱砂、`brutal` 橙红、`deco` 金补足；「浅色红系」降为可选色轴，不再单列为最高优先级。批次 4 已补上 **2000s 数字怀旧 / Neo-Aero**、**信息姿态 / 环境图形（交通导视）**、**Riso / 复印朋克** 三条轴；下一批缺口转为第二梯队（Broadsheet/LaTeX、自然史 / 珍奇柜、哥特 / 中世纪抄本、孟菲斯 / 80s、节庆 / 记分牌等）。
 
 扩展轴（2026-11-02 新增；用于区分“视觉像但使用感不同”的设计）：
 
 1. **时代 / 文化参照**：宋、1920s、1950s Swiss、1980s、1990s、2000s、中世纪、自然史。例：`ink` 是宋式册页，不是 editorial 变体；`aero` 是 2000s 科技乐观，不是 homepage99（90s）或 frost（Apple 玻璃）变体。
-2. **信息姿态 / 密度**：海报、文档、仪表、玩具、导视、记分牌。例：`transit` 是环境图形/导视，不是 govuk 政务 Web；`poster` 是海报，`lexicon` 是文档，`oxide` 是仪表，`pixel-pet-rpg` 是玩具。
+2. **信息姿态 / 密度**：海报、文档、仪表、玩具、导视、记分牌。例：`transit` 是环境图形/导视，不是 `material3` 企业 UI；`poster` 是海报，`lexicon` 是文档，`oxide` 是仪表，`pixel-pet-rpg` 是玩具。
 
 批次筛选器（不是视觉轴）：
 
@@ -196,11 +195,11 @@
 
 分级（仅视觉维；许可复核仍是前置硬门槛，逐一按 §4.2 执行）：
 
-- **A 强差异化（优先）**：`material3`（紫 tonal 色系、12–28px 大圆角、阴影层级、深浅双模——**已实现，v0.7.0**）；`geist`（复刻；纯黑白极简 + 几何细节——**已实现为 `kern`，v0.7.0**）；`govuk`（蓝幅 / 黄 focus / 高对比直角语言——**已实现，v0.8.0**，2025 品牌刷新口径）；Apple HIG（复刻；玻璃 / 材质感——**已实现为 `frost`，v0.8.0**）。
+- **A 强差异化（优先）**：`material3`（紫 tonal 色系、12–28px 大圆角、阴影层级、深浅双模——**已实现，v0.7.0**）；`geist`（复刻；纯黑白极简 + 几何细节——**已实现为 `kern`，v0.7.0**）；`govuk`（蓝幅 / 黄 focus / 高对比直角语言——**已退役，2026-11-04**，原 v0.8.0）；Apple HIG（复刻；玻璃 / 材质感——**已实现为 `frost`，v0.8.0**）。
 - **B 中等（备选）**：`vanilla`（紫橙）、`paste`（红）、`protocol`（黑白 + 橙）、`gitlab`（紫橙 DevOps）、`codex`（冷百科衬线，与 editorial 暖衬线部分接近）。
-- **C 同质暂缓**：浅蓝企业组（`uswds`、`ant-design`、`tdesign`、`patternfly`、`primer`、SLDS、Spectrum、Clarity、Arco、DevUI、semi——与 fast 高度同质）；政务蓝组（`nhs`、`dads`、ECL、SGDS——与 govuk 择一）；Fluent 2（与 fast 同源）；nutui 与 paste 红系二选一。
+- **C 同质暂缓**：浅蓝企业组（`uswds`、`ant-design`、`tdesign`、`patternfly`、`primer`、SLDS、Spectrum、Clarity、Arco、DevUI、semi——历史对照：与已退役的 fast 高度同质）；政务蓝组（`nhs`、`dads`、ECL、SGDS——历史对照：与已退役的 govuk 择一）；Fluent 2（历史对照：与已退役的 fast 同源）；nutui 与 paste 红系二选一。
 
-批次建议：**批次 3 已完成**（`govuk` + `frost`，v0.8.0，2026-10-11，经项目所有者确认执行）；**批次 4 已完成（2026-11-02）**：`aero`（2000s 科技乐观）+ `transit`（交通导视）+ `zine`（Riso/复印朋克），均为自产、纯 CSS/无 JS、5 语言、复用现有字体；本矩阵已先刷新，三套已按 Aero → Transit → Zine 实现并验证。批次 4 后共 **30 套**（29 套 `styled` + 1 套 `html-only`）。后续批次再评估 `paste` 等浅红系 / B 级候选；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
+批次建议：**批次 3 已完成**（`govuk` + `frost`，v0.8.0，2026-10-11，经项目所有者确认执行）；**批次 4 已完成（2026-11-02）**：`aero`（2000s 科技乐观）+ `transit`（交通导视）+ `zine`（Riso/复印朋克），均为自产、纯 CSS/无 JS、5 语言、复用现有字体；本矩阵已先刷新，三套已按 Aero → Transit → Zine 实现并验证。**批次 5 已完成（2026-11-04）：退役 `govuk` + `fast`**；当前共 **28 套**（27 套 `styled` + 1 套 `html-only`），旧 URL 404，历史批次记录保留。后续批次再评估 `paste` 等浅红系 / B 级候选；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
 
 ---
 
@@ -613,7 +612,7 @@ SenrenBanka/
 │  │  ├─ terminal/                   # 自产：复古终端风（结构同 editorial）
 │  │  ├─ oxide/                      # 官方来源（oxidecomputer/design-system，MPL-2.0）
 │  │  │  └─ …                        #   必交文件 + SOURCE-LICENSE.txt
-│  │  └─ fast/                       # 官方来源（microsoft/fast，MIT）
+│  │  └─ material3/                  # 官方文档汇编（Google Material 3，CC BY 4.0 / Apache-2.0）
 │  │     └─ …                        #   必交文件 + SOURCE-LICENSE.txt
 │  ├─ infra/
 │  │  ├─ SwitcherPage.astro          # 切换页（injectRoute 为 /<locale>/designs/，manualSwitch 时才注入）

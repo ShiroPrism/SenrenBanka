@@ -90,7 +90,7 @@ test('design CSS requires explicit fallback and CJK ordering', () => {
 test('repository typography contract passes', async () => {
   const result = await checkTypography();
   assert.deepEqual(result.findings, []);
-  assert.equal(result.styledCount, 29);
-  assert.equal(result.coreDesignCount, 29);
+  assert.equal(result.styledCount, 27);
+  assert.equal(result.coreDesignCount, 27);
   assert.equal(result.generatedFamilies, 31);
 });

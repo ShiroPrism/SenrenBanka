@@ -6,7 +6,7 @@ One profile, many AI-designed homepages, in five languages. Astro + TypeScript +
 
 ## 特性
 
-- 30 套视觉与结构不同的设计（29 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
+- 28 套视觉与结构不同的设计（27 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
 - **多语言（当前 `zh-CN` / `zh-TW` / `ja` / `en` / `ko`）**：每套设计在每种**它声明覆盖**的语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离；未覆盖的 locale 不生成该设计页面
 - **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
 - 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
@@ -132,7 +132,7 @@ npm run fonts:check
 
 - 本仓库代码：MIT（见 `LICENSE`）
 - Oxide 设计规范：来自 [oxidecomputer/design-system](https://github.com/oxidecomputer/design-system)（MPL-2.0）
-- FAST 设计规范：来自 [microsoft/fast](https://github.com/microsoft/fast)（MIT）
+- Material 3 设计规范：来自 [m3.material.io](https://m3.material.io/) 与 [material-components/material-web](https://github.com/material-components/material-web)（CC BY 4.0 / Apache-2.0）
 - 每套官方来源的完整许可与署名见对应设计目录下的 `SOURCE-LICENSE.txt`；来源 URL、获取日期与许可见 `design.json`
 
 ## 文档

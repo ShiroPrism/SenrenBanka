@@ -4,6 +4,7 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
+> **2026-11-04 退役 govuk / fast**：当前 **28 套 / 181 页 / dist 8,036,433 B**；旧路由 404；切换页 28 卡；`/zh-cn/lexicon/` 与 `/zh-tw/frost/` smoke 通过；检测器 26 套零发现（例外 `frost` 2 + `oxide` 1）。
 > 最近共享机制专项验证：**2026-11-02（菜单链接样式与设计页 `.design a` 隔离，GOV.UK `.gv a` 覆盖修复；菜单项与 `/designs/` 列表页标题统一为「全部设计」；站点级示例声明迁到 `site.config.yaml` 的 `locales[].notice`；新增 `design.exclude` 部署级设计打包范围）**；此前 2026-11-01（Prettier + ESLint + LF 行尾工具链，ADR 0020；同日字体语料按引用页 + 旧路径跳转页样式精简，ADR 0019；繁中全设计，ADR 0018）；此前 2026-11-01（韩语全设计字体层 + 22 套韩语内容扩覆盖，ADR 0017）、2026-10-31（韩语首批 + 设计语言覆盖 + 菜单 CSS 外置，ADR 0015 / 0016）、2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）、2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > **2026-11-02 批次 4（Aero / Transit / Zine）**：新增 3 套自产 `styled`（`aero` / `transit` / `zine`），各 5 语言；`fonts:typography` **29** 套 styled / **30** 设计覆盖；`npm run build` **193 页**、`astro check` 0 error / 0 warning、`npm test` **84/84**；`dist` **8,347,337 B（7.96 MiB）**、字体 **45 文件**、`fonts:audit` 0 孤儿 / 0 部署缺口（64 条既有缺字警告不变）。三套 `impeccable detect` 均 `[]`（oxide `codex-grid-background` 反证命中）；1440/768/375×812（触控 `tap()`）Reveal 全部显现、四种降级隐藏 0、菜单 5 语言 / 面板底边 = `innerHeight`；截图 `.cache/verification/{aero,transit,zine}-*` 与 `browser-matrix*.json`。`README` 设计数 24 → 30；`descriptions.ts` 30 条；`scripts/fonts/typography*.mjs` 计数 26 → 29。未测：`--base /demo`、Firefox/Safari/真机、200% 缩放。
 >
@@ -32,20 +33,22 @@
 
 ## 2026-11-02 设计打包范围（design.exclude）
 
-- **范围**：`site.config.yaml` 的 `design.exclude`（部署级黑名单，缺省 `[]` = 全部 30 套）。被排除设计不注入多语言页面或旧路径跳转、不进入随机池/切换页/语言入口；`enabled` 只在打包集合内生效。`design.default` 必须同时打包 + 启用。
+> **2026-11-04**：退役 `govuk` / `fast` 后当前基线为 **28 套 / 181 页 / dist 8,036,433 B**；以下排除构建实验保留为 2026-11-02 的 30 套历史记录。
+
+- **范围**：`site.config.yaml` 的 `design.exclude`（部署级黑名单，缺省 `[]` = 全部 28 套；2026-11-04 退役 `govuk` / `fast` 后）。被排除设计不注入多语言页面或旧路径跳转、不进入随机池/切换页/语言入口；`enabled` 只在打包集合内生效。`design.default` 必须同时打包 + 启用。
 - **代码点**：`content.config.ts` 的 `design.exclude` schema；`astro.config.mjs` 路由与旧跳转过滤；`site.ts` 的 `packaged` / `enabled` 与校验；`designsForLocale` 使用 packaged ∩ enabled。
-- **默认构建**：`npm run build` **193 页**；`npm test` **84/84**；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）；`dist` **8,340,020 B**；30 套设计全部打包，`/zh-cn/magical-girl/` 与 `/magical-girl/` 仍存在。
-- **排除构建**：临时 `design.exclude: [magical-girl]` 后 `npx astro build --outDir .cache/verify-packaged` → **187 页**；五语言切换页各 **29** 项且无 magical-girl；无 `magical-girl` 页面/旧跳转/HTML 字符串引用；`/zh-cn/magical-girl/` 与 `/magical-girl/` 均 **404**；375×812 切换页 **29** 项、`scrollWidth = innerWidth = 375`；截图 `.cache/verification/design-packaging-excluded-switcher-375.png`。
+- **默认构建**：`npm run build` **181 页**；`npm test` **84/84**；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）；`dist` **8,036,433 B**；28 套设计全部打包，`/zh-cn/magical-girl/` 与 `/magical-girl/` 仍存在。
+- **排除构建（2026-11-02 历史实验，30 套基线）**：临时 `design.exclude: [magical-girl]` 后 `npx astro build --outDir .cache/verify-packaged` → **187 页**；五语言切换页各 **29** 项且无 magical-girl；无 `magical-girl` 页面/旧跳转/HTML 字符串引用；`/zh-cn/magical-girl/` 与 `/magical-girl/` 均 **404**；375×812 切换页 **29** 项、`scrollWidth = innerWidth = 375`；截图 `.cache/verification/design-packaging-excluded-switcher-375.png`。
 - **错误校验**：default 被排除 / 未知 ID / 重复 ID / 排除全部均构建失败；错误含 `[senrenbanka]` 与修法（实测四种）。
 - **已知限制**：切换页 `Preview.astro` 仍为 eager glob，被排除设计的预览 CSS / 描述可能仍聚合进切换页资源（ADR 0022）；本轮未做预览清单，也未在排除构建中观察到 `magical-girl` 字符串引用。
 - **未测**：排除设计且 `enabled:false` 的组合、被排除设计的语言内容缺失场景、真机 Safari / Firefox、`--base /demo`、200% 缩放。
 
 ## 2026-11-02 站点级示例声明（Site notice）
 
-- **范围**：17 套实际渲染示例声明的设计（aero / archive / brutal / cute-alism / deco / fairy-kei / fax / ink / lexicon / pager / poster / radio / receipt / sticker-diary / tape / transit / zine）；`receipt` 通过私有 `Ticket.astro` 渲染。`govuk` 的 OGL 法律署名、`homepage99` 的外链提示、其余 13 套设计不动。
+- **范围**：17 套实际渲染示例声明的设计（aero / archive / brutal / cute-alism / deco / fairy-kei / fax / ink / lexicon / pager / poster / radio / receipt / sticker-diary / tape / transit / zine）；`receipt` 通过私有 `Ticket.astro` 渲染。`homepage99` 的外链提示、其余 11 套设计不动。
 - **数据源**：`src/data/site.config.yaml` 的 `i18n.locales[].notice`；`localeSchema` 可选、trim、非空；`LocaleEntry.notice`；设计读取 `view.locale.notice`（`receipt` 读取 `locale.notice`）。声明不进入 profile 契约。
-- **构建**：`npm run build` 193 页；`dist` **8,340,020 B**；`npm test` 84/84；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）；字体审计 0 孤儿 / 0 部署缺口（64 条既有缺字警告）。
-- **示例站**：五语言 17/17 页脚声明出现，13 套无声明设计为 0；`govuk` OGL 署名与 `homepage99` 外链提示保持；console 0。zh-cn 17 套 DOM 可见性矩阵通过；`sticker-diary` 需切到「留言」spread 才可见（设计分页，不是缺失）。375×812 抽查 aero / tape / ink / cute-alism / receipt：可见、无横向溢出；桌面 aero 页脚可见；截图 `.cache/verification/site-notice-desktop-aero.png`、`site-notice-375-aero.png`、`site-notice-375-tape.png`。
+- **构建**：`npm run build` 181 页；`dist` **8,036,433 B**；`npm test` 84/84；`npm run check` 0 error / 0 warning（1 条既有 `lexicon` hint）；字体审计 0 孤儿 / 0 部署缺口（64 条既有缺字警告）。
+- **示例站**：五语言 17/17 页脚声明出现，11 套无声明设计为 0；`homepage99` 外链提示保持；console 0。zh-cn 17 套 DOM 可见性矩阵通过；`sticker-diary` 需切到「留言」spread 才可见（设计分页，不是缺失）。375×812 抽查 aero / tape / ink / cute-alism / receipt：可见、无横向溢出；桌面 aero 页脚可见；截图 `.cache/verification/site-notice-desktop-aero.png`、`site-notice-375-aero.png`、`site-notice-375-tape.png`。
 - **无 notice 构建**：临时移除五处 `notice` 后 `npx astro build --outDir .cache/verify-no-notice`；17 套 notice 计数 0；tape 为 `SENRENBANKA · 磁带内页`、无尾部 `·`；footer 无 `sample` 元素或空壳；已恢复配置。
 - **检测器**：17 套受影响设计 `impeccable detect` 均为 `[]`；反证 `oxide` 仍命中既有 `codex-grid-background` advisory，非空转。
 - **未测**：17 套逐页 1440 全屏截图与完整视觉矩阵；真机 Safari / Firefox；`--base /demo`；200% 缩放。
@@ -252,7 +255,9 @@
 
 ## 切换页设计预览（`Preview.astro`，2026-10-19 全铺；2026-10-28 模式边界）
 
-切换页 `/{locale}/designs/` 为 **全部 24 套设计**渲染**装饰性缩略引述**。预览不是静态截图：它由各设计私有的 `Preview.astro` 在构建期生成，随设计、语言与内容更新，不需要截图维护管线。视觉签名覆盖布局骨架、字体角色、配色与标志性装饰；例如 terminal 保留琥珀屏 / 扫描线 / 命令行，receipt 保留长票 / 齿孔 / 点引导 / 红章，pager 保留机壳 / LCD / 状态栏，homepage99 保留左目录 / 主栏 / 徽章轨与施工条，html-only 呈现白纸式浏览器默认排版；v0.17.0 新增六套预览继续各自保留玩具盒、手帐、像素地图、森林小径、硬糖拼贴与魔法档案的独立签名。
+> **2026-11-04**：当前切换页为 **28 套**（27 styled + 1 html-only）；以下 24 套数字为 2026-10-19 / 10-28 的历史实测基线。
+
+历史基线为 **24 套设计**渲染**装饰性缩略引述**。预览不是静态截图：它由各设计私有的 `Preview.astro` 在构建期生成，随设计、语言与内容更新，不需要截图维护管线。视觉签名覆盖布局骨架、字体角色、配色与标志性装饰；例如 terminal 保留琥珀屏 / 扫描线 / 命令行，receipt 保留长票 / 齿孔 / 点引导 / 红章，pager 保留机壳 / LCD / 状态栏，homepage99 保留左目录 / 主栏 / 徽章轨与施工条，html-only 呈现白纸式浏览器默认排版；v0.17.0 新增六套预览继续各自保留玩具盒、手帐、像素地图、森林小径、硬糖拼贴与魔法档案的独立签名。
 
 **架构（沿用 10-18 定稿的三条硬约束）**
 
@@ -280,7 +285,7 @@
 | 卡片几何 | 2026-10-19 的 1536px 历史实测中 16/16 卡片均约 `379×333px`、预览均约 `353×221px`、描述区均 `46.2px`；2026-10-28 复测 homepage99 沿用固定三段结构。v0.17.0 产物确认 24 张卡均使用同一 `16 / 10` 三段合同，未重新记录几何尺寸 |
 | 降级 | 2026-10-28 的 18-card 历史实测中 reduced-motion、无 JS、无 IO 均无隐藏预览；v0.17.0 的 24 张预览保持 SSR、无预览脚本、0 可聚焦元素。六套新增设计的 no-JS / reduced-motion 矩阵另见各主题验证记录 |
 | 字体 | v0.18.0 当前切换页 **609** 个 `@font-face` 声明，构建产物 **611** 个 woff2；zh-cn 普通排版运行时 **82** 个请求 / **2,535,300 B**，0 preload、0 第三方；分片按 `unicode-range` 惰性加载 |
-| 检测器 | 21 套零发现；既有已记录例外：frost 2 条 `bounce-easing`、govuk 2 条 `overused-font`、oxide 1 条 `codex-grid-background`。v0.17.0 六套新增设计均为 `[]` |
+| 检测器 | 26 套零发现；既有已记录例外：frost 2 条 `bounce-easing`、oxide 1 条 `codex-grid-background`。v0.17.0 六套新增设计均为 `[]`；govuk 的 `overused-font` 例外随设计退役 |
 
 **成本实测与规模评估**
 
@@ -349,7 +354,7 @@
 - `BASE_PATH=/demo`：内部链接 / CSS / canonical / hreflang **全部带 `/demo`**，全站无遗漏；`/demo/zh-cn/` 仍正确解析为 `zh-CN`（部署 base 未被误判为语言代码）；右键菜单随机目标同样带 base 与 locale。
   **环境坑**：Git Bash 下必须 `MSYS2_ARG_CONV_EXCL='*'` **与** `--base /demo` 同时使用；只给 `BASE_PATH=/demo` 或只给 `--base /demo` 都会被 MSYS 转换成 `/D:/Git/demo`。
 
-**文案纪律**：翻译只处理**已有**文案，不新增解释性 / 自我描述的句子（`docs/rules/data-and-i18n.md` 强制条款）。据此已删除 fast / frost / govuk / kern / material3 页脚的无意义直译「由同一份资料生成」——24 页页脚实测：fast / frost / kern 仅姓名；govuk 姓名 + OGL 许可声明；material3 姓名 + M3 来源署名；editorial / oxide / terminal 各保留其原有文案不变。
+**文案纪律**：翻译只处理**已有**文案，不新增解释性 / 自我描述的句子（`docs/rules/data-and-i18n.md` 强制条款）。据此已删除 frost / kern / material3 页脚的无意义直译「由同一份资料生成」（fast / govuk 已于 2026-11-04 退役）——历史 24 页页脚实测：frost / kern 仅姓名；material3 姓名 + M3 来源署名；editorial / oxide / terminal 各保留其原有文案不变。
 
 **共享文案本地化覆盖**：右键菜单静态标签（含新增的**语言分组标题**）+ `lib/context-menu.ts` 6 处运行时 Toast、切换页（标题/说明/计数句/当前标记）、入口页（含 noscript 文案）、404、语言选择器 `aria-label`——全部随语言切换。原 `InfraStyles.astro` 中由 CSS `content: ' · 当前 / current'` 生成的「当前」标记已改为切换页模板里的**真实元素**（可本地化、可被读屏读取），运行时按存储显隐。
 

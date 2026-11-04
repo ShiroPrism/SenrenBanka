@@ -145,7 +145,7 @@
 
 ### Don't
 
-- Don't 做政务 Web 的蓝幅/黄 focus/表单语言；那是 `govuk`。
+- Don't 做政务 Web 的蓝幅/黄 focus/表单语言；那是政务服务的语言，不是交通导视。
 - Don't 做深色工业 HUD/ASCII 波形/扫描线；那是 `oxide`。
 - Don't 做 KPI、图表、数据卡或仪表盘。
 - Don't 用线路色单独承载信息；Don't 用黄色线承载白字。
