@@ -1,0 +1,8 @@
+{"file": "docs/rules/operations.md", "reason": "检查构建、版本与文档收口"}
+{"file": "docs/rules/design-contract.md", "reason": "检查注册表、预览与设计契约未破损"}
+{"file": "docs/verification/shared.md", "reason": "核对当前态计数、dist 与检测器汇总"}
+{"file": "SPEC.md", "reason": "核对当前设计数、矩阵与历史注记边界"}
+{"file": "docs/README.md", "reason": "核对文档职责与当前预览计数"}
+{"file": "docs/rules/pitfalls.md", "reason": "检查是否留下过期引用或样式聚合风险"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "检查设计页契约与验证入口"}
+{"file": ".trellis/spec/guides/index.md", "reason": "检查跨层引用与复用遗漏"}

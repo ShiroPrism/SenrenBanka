@@ -1,0 +1,8 @@
+{"file": "docs/rules/design-contract.md", "reason": "设计目录自动注册、预览与删除后的契约边界"}
+{"file": "docs/rules/operations.md", "reason": "构建、文档维护、版本与 change-log 规则"}
+{"file": "docs/rules/data-and-i18n.md", "reason": "多语言静态路由与 locale 页面契约"}
+{"file": "docs/rules/pitfalls.md", "reason": "引用/样式聚合/路径清理的已知坑"}
+{"file": "SPEC.md", "reason": "当前设计清单、路由、矩阵与版本事实"}
+{"file": "docs/verification/shared.md", "reason": "当前构建、dist、检测器与跨设计验证基线"}
+{"file": ".trellis/spec/frontend/index.md", "reason": "设计页契约入口；删除设计后检查注册、预览与验证边界"}
+{"file": ".trellis/spec/guides/index.md", "reason": "跨层/复用检查；避免漏改计数与引用"}
