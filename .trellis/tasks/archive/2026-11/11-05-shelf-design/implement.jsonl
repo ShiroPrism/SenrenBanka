@@ -1,0 +1,13 @@
+{"file":"AGENTS.md","reason":"八条硬门禁与任务路由"}
+{"file":"docs/rules/design-contract.md","reason":"styled 设计必交文件、菜单、字体、预览与构建契约"}
+{"file":"docs/rules/visual-language.md","reason":"动效、图标、视觉素材与字体选型规则"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"对比度、焦点、触控与响应式验收口径"}
+{"file":"docs/rules/data-and-i18n.md","reason":"loadDesignView、五语言文案与内部链接规则"}
+{"file":"docs/rules/pitfalls.md","reason":"CSS 隔离、字体栈、预览等已知坑"}
+{"file":"docs/fonts/selection-guide.md","reason":"字体角色、零新增 family 复用与回退栈流程"}
+{"file":"SPEC.md","reason":"§4.4.1 视觉差异化矩阵、设计契约与计数口径"}
+{"file":"src/designs/zine/DESIGN.md","reason":"自产 styled 设计的规范结构参照"}
+{"file":"src/designs/zine/Page.astro","reason":"五语言页面、Font/Reveal/ContextMenu 接线参照"}
+{"file":"src/designs/brutal/DESIGN.md","reason":"高饱和 / 粗黑字方向的反面参照与差异基线"}
+{"file":"src/designs/poster/DESIGN.md","reason":"印刷海报方向的反面参照与差异基线"}
+{"file":"docs/verification/zine.md","reason":"当前验证记录的结构、矩阵与体积口径"}

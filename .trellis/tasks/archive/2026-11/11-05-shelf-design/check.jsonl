@@ -1,0 +1,13 @@
+{"file":"AGENTS.md","reason":"检查八条硬门禁是否全部满足"}
+{"file":"docs/rules/design-contract.md","reason":"检查 styled 文件契约、共享菜单、字体注册与预览隔离"}
+{"file":"docs/rules/visual-language.md","reason":"检查动效门控、图标 / 素材与字体选型"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"检查对比度、焦点、触控目标与 375px 响应式"}
+{"file":"docs/rules/data-and-i18n.md","reason":"检查 loadDesignView、五语言消息与链接生成"}
+{"file":"docs/rules/pitfalls.md","reason":"检查 CSS 聚合、Preview :root、字体栈等已知坑"}
+{"file":"SPEC.md","reason":"核对 §4.4.1 矩阵、计数与设计契约"}
+{"file":"README.md","reason":"核对 29 套 / 28 styled 的当前计数"}
+{"file":"docs/verification/shared.md","reason":"核对当前基线、切换页预览数与字体 / 体积口径"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"按完整验证流程逐项检查"}
+{"file":"docs/verification/zine.md","reason":"对照最近自产设计的验证证据与 dist 增量"}
+{"file":"src/designs/brutal/DESIGN.md","reason":"核对与 brutal 的视觉差异是否成立"}
+{"file":"src/designs/poster/DESIGN.md","reason":"核对与 poster 的视觉差异是否成立"}
