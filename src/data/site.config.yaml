@@ -57,7 +57,7 @@ design:
   mode: random # random | fixed
   default: editorial # random 模式下为无 JS / SEO 回退设计；fixed 模式下为固定展示
   manualSwitch: true
-  exclude: [] # 部署级打包排除；缺省 [] = 全部设计。示例：[magical-girl]
+  exclude: [] # 部署级打包排除；缺省 [] = 全部设计。示例：[archive]
   random:
     cacheHours: 24 # 0 = 每次访问都重新随机（仍避免连续重复）
     avoidImmediateRepeat: true

@@ -1,13 +1,14 @@
 # verification — 繁体中文（zh-TW）
 
-> 本文件记录 `zh-TW` 第 5 语言的当前完整验证状态：27 套设计、5 个 TC 字体族、页面级字体路由与构建/浏览器证据。共享机制的跨设计结论同时写入 `docs/verification/shared.md`；决策见 `docs/adr/0018-traditional-chinese-typography.md`，字体调研见 `.trellis/tasks/11-01-traditional-chinese-font-research/research/tc-font-research.md`。
+> 本文件记录 `zh-TW` 第 5 语言的当前完整验证状态：26 套设计、5 个 TC 字体族、页面级字体路由与构建/浏览器证据。共享机制的跨设计结论同时写入 `docs/verification/shared.md`；决策见 `docs/adr/0018-traditional-chinese-typography.md`，字体调研见 `.trellis/tasks/11-01-traditional-chinese-font-research/research/tc-font-research.md`。
+> **2026-11-05 退役 `magical-girl`**：当前 26 套设计（25 styled + html-only）；下方 2026-11-01 的页数 / dist / 字体数字为当时验证快照，当前构建以 `shared.md` 为准。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）。
 
 ## 范围
 
-- `site.config.yaml` 新增 `zh-TW`（`path: zh-tw`，`fontProfile: traditional-chinese`）；`profiles/zh-tw.yaml`、共享文案、27 套设计文案/描述、27 套 `design.json.locales`。
+- `site.config.yaml` 新增 `zh-TW`（`path: zh-tw`，`fontProfile: traditional-chinese`）；`profiles/zh-tw.yaml`、共享文案、26 套设计文案/描述、26 套 `design.json.locales`。
 - 字体层：5 个 `core-cjk` TC 族（`noto-sans-tc` / `noto-serif-tc` / `lxgw-wenkai-tc` / `fusion-pixel-tc` / `noto-sans-mono-cjk-tc`），`scripts: ["cjk","han-traditional"]`；`fonts:coverage` 新增 TC 重映射门禁；`fonts:audit` 忽略 `var(...)`/哨兵值。
-- 页面级路由：26 套 styled 设计在 `html:lang(zh-TW)` 内做变量重映射；TC `<Font>` 只在 zh-TW 页注册；8 套系统 CJK 设计把韩文伴生变量重映射到 TC 族。`html-only` 零字体契约豁免。
+- 页面级路由：25 套 styled 设计在 `html:lang(zh-TW)` 内做变量重映射；TC `<Font>` 只在 zh-TW 页注册；8 套系统 CJK 设计把韩文伴生变量重映射到 TC 族。`html-only` 零字体契约豁免。
 
 ## 构建与测试
 
@@ -76,7 +77,7 @@ TC 核心子集实测：
 
 ## 未测 / 限制
 
-- 27 套 TC 页未逐页重跑完整菜单 / 无 JS / 对比度 / 动效 / 375px 矩阵；本次覆盖 6 套代表设计 + 跨页共享机制。韩语遗留的完整矩阵缺口仍未补。
+- 26 套 TC 页未逐页重跑完整菜单 / 无 JS / 对比度 / 动效 / 375px 矩阵；本次覆盖 6 套代表设计 + 跨页共享机制。韩语遗留的完整矩阵缺口仍未补。
 - 真机（iOS / Android）与 Safari / Firefox 引擎、横屏、200% 缩放未实测。
 - 繁中文案由 OpenCC `s2twp` 初转 + 逐设计改写，**仍需用户终审**；未经专业译者校对。
 - 本次验证使用公开 catalog v1.2.0（`430cb587…`）与本地构建产物；主站 lock / `fonts.config.json` 已指向公开 URL。TC 文案仍需用户终审；主站尚未提交/部署。

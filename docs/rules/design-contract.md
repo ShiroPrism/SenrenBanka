@@ -37,6 +37,15 @@
 7. `DESIGN.md` 定义该设计的动效语言（Motion 章节；可极简，决定静止须论证）；`styled` 采用共享滚动显现时必须接入 `<Reveal />`（见 [`visual-language.md`](./visual-language.md) 的动效章节）。`html-only` 必须在规范中论证完全静止，且不得渲染 Reveal。
 8. **多语言接入**：主题的界面文案全部来自本设计 `messages.ts`；`styled` 语言切换由共享操作菜单承担，`html-only` 由原生链接承担。所有设计页都**不渲染** `<LanguageSwitcher />`（它是基础设施页的 `<noscript>` 回退，见 [`action-menu.md`](./action-menu.md)）
 
+## 信息架构与主题文案
+
+每套设计可以有自己的视觉母题，但**主分区必须保持求职语义**：
+
+- 主分区固定对应「简介 / 项目 / 经历 / 技能 / 联系」或同义的标准词（英文 Profile / Projects / Experience / Skills / Contact）。主题词只能作为副标题、kicker、同一标题内的次级词或装饰，**不得单独替换**主分区标签。
+- 首次访问者必须在不看设计说明的情况下识别每个分区；不得要求访问者先解码主题隐喻。
+- 不得使用把候选人商品化、贬低或误导求职状态的文案作为主分区 / 核心标签（例如「非卖品」「净含量 1 人」「生产信息」「购买渠道」）。
+- 新增 / 修改主题时检查 `messages.ts` 与 `Page.astro` 的 h2；若主分区被主题词替换，改为「标准标签 + 主题副标题」。既有主题按批次审计，历史验证记录不回写。
+
 ### 可选 · 切换页预览碎片（`Preview.astro` / `tokens.css`）
 
 切换页 `/{locale}/designs/` 为每套提供 `Preview.astro` 的设计渲染一枚**装饰性缩略引述**。它**可选**——缺失时该卡片回退为 accent 色点形态，必交文件契约不因此变更。`html-only` 可以提供自包含预览碎片，但不得提供 `tokens.css`；预览不得改变正式 HTML-only 页面零 CSS / JS 的资源契约。

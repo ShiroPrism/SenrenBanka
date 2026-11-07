@@ -10,7 +10,7 @@
 
 ## 构建
 
-- `npm run check`：文档门禁 + `check:eol` + `lint` + `format:check` + `fonts:typography`（Astro 字体注册与 27 套 styled CSS / 预览回退契约）+ `fonts:coverage` + `astro check`
+- `npm run check`：文档门禁 + `check:eol` + `lint` + `format:check` + `fonts:typography`（Astro 字体注册与 26 套 styled CSS / 预览回退契约）+ `fonts:coverage` + `astro check`
 - `npm run check:eol`：解析 `git ls-files --eol`，任一文本文件 index / worktree 不是 LF（CRLF 或 mixed）即失败
 - `npm run lint`：ESLint flat config，覆盖 `src/**/*.{astro,ts}`、`scripts/**/*.mjs` 与配置文件；`Preview.astro` 的 `fonts` 导出按预览契约局部豁免
 - `npm run format` / `npm run format:check`：Prettier 写入 / 检查源码与配置；`docs/`、Markdown、生成物与 lock 文件由 `.prettierignore` 排除

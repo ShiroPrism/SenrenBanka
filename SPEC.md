@@ -180,7 +180,9 @@
 | transit | 冷纸 + 线路绿/红/黄 · 浅 | 直角网格 / 线路 / 站点圆点 | 中性 grotesque + 等宽站码 | 线路色带 / 站台牌 / 时刻表 |
 | zine | 暖纸 + 荧光红/蓝 · 浅 | 错位套印 / 剪贴 / 裁切线 | 窄体刊头 + 打字机标签 | 复印条纹 / 颗粒 / 印章 |
 
-覆盖缺口（2026-11-04 批次 5 后复核；`govuk` / `fast` 已退役，剩余 28 套）：色彩缺口已由 `ink` 朱砂、`brutal` 橙红、`deco` 金补足；「浅色红系」降为可选色轴，不再单列为最高优先级。批次 4 已补上 **2000s 数字怀旧 / Neo-Aero**、**信息姿态 / 环境图形（交通导视）**、**Riso / 复印朋克** 三条轴；下一批缺口转为第二梯队（Broadsheet/LaTeX、自然史 / 珍奇柜、哥特 / 中世纪抄本、孟菲斯 / 80s、节庆 / 记分牌等）。
+覆盖缺口（2026-11-04 批次 5 后复核；`govuk` / `fast` 已退役，剩余 27 套）：色彩缺口已由 `ink` 朱砂、`brutal` 橙红、`deco` 金补足；「浅色红系」降为可选色轴，不再单列为最高优先级。批次 4 已补上 **2000s 数字怀旧 / Neo-Aero**、**信息姿态 / 环境图形（交通导视）**、**Riso / 复印朋克** 三条轴；下一批缺口转为第二梯队（Broadsheet/LaTeX、自然史 / 珍奇柜、哥特 / 中世纪抄本、孟菲斯 / 80s、节庆 / 记分牌等）。
+
+**2026-11-05 主题文案边界**：`shelf`（90s–00s 中国商品包装）与 `magical-girl`（魔法少女档案）在首轮视觉评审后退役——主分区被「产品说明 / 配料 / 生产信息 / 购买渠道」或「魔法道具 / 星轨章回 / 变身年表 / 技能封印 / 蜡封信笺」替换，首次访问无法识别项目 / 经历 / 技能 / 联系；`shelf` 的「非卖品 / 净含量 1 人」还会误导求职状态。退役前的实现与截图只留在任务记录。新增规则见 [`docs/rules/design-contract.md`](docs/rules/design-contract.md)「信息架构与主题文案」：主分区必须保留标准求职语义，主题词只能做次级词 / 装饰。当前 **27 套**（26 套 `styled` + 1 套 `html-only`）。
 
 扩展轴（2026-11-02 新增；用于区分“视觉像但使用感不同”的设计）：
 
@@ -199,7 +201,7 @@
 - **B 中等（备选）**：`vanilla`（紫橙）、`paste`（红）、`protocol`（黑白 + 橙）、`gitlab`（紫橙 DevOps）、`codex`（冷百科衬线，与 editorial 暖衬线部分接近）。
 - **C 同质暂缓**：浅蓝企业组（`uswds`、`ant-design`、`tdesign`、`patternfly`、`primer`、SLDS、Spectrum、Clarity、Arco、DevUI、semi——历史对照：与已退役的 fast 高度同质）；政务蓝组（`nhs`、`dads`、ECL、SGDS——历史对照：与已退役的 govuk 择一）；Fluent 2（历史对照：与已退役的 fast 同源）；nutui 与 paste 红系二选一。
 
-批次建议：**批次 3 已完成**（`govuk` + `frost`，v0.8.0，2026-10-11，经项目所有者确认执行）；**批次 4 已完成（2026-11-02）**：`aero`（2000s 科技乐观）+ `transit`（交通导视）+ `zine`（Riso/复印朋克），均为自产、纯 CSS/无 JS、5 语言、复用现有字体；本矩阵已先刷新，三套已按 Aero → Transit → Zine 实现并验证。**批次 5 已完成（2026-11-04）：退役 `govuk` + `fast`**；当前共 **28 套**（27 套 `styled` + 1 套 `html-only`），旧 URL 404，历史批次记录保留。后续批次再评估 `paste` 等浅红系 / B 级候选；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
+批次建议：**批次 3 已完成**（`govuk` + `frost`，v0.8.0，2026-10-11，经项目所有者确认执行）；**批次 4 已完成（2026-11-02）**：`aero`（2000s 科技乐观）+ `transit`（交通导视）+ `zine`（Riso/复印朋克），均为自产、纯 CSS/无 JS、5 语言、复用现有字体；本矩阵已先刷新，三套已按 Aero → Transit → Zine 实现并验证。**批次 5 已完成（2026-11-04）：退役 `govuk` + `fast`；批次 6（2026-11-05）：退役 `shelf` + `magical-girl`**；当前共 **27 套**（26 套 `styled` + 1 套 `html-only`），旧 URL 404，历史批次记录保留。后续批次再评估 `paste` 等浅红系 / B 级候选；`uswds` 暂缓（研究材料保留，后续如需可直接复用）。
 
 ---
 
@@ -294,7 +296,7 @@ design:
   mode: random       # random | fixed
   default: editorial # 必填；random 模式下是无 JS/SEO 回退设计，fixed 模式下是固定展示
   manualSwitch: true
-  exclude: []        # 部署级打包排除；缺省 [] = 全部注册设计。示例：[magical-girl]
+  exclude: []        # 部署级打包排除；缺省 [] = 全部注册设计。示例：[archive]
   random:
     cacheHours: 24   # 0 = 每次访问都重新随机（仍避免连续重复）
     avoidImmediateRepeat: true

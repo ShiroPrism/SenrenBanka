@@ -84,13 +84,6 @@ export const designDescriptions: Record<string, Record<string, string>> = {
     en: 'Hard-candy collage: thick black outlines, hard shadows, oversized type and colour blocks across every section.',
     ko: '하드 캔디 콜라주 — 굵은 검정 외곽선, 단단한 그림자, 과장된 제목과 어긋난 색면이 전 페이지를 채웁니다.',
   },
-  'magical-girl': {
-    'zh-CN': '魔法少女档案：角色档案与舞台登场，用原创星轨、丝带、魔法阵和章回卡片组织华丽资料。',
-    'zh-TW': '魔法少女檔案：角色檔案與舞臺登場，用原創星軌、絲帶、魔法陣和章回卡片組織華麗資料。',
-    ja: '魔法少女のプロフィール——キャラクターカードと舞台登場。オリジナルの星の軌跡、リボン、魔法陣、章カードで構成。',
-    en: 'A magical-girl dossier: a staged character entrance with original star trails, ribbons, magic circles and episode cards.',
-    ko: '마법소녀 기록 — 캐릭터 기록과 무대 등장. 별길, 리본, 마법진, 장 카드로 꾸민 화려한 프로필.',
-  },
   homepage99: {
     'zh-CN': '1999 年个人主页：左目录、密集中栏与徽章轨，粗双线、系统字体与离线计数器。',
     'zh-TW': '1999 年個人主頁：左目錄、密集中欄與徽章軌，粗雙線、系統字型與離線計數器。',
