@@ -1,0 +1,14 @@
+{"file":"AGENTS.md","reason":"八条硬门禁与任务路由"}
+{"file":"docs/rules/design-contract.md","reason":"设计契约与新增的信息架构 / 主题文案规则"}
+{"file":"docs/rules/operations.md","reason":"构建、字体门禁、文档计数与版本操作"}
+{"file":"docs/rules/data-and-i18n.md","reason":"descriptions / 多语言文案与路由契约"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"删除后剩余设计的无障碍底线不变"}
+{"file":"docs/rules/visual-language.md","reason":"主题视觉 / 文案边界与动效规则"}
+{"file":"docs/rules/pitfalls.md","reason":"CSS 隔离、字体栈与构建已知坑"}
+{"file":"SPEC.md","reason":"§4.4.1 当前计数、批次记录与设计契约"}
+{"file":"README.md","reason":"当前计数、exclude 示例与目录说明"}
+{"file":"docs/verification/shared.md","reason":"当前基线、切换页计数、字体 / 体积 / 检测器口径"}
+{"file":"docs/verification/traditional-chinese.md","reason":"当前 TC 设计数与页面计数"}
+{"file":"docs/verification/action-menu.md","reason":"区分当前菜单状态与 2026-11-02 历史 exclude 实验"}
+{"file":".trellis/tasks/archive/2026-11/11-04-retire-govuk-fast/prd.md","reason":"上一轮退役的范围、历史白名单与验收模板"}
+{"file":".trellis/tasks/archive/2026-11/11-04-retire-govuk-fast/implement.md","reason":"上一轮退役的执行顺序、构建 / 404 / 引用审计模板"}

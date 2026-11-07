@@ -1,0 +1,13 @@
+{"file":"AGENTS.md","reason":"检查八条硬门禁是否仍满足"}
+{"file":"docs/rules/design-contract.md","reason":"检查删除后当前态文案与预览契约"}
+{"file":"docs/rules/operations.md","reason":"检查字体门禁、体积门禁与文档计数"}
+{"file":"docs/rules/data-and-i18n.md","reason":"检查 descriptions 删除与多语言路由"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"检查剩余设计的无障碍底线未被误改"}
+{"file":"docs/rules/pitfalls.md","reason":"检查构建 / CSS 隔离 / 字体坑"}
+{"file":"SPEC.md","reason":"核对当前 27 套 / 26 styled 与退役记录"}
+{"file":"README.md","reason":"核对当前计数与 exclude 示例"}
+{"file":"docs/verification/shared.md","reason":"核对当前基线、页数、切换页与历史条目边界"}
+{"file":"docs/verification/traditional-chinese.md","reason":"核对当前 TC 设计数 26"}
+{"file":"docs/verification/action-menu.md","reason":"确认历史 exclude 实验未被误改"}
+{"file":".trellis/tasks/archive/2026-11/11-04-retire-govuk-fast/prd.md","reason":"对照退役验收标准"}
+{"file":".trellis/tasks/archive/2026-11/11-04-retire-govuk-fast/implement.md","reason":"对照构建 / 404 / 引用审计步骤"}
