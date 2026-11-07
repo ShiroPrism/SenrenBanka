@@ -420,3 +420,25 @@ Retired govuk and fast: removed implementations, current verification/adaptation
 ### Status
 
 [OK] **Completed**
+
+
+## Session 16: Retire shelf and magical-girl; add theme IA guardrail
+<!-- trellis-session: v=2 fp=413af90baac6774d -->
+
+**Date**: 2026-11-07
+**Task**: Retire shelf and magical-girl; add theme IA guardrail
+**Branch**: `main`
+
+### Summary
+
+退役 shelf 与 magical-girl，当前 27 套（26 styled + html-only）/ 175 页 / dist 7,777,959 B；新增主分区语义规则，版本 0.21.1；构建、字体门禁、检测器与 404 smoke 通过。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `4f43172` | chore(designs): retire shelf and magical-girl |
+
+### Status
+
+[OK] **Completed**
