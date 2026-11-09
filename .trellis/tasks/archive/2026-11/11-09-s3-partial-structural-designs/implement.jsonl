@@ -1,0 +1,4 @@
+{"file":"docs/rules/design-contract.md","reason":"主分区 h2 与主题词位置的契约"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"分区可访问名称、标题层级与 375px 底线"}
+{"file":"docs/rules/pitfalls.md","reason":"改设计 Page/CSS 时的样式隔离与已知坑"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"11 套部分 / 结构违规设计的逐套证据"}

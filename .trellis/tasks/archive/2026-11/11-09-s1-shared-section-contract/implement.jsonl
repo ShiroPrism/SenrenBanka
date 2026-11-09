@@ -1,0 +1,9 @@
+{"file":"docs/rules/design-contract.md","reason":"主分区信息架构、共享词表与 data-section 的唯一正文来源"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"分区可访问名称与标题语义要求"}
+{"file":"docs/rules/data-and-i18n.md","reason":"共享词表与设计 messages 的边界、Locale 架构"}
+{"file":"docs/rules/operations.md","reason":"verify:sections 的构建接入与门禁"}
+{"file":"docs/rules/pitfalls.md","reason":"共享模块与设计样式隔离的已知坑"}
+{"file":".trellis/spec/frontend/index.md","reason":"设计页契约入口与验证要求"}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"共享词表跨 i18n / 设计层的边界检查"}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"避免 27 套重复维护标准标签"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"8 套合规设计与 19 套待修清单"}

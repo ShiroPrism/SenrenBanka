@@ -1,0 +1,30 @@
+{
+  "id": "standard-section-labels",
+  "name": "standard-section-labels",
+  "title": "主分区标准标签：共享词表与主题词分离",
+  "description": "27 套设计的主分区 h2 统一使用共享 canonical 标准标签（简介/项目/经历/技能/联系/链接），主题词移出 heading 仅作可选 kicker；建立共享词表、data-section 契约、构建后校验与存量修复批次。",
+  "status": "completed",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "makeinu",
+  "assignee": "makeinu",
+  "createdAt": "2026-11-09",
+  "completedAt": "2026-11-09",
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "11-09-s1-shared-section-contract",
+    "11-09-s2-full-violation-designs",
+    "11-09-s3-partial-structural-designs"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}

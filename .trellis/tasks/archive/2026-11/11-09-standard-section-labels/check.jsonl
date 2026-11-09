@@ -1,0 +1,5 @@
+{"file":"docs/rules/design-contract.md","reason":"检查主分区 h2、主题词位置、共享词表与 data-section 契约"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"检查分区可访问名称、标题层级与 375px 底线"}
+{"file":"docs/rules/pitfalls.md","reason":"检查共享模块与设计样式隔离是否被破坏"}
+{"file":"docs/rules/operations.md","reason":"检查构建与验证门禁是否完整执行"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"对照审计证据检查逐套修复范围"}

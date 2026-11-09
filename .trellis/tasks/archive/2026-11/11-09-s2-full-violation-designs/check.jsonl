@@ -1,0 +1,4 @@
+{"file":"docs/rules/design-contract.md","reason":"检查 h2 只含标准词元、主题词不在 heading"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"检查可访问名称、375px、减动态与无 JS 终态"}
+{"file":"docs/rules/pitfalls.md","reason":"检查是否引入跨设计样式或脚本"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"核对 8 套的修复范围与 allowlist 变化"}

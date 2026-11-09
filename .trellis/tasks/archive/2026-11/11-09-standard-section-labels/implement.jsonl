@@ -1,0 +1,7 @@
+{"file":"docs/rules/design-contract.md","reason":"主分区信息架构与主题文案的唯一正文来源"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"分区可访问名称与标题语义要求"}
+{"file":"docs/rules/data-and-i18n.md","reason":"共享文案与设计文案的边界、Locale 架构"}
+{"file":"docs/rules/operations.md","reason":"构建脚本与验证门禁"}
+{"file":"docs/rules/pitfalls.md","reason":"样式隔离与共享模块的已知坑"}
+{"file":"docs/adr/0021-site-notice-configuration.md","reason":"共享数据从设计层迁移到站点配置的先例与 ADR 格式"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"27 套设计的主分区命名审计证据"}

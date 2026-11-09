@@ -1,0 +1,5 @@
+{"file":"docs/rules/design-contract.md","reason":"检查共享词表、h2 契约与 data-section 是否符合规则"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"检查分区可访问名称与标题语义"}
+{"file":"docs/rules/pitfalls.md","reason":"检查共享模块是否破坏样式隔离"}
+{"file":"docs/rules/operations.md","reason":"检查 build / verify:sections / test 接入"}
+{"file":".trellis/tasks/11-09-standard-section-labels/research/audit-2026-11-09.md","reason":"核对 8 套合规设计与 19 套 allowlist"}
