@@ -13,11 +13,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('zine', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const projects = profile.projects ?? [];
@@ -71,26 +73,38 @@ const pad = (value: number) => String(value).padStart(2, '0');
       </header>
 
       <main>
-        <section class="zn-section zn-manifesto" aria-labelledby="zn-manifesto-title" data-reveal>
+        <section
+          class="zn-section zn-manifesto"
+          aria-labelledby="zn-manifesto-title"
+          data-section="profile"
+          data-reveal
+        >
+          <p class="zn-section-kicker">{t.manifesto}</p>
           <div class="zn-section-head">
             <span class="zn-section-num" aria-hidden="true">
               01
             </span>
             <h2 id="zn-manifesto-title" class="zn-section-title">
-              {t.manifesto}
+              {sections.profile.label}
             </h2>
           </div>
           <p class="zn-bio">{profile.bio}</p>
         </section>
 
         {profile.links.length > 0 && (
-          <section class="zn-section" aria-labelledby="zn-classifieds-title" data-reveal>
+          <section
+            class="zn-section"
+            aria-labelledby="zn-classifieds-title"
+            data-section="links"
+            data-reveal
+          >
+            <p class="zn-section-kicker">{t.classifieds}</p>
             <div class="zn-section-head">
               <span class="zn-section-num" aria-hidden="true">
                 02
               </span>
               <h2 id="zn-classifieds-title" class="zn-section-title">
-                {t.classifieds}
+                {sections.links.label}
               </h2>
               <span class="zn-section-count" aria-hidden="true">
                 {pad(profile.links.length)}
@@ -115,13 +129,19 @@ const pad = (value: number) => String(value).padStart(2, '0');
         )}
 
         {projects.length > 0 && (
-          <section class="zn-section" aria-labelledby="zn-spreads-title" data-reveal>
+          <section
+            class="zn-section"
+            aria-labelledby="zn-spreads-title"
+            data-section="projects"
+            data-reveal
+          >
+            <p class="zn-section-kicker">{t.spreads}</p>
             <div class="zn-section-head">
               <span class="zn-section-num" aria-hidden="true">
                 03
               </span>
               <h2 id="zn-spreads-title" class="zn-section-title">
-                {t.spreads}
+                {sections.projects.label}
               </h2>
               <span class="zn-section-count" aria-hidden="true">
                 {pad(projects.length)}
@@ -160,13 +180,19 @@ const pad = (value: number) => String(value).padStart(2, '0');
         )}
 
         {experience.length > 0 && (
-          <section class="zn-section" aria-labelledby="zn-notes-title" data-reveal>
+          <section
+            class="zn-section"
+            aria-labelledby="zn-notes-title"
+            data-section="experience"
+            data-reveal
+          >
+            <p class="zn-section-kicker">{t.notes}</p>
             <div class="zn-section-head">
               <span class="zn-section-num" aria-hidden="true">
                 04
               </span>
               <h2 id="zn-notes-title" class="zn-section-title">
-                {t.notes}
+                {sections.experience.label}
               </h2>
               <span class="zn-section-count" aria-hidden="true">
                 {pad(experience.length)}
@@ -188,13 +214,19 @@ const pad = (value: number) => String(value).padStart(2, '0');
         )}
 
         {skills.length > 0 && (
-          <section class="zn-section" aria-labelledby="zn-stamps-title" data-reveal>
+          <section
+            class="zn-section"
+            aria-labelledby="zn-stamps-title"
+            data-section="skills"
+            data-reveal
+          >
+            <p class="zn-section-kicker">{t.stamps}</p>
             <div class="zn-section-head">
               <span class="zn-section-num" aria-hidden="true">
                 05
               </span>
               <h2 id="zn-stamps-title" class="zn-section-title">
-                {t.stamps}
+                {sections.skills.label}
               </h2>
               <span class="zn-section-count" aria-hidden="true">
                 {pad(skills.length)}
@@ -209,14 +241,19 @@ const pad = (value: number) => String(value).padStart(2, '0');
         )}
 
         {hasContact && (
-          <section class="zn-coupon" aria-labelledby="zn-coupon-title" data-reveal>
+          <section
+            class="zn-coupon"
+            aria-labelledby="zn-coupon-title"
+            data-section="contact"
+            data-reveal
+          >
             <span class="zn-cut" aria-hidden="true">
               {t.cutHere}
             </span>
             <div class="zn-coupon-inner">
               <p class="zn-coupon-kicker">{t.coupon}</p>
               <h2 id="zn-coupon-title" class="zn-coupon-title">
-                {t.coupon}
+                {sections.contact.label}
               </h2>
               {contactEmail ? (
                 <a class="zn-coupon-link" href={`mailto:${contactEmail}`}>

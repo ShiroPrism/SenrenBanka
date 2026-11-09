@@ -1,8 +1,9 @@
 /**
  * oxide 主题文案（SPEC §4）。
  *
- * - 顶部的 `IDENTITY / 身份` 一类标签是该设计**刻意的双语标识**（终端频道语言），
- *   按项目决定不随语言切换：它们与等宽大写排版同属设计语言的一部分。
+ * - 分区标题（`Links / 链接` 一类双语标识）由共享标准标签 `src/i18n/sections` 提供，
+ *   随语言切换；英文主题词（IDENTITY / CHANNELS / CAPABILITIES / DEPLOYMENTS /
+ *   OPERATIONS）留在 Page.astro 里作等宽大写 kicker——它们是设计语言，不是分区名。
  * - 本文件只承载真正承担信息传达、需要随语言切换的文案（空态、页脚等）。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */

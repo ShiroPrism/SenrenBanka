@@ -9,6 +9,7 @@
  * - 纯装饰，不是完整页面，不带动效机制。
  */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -22,6 +23,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 
 const { locale, name, headline, location, links } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
 ---
 
@@ -37,18 +39,18 @@ const linkLabels = (links ?? []).slice(0, 2).map((link) => link.label);
   <p class="bt-pv-headline">{headline ?? t.portfolio}</p>
 
   <div class="bt-pv-actions">
-    <span class="bt-pv-btn bt-pv-btn-orange">{linkLabels[0] ?? t.projects}</span>
-    <span class="bt-pv-btn bt-pv-btn-blue">{linkLabels[1] ?? t.contact}</span>
+    <span class="bt-pv-btn bt-pv-btn-orange">{linkLabels[0] ?? sections.projects.label}</span>
+    <span class="bt-pv-btn bt-pv-btn-blue">{linkLabels[1] ?? sections.contact.label}</span>
   </div>
 
   <div class="bt-pv-cards">
     <span class="bt-pv-card">
       <span class="bt-pv-card-num">01</span>
-      {t.projects}
+      {sections.projects.label}
     </span>
     <span class="bt-pv-card">
       <span class="bt-pv-card-num">02</span>
-      {t.experience}
+      {sections.experience.label}
     </span>
   </div>
 </div>

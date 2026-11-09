@@ -5,12 +5,14 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import './style.css';
 
 const view = await loadDesignView('editorial', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 // 页脚邀请地址：优先 contact.email，其次取链接中的 mailto（仅作邀请段地址来源；Elsewhere 全量渲染 links，不过滤）
@@ -60,12 +62,12 @@ const inviteEmail =
       </header>
 
       {profile.projects && profile.projects.length > 0 && (
-        <section class="ed-section" aria-labelledby="ed-works">
+        <section class="ed-section" data-section="projects" aria-labelledby="ed-works">
           <div class="ed-section-head" data-reveal>
             <h2 id="ed-works" class="ed-section-title">
-              Selected Works
+              {sections.projects.label}
             </h2>
-            <p class="ed-label">{t.worksLabel}</p>
+            <p class="ed-label">{t.worksHeading}</p>
           </div>
           <ol class="ed-works">
             {profile.projects.map((project, index) => (
@@ -97,12 +99,12 @@ const inviteEmail =
         </section>
       )}
 
-      <section class="ed-section" aria-labelledby="ed-elsewhere">
+      <section class="ed-section" data-section="links" aria-labelledby="ed-elsewhere">
         <div class="ed-section-head" data-reveal>
           <h2 id="ed-elsewhere" class="ed-section-title">
-            Elsewhere
+            {sections.links.label}
           </h2>
-          <p class="ed-label">{t.elsewhereLabel}</p>
+          <p class="ed-label">{t.elsewhereHeading}</p>
         </div>
         <ul class="ed-links" data-reveal>
           {profile.links.map((link) => (

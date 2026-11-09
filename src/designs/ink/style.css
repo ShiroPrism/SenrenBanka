@@ -202,6 +202,22 @@ html:has(.ink) {
   min-width: 0;
 }
 
+/* 印谱（links）：主题词保留为小字引首，标准标签 h2 承担分区名。 */
+.ink-block--links {
+  gap: 0.45rem;
+}
+
+.ink-block-title {
+  margin: 0;
+  color: var(--ink-ink);
+  font-family: var(--ink-type-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.16em;
+  overflow-wrap: anywhere;
+}
+
 .ink-label {
   display: inline-flex;
   align-items: center;
@@ -298,6 +314,24 @@ html:has(.ink) {
   align-items: flex-end;
   gap: 0.9rem;
   margin-bottom: 1.35rem;
+}
+
+/* 标题区：题签主题词（小字）在上，标准标签 h2 与朱线仍居同一基线。 */
+.ink-section-title-block {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.ink-section-kicker {
+  margin: 0;
+  color: var(--ink-ink-muted);
+  font-family: var(--ink-type-label);
+  font-size: 0.66rem;
+  line-height: 1.5;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
 .ink-section-title {

@@ -3,6 +3,7 @@
  *
  * - 语域：剧院节目单——分区标题是印刷节目单上的栏目标签（剧目表 / 幕次 / 演出单 /
  *   演职员表 / 售票处），不用产品化措辞（「项目」「技能」这类词会被替换成节目单用语）。
+ *   这些栏目标签是 h2 上方的 kicker；h2 文本来自共享标准标签（`src/i18n/sections`）。
  * - 不翻译项（均为刻意保留，非漏译）：
  *   1. 幕次罗马数字 `I`–`XII`：编号是装饰性版式元素（`aria-hidden`），跨语言恒用罗马数字；
  *   2. monogram 标记：由姓名首字派生（拉丁取词首字母、CJK 取姓名前两字），不是译文；
@@ -18,15 +19,15 @@ export interface DecoMessages {
   portfolio: string;
   /** 序言块（bio）的栏目标签。 */
   overtureLabel: string;
-  /** links 分区标题（剧目表）。 */
+  /** links 分区 kicker（剧目表）。 */
   linksTitle: string;
-  /** projects 分区标题（幕次）。 */
+  /** projects 分区 kicker（幕次）。 */
   projectsTitle: string;
-  /** experience 分区标题（演出单）。 */
+  /** experience 分区 kicker（演出单）。 */
   experienceTitle: string;
-  /** skills 分区标题（演职员表）。 */
+  /** skills 分区 kicker（演职员表）。 */
   skillsTitle: string;
-  /** contact 分区标题（售票处）。 */
+  /** contact 分区 kicker（售票处）。 */
   contactTitle: string;
   /** 幕次卡片序号前的类别词（装饰性，作用于 `aria-hidden` 容器）。 */
   actWord: string;

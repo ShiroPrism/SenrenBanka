@@ -217,11 +217,31 @@
   letter-spacing: 0.18em;
 }
 
-.fx-sec {
+/* 分区抬头：语域词（kicker）+ 共享标准标签（h2），虚线拉到纸边 */
+.fx-sec-head {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   margin: 0 0 0.6rem;
+}
+
+.fx-kicker {
+  flex: none;
+  margin: 0;
+  color: var(--fx-dim);
+  font-family: var(--fx-type-label);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.fx-sec {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
   font-family: var(--fx-type-label);
   font-size: 0.6875rem;
   font-weight: 400;

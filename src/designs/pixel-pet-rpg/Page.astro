@@ -10,11 +10,14 @@ import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type PixelPetMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('pixel-pet-rpg', Astro.url.pathname);
 const t: PixelPetMessages = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
+const showKicker = (kicker: string, label: string) => kicker.toUpperCase() !== label.toUpperCase();
 const { profile } = view;
 
 const hasProjects = Boolean(profile.projects?.length);
@@ -297,6 +300,7 @@ const stationNo = (id: string) => {
               <section
                 class="pxt-place pxt-place--identity"
                 id="pxt-identity"
+                data-section="profile"
                 data-pxt-panel="pxt-identity"
                 aria-labelledby="pxt-identity-title"
               >
@@ -304,7 +308,12 @@ const stationNo = (id: string) => {
                   <span class="pxt-panel-index" aria-hidden="true">
                     {stationNo('identity')}
                   </span>
-                  <h2 id="pxt-identity-title">{t.identityTitle}</h2>
+                  {showKicker(t.identityTitle, sections.profile.label) && (
+                    <span class="pxt-panel-kicker" aria-hidden="true">
+                      {t.identityTitle}
+                    </span>
+                  )}
+                  <h2 id="pxt-identity-title">{sections.profile.label}</h2>
                 </div>
                 <div
                   class={`pxt-identity-body${profile.avatar ? '' : ' pxt-identity-body--no-avatar'}`}
@@ -339,6 +348,7 @@ const stationNo = (id: string) => {
               <section
                 class="pxt-place pxt-place--links"
                 id="pxt-links"
+                data-section="links"
                 data-pxt-panel="pxt-links"
                 aria-labelledby="pxt-links-title"
               >
@@ -346,7 +356,12 @@ const stationNo = (id: string) => {
                   <span class="pxt-panel-index" aria-hidden="true">
                     {stationNo('links')}
                   </span>
-                  <h2 id="pxt-links-title">{t.linksTitle}</h2>
+                  {showKicker(t.linksTitle, sections.links.label) && (
+                    <span class="pxt-panel-kicker" aria-hidden="true">
+                      {t.linksTitle}
+                    </span>
+                  )}
+                  <h2 id="pxt-links-title">{sections.links.label}</h2>
                 </div>
                 {profile.links.length > 0 ? (
                   <ul class="pxt-inventory">
@@ -374,6 +389,7 @@ const stationNo = (id: string) => {
                 <section
                   class="pxt-place pxt-place--projects"
                   id="pxt-projects"
+                  data-section="projects"
                   data-pxt-panel="pxt-projects"
                   aria-labelledby="pxt-projects-title"
                 >
@@ -381,7 +397,12 @@ const stationNo = (id: string) => {
                     <span class="pxt-panel-index" aria-hidden="true">
                       {stationNo('projects')}
                     </span>
-                    <h2 id="pxt-projects-title">{t.projectsTitle}</h2>
+                    {showKicker(t.projectsTitle, sections.projects.label) && (
+                      <span class="pxt-panel-kicker" aria-hidden="true">
+                        {t.projectsTitle}
+                      </span>
+                    )}
+                    <h2 id="pxt-projects-title">{sections.projects.label}</h2>
                   </div>
                   <ul class="pxt-destinations">
                     {profile.projects?.map((project) => (
@@ -421,6 +442,7 @@ const stationNo = (id: string) => {
                 <section
                   class="pxt-place pxt-place--experience"
                   id="pxt-experience"
+                  data-section="experience"
                   data-pxt-panel="pxt-experience"
                   aria-labelledby="pxt-experience-title"
                 >
@@ -428,7 +450,12 @@ const stationNo = (id: string) => {
                     <span class="pxt-panel-index" aria-hidden="true">
                       {stationNo('experience')}
                     </span>
-                    <h2 id="pxt-experience-title">{t.experienceTitle}</h2>
+                    {showKicker(t.experienceKicker, sections.experience.label) && (
+                      <span class="pxt-panel-kicker" aria-hidden="true">
+                        {t.experienceKicker}
+                      </span>
+                    )}
+                    <h2 id="pxt-experience-title">{sections.experience.label}</h2>
                   </div>
                   <ol class="pxt-log">
                     {profile.experience?.map((item) => (
@@ -455,6 +482,7 @@ const stationNo = (id: string) => {
                 <section
                   class="pxt-place pxt-place--skills"
                   id="pxt-skills"
+                  data-section="skills"
                   data-pxt-panel="pxt-skills"
                   aria-labelledby="pxt-skills-title"
                 >
@@ -462,7 +490,12 @@ const stationNo = (id: string) => {
                     <span class="pxt-panel-index" aria-hidden="true">
                       {stationNo('skills')}
                     </span>
-                    <h2 id="pxt-skills-title">{t.skillsTitle}</h2>
+                    {showKicker(t.skillsTitle, sections.skills.label) && (
+                      <span class="pxt-panel-kicker" aria-hidden="true">
+                        {t.skillsTitle}
+                      </span>
+                    )}
+                    <h2 id="pxt-skills-title">{sections.skills.label}</h2>
                   </div>
                   <ul class="pxt-tools">
                     {profile.skills?.map((skill) => (
@@ -479,6 +512,7 @@ const stationNo = (id: string) => {
                 <section
                   class="pxt-place pxt-place--contact"
                   id="pxt-contact"
+                  data-section="contact"
                   data-pxt-panel="pxt-contact"
                   aria-labelledby="pxt-contact-title"
                 >
@@ -486,7 +520,12 @@ const stationNo = (id: string) => {
                     <span class="pxt-panel-index" aria-hidden="true">
                       {stationNo('contact')}
                     </span>
-                    <h2 id="pxt-contact-title">{t.contactTitle}</h2>
+                    {showKicker(t.contactTitle, sections.contact.label) && (
+                      <span class="pxt-panel-kicker" aria-hidden="true">
+                        {t.contactTitle}
+                      </span>
+                    )}
+                    <h2 id="pxt-contact-title">{sections.contact.label}</h2>
                   </div>
                   <address class="pxt-postbox-copy">
                     {profile.contact?.note && <p class="pxt-post-note">{profile.contact.note}</p>}

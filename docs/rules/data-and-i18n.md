@@ -50,6 +50,7 @@
 - 每种语言必须有 `src/data/profiles/<locale.path>.yaml`，字段契约与 `zh-CN` **完全一致**（同一套 `profileSchema`）
 - 站点 SEO 元数据按语言提供（`i18n.locales[].title/description`）；**不再**保留全局 `site.title` / `site.description` / `site.lang`
 - **每套设计必须提供 `src/designs/<id>/messages.ts`**，导出 `messages`，为 `design.json` 的 `locales` 中**每种 code** 各给一份文案（默认设计必须覆盖 `i18n.locales` 的全部 code）。缺文件或缺键在构建期报错；文案必须遵循该设计的视觉语言，**不得**把所有设计统一翻译成相同表述。
+- **主分区标准标签**是共享契约，不属于设计文案：由 `src/i18n/sections.ts` 提供，设计 `messages.ts` 不得重复维护；主题词只能作为 h2 之外的 kicker / subtitle。规则见 [`design-contract.md`](./design-contract.md)「信息架构与主题文案」。
 - **设计语言覆盖**：`design.json` 必须声明 `locales: string[]`（非空、去重）。默认设计（`design.default`）必须覆盖全部配置 locale；非默认设计可覆盖子集。未覆盖的 locale **不生成该设计页面**（直接 404）；`/<locale>/designs/` 与随机池只包含覆盖当前 locale 的设计。声明覆盖但 `messages.ts` 缺该语言文案、或 `descriptions.ts` 缺切换页描述 → **构建失败**；`design.json` 中列出但未在 `site.config.yaml` 配置的 code → **告警并忽略**（单语言 fork 不必逐套清理 design.json）。
 - **Locale typography coverage（韩语）**：`fontProfile: korean` 由 `fonts:coverage` 消费；声明 `ko` 的 `styled` 设计，每个 `font` / `font-family` 栈必须包含 Hangul 核心变量，页面必须注册对应 `<Font>`；`html-only` 在字体维度豁免。CJK 核心存在性仍由 `fonts:typography` 处理。决策见 ADR 0017。
 - **Locale typography coverage（繁体中文）**：`fontProfile: traditional-chinese` 由 `fonts:coverage` 消费；声明 `zh-TW` 的 `styled` 设计必须在 `html:lang(zh-TW)` 内重映射每个被用到的 CJK/伴生变量（韩文伴生槽位可映射到 `__senrenbanka_tc_skip__` 哨兵，不得提升为新的字形角色），TC `<Font>` 只在 zh-TW 页注册；`html-only` 豁免。TC 族的 `scripts` 必须同时含 `cjk` 与 `han-traditional`，否则会绕过汉字审计。决策见 ADR 0018。

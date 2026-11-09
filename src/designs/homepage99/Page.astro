@@ -14,11 +14,13 @@ import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('homepage99', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const hasProjects = Boolean(profile.projects?.length);
@@ -27,11 +29,11 @@ const hasSkills = Boolean(profile.skills?.length);
 const hasContact = profile.contact !== undefined;
 
 const contents = [
-  { id: 'h99-links', label: t.links },
-  ...(hasProjects ? [{ id: 'h99-projects', label: t.projects }] : []),
-  ...(hasExperience ? [{ id: 'h99-experience', label: t.experience }] : []),
-  ...(hasSkills ? [{ id: 'h99-skills', label: t.skills }] : []),
-  ...(hasContact ? [{ id: 'h99-contact', label: t.contact }] : []),
+  { id: 'h99-links', label: sections.links.label },
+  ...(hasProjects ? [{ id: 'h99-projects', label: sections.projects.label }] : []),
+  ...(hasExperience ? [{ id: 'h99-experience', label: sections.experience.label }] : []),
+  ...(hasSkills ? [{ id: 'h99-skills', label: sections.skills.label }] : []),
+  ...(hasContact ? [{ id: 'h99-contact', label: sections.contact.label }] : []),
 ];
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
@@ -135,9 +137,14 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
         </nav>
 
         <main id="h99-main" class="h99-main">
-          <section class="h99-section" id="h99-links" aria-labelledby="h99-links-title">
+          <section
+            class="h99-section"
+            id="h99-links"
+            aria-labelledby="h99-links-title"
+            data-section="links"
+          >
             <div class="h99-section-head">
-              <h2 id="h99-links-title">{t.links}</h2>
+              <h2 id="h99-links-title">{sections.links.label}</h2>
               <span class="h99-section-mark" aria-hidden="true">
                 {t.linksMark}
               </span>
@@ -162,9 +169,14 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           </section>
 
           {hasProjects && (
-            <section class="h99-section" id="h99-projects" aria-labelledby="h99-projects-title">
+            <section
+              class="h99-section"
+              id="h99-projects"
+              aria-labelledby="h99-projects-title"
+              data-section="projects"
+            >
               <div class="h99-section-head">
-                <h2 id="h99-projects-title">{t.projects}</h2>
+                <h2 id="h99-projects-title">{sections.projects.label}</h2>
                 <span class="h99-section-mark" aria-hidden="true">
                   {t.projectsMark}
                 </span>
@@ -199,9 +211,14 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           )}
 
           {hasExperience && (
-            <section class="h99-section" id="h99-experience" aria-labelledby="h99-experience-title">
+            <section
+              class="h99-section"
+              id="h99-experience"
+              aria-labelledby="h99-experience-title"
+              data-section="experience"
+            >
               <div class="h99-section-head">
-                <h2 id="h99-experience-title">{t.experience}</h2>
+                <h2 id="h99-experience-title">{sections.experience.label}</h2>
                 <span class="h99-section-mark" aria-hidden="true">
                   {t.experienceMark}
                 </span>
@@ -248,9 +265,14 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           )}
 
           {hasSkills && (
-            <section class="h99-section" id="h99-skills" aria-labelledby="h99-skills-title">
+            <section
+              class="h99-section"
+              id="h99-skills"
+              aria-labelledby="h99-skills-title"
+              data-section="skills"
+            >
               <div class="h99-section-head">
-                <h2 id="h99-skills-title">{t.skills}</h2>
+                <h2 id="h99-skills-title">{sections.skills.label}</h2>
                 <span class="h99-section-mark" aria-hidden="true">
                   {t.skillsMark}
                 </span>
@@ -269,9 +291,14 @@ const avatarAlt = t.avatarAlt.replace('{name}', profile.name);
           )}
 
           {hasContact && (
-            <section class="h99-section" id="h99-contact" aria-labelledby="h99-contact-title">
+            <section
+              class="h99-section"
+              id="h99-contact"
+              aria-labelledby="h99-contact-title"
+              data-section="contact"
+            >
               <div class="h99-section-head">
-                <h2 id="h99-contact-title">{t.contact}</h2>
+                <h2 id="h99-contact-title">{sections.contact.label}</h2>
                 <span class="h99-section-mark" aria-hidden="true">
                   {t.contactMark}
                 </span>

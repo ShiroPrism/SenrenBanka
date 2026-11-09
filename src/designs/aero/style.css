@@ -330,15 +330,31 @@ html:has(.aero) {
   border-top: 1px solid rgb(18 50 71 / 0.12);
 }
 
+/* 分区标题区：主题词 kicker（第一行）+ 标准标签 h2（第二行）+ 计数（对齐 h2）。
+   标签变短后标题区仍保持「系统提示 + 标题 + 编号」的三层节奏。 */
 .aero-section-head {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+  gap: 0.15rem 1rem;
   margin-bottom: 1.1rem;
 }
 
+.aero-section-kicker {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  color: var(--ae-accent-ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
 .aero-section-title {
+  grid-column: 1;
+  grid-row: 2;
   margin: 0;
   font-family: var(--ae-type-display);
   font-size: clamp(1.5rem, 3vw, 2.2rem);
@@ -348,6 +364,8 @@ html:has(.aero) {
 }
 
 .aero-section-hint {
+  grid-column: 2;
+  grid-row: 2;
   color: var(--ae-ink-muted);
   font-size: 0.7rem;
   font-weight: 700;

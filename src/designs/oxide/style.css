@@ -70,6 +70,7 @@
 .ox-brand,
 .ox-top-meta,
 .ox-label,
+.ox-kicker,
 .ox-badge,
 .ox-num,
 .ox-row-tags,
@@ -119,6 +120,16 @@
   padding: clamp(2.5rem, 8vh, 5rem) 0 clamp(2rem, 6vh, 3.25rem);
   border-bottom: 1px solid var(--ox-line);
   border-bottom-color: oklch(0.316 0.006 260);
+}
+
+/* 分区标题上方的英文主题词（IDENTITY / CHANNELS / CAPABILITIES / DEPLOYMENTS / OPERATIONS）：
+   原为 `p.ox-label` 的前半段，现降为 kicker——h2 只印双语标准分区词。 */
+.ox-kicker {
+  margin: 0 0 0.3rem;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ox-dim);
 }
 
 .ox-label {

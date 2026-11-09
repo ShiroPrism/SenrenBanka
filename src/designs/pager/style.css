@@ -259,6 +259,14 @@ html {
   line-height: 1;
 }
 
+/* 消息标题前的语域词（kicker）：标准标签在 h2 上，屏显短词退回淡色小字 */
+.pg-msg-kicker {
+  flex: none;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--pg-dim);
+}
+
 .pg-msg-title {
   flex: none;
   margin: 0;

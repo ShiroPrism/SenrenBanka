@@ -99,7 +99,16 @@
   margin: 1.7rem 0 0;
 }
 
-/* 分栏标题：两翼虚线夹一枚小型主题签（装饰虚线不进无障碍树） */
+/* 分栏标题上方的语域小字（备注 / 明细 / 订单 / 纪录 / 结账台）：原为 h2 文本，
+   现降为 kicker——h2 只印标准分区词。 */
+.rc-kicker {
+  margin: 0 0 0.1rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+/* 分栏标题：两翼虚线夹一枚标准分区词（装饰虚线不进无障碍树） */
 .rc-sec {
   display: flex;
   align-items: center;

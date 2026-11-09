@@ -14,12 +14,16 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('poster', Astro.url.pathname);
 const { profile, contextMenu } = view;
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
+const showMark = (key: keyof typeof sections) =>
+  sections[key].enLabel.toUpperCase() !== sections[key].label.toUpperCase();
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
@@ -76,22 +80,36 @@ const linkCount = profile.links.length;
         </header>
 
         <div class="ps-grid">
-          <section class="ps-sec ps-sec--7" data-reveal aria-labelledby="ps-memo-title">
+          <section
+            class="ps-sec ps-sec--7"
+            data-section="profile"
+            data-reveal
+            aria-labelledby="ps-memo-title"
+          >
+            {showMark('profile') && (
+              <p class="ps-sec-kicker" aria-hidden="true">
+                <span class="ps-sec-mark">{sections.profile.enLabel}</span>
+              </p>
+            )}
             <h2 class="ps-sec-title" id="ps-memo-title">
-              <span class="ps-sec-mark">{t.memoMark}</span>
-              <span class="ps-sec-name">{t.memoTitle}</span>
+              <span class="ps-sec-name">{sections.profile.label}</span>
             </h2>
             <p class="ps-bio">{profile.bio}</p>
           </section>
 
           <section
             class="ps-sec ps-sec--5 ps-sec--rule"
+            data-section="links"
             data-reveal
             aria-labelledby="ps-links-title"
           >
+            {showMark('links') && (
+              <p class="ps-sec-kicker" aria-hidden="true">
+                <span class="ps-sec-mark">{sections.links.enLabel}</span>
+              </p>
+            )}
             <h2 class="ps-sec-title" id="ps-links-title">
-              <span class="ps-sec-mark">{t.itemsMark}</span>
-              <span class="ps-sec-name">{t.itemsTitle}</span>
+              <span class="ps-sec-name">{sections.links.label}</span>
             </h2>
             <ul class="ps-links">
               {profile.links.map((link, index) => (
@@ -109,10 +127,19 @@ const linkCount = profile.links.length;
           </section>
 
           {profile.projects && profile.projects.length > 0 && (
-            <section class="ps-sec ps-sec--5" data-reveal aria-labelledby="ps-orders-title">
+            <section
+              class="ps-sec ps-sec--5"
+              data-section="projects"
+              data-reveal
+              aria-labelledby="ps-orders-title"
+            >
+              {showMark('projects') && (
+                <p class="ps-sec-kicker" aria-hidden="true">
+                  <span class="ps-sec-mark">{sections.projects.enLabel}</span>
+                </p>
+              )}
               <h2 class="ps-sec-title" id="ps-orders-title">
-                <span class="ps-sec-mark">{t.ordersMark}</span>
-                <span class="ps-sec-name">{t.ordersTitle}</span>
+                <span class="ps-sec-name">{sections.projects.label}</span>
               </h2>
               <ol class="ps-works">
                 {profile.projects.map((project, index) => (
@@ -142,12 +169,17 @@ const linkCount = profile.links.length;
           {profile.experience && profile.experience.length > 0 && (
             <section
               class="ps-sec ps-sec--7 ps-sec--rule"
+              data-section="experience"
               data-reveal
               aria-labelledby="ps-log-title"
             >
+              {showMark('experience') && (
+                <p class="ps-sec-kicker" aria-hidden="true">
+                  <span class="ps-sec-mark">{sections.experience.enLabel}</span>
+                </p>
+              )}
               <h2 class="ps-sec-title" id="ps-log-title">
-                <span class="ps-sec-mark">{t.logMark}</span>
-                <span class="ps-sec-name">{t.logTitle}</span>
+                <span class="ps-sec-name">{sections.experience.label}</span>
               </h2>
               <ul class="ps-logs">
                 {profile.experience.map((item) => (
@@ -165,10 +197,19 @@ const linkCount = profile.links.length;
           )}
 
           {profile.skills && profile.skills.length > 0 && (
-            <section class="ps-sec ps-sec--7" data-reveal aria-labelledby="ps-skills-title">
+            <section
+              class="ps-sec ps-sec--7"
+              data-section="skills"
+              data-reveal
+              aria-labelledby="ps-skills-title"
+            >
+              {showMark('skills') && (
+                <p class="ps-sec-kicker" aria-hidden="true">
+                  <span class="ps-sec-mark">{sections.skills.enLabel}</span>
+                </p>
+              )}
               <h2 class="ps-sec-title" id="ps-skills-title">
-                <span class="ps-sec-mark">{t.skillsMark}</span>
-                <span class="ps-sec-name">{t.skillsTitle}</span>
+                <span class="ps-sec-name">{sections.skills.label}</span>
               </h2>
               <ul class="ps-skills">
                 {profile.skills.map((skill) => (
@@ -180,12 +221,17 @@ const linkCount = profile.links.length;
 
           <section
             class="ps-sec ps-sec--5 ps-sec--rule"
+            data-section="contact"
             data-reveal
             aria-labelledby="ps-checkout-title"
           >
+            {showMark('contact') && (
+              <p class="ps-sec-kicker" aria-hidden="true">
+                <span class="ps-sec-mark">{sections.contact.enLabel}</span>
+              </p>
+            )}
             <h2 class="ps-sec-title" id="ps-checkout-title">
-              <span class="ps-sec-mark">{t.checkoutMark}</span>
-              <span class="ps-sec-name">{t.checkoutTitle}</span>
+              <span class="ps-sec-name">{sections.contact.label}</span>
             </h2>
             <p class="ps-total">
               <span class="ps-total-label">{t.totalLabel}</span>

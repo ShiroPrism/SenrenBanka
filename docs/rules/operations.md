@@ -20,7 +20,8 @@
 - `npm run fonts:typography`：静态检查所有 npm / local registration 只有主 face，并检查所有 `styled` 设计及预览中字体变量后的显式回退与 CJK 顺序；已选用 core-cjk 的设计还必须在每个字体变量栈中保留核心字体
 - `npm run fonts:subset`：`astro build` 之后的构建步骤，按最终 `dist` 中实际引用该族的页面语料从 core source font 生成每族一个 WOFF2 字形子集，并把页面的核心分片 `@font-face` 替换为一条无 `unicode-range` 的子集规则；未被引用的族跳过；`-- --dist <dir>` / `-- --dry-run` 可用
 - `npm run fonts:prune`：`fonts:subset` 之后的构建步骤，按最终 `dist` 文本裁剪剩余分片并把保留的 `@font-face` 外置为共享哈希 CSS；`-- --dist <dir>` 指向其他产物目录，`-- --dry-run` 只报告不写盘。规则见下文「字体裁剪、内容子集与体积门禁」
-- `npm run build`：`fonts:check` + check（含 lint / format / eol / typography / coverage）+ Astro 构建 + **`fonts:subset`** + **`fonts:prune`** + HTML-only 门禁 + CJK 字体审计（部署集合适配）；设计注册表校验失败时以 `[senrenbanka]` 前缀明确报错，字体基础设施失败以 `[senrenbanka:fonts]` 前缀报错
+- `npm run build`：`fonts:check` + check（含 lint / format / eol / typography / coverage）+ Astro 构建 + **`fonts:subset`** + **`fonts:prune`** + HTML-only 门禁 + **主分区标签门禁** + CJK 字体审计（部署集合适配）；设计注册表校验失败时以 `[senrenbanka]` 前缀明确报错，字体基础设施失败以 `[senrenbanka:fonts]` 前缀报错
+- `npm run verify:sections`：`astro build` 之后扫描 `dist` 中每个 `[data-section]` 的 h2，按 Locale 校验只能由 `src/i18n/sections.json` 的 canonical / alias / 英文 canonical 组成；`scripts/section-labels.allowlist.json` 是迁移期债务清单，最终必须为空。`html-only` 同样覆盖，旧路径重定向页跳过。规则见 [`design-contract.md`](./design-contract.md)「信息架构与主题文案」。
 - 干净 clone / CI / 三平台部署必须先执行 `npm run fonts:prepare`；`.cache/fonts/` 与 `.cache/font-sources/` 不入库，CI 按 `fonts.lock.json` 与 source 哈希复用
 - 新设计页完成、或任一设计页 / 样式 / 构建配置 / 共享机制改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程（步骤与通过标准以 skill 为准，本文件不重复维护清单）；验证状态更新至 `../verification/`（见「文档维护」节）
 - 临时调整 `site.config.yaml`（如切 `mode: fixed`）验证行为后，请恢复示例配置再提交

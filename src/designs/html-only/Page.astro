@@ -1,11 +1,13 @@
 ---
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView, localeDesignHref, localeHref } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 
 const view = await loadDesignView('html-only', Astro.url.pathname);
 const { profile } = view;
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 
 const hasProjects = Boolean(profile.projects?.length);
 const hasExperience = Boolean(profile.experience?.length);
@@ -13,11 +15,11 @@ const hasSkills = Boolean(profile.skills?.length);
 const hasContact = profile.contact !== undefined;
 
 const contents = [
-  { id: 'links', label: t.links },
-  ...(hasProjects ? [{ id: 'projects', label: t.projects }] : []),
-  ...(hasExperience ? [{ id: 'experience', label: t.experience }] : []),
-  ...(hasSkills ? [{ id: 'skills', label: t.skills }] : []),
-  ...(hasContact ? [{ id: 'contact', label: t.contact }] : []),
+  { id: 'links', label: sections.links.label },
+  ...(hasProjects ? [{ id: 'projects', label: sections.projects.label }] : []),
+  ...(hasExperience ? [{ id: 'experience', label: sections.experience.label }] : []),
+  ...(hasSkills ? [{ id: 'skills', label: sections.skills.label }] : []),
+  ...(hasContact ? [{ id: 'contact', label: sections.contact.label }] : []),
 ];
 ---
 
@@ -84,8 +86,8 @@ const contents = [
     </nav>
 
     <main>
-      <section id="links" aria-labelledby="links-title">
-        <h2 id="links-title">{t.links}</h2>
+      <section id="links" aria-labelledby="links-title" data-section="links">
+        <h2 id="links-title">{sections.links.label}</h2>
         <ul>
           {profile.links.map((link) => (
             <li>
@@ -96,8 +98,8 @@ const contents = [
       </section>
 
       {hasProjects && (
-        <section id="projects" aria-labelledby="projects-title">
-          <h2 id="projects-title">{t.projects}</h2>
+        <section id="projects" aria-labelledby="projects-title" data-section="projects">
+          <h2 id="projects-title">{sections.projects.label}</h2>
           <ul>
             {profile.projects!.map((project, index) => (
               <li>
@@ -121,8 +123,8 @@ const contents = [
       )}
 
       {hasExperience && (
-        <section id="experience" aria-labelledby="experience-title">
-          <h2 id="experience-title">{t.experience}</h2>
+        <section id="experience" aria-labelledby="experience-title" data-section="experience">
+          <h2 id="experience-title">{sections.experience.label}</h2>
           <ul>
             {profile.experience!.map((item) => (
               <li>
@@ -139,8 +141,8 @@ const contents = [
       )}
 
       {hasSkills && (
-        <section id="skills" aria-labelledby="skills-title">
-          <h2 id="skills-title">{t.skills}</h2>
+        <section id="skills" aria-labelledby="skills-title" data-section="skills">
+          <h2 id="skills-title">{sections.skills.label}</h2>
           <ul>
             {profile.skills!.map((skill) => (
               <li>{skill}</li>
@@ -150,8 +152,8 @@ const contents = [
       )}
 
       {hasContact && (
-        <section id="contact" aria-labelledby="contact-title">
-          <h2 id="contact-title">{t.contact}</h2>
+        <section id="contact" aria-labelledby="contact-title" data-section="contact">
+          <h2 id="contact-title">{sections.contact.label}</h2>
           <address>
             {profile.contact?.note && <p>{profile.contact.note}</p>}
             {profile.contact?.email && (

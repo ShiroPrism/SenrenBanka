@@ -192,6 +192,17 @@ html {
   text-transform: uppercase;
 }
 
+/* 签上的类目词（主题词 kicker）：标准标签在 h2 上，语域词退回淡墨小字 */
+.ar-tab-kicker {
+  font-family:
+    var(--font-archive-record), 'Courier New', var(--font-gowun-batang), var(--font-zhuque),
+    'Songti SC', 'SimSun', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Serif KR', monospace;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  color: var(--ar-dim);
+}
+
 .ar-tab-no {
   font-family:
     var(--font-archive-record), 'Courier New', var(--font-gowun-batang), var(--font-zhuque),
@@ -645,6 +656,10 @@ html {
   }
 
   .ar-tab-no {
+    font-size: 0.625rem;
+  }
+
+  .ar-tab-kicker {
     font-size: 0.625rem;
   }
 

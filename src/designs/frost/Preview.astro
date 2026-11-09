@@ -1,13 +1,13 @@
 ---
 /** frost 预览碎片：极光、双层毛玻璃、胶囊控件与 iOS 蓝。 */
-import { messages } from './messages';
 import type { PreviewProps } from '../preview';
+import { getSectionLabels } from '../../i18n/sections';
 import './tokens.css';
 
 export const fonts: import('astro:assets').CssVariable[] = ['--font-inter'];
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
-const t = messages[locale];
+const sections = getSectionLabels(locale);
 ---
 
 <div class="fr-pv">
@@ -20,12 +20,12 @@ const t = messages[locale];
     <p class="fr-pv-name">{name}</p>
     <p class="fr-pv-headline">{headline}</p>
     <div class="fr-pv-actions">
-      <span class="fr-pv-pill">{t.projects}</span>
-      <span class="fr-pv-pill fr-pv-pill-accent">{t.contact}</span>
+      <span class="fr-pv-pill">{sections.projects.label}</span>
+      <span class="fr-pv-pill fr-pv-pill-accent">{sections.contact.label}</span>
     </div>
     <div class="fr-pv-card">
-      <p>{t.experience}</p>
-      <span>{t.skills}</span>
+      <p>{sections.experience.label}</p>
+      <span>{sections.skills.label}</span>
     </div>
   </div>
 </div>

@@ -17,12 +17,14 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('fairy-kei', Astro.url.pathname);
 const { profile, contextMenu } = view;
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 
 const pad = (value: number) => String(value).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
@@ -131,9 +133,12 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
             </span>
           </header>
 
-          <nav class="fk-charms" aria-labelledby="fk-links-title">
+          <nav class="fk-charms" aria-labelledby="fk-links-title" data-section="links">
             <div class="fk-charms-heading">
-              <h2 id="fk-links-title">{t.linksTitle}</h2>
+              <p class="fk-section-kicker" aria-hidden="true">
+                {t.linksTitle}
+              </p>
+              <h2 id="fk-links-title">{sections.links.label}</h2>
               <span class="fk-charms-count">
                 <span>{pad(profile.links.length)}</span>
                 {t.linkUnit}
@@ -167,14 +172,24 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
             )}
           </nav>
 
-          <section class="fk-package" data-reveal aria-labelledby="fk-bio-title">
+          <section
+            class="fk-package"
+            data-reveal
+            aria-labelledby="fk-bio-title"
+            data-section="profile"
+          >
             <div class="fk-package-inner">
               <span class="fk-package-tape" aria-hidden="true"></span>
               <div class="fk-section-heading">
                 <span class="fk-section-no" aria-hidden="true">
                   {bioSectionNo}
                 </span>
-                <h2 id="fk-bio-title">{t.bioTitle}</h2>
+                <div class="fk-section-title">
+                  <p class="fk-section-kicker" aria-hidden="true">
+                    {t.bioTitle}
+                  </p>
+                  <h2 id="fk-bio-title">{sections.profile.label}</h2>
+                </div>
               </div>
               <p class="fk-bio">{profile.bio}</p>
               <span class="fk-package-seal" aria-hidden="true">
@@ -184,12 +199,22 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
           </section>
 
           {projects.length > 0 && (
-            <section class="fk-projects" data-reveal aria-labelledby="fk-projects-title">
+            <section
+              class="fk-projects"
+              data-reveal
+              aria-labelledby="fk-projects-title"
+              data-section="projects"
+            >
               <div class="fk-section-heading fk-section-heading--wide">
                 <span class="fk-section-no" aria-hidden="true">
                   {projectsSectionNo}
                 </span>
-                <h2 id="fk-projects-title">{t.projectsTitle}</h2>
+                <div class="fk-section-title">
+                  <p class="fk-section-kicker" aria-hidden="true">
+                    {t.projectsTitle}
+                  </p>
+                  <h2 id="fk-projects-title">{sections.projects.label}</h2>
+                </div>
                 <span class="fk-section-count" aria-hidden="true">
                   {pad(projects.length)}
                 </span>
@@ -237,12 +262,22 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
           )}
 
           {experience.length > 0 && (
-            <section class="fk-ribbon" data-reveal aria-labelledby="fk-experience-title">
+            <section
+              class="fk-ribbon"
+              data-reveal
+              aria-labelledby="fk-experience-title"
+              data-section="experience"
+            >
               <div class="fk-section-heading fk-section-heading--wide">
                 <span class="fk-section-no" aria-hidden="true">
                   {experienceSectionNo}
                 </span>
-                <h2 id="fk-experience-title">{t.experienceTitle}</h2>
+                <div class="fk-section-title">
+                  <p class="fk-section-kicker" aria-hidden="true">
+                    {t.experienceTitle}
+                  </p>
+                  <h2 id="fk-experience-title">{sections.experience.label}</h2>
+                </div>
                 <span class="fk-section-count" aria-hidden="true">
                   {pad(experience.length)}
                 </span>
@@ -269,13 +304,23 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
           )}
 
           {skills.length > 0 && (
-            <section class="fk-stickers" data-reveal aria-labelledby="fk-skills-title">
+            <section
+              class="fk-stickers"
+              data-reveal
+              aria-labelledby="fk-skills-title"
+              data-section="skills"
+            >
               <span class="fk-sticker-holes" aria-hidden="true"></span>
               <div class="fk-section-heading fk-section-heading--wide">
                 <span class="fk-section-no" aria-hidden="true">
                   {skillsSectionNo}
                 </span>
-                <h2 id="fk-skills-title">{t.skillsTitle}</h2>
+                <div class="fk-section-title">
+                  <p class="fk-section-kicker" aria-hidden="true">
+                    {t.skillsTitle}
+                  </p>
+                  <h2 id="fk-skills-title">{sections.skills.label}</h2>
+                </div>
                 <span class="fk-section-count" aria-hidden="true">
                   {pad(skills.length)}
                 </span>
@@ -289,7 +334,12 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
           )}
 
           {hasContact && (
-            <section class="fk-contact" data-reveal aria-labelledby="fk-contact-title">
+            <section
+              class="fk-contact"
+              data-reveal
+              aria-labelledby="fk-contact-title"
+              data-section="contact"
+            >
               <div class="fk-contact-note">
                 <span class="fk-note-pin" aria-hidden="true">
                   <i></i>
@@ -298,7 +348,12 @@ const contactSectionNo = hasContact ? pad(++sectionNumber) : '';
                   <span class="fk-section-no" aria-hidden="true">
                     {contactSectionNo}
                   </span>
-                  <h2 id="fk-contact-title">{t.contactTitle}</h2>
+                  <div class="fk-section-title">
+                    <p class="fk-section-kicker" aria-hidden="true">
+                      {t.contactTitle}
+                    </p>
+                    <h2 id="fk-contact-title">{sections.contact.label}</h2>
+                  </div>
                 </div>
                 {profile.contact?.email ? (
                   <p class="fk-contact-line">

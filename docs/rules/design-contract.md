@@ -41,10 +41,16 @@
 
 每套设计可以有自己的视觉母题，但**主分区必须保持求职语义**：
 
-- 主分区固定对应「简介 / 项目 / 经历 / 技能 / 联系」或同义的标准词（英文 Profile / Projects / Experience / Skills / Contact）。主题词只能作为副标题、kicker、同一标题内的次级词或装饰，**不得单独替换**主分区标签。
+- 主分区固定为六个：简介 / 项目 / 经历 / 技能 / 联系 / 链接（英文 Profile / Projects / Experience / Skills / Contact / Links）。简介 hero 允许没有 h2；若存在独立简介分区，使用标准标签。
+- 主分区 h2 的文本只能由标准标签词元组成：当前 Locale 的 canonical、英文 canonical 或显式 alias（`src/i18n/sections.json`）。允许分隔符（`/`、`|`、`·`、`-`、`—`、空白）；不得出现主题词或其他文本。
+- 主题词只能出现在 h2 之外：可选 kicker、subtitle 或装饰；移除后页面必须仍然成立，且不得承担 heading 语义。
+- 主题词或英文 kicker 与当前 Locale 的 h2 标准标签同名时（忽略大小写），必须省略该 kicker，避免标题区重复；只省略 kicker，不移除 h2。
+- 标准标签由共享词表 `src/i18n/sections.ts` 提供；设计不得在 `messages.ts` 重复维护标准标签。新增 Locale 必须补齐词表。
+- 每个主分区的 sectioning 元素必须带 `data-section="<key>"`；该属性只用于构建期校验，不产生样式或脚本，`html-only` 同样适用。
+- `npm run verify:sections` 在构建后扫描 `dist`，按 Locale 校验每个 `data-section` 的 h2 词元；检查失败必须让构建失败。迁移期 allowlist `scripts/section-labels.allowlist.json` 只允许列出的设计跳过，最终必须为空。
 - 首次访问者必须在不看设计说明的情况下识别每个分区；不得要求访问者先解码主题隐喻。
 - 不得使用把候选人商品化、贬低或误导求职状态的文案作为主分区 / 核心标签（例如「非卖品」「净含量 1 人」「生产信息」「购买渠道」）。
-- 新增 / 修改主题时检查 `messages.ts` 与 `Page.astro` 的 h2；若主分区被主题词替换，改为「标准标签 + 主题副标题」。既有主题按批次审计，历史验证记录不回写。
+- 新增 / 修改主题时检查 `messages.ts`、`Page.astro` 与 `Preview.astro` 的 h2 / 标签；存量审计记录见 `docs/verification/section-labels.md`。
 
 ### 可选 · 切换页预览碎片（`Preview.astro` / `tokens.css`）
 

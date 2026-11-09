@@ -222,6 +222,16 @@ html:has(.zine) {
   margin-bottom: 1rem;
 }
 
+.zn-section-kicker {
+  margin: 0 0 0.35rem;
+  color: var(--zn-red-ink);
+  font-family: var(--zn-type-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .zn-section-num {
   padding: 0.08rem 0.35rem;
   background: var(--zn-ink);

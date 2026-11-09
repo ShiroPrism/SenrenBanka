@@ -1,6 +1,7 @@
 ---
 /** kern 预览碎片：纯黑白、发丝网格、十字交点与反转按钮。 */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -8,6 +9,7 @@ export const fonts: import('astro:assets').CssVariable[] = ['--font-geist', '--f
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 ---
 
 <div class="kern-pv">
@@ -19,13 +21,13 @@ const t = messages[locale];
     <p class="kern-pv-name">{name}</p>
     <p class="kern-pv-headline">{headline}</p>
     <div class="kern-pv-actions">
-      <span class="kern-pv-btn">{t.projects}</span>
-      <span class="kern-pv-btn kern-pv-btn-inv">{t.contact}</span>
+      <span class="kern-pv-btn">{sections.projects.label}</span>
+      <span class="kern-pv-btn kern-pv-btn-inv">{sections.contact.label}</span>
     </div>
     <div class="kern-pv-grid">
-      <span>01 / {t.projects}</span>
-      <span>02 / {t.experience}</span>
-      <span>03 / {t.skills}</span>
+      <span>01 / {sections.projects.label}</span>
+      <span>02 / {sections.experience.label}</span>
+      <span>03 / {sections.skills.label}</span>
     </div>
   </div>
 </div>

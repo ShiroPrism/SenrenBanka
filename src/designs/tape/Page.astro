@@ -7,6 +7,8 @@
  *
  * 结构：左栏 = 磁带本体（纯 CSS 几何：壳身 + 贴标 + 双卷轴窗 + 螺钉，桌面 sticky），
  * 右栏 = J 卡（h1 手写姓名 → 六个具名分区 → 页脚物件标记）。移动端单列、壳在上。
+ *       分区 h2 取共享标准标签（`src/i18n/sections`）；曲目单语域词（备注 / 曲目 /
+ *       企划 / 纪录 / 结算）降为 h2 上方的套印小字 kicker。
  *
  * 动效：一个作者时刻（磁带落桌 + 贴标展开，纯 CSS 一次性）；滚动显现走共享
  * IntersectionObserver（`data-reveal`，见 docs/rules/visual-language.md「动效（Motion）」）。卷轴只在 hover /
@@ -17,11 +19,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('tape', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const pad = (value: number) => String(value).padStart(2, '0');
@@ -118,31 +122,47 @@ const track = () => `A${(trackIndex += 1)}`;
           )}
         </header>
 
-        <section class="tp-track" data-reveal aria-labelledby="tp-memo-title">
-          <h2 class="tp-sec" id="tp-memo-title">
+        <section
+          class="tp-track"
+          data-section="profile"
+          data-reveal
+          aria-labelledby="tp-memo-title"
+        >
+          <p class="tp-sec-kicker">{t.memoTitle}</p>
+          <div class="tp-sec">
             <span class="tp-sec-no" aria-hidden="true">
               {track()}
             </span>
-            <span class="tp-sec-name">{t.memoTitle}</span>
+            <h2 class="tp-sec-name" id="tp-memo-title">
+              {sections.profile.label}
+            </h2>
             <span class="tp-sec-rule" aria-hidden="true"></span>
             <span class="tp-sec-count" aria-hidden="true">
               {t.sideLabel}
             </span>
-          </h2>
+          </div>
           <p class="tp-bio">{profile.bio}</p>
         </section>
 
-        <section class="tp-track" data-reveal aria-labelledby="tp-tracks-title">
-          <h2 class="tp-sec" id="tp-tracks-title">
+        <section
+          class="tp-track"
+          data-section="links"
+          data-reveal
+          aria-labelledby="tp-tracks-title"
+        >
+          <p class="tp-sec-kicker">{t.tracksTitle}</p>
+          <div class="tp-sec">
             <span class="tp-sec-no" aria-hidden="true">
               {track()}
             </span>
-            <span class="tp-sec-name">{t.tracksTitle}</span>
+            <h2 class="tp-sec-name" id="tp-tracks-title">
+              {sections.links.label}
+            </h2>
             <span class="tp-sec-rule" aria-hidden="true"></span>
             <span class="tp-sec-count" aria-hidden="true">
               {pad(total)}
             </span>
-          </h2>
+          </div>
           <ul class="tp-tracks">
             {profile.links.map((link, index) => (
               <li class="tp-row">
@@ -162,17 +182,25 @@ const track = () => `A${(trackIndex += 1)}`;
         </section>
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="tp-track" data-reveal aria-labelledby="tp-projects-title">
-            <h2 class="tp-sec" id="tp-projects-title">
+          <section
+            class="tp-track"
+            data-section="projects"
+            data-reveal
+            aria-labelledby="tp-projects-title"
+          >
+            <p class="tp-sec-kicker">{t.projectsTitle}</p>
+            <div class="tp-sec">
               <span class="tp-sec-no" aria-hidden="true">
                 {track()}
               </span>
-              <span class="tp-sec-name">{t.projectsTitle}</span>
+              <h2 class="tp-sec-name" id="tp-projects-title">
+                {sections.projects.label}
+              </h2>
               <span class="tp-sec-rule" aria-hidden="true"></span>
               <span class="tp-sec-count" aria-hidden="true">
                 {pad(profile.projects.length)}
               </span>
-            </h2>
+            </div>
             <ol class="tp-projects">
               {profile.projects.map((project, index) => (
                 <li class="tp-project">
@@ -205,17 +233,25 @@ const track = () => `A${(trackIndex += 1)}`;
         )}
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="tp-track" data-reveal aria-labelledby="tp-log-title">
-            <h2 class="tp-sec" id="tp-log-title">
+          <section
+            class="tp-track"
+            data-section="experience"
+            data-reveal
+            aria-labelledby="tp-log-title"
+          >
+            <p class="tp-sec-kicker">{t.logTitle}</p>
+            <div class="tp-sec">
               <span class="tp-sec-no" aria-hidden="true">
                 {track()}
               </span>
-              <span class="tp-sec-name">{t.logTitle}</span>
+              <h2 class="tp-sec-name" id="tp-log-title">
+                {sections.experience.label}
+              </h2>
               <span class="tp-sec-rule" aria-hidden="true"></span>
               <span class="tp-sec-count" aria-hidden="true">
                 {pad(profile.experience.length)}
               </span>
-            </h2>
+            </div>
             <ul class="tp-logs">
               {profile.experience.map((item) => (
                 <li class="tp-log">
@@ -232,32 +268,47 @@ const track = () => `A${(trackIndex += 1)}`;
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="tp-track" data-reveal aria-labelledby="tp-skills-title">
-            <h2 class="tp-sec" id="tp-skills-title">
+          <section
+            class="tp-track"
+            data-section="skills"
+            data-reveal
+            aria-labelledby="tp-skills-title"
+          >
+            <div class="tp-sec">
               <span class="tp-sec-no" aria-hidden="true">
                 {track()}
               </span>
-              <span class="tp-sec-name">{t.skillsTitle}</span>
+              <h2 class="tp-sec-name" id="tp-skills-title">
+                {sections.skills.label}
+              </h2>
               <span class="tp-sec-rule" aria-hidden="true"></span>
               <span class="tp-sec-count" aria-hidden="true">
                 {pad(profile.skills.length)}
               </span>
-            </h2>
+            </div>
             <p class="tp-skills">{profile.skills.join(' · ')}</p>
           </section>
         )}
 
-        <section class="tp-track" data-reveal aria-labelledby="tp-contact-title">
-          <h2 class="tp-sec" id="tp-contact-title">
+        <section
+          class="tp-track"
+          data-section="contact"
+          data-reveal
+          aria-labelledby="tp-contact-title"
+        >
+          <p class="tp-sec-kicker">{t.contactTitle}</p>
+          <div class="tp-sec">
             <span class="tp-sec-no" aria-hidden="true">
               {track()}
             </span>
-            <span class="tp-sec-name">{t.contactTitle}</span>
+            <h2 class="tp-sec-name" id="tp-contact-title">
+              {sections.contact.label}
+            </h2>
             <span class="tp-sec-rule" aria-hidden="true"></span>
             <span class="tp-sec-count" aria-hidden="true">
               {pad(total)}
             </span>
-          </h2>
+          </div>
           <p class="tp-total">
             <span class="tp-total-label">{t.totalLabel}</span>
             <span class="tp-total-num">{total}</span>

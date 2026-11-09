@@ -14,11 +14,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('deco', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 /** 幕次装饰编号：罗马数字，跨语言恒用（见 messages.ts 不翻译项说明）。 */
@@ -75,7 +77,7 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
       </header>
 
       <main class="deco-main">
-        <section class="deco-hero" aria-labelledby="deco-name">
+        <section class="deco-hero" aria-labelledby="deco-name" data-section="profile">
           <div class="deco-curtain" aria-hidden="true">
             <span class="deco-curtain-half deco-curtain-l"></span>
             <span class="deco-curtain-half deco-curtain-r"></span>
@@ -108,10 +110,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         </section>
 
         {profile.links.length > 0 && (
-          <section class="deco-section" aria-labelledby="deco-links-title" data-reveal>
+          <section
+            class="deco-section"
+            aria-labelledby="deco-links-title"
+            data-section="links"
+            data-reveal
+          >
             <div class="deco-section-head">
-              <h2 id="deco-links-title" class="deco-section-title">
+              <p class="deco-section-kicker" aria-hidden="true">
                 {t.linksTitle}
+              </p>
+              <h2 id="deco-links-title" class="deco-section-title">
+                {sections.links.label}
               </h2>
               <div class="deco-ornament" aria-hidden="true">
                 <span class="deco-ornament-line"></span>
@@ -133,10 +143,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="deco-section" aria-labelledby="deco-acts-title" data-reveal>
+          <section
+            class="deco-section"
+            aria-labelledby="deco-acts-title"
+            data-section="projects"
+            data-reveal
+          >
             <div class="deco-section-head">
-              <h2 id="deco-acts-title" class="deco-section-title">
+              <p class="deco-section-kicker" aria-hidden="true">
                 {t.projectsTitle}
+              </p>
+              <h2 id="deco-acts-title" class="deco-section-title">
+                {sections.projects.label}
               </h2>
               <div class="deco-ornament" aria-hidden="true">
                 <span class="deco-ornament-line"></span>
@@ -168,10 +186,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="deco-section" aria-labelledby="deco-bill-title" data-reveal>
+          <section
+            class="deco-section"
+            aria-labelledby="deco-bill-title"
+            data-section="experience"
+            data-reveal
+          >
             <div class="deco-section-head">
-              <h2 id="deco-bill-title" class="deco-section-title">
+              <p class="deco-section-kicker" aria-hidden="true">
                 {t.experienceTitle}
+              </p>
+              <h2 id="deco-bill-title" class="deco-section-title">
+                {sections.experience.label}
               </h2>
               <div class="deco-ornament" aria-hidden="true">
                 <span class="deco-ornament-line"></span>
@@ -195,10 +221,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="deco-section" aria-labelledby="deco-credits-title" data-reveal>
+          <section
+            class="deco-section"
+            aria-labelledby="deco-credits-title"
+            data-section="skills"
+            data-reveal
+          >
             <div class="deco-section-head">
-              <h2 id="deco-credits-title" class="deco-section-title">
+              <p class="deco-section-kicker" aria-hidden="true">
                 {t.skillsTitle}
+              </p>
+              <h2 id="deco-credits-title" class="deco-section-title">
+                {sections.skills.label}
               </h2>
               <div class="deco-ornament" aria-hidden="true">
                 <span class="deco-ornament-line"></span>
@@ -215,12 +249,20 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {hasContact && (
-          <section class="deco-boxoffice" aria-labelledby="deco-boxoffice-title" data-reveal>
+          <section
+            class="deco-boxoffice"
+            aria-labelledby="deco-boxoffice-title"
+            data-section="contact"
+            data-reveal
+          >
             <span class="deco-step deco-step-tl" aria-hidden="true"></span>
             <span class="deco-step deco-step-br" aria-hidden="true"></span>
             <div class="deco-section-head">
-              <h2 id="deco-boxoffice-title" class="deco-section-title">
+              <p class="deco-section-kicker" aria-hidden="true">
                 {t.contactTitle}
+              </p>
+              <h2 id="deco-boxoffice-title" class="deco-section-title">
+                {sections.contact.label}
               </h2>
               <div class="deco-ornament" aria-hidden="true">
                 <span class="deco-ornament-line"></span>

@@ -12,11 +12,6 @@ export interface HtmlOnlyMessages {
   allDesigns: string;
   backToTop: string;
   location: string;
-  links: string;
-  projects: string;
-  experience: string;
-  skills: string;
-  contact: string;
   tags: string;
 }
 
@@ -29,11 +24,6 @@ export const messages: Record<string, HtmlOnlyMessages> = {
     allDesigns: '全部设计',
     backToTop: '回到顶部',
     location: '所在地',
-    links: '链接',
-    projects: '项目',
-    experience: '经历',
-    skills: '技能',
-    contact: '联系',
     tags: '标签',
   },
   'zh-TW': {
@@ -44,11 +34,6 @@ export const messages: Record<string, HtmlOnlyMessages> = {
     allDesigns: '全部設計',
     backToTop: '回到頂部',
     location: '所在地',
-    links: '連結',
-    projects: '專案',
-    experience: '經歷',
-    skills: '技能',
-    contact: '聯絡',
     tags: '標籤',
   },
   ja: {
@@ -59,11 +44,6 @@ export const messages: Record<string, HtmlOnlyMessages> = {
     allDesigns: 'すべてのデザイン',
     backToTop: 'ページ上部へ戻る',
     location: '所在地',
-    links: 'リンク',
-    projects: 'プロジェクト',
-    experience: '経歴',
-    skills: 'スキル',
-    contact: '連絡先',
     tags: 'タグ',
   },
   en: {
@@ -74,11 +54,6 @@ export const messages: Record<string, HtmlOnlyMessages> = {
     allDesigns: 'All designs',
     backToTop: 'Back to top',
     location: 'Location',
-    links: 'Links',
-    projects: 'Projects',
-    experience: 'Experience',
-    skills: 'Skills',
-    contact: 'Contact',
     tags: 'Tags',
   },
   ko: {
@@ -89,11 +64,6 @@ export const messages: Record<string, HtmlOnlyMessages> = {
     allDesigns: '모든 디자인',
     backToTop: '맨 위로',
     location: '위치',
-    links: '링크',
-    projects: '프로젝트',
-    experience: '경력',
-    skills: '기술',
-    contact: '연락처',
     tags: '태그',
   },
 };

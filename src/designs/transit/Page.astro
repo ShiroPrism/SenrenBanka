@@ -13,11 +13,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('transit', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const projects = profile.projects ?? [];
@@ -58,7 +60,7 @@ const lineCode = (index: number) => `T${index + 1}`;
       </header>
 
       <main>
-        <section class="tr-hero" aria-labelledby="tr-name">
+        <section class="tr-hero" aria-labelledby="tr-name" data-section="profile">
           <div class="tr-hero-copy">
             <p class="tr-kicker tr-rise" style="--tr-delay: 0ms">
               {t.terminus}
@@ -89,13 +91,19 @@ const lineCode = (index: number) => `T${index + 1}`;
         </section>
 
         {profile.links.length > 0 && (
-          <section class="tr-section tr-lines" aria-labelledby="tr-lines-title" data-reveal>
+          <section
+            class="tr-section tr-lines"
+            aria-labelledby="tr-lines-title"
+            data-section="links"
+            data-reveal
+          >
+            <p class="tr-kicker">{t.lines}</p>
             <div class="tr-section-head">
               <span class="tr-section-num" aria-hidden="true">
                 01
               </span>
               <h2 id="tr-lines-title" class="tr-section-title">
-                {t.lines}
+                {sections.links.label}
               </h2>
               <span class="tr-section-count" aria-hidden="true">
                 {pad(profile.links.length)}
@@ -120,13 +128,19 @@ const lineCode = (index: number) => `T${index + 1}`;
         )}
 
         {projects.length > 0 && (
-          <section class="tr-section" aria-labelledby="tr-stations-title" data-reveal>
+          <section
+            class="tr-section"
+            aria-labelledby="tr-stations-title"
+            data-section="projects"
+            data-reveal
+          >
+            <p class="tr-kicker">{t.stations}</p>
             <div class="tr-section-head">
               <span class="tr-section-num" aria-hidden="true">
                 02
               </span>
               <h2 id="tr-stations-title" class="tr-section-title">
-                {t.stations}
+                {sections.projects.label}
               </h2>
               <span class="tr-section-count" aria-hidden="true">
                 {pad(projects.length)}
@@ -168,13 +182,19 @@ const lineCode = (index: number) => `T${index + 1}`;
         )}
 
         {experience.length > 0 && (
-          <section class="tr-section" aria-labelledby="tr-timetable-title" data-reveal>
+          <section
+            class="tr-section"
+            aria-labelledby="tr-timetable-title"
+            data-section="experience"
+            data-reveal
+          >
+            <p class="tr-kicker">{t.timetable}</p>
             <div class="tr-section-head">
               <span class="tr-section-num" aria-hidden="true">
                 03
               </span>
               <h2 id="tr-timetable-title" class="tr-section-title">
-                {t.timetable}
+                {sections.experience.label}
               </h2>
               <span class="tr-section-count" aria-hidden="true">
                 {pad(experience.length)}
@@ -201,13 +221,19 @@ const lineCode = (index: number) => `T${index + 1}`;
         )}
 
         {skills.length > 0 && (
-          <section class="tr-section" aria-labelledby="tr-badges-title" data-reveal>
+          <section
+            class="tr-section"
+            aria-labelledby="tr-badges-title"
+            data-section="skills"
+            data-reveal
+          >
+            <p class="tr-kicker">{t.badges}</p>
             <div class="tr-section-head">
               <span class="tr-section-num" aria-hidden="true">
                 04
               </span>
               <h2 id="tr-badges-title" class="tr-section-title">
-                {t.badges}
+                {sections.skills.label}
               </h2>
               <span class="tr-section-count" aria-hidden="true">
                 {pad(skills.length)}
@@ -225,11 +251,16 @@ const lineCode = (index: number) => `T${index + 1}`;
         )}
 
         {hasContact && (
-          <section class="tr-ticket" aria-labelledby="tr-ticket-title" data-reveal>
+          <section
+            class="tr-ticket"
+            aria-labelledby="tr-ticket-title"
+            data-section="contact"
+            data-reveal
+          >
             <div class="tr-ticket-inner">
               <p class="tr-ticket-kicker">{t.ticket}</p>
               <h2 id="tr-ticket-title" class="tr-ticket-title">
-                {t.ticket}
+                {sections.contact.label}
               </h2>
               {contactEmail ? (
                 <a class="tr-ticket-link" href={`mailto:${contactEmail}`}>

@@ -322,6 +322,16 @@
   margin-top: 1.9rem;
 }
 
+/* 分区头上方的套印小字（备注 / 曲目 / 企划 / 纪录 / 结算）：原为 h2 文本，
+   现降为 kicker——h2 只印标准分区词。 */
+.tp-sec-kicker {
+  margin: 0 0 0.15rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tp-dim);
+}
+
 /* 分区头 = 曲目号 + 名称 + 发丝线 + 计数（号与计数为装饰，不进可访问名） */
 .tp-sec {
   display: flex;
@@ -332,6 +342,14 @@
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+}
+
+.tp-sec h2 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .tp-sec-no {

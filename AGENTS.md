@@ -4,7 +4,7 @@
 
 ## 硬门禁
 
-以下 8 条在任何实现任务中都立即生效；展开说明见对应正文。
+以下 9 条在任何实现任务中都立即生效；展开说明见对应正文。
 
 1. <!-- gate:data-loader -->**统一取数**：设计页只用 `loadDesignView` / `loadDesignStrips` 取数，不得自行解析语言或文件路径。见 [`data-and-i18n.md`](docs/rules/data-and-i18n.md)。
 2. <!-- gate:profile-fields -->**资料完整**：`name` / `headline` / `bio` / `links` 必须全部渲染，禁止虚构个人事实。见 [`data-and-i18n.md`](docs/rules/data-and-i18n.md)。
@@ -14,6 +14,7 @@
 6. <!-- gate:css-isolation -->**样式隔离**：共享模块不得对设计页面 / CSS 建立动态导入边，不得跨设计聚合样式。见 [`pitfalls.md`](docs/rules/pitfalls.md)。
 7. <!-- gate:reveal-visibility -->**降级可见**：内容默认可见，隐藏态只能由 `html[data-reveal-ready]` 门控；无 JS / 无 IO / 减动态时必须可见。见 [`visual-language.md`](docs/rules/visual-language.md)。
 8. <!-- gate:verify-after-change -->**改动必验**：设计页或共享机制改动后必须执行 `design-page-verify` 并更新 `docs/verification/`。见 [`operations.md`](docs/rules/operations.md)。
+9. <!-- gate:section-labels -->**主分区标准标签**：主分区 h2 只能使用共享词表的标准标签（canonical / alias / 英文 canonical），主题词移出 h2；每个主分区带 `data-section`，`npm run verify:sections` 必须通过。见 [`design-contract.md`](docs/rules/design-contract.md)。
 
 ## 任务路由
 
@@ -24,6 +25,7 @@
 | 新增 / 修改 `styled` 设计 | [`design-contract`](docs/rules/design-contract.md) + [`visual-language`](docs/rules/visual-language.md) + [`pitfalls`](docs/rules/pitfalls.md) + [`accessibility-responsive`](docs/rules/accessibility-responsive.md) |
 | 新增 / 修改 `html-only` 设计 | [`design-contract`](docs/rules/design-contract.md) + [`accessibility-responsive`](docs/rules/accessibility-responsive.md) + [`pitfalls`](docs/rules/pitfalls.md) |
 | 数据 / 多语言 / 路由 / 文案 | [`data-and-i18n`](docs/rules/data-and-i18n.md) + [`pitfalls`](docs/rules/pitfalls.md) |
+| 主分区命名 / 标签 / 信息架构 | [`design-contract`](docs/rules/design-contract.md) + [`accessibility-responsive`](docs/rules/accessibility-responsive.md) + [`pitfalls`](docs/rules/pitfalls.md) |
 | 共享操作菜单 / 项目 chrome | [`action-menu`](docs/rules/action-menu.md) + [`accessibility-responsive`](docs/rules/accessibility-responsive.md) + [`pitfalls`](docs/rules/pitfalls.md) |
 | 构建 / 文档 / 版本 / git 范围 | [`operations`](docs/rules/operations.md) |
 | 排错 / 新增已知坑 | [`pitfalls`](docs/rules/pitfalls.md) + 对应主题文件 |

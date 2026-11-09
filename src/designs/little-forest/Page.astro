@@ -16,11 +16,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('little-forest', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
@@ -165,7 +167,12 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
     </header>
 
     <main class="lf-book" aria-label={t.trailLabel}>
-      <section class="lf-clearing" aria-labelledby="lf-clearing-title" data-reveal>
+      <section
+        class="lf-clearing"
+        aria-labelledby="lf-clearing-title"
+        data-section="profile"
+        data-reveal
+      >
         <div class="lf-clearing-mark" aria-hidden="true">
           <svg viewBox="0 0 72 92" focusable="false">
             <path d="M36 86C34 56 37 29 47 7"></path>
@@ -174,10 +181,11 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
           </svg>
         </div>
         <div class="lf-clearing-body">
-          <p class="lf-section-label">{t.clearingLabel}</p>
+          <p class="lf-section-label">{t.clearingTitle}</p>
           <h2 id="lf-clearing-title" class="lf-clearing-title">
-            {t.clearingTitle}
+            {sections.profile.label}
           </h2>
+          <p class="lf-clearing-caption">{t.clearingLabel}</p>
           <p class="lf-bio">{profile.bio}</p>
         </div>
       </section>
@@ -200,14 +208,20 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
           ></path>
         </svg>
 
-        <section class="lf-station lf-station--links" aria-labelledby="lf-links-title" data-reveal>
+        <section
+          class="lf-station lf-station--links"
+          aria-labelledby="lf-links-title"
+          data-section="links"
+          data-reveal
+        >
           <div class="lf-station-head">
             <span class="lf-station-no" aria-hidden="true">
               {stop(1)}
             </span>
             <div>
+              <p class="lf-section-label">{t.linksTitle}</p>
               <h2 id="lf-links-title" class="lf-station-title">
-                {t.linksTitle}
+                {sections.links.label}
               </h2>
               <p class="lf-station-label">{t.linksLabel}</p>
             </div>
@@ -248,6 +262,7 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
           <section
             class="lf-station lf-station--projects"
             aria-labelledby="lf-projects-title"
+            data-section="projects"
             data-reveal
           >
             <div class="lf-station-head">
@@ -255,8 +270,9 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
                 {stop(2)}
               </span>
               <div>
+                <p class="lf-section-label">{t.projectsTitle}</p>
                 <h2 id="lf-projects-title" class="lf-station-title">
-                  {t.projectsTitle}
+                  {sections.projects.label}
                 </h2>
                 <p class="lf-station-label">{t.projectsLabel}</p>
               </div>
@@ -303,6 +319,7 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
           <section
             class="lf-station lf-station--experience"
             aria-labelledby="lf-experience-title"
+            data-section="experience"
             data-reveal
           >
             <div class="lf-station-head">
@@ -310,8 +327,9 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
                 {stop(experienceStop)}
               </span>
               <div>
+                <p class="lf-section-label">{t.experienceTitle}</p>
                 <h2 id="lf-experience-title" class="lf-station-title">
-                  {t.experienceTitle}
+                  {sections.experience.label}
                 </h2>
                 <p class="lf-station-label">{t.experienceLabel}</p>
               </div>
@@ -394,6 +412,7 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
           <section
             class="lf-station lf-station--skills"
             aria-labelledby="lf-skills-title"
+            data-section="skills"
             data-reveal
           >
             <div class="lf-station-head">
@@ -401,8 +420,9 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
                 {stop(skillsStop)}
               </span>
               <div>
+                <p class="lf-section-label">{t.skillsTitle}</p>
                 <h2 id="lf-skills-title" class="lf-station-title">
-                  {t.skillsTitle}
+                  {sections.skills.label}
                 </h2>
                 <p class="lf-station-label">{t.skillsLabel}</p>
               </div>
@@ -475,6 +495,7 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
         <section
           class="lf-station lf-station--contact"
           aria-labelledby="lf-contact-title"
+          data-section="contact"
           data-reveal
         >
           <div class="lf-station-head">
@@ -482,8 +503,9 @@ const linkIcons: Partial<Record<string, typeof Tv>> = {
               {stop(contactStop)}
             </span>
             <div>
+              <p class="lf-section-label">{t.contactTitle}</p>
               <h2 id="lf-contact-title" class="lf-station-title">
-                {t.contactTitle}
+                {sections.contact.label}
               </h2>
               <p class="lf-station-label">{t.contactLabel}</p>
             </div>

@@ -33,20 +33,15 @@ export interface Homepage99Messages {
   counterDisplay: string;
   counterOffline: string;
   counterNote: string;
-  links: string;
   linksMark: string;
-  projects: string;
   projectsMark: string;
-  experience: string;
   experienceMark: string;
   experienceCaption: string;
   org: string;
   role: string;
   period: string;
   description: string;
-  skills: string;
   skillsMark: string;
-  contact: string;
   contactMark: string;
   emailLabel: string;
   noEmail: string;
@@ -76,20 +71,15 @@ export const messages: Record<string, Homepage99Messages> = {
     counterDisplay: '- - - - -',
     counterOffline: '离线 / 未接线',
     counterNote: '计数器没有接线，不统计访问。',
-    links: '链接',
     linksMark: '[ 链接目录 ]',
-    projects: '项目',
     projectsMark: '[ 文件 ]',
-    experience: '经历',
     experienceMark: '[ 记录 ]',
     experienceCaption: '工作记录',
     org: '机构',
     role: '角色',
     period: '时间',
     description: '说明',
-    skills: '技能',
     skillsMark: '[ 清单 ]',
-    contact: '联系',
     contactMark: '[ 信件 ]',
     emailLabel: '电子邮件',
     noEmail: '未登记电子邮件',
@@ -117,20 +107,15 @@ export const messages: Record<string, Homepage99Messages> = {
     counterDisplay: '- - - - -',
     counterOffline: '離線 / 未接線',
     counterNote: '計數器沒有接線，不統計訪問。',
-    links: '連結',
     linksMark: '[ 連結目錄 ]',
-    projects: '專案',
     projectsMark: '[ 檔案 ]',
-    experience: '經歷',
     experienceMark: '[ 記錄 ]',
     experienceCaption: '工作記錄',
     org: '機構',
     role: '角色',
     period: '時間',
     description: '說明',
-    skills: '技能',
     skillsMark: '[ 清單 ]',
-    contact: '聯絡',
     contactMark: '[ 信件 ]',
     emailLabel: '電子郵件',
     noEmail: '未登記電子郵件',
@@ -158,20 +143,15 @@ export const messages: Record<string, Homepage99Messages> = {
     counterDisplay: '- - - - -',
     counterOffline: 'オフライン / 未接続',
     counterNote: 'カウンターは未接続で、訪問数は記録しません。',
-    links: 'リンク',
     linksMark: '[ リンク集 ]',
-    projects: 'プロジェクト',
     projectsMark: '[ ファイル ]',
-    experience: '経歴',
     experienceMark: '[ 記録 ]',
     experienceCaption: '職務記録',
     org: '所属',
     role: '役割',
     period: '期間',
     description: '説明',
-    skills: 'スキル',
     skillsMark: '[ 一覧 ]',
-    contact: '連絡先',
     contactMark: '[ 手紙 ]',
     emailLabel: 'メール',
     noEmail: 'メール未登録',
@@ -199,20 +179,15 @@ export const messages: Record<string, Homepage99Messages> = {
     counterDisplay: '- - - - -',
     counterOffline: 'OFFLINE / NOT CONNECTED',
     counterNote: 'The counter is not wired. No visits are counted.',
-    links: 'LINKS',
     linksMark: '[ LINK DIRECTORY ]',
-    projects: 'PROJECTS',
     projectsMark: '[ FILES ]',
-    experience: 'EXPERIENCE',
     experienceMark: '[ RECORD ]',
     experienceCaption: 'WORK RECORD',
     org: 'ORGANIZATION',
     role: 'ROLE',
     period: 'PERIOD',
     description: 'DESCRIPTION',
-    skills: 'SKILLS',
     skillsMark: '[ LIST ]',
-    contact: 'CONTACT',
     contactMark: '[ MAIL ]',
     emailLabel: 'E-MAIL',
     noEmail: 'NO E-MAIL LISTED',
@@ -240,20 +215,15 @@ export const messages: Record<string, Homepage99Messages> = {
     counterDisplay: '- - - - -',
     counterOffline: '오프라인 / 미연결',
     counterNote: '카운터는 연결되지 않아 방문 수를 세지 않습니다.',
-    links: '링크',
     linksMark: '[ 링크 목록 ]',
-    projects: '프로젝트',
     projectsMark: '[ 파일 ]',
-    experience: '경력',
     experienceMark: '[ 기록 ]',
     experienceCaption: '업무 기록',
     org: '소속',
     role: '역할',
     period: '기간',
     description: '설명',
-    skills: '기술',
     skillsMark: '[ 목록 ]',
-    contact: '연락처',
     contactMark: '[ 편지 ]',
     emailLabel: '이메일',
     noEmail: '이메일 미등록',

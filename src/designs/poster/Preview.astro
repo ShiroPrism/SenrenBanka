@@ -1,6 +1,7 @@
 ---
 /** poster 预览碎片：双色丝印、巨幅窄体、套准十字与粗规线。 */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -13,6 +14,9 @@ export const fonts: import('astro:assets').CssVariable[] = [
 
 const { locale, name, headline, location } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
+const showMark = (key: keyof typeof sections) =>
+  sections[key].enLabel.toUpperCase() !== sections[key].label.toUpperCase();
 ---
 
 <div class="ps-pv">
@@ -28,20 +32,20 @@ const t = messages[locale];
     <span class="ps-pv-rule"></span>
     <div class="ps-pv-grid">
       <section>
-        <p class="ps-pv-mark">{t.memoMark}</p>
-        <p class="ps-pv-title">{t.memoTitle}</p>
+        {showMark('profile') && <p class="ps-pv-mark">{sections.profile.enLabel}</p>}
+        <p class="ps-pv-title">{sections.profile.label}</p>
         <p class="ps-pv-copy">{headline ?? name}</p>
       </section>
       <section>
-        <p class="ps-pv-mark">{t.itemsMark}</p>
-        <p class="ps-pv-title">{t.itemsTitle}</p>
+        {showMark('links') && <p class="ps-pv-mark">{sections.links.enLabel}</p>}
+        <p class="ps-pv-title">{sections.links.label}</p>
         <p class="ps-pv-link">
           <span>01</span>
-          {t.ordersTitle}
+          {sections.projects.label}
         </p>
         <p class="ps-pv-link">
           <span>02</span>
-          {t.checkoutTitle}
+          {sections.contact.label}
         </p>
       </section>
     </div>

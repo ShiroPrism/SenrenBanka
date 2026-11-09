@@ -5,6 +5,8 @@
  *   `01–07`、索书号）与数据本身——它们是藏书标记，不是界面文案。
  * - 分区标签走「目录柜」语域而不是小票语域：备注 / 索引 / 编目 / 履历 / 主题词 /
  *   借阅，分别对应 bio / links / projects / experience / skills / contact。
+ *   这些是卡片签上的**语域词**（kicker），h2 文本取自共享标准标签
+ *   （`src/i18n/sections`），本文件不再维护标准标签。
  * - 本文件承载全部随语言切换的可见文案；纯数据，不 import CSS / Astro 组件。
  */
 export interface ArchiveMessages {

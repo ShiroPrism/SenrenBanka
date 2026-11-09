@@ -4,11 +4,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('terminal', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const rule = '─'.repeat(52);
@@ -58,7 +60,11 @@ const introEnd = afterCmd(cmdIntro);
       </div>
 
       <div class="tm-body">
-        <section class="tm-block tm-block-intro" aria-label="Intro 简介">
+        <section
+          class="tm-block tm-block-intro"
+          aria-label={sections.profile.label}
+          data-section="profile"
+        >
           <p class="tm-cmd">
             <span class="tm-lit" style="--d:0ms" aria-hidden="true">
               $
@@ -69,7 +75,7 @@ const introEnd = afterCmd(cmdIntro);
               </span>
             ))}{' '}
             <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdIntro)}ms`} aria-hidden="true">
-              # 简介
+              # {sections.profile.label}
             </span>
           </p>
           <h1 class="tm-name" style={`--d:${lane(introEnd, 0)}ms`}>
@@ -89,9 +95,9 @@ const introEnd = afterCmd(cmdIntro);
           )}
         </section>
 
-        <section class="tm-block" data-reveal aria-labelledby="tm-links-title">
+        <section class="tm-block" data-section="links" data-reveal aria-labelledby="tm-links-title">
           <h2 id="tm-links-title" class="sr-only">
-            <span lang="en">Links</span> 链接
+            {sections.links.label}
           </h2>
           <p class="tm-cmd">
             <span class="tm-lit" style="--d:0ms" aria-hidden="true">
@@ -103,7 +109,7 @@ const introEnd = afterCmd(cmdIntro);
               </span>
             ))}{' '}
             <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdLinks)}ms`} aria-hidden="true">
-              # 链接
+              # {sections.links.label}
             </span>
           </p>
           <ul class="tm-list tm-list-links">
@@ -124,9 +130,14 @@ const introEnd = afterCmd(cmdIntro);
         </section>
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="tm-block" data-reveal aria-labelledby="tm-experience-title">
+          <section
+            class="tm-block"
+            data-section="experience"
+            data-reveal
+            aria-labelledby="tm-experience-title"
+          >
             <h2 id="tm-experience-title" class="sr-only">
-              <span lang="en">Experience</span> 经历
+              {sections.experience.label}
             </h2>
             <p class="tm-cmd">
               <span class="tm-lit" style="--d:0ms" aria-hidden="true">
@@ -142,7 +153,7 @@ const introEnd = afterCmd(cmdIntro);
                 style={`--d:${afterCmd(cmdExperience)}ms`}
                 aria-hidden="true"
               >
-                # 经历
+                # {sections.experience.label}
               </span>
             </p>
             {profile.experience.map((item, index) => (
@@ -162,9 +173,14 @@ const introEnd = afterCmd(cmdIntro);
         )}
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="tm-block" data-reveal aria-labelledby="tm-projects-title">
+          <section
+            class="tm-block"
+            data-section="projects"
+            data-reveal
+            aria-labelledby="tm-projects-title"
+          >
             <h2 id="tm-projects-title" class="sr-only">
-              <span lang="en">Projects</span> 项目
+              {sections.projects.label}
             </h2>
             <p class="tm-cmd">
               <span class="tm-lit" style="--d:0ms" aria-hidden="true">
@@ -180,7 +196,7 @@ const introEnd = afterCmd(cmdIntro);
                 style={`--d:${afterCmd(cmdProjects)}ms`}
                 aria-hidden="true"
               >
-                # 项目
+                # {sections.projects.label}
               </span>
             </p>
             <ul class="tm-list">
@@ -211,9 +227,14 @@ const introEnd = afterCmd(cmdIntro);
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="tm-block" data-reveal aria-labelledby="tm-skills-title">
+          <section
+            class="tm-block"
+            data-section="skills"
+            data-reveal
+            aria-labelledby="tm-skills-title"
+          >
             <h2 id="tm-skills-title" class="sr-only">
-              <span lang="en">Skills</span> 技能
+              {sections.skills.label}
             </h2>
             <p class="tm-cmd">
               <span class="tm-lit" style="--d:0ms" aria-hidden="true">
@@ -225,7 +246,7 @@ const introEnd = afterCmd(cmdIntro);
                 </span>
               ))}{' '}
               <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdSkills)}ms`} aria-hidden="true">
-                # 技能
+                # {sections.skills.label}
               </span>
             </p>
             <p class="tm-out tm-skills" style={`--d:${lane(afterCmd(cmdSkills), 0)}ms`}>
@@ -234,9 +255,14 @@ const introEnd = afterCmd(cmdIntro);
           </section>
         )}
 
-        <section class="tm-block" data-reveal aria-labelledby="tm-contact-title">
+        <section
+          class="tm-block"
+          data-section="contact"
+          data-reveal
+          aria-labelledby="tm-contact-title"
+        >
           <h2 id="tm-contact-title" class="sr-only">
-            <span lang="en">Contact</span> 联系
+            {sections.contact.label}
           </h2>
           <p class="tm-cmd">
             <span class="tm-lit" style="--d:0ms" aria-hidden="true">
@@ -248,7 +274,7 @@ const introEnd = afterCmd(cmdIntro);
               </span>
             ))}{' '}
             <span class="tm-dim tm-lit" style={`--d:${afterCmd(cmdMail)}ms`} aria-hidden="true">
-              # 联系
+              # {sections.contact.label}
             </span>
           </p>
           {profile.contact?.email ? (

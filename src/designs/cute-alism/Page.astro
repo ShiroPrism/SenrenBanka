@@ -15,12 +15,14 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('cute-alism', Astro.url.pathname);
 const { profile } = view;
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const linkIcons = { tv: Tv, video: Video, coffee: Coffee } as const;
 
 const pad = (value: number) => String(value).padStart(2, '0');
@@ -107,26 +109,36 @@ const nextSection = () => pad((sectionIndex += 1));
         </div>
       </header>
 
-      <section class="cal-section cal-bio" data-reveal aria-labelledby="cal-bio-title">
+      <section
+        class="cal-section cal-bio"
+        data-reveal
+        aria-labelledby="cal-bio-title"
+        data-section="profile"
+      >
         <div class="cal-section-heading">
           <span class="cal-section-no" aria-hidden="true">
             {nextSection()}
           </span>
           <h2 class="cal-section-title" id="cal-bio-title">
-            {t.bioTitle}
+            {sections.profile.label}
           </h2>
         </div>
         <p class="cal-bio-copy">{profile.bio}</p>
         <span class="cal-bio-dot" aria-hidden="true"></span>
       </section>
 
-      <section class="cal-section cal-links" data-reveal aria-labelledby="cal-links-title">
+      <section
+        class="cal-section cal-links"
+        data-reveal
+        aria-labelledby="cal-links-title"
+        data-section="links"
+      >
         <div class="cal-section-heading">
           <span class="cal-section-no" aria-hidden="true">
             {nextSection()}
           </span>
           <h2 class="cal-section-title" id="cal-links-title">
-            {t.linksTitle}
+            {sections.links.label}
           </h2>
           <span class="cal-section-count" aria-hidden="true">
             {pad(profile.links.length)}
@@ -160,13 +172,18 @@ const nextSection = () => pad((sectionIndex += 1));
       </section>
 
       {profile.projects && profile.projects.length > 0 && (
-        <section class="cal-section cal-projects" data-reveal aria-labelledby="cal-projects-title">
+        <section
+          class="cal-section cal-projects"
+          data-reveal
+          aria-labelledby="cal-projects-title"
+          data-section="projects"
+        >
           <div class="cal-section-heading">
             <span class="cal-section-no" aria-hidden="true">
               {nextSection()}
             </span>
             <h2 class="cal-section-title" id="cal-projects-title">
-              {t.projectsTitle}
+              {sections.projects.label}
             </h2>
             <span class="cal-section-count" aria-hidden="true">
               {pad(profile.projects.length)}
@@ -210,13 +227,18 @@ const nextSection = () => pad((sectionIndex += 1));
       )}
 
       {profile.experience && profile.experience.length > 0 && (
-        <section class="cal-section cal-stairs" data-reveal aria-labelledby="cal-experience-title">
+        <section
+          class="cal-section cal-stairs"
+          data-reveal
+          aria-labelledby="cal-experience-title"
+          data-section="experience"
+        >
           <div class="cal-section-heading">
             <span class="cal-section-no" aria-hidden="true">
               {nextSection()}
             </span>
             <h2 class="cal-section-title" id="cal-experience-title">
-              {t.experienceTitle}
+              {sections.experience.label}
             </h2>
             <span class="cal-section-count" aria-hidden="true">
               {pad(profile.experience.length)}
@@ -249,13 +271,18 @@ const nextSection = () => pad((sectionIndex += 1));
         ]}
       >
         {profile.skills && profile.skills.length > 0 && (
-          <section class="cal-section cal-skills" data-reveal aria-labelledby="cal-skills-title">
+          <section
+            class="cal-section cal-skills"
+            data-reveal
+            aria-labelledby="cal-skills-title"
+            data-section="skills"
+          >
             <div class="cal-section-heading">
               <span class="cal-section-no" aria-hidden="true">
                 {nextSection()}
               </span>
               <h2 class="cal-section-title" id="cal-skills-title">
-                {t.skillsTitle}
+                {sections.skills.label}
               </h2>
               <span class="cal-section-count" aria-hidden="true">
                 {pad(profile.skills.length)}
@@ -271,14 +298,19 @@ const nextSection = () => pad((sectionIndex += 1));
           </section>
         )}
 
-        <section class="cal-section cal-contact" data-reveal aria-labelledby="cal-contact-title">
+        <section
+          class="cal-section cal-contact"
+          data-reveal
+          aria-labelledby="cal-contact-title"
+          data-section="contact"
+        >
           <div class="cal-pack-panel">
             <div class="cal-section-heading">
               <span class="cal-section-no" aria-hidden="true">
                 {nextSection()}
               </span>
               <h2 class="cal-section-title" id="cal-contact-title">
-                {t.contactTitle}
+                {sections.contact.label}
               </h2>
             </div>
 

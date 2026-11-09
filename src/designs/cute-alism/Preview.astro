@@ -2,6 +2,7 @@
 /** cute-alism preview: a miniature candy-collage signature; no page CSS or focusable nodes. */
 import type { PreviewProps } from '../preview';
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import './tokens.css';
 
 export const fonts: import('astro:assets').CssVariable[] = [
@@ -13,6 +14,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 const previewLinks = links.slice(0, 2);
 ---
 
@@ -38,7 +40,7 @@ const previewLinks = links.slice(0, 2);
   </div>
 
   <p class="cal-pv-contact">
-    {t.contactTitle}
+    {sections.contact.label}
     <span aria-hidden="true"></span>
   </p>
 </div>

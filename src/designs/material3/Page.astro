@@ -4,6 +4,7 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import GithubMark from '../../assets/brand/github.svg';
 import MailIcon from './assets/mail_24px.svg';
@@ -12,6 +13,7 @@ import './style.css';
 
 const view = await loadDesignView('material3', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 ---
 
@@ -36,7 +38,7 @@ const { profile, contextMenu } = view;
       </header>
 
       <main>
-        <section class="m3-hero" aria-labelledby="m3-title">
+        <section class="m3-hero" aria-labelledby="m3-title" data-section="profile">
           {profile.avatar && (
             <img
               class="m3-avatar m3-rise"
@@ -73,9 +75,14 @@ const { profile, contextMenu } = view;
         </section>
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="m3-section" aria-labelledby="m3-projects" data-reveal>
+          <section
+            class="m3-section"
+            aria-labelledby="m3-projects"
+            data-section="projects"
+            data-reveal
+          >
             <h2 id="m3-projects" class="m3-h2">
-              {t.projects}
+              {sections.projects.label}
             </h2>
             <ul class="m3-cards">
               {profile.projects.map((project) => (
@@ -105,9 +112,14 @@ const { profile, contextMenu } = view;
         )}
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="m3-section" aria-labelledby="m3-experience" data-reveal>
+          <section
+            class="m3-section"
+            aria-labelledby="m3-experience"
+            data-section="experience"
+            data-reveal
+          >
             <h2 id="m3-experience" class="m3-h2">
-              {t.experience}
+              {sections.experience.label}
             </h2>
             <ul class="m3-exp">
               {profile.experience.map((item) => (
@@ -125,9 +137,9 @@ const { profile, contextMenu } = view;
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="m3-section" aria-labelledby="m3-skills" data-reveal>
+          <section class="m3-section" aria-labelledby="m3-skills" data-section="skills" data-reveal>
             <h2 id="m3-skills" class="m3-h2">
-              {t.skills}
+              {sections.skills.label}
             </h2>
             <ul class="m3-chips">
               {profile.skills.map((skill) => (
@@ -137,9 +149,9 @@ const { profile, contextMenu } = view;
           </section>
         )}
 
-        <section class="m3-section" aria-labelledby="m3-contact" data-reveal>
+        <section class="m3-section" aria-labelledby="m3-contact" data-section="contact" data-reveal>
           <h2 id="m3-contact" class="m3-h2">
-            {t.contact}
+            {sections.contact.label}
           </h2>
           <div class="m3-contact" data-reveal>
             {profile.contact?.note && <p class="m3-contact-note">{profile.contact.note}</p>}

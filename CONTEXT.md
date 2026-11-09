@@ -99,7 +99,7 @@ _Avoid_: 翻译文件、多语言副本
 _Avoid_: 全局文案、i18n 字典
 
 **Design messages（主题文案）**:
-某套设计自身界面的用户可见文案，位于 `src/designs/<id>/messages.ts`，按该设计的视觉语言撰写，不与其他设计统一表述。
+某套设计自身界面的用户可见文案，位于 `src/designs/<id>/messages.ts`，按该设计的视觉语言撰写，不与其他设计统一表述。主分区标准标签是共享契约，不属于设计文案（见 Standard section label）。
 _Avoid_: 主题翻译、设计字典
 
 **Language switcher（语言切换入口）**:
@@ -143,6 +143,20 @@ _Avoid_: 灵活资料、自由区块、通用 CMS
 **Outbound profile link（站外资料出口）**:
 核心字段 `links` 中指向站外页面或联系方式的目标，用于承载超出固定契约的更多个人信息；站点只呈现入口，目标内容的可用性、可访问性、归属与持久性受外部平台控制。
 _Avoid_: 扩展资料源、外链字段
+
+### Information Architecture
+
+**Primary section（主分区）**:
+设计页中对应资料契约固定语义的可见分区：简介 / 项目 / 经历 / 技能 / 联系 / 链接。分区标签属于信息架构，不属于主题文案；首次访问者必须无需解码主题即可识别。
+_Avoid_: 模块标题、栏目名
+
+**Standard section label（标准分区标签）**:
+每个主分区在每个 Locale 下使用的固定 canonical 词；由所有设计共享的一份标签字典提供，不由各设计自行改写。英文标准词可用于双语标题，但必须来自同一 canonical 集合。
+_Avoid_: 通用标题、默认文案
+
+**Theme word（主题词）**:
+某套设计为视觉母题撰写的分区替代表述；只能作为主分区标题之外的可见 kicker / 副标题或纯装饰，不得承担 heading 语义，也不得替换标准分区标签。
+_Avoid_: 创意标题、主题命名
 
 ### Motion
 

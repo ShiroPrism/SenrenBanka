@@ -2,7 +2,10 @@
  * editorial 主题文案（SPEC §4）。
  *
  * - 遵循杂志编排的视觉语言：期号、栏目名、克制的编辑腔调。
- * - `tagline` 是该设计**刻意保留的双语装饰**（杂志封面式中英并置），按项目决定不随语言切换。
+ * - 分区 h2 文本来自共享标准标签（`src/i18n/sections`）；`worksHeading` /
+ *   `elsewhereHeading`（Selected Works / Elsewhere）是该设计**刻意的英文栏目名**，
+ *   现在印在 h2 右侧作 kicker；`worksLabel` / `elsewhereLabel` 仍承担页内目录。
+ * - `colophon` 是该设计**刻意保留的英文装饰**（杂志版权页句式），按项目决定不随语言切换。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface EditorialMessages {

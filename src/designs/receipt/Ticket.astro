@@ -2,8 +2,11 @@
 /**
  * receipt 单票渲染（私有组件，不属于设计注册表四件套）。
  * 只渲染当前语言的一份内容；桌面纸内折双栏与窄屏单栏均由 style.css 决定。
+ * 分区 h2 取共享标准标签（`src/i18n/sections`）；小票语域词（备注 / 明细 / 订单 /
+ * 纪录 / 结账台）降为 h2 上方的小字 kicker。
  */
 import type { LocaleEntry, ResolvedProfile } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type ReceiptMessages } from './messages';
 
 interface Props {
@@ -13,6 +16,7 @@ interface Props {
 
 const { locale, profile } = Astro.props;
 const t: ReceiptMessages = designMessages[locale.code];
+const sections = getSectionLabels(locale.code);
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
@@ -62,9 +66,16 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
     </div>
   </header>
 
-  <section class="rc-block rc-memo" aria-labelledby={`rc-memo-title-${locale.path}`}>
-    <h2 class="rc-sec rc-print" id={`rc-memo-title-${locale.path}`} style={`--d:${d(4)}`}>
+  <section
+    class="rc-block rc-memo"
+    data-section="profile"
+    aria-labelledby={`rc-memo-title-${locale.path}`}
+  >
+    <p class="rc-kicker rc-dim rc-print" style={`--d:${d(4)}`}>
       {t.memoTitle}
+    </p>
+    <h2 class="rc-sec rc-print" id={`rc-memo-title-${locale.path}`} style={`--d:${d(4)}`}>
+      {sections.profile.label}
     </h2>
     <p class="rc-bio rc-print" style={`--d:${d(5)}`}>
       {profile.bio}
@@ -72,9 +83,17 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
   </section>
 
   <div class="rc-fold-body">
-    <section class="rc-block" data-reveal aria-labelledby={`rc-items-title-${locale.path}`}>
-      <h2 class="rc-sec rc-line" id={`rc-items-title-${locale.path}`} style={`--d:${seg(0)}`}>
+    <section
+      class="rc-block"
+      data-section="links"
+      data-reveal
+      aria-labelledby={`rc-items-title-${locale.path}`}
+    >
+      <p class="rc-kicker rc-dim rc-line" style={`--d:${seg(0)}`}>
         {t.itemsTitle}
+      </p>
+      <h2 class="rc-sec rc-line" id={`rc-items-title-${locale.path}`} style={`--d:${seg(0)}`}>
+        {sections.links.label}
       </h2>
       <ul class="rc-items">
         {profile.links.map((link, index) => (
@@ -95,9 +114,17 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
     </section>
 
     {profile.projects && profile.projects.length > 0 && (
-      <section class="rc-block" data-reveal aria-labelledby={`rc-orders-title-${locale.path}`}>
-        <h2 class="rc-sec rc-line" id={`rc-orders-title-${locale.path}`} style={`--d:${seg(0)}`}>
+      <section
+        class="rc-block"
+        data-section="projects"
+        data-reveal
+        aria-labelledby={`rc-orders-title-${locale.path}`}
+      >
+        <p class="rc-kicker rc-dim rc-line" style={`--d:${seg(0)}`}>
           {t.ordersTitle}
+        </p>
+        <h2 class="rc-sec rc-line" id={`rc-orders-title-${locale.path}`} style={`--d:${seg(0)}`}>
+          {sections.projects.label}
         </h2>
         <ol class="rc-orders">
           {profile.projects.map((project, index) => (
@@ -137,9 +164,17 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
     )}
 
     {profile.experience && profile.experience.length > 0 && (
-      <section class="rc-block" data-reveal aria-labelledby={`rc-log-title-${locale.path}`}>
-        <h2 class="rc-sec rc-line" id={`rc-log-title-${locale.path}`} style={`--d:${seg(0)}`}>
+      <section
+        class="rc-block"
+        data-section="experience"
+        data-reveal
+        aria-labelledby={`rc-log-title-${locale.path}`}
+      >
+        <p class="rc-kicker rc-dim rc-line" style={`--d:${seg(0)}`}>
           {t.logTitle}
+        </p>
+        <h2 class="rc-sec rc-line" id={`rc-log-title-${locale.path}`} style={`--d:${seg(0)}`}>
+          {sections.experience.label}
         </h2>
         <ul class="rc-logs">
           {profile.experience.map((item, index) => (
@@ -170,9 +205,14 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
     )}
 
     {profile.skills && profile.skills.length > 0 && (
-      <section class="rc-block" data-reveal aria-labelledby={`rc-skills-title-${locale.path}`}>
+      <section
+        class="rc-block"
+        data-section="skills"
+        data-reveal
+        aria-labelledby={`rc-skills-title-${locale.path}`}
+      >
         <h2 class="rc-sec rc-line" id={`rc-skills-title-${locale.path}`} style={`--d:${seg(0)}`}>
-          {t.skillsTitle}
+          {sections.skills.label}
         </h2>
         <p class="rc-line rc-skills" style={`--d:${seg(1)}`}>
           {profile.skills.join(' ・ ')}
@@ -180,9 +220,17 @@ const clipPath = `polygon(${crest.join(', ')}, ${[...crest].reverse().map(flipY)
       </section>
     )}
 
-    <section class="rc-block rc-pay" data-reveal aria-labelledby={`rc-pay-title-${locale.path}`}>
-      <h2 class="rc-sec rc-line" id={`rc-pay-title-${locale.path}`} style={`--d:${seg(0)}`}>
+    <section
+      class="rc-block rc-pay"
+      data-section="contact"
+      data-reveal
+      aria-labelledby={`rc-pay-title-${locale.path}`}
+    >
+      <p class="rc-kicker rc-dim rc-line" style={`--d:${seg(0)}`}>
         {t.contactTitle}
+      </p>
+      <h2 class="rc-sec rc-line" id={`rc-pay-title-${locale.path}`} style={`--d:${seg(0)}`}>
+        {sections.contact.label}
       </h2>
       <p class="rc-line rc-total" style={`--d:${seg(1)}`}>
         <span class="rc-total-label">{t.totalLabel}</span>

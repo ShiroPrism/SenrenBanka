@@ -17,11 +17,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type FaxMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('fax', Astro.url.pathname);
 const t: FaxMessages = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const pad = (value: number) => String(value).padStart(2, '0');
@@ -33,12 +35,12 @@ const transmitDate = `${transmitted.getUTCFullYear()}-${pad(transmitted.getUTCMo
 
 // 页数 = 封面一页 + 实际渲染的内容分区数（真实计数，与段末页码同源）。
 const sectionCount =
-  1 + // 备注
-  1 + // 明细
+  1 + // 简介
+  1 + // 链接
   (profile.projects && profile.projects.length > 0 ? 1 : 0) +
   (profile.experience && profile.experience.length > 0 ? 1 : 0) +
   (profile.skills && profile.skills.length > 0 ? 1 : 0) +
-  1; // 结账
+  1; // 联系
 const pageCount = pad(sectionCount + 1);
 ---
 
@@ -108,17 +110,27 @@ const pageCount = pad(sectionCount + 1);
             </div>
           </header>
 
-          <section class="fx-block" data-reveal aria-labelledby="fx-memo">
-            <h2 class="fx-sec" id="fx-memo">
-              {t.memoTitle}
-            </h2>
+          <section class="fx-block" data-section="profile" data-reveal aria-labelledby="fx-memo">
+            <div class="fx-sec-head">
+              <p class="fx-kicker" aria-hidden="true">
+                {t.memoTitle}
+              </p>
+              <h2 class="fx-sec" id="fx-memo">
+                {sections.profile.label}
+              </h2>
+            </div>
             <p class="fx-bio">{profile.bio}</p>
           </section>
 
-          <section class="fx-block" data-reveal aria-labelledby="fx-items">
-            <h2 class="fx-sec" id="fx-items">
-              {t.itemsTitle}
-            </h2>
+          <section class="fx-block" data-section="links" data-reveal aria-labelledby="fx-items">
+            <div class="fx-sec-head">
+              <p class="fx-kicker" aria-hidden="true">
+                {t.itemsTitle}
+              </p>
+              <h2 class="fx-sec" id="fx-items">
+                {sections.links.label}
+              </h2>
+            </div>
             <ul class="fx-links">
               {profile.links.map((link, index) => (
                 <li class="fx-linkrow">
@@ -137,10 +149,20 @@ const pageCount = pad(sectionCount + 1);
           </section>
 
           {profile.projects && profile.projects.length > 0 && (
-            <section class="fx-block" data-reveal aria-labelledby="fx-orders">
-              <h2 class="fx-sec" id="fx-orders">
-                {t.ordersTitle}
-              </h2>
+            <section
+              class="fx-block"
+              data-section="projects"
+              data-reveal
+              aria-labelledby="fx-orders"
+            >
+              <div class="fx-sec-head">
+                <p class="fx-kicker" aria-hidden="true">
+                  {t.ordersTitle}
+                </p>
+                <h2 class="fx-sec" id="fx-orders">
+                  {sections.projects.label}
+                </h2>
+              </div>
               <ol class="fx-orders">
                 {profile.projects.map((project, index) => (
                   <li class="fx-order">
@@ -172,10 +194,20 @@ const pageCount = pad(sectionCount + 1);
           )}
 
           {profile.experience && profile.experience.length > 0 && (
-            <section class="fx-block" data-reveal aria-labelledby="fx-log">
-              <h2 class="fx-sec" id="fx-log">
-                {t.logTitle}
-              </h2>
+            <section
+              class="fx-block"
+              data-section="experience"
+              data-reveal
+              aria-labelledby="fx-log"
+            >
+              <div class="fx-sec-head">
+                <p class="fx-kicker" aria-hidden="true">
+                  {t.logTitle}
+                </p>
+                <h2 class="fx-sec" id="fx-log">
+                  {sections.experience.label}
+                </h2>
+              </div>
               <ul class="fx-logs">
                 {profile.experience.map((item) => (
                   <li class="fx-log">
@@ -192,18 +224,28 @@ const pageCount = pad(sectionCount + 1);
           )}
 
           {profile.skills && profile.skills.length > 0 && (
-            <section class="fx-block" data-reveal aria-labelledby="fx-skills">
+            <section class="fx-block" data-section="skills" data-reveal aria-labelledby="fx-skills">
               <h2 class="fx-sec" id="fx-skills">
-                {t.skillsTitle}
+                {sections.skills.label}
               </h2>
               <p class="fx-skills">{profile.skills.join(' / ')}</p>
             </section>
           )}
 
-          <section class="fx-block" data-reveal aria-labelledby="fx-checkout">
-            <h2 class="fx-sec" id="fx-checkout">
-              {t.checkoutTitle}
-            </h2>
+          <section
+            class="fx-block"
+            data-section="contact"
+            data-reveal
+            aria-labelledby="fx-checkout"
+          >
+            <div class="fx-sec-head">
+              <p class="fx-kicker" aria-hidden="true">
+                {t.checkoutTitle}
+              </p>
+              <h2 class="fx-sec" id="fx-checkout">
+                {sections.contact.label}
+              </h2>
+            </div>
             <p class="fx-total">
               <span class="fx-total-label">{t.totalLabel}</span>
               <span class="fx-total-num">{pad(profile.links.length)}</span>

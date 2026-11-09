@@ -268,7 +268,15 @@ html:has(.ps) {
   background: var(--ps-ink);
 }
 
-/* 分区标题：镂空拉丁字（Blackout 2AM）+ 本地语言名 */
+/* 分区抬头：标准英文标签（Blackout 2AM）在上，共享标准标签（h2）在下 */
+.ps-sec-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  margin: 0 0 0.2rem;
+}
+
 .ps-sec-title {
   display: flex;
   flex-wrap: wrap;

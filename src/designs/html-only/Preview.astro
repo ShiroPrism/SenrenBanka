@@ -8,12 +8,14 @@
  * - caller supplies aria-hidden; this component stays decorative
  */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 
 export const fonts: import('astro:assets').CssVariable[] = [];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 const rows = links.slice(0, 3);
 ---
 
@@ -23,9 +25,9 @@ const rows = links.slice(0, 3);
     <p class="ho-pv-name">{name}</p>
     {headline && <p class="ho-pv-headline">{headline}</p>}
     <p class="ho-pv-heading">{t.contents}</p>
-    <p class="ho-pv-link">1. {t.links}</p>
-    <p class="ho-pv-link">2. {t.projects}</p>
-    <p class="ho-pv-heading">{t.links}</p>
+    <p class="ho-pv-link">1. {sections.links.label}</p>
+    <p class="ho-pv-link">2. {sections.projects.label}</p>
+    <p class="ho-pv-heading">{sections.links.label}</p>
     {rows.map((link) => (
       <p class="ho-pv-link">+ {link.label}</p>
     ))}

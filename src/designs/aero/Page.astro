@@ -13,11 +13,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('aero', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const projects = profile.projects ?? [];
@@ -63,7 +65,7 @@ const pad = (value: number) => String(value).padStart(2, '0');
 
       <div class="aero-body">
         <main>
-          <section class="aero-hero" aria-labelledby="ae-name">
+          <section class="aero-hero" aria-labelledby="ae-name" data-section="profile">
             <div class="aero-hero-copy">
               <p class="aero-kicker aero-boot" style="--ae-delay: 0ms">
                 {t.device}
@@ -88,10 +90,17 @@ const pad = (value: number) => String(value).padStart(2, '0');
           </section>
 
           {profile.links.length > 0 && (
-            <section class="aero-dock-section" aria-labelledby="ae-links-title">
+            <section
+              class="aero-dock-section"
+              aria-labelledby="ae-links-title"
+              data-section="links"
+            >
               <div class="aero-section-head">
-                <h2 id="ae-links-title" class="aero-section-title">
+                <p class="aero-section-kicker" aria-hidden="true">
                   {t.links}
+                </p>
+                <h2 id="ae-links-title" class="aero-section-title">
+                  {sections.links.label}
                 </h2>
                 <span class="aero-section-hint" aria-hidden="true">
                   {pad(profile.links.length)}
@@ -111,10 +120,18 @@ const pad = (value: number) => String(value).padStart(2, '0');
           )}
 
           {projects.length > 0 && (
-            <section class="aero-section" aria-labelledby="ae-projects-title" data-reveal>
+            <section
+              class="aero-section"
+              aria-labelledby="ae-projects-title"
+              data-section="projects"
+              data-reveal
+            >
               <div class="aero-section-head">
-                <h2 id="ae-projects-title" class="aero-section-title">
+                <p class="aero-section-kicker" aria-hidden="true">
                   {t.projects}
+                </p>
+                <h2 id="ae-projects-title" class="aero-section-title">
+                  {sections.projects.label}
                 </h2>
                 <span class="aero-section-hint" aria-hidden="true">
                   {pad(projects.length)}
@@ -158,10 +175,18 @@ const pad = (value: number) => String(value).padStart(2, '0');
           )}
 
           {experience.length > 0 && (
-            <section class="aero-section" aria-labelledby="ae-experience-title" data-reveal>
+            <section
+              class="aero-section"
+              aria-labelledby="ae-experience-title"
+              data-section="experience"
+              data-reveal
+            >
               <div class="aero-section-head">
-                <h2 id="ae-experience-title" class="aero-section-title">
+                <p class="aero-section-kicker" aria-hidden="true">
                   {t.experience}
+                </p>
+                <h2 id="ae-experience-title" class="aero-section-title">
+                  {sections.experience.label}
                 </h2>
                 <span class="aero-section-hint" aria-hidden="true">
                   {pad(experience.length)}
@@ -186,10 +211,18 @@ const pad = (value: number) => String(value).padStart(2, '0');
           )}
 
           {skills.length > 0 && (
-            <section class="aero-section" aria-labelledby="ae-skills-title" data-reveal>
+            <section
+              class="aero-section"
+              aria-labelledby="ae-skills-title"
+              data-section="skills"
+              data-reveal
+            >
               <div class="aero-section-head">
-                <h2 id="ae-skills-title" class="aero-section-title">
+                <p class="aero-section-kicker" aria-hidden="true">
                   {t.skills}
+                </p>
+                <h2 id="ae-skills-title" class="aero-section-title">
+                  {sections.skills.label}
                 </h2>
                 <span class="aero-section-hint" aria-hidden="true">
                   {pad(skills.length)}
@@ -204,11 +237,18 @@ const pad = (value: number) => String(value).padStart(2, '0');
           )}
 
           {hasContact && (
-            <section class="aero-message" aria-labelledby="ae-contact-title" data-reveal>
+            <section
+              class="aero-message"
+              aria-labelledby="ae-contact-title"
+              data-section="contact"
+              data-reveal
+            >
               <div class="aero-message-inner">
-                <p class="aero-message-kicker">{t.device}</p>
-                <h2 id="ae-contact-title" class="aero-message-title">
+                <p class="aero-message-kicker" aria-hidden="true">
                   {t.contact}
+                </p>
+                <h2 id="ae-contact-title" class="aero-message-title">
+                  {sections.contact.label}
                 </h2>
                 {contactEmail ? (
                   <a class="aero-message-link" href={`mailto:${contactEmail}`}>

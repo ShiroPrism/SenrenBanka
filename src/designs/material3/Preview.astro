@@ -1,6 +1,7 @@
 ---
 /** material3 预览碎片：大圆角面层、tonal/filled 按钮与紫 tonal 色。 */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -8,6 +9,7 @@ export const fonts: import('astro:assets').CssVariable[] = ['--font-roboto-flex'
 
 const { locale, name, headline } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 ---
 
 <div class="m3-pv">
@@ -20,22 +22,22 @@ const t = messages[locale];
       <p class="m3-pv-label">{t.portfolio}</p>
       <p class="m3-pv-title">{headline ?? name}</p>
       <div class="m3-pv-actions">
-        <span class="m3-pv-btn m3-pv-btn-tonal">{t.projects}</span>
-        <span class="m3-pv-btn m3-pv-btn-filled">{t.contact}</span>
+        <span class="m3-pv-btn m3-pv-btn-tonal">{sections.projects.label}</span>
+        <span class="m3-pv-btn m3-pv-btn-filled">{sections.contact.label}</span>
       </div>
     </div>
     <div class="m3-pv-cards">
       <div>
         <b>01</b>
-        <span>{t.projects}</span>
+        <span>{sections.projects.label}</span>
       </div>
       <div>
         <b>02</b>
-        <span>{t.experience}</span>
+        <span>{sections.experience.label}</span>
       </div>
       <div>
         <b>03</b>
-        <span>{t.skills}</span>
+        <span>{sections.skills.label}</span>
       </div>
     </div>
   </div>

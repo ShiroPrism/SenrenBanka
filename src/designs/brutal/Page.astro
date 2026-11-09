@@ -10,11 +10,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('brutal', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
 ---
@@ -50,7 +52,7 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
       </header>
 
       <main class="bt-main">
-        <section class="bt-hero" aria-labelledby="bt-hero-title">
+        <section class="bt-hero" aria-labelledby="bt-hero-title" data-section="profile">
           <p class="bt-kicker bt-snap" style="--bt-delay: 0ms">
             {t.portfolio}
           </p>
@@ -85,13 +87,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         </section>
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="bt-section" aria-labelledby="bt-projects-title" data-reveal>
+          <section
+            class="bt-section"
+            aria-labelledby="bt-projects-title"
+            data-section="projects"
+            data-reveal
+          >
             <div class="bt-section-head">
               <span class="bt-section-num" aria-hidden="true">
                 01
               </span>
               <h2 id="bt-projects-title" class="bt-section-title">
-                {t.projects}
+                {sections.projects.label}
               </h2>
             </div>
             <ul class="bt-projects">
@@ -127,13 +134,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="bt-section" aria-labelledby="bt-experience-title" data-reveal>
+          <section
+            class="bt-section"
+            aria-labelledby="bt-experience-title"
+            data-section="experience"
+            data-reveal
+          >
             <div class="bt-section-head">
               <span class="bt-section-num" aria-hidden="true">
                 02
               </span>
               <h2 id="bt-experience-title" class="bt-section-title">
-                {t.experience}
+                {sections.experience.label}
               </h2>
             </div>
             <ol class="bt-ledger">
@@ -152,13 +164,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="bt-section" aria-labelledby="bt-skills-title" data-reveal>
+          <section
+            class="bt-section"
+            aria-labelledby="bt-skills-title"
+            data-section="skills"
+            data-reveal
+          >
             <div class="bt-section-head">
               <span class="bt-section-num" aria-hidden="true">
                 03
               </span>
               <h2 id="bt-skills-title" class="bt-section-title">
-                {t.skills}
+                {sections.skills.label}
               </h2>
             </div>
             <ul class="bt-skills">
@@ -170,13 +187,18 @@ const hasContact = Boolean(profile.contact?.email || profile.contact?.note);
         )}
 
         {hasContact && (
-          <section class="bt-contact" aria-labelledby="bt-contact-title" data-reveal>
+          <section
+            class="bt-contact"
+            aria-labelledby="bt-contact-title"
+            data-section="contact"
+            data-reveal
+          >
             <div class="bt-section-head">
               <span class="bt-section-num" aria-hidden="true">
                 04
               </span>
               <h2 id="bt-contact-title" class="bt-section-title">
-                {t.contact}
+                {sections.contact.label}
               </h2>
             </div>
             <div class="bt-contact-body">

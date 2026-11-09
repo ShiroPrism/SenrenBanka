@@ -216,7 +216,7 @@ components:
 
 - **一张纸，一个流**：没有卡片、没有阴影层级、没有圆角。全页只有纸与油墨，唯一的深度是纸被看片灯托起的那层软阴影。
 - **报头即海报**：h1 是姓名，`clamp()` 上限 6rem、`font-stretch: 82%`；下方是副标（headline）与印刷附注（印刷方式 + 地点）。
-- **12 栏两组**：备注 7 + 明细 5 / 订单 5 + 纪录 7 / 技能 7 + 结账 5；每行两栏之间一条 6px 竖规线，栏上各一条 6px 横规线。
+- **12 栏两组**：简介 7 + 链接 5 / 项目 5 + 经历 7 / 技能 7 + 联系 5；每行两栏之间一条 6px 竖规线，栏上各一条 6px 横规线。
 - **两套字面**：League Gothic（可变窄体）打大字与数字，Blackout 2AM 只打镂空短词，Prociono 承载正文，中文回落 Zhuque Fangsong。
 - **动效只有一个作者时刻**：油墨辊压过标题（`clip-path` 从左展开一次）+ 规线画出（`scaleX`）。印完即静止。
 
@@ -252,7 +252,7 @@ components:
 **CJK:** Zhuque Fangsong（`--font-zhuque`，仿宋骨架）
 
 **Character:** 海报的字面是"窄、大、断笔"。拉丁大字被压到 82% 宽度、行高 0.86——像把整块字当图形用；
-分区前是 Blackout 2AM 的镂空短词（MEMO / INDEX / ORDERS / RECORD / SKILLS / CHECKOUT），
+分区前是 Blackout 2AM 的镂空标准英文标签（PROFILE / LINKS / PROJECTS / EXPERIENCE / SKILLS / CONTACT），
 笔画缺口就是丝网漏印的砂眼；正文换回 Prociono 的旧式衬线，保证 1rem/1.65 的长读；
 中文（姓名、分区名、正文）一律落在 Zhuque Fangsong——巨幅中文标题不是"窄体"，而是"大字距的书写骨架"。
 
@@ -268,7 +268,7 @@ components:
    正文用 Prociono 而非像素字（Silkscreen / Handjet / Ark Pixel）：像素声部属于屏幕与热敏纸（见 receipt），
    海报要的是纸上的阅读灰度。中文用 Zhuque Fangsong 而非 Ark Pixel：仿宋的书写笔形与丝网手绘感同源。
 4. **实际覆盖与回退**: League Gothic 覆盖拉丁（ASCII 大小写 + 数字 + 常用标点）；Blackout 2AM 覆盖拉丁大写与数字
-   （本设计只用 MEMO / INDEX / ORDERS / RECORD / SKILLS / CHECKOUT 六个词）；Prociono 覆盖拉丁 95/95；
+   （本设计只用 PROFILE / LINKS / PROJECTS / EXPERIENCE / SKILLS / CONTACT 六个词）；Prociono 覆盖拉丁 95/95；
    Zhuque 由外部 catalog v1.0.0 提供完整 `core-cjk` cmap（161 个 `unicode-range`
    分片，家族包 5,998,018 B）。中文回退 Songti SC / SimSun；拉丁展示回退 Arial Narrow /
    Arial Black；正文回退 Georgia。
@@ -284,7 +284,7 @@ components:
 ### Hierarchy
 
 - **Display / 姓名**（400, `clamp(2.6rem, 11vw, 6rem)`, 0.86, `-0.03em`, 82%）：h1，全页唯一的最大字面。
-- **Display-count / 合计**（400, `clamp(2.4rem, 5vw, 3.25rem)`, 0.85, `-0.01em`, 78%）：结账栏的数字。
+- **Display-count / 合计**（400, `clamp(2.4rem, 5vw, 3.25rem)`, 0.85, `-0.01em`, 78%）：联系栏的数字。
 - **Display-imprint / 页脚署名**（400, `clamp(1.1rem, 2.2vw, 1.5rem)`, 1.05, `0.06em`, 85%）。
 - **Stencil / 分区名**（400, 1.75rem, 0.04em）：Blackout 2AM 的镂空短词。
 - **Lede / 副标**（400, `clamp(1.05rem, 1.8vw, 1.25rem)`, 1.55）：headline。
@@ -329,9 +329,9 @@ components:
 - **纸**：`width: min(60rem, 100%)`；纸边（内边距）`clamp(1.6rem, 4.4vw, 3.25rem)`——套准标记与裁切角线都活在这条纸边里。
 - **报头**：h1 → 副标（`flex: 1 1 22rem`，`max-width: 40ch`）+ 印刷附注 + 半调块（同为 flex 行）→ 10px 粗规线（向两侧出血到纸边）。
 - **12 栏网格**：`repeat(12, minmax(0, 1fr))`，栏距 `clamp(1rem, 2.6vw, 2.25rem)`，行距 `clamp(1.9rem, 4vw, 3rem)`。
-  三段两栏：**备注 7 + 明细 5** → **订单 5 + 纪录 7** → **技能 7 + 结账 5**（宽窄交替）。
+  三段两栏：**简介 7 + 链接 5** → **项目 5 + 经历 7** → **技能 7 + 联系 5**（宽窄交替）。
 - **规线**：每栏上方 6px 横规线；同一行两栏之间 6px 竖规线（落在栏距中线上，`top:0; bottom:0` 与整行等高）；条目之间 1px 淡墨细线。
-- **明细行**：编号（窄体数字）+ 链接 + 短 URL（右对齐、省略号，≤52% 宽）。
+- **链接行**：编号（窄体数字）+ 链接 + 短 URL（右对齐、省略号，≤52% 宽）。
 - **页脚**：6px 粗规线（flex 首行占满宽度）+ 左署名 / 右可选站点声明。
 - **响应式**：≤880px 收成单栏（`grid-column: auto`）、竖规线与左右两枚套准标记退场、套准圆缩到 0.65rem；
   ≤600px 隐藏半调块与 URL（行只留编号与标签）；姓名靠 `clamp()` 自然落到 ~2.6rem（375px 时 11vw < 2.6rem）。
@@ -371,14 +371,14 @@ components:
 - **关于 h2 数量**：报头与页脚是**地标**（`header` / `footer`），不设 h2——h1 已经承担报头，
   在 h1 上方再放一行小字就是常见的 kicker/eyebrow，本设计拒绝。六个内容分区各有一枚可见 h2。
 
-### Items（明细 / 订单 / 纪录 / 技能）
-- **明细**：编号（`aria-hidden`）+ 链接 + 短 URL（显示去协议地址，可读，不隐藏于无障碍树）。
-- **订单**：编号 + 标题（有 url 则为链接）+ 描述（1rem/1.65）+ 标签行（`/` 分隔，大写，淡墨）。
-- **纪录**：日期（League Gothic 100%）+ 机构；角色与描述各占一行（角色淡墨 0.875rem，描述 1rem）。
+### Items（链接 / 项目 / 经历 / 技能）
+- **链接**：编号（`aria-hidden`）+ 链接 + 短 URL（显示去协议地址，可读，不隐藏于无障碍树）。
+- **项目**：编号 + 标题（有 url 则为链接）+ 描述（1rem/1.65）+ 标签行（`/` 分隔，大写，淡墨）。
+- **经历**：日期（League Gothic 100%）+ 机构；角色与描述各占一行（角色淡墨 0.875rem，描述 1rem）。
 - **技能**：一行流式列表，条目之间由伪元素 `/` 分隔（装饰，不计入可访问名）。
 
-### Total & Contact（合计 / 结账）
-- 合计 = `profile.links.length`（明细件数，真实数据）；数字用 League Gothic 78%、`clamp(2.4rem, 5vw, 3.25rem)`。
+### Total & Contact（合计 / 联系）
+- 合计 = `profile.links.length`（链接件数，真实数据）；数字用 League Gothic 78%、`clamp(2.4rem, 5vw, 3.25rem)`。
 - 联络：`contact.email` → `mailto:` 链接（`word-break: break-all`）；缺失时显示 `noMail` 文案（淡墨）。
 - `contact.note` 作为附注排在最后（`max-width: 40ch`）。
 
@@ -424,10 +424,10 @@ components:
 
 ## Project Contract（本项目契约）
 
-- **核心字段必须渲染**：`name`（h1）/ `headline`（副标）/ `bio`（备注）/ `links`（明细，全部条目）。
+- **核心字段必须渲染**：`name`（h1）/ `headline`（副标）/ `bio`（简介）/ `links`（链接，全部条目）。
 - **取数**：`loadDesignView('poster', Astro.url.pathname)`（`src/lib/site.ts`）——语言由路径统一解析，页面不判断语言。
-- **扩展区块取舍**：四个全部渲染——`projects`（订单）、`experience`（纪录）、`skills`（技能）、
-  `contact`（结账 + 合计，合计 = `links.length`）。`avatar` 不使用（海报不印头像）。
+- **扩展区块取舍**：四个全部渲染——`projects`（项目）、`experience`（经历）、`skills`（技能）、
+  `contact`（联系 + 合计，合计 = `links.length`）。`avatar` 不使用（海报不印头像）。
 - **多语言**：全部界面文案来自 `./messages.ts`（zh-CN / ja / en）；分区前的镂空拉丁词、`SENRENBANKA`
   与页脚 `PRINTED MATTER` 署名是三语共用的排印装置 / 品牌，理由写在 `messages.ts` 文件头。
 - `<HeadMeta {...view.head} />` 原样引入；页面操作、主题切换与语言切换由**共享操作菜单**承担

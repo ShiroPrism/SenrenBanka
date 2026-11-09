@@ -14,11 +14,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type PagerMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('pager', Astro.url.pathname);
 const t: PagerMessages = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -101,13 +103,16 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
           )}
         </header>
 
-        <section class="pg-msg" aria-labelledby="pg-memo-title">
+        <section class="pg-msg" data-section="profile" aria-labelledby="pg-memo-title">
           <div class="pg-msg-head pg-line" style={`--d:${d(5)}`}>
             <span class="pg-msg-no" aria-hidden="true">
               {no.bio}
             </span>
-            <h2 class="pg-msg-title" id="pg-memo-title">
+            <span class="pg-msg-kicker" aria-hidden="true">
               {t.memoTitle}
+            </span>
+            <h2 class="pg-msg-title" id="pg-memo-title">
+              {sections.profile.label}
             </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>
@@ -116,13 +121,13 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
           </p>
         </section>
 
-        <section class="pg-msg" data-reveal aria-labelledby="pg-links-title">
+        <section class="pg-msg" data-section="links" data-reveal aria-labelledby="pg-links-title">
           <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
             <span class="pg-msg-no" aria-hidden="true">
               {no.links}
             </span>
             <h2 class="pg-msg-title" id="pg-links-title">
-              {t.linksTitle}
+              {sections.links.label}
             </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>
@@ -141,13 +146,18 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
         </section>
 
         {hasProjects && (
-          <section class="pg-msg" data-reveal aria-labelledby="pg-projects-title">
+          <section
+            class="pg-msg"
+            data-section="projects"
+            data-reveal
+            aria-labelledby="pg-projects-title"
+          >
             <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
               <span class="pg-msg-no" aria-hidden="true">
                 {no.projects}
               </span>
               <h2 class="pg-msg-title" id="pg-projects-title">
-                {t.projectsTitle}
+                {sections.projects.label}
               </h2>
               <span class="pg-msg-rule" aria-hidden="true"></span>
             </div>
@@ -179,13 +189,18 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
         )}
 
         {hasExperience && (
-          <section class="pg-msg" data-reveal aria-labelledby="pg-history-title">
+          <section
+            class="pg-msg"
+            data-section="experience"
+            data-reveal
+            aria-labelledby="pg-history-title"
+          >
             <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
               <span class="pg-msg-no" aria-hidden="true">
                 {no.experience}
               </span>
               <h2 class="pg-msg-title" id="pg-history-title">
-                {t.experienceTitle}
+                {sections.experience.label}
               </h2>
               <span class="pg-msg-rule" aria-hidden="true"></span>
             </div>
@@ -204,13 +219,18 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
         )}
 
         {hasSkills && (
-          <section class="pg-msg" data-reveal aria-labelledby="pg-skills-title">
+          <section
+            class="pg-msg"
+            data-section="skills"
+            data-reveal
+            aria-labelledby="pg-skills-title"
+          >
             <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
               <span class="pg-msg-no" aria-hidden="true">
                 {no.skills}
               </span>
               <h2 class="pg-msg-title" id="pg-skills-title">
-                {t.skillsTitle}
+                {sections.skills.label}
               </h2>
               <span class="pg-msg-rule" aria-hidden="true"></span>
             </div>
@@ -220,13 +240,18 @@ const d = (n: number) => `${Math.min(n, 8) * STEP}ms`;
           </section>
         )}
 
-        <section class="pg-msg" data-reveal aria-labelledby="pg-contact-title">
+        <section
+          class="pg-msg"
+          data-section="contact"
+          data-reveal
+          aria-labelledby="pg-contact-title"
+        >
           <div class="pg-msg-head pg-line" style={`--d:${d(0)}`}>
             <span class="pg-msg-no" aria-hidden="true">
               {no.contact}
             </span>
             <h2 class="pg-msg-title" id="pg-contact-title">
-              {t.contactTitle}
+              {sections.contact.label}
             </h2>
             <span class="pg-msg-rule" aria-hidden="true"></span>
           </div>

@@ -381,6 +381,20 @@ html:has(.deco) {
   margin-bottom: clamp(1.4rem, 3.6vw, 2.2rem);
 }
 
+/* 主题词 kicker：节目单上的栏目标签（剧目表 / 幕次 …）移到 h2 上方，h2 用标准标签。 */
+.deco-section-kicker {
+  margin: 0;
+  color: var(--dc-gold-bright);
+  font-family: var(--dc-type-body);
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 .deco-section-head .deco-ornament {
   margin: 0.2rem auto 0;
 }

@@ -9,6 +9,8 @@
  * Page.astro 直接书写，见下）、词条编号（算术序号，不进本文件）。
  *
  * - 本文件承载全部随语言切换的可见文案；页面级 `lexiconWord` 只用作书眉的辞书名。
+ * - 分区 h2 使用共享标准标签（`src/i18n/sections`）；`*Title` 是词条名之后的语域词
+ *   （kicker），不再承担标题语义。技能分区没有语域词，故不设该键。
  * - 翻译纪律：不做解释性增译，三语读者获得等量信息（例：明细 / 明細 / INDEX 都指
  *   "参照项清单"，不写成 "交叉引用索引" 之类的说明句）。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
@@ -35,7 +37,6 @@ export interface LexiconMessages {
   logTitle: string;
   logLatin: string;
   logPos: string;
-  skillsTitle: string;
   skillsLatin: string;
   skillsPos: string;
   contactTitle: string;
@@ -83,7 +84,6 @@ export const messages: Record<string, LexiconMessages> = {
     logTitle: '纪录',
     logLatin: LATIN.log,
     logPos: LATIN.plural,
-    skillsTitle: '技能',
     skillsLatin: LATIN.skills,
     skillsPos: LATIN.plural,
     contactTitle: '结账',
@@ -113,7 +113,6 @@ export const messages: Record<string, LexiconMessages> = {
     logTitle: '紀錄',
     logLatin: LATIN.log,
     logPos: LATIN.plural,
-    skillsTitle: '技能',
     skillsLatin: LATIN.skills,
     skillsPos: LATIN.plural,
     contactTitle: '結賬',
@@ -143,7 +142,6 @@ export const messages: Record<string, LexiconMessages> = {
     logTitle: '記録',
     logLatin: LATIN.log,
     logPos: LATIN.plural,
-    skillsTitle: '技能',
     skillsLatin: LATIN.skills,
     skillsPos: LATIN.plural,
     contactTitle: '連絡',
@@ -173,7 +171,6 @@ export const messages: Record<string, LexiconMessages> = {
     logTitle: 'RECORD',
     logLatin: LATIN.log,
     logPos: LATIN.plural,
-    skillsTitle: 'SKILLS',
     skillsLatin: LATIN.skills,
     skillsPos: LATIN.plural,
     contactTitle: 'CONTACT',
@@ -203,7 +200,6 @@ export const messages: Record<string, LexiconMessages> = {
     logTitle: '기록',
     logLatin: LATIN.log,
     logPos: LATIN.plural,
-    skillsTitle: '기술',
     skillsLatin: LATIN.skills,
     skillsPos: LATIN.plural,
     contactTitle: '연락',

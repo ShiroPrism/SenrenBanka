@@ -7,8 +7,9 @@
  *      属收音机的铭牌文字，三种语言的机器上刻的是同一行 ASCII，故三语取同值；
  *   3) 模块编号 `01`–`06` 与刻度数字——DSEG14 段码本身，`aria-hidden`、不进无障碍树，
  *      由 Page.astro 的构建期循环生成。
- * - 分栏标题取「收信机面板」的语域，而不是机械直译：链接 = 频道（收信机的输入端口）、
- *   项目 = 节目（这台机器播出的东西）、经历 = 日志（值班记录）、联络 = 交信（ja 用交信）。
+ * - 分区 h2 使用共享标准标签（`src/i18n/sections` 的 `label`）；h2 上方的小字 kicker
+ *   也使用标准英文标签（`enLabel`），不再保留机面语域词。技能分区与其余分区一致，
+ *   只在 h2 中呈现标准词。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface RadioMessages {
@@ -22,12 +23,6 @@ export interface RadioMessages {
   channelKey: string;
   /** 地点标签：收信机的台址。 */
   qthLabel: string;
-  memoTitle: string;
-  channelsTitle: string;
-  programsTitle: string;
-  logTitle: string;
-  skillsTitle: string;
-  contactTitle: string;
   totalLabel: string;
   totalUnit: string;
   contactVia: string;
@@ -43,12 +38,6 @@ export const messages: Record<string, RadioMessages> = {
     callSignLabel: '呼号',
     channelKey: 'CH',
     qthLabel: '台址',
-    memoTitle: '备注',
-    channelsTitle: '频道',
-    programsTitle: '节目',
-    logTitle: '日志',
-    skillsTitle: '技能',
-    contactTitle: '联络',
     totalLabel: '频道',
     totalUnit: '个',
     contactVia: '来信',
@@ -61,12 +50,6 @@ export const messages: Record<string, RadioMessages> = {
     callSignLabel: '呼號',
     channelKey: 'CH',
     qthLabel: '臺址',
-    memoTitle: '備註',
-    channelsTitle: '頻道',
-    programsTitle: '節目',
-    logTitle: '日誌',
-    skillsTitle: '技能',
-    contactTitle: '聯絡',
     totalLabel: '頻道',
     totalUnit: '個',
     contactVia: '來信',
@@ -79,12 +62,6 @@ export const messages: Record<string, RadioMessages> = {
     callSignLabel: 'コールサイン',
     channelKey: 'CH',
     qthLabel: '所在地',
-    memoTitle: '備考',
-    channelsTitle: 'チャンネル',
-    programsTitle: '番組',
-    logTitle: '記録',
-    skillsTitle: 'スキル',
-    contactTitle: '交信',
     totalLabel: 'チャンネル',
     totalUnit: '局',
     contactVia: '連絡先',
@@ -97,12 +74,6 @@ export const messages: Record<string, RadioMessages> = {
     callSignLabel: 'CALL SIGN',
     channelKey: 'CH',
     qthLabel: 'QTH',
-    memoTitle: 'MEMO',
-    channelsTitle: 'CHANNELS',
-    programsTitle: 'PROGRAMS',
-    logTitle: 'LOG',
-    skillsTitle: 'SKILLS',
-    contactTitle: 'CONTACT',
     totalLabel: 'CHANNELS',
     totalUnit: 'RX',
     contactVia: 'MAIL',
@@ -115,12 +86,6 @@ export const messages: Record<string, RadioMessages> = {
     callSignLabel: '콜사인',
     channelKey: 'CH',
     qthLabel: '위치',
-    memoTitle: '메모',
-    channelsTitle: '채널',
-    programsTitle: '프로그램',
-    logTitle: '기록',
-    skillsTitle: '기술',
-    contactTitle: '교신',
     totalLabel: '채널',
     totalUnit: '국',
     contactVia: '메일',

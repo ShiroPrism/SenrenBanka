@@ -8,6 +8,8 @@
  *   2. `brand`（SENRENBANKA）为站名 / 品牌。
  * - 其余全部随语言切换；语域取"办公室里传真机旁边的语气"：短、事务性、带编号感，
  *   不做成营销文案（en 用 MEMO / ENCLOSURES / SETTLEMENT 而不是 ABOUT / LINKS / CONTACT）。
+ * - 分区 h2 使用共享标准标签（`src/i18n/sections`）；下列 `*Title` 是各分区抬头左侧的
+ *   语域词（kicker），不在 h2 里。技能分区没有语域词，故不设该键。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface FaxMessages {
@@ -26,12 +28,11 @@ export interface FaxMessages {
   originLabel: string;
   /** PAGES 字段的单位。 */
   pagesUnit: string;
-  /** 分区标题（h2）。 */
+  /** 分区抬头左侧的语域词（kicker，h2 之外）。 */
   memoTitle: string;
   itemsTitle: string;
   ordersTitle: string;
   logTitle: string;
-  skillsTitle: string;
   checkoutTitle: string;
   /** 结账区的合计。 */
   totalLabel: string;
@@ -60,7 +61,6 @@ export const messages: Record<string, FaxMessages> = {
     itemsTitle: '明细',
     ordersTitle: '订单',
     logTitle: '纪录',
-    skillsTitle: '技能',
     checkoutTitle: '结账',
     totalLabel: '合计',
     totalUnit: '件',
@@ -83,7 +83,6 @@ export const messages: Record<string, FaxMessages> = {
     itemsTitle: '明細',
     ordersTitle: '訂單',
     logTitle: '紀錄',
-    skillsTitle: '技能',
     checkoutTitle: '結賬',
     totalLabel: '合計',
     totalUnit: '件',
@@ -106,7 +105,6 @@ export const messages: Record<string, FaxMessages> = {
     itemsTitle: '同封書類',
     ordersTitle: '発注案件',
     logTitle: '稼働記録',
-    skillsTitle: '技能',
     checkoutTitle: '清算',
     totalLabel: '合計',
     totalUnit: '件',
@@ -129,7 +127,6 @@ export const messages: Record<string, FaxMessages> = {
     itemsTitle: 'ENCLOSURES',
     ordersTitle: 'ORDERS',
     logTitle: 'LOG',
-    skillsTitle: 'SKILLS',
     checkoutTitle: 'SETTLEMENT',
     totalLabel: 'TOTAL',
     totalUnit: 'ITEMS',
@@ -152,7 +149,6 @@ export const messages: Record<string, FaxMessages> = {
     itemsTitle: '동봉물',
     ordersTitle: '주문 건',
     logTitle: '기록',
-    skillsTitle: '기술',
     checkoutTitle: '정산',
     totalLabel: '합계',
     totalUnit: '건',

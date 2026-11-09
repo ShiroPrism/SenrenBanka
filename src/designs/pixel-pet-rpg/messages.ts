@@ -4,7 +4,9 @@
  * `gameTitle`, `playerLabel`, and `periodLabel` are game-HUD marks and stay
  * identical in every locale. Everything else is localized UI copy. `liveTemplate` is read by
  * script.ts only to update the visible/announced current-stop status from the
- * selected anchor. Chinese and Japanese UI strings use the complete Ark Pixel
+ * selected anchor. Section h2s come from the shared label table
+ * (`src/i18n/sections`); the `*Title` values below are the station names shown on
+ * the map and as the panel kicker, never as heading text. Chinese and Japanese UI strings use the complete Ark Pixel
  * core-cjk shards; source-missing glyphs may still fall back per glyph.
  * Station indexes (`01`, `02`, ...) are generated in Page.astro as aria-hidden
  * DOM-order marks, so they are not language copy.
@@ -25,6 +27,8 @@ export interface PixelPetMessages {
   linksTitle: string;
   projectsTitle: string;
   experienceTitle: string;
+  /** 经历分区的语域词（kicker）：地名「经历日志」之外的屏显短词。 */
+  experienceKicker: string;
   skillsTitle: string;
   contactTitle: string;
   avatarAlt: string;
@@ -53,6 +57,7 @@ export const messages: Record<string, PixelPetMessages> = {
     linksTitle: '随身物品',
     projectsTitle: '远方路标',
     experienceTitle: '经历日志',
+    experienceKicker: '日志',
     skillsTitle: '工具',
     contactTitle: '联系',
     avatarAlt: '{name} 的个人形象',
@@ -79,6 +84,7 @@ export const messages: Record<string, PixelPetMessages> = {
     linksTitle: '隨身物品',
     projectsTitle: '遠方路標',
     experienceTitle: '經歷日誌',
+    experienceKicker: '日誌',
     skillsTitle: '工具',
     contactTitle: '聯絡',
     avatarAlt: '{name} 的個人形象',
@@ -105,6 +111,7 @@ export const messages: Record<string, PixelPetMessages> = {
     linksTitle: '持ちもの',
     projectsTitle: '目的地',
     experienceTitle: '記録',
+    experienceKicker: 'ログ',
     skillsTitle: '道具',
     contactTitle: '連絡先',
     avatarAlt: '{name} のプロフィール写真',
@@ -131,6 +138,7 @@ export const messages: Record<string, PixelPetMessages> = {
     linksTitle: 'POCKET ITEMS',
     projectsTitle: 'DISTANT MARKERS',
     experienceTitle: 'FOOTPRINT LOG',
+    experienceKicker: 'LOG',
     skillsTitle: 'TOOL RACK',
     contactTitle: 'TOWN POST',
     avatarAlt: 'Portrait of {name}',
@@ -157,6 +165,7 @@ export const messages: Record<string, PixelPetMessages> = {
     linksTitle: '소지품',
     projectsTitle: '먼 곳 표지판',
     experienceTitle: '발자취 기록',
+    experienceKicker: '기록',
     skillsTitle: '도구',
     contactTitle: '마을 우체국',
     avatarAlt: '{name}의 프로필 그림',

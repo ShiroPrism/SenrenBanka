@@ -1,0 +1,70 @@
+{
+  "zh-CN": {
+    "profile": { "label": "简介", "enLabel": "Profile", "aliases": ["关于", "关于我", "个人资料"] },
+    "projects": {
+      "label": "项目",
+      "enLabel": "Projects",
+      "aliases": ["作品", "精选项目", "精选作品"]
+    },
+    "experience": { "label": "经历", "enLabel": "Experience", "aliases": ["履历", "工作经历"] },
+    "skills": { "label": "技能", "enLabel": "Skills", "aliases": ["能力", "专长"] },
+    "contact": { "label": "联系", "enLabel": "Contact", "aliases": ["联络", "联系方式"] },
+    "links": { "label": "链接", "enLabel": "Links", "aliases": ["社交链接"] }
+  },
+  "zh-TW": {
+    "profile": { "label": "簡介", "enLabel": "Profile", "aliases": ["關於", "關於我", "個人資料"] },
+    "projects": {
+      "label": "專案",
+      "enLabel": "Projects",
+      "aliases": ["作品", "精選專案", "精選作品"]
+    },
+    "experience": { "label": "經歷", "enLabel": "Experience", "aliases": ["履歷", "工作經歷"] },
+    "skills": { "label": "技能", "enLabel": "Skills", "aliases": ["能力", "專長"] },
+    "contact": {
+      "label": "聯絡",
+      "enLabel": "Contact",
+      "aliases": ["聯繫", "聯絡方式", "聯繫方式"]
+    },
+    "links": { "label": "連結", "enLabel": "Links", "aliases": ["社群連結"] }
+  },
+  "ja": {
+    "profile": {
+      "label": "プロフィール",
+      "enLabel": "Profile",
+      "aliases": ["自己紹介", "について"]
+    },
+    "projects": { "label": "プロジェクト", "enLabel": "Projects", "aliases": ["作品"] },
+    "experience": { "label": "経歴", "enLabel": "Experience", "aliases": ["職歴"] },
+    "skills": { "label": "スキル", "enLabel": "Skills", "aliases": ["技能", "能力"] },
+    "contact": {
+      "label": "連絡先",
+      "enLabel": "Contact",
+      "aliases": ["お問い合わせ", "コンタクト"]
+    },
+    "links": { "label": "リンク", "enLabel": "Links", "aliases": ["ソーシャルリンク"] }
+  },
+  "en": {
+    "profile": { "label": "Profile", "enLabel": "Profile", "aliases": ["About"] },
+    "projects": {
+      "label": "Projects",
+      "enLabel": "Projects",
+      "aliases": ["Works", "Selected Works"]
+    },
+    "experience": {
+      "label": "Experience",
+      "enLabel": "Experience",
+      "aliases": ["Work Experience"]
+    },
+    "skills": { "label": "Skills", "enLabel": "Skills", "aliases": ["Capabilities"] },
+    "contact": { "label": "Contact", "enLabel": "Contact", "aliases": ["Get in Touch"] },
+    "links": { "label": "Links", "enLabel": "Links", "aliases": ["Social Links"] }
+  },
+  "ko": {
+    "profile": { "label": "프로필", "enLabel": "Profile", "aliases": ["소개"] },
+    "projects": { "label": "프로젝트", "enLabel": "Projects", "aliases": ["작품"] },
+    "experience": { "label": "경력", "enLabel": "Experience", "aliases": ["이력", "경험"] },
+    "skills": { "label": "기술", "enLabel": "Skills", "aliases": ["역량", "스킬"] },
+    "contact": { "label": "연락처", "enLabel": "Contact", "aliases": ["문의", "연락"] },
+    "links": { "label": "링크", "enLabel": "Links", "aliases": ["소셜 링크"] }
+  }
+}

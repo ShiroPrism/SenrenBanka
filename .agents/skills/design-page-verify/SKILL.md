@@ -23,10 +23,11 @@ description: "SenrenBanka 设计页验证流程：新建或修改设计页（或
 ## 步骤 1 · 构建与注册表
 
 ```powershell
-npm run build        # astro check + Astro build + html-only 产物门禁
+npm run build        # astro check + Astro build + html-only 产物门禁 + verify:sections
 npm run check        # 仅类型检查（可按需）
 npm run test:html-only  # 验证器正向 / 负向回归（Node 内置 test runner）
 npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
+npm run verify:sections  # 主分区 data-section / h2 标准标签门禁
 ```
 
 - 共同必交：`DESIGN.md` / `design.json` / `Page.astro` / **`messages.ts`**（多语言文案契约，见步骤 2b）。
@@ -50,6 +51,13 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 2. 最终 HTML 的 `<link>` rel 仅含 `canonical` / `alternate` / `icon`；`<style>`、`style` 属性、`<script>`、`on*`、`iframe` / `object` / `embed`、stylesheet / preload、`javascript:` URL、meta refresh 计数均为 0。
 3. 核心字段与所有实际存在的可选区块均渲染；`name` 是唯一 `h1`，每个 section 有可访问名称，目录不链接不存在的锚点。
 4. 页面不使用 `<Font>` / `<Reveal>` / `<ContextMenu>` / `<InfraStyles>` / `<LanguageSwitcher>`，且不存在随机入口。
+
+**主分区标签（所有模式，ADR 0023）**：
+
+1. `npm run verify:sections` 通过；该设计不得出现在 `scripts/section-labels.allowlist.json` 中（迁移期除外）。
+2. 每个主分区有 `data-section="profile|projects|experience|skills|contact|links"`；profile hero 允许没有 h2。
+3. h2 只含当前 Locale 的标准标签（canonical / alias / 英文 canonical）；主题词在 h2 之外的 kicker / subtitle / 装饰中。
+4. `aria-labelledby` / `aria-label` 指向标准标签，不得只含主题词。
 
 ## 步骤 2b · 多语言专项（v0.9.0 起必做）
 
@@ -97,6 +105,7 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 - **关键 token 复核（仅 `styled`）**：颜色（如需对比度，直接算数值）、字号/字距、间距/padding、布局结构（如 grid 列宽）。
 - **a11y 结构（逐项可判定）**：
   - 标题层级 `h1 → h2 → h3` 无跳级；
+  - **主分区 h2 的文本是标准标签**（`data-section` 区间内），主题词只出现在 h2 之外；
   - **每个 `<section>` / 分区都有可访问名称**（`aria-labelledby` 指向同区可见标签，或 sr-only 标题）——实测 `[aria-label],[aria-labelledby]` 计数必须 > 0；
   - **装饰符号不进入可访问名**：`▸` `└─` `#` `●`、ASCII 波形、扫描线等一律 `aria-hidden`；链接可访问名**不得**以这类符号开头；
   - 输出实测值：标题序列、链接可访问名列表、`aria-hidden` 计数。
@@ -171,7 +180,8 @@ npm run verify:html-only -- --dist <目录>  # 检查非默认产物目录
 
 ## 通过标准（勾选表）
 
-- [ ] `npm run build` 通过（含 astro check 与 html-only 产物门禁），注册表校验无 `[senrenbanka]` 报错
+- [ ] `npm run build` 通过（含 astro check、html-only 产物门禁与 `verify:sections`），注册表校验无 `[senrenbanka]` 报错
+- [ ] 主分区标签：每个主分区有 `data-section`，h2 只含标准标签，主题词在 h2 之外；该设计不在 allowlist 中
 - [ ] 产物抽查按模式完成：`styled` 的 CSS 隔离 / 字体 / 核心字段通过；`html-only` 的资源禁令 / metadata rel / 核心字段通过，且 `npm run test:html-only` 全绿
 - [ ] 多语言（步骤 2b）：各 locale 页面齐备、`lang`/`robots`/`canonical`/`hreflang` 正确；`styled` 菜单语言项与键盘路径通过；`html-only` 普通语言链接通过；语言/主题正交、旧路径跳转与配置开关均符合
 - [ ] 韩语字体（若设计声明 `ko`）：`fonts:coverage` 通过；浏览器实际命中声明的 Hangul 核心字体；非 `ko` 页面未下载韩语子集

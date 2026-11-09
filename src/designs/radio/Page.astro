@@ -4,7 +4,9 @@
  *
  * 数据：`loadDesignView('radio', Astro.url.pathname)`（语言由路径统一解析，页面不自行判断）。
  * 结构：面板头（品牌 + 指示灯）→ 刻度盘（呼号 h1 + 刻度尺 + 指针）→ 模块栅格
- *       （备注 / 频道 / 节目 / 日志 / 技能 / 联络）→ 页脚（VU 表 + 波段铭牌）。
+ *       （简介 / 链接 / 项目 / 经历 / 技能 / 联系）→ 页脚（VU 表 + 波段铭牌）。
+ *       分区 h2 文本取共享标准标签（`src/i18n/sections`）；机面语域的主题词
+ *       （备注 / 频道 / 节目 / 日志 / 联络）降为 h2 上方的琥珀色小字 kicker。
  * 装饰：螺钉、刻度尺、指针、指示灯、VU 条、模块编号一律 aria-hidden；
  *       它们只描述「一台机器」，不承载资料，可访问名由 h1 / h2 / 文本标签承担。
  * 动效：唯一作者时刻 = 上电（指针扫到固定刻度 + 指示灯两段点亮），一次性；
@@ -16,15 +18,20 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type RadioMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('radio', Astro.url.pathname);
 const t: RadioMessages = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
+// 标准英文 kicker 与当前 Locale 的 h2 同名时不重复印（en 下六个分区全部省略）。
+const showKicker = (key: keyof typeof sections) =>
+  sections[key].enLabel.toUpperCase() !== sections[key].label.toUpperCase();
 
 // 刻度尺：61 格、每 10 格标数字（6–12 MHz）。量程标记是机面装饰，不承载任何个人资料。
 const TICK_COUNT = 61;
@@ -126,23 +133,34 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
       </div>
 
       <div class="rd-modules">
-        <section class="rd-mod" data-reveal aria-labelledby="rd-memo-title">
-          <h2 class="rd-mod-title" id="rd-memo-title">
+        <section class="rd-mod" data-section="profile" data-reveal aria-labelledby="rd-memo-title">
+          {showKicker('profile') && <p class="rd-mod-kicker">{sections.profile.enLabel}</p>}
+          <div class="rd-mod-title">
             <span class="rd-mod-no" aria-hidden="true">
               {pad(0)}
             </span>
-            {t.memoTitle}
-          </h2>
+            <h2 class="rd-mod-heading" id="rd-memo-title">
+              {sections.profile.label}
+            </h2>
+          </div>
           <p class="rd-bio">{profile.bio}</p>
         </section>
 
-        <section class="rd-mod" data-reveal aria-labelledby="rd-channels-title">
-          <h2 class="rd-mod-title" id="rd-channels-title">
+        <section
+          class="rd-mod"
+          data-section="links"
+          data-reveal
+          aria-labelledby="rd-channels-title"
+        >
+          {showKicker('links') && <p class="rd-mod-kicker">{sections.links.enLabel}</p>}
+          <div class="rd-mod-title">
             <span class="rd-mod-no" aria-hidden="true">
               {pad(1)}
             </span>
-            {t.channelsTitle}
-          </h2>
+            <h2 class="rd-mod-heading" id="rd-channels-title">
+              {sections.links.label}
+            </h2>
+          </div>
           <ul class="rd-channels">
             {profile.links.map((link, index) => (
               <li class="rd-chan">
@@ -162,13 +180,21 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
         </section>
 
         {profile.projects && profile.projects.length > 0 && (
-          <section class="rd-mod" data-reveal aria-labelledby="rd-programs-title">
-            <h2 class="rd-mod-title" id="rd-programs-title">
+          <section
+            class="rd-mod"
+            data-section="projects"
+            data-reveal
+            aria-labelledby="rd-programs-title"
+          >
+            {showKicker('projects') && <p class="rd-mod-kicker">{sections.projects.enLabel}</p>}
+            <div class="rd-mod-title">
               <span class="rd-mod-no" aria-hidden="true">
                 {pad(2)}
               </span>
-              {t.programsTitle}
-            </h2>
+              <h2 class="rd-mod-heading" id="rd-programs-title">
+                {sections.projects.label}
+              </h2>
+            </div>
             <ol class="rd-programs">
               {profile.projects.map((project, index) => (
                 <li class="rd-program">
@@ -199,13 +225,21 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
         )}
 
         {profile.experience && profile.experience.length > 0 && (
-          <section class="rd-mod" data-reveal aria-labelledby="rd-log-title">
-            <h2 class="rd-mod-title" id="rd-log-title">
+          <section
+            class="rd-mod"
+            data-section="experience"
+            data-reveal
+            aria-labelledby="rd-log-title"
+          >
+            {showKicker('experience') && <p class="rd-mod-kicker">{sections.experience.enLabel}</p>}
+            <div class="rd-mod-title">
               <span class="rd-mod-no" aria-hidden="true">
                 {pad(3)}
               </span>
-              {t.logTitle}
-            </h2>
+              <h2 class="rd-mod-heading" id="rd-log-title">
+                {sections.experience.label}
+              </h2>
+            </div>
             <ul class="rd-logs">
               {profile.experience.map((item) => (
                 <li class="rd-log">
@@ -222,13 +256,21 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
         )}
 
         {profile.skills && profile.skills.length > 0 && (
-          <section class="rd-mod" data-reveal aria-labelledby="rd-skills-title">
-            <h2 class="rd-mod-title" id="rd-skills-title">
+          <section
+            class="rd-mod"
+            data-section="skills"
+            data-reveal
+            aria-labelledby="rd-skills-title"
+          >
+            {showKicker('skills') && <p class="rd-mod-kicker">{sections.skills.enLabel}</p>}
+            <div class="rd-mod-title">
               <span class="rd-mod-no" aria-hidden="true">
                 {pad(4)}
               </span>
-              {t.skillsTitle}
-            </h2>
+              <h2 class="rd-mod-heading" id="rd-skills-title">
+                {sections.skills.label}
+              </h2>
+            </div>
             <ul class="rd-tags rd-skills">
               {profile.skills.map((skill) => (
                 <li class="rd-tag">{skill}</li>
@@ -237,13 +279,21 @@ const vuBars = Array.from({ length: VU_BARS }, (_, i) => ({
           </section>
         )}
 
-        <section class="rd-mod" data-reveal aria-labelledby="rd-contact-title">
-          <h2 class="rd-mod-title" id="rd-contact-title">
+        <section
+          class="rd-mod"
+          data-section="contact"
+          data-reveal
+          aria-labelledby="rd-contact-title"
+        >
+          {showKicker('contact') && <p class="rd-mod-kicker">{sections.contact.enLabel}</p>}
+          <div class="rd-mod-title">
             <span class="rd-mod-no" aria-hidden="true">
               {pad(5)}
             </span>
-            {t.contactTitle}
-          </h2>
+            <h2 class="rd-mod-heading" id="rd-contact-title">
+              {sections.contact.label}
+            </h2>
+          </div>
           <p class="rd-total">
             <span class="rd-total-label">{t.totalLabel}</span>
             <span class="rd-total-num">{String(profile.links.length).padStart(2, '0')}</span>

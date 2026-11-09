@@ -14,11 +14,13 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('ink', Astro.url.pathname);
 const t = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 /* 印章只钤姓名首字；按字素切分，避免拆开代理对。 */
@@ -79,7 +81,7 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
       </header>
 
       <main>
-        <section class="ink-hero" aria-labelledby="ink-name">
+        <section class="ink-hero" aria-labelledby="ink-name" data-section="profile">
           <div class="ink-tiers">
             <p class="ink-kicker ink-rise" style="--ink-delay: 0ms">
               {t.portfolio}
@@ -102,8 +104,17 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
             </div>
 
             {profile.links.length > 0 && (
-              <div class="ink-block">
-                <p class="ink-label">{t.imprint}</p>
+              <section
+                class="ink-block ink-block--links"
+                data-section="links"
+                aria-labelledby="ink-links-title"
+              >
+                <p class="ink-label" aria-hidden="true">
+                  {t.imprint}
+                </p>
+                <h2 id="ink-links-title" class="ink-block-title">
+                  {sections.links.label}
+                </h2>
                 <ul class="ink-slips">
                   {profile.links.map((link) => (
                     <li>
@@ -114,21 +125,31 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
                     </li>
                   ))}
                 </ul>
-              </div>
+              </section>
             )}
           </div>
         </section>
 
         {hasProjects && (
-          <section class="ink-section" aria-labelledby="ink-projects-title" data-reveal>
+          <section
+            class="ink-section"
+            aria-labelledby="ink-projects-title"
+            data-section="projects"
+            data-reveal
+          >
             <p class="ink-gutter" aria-hidden="true">
               {numeral(marks.projects)}
             </p>
             <div class="ink-section-body">
               <div class="ink-section-head">
-                <h2 id="ink-projects-title" class="ink-section-title">
-                  {t.projects}
-                </h2>
+                <div class="ink-section-title-block">
+                  <p class="ink-section-kicker" aria-hidden="true">
+                    {t.projects}
+                  </p>
+                  <h2 id="ink-projects-title" class="ink-section-title">
+                    {sections.projects.label}
+                  </h2>
+                </div>
                 <span class="ink-rule-line" aria-hidden="true" />
               </div>
               <ul class="ink-volumes">
@@ -149,15 +170,25 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
         )}
 
         {hasExperience && (
-          <section class="ink-section" aria-labelledby="ink-experience-title" data-reveal>
+          <section
+            class="ink-section"
+            aria-labelledby="ink-experience-title"
+            data-section="experience"
+            data-reveal
+          >
             <p class="ink-gutter" aria-hidden="true">
               {numeral(marks.experience)}
             </p>
             <div class="ink-section-body">
               <div class="ink-section-head">
-                <h2 id="ink-experience-title" class="ink-section-title">
-                  {t.experience}
-                </h2>
+                <div class="ink-section-title-block">
+                  <p class="ink-section-kicker" aria-hidden="true">
+                    {t.experience}
+                  </p>
+                  <h2 id="ink-experience-title" class="ink-section-title">
+                    {sections.experience.label}
+                  </h2>
+                </div>
                 <span class="ink-rule-line" aria-hidden="true" />
               </div>
               <ol class="ink-chronology">
@@ -177,15 +208,25 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
         )}
 
         {hasSkills && (
-          <section class="ink-section" aria-labelledby="ink-skills-title" data-reveal>
+          <section
+            class="ink-section"
+            aria-labelledby="ink-skills-title"
+            data-section="skills"
+            data-reveal
+          >
             <p class="ink-gutter" aria-hidden="true">
               {numeral(marks.skills)}
             </p>
             <div class="ink-section-body">
               <div class="ink-section-head">
-                <h2 id="ink-skills-title" class="ink-section-title">
-                  {t.skills}
-                </h2>
+                <div class="ink-section-title-block">
+                  <p class="ink-section-kicker" aria-hidden="true">
+                    {t.skills}
+                  </p>
+                  <h2 id="ink-skills-title" class="ink-section-title">
+                    {sections.skills.label}
+                  </h2>
+                </div>
                 <span class="ink-rule-line" aria-hidden="true" />
               </div>
               <ul class="ink-brushwork">
@@ -198,15 +239,25 @@ const numeral = (index: number) => t.numerals[index] ?? String(index + 1);
         )}
 
         {hasContact && (
-          <section class="ink-section" aria-labelledby="ink-contact-title" data-reveal>
+          <section
+            class="ink-section"
+            aria-labelledby="ink-contact-title"
+            data-section="contact"
+            data-reveal
+          >
             <p class="ink-gutter" aria-hidden="true">
               {numeral(marks.contact)}
             </p>
             <div class="ink-section-body">
               <div class="ink-section-head">
-                <h2 id="ink-contact-title" class="ink-section-title">
-                  {t.contact}
-                </h2>
+                <div class="ink-section-title-block">
+                  <p class="ink-section-kicker" aria-hidden="true">
+                    {t.contact}
+                  </p>
+                  <h2 id="ink-contact-title" class="ink-section-title">
+                    {sections.contact.label}
+                  </h2>
+                </div>
                 <span class="ink-rule-line" aria-hidden="true" />
               </div>
               <div class="ink-colophon">

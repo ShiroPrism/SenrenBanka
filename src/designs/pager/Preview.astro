@@ -1,6 +1,7 @@
 ---
 /** pager 预览碎片：塑料机身、LCD、信号/电池/MSG 与消息行。 */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -12,6 +13,7 @@ export const fonts: import('astro:assets').CssVariable[] = [
 
 const { locale, name, headline, location, links = [] } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 const count = String(links.length).padStart(2, '0');
 ---
 
@@ -44,12 +46,12 @@ const count = String(links.length).padStart(2, '0');
       )}
       <p class="pg-pv-msg">
         <span>01</span>
-        {t.memoTitle}
+        {sections.profile.label}
         <i></i>
       </p>
       <p class="pg-pv-msg">
         <span>02</span>
-        {t.linksTitle}
+        {sections.links.label}
         <i></i>
       </p>
       <p class="pg-pv-end">{t.endLine}</p>

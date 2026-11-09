@@ -9,6 +9,7 @@
  * - caller supplies aria-hidden; this component stays decorative
  */
 import { messages } from './messages';
+import { getSectionLabels } from '../../i18n/sections';
 import type { PreviewProps } from '../preview';
 import './tokens.css';
 
@@ -17,6 +18,7 @@ export const fonts: import('astro:assets').CssVariable[] = [];
 
 const { locale, name, headline, links = [] } = Astro.props as PreviewProps;
 const t = messages[locale];
+const sections = getSectionLabels(locale);
 const rows = links.slice(0, 3);
 ---
 
@@ -31,13 +33,13 @@ const rows = links.slice(0, 3);
       <div class="h99-pv-nav">
         <p class="h99-pv-nav-title">{t.contentsTitle}</p>
         <p>
-          <span>01</span> {t.links}
+          <span>01</span> {sections.links.label}
         </p>
         <p>
-          <span>02</span> {t.projects}
+          <span>02</span> {sections.projects.label}
         </p>
         <p>
-          <span>03</span> {t.experience}
+          <span>03</span> {sections.experience.label}
         </p>
       </div>
 

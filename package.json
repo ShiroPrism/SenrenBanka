@@ -23,11 +23,12 @@
     "fonts:coverage": "node scripts/fonts/coverage.mjs",
     "fonts:prune": "node scripts/fonts/cli.mjs prune",
     "fonts:audit": "node scripts/fonts/cli.mjs audit",
-    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/check-line-endings.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
+    "test": "node --test scripts/verify-agent-docs.test.mjs scripts/verify-html-only.test.mjs scripts/check-line-endings.test.mjs scripts/check-section-labels.test.mjs scripts/fonts.test.mjs scripts/fonts/typography.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
     "test:html-only": "node --test scripts/verify-html-only.test.mjs",
     "test:fonts": "node --test scripts/fonts.test.mjs scripts/fonts/prune.test.mjs scripts/fonts/source-cache.test.mjs scripts/fonts/subset.test.mjs scripts/fonts/script-ranges.test.mjs scripts/fonts/coverage.test.mjs",
     "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
-    "build": "npm run fonts:check && npm run check && astro build && npm run fonts:subset && npm run fonts:prune && npm run verify:html-only && npm run fonts:audit",
+    "verify:sections": "node scripts/check-section-labels.mjs",
+    "build": "npm run fonts:check && npm run check && astro build && npm run fonts:subset && npm run fonts:prune && npm run verify:html-only && npm run verify:sections && npm run fonts:audit",
     "preview": "astro preview"
   },
   "dependencies": {

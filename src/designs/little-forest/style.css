@@ -152,6 +152,7 @@ html:has(.lf) {
 
 .lf-kicker,
 .lf-section-label,
+.lf-clearing-caption,
 .lf-station-label,
 .lf-place-kicker,
 .lf-specimen-no,
@@ -463,13 +464,18 @@ html:has(.lf) {
 }
 
 .lf-clearing-title {
-  margin: 0 0 1.15rem;
+  margin: 0 0 0.45rem;
   color: var(--lf-ink);
   font-family: var(--lf-display);
   font-size: clamp(1.9rem, 4vw, 3.3rem);
   font-weight: 470;
   line-height: 1.08;
   letter-spacing: -0.018em;
+}
+
+.lf-clearing-caption {
+  margin: 0 0 1.15rem;
+  color: var(--lf-muted);
 }
 
 .lf-bio {

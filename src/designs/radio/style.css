@@ -364,6 +364,16 @@
   left: 6px;
 }
 
+/* 分区标题上方的机面语域小字（备注 / 频道 / 节目 / 日志 / 联络）：原为 h2 文本，
+   现降为 kicker——h2 只刻标准分区词。 */
+.rd-mod-kicker {
+  margin: 0 0 0.15rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rd-amber);
+}
+
 .rd-mod-title {
   display: flex;
   align-items: baseline;
@@ -375,12 +385,21 @@
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .rd-mod-no {
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   color: var(--rd-amber);
+}
+
+.rd-mod-title h2 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .rd-bio {

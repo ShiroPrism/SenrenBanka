@@ -15,11 +15,13 @@ import { Font } from 'astro:assets';
 import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages, type StickerDiaryMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('sticker-diary', Astro.url.pathname);
 const t: StickerDiaryMessages = designMessages[view.locale.code];
+const sections = getSectionLabels(view.locale.code);
 const { profile, contextMenu } = view;
 
 const hasProjects = Boolean(profile.projects && profile.projects.length > 0);
@@ -100,13 +102,12 @@ const shortUrl = (url: string) =>
           class="sd-spread"
           id="sd-profile"
           data-sd-spread
-          aria-labelledby="sd-profile-label"
+          data-section="profile"
+          aria-labelledby="sd-about-title"
         >
           <div class="sd-page sd-page--left sd-page--profile">
             <span class="sd-tape sd-tape--rose" aria-hidden="true"></span>
-            <p class="sd-kicker" id="sd-profile-label">
-              {t.profileTab}
-            </p>
+            <p class="sd-kicker">{t.aboutTitle}</p>
 
             <div class:list={['sd-identity', !profile.avatar && 'sd-identity--solo']}>
               {profile.avatar && (
@@ -150,7 +151,7 @@ const shortUrl = (url: string) =>
               {t.bookLabel}
             </p>
             <h2 class="sd-title" id="sd-about-title">
-              {t.aboutTitle}
+              {sections.profile.label}
             </h2>
             <p class="sd-bio">{profile.bio}</p>
             <span class="sd-doodle-heart" aria-hidden="true"></span>
@@ -160,12 +161,18 @@ const shortUrl = (url: string) =>
           </div>
         </section>
 
-        <section class="sd-spread" id="sd-links" data-sd-spread aria-labelledby="sd-links-title">
+        <section
+          class="sd-spread"
+          id="sd-links"
+          data-sd-spread
+          data-section="links"
+          aria-labelledby="sd-links-title"
+        >
           <div class="sd-page sd-page--left">
             <span class="sd-tape sd-tape--teal" aria-hidden="true"></span>
-            <p class="sd-kicker">{t.linksTab}</p>
+            <p class="sd-kicker">{t.linksTitle}</p>
             <h2 class="sd-title" id="sd-links-title" data-sd-focus tabindex="-1">
-              {t.linksTitle}
+              {sections.links.label}
             </h2>
             {linksLeft.length > 0 ? (
               <ul class="sd-link-list">
@@ -232,13 +239,14 @@ const shortUrl = (url: string) =>
             class="sd-spread"
             id="sd-projects"
             data-sd-spread
+            data-section="projects"
             aria-labelledby="sd-projects-title"
           >
             <div class="sd-page sd-page--left">
               <span class="sd-tape sd-tape--mustard" aria-hidden="true"></span>
-              <p class="sd-kicker">{t.projectsTab}</p>
+              <p class="sd-kicker">{t.projectsTitle}</p>
               <h2 class="sd-title" id="sd-projects-title" data-sd-focus tabindex="-1">
-                {t.projectsTitle}
+                {sections.projects.label}
               </h2>
               <ol class="sd-project-list">
                 {projectsLeft.map((project) => (
@@ -327,13 +335,14 @@ const shortUrl = (url: string) =>
             class="sd-spread"
             id="sd-experience"
             data-sd-spread
+            data-section="experience"
             aria-labelledby="sd-experience-title"
           >
             <div class="sd-page sd-page--left">
               <span class="sd-tape sd-tape--rose" aria-hidden="true"></span>
-              <p class="sd-kicker">{t.experienceTab}</p>
+              <p class="sd-kicker">{t.experienceTitle}</p>
               <h2 class="sd-title" id="sd-experience-title" data-sd-focus tabindex="-1">
-                {t.experienceTitle}
+                {sections.experience.label}
               </h2>
               <ol class="sd-memory-list">
                 {experienceLeft.map((item) => (
@@ -378,13 +387,14 @@ const shortUrl = (url: string) =>
             class="sd-spread"
             id="sd-skills"
             data-sd-spread
+            data-section="skills"
             aria-labelledby="sd-skills-title"
           >
             <div class="sd-page sd-page--left">
               <span class="sd-tape sd-tape--teal" aria-hidden="true"></span>
-              <p class="sd-kicker">{t.skillsTab}</p>
+              <p class="sd-kicker">{t.skillsTitle}</p>
               <h2 class="sd-title" id="sd-skills-title" data-sd-focus tabindex="-1">
-                {t.skillsTitle}
+                {sections.skills.label}
               </h2>
               <ul class="sd-skill-list">
                 {skillsLeft.map((skill) => (
@@ -420,13 +430,14 @@ const shortUrl = (url: string) =>
           class="sd-spread"
           id="sd-contact"
           data-sd-spread
+          data-section="contact"
           aria-labelledby="sd-contact-title"
         >
           <div class="sd-page sd-page--left sd-page--contact">
             <span class="sd-tape sd-tape--mustard" aria-hidden="true"></span>
-            <p class="sd-kicker">{t.contactTab}</p>
+            <p class="sd-kicker">{t.contactTitle}</p>
             <h2 class="sd-title" id="sd-contact-title" data-sd-focus tabindex="-1">
-              {t.contactTitle}
+              {sections.contact.label}
             </h2>
             {hasContact ? (
               <>

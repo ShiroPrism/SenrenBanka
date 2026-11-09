@@ -3,10 +3,11 @@
  *
  * - 不翻译项：`SENRENBANKA`（站名 / 品牌）、`REC`、`C-60 · TYPE II · NR ON` 等磁带机
  *   机身丝印标记——它们是物件的物理标记，不是界面文案，由 CSS / Page.astro 直接承担。
- * - 语域：J 卡内页（磁带包装里的手写曲目单）。分区标题按「曲目单」语域翻译，
- *   不做机械直译：zh 备注 / 曲目 / 企划 / 纪录 / 技能 / 结算；ja ライナーノーツ /
- *   曲目 / 企画 / 記録 / スキル / 精算；en LINER NOTES / TRACKLIST / PROGRAMME /
- *   LOGBOOK / SKILLS / CHECKOUT。
+ * - 语域：J 卡内页（磁带包装里的手写曲目单）。分区语域词按「曲目单」语域翻译，
+ *   不做机械直译：zh 备注 / 曲目 / 企划 / 纪录 / 结算；ja ライナーノーツ /
+ *   曲目 / 企画 / 記録 / 精算；en LINER NOTES / TRACKLIST / PROGRAMME / LOGBOOK / CHECKOUT。
+ *   这些语域词现在是分区 h2 **上方的套印小字 kicker**；h2 文本来自共享标准标签
+ *   （`src/i18n/sections`），技能分区的标准词与语域本已一致，故不再单独保留键。
  * - 纯数据：不 import 任何 CSS / Page.astro / style.css。
  */
 export interface TapeMessages {
@@ -20,7 +21,6 @@ export interface TapeMessages {
   tracksTitle: string;
   projectsTitle: string;
   logTitle: string;
-  skillsTitle: string;
   contactTitle: string;
   totalLabel: string;
   totalUnit: string;
@@ -42,7 +42,6 @@ export const messages: Record<string, TapeMessages> = {
     tracksTitle: '曲目',
     projectsTitle: '企划',
     logTitle: '纪录',
-    skillsTitle: '技能',
     contactTitle: '结算',
     totalLabel: '合计',
     totalUnit: '曲',
@@ -59,7 +58,6 @@ export const messages: Record<string, TapeMessages> = {
     tracksTitle: '曲目',
     projectsTitle: '企劃',
     logTitle: '紀錄',
-    skillsTitle: '技能',
     contactTitle: '結算',
     totalLabel: '合計',
     totalUnit: '曲',
@@ -76,7 +74,6 @@ export const messages: Record<string, TapeMessages> = {
     tracksTitle: '曲目',
     projectsTitle: '企画',
     logTitle: '記録',
-    skillsTitle: 'スキル',
     contactTitle: '精算',
     totalLabel: '合計',
     totalUnit: '曲',
@@ -93,7 +90,6 @@ export const messages: Record<string, TapeMessages> = {
     tracksTitle: 'TRACKLIST',
     projectsTitle: 'PROGRAMME',
     logTitle: 'LOGBOOK',
-    skillsTitle: 'SKILLS',
     contactTitle: 'CHECKOUT',
     totalLabel: 'TOTAL',
     totalUnit: 'TRKS',
@@ -110,7 +106,6 @@ export const messages: Record<string, TapeMessages> = {
     tracksTitle: '수록곡',
     projectsTitle: '기획',
     logTitle: '기록',
-    skillsTitle: '기술',
     contactTitle: '정산',
     totalLabel: '합계',
     totalUnit: '곡',

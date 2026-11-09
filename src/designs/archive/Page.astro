@@ -5,8 +5,9 @@
  * 数据：`loadDesignView` 返回当前语言视图；页面不接触文件路径、不自行判断语言。
  *
  * 结构：一只拉开的胡桃木抽屉里立着 7 张马尼拉索引卡（卡头 + 六个分区），
- * 每张卡凸出一枚类目签（h2 即签上的类目词）；页脚是抽屉前沿的著录签。
- * 顺序即层级：卡头 → 备注 → 索引 → 编目 → 履历 → 主题词 → 借阅。
+ * 每张卡凸出一枚类目签（签上是共享标准标签 h2 + 卡内语域的类目词 kicker）；
+ * 页脚是抽屉前沿的著录签。
+ * 顺序即层级：卡头 → 简介 → 链接 → 项目 → 经历 → 技能 → 联系。
  *
  * 动效：卡片自抽屉里升起（60ms 步进，共享 Reveal 的 IO 触发），图章最后落下。
  * reduced-motion / 无 IO / 无 JS 时全部内容静态可见（隐藏态只在
@@ -17,12 +18,15 @@ import ContextMenu from '../../components/ContextMenu.astro';
 import HeadMeta from '../../components/HeadMeta.astro';
 import Reveal from '../../components/Reveal.astro';
 import { loadDesignView } from '../../lib/site';
+import { getSectionLabels } from '../../i18n/sections';
 import { messages as designMessages } from './messages';
 import './style.css';
 
 const view = await loadDesignView('archive', Astro.url.pathname);
 const { profile, locale, contextMenu } = view;
 const t = designMessages[locale.code];
+const sections = getSectionLabels(view.locale.code);
+const showKicker = (kicker: string, label: string) => kicker.toUpperCase() !== label.toUpperCase();
 
 const pad = (index: number) => String(index + 1).padStart(2, '0');
 const shortUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/^mailto:/, '');
@@ -83,27 +87,49 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </div>
             </div>
 
-            {/* 02 · 备注（bio） */}
-            <section class="ar-card" data-reveal aria-labelledby="ar-notes-title" style="--i:1">
+            {/* 02 · 简介（bio） */}
+            <section
+              class="ar-card"
+              data-section="profile"
+              data-reveal
+              aria-labelledby="ar-notes-title"
+              style="--i:1"
+            >
               <div class="ar-tab">
                 <span class="ar-tab-no" aria-hidden="true">
                   02
                 </span>
+                {showKicker(t.memoTitle, sections.profile.label) && (
+                  <span class="ar-tab-kicker" aria-hidden="true">
+                    {t.memoTitle}
+                  </span>
+                )}
                 <h2 class="ar-tab-title" id="ar-notes-title">
-                  {t.memoTitle}
+                  {sections.profile.label}
                 </h2>
               </div>
               <p class="ar-bio">{profile.bio}</p>
             </section>
 
-            {/* 03 · 索引（links）：编号 + 标签 + 点引导 + URL */}
-            <section class="ar-card" data-reveal aria-labelledby="ar-index-title" style="--i:2">
+            {/* 03 · 链接（links）：编号 + 标签 + 点引导 + URL */}
+            <section
+              class="ar-card"
+              data-section="links"
+              data-reveal
+              aria-labelledby="ar-index-title"
+              style="--i:2"
+            >
               <div class="ar-tab">
                 <span class="ar-tab-no" aria-hidden="true">
                   03
                 </span>
+                {showKicker(t.itemsTitle, sections.links.label) && (
+                  <span class="ar-tab-kicker" aria-hidden="true">
+                    {t.itemsTitle}
+                  </span>
+                )}
                 <h2 class="ar-tab-title" id="ar-index-title">
-                  {t.itemsTitle}
+                  {sections.links.label}
                 </h2>
               </div>
               <ul class="ar-entries">
@@ -124,15 +150,26 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </ul>
             </section>
 
-            {/* 04 · 编目（projects） */}
+            {/* 04 · 项目（projects） */}
             {profile.projects && profile.projects.length > 0 && (
-              <section class="ar-card" data-reveal aria-labelledby="ar-catalog-title" style="--i:3">
+              <section
+                class="ar-card"
+                data-section="projects"
+                data-reveal
+                aria-labelledby="ar-catalog-title"
+                style="--i:3"
+              >
                 <div class="ar-tab">
                   <span class="ar-tab-no" aria-hidden="true">
                     04
                   </span>
+                  {showKicker(t.ordersTitle, sections.projects.label) && (
+                    <span class="ar-tab-kicker" aria-hidden="true">
+                      {t.ordersTitle}
+                    </span>
+                  )}
                   <h2 class="ar-tab-title" id="ar-catalog-title">
-                    {t.ordersTitle}
+                    {sections.projects.label}
                   </h2>
                 </div>
                 <ol class="ar-projects">
@@ -169,15 +206,26 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </section>
             )}
 
-            {/* 05 · 履历（experience） */}
+            {/* 05 · 经历（experience） */}
             {profile.experience && profile.experience.length > 0 && (
-              <section class="ar-card" data-reveal aria-labelledby="ar-record-title" style="--i:4">
+              <section
+                class="ar-card"
+                data-section="experience"
+                data-reveal
+                aria-labelledby="ar-record-title"
+                style="--i:4"
+              >
                 <div class="ar-tab">
                   <span class="ar-tab-no" aria-hidden="true">
                     05
                   </span>
+                  {showKicker(t.logTitle, sections.experience.label) && (
+                    <span class="ar-tab-kicker" aria-hidden="true">
+                      {t.logTitle}
+                    </span>
+                  )}
                   <h2 class="ar-tab-title" id="ar-record-title">
-                    {t.logTitle}
+                    {sections.experience.label}
                   </h2>
                 </div>
                 <ul class="ar-logs">
@@ -195,10 +243,11 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
               </section>
             )}
 
-            {/* 06 · 主题词（skills） */}
+            {/* 06 · 技能（skills） */}
             {profile.skills && profile.skills.length > 0 && (
               <section
                 class="ar-card"
+                data-section="skills"
                 data-reveal
                 aria-labelledby="ar-subjects-title"
                 style="--i:5"
@@ -207,17 +256,23 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
                   <span class="ar-tab-no" aria-hidden="true">
                     06
                   </span>
+                  {showKicker(t.skillsTitle, sections.skills.label) && (
+                    <span class="ar-tab-kicker" aria-hidden="true">
+                      {t.skillsTitle}
+                    </span>
+                  )}
                   <h2 class="ar-tab-title" id="ar-subjects-title">
-                    {t.skillsTitle}
+                    {sections.skills.label}
                   </h2>
                 </div>
                 <p class="ar-skills">{profile.skills.join(' · ')}</p>
               </section>
             )}
 
-            {/* 07 · 借阅（contact + 合计 links.length） */}
+            {/* 07 · 联系（contact + 合计 links.length） */}
             <section
               class="ar-card"
+              data-section="contact"
               data-reveal
               aria-labelledby="ar-circulation-title"
               style="--i:6"
@@ -226,8 +281,13 @@ const callNo = `SB · 03 · ${String(profile.links.length).padStart(2, '0')}`;
                 <span class="ar-tab-no" aria-hidden="true">
                   07
                 </span>
+                {showKicker(t.contactTitle, sections.contact.label) && (
+                  <span class="ar-tab-kicker" aria-hidden="true">
+                    {t.contactTitle}
+                  </span>
+                )}
                 <h2 class="ar-tab-title" id="ar-circulation-title">
-                  {t.contactTitle}
+                  {sections.contact.label}
                 </h2>
               </div>
               <p class="ar-total">
