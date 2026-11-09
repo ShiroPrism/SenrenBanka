@@ -442,3 +442,25 @@ Retired govuk and fast: removed implementations, current verification/adaptation
 ### Status
 
 [OK] **Completed**
+
+
+## Session 17: Standardize primary section labels
+<!-- trellis-session: v=2 fp=4c368936b02a4d48 -->
+
+**Date**: 2026-11-09
+**Task**: Standardize primary section labels
+**Branch**: `main`
+
+### Summary
+
+Added shared section dictionary (canonical/enLabel/aliases) and data-section contract; migrated all 27 designs to standard h2 labels with theme kickers; added verify:sections build gate, ADR 0023 and verification records; applied kicker dedup for en and locale collisions. npm run check/test/build pass; verify:sections 135 pages / 760 sections / 0 allowlist.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `cd6d89d` | feat(sections): standardize primary section labels |
+
+### Status
+
+[OK] **Completed**
