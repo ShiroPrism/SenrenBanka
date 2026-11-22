@@ -464,3 +464,39 @@ Added shared section dictionary (canonical/enLabel/aliases) and data-section con
 ### Status
 
 [OK] **Completed**
+
+
+## Session 18: 入口语言协商与零窗口随机
+<!-- trellis-session: v=2 fp=98743165939305d2 -->
+
+**Date**: 2026-11-22
+**Task**: 入口语言协商与零窗口随机
+**Branch**: `main`
+
+### Summary
+
+根入口按语言偏好/浏览器语言/默认 Locale 协商，随机改为入口零窗口重抽，设计页保持稳定；文档、ADR、验证与版本 0.22.0 同步。
+
+### Main Changes
+
+- 根入口语言协商与独立语言偏好存储
+- cacheHours: 0 与共享菜单语言偏好写入
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `3673d63` | feat(routing): negotiate locale at entry and reroll on each visit |
+
+### Testing
+
+- [OK] test:locale 14/14；npm test 106/106；astro build 175 页
+- [OK] 浏览器矩阵 17/17；html-only 5 页；sections 135/760；fonts audit 0 孤儿
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- 既有 .trellis EOL 门禁仍待环境修复；无功能待办

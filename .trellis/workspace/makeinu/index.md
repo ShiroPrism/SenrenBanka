@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 17
-- **Last Active**: 2026-11-09
+- **Total Sessions**: 18
+- **Last Active**: 2026-11-22
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~466 | Active |
+| `journal-1.md` | ~502 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 18 | 2026-11-22 | 入口语言协商与零窗口随机 | `3673d63` | `main` |
 | 17 | 2026-11-09 | Standardize primary section labels | `cd6d89d` | `main` |
 | 16 | 2026-11-07 | Retire shelf and magical-girl; add theme IA guardrail | `4f43172` | `main` |
 | 15 | 2026-11-04 | Retire govuk and fast designs | `09cb1de` | `main` |
