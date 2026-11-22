@@ -59,5 +59,5 @@ design:
   manualSwitch: true
   exclude: [] # 部署级打包排除；缺省 [] = 全部设计。示例：[archive]
   random:
-    cacheHours: 24 # 0 = 每次访问都重新随机（仍避免连续重复）
+    cacheHours: 0 # 每次从入口进入都重抽；设计页直达 / 刷新保持稳定（仍避免连续重复）
     avoidImmediateRepeat: true

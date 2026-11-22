@@ -9,7 +9,7 @@ One profile, many AI-designed homepages, in five languages. Astro + TypeScript +
 - 27 套视觉与结构不同的设计（26 套 `styled` + 1 套零 CSS / JS 的 HTML-only），共用同一份资料契约
 - **多语言（当前 `zh-CN` / `zh-TW` / `ja` / `en` / `ko`）**：每套设计在每种**它声明覆盖**的语言下都是独立静态页，资料、文案与 SEO 元数据按语言分离；未覆盖的 locale 不生成该设计页面
 - **`styled` 页面的语言切换与页面操作入口统一**：桌面右键菜单、移动端悬浮球 → 底部动作面板，数据与语义完全共享（**桌面与移动端都可用**）；`html-only` 使用原生链接，不接入该菜单
-- 随机 / 固定两种模式、浏览器缓存与避免连续重复、可配置手动切换
+- 随机 / 固定两种模式、入口随机与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
 - 根路径是零外部请求的客户端路由；每种语言仅其默认设计对外可索引（避免近重复内容）
 - fork 后只需改资料与 `src/data/site.config.yaml` 即可部署 GitHub Pages / Cloudflare Pages / Vercel
@@ -82,13 +82,15 @@ npm run fonts:check
 ### URL 规则
 
 ```
-/                         根入口 → 进入默认语言（zh-CN），随机 / 固定模式同既有行为
+/                         根入口 → 协商语言（偏好 → 浏览器语言 → 默认 zh-CN），再进入随机 / 固定设计
 /zh-cn/<设计>/  /zh-tw/<设计>/  /ja/<设计>/  /en/<设计>/  /ko/<设计>/    各语言下已声明覆盖的设计页（唯一权威地址）
 /zh-cn/designs/ 等          各语言的主题切换页（manualSwitch 关闭时不构建）
 /<设计>/  /designs/         旧无前缀路径 → 默认语言版本的静态跳转（meta refresh + canonical + noindex）
 ```
 
-- **不按浏览器语言自动改写 URL**，也不使用 Cookie 语言检测；根路径固定进入 `i18n.defaultLocale`。
+- `/` 按「手动语言偏好 → 浏览器语言 → `i18n.defaultLocale`」协商 Locale；`/<locale>/...` 的路径语言始终优先，不做运行时改写，也不使用 Cookie 语言检测。
+- 当前部署使用入口随机（`cacheHours: 0`）：每次从 `/` 或 `/<locale>/` 进入都重新抽取设计；`/<locale>/<design>/` 是稳定设计地址，直达、刷新、书签与分享都不会重抽。想书签“每次换一套”，请书签 `/` 或 `/<locale>/`。
+- 无 JavaScript 时 `/` 仍以 `meta refresh` 进入默认 Locale 的默认设计与设计列表；浏览器语言协商不可用，这是该降级路径的已知限制。
 - 部署到子路径（如 GitHub Pages 的 `/<repo>/`）时，所有链接、CSS、字体、`canonical` 与 `hreflang` 自动带上 base 前缀。
 - 旧路径**不是**真正的 HTTP 301（静态托管限制），而是明确声明的降级：静态 meta refresh + `canonical` + `noindex, follow`。如需真 301，请在托管平台侧配置。
 
@@ -99,7 +101,8 @@ npm run fonts:check
 - 桌面鼠标环境：右键或 `Shift+F10` 打开菜单，语言项收在二级子菜单里。
 - 移动端：右下角**悬浮球**打开**底部动作面板**，语言项直接平铺（触屏没有 hover 二级菜单的心智模型）。
 - 以上两条适用于 `styled` 页面；`html-only` 的普通语言链接不受输入环境影响。
-- 主题偏好（`localStorage`）跨语言共享：在 `styled` 页面切换语言**不会**重置随机结果。
+- 主题偏好（`localStorage`）跨语言共享：在 `styled` 页面切换语言**不会**重置设计存储；当前零窗口随机下，下一次从入口进入仍会重抽。
+- 在共享操作菜单中显式点击语言链接会记住入口语言偏好；直接打开某个语言的设计页不会覆盖已有偏好。`html-only` 页面没有运行时，语言点击只完成本次导航，不持久化偏好。
 - 无 JavaScript 时，`styled` 设计页的语言入口不可达（共享菜单依赖运行时）；切换页与 404 由 `<noscript>` 语言链接回退，`html-only` 设计页使用始终可见的原生语言链接。
 
 ### 页面操作

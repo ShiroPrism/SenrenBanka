@@ -41,6 +41,8 @@ export interface ContextMenuRuntimeConfig {
   cacheHours: number;
   avoidRepeat: boolean;
   storageKey: string;
+  /** 语言偏好存储键；与设计偏好独立，始终按部署 base 派生。 */
+  localeStorageKey: string;
   /** 当前语言的 Toast 文案（构建期按 view.messages.toast 注入，运行时不做语言判断）。 */
   toast: ContextMenuToastMessages;
   /** 悬浮球与动作面板的无障碍文案。 */
@@ -51,10 +53,16 @@ export interface ContextMenuRuntimeConfig {
   closeLabel: string;
   cancel: string;
   /**
-   * 语言切换项（普通 <a>，导航由浏览器处理，运行时无需参与）。
-   * 保留在配置里是为了让运行时能识别它们不是"动作"——点击不应触发任何拦截。
+   * 语言切换项（普通 <a>，导航由浏览器处理）。
+   * 运行时只在显式激活时读取 `path` 写入语言偏好；默认导航不拦截。
    */
-  languages?: Array<{ code: string; label: string; href: string; isCurrent: boolean }>;
+  languages?: Array<{
+    code: string;
+    path: string;
+    label: string;
+    href: string;
+    isCurrent: boolean;
+  }>;
 }
 
 export interface ContextMenuToastMessages {
@@ -113,6 +121,7 @@ export function initContextMenu(): void {
     !config.context ||
     !Array.isArray(config.targets) ||
     typeof config.storageKey !== 'string' ||
+    typeof config.localeStorageKey !== 'string' ||
     !config.toast
   )
     return;
@@ -747,6 +756,16 @@ export function initContextMenu(): void {
     });
   }
 
+  const rememberLocale = (item: HTMLElement) => {
+    const path = item.getAttribute('data-cm-locale');
+    if (!path) return;
+    try {
+      localStorage.setItem(config.localeStorageKey, path);
+    } catch {
+      /* 存储不可用：本次导航仍正常，偏好不被记住 */
+    }
+  };
+
   /** 动作点击委托：桌面菜单与移动面板共用同一份实现。 */
   const onActionClick = (event: MouseEvent) => {
     const item =
@@ -758,6 +777,7 @@ export function initContextMenu(): void {
     const action = item.getAttribute('data-cm-action');
     // 语言项是原生 <a> 导航：不拦截默认行为，只收起整个菜单
     if (item.classList.contains('cm-lang')) {
+      rememberLocale(item);
       closeMenu(false);
       return;
     }
@@ -787,6 +807,16 @@ export function initContextMenu(): void {
   };
   root.addEventListener('click', onActionClick);
   sheet?.addEventListener('click', onActionClick);
+
+  /** 中键在新标签页打开语言链接时也记住偏好；不拦截默认行为。 */
+  const onAuxClick = (event: MouseEvent) => {
+    if (event.button !== 1) return;
+    const item =
+      event.target instanceof Element ? event.target.closest<HTMLElement>('.cm-lang') : null;
+    if (item) rememberLocale(item);
+  };
+  root.addEventListener('auxclick', onAuxClick);
+  sheet?.addEventListener('auxclick', onAuxClick);
 
   // Web Share 不支持 → 移除「分享页面」，菜单里不存在点了没反应的项
   if (typeof navigator.share !== 'function') {

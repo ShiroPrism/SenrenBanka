@@ -1,5 +1,6 @@
 ---
 import InfraStyles from '../components/InfraStyles.astro';
+import { localeMatchTags } from '../lib/locale-match';
 import { renderRouterScript } from '../lib/router-script';
 import { designsForLocale, loadSite } from '../lib/site';
 import { localeDesignHref } from '../lib/site';
@@ -7,7 +8,8 @@ import { sharedMessagesFor } from '../i18n/resolve';
 
 /**
  * 根路由 `/`（SPEC §7.3）：零外部请求的内联脚本选择设计并立即跳转。
- * 语言固定为**默认语言**（不按浏览器语言改写 URL，也不做 Cookie 语言检测）。
+ * 先按「手动语言偏好 → navigator.languages → 默认语言」协商 Locale（ADR 0024），
+ * 再从选中 Locale 的启用池抽取设计；其他 Locale 路径始终按 URL 语言优先。
  * 无 JS → noscript 内 meta refresh 到默认语言的默认设计 + 手动链接列表。
  * SEO → noindex, follow（唯一可索引入口是各语言的默认设计页，SPEC §7.4）。
  */
@@ -20,12 +22,20 @@ const script = renderRouterScript({
   mode: model.mode,
   manualSwitch: model.switcherEnabled,
   defaultId: model.default.id,
-  enabled: localeDesigns.map((design) => design.id),
   cacheHours: model.random.cacheHours,
   avoidRepeat: model.random.avoidRepeat,
   base: model.base,
   storageKey: model.storageKey,
-  localePrefix: locale.path,
+  localeNegotiation: {
+    storageKey: model.localeStorageKey,
+    defaultPath: locale.path,
+    entries: model.locales.map((entry) => ({
+      path: entry.path,
+      code: entry.code,
+      matchTags: localeMatchTags(entry),
+      enabled: designsForLocale(model, entry).map((design) => design.id),
+    })),
+  },
 });
 const fallbackUrl = localeDesignHref(locale.path, model.default.id);
 ---

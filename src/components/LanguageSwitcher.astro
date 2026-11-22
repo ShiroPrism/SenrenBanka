@@ -28,6 +28,7 @@ const { language } = Astro.props;
           <a
             class="lang-switch-link"
             href={item.href}
+            data-locale={item.path}
             hreflang={item.code}
             lang={item.code}
             aria-current={item.isCurrent ? 'page' : undefined}

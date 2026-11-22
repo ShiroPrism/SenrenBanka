@@ -24,6 +24,7 @@
 - `npm run verify:sections`：`astro build` 之后扫描 `dist` 中每个 `[data-section]` 的 h2，按 Locale 校验只能由 `src/i18n/sections.json` 的 canonical / alias / 英文 canonical 组成；`scripts/section-labels.allowlist.json` 是迁移期债务清单，最终必须为空。`html-only` 同样覆盖，旧路径重定向页跳过。规则见 [`design-contract.md`](./design-contract.md)「信息架构与主题文案」。
 - 干净 clone / CI / 三平台部署必须先执行 `npm run fonts:prepare`；`.cache/fonts/` 与 `.cache/font-sources/` 不入库，CI 按 `fonts.lock.json` 与 source 哈希复用
 - 新设计页完成、或任一设计页 / 样式 / 构建配置 / 共享机制改动后：按 `design-page-verify` skill（`.agents/skills/design-page-verify/SKILL.md`）执行完整验证流程（步骤与通过标准以 skill 为准，本文件不重复维护清单）；验证状态更新至 `../verification/`（见「文档维护」节）
+- 根入口、语言偏好或随机模式改动后：按 `design-page-verify` 的「入口语言协商与入口随机」步骤跑浏览器语言矩阵、偏好优先 / 非法值回退、连续入口重抽、设计页刷新稳定、无 JS 回退与 `--base /demo` 存储键检查；无法实测的项如实写入验证记录。
 - 临时调整 `site.config.yaml`（如切 `mode: fixed`）验证行为后，请恢复示例配置再提交
 
 ## 代码规范与行尾

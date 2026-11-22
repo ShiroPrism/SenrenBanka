@@ -86,6 +86,14 @@ _Avoid_: locale（指代代码本身时）、lang
 语言在 URL 中的前缀，同时是资料文件名（`src/data/profiles/<path>.yaml`）；要求唯一且合法。
 _Avoid_: lang、slug
 
+**Entry locale negotiation（入口语言协商）**:
+根入口 `/` 在用户未指定路径语言时，按手动语言偏好、浏览器语言、默认 Locale 的顺序选择语言的机制；只发生在根入口，Locale 路径与设计页路径始终优先。
+_Avoid_: 自动语言检测、浏览器语言锁定
+
+**Locale preference（语言偏好）**:
+用户显式选择语言后记录的 Locale path，供根入口协商时优先采用；区别于浏览器语言与 Cookie 语言检测。
+_Avoid_: 浏览器语言、语言 Cookie
+
 **Language self-name（语言自称）**:
 语言选择器中展示该语言的名字，由各语言自己书写（简体中文 / 繁體中文 / 日本語 / English），不使用英文名或其他语言名。
 _Avoid_: 语言英文名、显示名
@@ -157,6 +165,20 @@ _Avoid_: 通用标题、默认文案
 **Theme word（主题词）**:
 某套设计为视觉母题撰写的分区替代表述；只能作为主分区标题之外的可见 kicker / 副标题或纯装饰，不得承担 heading 语义，也不得替换标准分区标签。
 _Avoid_: 创意标题、主题命名
+
+### Entry & Random
+
+**Entry random（入口随机）**:
+只在根入口 `/` 与 Locale 入口 `/<locale>/` 发生的设计抽取；设计页地址不参与随机，刷新、书签与分享均保持同一设计。
+_Avoid_: 刷新随机、全站随机
+
+**Stable design URL（稳定设计地址）**:
+指向某一设计的固定地址；无论直达、刷新、书签还是分享，都渲染该设计。随机入口不改变其目标。
+_Avoid_: 随机地址、一次性 URL
+
+**Zero-window random（零窗口随机）**:
+入口每次都重新抽取设计、只保留“上一次”用于避免连续重复的随机策略；不设时间窗口，设计页仍稳定。
+_Avoid_: 无缓存随机、每次加载随机
 
 ### Motion
 

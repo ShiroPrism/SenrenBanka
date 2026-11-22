@@ -4,6 +4,7 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
+> **2026-11-22 入口语言协商与零窗口随机（ADR 0024）**：`/` 改为按语言偏好 → 浏览器语言 → 默认 Locale 协商；随机改为入口每次重抽（`cacheHours: 0`），设计页保持稳定。`npm run test:locale` **14/14**、`npm test` **106/106**；`npx astro build` **175 页**、`dist` **7,888,020 B（7.52 MiB）**、字体 **45 文件**；`verify:html-only` **5 页**、`verify:sections` **135 页 / 760 分区**、`fonts:audit` **0 孤儿**；浏览器矩阵 **17/17**（语言矩阵、偏好优先、非法值回退、菜单显式写入、设计页稳定、入口重抽、无 JS、`html-only` 不持久化、0 第三方请求）。详见 `entry-locale-random.md`。`npm run check` 仅因既有 10 个 `.trellis/**` EOL 文件失败；与 2026-11-04 的 7,777,959 B 差值本轮未逐文件归因。
 > **2026-11-04 退役 govuk / fast；2026-11-05 退役 shelf / magical-girl**：当前 **27 套 / 175 页 / dist 7,777,959 B**；旧路由 404；切换页 27 卡；`/zh-cn/lexicon/` 与 `/zh-tw/frost/` smoke 通过；检测器 25 套零发现（例外 `frost` 2 + `oxide` 1）。
 > 最近共享机制专项验证：**2026-11-02（菜单链接样式与设计页 `.design a` 隔离，GOV.UK `.gv a` 覆盖修复；菜单项与 `/designs/` 列表页标题统一为「全部设计」；站点级示例声明迁到 `site.config.yaml` 的 `locales[].notice`；新增 `design.exclude` 部署级设计打包范围）**；此前 2026-11-01（Prettier + ESLint + LF 行尾工具链，ADR 0020；同日字体语料按引用页 + 旧路径跳转页样式精简，ADR 0019；繁中全设计，ADR 0018）；此前 2026-11-01（韩语全设计字体层 + 22 套韩语内容扩覆盖，ADR 0017）、2026-10-31（韩语首批 + 设计语言覆盖 + 菜单 CSS 外置，ADR 0015 / 0016）、2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）、2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
 > **2026-11-02 批次 4（Aero / Transit / Zine）**：新增 3 套自产 `styled`（`aero` / `transit` / `zine`），各 5 语言；`fonts:typography` **29** 套 styled / **30** 设计覆盖；`npm run build` **193 页**、`astro check` 0 error / 0 warning、`npm test` **84/84**；`dist` **8,347,337 B（7.96 MiB）**、字体 **45 文件**、`fonts:audit` 0 孤儿 / 0 部署缺口（64 条既有缺字警告不变）。三套 `impeccable detect` 均 `[]`（oxide `codex-grid-background` 反证命中）；1440/768/375×812（触控 `tap()`）Reveal 全部显现、四种降级隐藏 0、菜单 5 语言 / 面板底边 = `innerHeight`；截图 `.cache/verification/{aero,transit,zine}-*` 与 `browser-matrix*.json`。`README` 设计数 24 → 30；`descriptions.ts` 30 条；`scripts/fonts/typography*.mjs` 计数 26 → 29。未测：`--base /demo`、Firefox/Safari/真机、200% 缩放。
@@ -346,7 +347,7 @@
 - **键盘实测**：`↑↓` 在主菜单 8 项间循环**不飞出菜单**（修复前第 8 次 `↓` 会落到 BODY）；移到「语言」自动展开、移开收起；`→` 进入并聚焦首项、`←` 返回触发项；焦点环实测 `outline: 1.6px solid`。
 - **重复排版已消除**：8 套设计的 `style.css` 中语言切换样式全部移除（约 **9.4 KB**），各设计 `style.css` 现与改动前**逐字节一致**（仅末尾换行）——文案本地化与入口重构**零视觉漂移**，检测器状态回到改动前基线。
 - 语言入口：`/zh-cn/` → `/zh-cn/frost/`、`/ja/` → `/ja/frost/`、`/en/` → `/en/frost/`（**均保留自身 locale 前缀**）。
-- 根路径 `/` → `/zh-cn/frost/`（进入**默认语言**，不按浏览器语言改写 URL，无 Cookie 检测）。
+- 根路径 `/`（v0.22.0 起）→ 先协商 Locale（偏好 → `navigator.languages` → 默认 Locale），再进入该 Locale 的设计；v0.9.0 时固定进入默认语言，该行为已被 ADR 0024 取代。非根路径仍不按浏览器语言改写 URL，也无 Cookie 语言检测。
 - 旧路径兼容：`/editorial/` → `/zh-cn/editorial/`、`/designs/` → `/zh-cn/designs/`、`/terminal/` → `/zh-cn/terminal/`（meta refresh + canonical + noindex）。**真正的 HTTP 301 未实现**——静态托管下由平台配置决定，属明确声明的降级（SPEC §7.3）。
 - `manualSwitch: false` + `mode: fixed`：切换页与旧 `/designs/` **均不构建**（37 页）；菜单内**主题切换项不渲染**（`data-cm-action="random"` / `switch"` 计数 0），**但菜单与语言分组照常渲染**（`cm-lang` 仍 3 项）——语言切换不受 `manualSwitch` 影响；测后已恢复示例配置。
 - 无 JS：正文可读；基础设施页通过 `<noscript>` 语言链接导航。`styled` 设计页的菜单 DOM 虽存在，但 `.cm` / `.cm-sheet` 初始带 `hidden` 且无法在无运行时下打开，语言入口不可达；`html-only` 使用自身可见的原生语言导航。
@@ -371,5 +372,5 @@
 - **`styled` 的无 JS 入口缺口**：共享操作菜单依赖运行时，因此 `styled` 设计页在无 JS 下没有菜单内的操作 / 语言入口；移动面板的静态 DOM 初始带 `hidden`，且需要悬浮球与运行时才能打开，不可达。切换页与 404 有 `<noscript>` 语言链接回退。该缺口是 v0.9.0 起沿用的取舍，v0.10.0 未改变（ADR 0007 决策 8），ADR 0009 仅让 `html-only` 通过普通链接规避。
 - **旧路径未实现真正的 HTTP 301**：静态托管限制，当前为 meta refresh + canonical + noindex 的降级方案（SPEC §7.3）。
 - **未做真实搜索引擎验证**：hreflang / canonical 的正确性仅经产物断言与浏览器实测，未经 Google / Bing 实际抓取验证。
-- **语言自动检测为项目决策且未实现**：不按浏览器语言改写 URL、不使用 Cookie 语言检测。
+- **语言协商只发生在根入口**：`/` 按语言偏好 → 浏览器语言 → 默认 Locale 选择一次，随后一跳进入 `/<locale>/<design>/`；`/<locale>/...` 与设计页始终路径语言优先。不使用 Cookie 或服务端语言状态。
 - 样例资料为**虚构角色**，五语内容为示例翻译，未经专业译者校对；日文 / 繁中排版仅验证无溢出与字体命中，未做当地 typographic 精修；繁中文案仍需用户终审。

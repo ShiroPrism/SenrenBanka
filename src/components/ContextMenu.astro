@@ -57,6 +57,7 @@ const runtimeConfig = {
   cacheHours: config.cacheHours,
   avoidRepeat: config.avoidRepeat,
   storageKey: config.storageKey,
+  localeStorageKey: config.localeStorageKey,
   toast: config.messages.toast,
   launcherLabel: config.launcherLabel,
   menuLabel: config.menuLabel,
@@ -771,6 +772,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
             class="cm-item cm-lang"
             role="menuitem"
             href={item.href}
+            data-cm-locale={item.path}
             hreflang={item.code}
             lang={item.code}
             aria-current={item.isCurrent ? 'page' : undefined}
@@ -859,6 +861,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
             class="cm-item cm-lang"
             role="menuitem"
             href={item.href}
+            data-cm-locale={item.path}
             hreflang={item.code}
             lang={item.code}
             aria-current={item.isCurrent ? 'page' : undefined}

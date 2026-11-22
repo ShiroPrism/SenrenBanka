@@ -69,5 +69,8 @@
   - **两种形态都不得依赖 hover**：桌面子菜单必须支持点击 / `→` / Enter 打开；移动端平铺项本身即入口。
 - **`manualSwitch` 只控制主题切换入口**：`styled` 菜单中的随机 / 全部设计项由 `designActionsEnabled` 门控；`html-only` 的「全部设计」普通链接同样受它门控。语言入口在两种模式下都照常渲染——语言切换不受 `manualSwitch` 影响
 - 切换语言时**保持页面上下文**（`context.kind` 派生，ADR 0007）：主题页 → 目标语言**覆盖该设计时进同一主题，否则落到目标语言的默认设计**；切换页 → 目标语言的切换页；404 → 目标语言的入口页。`html-only` 的原生语言链接遵循同一目标规则。
-- 切换语言只改 locale，**不改当前主题、不重置随机窗口**；`storageKey` 不含 locale（主题偏好跨语言共享）
-- 语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码
+- 切换语言只改 locale，**不改当前主题、不重置设计存储**；`storageKey` 不含 locale（主题偏好跨语言共享）。当前零窗口随机下，下一次从入口进入仍会重抽。
+- 除 `/` 的入口协商外，语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码
+- **根入口语言协商**：只有 `/` 在运行时按「语言偏好 → `navigator.languages`（缺失时 `navigator.language`）→ `i18n.defaultLocale`」选择 Locale，再进入该 Locale 的启用设计池。语言偏好存于独立键 `senrenbanka.locale.v1:<baseKey>`（值为 Locale path），不得复用设计存储键或 `site.storageKey` 覆盖值。`/<locale>/` 与 `/<locale>/<design>/` 始终路径优先，不读偏好、不做运行时改写。匹配采用最长标签：`zh-Hant` / `zh-TW` / `zh-HK` / `zh-MO` → `zh-TW`；`zh-Hans` / `zh-CN` / `zh-SG` / 裸 `zh` → `zh-CN`；`ja*` / `en*` / `ko*` 归对应 Locale。
+- **语言偏好写入时机**：仅共享操作菜单的 `.cm-lang` 链接被显式激活（点击 / Ctrl-Cmd 点击 / 中键）时写入；直接访问 Locale 页面、刷新、切换页或 404 均不写。`html-only` 因零脚本契约无法持久化，语言点击只完成当次导航。
+- **入口随机与稳定地址**：随机只发生在 `/` 与 `/<locale>/`；设计页直达、刷新、书签与分享保持同一设计。当前部署 `cacheHours: 0`，每次入口重抽，但仍用“上一次设计”避免连续重复。无 JS 的 `/` 仍回退到默认 Locale 的默认设计与设计列表，不新增语言链接。

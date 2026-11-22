@@ -64,9 +64,9 @@
 ## 语言与主题跳转正交性
 
 - `design` 页（`/ja/material3/`）：8 个随机目标**全为 `ja` 前缀**；池（排除 material3 后）= **7**，`excludesCurrent: true`；语言项 = `/zh-cn/material3/`、`/ja/material3/`、`/en/material3/`。
-- `switcher` 页（`/zh-cn/designs/`）：8 个目标全为 `zh-cn`；无身份条；无「全部设计」；随机实测跳转 `→ /zh-cn/oxide/`，存储写入 `{"designId":"oxide","expiresAt":1791989119493}`（`random` 模式 + `cacheHours: 24`）。
+- `switcher` 页（`/zh-cn/designs/`）：8 个目标全为 `zh-cn`；无身份条；无「全部设计」；随机实测跳转 `→ /zh-cn/oxide/`。2026-10-13 记录时写入 `{"designId":"oxide","expiresAt":1791989119493}`（`cacheHours: 24`）；v0.22.0 起当前配置为 `cacheHours: 0`，写入 `expiresAt: 0`，下一次入口重抽。
 - `not-found`（`/nonexistent-path/` 真实 404）：语言项 = `/zh-cn/`、`/ja/`、`/en/`；有随机与切换页项；无身份条。
-- 存储语义未变：`storageKey = senrenbanka.design.v1:root`（不含 locale）、`mode: random`、`cacheHours: 24`、`avoidRepeat: true`。语言切换**不会**重置主题偏好。
+- 存储语义：`storageKey = senrenbanka.design.v1:root`（不含 locale）、`mode: random`、`avoidRepeat: true`；v0.22.0 起 `cacheHours: 0`（入口每次重抽，设计页稳定）。语言切换**不会**重置主题偏好。
 
 ## 配置边界
 

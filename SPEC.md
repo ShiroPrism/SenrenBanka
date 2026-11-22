@@ -16,7 +16,7 @@
 
 1. 使用者只维护**一份**个人资料配置（`profile.yaml`），即可拥有多套由 AI 依据各自 `DESIGN.md` 生成的、视觉与页面结构完全不同的静态个人主页。
 2. 每套 `styled` 设计拥有独立的 HTML 结构、排版、CSS 与必要交互，不是换色/换字体的简单主题；`html-only` 设计以无自定义 CSS/JS 的原生语义 HTML 作为显式例外。
-3. 支持 `fixed` / `random` 两种模式、可配置手动切换、浏览器缓存与避免连续重复。
+3. 支持 `fixed` / `random` 两种模式、可配置手动切换、入口随机与避免连续重复。
 4. 构建期预生成全部静态 HTML；访客访问时不调用 AI、不需要服务端。
 5. fork 后修改资料与少量配置，即可部署到 GitHub Pages / Cloudflare Pages / Vercel。
 6. 一期用 4 套差异明显的设计验证完整工作流。
@@ -298,7 +298,7 @@ design:
   manualSwitch: true
   exclude: []        # 部署级打包排除；缺省 [] = 全部注册设计。示例：[archive]
   random:
-    cacheHours: 24   # 0 = 每次访问都重新随机（仍避免连续重复）
+    cacheHours: 0    # 0 = 每次从入口进入都重抽（仍避免连续重复；设计页保持稳定）
     avoidImmediateRepeat: true
 ```
 
@@ -326,6 +326,8 @@ design:
 **配置强校验**（Zod `superRefine`，构建期失败而非静默回退）：语言 `code` 与 `path` 均不得重复；`defaultLocale` 必须存在于 `locales`；每种语言必须有完整元数据与对应资料文件；`src/data/profiles/` 中存在未声明的资料文件同样报错。
 
 **设计语言覆盖（v0.21.0）**：每套 `design.json` 必须声明 `locales: string[]`；默认设计（`design.default`）必须覆盖全部配置 locale，非默认设计可覆盖子集。未覆盖的 locale **不生成该设计页面**（直接 404）；切换页与随机池只包含覆盖当前 locale 的设计；声明覆盖但 `messages.ts` 缺该语言文案、或 `descriptions.ts` 缺切换页描述 → 构建失败；覆盖数组中列出但未在 `site.config.yaml` 配置的 code → 告警并忽略（单语言 fork 无需逐套清理）。`locales.length < 2` 时语言分组、`LanguageSwitcher`、注入 JSON 与 `html-only` 原生语言区整组不渲染；保留 `/<locale>/` 前缀。
+
+**入口语言协商（v0.22.0）**：语言清单仍是唯一来源；根入口 `/` 只消费这份清单，在运行时按语言偏好、浏览器语言、默认 Locale 的顺序选择其中一个 `path`。协商不会改变 `/<locale>/...` 的路径语言解析，也不新增 Cookie 或服务端语言状态；语言偏好是独立的运行态存储，不进入资料 schema。
 
 ---
 
@@ -399,14 +401,17 @@ src/designs/<id>/
 
 - 键：`senrenbanka.design.v1:<baseKey>`（`baseKey`：`/` → `root`；`/repo/` → `repo`）；可用 `site.storageKey` 覆盖。**必须带命名空间**（GH Pages 同域多项目共享 localStorage）。
 - 值：JSON `{ "designId": "terminal", "expiresAt": 1760000000000 | null }`（null 仅出现在固定模式的手动选择）。
+- 语言偏好键：`senrenbanka.locale.v1:<baseKey>`，值是该 Locale 的 `path`（如 `en`）。语言偏好始终按 base 派生，**不读取** `site.storageKey` 覆盖值，避免与设计偏好共用同一个键。
 - 所有读写均做容错（JSON 解析失败、designId 不在启用池 → 视为无效并覆盖/回退）。
 
 ### 7.2 行为状态表【已定】
 
 | 场景 | 根路径行为 | 存储写入 |
 |---|---|---|
+| 根入口 `/` 选择 Locale | 语言偏好 → `navigator.languages` → 默认 Locale；再从该 Locale 的启用池执行下列随机 / 固定规则 | 不写语言偏好；非法偏好清除 |
 | 随机模式，存储有效（未过期） | 进入存储设计 | 无 |
 | 随机模式，无存储或已过期 | 重随机（`avoidImmediateRepeat` 时排除上次，池空则回退全部启用）→ 进入 | `{id, now + cacheHours}`；`cacheHours=0` 时窗口为 0（下次访问必重随机，但记得"上次"） |
+| 随机模式，`cacheHours=0`（当前部署） | 每次从 `/` 或 `/<locale>/` 进入都重抽；设计页直达、刷新、书签与分享保持稳定 | `{id, expiresAt: 0}` |
 | 随机模式，手动切换 | 进入所选设计 | `{id, now + cacheHours}`（重开窗口） |
 | 固定模式，`manualSwitch:false` | 永远进入 default | 无读写 |
 | 固定模式，`manualSwitch:true`，有手选存储 | 进入存储设计 | 无 |
@@ -417,6 +422,8 @@ src/designs/<id>/
 
 表注（v0.5.0，v0.10.0 补充页面上下文）："手动切换"同时指 `/designs/` 切换页点击与菜单内「随机一个设计」；后者在**主题页**额外**必须排除当前设计**（保证点击后确实发生切换），在**切换页 / 404** 没有当前主题、走全池；`avoidRepeat` 时再尽量排除上次，随后按上表写存储并**直接导航目标设计的固定 URL**（不回根路径）；页面加载 / 打开菜单本身不写存储。
 
+入口 Locale 协商（v0.22.0）：`/` 在选择设计前先按「手动语言偏好 → `navigator.languages` → 默认 Locale」选语言，再使用该 Locale 的启用设计池。当前部署使用零窗口随机（`cacheHours: 0`）：每次从 `/` 或 `/<locale>/` 进入都重抽，`avoidImmediateRepeat` 仍以“上一次设计”生效；设计页直达、刷新、书签与分享保持稳定。
+
 局限（如实文档化）：清除浏览器存储后无法保证"连续两次不重复"；存储按浏览器而非访客身份；跨设备不共享。
 
 ### 7.3 路由与语言入口【v0.9.0 修订】
@@ -425,7 +432,7 @@ src/designs/<id>/
 
 | 路径 | 页面 | 说明 |
 |---|---|---|
-| `/` | `src/pages/index.astro` | 进入**默认语言**，沿用既有 random / fixed 机制 |
+| `/` | `src/pages/index.astro` | 协商 Locale 后进入该语言的设计，沿用既有 random / fixed 机制 |
 | `/<locale.path>/` | `src/infra/LocaleIndex.astro` | 每种语言的入口页，目标带该语言前缀 |
 | `/<locale.path>/<design>/` | `src/designs/<id>/Page.astro` | 每套设计在每种语言下的页面 |
 | `/<locale.path>/designs/` | `src/infra/SwitcherPage.astro` | 每种语言的切换页；`manualSwitch: false` 时不构建 |
@@ -433,9 +440,11 @@ src/designs/<id>/
 
 - 同一 `Page.astro` 被注册到多个语言前缀；语言由 `resolveLocale(model, Astro.url.pathname)` **在构建期**从路径首段解析，页面不各自判断。
 - **不启用 Astro 原生 `i18n`**：实测其开关两种配置产物完全相同，唯一作用是让 `Astro.currentLocale` 有值（不配时为 `UNDEFINED`）。采用自解析可让 `/demo` 这类部署 base 与语言前缀的边界完全可控。
-- 入口页零外部请求、无 JS 降级与既有行为一致，只是 `location.replace(base + localePrefix + '/' + id + '/')` 的目标带上语言前缀。
-- **不按浏览器语言自动改写 URL，也不做 Cookie 语言检测**：根路径与各 locale 入口都保持既定 random / fixed 行为。
-- **语言识别只认路径首段**并与 `locales[].path` 精确匹配，因此部署 base（`/demo`）不会被误当成语言代码。
+- 入口页零外部请求、无 JS 降级与既有行为一致；根入口最终只执行一次 `location.replace(base + localePath + '/' + id + '/')`。
+- **Locale 协商只在 `/` 发生**：手动语言偏好优先，其次按 `navigator.languages`（缺失时 `navigator.language`）匹配，最后回退 `i18n.defaultLocale`。`zh-Hant` / `zh-TW` / `zh-HK` / `zh-MO` → `zh-TW`；`zh-Hans` / `zh-CN` / `zh-SG` / 裸 `zh` → `zh-CN`；`ja*` / `en*` / `ko*` 分别归对应 Locale；采用最长标签优先，未匹配回退默认 Locale。
+- `/<locale>/` 与 `/<locale>/<design>/` **路径语言优先**，不读语言偏好、不做运行时改写，也不做 Cookie 语言检测。
+- **除 `/` 的入口协商外，语言识别只认路径首段**并与 `locales[].path` 精确匹配，因此部署 base（`/demo`）不会被误当成语言代码。
+- 无 JS 的 `/` 维持原状：`meta refresh` 到默认 Locale 的默认设计并列出默认 Locale 的设计，不新增语言链接；浏览器语言协商不可用是该降级路径的已知限制。
 
 **旧路径兼容的降级行为（明确声明）**：静态托管无法在代码内实现真正的 HTTP 301（重定向由平台配置决定），因此 `/<design>/` 与 `/designs/` 采用**静态 meta refresh + `canonical` + `noindex, follow`** 的降级方案——旧链接仍可用，无 JavaScript 依赖，且不与 locale 页面形成重复可索引内容。权威地址只有带语言前缀的那一份。真正的 301 如有需要，应在托管平台侧另行配置。
 
@@ -479,11 +488,12 @@ src/designs/<id>/
   - **基础设施页例外**：切换页与 404 也接入共享菜单（v0.10.0 起），其可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）**包进 `<noscript>`**——运行时只有菜单一个可见入口，无 JS 时靠它回退。设计页不渲染它。
 - `html-only` 以普通链接提供页内目录、同主题语言链接，并在 `manualSwitch:true` 时提供一条「全部设计」链接；不得渲染随机入口、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或 `LanguageSwitcher`。
 - `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、`styled` 菜单的「设计」组不渲染、`html-only` 的「全部设计」链接不渲染；两种模式的语言入口与各设计固定 URL 均不受影响。
+- **语言偏好写入时机**：仅当用户在共享操作菜单中显式激活 `.cm-lang` 语言链接（点击、Ctrl/Cmd 点击或中键 `auxclick`）时写入 `senrenbanka.locale.v1:<baseKey>`。直接访问 `/en/fax/`、刷新、切换页或 404 均不写入，因此打开别人分享的语言链接不会覆盖收件人的入口偏好。`html-only` 没有运行时与共享菜单，语言点击只完成当次导航，不持久化偏好。
 
 ### 7.6 主题偏好与语言的耦合【v0.9.0】
 
 - 主题选择的 `localStorage` 格式与 `storageKeyFor()` 命名空间策略**保持兼容**，且**不含 locale**——主题偏好跨语言共享，不因切换语言而形成互相覆盖的不同选择。
-- 切换语言只改变 locale，**不改变当前主题、不重置随机有效期**；切换主题必须保留当前语言前缀。
+- 切换语言只改变 locale，**不改变当前主题、不重置设计存储**；当前零窗口随机下，下一次从入口进入仍会重抽；切换主题必须保留当前语言前缀。
 
 ---
 
@@ -533,6 +543,7 @@ src/designs/<id>/
   "fonts:coverage": "node scripts/fonts/coverage.mjs",
   "fonts:prune": "node scripts/fonts/cli.mjs prune",
   "test:html-only": "node --test scripts/verify-html-only.test.mjs",
+  "test:locale": "node --test scripts/locale-match.test.mjs",
   "verify:html-only": "npm run test:html-only && node scripts/verify-html-only.mjs",
   "build": "npm run fonts:check && npm run check && astro build && npm run fonts:subset && npm run fonts:prune && npm run verify:html-only && npm run fonts:audit",
   "preview": "astro preview"
@@ -590,7 +601,8 @@ SenrenBanka/
 │  ├─ lib/                           # 框架共享逻辑（设计不重复实现）
 │  │  ├─ site.ts                     #   loadSite()：多语言资料合并与交叉校验、resolveLocale()、类型化数据接口
 │  │  ├─ urls.ts                     #   base 前缀 helper（所有内部链接必须经此拼接）+ 路径分段解析
-│  │  ├─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（随机/缓存/手选）
+│  │  ├─ locale-match.ts             #   根入口语言匹配纯函数（无 Astro / CSS 依赖，可 Node 直测）
+│  │  ├─ router-script.ts            #   根路由页/切换页共享的内联脚本源码生成（Locale 协商/随机/缓存/手选）
 │  │  └─ context-menu.ts             #   共享操作菜单运行时（形态判定/动作/键盘/随机语义；无 CSS 边）
 │  ├─ i18n/
 │  │  ├─ messages.ts                # 共享文案（操作菜单/切换页/入口/404/语言选择器；纯数据，无 CSS 边）
@@ -621,7 +633,7 @@ SenrenBanka/
 │  │  ├─ LocaleIndex.astro           # 语言入口页（injectRoute 为 /<locale>/）
 │  │  └─ LegacyRedirect.astro        # 旧无前缀路径的静态跳转页（meta refresh + canonical + noindex）
 │  └─ pages/
-│     ├─ index.astro                 # 根路由页：进入默认语言（内联脚本 + noscript 降级，noindex）
+│     ├─ index.astro                 # 根路由页：协商 Locale 后进入该语言的随机 / 固定设计（内联脚本 + noscript 降级，noindex）
 │     └─ 404.astro                   # 中性 404（noindex，提供各语言入口）
 ├─ .gitignore
 ├─ .nvmrc                            # Node 24

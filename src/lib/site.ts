@@ -2,7 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { allDesigns, type DesignEntry } from '../designs/registry';
 import { designDescriptions } from '../designs/descriptions';
-import { storageKeyFor } from './router-script';
+import { localeStorageKeyFor, storageKeyFor } from './router-script';
 import { BASE, pathSegments, withBase } from './urls';
 import type { ContextMenuRuntimeConfig, PageContext } from './context-menu';
 import {
@@ -68,6 +68,8 @@ export interface LanguageSwitcherData {
   /** 各语言的展示名与目标 URL（目标 = 同设计的该语言版本）。 */
   items: Array<{
     code: string;
+    /** 目标 Locale 的 URL path；共享菜单据此写入语言偏好。 */
+    path: string;
     label: string;
     href: string;
     isCurrent: boolean;
@@ -119,7 +121,10 @@ export interface SiteModel {
   mode: 'random' | 'fixed';
   random: { cacheHours: number; avoidRepeat: boolean };
   base: string;
+  /** 设计偏好存储键；可被 site.storageKey 覆盖。 */
   storageKey: string;
+  /** 语言偏好存储键；始终按 base 派生，不复用设计键覆盖值。 */
+  localeStorageKey: string;
   designs: readonly DesignEntry[];
   /** 当前部署打包的设计（全部注册设计 - design.exclude）。 */
   packaged: readonly DesignEntry[];
@@ -325,6 +330,7 @@ export async function loadSite(): Promise<SiteModel> {
     base: BASE,
     // 主题偏好跨语言共享：storageKey 只按 base 派生，不含locale（SPEC §7.5）
     storageKey: storageKeyFor(BASE, cfg.site.storageKey),
+    localeStorageKey: localeStorageKeyFor(BASE),
     designs: allDesigns,
     packaged: packagedDesigns,
     enabled: visibleDesigns,
@@ -394,6 +400,7 @@ export function actionMenuLanguageItems(
       : undefined;
   return model.locales.map((entry) => ({
     code: entry.code,
+    path: entry.path,
     label: entry.label,
     href:
       context.kind === 'design' && design
@@ -431,6 +438,7 @@ export function buildActionMenuConfig(
     cacheHours: model.random.cacheHours,
     avoidRepeat: model.random.avoidRepeat,
     storageKey: model.storageKey,
+    localeStorageKey: model.localeStorageKey,
     toast: messages.toast,
     launcherLabel: messages.contextMenu.launcherLabel,
     menuLabel: messages.contextMenu.menuLabel,
@@ -524,6 +532,7 @@ export function languageItems(
 ): LanguageSwitcherData['items'] {
   return model.locales.map((entry) => ({
     code: entry.code,
+    path: entry.path,
     label: entry.label,
     href: localeDesignHref(entry.path, designId),
     isCurrent: entry.code === locale.code,
@@ -540,6 +549,7 @@ export function languageSwitcherData(
     current: locale.code,
     items: model.locales.map((entry) => ({
       code: entry.code,
+      path: entry.path,
       label: entry.label,
       href: hrefFor(entry),
       isCurrent: entry.code === locale.code,

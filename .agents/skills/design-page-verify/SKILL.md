@@ -87,6 +87,19 @@ npm run verify:sections  # 主分区 data-section / h2 标准标签门禁
 8. **旧路径兼容**：`/<id>/` 与 `/designs/` 存在 meta refresh → 默认语言版本，且带 `canonical` + `noindex, follow`。
 9. **触控命中区（仅 `styled`）**：375px + 触控下**悬浮球 ≥44×44px**、**移动面板内每项 ≥44px**（项目 chrome，见 `action-menu.md` 实测：球 52×52、项 50px、关闭 ✕ 44px、取消条 48px、抓手条 56px）；设计自身的 `.lang-switch-link` 不再存在。`html-only` 只检查普通链接可点、焦点可见，不要求悬浮球或面板。
 
+## 步骤 2c · 入口语言协商与入口随机（根入口 / 语言偏好 / 随机模式改动时必做）
+
+规则与决策见 ADR 0024、`docs/rules/data-and-i18n.md`、`docs/rules/action-menu.md`。验证必须使用 preview 或 dev，并如实记录无法实测的项。
+
+1. **浏览器语言矩阵**：清空语言偏好键 `senrenbanka.locale.v1:root`，分别把 `navigator.languages` 设为 `['en-US']`、`['ja-JP']`、`['zh-TW']`、`['zh-HK']`、`['zh-Hans-CN']`、`['fr-FR']`，打开 `/`，断言落到 `/en/<design>/`、`/ja/<design>/`、`/zh-tw/<design>/`、`/zh-tw/<design>/`、`/zh-cn/<design>/`、`/zh-cn/<design>/`。记录每次设计 id。优先使用浏览器 locale 上下文（如 Playwright `newContext({ locale })`）；只能用 init script 覆盖 `navigator.languages` 时必须在记录中注明。
+2. **偏好优先与非法值**：写入 `senrenbanka.locale.v1:root = "ja"` 后浏览器用 `en-US`，`/` 必须进 `/ja/<design>/`；写入非法值 `xx` 后必须清除该键并按浏览器语言或默认 Locale 回退，console 0。
+3. **显式点击才写入**：在 `styled` 页共享菜单点击语言链接（含 Ctrl/Cmd 点击；中键 `auxclick` 亦写入）后，键值为目标 Locale path，再访问 `/` 尊重该偏好。直接访问 `/en/fax/` 不改变已存偏好；刷新仍是 fax。
+4. **零窗口随机与稳定地址**：连续两次从 `/` 进入，在池大于 1 时设计不同；直接访问 `/ja/fax/` 并刷新仍为 fax，设计存储值不被改写。`cacheHours` 必须为 `0`。
+5. **配置分支**：临时 `mode: fixed` → 协商 Locale 后进入该 Locale 的默认设计；临时 `manualSwitch: false` → 同前，且切换页 404。测后恢复。
+6. **无 JS**：禁用 JavaScript 打开 `/`，实际导航必须进入默认 Locale 默认设计。meta refresh 会立即离开根页；若要检查根页设计列表与“没有新增语言链接”，在测试工具中拦截 `/` 响应并仅移除 refresh 后渲染检查，且不要把该改造页当作实际导航证据。
+7. **`html-only` 限制**：点击其原生语言链接只完成当次导航；回 `/` 不会复用该选择；记录为已声明限制。
+8. **base 命名空间**：执行 `MSYS2_ARG_CONV_EXCL='*' npx astro build --outDir dist-demo --base /demo`，断言根脚本目标为 `/demo/<locale>/<design>/`，语言偏好键为 `senrenbanka.locale.v1:demo`；完成后清理临时产物。
+
 ## 步骤 3 · impeccable 检测器
 
 ```powershell
@@ -184,6 +197,7 @@ npm run verify:sections  # 主分区 data-section / h2 标准标签门禁
 - [ ] 主分区标签：每个主分区有 `data-section`，h2 只含标准标签，主题词在 h2 之外；该设计不在 allowlist 中
 - [ ] 产物抽查按模式完成：`styled` 的 CSS 隔离 / 字体 / 核心字段通过；`html-only` 的资源禁令 / metadata rel / 核心字段通过，且 `npm run test:html-only` 全绿
 - [ ] 多语言（步骤 2b）：各 locale 页面齐备、`lang`/`robots`/`canonical`/`hreflang` 正确；`styled` 菜单语言项与键盘路径通过；`html-only` 普通语言链接通过；语言/主题正交、旧路径跳转与配置开关均符合
+- [ ] 入口（步骤 2c，涉及根入口 / 语言偏好 / 随机模式时）：浏览器语言矩阵、偏好优先与非法值回退、显式点击写入、连续入口重抽、设计页刷新稳定、无 JS 与 base 命名空间符合 ADR 0024
 - [ ] 韩语字体（若设计声明 `ko`）：`fonts:coverage` 通过；浏览器实际命中声明的 Hangul 核心字体；非 `ko` 页面未下载韩语子集
 - [ ] 检测器 0 发现（或均已记录为例外）
 - [ ] 桌面：console 0、仅自身资源；`styled` token 实测符合 DESIGN.md，`html-only` 只有 Document / favicon metadata 请求
