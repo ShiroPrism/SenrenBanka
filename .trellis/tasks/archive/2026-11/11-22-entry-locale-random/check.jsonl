@@ -1,0 +1,8 @@
+{"file":"docs/rules/data-and-i18n.md","reason":"检查根入口协商、Locale 路径优先与语言偏好写入边界"}
+{"file":"docs/rules/action-menu.md","reason":"检查语言项激活、随机语义与菜单布局未被破坏"}
+{"file":"docs/rules/operations.md","reason":"检查构建、design-page-verify、文档与版本门禁"}
+{"file":"docs/rules/pitfalls.md","reason":"检查 base 前缀、Locale 拼接与共享模块隔离"}
+{"file":"docs/adr/0024-entry-locale-negotiation-and-zero-window-random.md","reason":"对照决策检查实现与文档是否一致"}
+{"file":".trellis/tasks/11-22-entry-locale-random/prd.md","reason":"对照验收标准逐项检查"}
+{"file":".trellis/tasks/11-22-entry-locale-random/design.md","reason":"对照技术设计检查数据流、存储与回退"}
+{"file":".trellis/tasks/11-22-entry-locale-random/implement.md","reason":"对照执行计划检查验证矩阵与回滚"}

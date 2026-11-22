@@ -1,0 +1,10 @@
+{"file":"docs/rules/data-and-i18n.md","reason":"Locale 清单、路径识别与语言切换的唯一规则来源"}
+{"file":"docs/rules/action-menu.md","reason":"共享菜单语言项与随机语义的既有契约"}
+{"file":"docs/rules/operations.md","reason":"构建、验证、文档与版本门禁"}
+{"file":"docs/rules/pitfalls.md","reason":"多语言路由、base 前缀与共享模块已知坑"}
+{"file":"docs/adr/0006-multilingual-static-routing.md","reason":"静态多语言路由与 injectRoute 的既有决策"}
+{"file":"docs/adr/0007-action-menu-site-wide-with-touch-launcher.md","reason":"共享操作菜单与语言分组的既有决策"}
+{"file":"docs/adr/0024-entry-locale-negotiation-and-zero-window-random.md","reason":"本任务的语言协商、入口随机与设计页稳定决策"}
+{"file":".trellis/tasks/11-22-entry-locale-random/prd.md","reason":"本任务需求、决策与验收标准"}
+{"file":".trellis/tasks/11-22-entry-locale-random/design.md","reason":"本任务技术设计与运行时算法"}
+{"file":".trellis/tasks/11-22-entry-locale-random/implement.md","reason":"本任务执行顺序与验证矩阵"}
