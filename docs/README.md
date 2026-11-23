@@ -26,6 +26,7 @@
 
 - 规则入口（`AGENTS.md`）→ 规则正文（`docs/rules/`）→ 执行（`design-page-verify` skill）→ 状态（`docs/verification/`）→ 版本结论（`change-log/`）。
 - 多语言链路：语言清单唯一来源 `site.config.yaml` 的 `i18n.locales` → 资料 `src/data/profiles/<path>.yaml` → 共享文案 `src/i18n/messages.ts` / 主题文案 `src/designs/<id>/messages.ts` → 路由 `astro.config.mjs` 的 `injectRoute` → 决策 `docs/adr/0006-multilingual-static-routing.md`。
+- 404 多语言链路：`src/lib/not-found.ts`（构建期预渲染数据 / 首屏解析脚本 / 菜单 variants）→ `src/pages/404.astro`（单份 HTML）→ `ContextMenu` 运行时按 `data-404-locale` 本地化 → 决策 `docs/adr/0025-single-404-locale-resolution.md`；当前实测见 `docs/verification/shared.md` 与 `action-menu.md`。
 - 操作入口链路：`docs/rules/action-menu.md`（规则）→ `ContextMenu.astro` + `context-menu.ts`（`styled` 页面的唯一实现）→ `docs/verification/action-menu.md`（实测）→ 决策 `docs/adr/0007-action-menu-site-wide-with-touch-launcher.md`（取代 `0004` 的决定 2 与被否决项 2，并修订 `0003` 决定 4；无 JS 能力由 ADR 0009 更正；菜单样式外置见 ADR 0015）。
 - 预览链路：`docs/rules/design-contract.md`「可选 · 切换页预览碎片」（规则）→ `src/designs/<id>/{Preview.astro,tokens.css}`（各设计私有）+ `src/infra/SwitcherPage.astro`（唯一聚合点）→ `docs/verification/shared.md`（实测与成本；当前 27 套预览）。
 - 渲染模式链路：ADR 0009（决策）→ `design.json.renderMode` + `src/designs/registry.ts`（源文件契约）→ `scripts/verify-html-only.mjs`（最终 HTML 门禁）→ `docs/verification/{shared,html-only}.md`（当前状态）。

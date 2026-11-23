@@ -4,65 +4,89 @@
  * 共享操作菜单（context.kind = 'not-found'）在此接入：本页没有"当前主题"，
  * 因此不渲染身份条、随机抽选不排除任何主题；语言切换指向各语言的入口页
  * （404 不承载主题上下文，切语言后交给入口页分配）。
+ *
+ * 静态托管只会送达这一份 404.html，请求路径在构建期不可知。因此本页预渲染全部
+ * Locale 区块，由 `<head>` 内联脚本按「路径 → 偏好 → 浏览器 → 默认」选择展示语言；
+ * 无 JS 时默认 Locale 区块保持可见（ADR 0025）。
  */
 import ContextMenu from '../components/ContextMenu.astro';
 import HeadMeta from '../components/HeadMeta.astro';
 import InfraStyles from '../components/InfraStyles.astro';
 import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { sharedMessagesFor } from '../i18n/resolve';
+import { buildNotFoundView, renderNotFoundLocaleScript } from '../lib/not-found';
 import {
   buildActionMenuConfig,
   languageSwitcherData,
   loadSite,
   localeDesignHref,
   localeHref,
-  resolveLocale,
 } from '../lib/site';
-import { sharedMessagesFor } from '../i18n/resolve';
 
 const model = await loadSite();
-// 404 由托管服务器在任意路径上返回，路径本身不含语言前缀 → 按默认语言呈现，
-// 并提供各语言入口链接（不残留错误的旧路由）。
-const locale = resolveLocale(model, '');
-const m = sharedMessagesFor(locale.code);
-const heading = `404 · ${m.notFound.titleSuffix} · ${locale.title}`;
-const contextMenu = buildActionMenuConfig(model, locale, { kind: 'not-found' }, heading);
+const view = buildNotFoundView(model, {
+  sharedMessagesFor,
+  buildActionMenuConfig,
+  localeDesignHref,
+  localeHref,
+});
+const defaultPanel = view.defaultPanel;
+const contextMenu = {
+  ...defaultPanel.contextMenu,
+  localeVariants: view.menuLocaleVariants,
+};
+const script = renderNotFoundLocaleScript(view.localeScript);
+const fallbackLanguage = languageSwitcherData(model, defaultPanel.locale, (entry) =>
+  localeHref(entry.path),
+);
 ---
 
 <!doctype html>
-<html lang={locale.code}>
+<html lang={defaultPanel.locale.code}>
   <head>
-    <HeadMeta title={heading} robots="noindex, follow" />
+    <HeadMeta title={defaultPanel.heading} robots="noindex, follow" />
+    <style is:inline set:html={view.panelCss} />
+    <script is:inline set:html={script} />
   </head>
   <body>
     <InfraStyles />
     <main class="infra">
       <h1>404</h1>
-      <p>{m.notFound.body}</p>
-      <!-- 无 JavaScript 回退：共享菜单依赖运行时，无 JS 时由这里提供可见的语言链接组。 -->
-      <noscript>
-        <LanguageSwitcher
-          language={languageSwitcherData(model, locale, (entry) => localeHref(entry.path))}
-        />
-      </noscript>
-      <ul class="infra-list">
-        <li>
-          <a class="infra-card" href={localeHref(locale.path)}>
-            <span class="name">{m.notFound.backToEntry}</span>
-          </a>
-        </li>
-        {model.switcherEnabled ? (
-          <li>
-            <a class="infra-card" href={localeHref(locale.path, 'designs/')}>
-              <span class="name">{m.notFound.allDesigns}</span>
-            </a>
-          </li>
-        ) : null}
-        <li>
-          <a class="infra-card" href={localeDesignHref(locale.path, model.default.id)}>
-            <span class="name">{model.default.meta.displayName}</span>
-          </a>
-        </li>
-      </ul>
+      {view.panels.map((panel) => (
+        <div
+          class="not-found-panel"
+          data-404-panel={panel.locale.path}
+          data-default={panel.locale.code === defaultPanel.locale.code ? 'true' : undefined}
+          lang={panel.locale.code}
+        >
+          <p>{panel.body}</p>
+          {/* 无 JavaScript 回退：默认区块内保留可见的语言链接组。 */}
+          {panel.locale.code === defaultPanel.locale.code ? (
+            <noscript>
+              <LanguageSwitcher language={fallbackLanguage} />
+            </noscript>
+          ) : null}
+          <ul class="infra-list">
+            <li>
+              <a class="infra-card" href={localeHref(panel.locale.path)}>
+                <span class="name">{panel.backToEntry}</span>
+              </a>
+            </li>
+            {panel.allDesignsHref ? (
+              <li>
+                <a class="infra-card" href={panel.allDesignsHref}>
+                  <span class="name">{panel.allDesigns}</span>
+                </a>
+              </li>
+            ) : null}
+            <li>
+              <a class="infra-card" href={panel.defaultDesignHref}>
+                <span class="name">{panel.defaultDesignName}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      ))}
     </main>
     <ContextMenu config={contextMenu} />
   </body>

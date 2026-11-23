@@ -4,6 +4,7 @@
 > **共享操作菜单（桌面浮层 / 移动面板 / 悬浮球）的实测矩阵独立在 `docs/verification/action-menu.md`**——它跨设计、跨输入环境、跨配置，与本文件的路由 / 字体 / Reveal 职责不同。
 > 重复验证时**更新本文件**，不追加历史快照（历史由 Git 保留）；各设计自身的状态见 `docs/verification/<id>.md`。
 > 验证步骤与通过标准见 `design-page-verify` skill；记录归属见 `docs/README.md`。
+> **2026-11-23 单份 404 的 Locale 展示（ADR 0025）**：`dist/404.html` 单份 **42,970 B**，5 个 Locale 区块 / 1 个默认区块 / 1 条共享菜单 CSS / 0 条设计 CSS；原始 HTML 不设 `data-404-locale`。路径 / 偏好 / 浏览器 / 默认四层解析、偏好只读、无 JS 默认面板、移动菜单和 `--base /demo` 均实测；`npm test` **116/116**、`npm run test:locale` **24/24**。详见下文专项。
 > **2026-11-22 入口语言协商与零窗口随机（ADR 0024）**：`/` 改为按语言偏好 → 浏览器语言 → 默认 Locale 协商；随机改为入口每次重抽（`cacheHours: 0`），设计页保持稳定。`npm run test:locale` **14/14**、`npm test` **106/106**；`npx astro build` **175 页**、`dist` **7,888,020 B（7.52 MiB）**、字体 **45 文件**；`verify:html-only` **5 页**、`verify:sections` **135 页 / 760 分区**、`fonts:audit` **0 孤儿**；浏览器矩阵 **17/17**（语言矩阵、偏好优先、非法值回退、菜单显式写入、设计页稳定、入口重抽、无 JS、`html-only` 不持久化、0 第三方请求）。详见 `entry-locale-random.md`。`npm run check` 仅因既有 10 个 `.trellis/**` EOL 文件失败；与 2026-11-04 的 7,777,959 B 差值本轮未逐文件归因。
 > **2026-11-04 退役 govuk / fast；2026-11-05 退役 shelf / magical-girl**：当前 **27 套 / 175 页 / dist 7,777,959 B**；旧路由 404；切换页 27 卡；`/zh-cn/lexicon/` 与 `/zh-tw/frost/` smoke 通过；检测器 25 套零发现（例外 `frost` 2 + `oxide` 1）。
 > 最近共享机制专项验证：**2026-11-02（菜单链接样式与设计页 `.design a` 隔离，GOV.UK `.gv a` 覆盖修复；菜单项与 `/designs/` 列表页标题统一为「全部设计」；站点级示例声明迁到 `site.config.yaml` 的 `locales[].notice`；新增 `design.exclude` 部署级设计打包范围）**；此前 2026-11-01（Prettier + ESLint + LF 行尾工具链，ADR 0020；同日字体语料按引用页 + 旧路径跳转页样式精简，ADR 0019；繁中全设计，ADR 0018）；此前 2026-11-01（韩语全设计字体层 + 22 套韩语内容扩覆盖，ADR 0017）、2026-10-31（韩语首批 + 设计语言覆盖 + 菜单 CSS 外置，ADR 0015 / 0016）、2026-10-31（v0.20.0 核心字体内容子集 + source cache + 子集 cmap 审计 + 10 MiB 体积门禁）、2026-10-31（v0.19.0 构建期分片裁剪 + 字体 CSS 外置 + 部署集合审计 + 15 MiB 门禁）、2026-10-30（v0.18.0 外部字体目录 + 完整 CJK 分片 + primary-only Font 变量 + 设计 CSS 回退链）；最近全流程基线为 2026-10-29（v0.17.0 六套可爱风设计 + 24 套切换预览）；此前 2026-10-19（切换页设计预览 16 套全铺 + 三列响应式栅格）、2026-10-28（第 17 套 `styled` 预览 homepage99 与第 18 套自包含预览 html-only）、2026-10-18（预览碎片 3 套原型）、2026-10-13（v0.10.0 操作菜单全站化，基础设施页部分）、2026-10-12（v0.9.0 多语言）；2026-10-11 文档治理迁移，无代码改动。
@@ -31,6 +32,60 @@
 > 2026-10-31 跨设计冒烟矩阵（C1–C4 收口）：**90 个 URL**（zh/ja/en 各 28 页 + ko 6 页）在 **1280×800** 与 **375×812 + 触控** 下逐页导航：HTTP 200、0 console、0 4xx、`html lang` 正确、styled 页 8 个 `.cm-lang`（4×2）、`html-only` 4 个 `hreflang`、`h1` 存在、无横向溢出、悬浮球 ≥44×44；**0 失败**。`impeccable detect`：editorial `[]`；frost 2 条 `bounce-easing` 为 `docs/designs/frost/ADAPTATION.md` 已记录例外。未逐页重跑像素 / 对比度 / reduced-motion 视觉矩阵。
 >
 > 2026-10-31 单语言 fork 体积实测（C3）：临时只保留 `zh-CN`，完整字体管线后 `dist` **3,135,835 B（2.99 MiB）**、**59 页**、149 文件、字体 **34 文件 / 1,380,744 B**；HTML 约 786 KB。语言分组、菜单 JSON `languages`、`LanguageSwitcher` 与 `html-only` 原生语言区整组消失；源码已恢复。
+
+## 2026-11-23 单份 404 的 Locale 展示（ADR 0025）
+
+**范围**：新增 `src/lib/not-found.ts`；修改 `src/pages/404.astro`、`src/lib/context-menu.ts`、
+`src/components/ContextMenu.astro`、`package.json` 测试脚本；新增 `scripts/not-found-locale.test.mjs`。
+契约是单份 `dist/404.html` 预渲染全部 Locale，不在 `dist/<locale>/404.html` 生成副本。
+
+**构建 / 测试**
+
+- `npm test` **116/116**；`npm run test:locale` **24/24**；`npm run check:docs` **8/8**；`npm run lint`、
+  `npm run format:check`、`npx astro check` 均通过（astro check 0 error / 0 warning / 1 条既有
+  `lexicon` hint）。
+- `npm run fonts:typography`：**26 styled designs / 26 core / 31 primary-only local families**；
+  `npm run fonts:coverage`：**27 design(s)**。
+- `npx astro build` **175 页**；`dist/404.html` **42,970 B**，含 **5** 个 panel div、**1** 个默认 panel、
+  **1** 条共享菜单 CSS、**0** 条设计 CSS；原始 `<html>` 无 `data-404-locale`，`<title>` 为默认
+  `zh-CN`，`<html lang="zh-CN">`；`dist` 下只有这一份 `404.html`。
+- 构建后门禁：`fonts:subset` **14 个核心子集 / 1,784,080 B**；`fonts:prune` 保留 **735** / 删除
+  **765** 条规则；`dist` **7,920,458 B**；`verify:html-only` **5 页**；`verify:sections`
+  **135 页 / 760 分区**；`fonts:audit` **0 孤儿** / 64 条既有源字体缺字警告。
+- `npm run build` 包装脚本仍会在既有 `check:eol` 处停止：10 个 `.trellis/**` 文件 index LF /
+  worktree CRLF，与本任务改动无关；本轮以 `npx astro build` + 独立后续门禁完成验证。
+
+**Locale 与浏览器矩阵**
+
+| 场景 | 结果 |
+|---|---|
+| `/en/missing/`（真实 404） | `lang=en`、`data-404-locale=en`、英文标题与英文 panel；菜单标签英文、当前 English、switch `/en/designs/`、复制 Toast `Page link copied` |
+| `/ja/missing/` | 日文 panel / 标题；375×812 + 触控打开底部面板，标题「クイック操作」，分组「ページ / デザイン / 言語」，当前「日本語」，无横向溢出 |
+| `/ko/missing/` | 韩文 panel / 标题；截图归档 |
+| `/zh-tw/missing/` | 繁中 panel / 标题（实现代理矩阵） |
+| 偏好 `ja`，访问 `/missing/` | 日文 panel；偏好优先于浏览器语言 |
+| 偏好 `ja`，访问 `/en/missing/` | 英文 panel；路径优先于偏好 |
+| 偏好 `xx`，浏览器 `en-US` | 英文 panel；非法偏好被忽略且仍保留 `xx`，未删除 |
+| 浏览器 `zh-Hant-HK` / `en-US` / `fr-FR` | 分别命中 `zh-TW` / `en` / 默认 `zh-CN`（最长标签匹配） |
+| 页面加载 | 不写、不删 `senrenbanka.locale.v1:<baseKey>`；菜单显式点击语言项才写入 |
+
+**降级与配置分支**
+
+- 无 JS：默认 `zh-CN` panel 可见，5 个 panel 中仅 1 个 `display:block`，`<noscript>` 5 个语言链接可见。
+- `manualSwitch:false`：169 页；404 无 design group / random / switch，语言组保留；无切换页产物。
+- `BASE_PATH=/demo`：175 页；404 panel / CSS / 脚本 / 菜单目标均带 `/demo`，`demo` 不被识别为 Locale。
+- 临时单语言配置：59 页；404 仅 1 个 panel，无语言组 / `.cm-lang` / 语言导航；临时 profile 与
+  `site.config.yaml` 已恢复，`git diff -- src/data` 为空。
+- 设计页回归：`/en/editorial/` 菜单可打开；仅当前 `en` 勾选可见，配置无 `localeVariants`，未改变设计页行为。
+- 体积修正：`ContextMenu.astro` 仅对 404（有 `localeVariants`）渲染全部语言 Check；设计页 / 切换页恢复为每份菜单只渲染当前 Check。产物实测 `/en/editorial/` **2** 个 `.cm-check`、**0** 个隐藏勾选；`404.html` **10** 个 `.cm-check`（2 当前 + 8 隐藏）。该修正将 `dist` 从 **8,244,458 B** 降到 **7,920,458 B**（−324,000 B）。
+
+**证据**
+
+- 截图：`.cache/verification/404-locale-en-desktop.png`、`404-locale-ko-desktop.png`、
+  `404-locale-ja-mobile-sheet.png`。
+- 独立复核：`/en/missing/` 状态码 **404**；英文 panel；菜单 aria-label `Quick actions`、动作标签英文；
+  `/missing/` 移动面板打开后语言项点击写入 `ja` 并导航到 `/ja/transit/`；复制 Toast 为英文。
+- 未测：真实首帧视频（以 head 内联脚本顺序 + DOM/CSS 实测替代）、Firefox / Safari / 真机、200% 缩放。
 
 ## 2026-11-02 设计打包范围（design.exclude）
 

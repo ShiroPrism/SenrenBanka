@@ -22,7 +22,8 @@
   - 移动：点击悬浮球，门控 `(any-pointer: coarse)`。
   - **原生右键保留规则在两种环境下都不变**：链接、图片、输入控件、可编辑区、已选中文字、触屏来源（混合设备长按）一律交还浏览器原生菜单——**不得对全页无条件 `preventDefault()`**。移动端**不靠长按打开**，也不拦截原生长按与文本选择。
   - **混合输入设备按真实输入能力处理**：媒体查询只做初判，收到真实 `pointerdown` 的 `pointerType`（`touch` / `mouse`）即切换形态并记入**会话级 `sessionStorage`**（键 `senrenbanka.input.v1`）。该键**不得**与 `storageKeyFor()` 的主题偏好混用，也不得写入 `localStorage`。
-- **页面上下文（`context`，判别联合）**：`design` / `switcher` / `not-found` 三值，**不得**假设每页都存在"当前主题"。它决定：身份条是否渲染（仅 `design`）、随机抽选是否排除当前（仅 `design`）、「全部设计」是否隐藏（`switcher` 上是重复动作，构建期就不渲染）、语言项目的标 URL。
+- **页面上下文（`context`，判别联合）**：`design` / `switcher` / `not-found` 三值，**不得**假设每页都存在"当前主题"。它决定：身份条是否渲染（仅 `design`）、随机抽选是否排除当前（仅 `design`）、「全部设计」是否隐藏（`switcher` 上是重复动作，构建期就不渲染）、语言项目的目标 URL。
+- **404 菜单跟随 404 display locale**：404 的菜单标签、分组标题、Toast、无障碍名称、当前语言标记、随机目标池、全部设计 href 与分享标题必须与页面展示语言一致。菜单仍只有一份 DOM；构建期注入各 Locale 的 runtime variant，运行时按 `html[data-404-locale]` 选择并更新，**不得**复制菜单 DOM，也**不得**固定使用默认 Locale 的菜单文案。决策见 [ADR 0025](../adr/0025-single-404-locale-resolution.md)。
 - **菜单项**：页面操作（重新加载 / 回到顶部 / 复制当前页面链接 / 打印 / 分享页面）+ 主题操作（随机一个设计 / 全部设计）；`navigator.share` 不可用时移除「分享页面」；复制 / 分享结果以 Toast（`role="status"`）反馈，各配置语言各有文案。
 - **随机语义**（与 `/designs/` 切换页、根脚本一致）：复用 `storageKey` 与 `{ designId, expiresAt }` 格式；**`design` 页**必须排除当前设计（保证确实切换），**`switcher` / `not-found`** 没有当前主题，走**全池**（绝不能排除一个不存在的"当前"）；`avoidRepeat` 时再尽量排除上次；仅一套启用设计时该项 `aria-disabled`（不得假装切换）；写入后直接导航目标设计的固定 URL；打开菜单 / 页面加载均不写存储。**随机主题在所有页面可用**。
 - **语言偏好写入**：语言项是普通 `<a>`，默认导航不被拦截；显式激活 `.cm-lang` 时把目标 Locale path 写入独立键 `senrenbanka.locale.v1:<baseKey>`（桌面 / 移动共用同一逻辑，Ctrl-Cmd 点击与中键 `auxclick` 也写入）。直接访问 Locale 页面或其他导航不写偏好。`html-only` 没有共享菜单与运行时，语言点击不持久化。

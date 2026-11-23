@@ -13,6 +13,7 @@
  *   random → `now + cacheHours`（cacheHours=0 时窗口为 0）；fixed → `null`（永久记住）。
  *   本模块只在用户点击「随机一个设计」时写存储；页面加载/打开菜单不写。
  */
+import type { LocaleMessages } from '../i18n/messages';
 
 export interface ContextMenuTarget {
   id: string;
@@ -27,6 +28,14 @@ export type PageContext =
   | { kind: 'design'; designId: string; designName: string; accent?: string }
   | { kind: 'switcher' }
   | { kind: 'not-found' };
+
+export interface ContextMenuLanguageItem {
+  code: string;
+  path: string;
+  label: string;
+  href: string;
+  isCurrent: boolean;
+}
 
 export interface ContextMenuRuntimeConfig {
   /** 当前页面上下文：`designId` 只在 design 页存在，随机抽选才需要排除它。 */
@@ -56,13 +65,12 @@ export interface ContextMenuRuntimeConfig {
    * 语言切换项（普通 <a>，导航由浏览器处理）。
    * 运行时只在显式激活时读取 `path` 写入语言偏好；默认导航不拦截。
    */
-  languages?: Array<{
-    code: string;
-    path: string;
-    label: string;
-    href: string;
-    isCurrent: boolean;
-  }>;
+  languages?: ContextMenuLanguageItem[];
+  /**
+   * 按 Locale path 索引的运行时变体。仅 404 使用：页面已在 head 解析出
+   * `html[data-404-locale]`，菜单据此只替换自身文案与目标，不复制 DOM。
+   */
+  localeVariants?: Record<string, ContextMenuLocaleVariant>;
 }
 
 export interface ContextMenuToastMessages {
@@ -72,6 +80,24 @@ export interface ContextMenuToastMessages {
   shareCancelled: string;
   shareFailed: string;
   noOtherDesign: string;
+}
+
+/**
+ * 404 多语言菜单的运行时变体。字段只覆盖随 Locale 变化的部分；context / mode /
+ * storageKey 等页面级语义由主配置共享。
+ */
+export interface ContextMenuLocaleVariant {
+  switcherHref: string;
+  shareTitle: string;
+  targets: ContextMenuTarget[];
+  toast: ContextMenuToastMessages;
+  launcherLabel: string;
+  menuLabel: string;
+  closeLabel: string;
+  cancel: string;
+  languages?: ContextMenuLanguageItem[];
+  /** 静态标签（动作 / 分组 / 关闭 / 取消）的当前语言文案。 */
+  contextMenu: LocaleMessages['contextMenu'];
 }
 
 /** 保留原生菜单的元素（含宿主：未知的媒体/嵌入元素一律不动）。 */
@@ -126,6 +152,10 @@ export function initContextMenu(): void {
   )
     return;
 
+  const notFoundLocale = document.documentElement.getAttribute('data-404-locale');
+  const localeVariant =
+    notFoundLocale && config.localeVariants ? config.localeVariants[notFoundLocale] : undefined;
+
   /** 只有 design 页有"当前主题"，随机时才需要排除它（切换页/404 不得排除不存在的当前）。 */
   const currentId = config.context.kind === 'design' ? config.context.designId : null;
 
@@ -139,6 +169,80 @@ export function initContextMenu(): void {
     Array.from(menu.querySelectorAll<HTMLElement>('[role="menuitem"]')).filter(
       (item) => !item.closest('[data-cm-submenu]') || menu === submenu,
     );
+
+  /**
+   * 404 的菜单静态 DOM 默认按默认 Locale 渲染；页面 head 已把展示 Locale 写到
+   * `html[data-404-locale]`。这里只更新这一份 DOM 的文案 / 目标 / 当前项，
+   * 菜单容器、动作顺序与交互逻辑保持不变。
+   */
+  const applyMenuLocale = (variant: ContextMenuLocaleVariant) => {
+    const text = variant.contextMenu;
+    const setText = (selector: string, value: string) => {
+      document.querySelectorAll<HTMLElement>(selector).forEach((node) => {
+        node.textContent = value;
+      });
+    };
+
+    root.setAttribute('aria-label', variant.menuLabel);
+    sheet?.setAttribute('aria-label', variant.menuLabel);
+    launcher?.setAttribute('aria-label', variant.launcherLabel);
+    setText('.cm-sheet-title', variant.menuLabel);
+    setText('.cm-sheet-cancel', variant.cancel);
+    document.querySelectorAll<HTMLElement>('.cm-sheet-close').forEach((node) => {
+      node.setAttribute('aria-label', variant.closeLabel);
+    });
+
+    const groupLabels: Record<string, string> = {
+      page: text.pageGroup,
+      design: text.designGroup,
+      language: text.languageGroup,
+    };
+    document.querySelectorAll<HTMLElement>('[data-cm-group]').forEach((node) => {
+      const key = node.getAttribute('data-cm-group');
+      const label = key ? groupLabels[key] : undefined;
+      if (label) node.textContent = label;
+    });
+
+    const actionLabels: Record<string, string> = {
+      reload: text.reload,
+      top: text.toTop,
+      copy: text.copyLink,
+      print: text.print,
+      share: text.share,
+      random: text.random,
+      switch: text.switchDesign,
+    };
+    document.querySelectorAll<HTMLElement>('[data-cm-action]').forEach((node) => {
+      const action = node.getAttribute('data-cm-action');
+      const label = action ? actionLabels[action] : undefined;
+      const labelNode = node.querySelector<HTMLElement>('.cm-label');
+      if (label && labelNode) labelNode.textContent = label;
+      if (action === 'switch' && node instanceof HTMLAnchorElement) {
+        node.href = variant.switcherHref;
+      }
+      if (action === 'random') {
+        if (variant.targets.length < 2) node.setAttribute('aria-disabled', 'true');
+        else node.removeAttribute('aria-disabled');
+      }
+    });
+
+    const triggerLabel = root.querySelector<HTMLElement>('[data-cm-submenu-trigger] .cm-label');
+    if (triggerLabel) triggerLabel.textContent = text.languageGroup;
+    submenu?.setAttribute('aria-label', text.languageGroup);
+
+    const languages = variant.languages ?? [];
+    document.querySelectorAll<HTMLAnchorElement>('.cm-lang').forEach((link) => {
+      const path = link.getAttribute('data-cm-locale');
+      const item = languages.find((entry) => entry.path === path);
+      if (!item) return;
+      link.href = item.href;
+      if (item.isCurrent) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+      const check = link.querySelector<SVGElement>('.cm-check');
+      if (!check) return;
+      check.classList.toggle('cm-check-hidden', !item.isCurrent);
+    });
+  };
 
   /**
    * 输入环境判定（ADR 0007）。
@@ -825,6 +929,22 @@ export function initContextMenu(): void {
         ?.querySelectorAll<HTMLElement>('[data-cm-action="share"]')
         .forEach((node) => node.remove());
     }
+  }
+
+  if (localeVariant) {
+    config = {
+      ...config,
+      switcherHref: localeVariant.switcherHref,
+      shareTitle: localeVariant.shareTitle,
+      targets: localeVariant.targets,
+      toast: localeVariant.toast,
+      launcherLabel: localeVariant.launcherLabel,
+      menuLabel: localeVariant.menuLabel,
+      closeLabel: localeVariant.closeLabel,
+      cancel: localeVariant.cancel,
+      languages: localeVariant.languages,
+    };
+    applyMenuLocale(localeVariant);
   }
 
   // 首次进入：按判定结果落定形态（无 JS 时两份 DOM 都在，见 SSR 说明）

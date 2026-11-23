@@ -5,6 +5,7 @@
 > 验证步骤与通过标准见 `design-page-verify` skill。
 > 最近完整基线：**2026-10-13（v0.10.0）**，本机 Chromium 实测（`astro preview` + Playwright），非模拟推断；2026-10-29（v0.17.0）追加六套新增设计的桌面 / 375px 触控回归；**2026-10-31 追加菜单 CSS 外置复测（桌面 / 375px 触控 / 无 JS / 体积）**；**2026-11-02 追加菜单链接样式隔离复测（GOV.UK `.gv a` 覆盖修复）**。
 > 2026-10-28（HTML-only 子任务）：`html-only` 按 ADR 0009 明确排除在共享菜单接入范围之外，使用普通链接导航。2026-10-29（v0.17.0）：六套新增 `styled` 设计均在桌面与 375px 触控环境实测共享菜单；当前 **26 套 `styled`** 设计。
+> **2026-11-23 404 展示语言与菜单同步（ADR 0025）**：单份 404 的菜单仍只有一份 DOM，运行时按 `html[data-404-locale]` 应用 Locale variant；文案、分组、Toast、aria、当前语言勾选、随机目标、全部设计 href 与分享标题均跟随展示语言。英文 / 日文 / 韩文 / 繁中面板与 375×812 触控面板实测通过；详见下文。
 
 ## 形态与接入面
 
@@ -19,6 +20,9 @@
 | `entry`（`/`、`/{locale}/`、旧路径跳转页） | ❌ | — | — | — | 现有 `<noscript>` 列表 |
 
 产物实测：设计页（4 语言页面）`cm-lang` **8** 个（桌面子菜单 4 + 面板平铺 4）、`aria-current="page"` **2** 个（两份各一）、`data-cm-sheet` / `data-cm-launcher` / `data-cm-scrim` 各 1。切换页 `data-cm-action="switch"` 计数 **0**、`<header class="cm-head">` 计数 **0**；404 同样无身份条。
+
+404 的菜单文案与当前语言标记自 2026-11-23 起跟随 404 display locale；菜单 DOM 仍只有一份，
+不复制第二套菜单。实测见下文「2026-11-23 404 展示语言与菜单同步」。
 
 ## 桌面鼠标环境
 
@@ -65,7 +69,7 @@
 
 - `design` 页（`/ja/material3/`）：8 个随机目标**全为 `ja` 前缀**；池（排除 material3 后）= **7**，`excludesCurrent: true`；语言项 = `/zh-cn/material3/`、`/ja/material3/`、`/en/material3/`。
 - `switcher` 页（`/zh-cn/designs/`）：8 个目标全为 `zh-cn`；无身份条；无「全部设计」；随机实测跳转 `→ /zh-cn/oxide/`。2026-10-13 记录时写入 `{"designId":"oxide","expiresAt":1791989119493}`（`cacheHours: 24`）；v0.22.0 起当前配置为 `cacheHours: 0`，写入 `expiresAt: 0`，下一次入口重抽。
-- `not-found`（`/nonexistent-path/` 真实 404）：语言项 = `/zh-cn/`、`/ja/`、`/en/`；有随机与切换页项；无身份条。
+- `not-found`（`/nonexistent-path/` 真实 404）：语言项 = `/zh-cn/`、`/ja/`、`/en/`；有随机与切换页项；无身份条。2026-11-23 起语言项、菜单标签与当前勾选跟随 404 display locale，仍保持目标为各语言入口页。
 - 存储语义：`storageKey = senrenbanka.design.v1:root`（不含 locale）、`mode: random`、`avoidRepeat: true`；v0.22.0 起 `cacheHours: 0`（入口每次重抽，设计页稳定）。语言切换**不会**重置主题偏好。
 
 ## 配置边界
@@ -75,6 +79,30 @@
 - 剪贴板双失败：模拟 `navigator.clipboard.writeText` reject 且 `execCommand` 返回 false → Toast 显示「复制失败，请手动复制地址栏链接」、`data-cm-tone="error"`、`hidden: false`。
 - 无 JS 回退：切换页与 404 的 `<noscript>` 各含 **3** 个 `.lang-switch-link`，目标分别为 `/{locale}/designs/` 与 `/{locale}/`；`styled` 设计页**不含**该回退（维持 v0.9.0 已裁定的取舍）。`html-only` 由 ADR 0009 的原生 `<nav>` 提供可见语言链接，不依赖菜单。
 - **隐藏菜单 DOM 不是回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与交互逻辑也依赖运行时；无 JS 时其中的语言链接不可见、不可达。此前把移动面板静态 DOM 说成“无 JS 语言切换回退”的表述已更正。
+
+## 2026-11-23 404 展示语言与菜单同步（ADR 0025）
+
+- **单份 DOM**：404 只渲染一份 `ContextMenu`；构建期把每个 Locale 的菜单文案 / 目标注入
+  `localeVariants`，运行时按 `html[data-404-locale]` 选择，不复制桌面或移动菜单。
+- **Check 渲染范围**：仅 404（存在 `localeVariants`）为每个语言项渲染 Check；设计页 / 切换页
+  只渲染当前语言 Check，避免给所有菜单页增加隐藏 SVG。产物实测 404 为 **10** 个 `.cm-check`
+  （2 当前 + 8 隐藏），`/en/editorial/` 为 **2** 个、**0** 个隐藏。
+- **桌面**：`/en/missing/` 右键打开后菜单 `aria-label` 为 `Quick actions`；动作标签为
+  `Reload / Back to top / Copy link to this page / Print / Share page / Random design / All designs`；
+  当前语言 English；`switch` href `/en/designs/`；复制 Toast `Page link copied`。
+- **移动 375×812 + 触控**：用 `tap()` 打开悬浮球；面板标题 `Quick actions`，分组
+  `Page / Design / Language`，当前 English，`scrollWidth - innerWidth = 0`。日文截图
+  `404-locale-ja-mobile-sheet.png` 显示「クイック操作」「ページ / デザイン / 言語」与「日本語」勾选。
+- **偏好写入**：在 `/missing/`（浏览器英文）移动面板点击「日本語」后，语言偏好写入 `ja`，导航到
+  `/ja/transit/`（Enter 随机进入）——目标仍是目标 Locale 入口，而非停留错误 URL。
+- **配置边界**：`manualSwitch:false` 时 404 菜单无 design group / random / switch，语言组保留；
+  设计页 `/en/editorial/` 无 `localeVariants`，仍只显示当前语言勾选，未回归。
+- **无 JS**：菜单 DOM 始终隐藏，404 由默认 Locale panel 内的 `<noscript>` 语言链接回退；不把隐藏菜单
+  静态 DOM 称为回退。
+- 截图：`.cache/verification/404-locale-en-desktop.png`、`404-locale-ko-desktop.png`、
+  `404-locale-ja-mobile-sheet.png`。独立复核命令：`.cache/verification/check-404.py`、
+  `check-404-menu.py`（临时脚本，不入库）。
+- 未测：真实 OS 分享面板、Firefox / Safari / 真机、200% 缩放。
 
 ## 构建与产物隔离
 

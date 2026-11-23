@@ -4,7 +4,7 @@
 >
 > **权威级别**：本文件是该项目主题规则的唯一正文来源；根 `AGENTS.md` 只提供硬门禁与路由。
 >
-> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md), [`../adr/0021-site-notice-configuration.md`](../adr/0021-site-notice-configuration.md), [`../adr/0022-design-packaging-scope.md`](../adr/0022-design-packaging-scope.md)
+> **相关决策**：[`../adr/0006-multilingual-static-routing.md`](../adr/0006-multilingual-static-routing.md), [`../adr/0007-action-menu-site-wide-with-touch-launcher.md`](../adr/0007-action-menu-site-wide-with-touch-launcher.md), [`../adr/0021-site-notice-configuration.md`](../adr/0021-site-notice-configuration.md), [`../adr/0022-design-packaging-scope.md`](../adr/0022-design-packaging-scope.md), [`../adr/0025-single-404-locale-resolution.md`](../adr/0025-single-404-locale-resolution.md)
 >
 > **维护归属**：规则变更先修改本文件，再检查根索引与引用。
 
@@ -72,5 +72,6 @@
 - 切换语言只改 locale，**不改当前主题、不重置设计存储**；`storageKey` 不含 locale（主题偏好跨语言共享）。当前零窗口随机下，下一次从入口进入仍会重抽。
 - 除 `/` 的入口协商外，语言识别只认路径**首段**并与 `locales[].path` 精确匹配，部署 base 不得被当作语言代码
 - **根入口语言协商**：只有 `/` 在运行时按「语言偏好 → `navigator.languages`（缺失时 `navigator.language`）→ `i18n.defaultLocale`」选择 Locale，再进入该 Locale 的启用设计池。语言偏好存于独立键 `senrenbanka.locale.v1:<baseKey>`（值为 Locale path），不得复用设计存储键或 `site.storageKey` 覆盖值。`/<locale>/` 与 `/<locale>/<design>/` 始终路径优先，不读偏好、不做运行时改写。匹配采用最长标签：`zh-Hant` / `zh-TW` / `zh-HK` / `zh-MO` → `zh-TW`；`zh-Hans` / `zh-CN` / `zh-SG` / 裸 `zh` → `zh-CN`；`ja*` / `en*` / `ko*` 归对应 Locale。
+- **404 展示语言**：全站只有一份 `dist/404.html`，不得为每种 Locale 生成独立 404 页面。构建期在同一份 HTML 内预渲染全部 Locale 的 404 区块；运行时按「请求路径首段（精确匹配 `locales[].path`）→ 语言偏好 → 浏览器语言（最长标签）→ 默认 Locale」选择展示语言。路径首段未配置时视为无路径语言；非法偏好忽略。内联脚本必须在首屏前设置 `html[lang]`、`data-404-locale`（Locale path）与本地化标题；无 JS 时固定显示默认 Locale 区块并保留 `<noscript>` 语言链接。404 **只读**语言偏好，页面加载不得写入或清除偏好；决策见 ADR 0025。
 - **语言偏好写入时机**：仅共享操作菜单的 `.cm-lang` 链接被显式激活（点击 / Ctrl-Cmd 点击 / 中键）时写入；直接访问 Locale 页面、刷新、切换页或 404 均不写。`html-only` 因零脚本契约无法持久化，语言点击只完成当次导航。
 - **入口随机与稳定地址**：随机只发生在 `/` 与 `/<locale>/`；设计页直达、刷新、书签与分享保持同一设计。当前部署 `cacheHours: 0`，每次入口重抽，但仍用“上一次设计”避免连续重复。无 JS 的 `/` 仍回退到默认 Locale 的默认设计与设计列表，不新增语言链接。

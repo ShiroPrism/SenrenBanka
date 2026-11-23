@@ -94,6 +94,10 @@ _Avoid_: 自动语言检测、浏览器语言锁定
 用户显式选择语言后记录的 Locale path，供根入口协商时优先采用；区别于浏览器语言与 Cookie 语言检测。
 _Avoid_: 浏览器语言、语言 Cookie
 
+**404 display locale（404 展示语言）**:
+单份静态 404 为当前请求选择的 Locale；按请求路径首段、Locale preference、浏览器语言、默认 Locale 的顺序解析，只决定本次页面与菜单展示，不写入偏好。无 JavaScript 时固定为默认 Locale。
+_Avoid_: 404 路由语言、错误页自动翻译
+
 **Language self-name（语言自称）**:
 语言选择器中展示该语言的名字，由各语言自己书写（简体中文 / 繁體中文 / 日本語 / English），不使用英文名或其他语言名。
 _Avoid_: 语言英文名、显示名
@@ -337,6 +341,10 @@ _Avoid_: FAB、浮动按钮、汉堡按钮、移动端菜单
 **Page context（页面上下文）**:
 描述当前页面在站点中的角色，取值为 `design` / `switcher` / `not-found` / `entry` 四种。它决定菜单身份条是否渲染、随机主题是否排除当前、进入切换页的动作是否隐藏，以及语言项的目标 URL。菜单配置据此派生，不假设每页都存在"当前主题"。
 _Avoid_: 页面类型、路由类型、页面模式
+
+**Single 404 page（单份 404）**:
+全站唯一构建的 `404.html`，在同一份 HTML 内预渲染全部 Locale 的展示区块，由运行时按 404 display locale 选择可见区块；不为每种 Locale 生成独立 404 页面。
+_Avoid_: 每语言 404 页面、404 重定向页
 
 **Context menu（快捷操作菜单）**:
 共享操作菜单在桌面鼠标环境（`(hover: hover) and (any-pointer: fine)`）非交互区域右键 / `Shift+F10` 打开时的形态：贴近点击点定位、二级子菜单、语言项收在子菜单内。v0.5.0 起引入，v0.10.0 起被 `Action menu` 统摄。

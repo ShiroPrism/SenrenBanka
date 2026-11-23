@@ -42,6 +42,9 @@ const { config } = Astro.props;
 const t = config.messages.contextMenu;
 const isDesign = config.context.kind === 'design';
 const accent = config.context.kind === 'design' ? config.context.accent : undefined;
+// 404 需要为每个语言项保留 Check，运行时切换当前项；设计页 / 切换页只渲染当前项，
+// 避免为 136 个菜单页各增加 8 个无用的隐藏 SVG。
+const showAllLocaleChecks = Boolean(config.localeVariants);
 
 // 切换页上「进入切换页」是重复动作 → 构建期就不渲染，而不是运行时隐藏
 const showSwitchItem = config.designActionsEnabled && config.context.kind !== 'switcher';
@@ -64,6 +67,7 @@ const runtimeConfig = {
   closeLabel: config.closeLabel,
   cancel: config.cancel,
   languages: config.languages,
+  localeVariants: config.localeVariants,
 };
 // 转义 '<'，防止 JSON 串提前闭合 <script>（与 router-script.ts 同法）
 const configJson = JSON.stringify(runtimeConfig).replace(/</g, '\\u003c');
@@ -263,6 +267,9 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     flex: none;
     margin-left: auto;
     color: light-dark(#0b7a3b, #6ede9f);
+  }
+  .cm-check.cm-check-hidden {
+    display: none;
   }
 
   /* ---------- 移动：底部动作面板 ----------
@@ -778,7 +785,12 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
             aria-current={item.isCurrent ? 'page' : undefined}
           >
             <span class="cm-label">{item.label}</span>
-            {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+            {showAllLocaleChecks || item.isCurrent ? (
+              <Check
+                class={`cm-icon cm-check${item.isCurrent ? '' : ' cm-check-hidden'}`}
+                aria-hidden="true"
+              />
+            ) : null}
           </a>
         ))}
       </div>
@@ -816,7 +828,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
         <span class="cm-tag">{t.currentDesignTag}</span>
       </header>
     )}
-    <div class="cm-sheet-group" aria-hidden="true">
+    <div class="cm-sheet-group" data-cm-group="page" aria-hidden="true">
       {t.pageGroup}
     </div>
     {sheetActions.map((action) => {
@@ -830,7 +842,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     })}
     {config.designActionsEnabled && (
       <>
-        <div class="cm-sheet-group" aria-hidden="true">
+        <div class="cm-sheet-group" data-cm-group="design" aria-hidden="true">
           {t.designGroup}
         </div>
         <button
@@ -853,7 +865,7 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
     )}
     {config.languages.length > 0 && (
       <>
-        <div class="cm-sheet-group" aria-hidden="true">
+        <div class="cm-sheet-group" data-cm-group="language" aria-hidden="true">
           {t.languageGroup}
         </div>
         {config.languages.map((item) => (
@@ -868,7 +880,12 @@ const actionIcon: Record<ActionId, typeof RotateCw> = {
           >
             <Globe class="cm-icon" aria-hidden="true" />
             <span class="cm-label">{item.label}</span>
-            {item.isCurrent ? <Check class="cm-icon cm-check" aria-hidden="true" /> : null}
+            {showAllLocaleChecks || item.isCurrent ? (
+              <Check
+                class={`cm-icon cm-check${item.isCurrent ? '' : ' cm-check-hidden'}`}
+                aria-hidden="true"
+              />
+            ) : null}
           </a>
         ))}
       </>

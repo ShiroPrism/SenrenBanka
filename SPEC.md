@@ -329,6 +329,8 @@ design:
 
 **入口语言协商（v0.22.0）**：语言清单仍是唯一来源；根入口 `/` 只消费这份清单，在运行时按语言偏好、浏览器语言、默认 Locale 的顺序选择其中一个 `path`。协商不会改变 `/<locale>/...` 的路径语言解析，也不新增 Cookie 或服务端语言状态；语言偏好是独立的运行态存储，不进入资料 schema。
 
+**404 展示语言（v0.22.1）**：全站只构建一份 `dist/404.html`，不为每种 Locale 生成独立 404 页面。构建期把全部 Locale 的 404 内容预渲染为同一页内的 `[data-404-panel]` 区块；默认 Locale 区块无 JS 时可见。`<head>` 内联脚本在首屏前按「请求路径首段 → Locale preference → 浏览器语言（最长标签）→ 默认 Locale」解析展示语言，设置 `html[lang]`、`html[data-404-locale]`（Locale path）与本地化标题；共享操作菜单使用同一解析结果更新文案、当前语言标记与随机目标。404 只读偏好，不写入或清除；决策见 ADR 0025。
+
 ---
 
 ## 6. 设计目录、页面接口与注册机制
@@ -437,6 +439,7 @@ src/designs/<id>/
 | `/<locale.path>/<design>/` | `src/designs/<id>/Page.astro` | 每套设计在每种语言下的页面 |
 | `/<locale.path>/designs/` | `src/infra/SwitcherPage.astro` | 每种语言的切换页；`manualSwitch: false` 时不构建 |
 | `/<design>/`、`/designs/` | `src/infra/LegacyRedirect.astro` | 旧无前缀路径的兼容入口 |
+| 任意未匹配路径 | `src/pages/404.astro` | 单份 404；运行时按请求路径 / Locale preference / 浏览器语言 / 默认 Locale 选择预渲染区块 |
 
 - 同一 `Page.astro` 被注册到多个语言前缀；语言由 `resolveLocale(model, Astro.url.pathname)` **在构建期**从路径首段解析，页面不各自判断。
 - **不启用 Astro 原生 `i18n`**：实测其开关两种配置产物完全相同，唯一作用是让 `Astro.currentLocale` 有值（不配时为 `UNDEFINED`）。采用自解析可让 `/demo` 这类部署 base 与语言前缀的边界完全可控。
@@ -444,6 +447,7 @@ src/designs/<id>/
 - **Locale 协商只在 `/` 发生**：手动语言偏好优先，其次按 `navigator.languages`（缺失时 `navigator.language`）匹配，最后回退 `i18n.defaultLocale`。`zh-Hant` / `zh-TW` / `zh-HK` / `zh-MO` → `zh-TW`；`zh-Hans` / `zh-CN` / `zh-SG` / 裸 `zh` → `zh-CN`；`ja*` / `en*` / `ko*` 分别归对应 Locale；采用最长标签优先，未匹配回退默认 Locale。
 - `/<locale>/` 与 `/<locale>/<design>/` **路径语言优先**，不读语言偏好、不做运行时改写，也不做 Cookie 语言检测。
 - **除 `/` 的入口协商外，语言识别只认路径首段**并与 `locales[].path` 精确匹配，因此部署 base（`/demo`）不会被误当成语言代码。
+- **404 也识别路径首段**：未匹配路径仍保留原 URL；404 的单份 HTML 在运行时读取路径首段并匹配 Locale path，未命中时才回退偏好、浏览器语言与默认 Locale。404 的路径识别不写偏好、不做导航改写。
 - 无 JS 的 `/` 维持原状：`meta refresh` 到默认 Locale 的默认设计并列出默认 Locale 的设计，不新增语言链接；浏览器语言协商不可用是该降级路径的已知限制。
 
 **旧路径兼容的降级行为（明确声明）**：静态托管无法在代码内实现真正的 HTTP 301（重定向由平台配置决定），因此 `/<design>/` 与 `/designs/` 采用**静态 meta refresh + `canonical` + `noindex, follow`** 的降级方案——旧链接仍可用，无 JavaScript 依赖，且不与 locale 页面形成重复可索引内容。权威地址只有带语言前缀的那一份。真正的 301 如有需要，应在托管平台侧另行配置。
@@ -486,6 +490,7 @@ src/designs/<id>/
   - **`manualSwitch` 只控制主题切换入口**（`styled` 的随机 / 全部设计由 `designActionsEnabled` 门控）；`manualSwitch: false` 时这些入口不渲染，`html-only` 的「全部设计」链接也不渲染，**但语言入口在两种模式下照常可用**。
   - **移动菜单的静态 DOM 不是无 JavaScript 回退**：`.cm` 与 `.cm-sheet` 初始均带 `hidden`，悬浮球与菜单交互依赖运行时，因此无 JS 时这些语言链接不可见、不可达。该表述曾是已知文档错误，ADR 0009 已更正。
   - **基础设施页例外**：切换页与 404 也接入共享菜单（v0.10.0 起），其可见 `LanguageSwitcher`（共享组件，中性样式由 `InfraStyles.astro` 提供）**包进 `<noscript>`**——运行时只有菜单一个可见入口，无 JS 时靠它回退。设计页不渲染它。
+  - **404 菜单跟随 404 展示语言**：404 的单份菜单 DOM 通过构建期注入的 Locale variants，在运行时按 `data-404-locale` 同步标签、Toast、当前语言标记、随机目标池、全部设计 href 与分享标题；不得复制菜单 DOM，也不得固定使用默认 Locale 文案（ADR 0025）。
 - `html-only` 以普通链接提供页内目录、同主题语言链接，并在 `manualSwitch:true` 时提供一条「全部设计」链接；不得渲染随机入口、`Font`、`Reveal`、`ContextMenu`、`InfraStyles` 或 `LanguageSwitcher`。
 - `manualSwitch:false` → 各语言切换页**不构建**（404，见 §10.4 实现注记）、`styled` 菜单的「设计」组不渲染、`html-only` 的「全部设计」链接不渲染；两种模式的语言入口与各设计固定 URL 均不受影响。
 - **语言偏好写入时机**：仅当用户在共享操作菜单中显式激活 `.cm-lang` 语言链接（点击、Ctrl/Cmd 点击或中键 `auxclick`）时写入 `senrenbanka.locale.v1:<baseKey>`。直接访问 `/en/fax/`、刷新、切换页或 404 均不写入，因此打开别人分享的语言链接不会覆盖收件人的入口偏好。`html-only` 没有运行时与共享菜单，语言点击只完成当次导航，不持久化偏好。
@@ -696,6 +701,7 @@ SenrenBanka/
 13. README 覆盖：fork → 修改资料 → 三平台部署（含自定义域名说明）→ 新增设计流程。
 14. 共享操作菜单（`manualSwitch:true`，所有 `styled` 设计）：桌面端在非交互区域右键 / `Shift+F10` 均可打开菜单且视口边缘自动收敛；全部菜单项真实执行、失败路径有明确反馈（复制降级 / 分享取消 / `navigator.share` 不可用时该项不出现）；链接、图片、输入控件、可编辑区与已选中文字保留浏览器原生菜单；键盘可遍历激活、Esc 关闭并归还焦点；375px 触控仿真下悬浮球可见（命中 ≥44px）、点击可开合底部动作面板、面板内语言项平铺可达、**面板内两条关闭路径均可用（头部 ✕ 44px / 底部取消条 ≥48px）且均解锁背景滚动**、操作项按页面/设计/语言分组、**移动端面板内不存在「重新加载 / 回到页面顶部 / 打印」三项而桌面菜单仍有**、**全站 `touch-action` 计算值无 `none`（页面顶部下拉刷新可用）**、无横向溢出（v0.10.0 修订）；切换页与 404 同样能打开共享菜单，且切换页不渲染重复的「全部设计」项；所有 `styled` 设计均不存在旧的可见 `Switch design` 入口。`html-only` 不接入菜单。
 15. HTML-only 产物门禁：每个 `html-only` 设计 × locale 的最终 HTML 不含 `<style>`、`style` 属性、`<script>`、事件处理器、`iframe` / `object` / `embed`、`javascript:` URL 或 meta refresh；`<link>` 只含 `canonical` / `alternate` / `icon`，无 stylesheet / preload。缺少候选或页面、任一项违规均让 `npm run verify:html-only` 非零退出；该命令先跑 Node 内置回归测试，`--dist` 可检查指定产物目录。
+16. 404 多语言（v0.22.1）：`dist/404.html` 只有一份且不为 Locale 生成额外 404 页面；原始 HTML 不设置 `data-404-locale`，默认 Locale 区块无 JS 可见；脚本按请求路径 → 偏好 → 浏览器语言 → 默认 Locale 设置 `html[lang]`、`data-404-locale` 与标题；404 加载不写/不删偏好；共享菜单、当前语言标记、随机目标与全部 Locale 链接跟随展示语言；`BASE_PATH=/demo` 与单语言配置均通过。
 
 ---
 

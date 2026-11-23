@@ -1,0 +1,11 @@
+{"file":"AGENTS.md","reason":"项目硬门禁与按任务读取规则；404 属共享机制改动，必须遵守统一取数、链接可部署、改动必验等约束。"}
+{"file":"docs/rules/data-and-i18n.md","reason":"Locale、共享文案、语言偏好与 404 语言切换目标的权威规则。"}
+{"file":"docs/rules/action-menu.md","reason":"共享操作菜单的单一入口、语言项目标与基础设施页接入契约。"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"html lang、aria-label、隐藏内容与 375px 触控可达性要求。"}
+{"file":"docs/rules/pitfalls.md","reason":"共享菜单运行时、CSS 隔离、语言与基础设施页的已知坑。"}
+{"file":"docs/rules/operations.md","reason":"构建、验证、版本与入库范围要求。"}
+{"file":"docs/adr/0007-action-menu-site-wide-with-touch-launcher.md","reason":"PageContext / not-found 上下文、语言项目标与菜单两份容器的既有决策。"}
+{"file":"docs/adr/0024-entry-locale-negotiation-and-zero-window-random.md","reason":"语言偏好、浏览器语言匹配与默认 Locale 回退的既有协商语义。"}
+{"file":"CONTEXT.md","reason":"Locale、Shared messages、Page context 与 404 展示语言相关术语。"}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"跨构建期数据、内联运行时脚本与共享菜单 DOM 的数据流检查。"}
+{"file":".trellis/spec/guides/code-reuse-thinking-guide.md","reason":"复用 localeMatchTags、buildActionMenuConfig、localeHref 等既有机制，避免重复实现。"}

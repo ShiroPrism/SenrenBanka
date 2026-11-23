@@ -87,6 +87,19 @@ npm run verify:sections  # 主分区 data-section / h2 标准标签门禁
 8. **旧路径兼容**：`/<id>/` 与 `/designs/` 存在 meta refresh → 默认语言版本，且带 `canonical` + `noindex, follow`。
 9. **触控命中区（仅 `styled`）**：375px + 触控下**悬浮球 ≥44×44px**、**移动面板内每项 ≥44px**（项目 chrome，见 `action-menu.md` 实测：球 52×52、项 50px、关闭 ✕ 44px、取消条 48px、抓手条 56px）；设计自身的 `.lang-switch-link` 不再存在。`html-only` 只检查普通链接可点、焦点可见，不要求悬浮球或面板。
 
+### 步骤 2b-404 · 单份 404 的 Locale 展示（2026-11-23 起，404 / 共享菜单 / Locale 解析改动时必做）
+
+规则与决策见 ADR 0025、`docs/rules/data-and-i18n.md`、`docs/rules/action-menu.md`。必须用**保留原错误 URL**的静态服务器或 Playwright route 返回 `dist/404.html`，不能用 `/404.html` 直接打开冒充路径语言证据。
+
+1. **单份产物**：`dist/404.html` 只有一份；不存在 `dist/<locale>/404.html`。原始 HTML 不设置 `data-404-locale`，默认 Locale 区块带 `data-default`，且默认不链接设计 CSS。
+2. **首屏解析**：访问 `/en/missing/`、`/ja/missing/`、`/zh-tw/missing/`、`/ko/missing/`，断言 `<html lang>`、`data-404-locale`、`document.title` 与可见 `[data-404-panel]` 一致；页面首屏截图不得出现默认语言一闪而过的证据（或记录无法截取首帧的仿真限制）。
+3. **优先级**：清空偏好后写入 `ja` 再访问 `/en/missing/` → 英文（路径优先）；访问 `/missing/` → 日文（偏好优先）；写入非法值 → 忽略并按浏览器语言 / 默认回退，且非法值不被删除；浏览器 `zh-Hant-HK` → `zh-TW`，`en-US` → `en`。
+4. **不写偏好**：404 加载、路径解析、浏览器回退前后，`senrenbanka.locale.v1:<baseKey>` 值不变；只有菜单 `.cm-lang` 显式点击 / Ctrl-Cmd 点击 / 中键才写入，并导航到目标 Locale 入口页。
+5. **菜单一致**：每种展示语言下，菜单标签、分组标题、Toast、`aria-label`、当前语言勾选 / `aria-current`、随机目标、全部设计 href 与分享标题均跟随页面；菜单 DOM 仍只有一份，`manualSwitch:false` 时无设计组；`data-cm-action="random"` 的 disabled 状态与当前 Locale 目标池一致。
+6. **无 JS**：默认 Locale 正文可见，其它区块不可见，`<noscript>` 语言链接存在且指向各 Locale 入口；不得出现空白 404。
+7. **base / 单语言**：`BASE_PATH=/demo` 下 `/demo/en/missing/` 正确识别为 `en`，链接带 `/demo`；临时单语言配置只渲染一个区块、无语言组，测后恢复。
+8. **记录**：更新 `docs/verification/shared.md`（404 路由 / 面板 / 无 JS / base）与 `docs/verification/action-menu.md`（404 菜单本地化矩阵）；截图路径、未测项与仿真限制如实写入。
+
 ## 步骤 2c · 入口语言协商与入口随机（根入口 / 语言偏好 / 随机模式改动时必做）
 
 规则与决策见 ADR 0024、`docs/rules/data-and-i18n.md`、`docs/rules/action-menu.md`。验证必须使用 preview 或 dev，并如实记录无法实测的项。
@@ -197,6 +210,7 @@ npm run verify:sections  # 主分区 data-section / h2 标准标签门禁
 - [ ] 主分区标签：每个主分区有 `data-section`，h2 只含标准标签，主题词在 h2 之外；该设计不在 allowlist 中
 - [ ] 产物抽查按模式完成：`styled` 的 CSS 隔离 / 字体 / 核心字段通过；`html-only` 的资源禁令 / metadata rel / 核心字段通过，且 `npm run test:html-only` 全绿
 - [ ] 多语言（步骤 2b）：各 locale 页面齐备、`lang`/`robots`/`canonical`/`hreflang` 正确；`styled` 菜单语言项与键盘路径通过；`html-only` 普通语言链接通过；语言/主题正交、旧路径跳转与配置开关均符合
+- [ ] 404 多语言（步骤 2b-404，涉及 404 / 共享菜单 / Locale 解析时）：单份产物、路径/偏好/浏览器/默认优先级、不写偏好、菜单一致、无 JS、base 与单语言分支符合 ADR 0025
 - [ ] 入口（步骤 2c，涉及根入口 / 语言偏好 / 随机模式时）：浏览器语言矩阵、偏好优先与非法值回退、显式点击写入、连续入口重抽、设计页刷新稳定、无 JS 与 base 命名空间符合 ADR 0024
 - [ ] 韩语字体（若设计声明 `ko`）：`fonts:coverage` 通过；浏览器实际命中声明的 Hangul 核心字体；非 `ko` 页面未下载韩语子集
 - [ ] 检测器 0 发现（或均已记录为例外）

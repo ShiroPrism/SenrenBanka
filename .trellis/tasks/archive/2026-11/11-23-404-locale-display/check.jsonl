@@ -1,0 +1,11 @@
+{"file":"AGENTS.md","reason":"检查共享机制改动是否越过硬门禁与文档边界。"}
+{"file":"docs/rules/data-and-i18n.md","reason":"核对 404 展示语言解析、语言偏好只读、文案覆盖与链接目标。"}
+{"file":"docs/rules/accessibility-responsive.md","reason":"核对 html lang、隐藏 panel、aria 与触控可达性。"}
+{"file":"docs/rules/action-menu.md","reason":"核对菜单仍为唯一入口、单一 DOM、语言项目标未变。"}
+{"file":"docs/rules/pitfalls.md","reason":"核对共享菜单运行时与 CSS 隔离未回归。"}
+{"file":"docs/rules/operations.md","reason":"核对构建、验证、版本与提交范围。"}
+{"file":".agents/skills/design-page-verify/SKILL.md","reason":"共享机制改动必须按此流程验证并更新 verification 记录。"}
+{"file":"SPEC.md","reason":"核对 §5.5 / §7.3 / §7.5 / §13 的 Locale 与 404 验收契约。"}
+{"file":"docs/verification/shared.md","reason":"更新 404 与共享机制当前验证状态。"}
+{"file":"docs/verification/action-menu.md","reason":"更新 404 菜单本地化与三输入环境矩阵的当前验证状态。"}
+{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"复核构建期预渲染、head 内联脚本与菜单运行时之间的数据一致性。"}
