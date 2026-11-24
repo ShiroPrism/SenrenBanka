@@ -6,6 +6,12 @@ import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import { parse as parseYaml } from 'yaml';
 import { localFontDefinitions } from './src/fonts/generated.ts';
+import dns from 'node:dns';
+
+// dev 进程内让 localhost 解析 IPv4 优先：本机 Windows 下 localhost 常解析为仅 ::1，
+// Vite 会只监听 ::1，导致 http://127.0.0.1:4321 拒绝连接。ipv4first 后 Vite 会在
+// 127.0.0.1 与 ::1 双栈监听，两个回环地址都可访问。
+dns.setDefaultResultOrder('ipv4first');
 
 const projectRoot = fileURLToPath(new URL('.', import.meta.url));
 
@@ -196,6 +202,26 @@ export default defineConfig({
   integrations: [designRoutes],
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      host: 'localhost',
+      watch: {
+        // dev 启动慢 / fetchModule 60s 超时的根因：默认 watcher 会为项目内每个目录
+        // 建立监听句柄（.cache 约 1.7k、.local-fonts 约 3.8k、.astro 约 1.1k 个目录，
+        // 其中 .cache/fonts 含 5.5k 字体文件），初始化期间长时间占住主线程，
+        // module-runner 的 fetchModule invoke（60s 超时）无法被应答，触发
+        // "transport invoke timed out" 与 server app 创建失败。
+        // dev 只需感知 src / public / 根配置的变更，生成物与缓存树一律不监听。
+        ignored: [
+          '**/.git/**',
+          '**/node_modules/**',
+          '**/.cache/**',
+          '**/.local-fonts/**',
+          '**/.astro/**',
+          '**/dist/**',
+          '**/.trellis/**',
+        ],
+      },
+    },
   },
   // 字体（SPEC §8.5）：六个 npm provider family 保留 Fontsource 包；
   // 20 个项目自有 family 由 fonts.config.json → fonts.lock.json →
