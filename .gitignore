@@ -24,6 +24,9 @@ node_modules/
 !.agents/skills/design-page-verify
 !.agents/skills/design-page-verify/
 !.agents/skills/design-page-verify/**
+!.agents/skills/personal-site-launch
+!.agents/skills/personal-site-launch/
+!.agents/skills/personal-site-launch/**
 
 
 # logs & env

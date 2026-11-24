@@ -20,6 +20,7 @@
 | `src/designs/<id>/DESIGN.md` | 主题视觉规范、设计意图与设计层实现要求 | 自产 / 复刻规范可修订（先规范、后实现）；厂商来源（快照 / 汇编）**只读**（汇编 = 整合完成即冻结），偏差记入该主题 `ADAPTATION.md` |
 | `src/designs/<id>/tokens.css`、`Preview.astro` | 可选：设计令牌单一来源（正式页与预览共用）与切换页预览碎片 | 预览层新增 / 变更；约束见 `docs/rules/design-contract.md`「可选 · 切换页预览碎片」 |
 | `.agents/skills/design-page-verify/SKILL.md` | **验证流程唯一载体**：步骤、通过标准、记录收口 | 流程变化 |
+| `.agents/skills/personal-site-launch/SKILL.md` | **资料导入与部署流程**：运行环境 / 部署权限门禁、文件抽取、语言映射、profile 替换、构建、上线与临时资源清理 | 流程、权限要求或平台操作变化 |
 | `CONTEXT.md` | 领域术语表（只收项目特有概念，不含实现细节） | 术语新增 / 修订 |
 
 ## 引用关系

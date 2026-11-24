@@ -29,6 +29,7 @@
 | 共享操作菜单 / 项目 chrome | [`action-menu`](docs/rules/action-menu.md) + [`accessibility-responsive`](docs/rules/accessibility-responsive.md) + [`pitfalls`](docs/rules/pitfalls.md) |
 | 构建 / 文档 / 版本 / git 范围 | [`operations`](docs/rules/operations.md) |
 | 排错 / 新增已知坑 | [`pitfalls`](docs/rules/pitfalls.md) + 对应主题文件 |
+| 个人资料导入 / 快速部署 | [`README`](README.md) + [`data-and-i18n`](docs/rules/data-and-i18n.md) + [`operations`](docs/rules/operations.md) + [`.agents/skills/personal-site-launch/SKILL.md`](.agents/skills/personal-site-launch/SKILL.md) |
 
 ## 规则正文索引
 

@@ -72,6 +72,6 @@
 
 ## 入库范围（git）
 
-- skill 只入库**仓库定制化**的 `.agents/skills/design-page-verify/`；通用 skill（impeccable、grill-me 等）不入库
+- skill 只入库**仓库定制化**的 `.agents/skills/design-page-verify/` 与 `.agents/skills/personal-site-launch/`；通用 skill（impeccable、grill-me 等）不入库
 - `.trae/`、`.codex/`、`.impeccable/` 等本地工具目录不入库（规则见 `.gitignore`）
 - 通用 skill 由使用者自行安装（如 impeccable：用于设计文档化 / 检测器 / 评审；`design-page-verify` 流程中的检测器步骤依赖它）
