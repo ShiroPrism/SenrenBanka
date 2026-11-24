@@ -1,8 +1,12 @@
 # SenrenBanka
 
+简体中文 | [繁體中文](docs/readmes/README.zh-TW.md) | [日本語](docs/readmes/README.ja.md) | [English](docs/readmes/README.en.md) | [한국어](docs/readmes/README.ko.md)
+
+> SenrenBanka（「洗練万華」）：一つの**洗練**されたデータから、**万華**鏡のように千変万化するプロフィールサイトを映し出す。
+
 一份个人资料，多套由 AI 依据 `DESIGN.md` 生成的完整设计，支持简中 / 繁中 / 日 / 英 / 韩五语言——构建期产出纯静态页面，可部署到任何静态托管。
 
-One profile, many AI-designed homepages, in five languages. Astro + TypeScript + Tailwind CSS 4, shipped as static files.
+技术栈：Astro + TypeScript + Tailwind CSS 4
 
 ## 特性
 
@@ -12,7 +16,35 @@ One profile, many AI-designed homepages, in five languages. Astro + TypeScript +
 - 随机 / 固定两种模式、入口随机与避免连续重复、可配置手动切换
 - 每套设计独立 CSS（Tailwind `source(none)` + `@source` 精确隔离），**多语言不改变这一点**，字体构建期自托管，运行时零第三方请求
 - 根路径是零外部请求的客户端路由；每种语言仅其默认设计对外可索引（避免近重复内容）
-- fork 后只需改资料与 `src/data/site.config.yaml` 即可部署 GitHub Pages / Cloudflare Pages / Vercel
+- 使用本仓库作为模板或 fork 后，只需改资料与 `src/data/site.config.yaml` 即可部署 GitHub Pages / Cloudflare Pages / Vercel
+
+## 全部设计
+
+27 套设计共用同一份资料，下面每张图展示 9 套。部署后可在 `/<locale>/designs/` 查看可交互的完整列表。
+
+![Aero、Archive、Brutal、Cute-alism、Deco、Editorial、Fairy Kei、Fax、Frost](docs/assets/design-gallery/zh-cn/designs-01-09.png)
+
+![Homepage '99、HTML Only、Ink、Kern、Lexicon、Little Forest、Material 3、Oxide、Pager](docs/assets/design-gallery/zh-cn/designs-10-18.png)
+
+![Pixel Pet RPG、Poster、Radio、Receipt、Sticker Diary、Tape、Terminal、Transit、Zine](docs/assets/design-gallery/zh-cn/designs-19-27.png)
+
+## Agent 一键部署
+
+安装 `personal-site-launch` skill
+
+```bash
+npx skills add ShiroPrism/SenrenBanka --skill personal-site-launch -g
+```
+
+`-g` 表示安装到用户级 skill 目录，之后可以在任意项目中调用；按命令行提示选择你使用的 Agent。也可以去掉 `-g`，只安装到当前项目。
+
+安装后不需要手动 fork、clone 或创建仓库。把下面的快捷 Prompt 调用 `personal-site-launch` 并把你的个人资料交给 Agent：
+
+```text
+/personal-site-launch 请从模板仓库 https://github.com/ShiroPrism/SenrenBanka 创建一个属于我的独立个人主页仓库并克隆到本地，然后根据我接下来提供的图片、PDF、DOCX、Markdown 等个人资料生成 profiles、同步 site.config.yaml，完成构建验证并部署为可访问网址。未指定语言时，按资料语言与项目现有语言处理；缺少 GitHub、Cloudflare 或 Vercel 连接/权限时，直接列出需要我开启的项目并等待，不要让我手动处理仓库。
+```
+
+默认优先 GitHub Pages。如果你只想用 Cloudflare Pages Direct Upload 或 Vercel CLI，在 Prompt 里直接说明即可；那类从本地上传的部署方式不需要先创建 GitHub 仓库。
 
 ## 快速开始
 
@@ -26,21 +58,11 @@ npm run preview
 
 代码与配置统一走 Prettier + ESLint；新增或修改文件后运行 `npm run format && npm run lint`。行尾由 `.gitattributes` / `.editorconfig` 固定为 LF，`npm run check:eol` 会在构建前拦截 CRLF。
 
-字体缓存不进入版本控制，也不在 `postinstall` 中隐式联网。干净 clone 必须先
-显式执行 `npm run fonts:prepare`；准备完成后，`npm run build` 的
-`fonts:check` 会完全离线重算锁、快照、缓存文件与生成注册的哈希。缓存缺失或
-损坏时会给出修复命令并失败。
+字体缓存不进入版本控制，也不在 `postinstall` 中隐式联网。干净 clone 必须先显式执行 `npm run fonts:prepare`；准备完成后，`npm run build` 的 `fonts:check` 会完全离线重算锁、快照、缓存文件与生成注册的哈希。缓存缺失或损坏时会给出修复命令并失败。
 
-`--font-*` 变量只暴露主 face；6 个 npm family 与 31 个外部 local family 都不
-携带 Astro fallback。每套设计的 `style.css` 自己维护“拉丁声部 → 核心 CJK
-（Zhuque / LXGW / Ark Pixel / 繁中 TC 族）→ 系统中文字体 → 通用族”的完整顺序，
-`npm run fonts:typography` 会静态检查这条契约。
+`--font-*` 变量只暴露主 face；6 个 npm family 与 31 个外部 local family 都不携带 Astro fallback。每套设计的 `style.css` 自己维护“拉丁声部 → 核心 CJK（Zhuque / LXGW / Ark Pixel / 繁中 TC 族）→ 系统中文字体 → 通用族”的完整顺序，`npm run fonts:typography` 会静态检查这条契约。
 
-`fonts:prepare` 还会为核心 CJK 字体下载并校验 source archive；构建末尾的
-`fonts:subset` 按最终 `dist` 语料生成每族一个 WOFF2 字形子集，`fonts:prune`
-再把剩余 `@font-face` 外置为共享字体 CSS 并删除未引用分片。`dist` 全部文件
-字节上限为 **10 MiB**。源字体、锁、快照与生成注册不变；fork 用户只需执行
-`npm run fonts:prepare && npm run build`，不需要本地字体、Python 或额外子集化工具。
+`fonts:prepare` 还会为核心 CJK 字体下载并校验 source archive；构建末尾的 `fonts:subset` 按最终 `dist` 语料生成每族一个 WOFF2 字形子集，`fonts:prune` 再把剩余 `@font-face` 外置为共享字体 CSS 并删除未引用分片。`dist` 全部文件字节上限为 **10 MiB**。源字体、锁、快照与生成注册不变；fork 用户只需执行 `npm run fonts:prepare && npm run build`，不需要本地字体、Python 或额外子集化工具。
 
 最小资料只需以下四个核心字段，可直接替换 `src/data/profiles/zh-cn.yaml`（`ja.yaml` / `en.yaml` 同理）：
 
@@ -116,7 +138,7 @@ npm run fonts:check
 
 ## 部署
 
-### GitHub Pages（fork 零配置）
+### GitHub Pages（template / fork 零配置）
 
 1. 仓库 Settings → Pages → Source 选择 **GitHub Actions**
 2. push 到 `main` 即自动构建部署；工作流按 `fonts.lock.json` 哈希复用 `.cache/fonts/`，随后执行 `npm run fonts:prepare`；`SITE_URL` / `BASE_PATH` 从仓库上下文自动注入
@@ -126,12 +148,12 @@ npm run fonts:check
 
 - 连接仓库；Build command `npm ci && npm run fonts:prepare && npm run build`；Build output directory `dist`
 - 可选环境变量：`SITE_URL=https://<你的域名>`（用于 canonical 绝对地址）
-- 构建环境需 Node.js `>=22.12`；只有 `fonts:prepare` 在有缓存缺失时联网，之后的 build 不访问字体源。
+- 构建环境使用 Node.js 24（项目 `.nvmrc`）；只有 `fonts:prepare` 在有缓存缺失时联网，之后的 build 不访问字体源。
 
 ### Vercel
 
 - 导入仓库，框架预设自动识别 Astro；Install Command `npm ci`；Build Command `npm run fonts:prepare && npm run build`；可选环境变量 `SITE_URL`
-- Node.js 版本需 `>=22.12`。20 个 local-provider family 的二进制不进入 Git，部署时由固定的字体目录 Release 准备。
+- Node.js 版本使用 24（项目 `.nvmrc`）；20 个 local-provider family 的二进制不进入 Git，部署时由固定的字体目录 Release 准备。
 
 ## 设计来源与许可
 
